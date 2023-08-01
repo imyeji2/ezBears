@@ -34,6 +34,39 @@
     <!-- Template Stylesheet -->
     <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
     <script type="text/javascript" src="<c:url value='/js/jquery-3.7.0.min.js'/>"></script>
+    
+    <style>
+    	a{
+    	color:#7000D8;
+    	}
+    	
+    	.btn-primary{
+    	    color: #fff;
+		    background-color:#7000D8;
+		    border-color:#7000D8;
+    	} 
+    	
+    	
+    	.boardTop{
+    		width:100%;
+    		padding:0px 5px 10px 18px;
+    		font-size:16px;
+    		font-weight: 800;
+    		overflow: hidden;
+    	}
+    	
+    	.boardTop_txt{
+    		float: left;
+    	}
+    	
+    	.boardTop_btn{
+    		float: right;
+    	}
+    	
+    	.boardTop_btn img:hover{
+    		cursor: pointer;
+    	}
+    </style>
 </head>
 
 <body>
@@ -51,24 +84,32 @@
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-secondary navbar-dark">
                 <a href="<c:url value='/'/>" class="navbar-brand mx-4 mb-3">
-                    <h3 class="text-primary"><i class="fa fa-user-edit me-2"></i>이젠베어스</h3>
+                    <img src="<c:url value='/img/logo.png'/>" alt="logo" style="width:100%">
                 </a>
                 <!-- 사원정보 -->
                 <div class="d-flex align-items-center ms-4 mb-4">
-                    <div class="position-relative">
-                        <img class="rounded-circle" src="<c:url value='/img/user.jpg'/>" alt="" style="width: 40px; height: 40px;">
-                        <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
-                    </div>
-                    <div class="ms-3">
-                        <h6 class="mb-0">Jhon Doe</h6>
-                        <span>Admin</span>
-                    </div>
+                	<div>
+                	</div>
+
                 </div>
                 <!-- 사원정보 -->
                 <!-- 사이드 메뉴 시작 -->
                 <div class="navbar-nav w-100">
-                    <a href="#" class="nav-item nav-link active">공지사항</a>
-                    <a href="#" class="nav-item nav-link">자유게시판</a>
+                	<div class="boardTop">
+                		<div class="boardTop_txt">워크보드</div>
+                		<div class="boardTop_btn">
+                			<img src="<c:url value='/img/plus.svg'/>" alt="보드 추가 버튼" style="margin-right:10px;">
+                			<img src="<c:url value='/img/gear-wide.svg'/>" alt="보드 관리 버튼"/>
+                			
+                		</div>
+                	</div>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">공용</a>
+                        <div class="dropdown-menu bg-transparent border-0">
+                            <a href="#" class="dropdown-item">공지사항</a>
+                            <a href="#" class="dropdown-item">자유게시판</a>
+                        </div>
+                    </div>                
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">경영지원팀</a>
                         <div class="dropdown-menu bg-transparent border-0">
@@ -77,11 +118,10 @@
                             <a href="#" class="dropdown-item">게시글관리</a>
                             <a href="#" class="dropdown-item">부서관리</a>
                             <a href="#" class="dropdown-item">스태프관리</a>
-                            <a href="#" class="dropdown-item">선수단관리</a>
-                            
-                                                        
+                            <a href="#" class="dropdown-item">선수단관리</a>                         
                         </div>
-                    </div>                    
+                    </div>           
+                             
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">나의보드</a>
                         <div class="dropdown-menu bg-transparent border-0">
@@ -89,6 +129,8 @@
                             <a href="#" class="dropdown-item">프로젝트팀</a>
                         </div>
                     </div>
+                    
+                    
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">팀관리</a>
                         <div class="dropdown-menu bg-transparent border-0">
@@ -98,6 +140,7 @@
                             <a href="#" class="dropdown-item">선수통계</a>
                         </div>
                     </div>
+                    <a href="#" class="nav-item nav-link">임직원정보</a>
                 </div>
                 <!-- 사이드 메뉴 종료 -->
             </nav>
@@ -109,84 +152,19 @@
         <div class="content">
         	<!-- top 메뉴 시작 -->
             <!-- Navbar Start -->
-            <nav class="navbar navbar-expand bg-secondary navbar-dark sticky-top px-4 py-0">
-                <a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
-                    <h2 class="text-primary mb-0"><i class="fa fa-user-edit"></i></h2>
-                </a>
-                <a href="#" class="sidebar-toggler flex-shrink-0">
-                    <i class="fa fa-bars"></i>
-                </a>
-                <form class="d-none d-md-flex ms-4">
-                    <input class="form-control bg-dark border-0" type="search" placeholder="Search">
-                </form>
+            <nav class="navbar navbar-expand bg-secondary navbar-dark sticky-top py-0">
+            	<div style="width:900px; ">
+	                <form class="d-none d-md-flex ms-4">
+	                    <input class="form-control bg-dark border-0" type="search" placeholder="사원을 검색하세요">
+	                </form>
+                </div>
                 <div class="navbar-nav align-items-center ms-auto">
+                	<span class="d-none d-lg-inline-flex">운영1팀</span>
+                	<span class="d-none d-lg-inline-flex">&nbsp;|&nbsp;</span>
+                	<span class="d-none d-lg-inline-flex">제이든</span>
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <i class="fa fa-envelope me-lg-2"></i>
-                            <span class="d-none d-lg-inline-flex">Message</span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
-                            <a href="#" class="dropdown-item">
-                                <div class="d-flex align-items-center">
-                                    <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                                    <div class="ms-2">
-                                        <h6 class="fw-normal mb-0">Jhon send you a message</h6>
-                                        <small>15 minutes ago</small>
-                                    </div>
-                                </div>
-                            </a>
-                            <hr class="dropdown-divider">
-                            <a href="#" class="dropdown-item">
-                                <div class="d-flex align-items-center">
-                                    <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                                    <div class="ms-2">
-                                        <h6 class="fw-normal mb-0">Jhon send you a message</h6>
-                                        <small>15 minutes ago</small>
-                                    </div>
-                                </div>
-                            </a>
-                            <hr class="dropdown-divider">
-                            <a href="#" class="dropdown-item">
-                                <div class="d-flex align-items-center">
-                                    <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                                    <div class="ms-2">
-                                        <h6 class="fw-normal mb-0">Jhon send you a message</h6>
-                                        <small>15 minutes ago</small>
-                                    </div>
-                                </div>
-                            </a>
-                            <hr class="dropdown-divider">
-                            <a href="#" class="dropdown-item text-center">See all message</a>
-                        </div>
-                    </div>
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <i class="fa fa-bell me-lg-2"></i>
-                            <span class="d-none d-lg-inline-flex">Notificatin</span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
-                            <a href="#" class="dropdown-item">
-                                <h6 class="fw-normal mb-0">Profile updated</h6>
-                                <small>15 minutes ago</small>
-                            </a>
-                            <hr class="dropdown-divider">
-                            <a href="#" class="dropdown-item">
-                                <h6 class="fw-normal mb-0">New user added</h6>
-                                <small>15 minutes ago</small>
-                            </a>
-                            <hr class="dropdown-divider">
-                            <a href="#" class="dropdown-item">
-                                <h6 class="fw-normal mb-0">Password changed</h6>
-                                <small>15 minutes ago</small>
-                            </a>
-                            <hr class="dropdown-divider">
-                            <a href="#" class="dropdown-item text-center">See all notifications</a>
-                        </div>
-                    </div>
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <img class="rounded-circle me-lg-2" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                            <span class="d-none d-lg-inline-flex">John Doe</span>
+                        <a href="#" class="nav-link " data-bs-toggle="dropdown">
+                            <img class=" me-lg-2" src="<c:url value='/img/user.jpg'/>" alt="사원프로필" style="width: 40px; height:40px;">
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
                             <a href="#" class="dropdown-item">My Profile</a>
