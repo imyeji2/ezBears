@@ -1,6 +1,6 @@
 /********** Template CSS **********/
 :root {
-    --primary: #EB1616;
+    --primary: #7000D8;
     --secondary: #191C24;
     --light: #6C7293;
     --dark: #000000;
@@ -152,7 +152,7 @@
 
 .sidebar .navbar .dropdown-toggle::after {
     position: absolute;
-    top: 15px;
+   /* top: 15px;*/
     right: 15px;
     border: none;
     content: "\f107";

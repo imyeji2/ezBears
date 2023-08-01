@@ -1,16 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <style>
+    	.b_txt{
+    		padding: 0px;
+    		margin:5px 0px 5px 0px;
+    	}
+    </style>
            <!-- Footer Start -->
             <div class="container-fluid pt-4 px-4">
                 <div class="bg-secondary rounded-top p-4">
                     <div class="row">
                         <div class="col-12 col-sm-6 text-center text-sm-start">
-                            &copy; <a href="#">Your Site Name</a>, All Right Reserved. 
-                        </div>
-                        <div class="col-12 col-sm-6 text-center text-sm-end">
-                            <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
-                            Designed By <a href="https://htmlcodex.com">HTML Codex</a>
-                            <br>Distributed By: <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
+                        	<p class="b_txt">주소 : 서울특별시 송파구 올림픽로 25 잠실야구장내 이젠베어스</p>
+                        	<p class="b_txt">연락처 : 02-532-6500 | 대표자 : 서다희 | 사업자등록번호 : 107-81-13241
+                        	<bt>
+                            <p class="b_txt">&copy;2023 ezBears Inc. All Right Reserved.</p>
                         </div>
                     </div>
                 </div>
@@ -27,13 +31,13 @@
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="${pageContext.request.contextPath}lib/chart/chart.min.js"></script>
-    <script src="${pageContext.request.contextPath}lib/easing/easing.min.js"></script>
-    <script src="${pageContext.request.contextPath}lib/waypoints/waypoints.min.js"></script>
-    <script src="${pageContext.request.contextPath}lib/owlcarousel/owl.carousel.min.js"></script>
-    <script src="${pageContext.request.contextPath}lib/tempusdominus/js/moment.min.js"></script>
-    <script src="${pageContext.request.contextPath}lib/tempusdominus/js/moment-timezone.min.js"></script>
-    <script src="${pageContext.request.contextPath}lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+    <script src="${pageContext.request.contextPath}/lib/chart/chart.min.js"></script>
+    <script src="${pageContext.request.contextPath}/lib/easing/easing.min.js"></script>
+    <script src="${pageContext.request.contextPath}/lib/waypoints/waypoints.min.js"></script>
+    <script src="${pageContext.request.contextPath}/lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="${pageContext.request.contextPath}/lib/tempusdominus/js/moment.min.js"></script>
+    <script src="${pageContext.request.contextPath}/lib/tempusdominus/js/moment-timezone.min.js"></script>
+    <script src="${pageContext.request.contextPath}/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
     <!-- Template Javascript -->
     <script src="${pageContext.request.contextPath}/js/main.js"></script>
