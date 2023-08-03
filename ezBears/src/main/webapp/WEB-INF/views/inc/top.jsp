@@ -8,9 +8,7 @@
 <head>
     <meta charset="utf-8">
     <title>이젠 베어스 - 그룹웨어 시스템</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="" name="keywords">
-    <meta content="" name="description">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"> 
 
     <!-- Favicon -->
     <link href="${pageContext.request.contextPath}/img/favicon.ico" rel="icon">
@@ -30,43 +28,15 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/custom.css">
 
     <!-- Template Stylesheet -->
     <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
     <script type="text/javascript" src="<c:url value='/js/jquery-3.7.0.min.js'/>"></script>
     
-    <style>
-    	a{
-    	color:#7000D8;
-    	}
-    	
-    	.btn-primary{
-    	    color: #fff;
-		    background-color:#7000D8;
-		    border-color:#7000D8;
-    	} 
-    	
-    	
-    	.boardTop{
-    		width:100%;
-    		padding:0px 5px 10px 18px;
-    		font-size:16px;
-    		font-weight: 800;
-    		overflow: hidden;
-    	}
-    	
-    	.boardTop_txt{
-    		float: left;
-    	}
-    	
-    	.boardTop_btn{
-    		float: right;
-    	}
-    	
-    	.boardTop_btn img:hover{
-    		cursor: pointer;
-    	}
-    </style>
+    <!-- 개인 css -->
+    <link href="${pageContext.request.contextPath}/css/yeji.css" rel="stylesheet">
+    
 </head>
 
 <body>
@@ -159,9 +129,12 @@
 	                </form>
                 </div>
                 <div class="navbar-nav align-items-center ms-auto">
+             	   <span class="d-none d-lg-inline-flex">출근</span>
+                	<span class="d-none d-lg-inline-flex">&nbsp;|&nbsp;</span>
                 	<span class="d-none d-lg-inline-flex">운영1팀</span>
                 	<span class="d-none d-lg-inline-flex">&nbsp;|&nbsp;</span>
                 	<span class="d-none d-lg-inline-flex">제이든</span>
+                	
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link " data-bs-toggle="dropdown">
                             <img class=" me-lg-2" src="<c:url value='/img/user.jpg'/>" alt="사원프로필" style="width: 40px; height:40px;">
