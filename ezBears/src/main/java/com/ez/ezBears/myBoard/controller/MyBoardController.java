@@ -29,6 +29,8 @@ public class MyBoardController {
 		return "myBoard/teamNoticeDetail";
 	}
 	
+	
+	
 	@RequestMapping("/teamNoticeWrite")
 	public String teamNoticeWrite() {
 		logger.info("팀 공지사항 등록하기 페이지");
