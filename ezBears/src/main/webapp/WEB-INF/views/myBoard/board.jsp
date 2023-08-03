@@ -13,7 +13,9 @@
 		color:#fff!important ;
 		background:#7000D8 !important;
 	}
+	
 	</style>
+
 
     <!-- Recent Sales Start -->
     <div class="container-fluid pt-4 px-4">
@@ -54,13 +56,14 @@
                         Invidunt rebum voluptua lorem eirmod dolore. Amet no sed sanctus lorem ea. Nonumy sit stet sit magna. Rebum rebum ipsum clita erat consetetur, sit dolor sit clita et amet. Est et clita dolore takimata, sea dolores tempor erat consetetur lorem. Consetetur sea sadipscing dolor et dolores et stet, tempor elitr.
                     </div>
                     <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
-                        Et diam et est sed vero ipsum voluptua dolor et, sit eos justo ipsum no ipsum amet sed aliquyam dolore, ut ipsum sanctus et consetetur. Sit ea sit clita lorem ea gubergren. Et dolore vero sanctus voluptua ipsum sadipscing amet at. Et sed dolore voluptua dolor eos tempor, erat amet.
+                   		<%@include file="Calender.jsp" %>
                     </div>
                     <div class="tab-pane fade" id="pills-contact1" role="tabpanel" aria-labelledby="pills-contact1-tab">
-						결재
+						<%@include file="Approval.jsp" %>
                     </div>
+                    <!-- 웹하드  -->
                     <div class="tab-pane fade" id="pills-contact2" role="tabpanel" aria-labelledby="pills-contact2-tab">
-						웹하드
+						<%@include file="webhard.jsp" %>	
                     </div>
                                                             
                 </div>
