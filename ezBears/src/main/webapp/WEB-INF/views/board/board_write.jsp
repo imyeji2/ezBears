@@ -3,22 +3,35 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%@include file="../inc/top.jsp"%>
-<link href="${pageContext.request.contextPath}/css/gopanju.css" rel="stylesheet">
 <div class="form-container">
 	<form action="AddPostServlet" method="post">
-		<label for="title">제목</label> 
-		<input type="text" id="title" name="title" required> 
-		<label for="content">내용</label>
-		<textarea id="content" name="content" rows="5" required></textarea>
-		<div class="col-sm-12 col-xl-6">
+		<div class="col-sm-12 col-xl-8">
 			<div class="bg-secondary rounded h-100 p-4">
-				<div class="mb-3">
-					<label for="formFileMultiple" class="form-label">Multiple files input example</label> 
-					<input class="form-control bg-dark" type="file" id="formFileMultiple" multiple>
+				<h6 class="mb-4">공용 > 공지사항 > 공지사항 등록</h6>
+
+				<div class="input-group mb-3">
+					<input type="text" placeholder="제목을 입력해주세요" class="form-control" id="title">
 				</div>
+
+				<div class="input-group mb-3">
+					<textarea class="form-control" placeholder="내용을 입력해주세요" id="floatingTextarea" style="height: 150px;"></textarea>
+				</div>
+				<br>
+
+				<div class="form-floating">
+					<div class="mb-3">
+						<input class="form-control bg-dark" type="file" id="formFileMultiple" multiple>
+					</div>
+				</div>
+
+				<div class="text-center">
+					<button type="submit" class="btn btn-primary">등록</button>
+					<button type="submit" class="btn btn-primary">취소</button>
+				</div>
+
 			</div>
 		</div>
-		<button type="submit">등록</button>
 	</form>
 </div>
+
 <%@include file="../inc/bottom.jsp"%>
