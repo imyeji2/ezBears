@@ -1,46 +1,35 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@include file="../inc/top.jsp"%>	
 
-<%@include file="../inc/top.jsp"%>
-<table border="1" style="border-collapse: collapse;">
-	<tr>
-		<!--  home -->
-		<td><a href="#"></a></td>
-		<td></td>
-		<td></td>
-	</tr>
+<div id="teamWorkBoardList">
+	<br>
+	<div id="teamNotice_serch">
+		<div class="serch_input">
+			<div class="select_box">
+				<select class="form-select" aria-label="Default select example">
+					<option selected>선택</option>
+					<option value="name">이름</option>
+					<option value="subject">제목</option>
+					<option value="content">내용</option>
+				</select>
+			</div>
+			<div class="text_box">
+				<input type="text" class="form-control"
+					id="exampleFormControlInput1" placeholder="검색어를 입력해주세요">
+			</div>
 
-	<tr>
-		<td></td>
+			<div class="serch_btn">
+				<button>검색</button>
+			</div>
+			<!-- serch_btn -->
+		</div>
+		<!-- serch_input -->
+	</div>
+	<!-- teamNotice_serch -->
 
-		<!-- text print -->
-		<td>
-		<hr>
-			<table border="1" style="width: 900px; border-collapse: collapse"></table>
-	<tr>
-		<td>
-		<p style="text-align: right">
-		이름&nbsp;|&nbsp;|2023.08.03&nbsp;</p>
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<p>
-				content<br> 내용<br> 다음줄1<br>
-			</p>
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<p style="text-align: left;">
-				<a href="#">댓글달기</a>&nbsp;&nbsp;
-			</p>
-		</td>
-	</tr>
-</table>
-<br>
-<br>
-
+	<br>
+	
+</div>
 
 <%@include file="../inc/bottom.jsp"%>
