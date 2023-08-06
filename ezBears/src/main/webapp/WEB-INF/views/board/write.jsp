@@ -3,10 +3,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%@include file="../inc/top.jsp"%>
-<div class="form-container">
+<div class="board_write">
 	<form action="AddPostServlet" method="post">
-		<div class="col-sm-12 col-xl-8">
-			<div class="bg-secondary rounded h-100 p-4">
+		<div class="col-sm-12 col-xl-9">
+			<div class="bg-secondary rounded h-200 p-5">
 				<h6 class="mb-4">공용 > 공지사항 > 공지사항 등록</h6>
 
 				<div class="input-group mb-3">
@@ -33,5 +33,4 @@
 		</div>
 	</form>
 </div>
-
 <%@include file="../inc/bottom.jsp"%>

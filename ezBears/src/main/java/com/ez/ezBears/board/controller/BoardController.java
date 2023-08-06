@@ -10,15 +10,15 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/board")
 public class BoardController {
 
-	@RequestMapping("/board_write")
+	@RequestMapping("/write")
 	public String wirte() {
 		
-		return "board/board_write";
+		return "board/write";
 	}
 	
-	@RequestMapping("/board_list")
+	@RequestMapping("/list")
 	public String list() {
 		
-		return "board/board_list";
+		return "board/list";
 	}
 }
