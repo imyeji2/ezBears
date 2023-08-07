@@ -11,7 +11,6 @@
 
 input.btn.btn-sm.btn-primary {
 	width: 70px;
-	
 	margin-top: 14px;
 } 
 #btn {

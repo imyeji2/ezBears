@@ -5,25 +5,26 @@
 <%@include file="../inc/top.jsp"%>
 
 <style>
-.bg-secondary.rounded.h-100.p-4 {
+/* .bg-secondary.rounded.h-100.p-4 {
     width: 1250px;
-}
+}  
+
 input.btn.btn-sm.btn-primary {
     width: 70px;
     margin-left: 1135px;
     margin-top: 14px;
-}
-.appbox{
-	width: 80%;
+} 
+ .appbox{
+	width: 70%;
 	margin: 0 auto;
-}
+} 
 #floatingTextarea{
 	resize: none;
-}
+} */
 </style>
-<div class="container-fluid pt-4 px-4">
+<div class="container-fluid pt-4 px-4" id ="Approval_wr">
 	<div class="col-sm-12 col-xl-6">
-		<div class="bg-secondary rounded h-100 p-4">
+		<div class="bg-secondary rounded h-100 p-4" class="Appfrm">
 			<h6 class="mb-4">결재 입력</h6>
 			<div class="appbox">
 				<div class="form-floating mb-3">
@@ -42,12 +43,12 @@ input.btn.btn-sm.btn-primary {
 				</div>
 				<div class="form-floating">
 					<textarea class="form-control" placeholder="Leave a comment here"
-						id="floatingTextarea" style="height: 150px;"></textarea>
+						id="floatingTextarea" style="height: 150px;" class="textarea"></textarea>
 					<label for="floatingTextarea">내용</label>
 				</div>
 			</div>
 		<div>
-		<input type="button" value="입력" class="btn btn-sm btn-primary"/>
+		<input type="button" value="입력" class="btn btn-sm btn-primary" class="btn"/>
 		</div>
 		</div>
 	</div>
