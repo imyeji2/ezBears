@@ -19,6 +19,36 @@ public class MyBoardController {
 		return "myBoard/board";
 	}
 	
+	
+	@RequestMapping("/Approval_wr")
+	public String Approval_wr() {
+		logger.info("결재 작성");
+		return "myBoard/Approval_wr";
+	}
+	
+	@RequestMapping("/Approval_detail")
+	public String Approval_detail() {
+		logger.info("결재 디테일");
+		return "myBoard/Approval_detail";
+	}
+	
+	@RequestMapping("/hard_detail")
+	public String hard_detail() {
+		logger.info("웹하드 디테일");
+		return "myBoard/hard_detail";
+	}
+	@RequestMapping("/hard_delete")
+	public String hard_delete() {
+		logger.info("웹하드 삭제");
+		return "myBoard/hard_delete";
+	}
+	@RequestMapping("/Approval_delete")
+	public String Approval_delete() {
+		logger.info("결재하드 삭제");
+		return "myBoard/Approval_delete";
+	}
+	
+	
 	@RequestMapping("/teamNoticeDetail")
 	public String teamBoardDetil(/* @RequestParam (defaultValue = "0")int no */) {
 		//1

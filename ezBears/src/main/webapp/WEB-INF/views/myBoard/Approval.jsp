@@ -53,7 +53,7 @@
                                 <tr>
                                     <td><input class="form-check-input" type="checkbox"></td>
                                     <td>2023-01-21</td>
-                                    <td><a href="">TEST</a></td>
+                                    <td><a href="Approval_detail">TEST</a></td>
                                     <td>Jhon Doe</td>
                                     <td>결재</td>
                                     
@@ -62,7 +62,7 @@
                                 <tr>
                                     <td><input class="form-check-input" type="checkbox"></td>
                                     <td>2023-01-21</td>
-                                    <td><a href="">TEST</a></td>
+                                    <td><a href="Approval_detail">TEST</a></td>
                                     <td>Jhon Doe</td>
                                     <td>결재</td>
                                     
@@ -71,7 +71,7 @@
                                 <tr>
                                     <td><input class="form-check-input" type="checkbox"></td>
                                     <td>2023-01-21</td>
-                                    <td><a href="">TEST</a></td>
+                                    <td><a href="Approval_detail">TEST</a></td>
                                     <td>Jhon Doe</td>
                                     <td>결재</td>
                                    
