@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -69,6 +70,13 @@
     		cursor: pointer;
     	}
     </style>
+
+    <!-- 개인 css -->
+    <link href="${pageContext.request.contextPath}/css/park.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/css/gopanju.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/css/Dcss.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/css/yeji.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -127,7 +135,7 @@
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">나의보드</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="#" class="dropdown-item">개발1팀</a>
+                            <a href="<c:url value='/myBoard/board'/>" class="dropdown-item">개발1팀</a>
                             <a href="#" class="dropdown-item">프로젝트팀</a>
                         </div>
                     </div>

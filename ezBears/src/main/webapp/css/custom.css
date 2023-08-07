@@ -17,7 +17,7 @@ button:focus {
 input:focus {
   outline: none;
 }
-   
+
 .btn-primary{
     color: #fff;
     background-color:#7000D8;
@@ -109,5 +109,9 @@ input:focus {
 
 input:focus {
    outline: none !important;
+}
+
+input:focus {
+	outline: none !important;
 }
 
