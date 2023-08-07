@@ -4,25 +4,13 @@
 
 <%@include file="../inc/top.jsp"%>
 
-<style>
-.bg-secondary.rounded.h-100.p-4 {
-	width: 1250px;
-}
 
-input.btn.btn-sm.btn-primary {
-	width: 70px;
-	margin-top: 14px;
-} 
-#btn {
-	text-align:  center;
-}
-</style>
 
 <!-- write / edit 같이 쓰게 수정하기 -->
 
-<div class="container-fluid pt-4 px-4">
+<div class="container-fluid pt-4 px-4" id ="harddetail">
 	<div class="col-sm-12 col-xl-6">
-		<div class="bg-secondary rounded h-100 p-4">
+		<div class="bg-secondary rounded h-100 p-4 hardfrm">
 			<h6 class="mb-4">웹하드</h6>
 			<div class="form-floating mb-3">
 				<input type="email" class="form-control" id="floatingInput"
