@@ -18,6 +18,18 @@ public class MyBoardController {
 		logger.info("마이보드 보여주기");
 		return "myBoard/board";
 	}
+
+	
+	@RequestMapping("/teamNoticeList")
+	public String teamNoticeList() {
+		//1
+		logger.info("팀 공지사항 리스트 페이지");
+		//2
+		//3
+		//4
+		return "myBoard/teamNoticeList";
+	}
+	
 	
 	@RequestMapping("/teamNoticeDetail")
 	public String teamBoardDetil(/* @RequestParam (defaultValue = "0")int no */) {
@@ -36,4 +48,18 @@ public class MyBoardController {
 		logger.info("팀 공지사항 등록하기 페이지");
 		return "myBoard/teamNoticeWrite";
 	}
+	
+	@RequestMapping("/teamWorkBoardWrite")
+	public String teamWorkBoardWrite() {
+		logger.info("팀 업무 게시판 등록하기 페이지");
+		return "myBoard/teamWorkBoardWrite";
+	}
+	
+	@RequestMapping("/teamWorkBoardDetail")
+	public String teamWorkBoardDetail() {
+		logger.info("팀 업무 게시판 상세 보기");
+		return "myBoard/teamWorkBoardDetail";
+	}
 }
+
+
