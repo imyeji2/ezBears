@@ -49,13 +49,13 @@
 						<%@include file="teamWorkBoardList.jsp" %>
                     </div>
                     <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
-                        Et diam et est sed vero ipsum voluptua dolor et, sit eos justo ipsum no ipsum amet sed aliquyam dolore, ut ipsum sanctus et consetetur. Sit ea sit clita lorem ea gubergren. Et dolore vero sanctus voluptua ipsum sadipscing amet at. Et sed dolore voluptua dolor eos tempor, erat amet.
+						<%@include file="Calender.jsp" %>
                     </div>
                     <div class="tab-pane fade" id="pills-contact1" role="tabpanel" aria-labelledby="pills-contact1-tab">
-						결재
+						<%@include file="Approval.jsp" %>
                     </div>
                     <div class="tab-pane fade" id="pills-contact2" role="tabpanel" aria-labelledby="pills-contact2-tab">
-						웹하드
+						<%@include file="webhard.jsp" %>
                     </div>
                                                             
                 </div>
