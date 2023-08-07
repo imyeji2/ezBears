@@ -5,7 +5,7 @@
 <%@include file="../inc/top.jsp"%>
 
 <div id="board_list">
-	<div class="col-sm-12 col-xl-9">
+	<div class="col-sm-12 col-xl-9 board_listbox">
 		<br>
 		<div class="bg-secondary">
 			<div class="serch_input">
@@ -31,7 +31,7 @@
 			<hr>
 
 
-			<div class="facebook-feed">
+			<div id="facebook-feed">
 
 
 				<div class="post">
