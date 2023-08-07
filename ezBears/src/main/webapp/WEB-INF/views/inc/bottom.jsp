@@ -1,11 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <style>
-    	.b_txt{
-    		padding: 0px;
-    		margin:5px 0px 5px 0px;
-    	}
-    </style>
            <!-- Footer Start -->
             <div class="container-fluid pt-4 px-4">
                 <div class="bg-secondary rounded-top p-4">
@@ -41,6 +35,5 @@
 
     <!-- Template Javascript -->
     <script src="${pageContext.request.contextPath}/js/main.js"></script>
+    
 </body>
-
-</html>
