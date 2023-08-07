@@ -24,7 +24,7 @@ input.btn.btn-sm.btn-primary {
 </style>
 <div class="container-fluid pt-4 px-4" id ="Approval_wr">
 	<div class="col-sm-12 col-xl-6">
-		<div class="bg-secondary rounded h-100 p-4" class="Appfrm">
+		<div class="bg-secondary rounded h-100 p-4 Appfrm">
 			<h6 class="mb-4">결재 입력</h6>
 			<div class="appbox">
 				<div class="form-floating mb-3">
@@ -42,13 +42,13 @@ input.btn.btn-sm.btn-primary {
 					</select> <label for="floatingSelect">결재 분류</label>
 				</div>
 				<div class="form-floating">
-					<textarea class="form-control" placeholder="Leave a comment here"
-						id="floatingTextarea" style="height: 150px;" class="textarea"></textarea>
+					<textarea class="form-control textarea" placeholder="Leave a comment here"
+						id="floatingTextarea" style="height: 150px;" ></textarea>
 					<label for="floatingTextarea">내용</label>
 				</div>
 			</div>
 		<div>
-		<input type="button" value="입력" class="btn btn-sm btn-primary" class="btn"/>
+		<input type="button" value="입력" class="btn btn-sm btn-primary btn"/>
 		</div>
 		</div>
 	</div>

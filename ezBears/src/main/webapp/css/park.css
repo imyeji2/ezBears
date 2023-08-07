@@ -4,9 +4,6 @@
 /* write */
 #Approval_wr {	
 	
-.textarea{
-	resize: none;
-}
 .appbox{
 	width: 70%;
 	margin: 0 auto;
@@ -20,5 +17,30 @@
     margin-top: 14px;	
 }
 
+.textarea{
+	resize: none;
+}
 
+}
+
+#harddetail{
+	.appbox{
+	width: 70%;
+	margin: 0 auto;
+}
+.hardfrm{
+  width: 1250px;
+}
+.btn{
+ 	width: 70px;
+    margin-left: 1135px;
+    margin-top: 14px;	
+}
+
+.textarea{
+	resize: none;
+}
+	
+	
+	
 }
