@@ -2,11 +2,24 @@
     pageEncoding="UTF-8"%>
 <%@include file="../inc/top.jsp"%>
 <link href="${pageContext.request.contextPath}/css/Dcss.css" rel="stylesheet">
+<style>
 
+.addDept {
+    outline: none;
+    background-color: #191C24;
+    border: 1px solid #6C7293;
+    color: #6C7293;
+    padding: 5px 15px;
+    border-radius: 5px;
+}
+
+</style>
 	<div class="col-12">
 	    <div class="bg-secondary rounded h-100 p-4">
-	        <h6 class="mb-4">부서 리스트</h6>
+	        <h6 class="mb-4">부서 관리</h6>
 			<form class="btn-form" name="frm1" method="get" action="<c:url value ='/Member/write'/>">
+				<input type="text" class="addDept" id = "deptName" placeholder="부서명">
+				<input type="text" class="addDept" id = "deptTel" placeholder="부서전화번호">
 				<button type="submit" class="btnAdd" id="btnAdd" value="등록">등록</button>
 				<button class="btnDelete" type="button" id="btnDelete">삭제</button>
 			</form>
