@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%@include file="../inc/top.jsp"%>
-<div class="board_write">
+<div id="board_write">
 	<form action="AddPostServlet" method="post">
 		<div class="col-sm-12 col-xl-9">
 			<div class="bg-secondary rounded h-200 p-5">
@@ -13,8 +13,8 @@
 					<input type="text" placeholder="제목을 입력해주세요" class="form-control" id="title">
 				</div>
 
-				<div class="input-group mb-3">
-					<textarea class="form-control" placeholder="내용을 입력해주세요" id="floatingTextarea" style="height: 150px;"></textarea>
+				<div class="input-group mb-3 ">
+					<textarea class="form-control infotext" placeholder="내용을 입력해주세요" id="floatingTextarea" style="height: 150px;"></textarea>
 				</div>
 				<br>
 
