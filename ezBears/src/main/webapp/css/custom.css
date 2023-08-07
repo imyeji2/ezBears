@@ -7,7 +7,17 @@ a{
 a:hover {
 	color:#7000D8;
 }
-    	
+
+textarea:focus {
+  outline: none;
+}
+button:focus {
+  outline: none;
+}
+input:focus {
+  outline: none;
+}
+	
 .btn-primary{
     color: #fff;
     background-color:#7000D8;
@@ -95,5 +105,9 @@ a:hover {
 
 .page_box{
 	margin: 30px 0px 0px 0px;
+}
+
+input:focus {
+	outline: none !important;
 }
 

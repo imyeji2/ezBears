@@ -40,7 +40,7 @@
                   <tr class="table_info">
                       <!-- <td><input class="form-check-input" type="checkbox"></td> -->
                       <td>10</td>
-                      <td>개발1팀 8월 업무 리스트</td>
+                      <td><a href="<c:url value='/myBoard/teamWorkBoardDetail'/>">개발1팀 8월 업무 리스트</a></td>
                       <td>제이든</td>
                       <td>2023-08-01</td>
                       <td>5</td>
@@ -134,7 +134,7 @@
       <div class="btnBox">
 			<a class="btn btn-sm btn-primary" href="">삭제</a>
 			<a class="btn btn-sm btn-primary" href="">수정</a>
-			<a class="btn btn-sm btn-primary" href="">등록</a>
+			<a class="btn btn-sm btn-primary" href="<c:url value='/myBoard/teamWorkBoardWrite'/>">등록</a>
 	</div><!-- btnBox -->
       <div class="page_box">
 	      <nav aria-label="Page navigation example">
