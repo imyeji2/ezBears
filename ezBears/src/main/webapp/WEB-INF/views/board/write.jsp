@@ -3,10 +3,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%@include file="../inc/top.jsp"%>
+
+<!-- <div class="container-fluid pt-4 px-4">
+        <div class="bg-secondary text-center rounded p-4">
+            <div class="d-flex align-items-center justify-content-between mb-4"> -->
+
+
 <div id="board_write">
 	<form action="AddPostServlet" method="post">
-		<div class="col-sm-12 col-xl-9">
+		<div class="col-sm-12 col-xl-12">
 			<div class="bg-secondary rounded h-200 p-5">
+			
 				<h6 class="mb-4">공용 > 공지사항 > 공지사항 등록</h6>
 
 				<div class="input-group mb-3">
@@ -26,7 +33,7 @@
 
 				<div class="text-center">
 					<button type="submit" class="btn btn-primary">등록</button>
-					<button type="submit" class="btn btn-primary">취소</button>
+					<button class="btn btn-primary">취소</button>
 				</div>
 
 			</div>
