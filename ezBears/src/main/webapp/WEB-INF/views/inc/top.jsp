@@ -35,10 +35,8 @@
     <!-- Template Stylesheet -->
     <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/css/custom.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/css/park.css" rel="stylesheet">
     <script type="text/javascript" src="<c:url value='/js/jquery-3.7.0.min.js'/>"></script>
     
-    <link href="${pageContext.request.contextPath}/css/gopanju.css" rel="stylesheet">
     <style>
     	a{
     	color:#7000D8;
