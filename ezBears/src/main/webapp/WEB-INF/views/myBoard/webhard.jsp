@@ -12,6 +12,10 @@ label#fileup {
 	margin-left: 960px;
 	margin-top: 20px;
 }
+a#hard {
+    margin-top: 19px;
+    margin-left: 930px;
+}
 </style>
 
 <!-- Recent Sales Start -->
@@ -80,7 +84,7 @@ label#fileup {
 					<tr>
 						<td><input class="form-check-input" type="checkbox"></td>
 						<td>01 Jan 2045</td>
-						<td><a href="">INV-0123</a></td>
+						 <td><a href="hard_detail">TEST</a></td>
 						<td>Jhon Doe</td>
 						<td>test.jpg</td>
 						<td>용량계산</td>
@@ -89,9 +93,13 @@ label#fileup {
 					</tr>
 				</tbody>
 			</table>
-			<label class="btn btn-sm btn-primary" for="input-file" id="fileup" />
+			<!-- <label class="btn btn-sm btn-primary" for="input-file" id="fileup" />
 				업로드 
-			<input type="file" id="input-file" />
+			<input type="file" id="input-file" /> -->
+			<div>
+			<a href='<c:url value='/myBoard/hard_detail'/>' role="button"
+			 class="btn btn-sm btn-primary" id="hard">웹 하드 작성</a>
+			</div>
 		</div>
 	</div>
 </div>
