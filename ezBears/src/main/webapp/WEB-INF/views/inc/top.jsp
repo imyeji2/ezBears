@@ -71,6 +71,9 @@
     </style>
 
     <!-- 개인 css -->
+    <link href="${pageContext.request.contextPath}/css/park.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/css/gopanju.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/css/Dcss.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/css/yeji.css" rel="stylesheet">
 
 </head>

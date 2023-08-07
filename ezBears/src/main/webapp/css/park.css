@@ -1,0 +1,24 @@
+@charset "EUC-KR";
+
+
+/* write */
+#Approval_wr {	
+	
+.textarea{
+	resize: none;
+}
+.appbox{
+	width: 70%;
+	margin: 0 auto;
+}
+.Appfrm{
+  width: 1250px;
+}
+.btn{
+ 	width: 70px;
+    margin-left: 1135px;
+    margin-top: 14px;	
+}
+
+
+}
