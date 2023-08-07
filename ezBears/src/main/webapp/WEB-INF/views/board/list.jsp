@@ -4,10 +4,10 @@
 
 <%@include file="../inc/top.jsp"%>
 
-<div id="board_list">
+<div id=" board_list ">
 	<div class="col-sm-12 col-xl-9 board_listbox">
 		<br>
-		<div class="bg-secondary">
+		<div class="bg-secondary board_listsize">
 			<div class="serch_input">
 				<div class="select_box">
 					<select class="form-select" aria-label="Default select example">
