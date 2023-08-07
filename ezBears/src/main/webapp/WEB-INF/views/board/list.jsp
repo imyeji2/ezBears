@@ -3,10 +3,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%@include file="../inc/top.jsp"%>
-<div id="board_list">
-	<div class="col-sm-12 col-xl-9">
+
+<div id=" board_list ">
+	<div class="col-sm-12 col-xl-9 board_listbox">
 		<br>
-		<div class="bg-secondary rounded h-200 p-5">
+		<div class="bg-secondary board_listsize">
 			<div class="serch_input">
 				<div class="select_box">
 					<select class="form-select" aria-label="Default select example">
@@ -30,7 +31,7 @@
 			<hr>
 
 
-			<div class="facebook-feed">
+			<div id="facebook-feed">
 
 
 				<div class="post">

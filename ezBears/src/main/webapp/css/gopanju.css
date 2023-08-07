@@ -1,56 +1,53 @@
-textarea{
-	resize: none;
+#board_write{
+	top: 100%;
+	left: 100%;
+	margin: 2% 2% 0 2%;
+	
+	.infotext{
+		resize: none;
+	}
 }
 
-.board_write{
-	top: 50%;
-	left: 50%;
-	margin: 100px 0px 0px 400px;
+
+
+#board_list{
+	margin: 2% 2% 0 2%;
+	
+	.board_listbox{
+		width: 100%;
+		magin: 0 auto;
+	}
+	.serch_input {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 2%;
+		padding-top: 16px
+	}
+	
+	.text_box {
+	width: 57%;
+	}
+	
+	.select_box select {
+		width: 150px;
+	}
+	
+	.text_box input {
+	  width: 100%;
+	}
+	
 }
 
-.board_list{
-	top: 50%;
-	left: 50%;
-	margin: 100px 0px 0px 400px;
-}
-
-.serch_input {
-  
- 
-display: flex; 
-  
- 
-align-items: center; 
-}
-
-.select_box,
-.text_box {
-margin-right: 10px; 
-}
-
-.select_box select {
-	width: 150px;
-}
-
-.text_box input {
-  width: 900px;
-}
 
 
 /* Basic reset for margin and padding */
-body, h1, h2, h3, p {
-  
- 
-margin: 0;
-  
- 
-padding: 0;
-}
 
-.facebook-feed {
+
+#facebook-feed {
   
  
-max-width: 600px; /* Adjust this as needed */
+width: 95%; /* Adjust this as needed */
   
  
 height: 400px; /* Set a fixed height for the container */
@@ -59,7 +56,11 @@ font-family: Arial, sans-serif;
   
  
 overflow-y: auto; /* Enable vertical scrolling when content overflows */
+
+.board_listsize{
+	width: 600px;
 }
+
 
 .post {
   
@@ -186,3 +187,6 @@ margin-top: 5px;
 }
 
 /* Add any other custom styling as needed */
+}
+
+
