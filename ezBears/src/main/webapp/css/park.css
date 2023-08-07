@@ -48,7 +48,7 @@
 /*Appdelete*/
 #Appdelete{
 	.pwd{
-	 width: 150px;	
+	 width: 230px;	
 	}	
 	.center{
 	margin-top: 15px;
@@ -81,6 +81,6 @@
 	margin-left: 60px;
 	}	
 	.pwd{
-		 width: 150px;	
+		 width: 230px;	
 	}	
 }
