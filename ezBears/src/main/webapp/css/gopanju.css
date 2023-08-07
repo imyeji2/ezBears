@@ -57,6 +57,11 @@ font-family: Arial, sans-serif;
  
 overflow-y: auto; /* Enable vertical scrolling when content overflows */
 
+.board_listsize{
+	width: 600px;
+}
+
+
 .post {
   
  
