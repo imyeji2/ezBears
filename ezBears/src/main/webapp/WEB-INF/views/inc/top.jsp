@@ -34,6 +34,7 @@
 
     <!-- Template Stylesheet -->
     <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/css/custom.css" rel="stylesheet">
     <script type="text/javascript" src="<c:url value='/js/jquery-3.7.0.min.js'/>"></script>
     
     <style>
@@ -114,7 +115,7 @@
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">경영지원팀</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="#" class="dropdown-item">사원관리</a>
+                            <a href="<c:url value='/Member/list'/>" class="dropdown-item">사원관리</a>
                             <a href="#" class="dropdown-item">근태관리</a>
                             <a href="#" class="dropdown-item">게시글관리</a>
                             <a href="#" class="dropdown-item">부서관리</a>

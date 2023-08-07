@@ -60,8 +60,8 @@
 
 
     // Chart Global Color
-    Chart.defaults.color = "#6C7293";
-    Chart.defaults.borderColor = "#000000";
+    Chart.defaults.color = "#fff";
+    Chart.defaults.borderColor = "#6c757d";
 
 
     // Worldwide Sales Chart
@@ -69,22 +69,18 @@
     var myChart1 = new Chart(ctx1, {
         type: "bar",
         data: {
-            labels: ["2016", "2017", "2018", "2019", "2020", "2021", "2022"],
+            labels: ["2017", "2018", "2019", "2020", "2021", "2022", "2022"],
             datasets: [{
-                    label: "USA",
+                    label: "남",
                     data: [15, 30, 55, 65, 60, 80, 95],
-                    backgroundColor: "rgba(235, 22, 22, .7)"
+                    backgroundColor: "rgba(1, 77, 208, 0.5)"
                 },
                 {
-                    label: "UK",
+                    label: "여",
                     data: [8, 35, 40, 60, 70, 55, 75],
-                    backgroundColor: "rgba(235, 22, 22, .5)"
+                    backgroundColor: "rgba(204, 21, 102, 0.5)"
                 },
-                {
-                    label: "AU",
-                    data: [12, 25, 45, 55, 65, 70, 60],
-                    backgroundColor: "rgba(235, 22, 22, .3)"
-                }
+                
             ]
             },
         options: {
@@ -98,20 +94,13 @@
     var myChart2 = new Chart(ctx2, {
         type: "line",
         data: {
-            labels: ["2016", "2017", "2018", "2019", "2020", "2021", "2022"],
+            labels: ["03", "04", "05", "06", "07", "08", "09","10","11"],
             datasets: [{
-                    label: "Salse",
-                    data: [15, 30, 55, 45, 70, 65, 85],
-                    backgroundColor: "rgba(235, 22, 22, .7)",
+                    label: "승률",
+                    data: [15, 30, 55, 45, 70, 65, 85,30,70],
+                    backgroundColor: "rgba(48, 0, 66, 0.5)",
                     fill: true
-                },
-                {
-                    label: "Revenue",
-                    data: [99, 135, 170, 130, 190, 180, 270],
-                    backgroundColor: "rgba(235, 22, 22, .5)",
-                    fill: true
-                }
-            ]
+                }]
             },
         options: {
             responsive: true
@@ -207,6 +196,5 @@
         }
     });
 
-    
 })(jQuery);
 

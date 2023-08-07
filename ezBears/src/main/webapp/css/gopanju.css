@@ -1,0 +1,188 @@
+textarea{
+	resize: none;
+}
+
+.board_write{
+	top: 50%;
+	left: 50%;
+	margin: 100px 0px 0px 400px;
+}
+
+.board_list{
+	top: 50%;
+	left: 50%;
+	margin: 100px 0px 0px 400px;
+}
+
+.serch_input {
+  
+ 
+display: flex; 
+  
+ 
+align-items: center; 
+}
+
+.select_box,
+.text_box {
+margin-right: 10px; 
+}
+
+.select_box select {
+	width: 150px;
+}
+
+.text_box input {
+  width: 900px;
+}
+
+
+/* Basic reset for margin and padding */
+body, h1, h2, h3, p {
+  
+ 
+margin: 0;
+  
+ 
+padding: 0;
+}
+
+.facebook-feed {
+  
+ 
+max-width: 600px; /* Adjust this as needed */
+  
+ 
+height: 400px; /* Set a fixed height for the container */
+margin: 0 auto;
+font-family: Arial, sans-serif;
+  
+ 
+overflow-y: auto; /* Enable vertical scrolling when content overflows */
+}
+
+.post {
+  
+ 
+border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  background-color: #fff;
+  
+ 
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  
+ 
+display: flex;
+}
+
+.user-profile {
+  
+ 
+padding: 10px;
+}
+
+.user-profile img {
+  width: 50px;
+  height: 50px;
+  
+ 
+border-radius: 50%;
+}
+
+.post-content {
+  
+ 
+flex: 1;
+  
+ 
+padding: 10px;
+}
+
+.post-header {
+  
+ 
+display: flex;
+  justify-content: space-between;
+  
+ 
+align-items: center;
+}
+
+.display-name {
+  
+ 
+font-weight: bold;
+  
+ 
+margin-right: 10px;
+}
+
+.post-date {
+  
+ 
+font-size: 14px;
+  
+ 
+color: #999;
+}
+
+.post-image img {
+  
+ 
+width: 100%;
+  
+ 
+display: block;
+}
+
+.post-caption {
+  
+ 
+margin-top: 5px;
+  
+ 
+color: #333;
+}
+
+.comment-section {
+  
+ 
+margin-top: 10px;
+}
+
+.comment {
+  
+ 
+margin-bottom: 5px;
+}
+
+.comment-author {
+  font-weight: bold;
+}
+
+.comment-content {
+  
+ 
+color: #333;
+}
+
+.add-comment input {
+  
+ 
+width: 100%;
+  
+ 
+padding: 5px;
+  
+ 
+border: 1px solid #ddd;
+  
+ 
+border-radius: 5px;
+  
+ 
+margin-top: 5px;
+}
+
+/* Add any other custom styling as needed */
