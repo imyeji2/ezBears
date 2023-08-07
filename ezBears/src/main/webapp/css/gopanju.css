@@ -1,11 +1,13 @@
-textarea{
-	resize: none;
-}
 
-.board_write{
-	top: 50%;
+
+#board_write{
+/*	top: 50%;
 	left: 50%;
-	margin: 100px 0px 0px 400px;
+	margin: 100px 0px 0px 400px;*/
+	
+	.infotext{
+		resize: none;
+	}
 }
 
 .board_list{
