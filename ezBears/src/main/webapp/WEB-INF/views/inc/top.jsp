@@ -1,14 +1,16 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="utf-8">
     <title>이젠 베어스 - 그룹웨어 시스템</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"> 
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
 
     <!-- Favicon -->
     <link href="${pageContext.request.contextPath}/img/favicon.ico" rel="icon">
@@ -28,15 +30,51 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/custom.css">
 
     <!-- Template Stylesheet -->
     <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/css/custom.css" rel="stylesheet">
     <script type="text/javascript" src="<c:url value='/js/jquery-3.7.0.min.js'/>"></script>
     
+    <style>
+    	a{
+    	color:#7000D8;
+    	}
+    	
+    	.btn-primary{
+    	    color: #fff;
+		    background-color:#7000D8;
+		    border-color:#7000D8;
+    	} 
+    	
+    	
+    	.boardTop{
+    		width:100%;
+    		padding:0px 5px 10px 18px;
+    		font-size:16px;
+    		font-weight: 800;
+    		overflow: hidden;
+    	}
+    	
+    	.boardTop_txt{
+    		float: left;
+    	}
+    	
+    	.boardTop_btn{
+    		float: right;
+    	}
+    	
+    	.boardTop_btn img:hover{
+    		cursor: pointer;
+    	}
+    </style>
+
     <!-- 개인 css -->
+    <link href="${pageContext.request.contextPath}/css/park.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/css/gopanju.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/css/Dcss.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/css/yeji.css" rel="stylesheet">
-    
+
 </head>
 
 <body>
@@ -57,12 +95,21 @@
                     <img src="<c:url value='/img/logo.png'/>" alt="logo" style="width:100%">
                 </a>
                 <!-- 사원정보 -->
-                <div class="d-flex align-items-center ms-4 mb-4">
-                	<div>
-                	</div>
-
+               <div id="top_membox">
+	                <div class="d-flex user_info">
+	                    <div class="position-relative">
+	                        <img class="member_img" src="<c:url value='/img/user.jpg'/>" alt="프로필 이미지">
+	                        <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
+	                    </div>
+	                    <div class="ms-3 lign-items-center">
+	                        <h6 class="mb-0">김민석/대리</h6>
+	                        <span>💼운영1팀</span>
+	                    </div>
+	                </div>
+	               	<button class="inoutBtn">출근</button>
                 </div>
-                <!-- 사원정보 -->
+                <!-- 사원정보 끝-->
+
                 <!-- 사이드 메뉴 시작 -->
                 <div class="navbar-nav w-100">
                 	<div class="boardTop">
@@ -74,43 +121,81 @@
                 		</div>
                 	</div>
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">공용</a>
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                      	 	<i class="bi bi-building me-2"></i>공용
+                        </a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="#" class="dropdown-item">공지사항</a>
-                            <a href="#" class="dropdown-item">자유게시판</a>
+                            <a href="#" class="dropdown-item">
+                           		<i class="far fa-bell me-2"></i>공지사항
+                           	</a>
+                            <a href="#" class="dropdown-item">
+                            	<i class="bi bi-chat-square-dots-fill me-2"></i>자유게시판
+                            </a>
                         </div>
                     </div>                
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">경영지원팀</a>
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                        	<i class="bi bi-folder-fill me-2"></i>경영지원팀
+                        </a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="#" class="dropdown-item">사원관리</a>
-                            <a href="#" class="dropdown-item">근태관리</a>
-                            <a href="#" class="dropdown-item">게시글관리</a>
-                            <a href="#" class="dropdown-item">부서관리</a>
-                            <a href="#" class="dropdown-item">스태프관리</a>
-                            <a href="#" class="dropdown-item">선수단관리</a>                         
+                            <a href="<c:url value='/Member/list'/>" class="dropdown-item">
+                            	<i class="bi bi-person-badge me-2"></i>사원관리
+                            </a>
+                            <a href="#" class="dropdown-item">
+                            	<i class="bi bi-calendar3 me-2"></i>근태관리
+                            </a>
+                            <a href="#" class="dropdown-item">
+                            	<i class="bi bi-list-task me-2"></i>게시글관리
+                            </a>
+                            <a href="#" class="dropdown-item">
+                            	<i class="bi bi-briefcase-fill me-2"></i>부서관리
+                            </a>
+                            <a href="#" class="dropdown-item">
+                            <i class="bi bi-person me-2"></i>스태프관리
+                            </a>
+                            <a href="#" class="dropdown-item">
+                           		<i class="bi bi-person-square me-2"></i>선수단관리
+                            </a>                         
                         </div>
                     </div>           
                              
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">나의보드</a>
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                        	<i class="bi bi-text-center me-2"></i>나의보드
+                        </a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="#" class="dropdown-item">개발1팀</a>
-                            <a href="#" class="dropdown-item">프로젝트팀</a>
+                            <a href="<c:url value='/myBoard/board'/>" class="dropdown-item">
+                           		<i class="bi bi-pin-angle-fill me-2"></i>운영1팀
+                            </a>
+                            <a href="#" class="dropdown-item">
+                            	<i class="bi bi-pin-angle-fill me-2"></i>프로젝트팀
+                            </a>
                         </div>
                     </div>
                     
                     
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">팀관리</a>
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                       		<i class="bi bi-clipboard-data me-2"></i>팀관리
+                       	</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="#" class="dropdown-item">경기기록</a>
-                            <a href="#" class="dropdown-item">선수기록</a>
-                            <a href="#" class="dropdown-item">팀통계</a>
-                            <a href="#" class="dropdown-item">선수통계</a>
+                            <a href="#" class="dropdown-item">
+                            	<i class="bi bi-trophy-fill me-2"></i>경기기록
+                            </a>
+                            <a href="#" class="dropdown-item">
+                            	<i class="bi bi-person-square me-2"></i>선수기록
+                            </a>
+                            <a href="#" class="dropdown-item">
+                            	<i class="bi bi-pie-chart-fill me-2"></i>팀통계
+                            </a>
+                            <a href="#" class="dropdown-item">
+                            	<i class="bi bi-journal-text me-2"></i>선수통계
+                            </a>
                         </div>
                     </div>
-                    <a href="#" class="nav-item nav-link">임직원정보</a>
+                    <a href="#" class="nav-item nav-link">
+                    	<i class="bi bi-people-fill me-2"></i>임직원정보
+                    	</a>
                 </div>
                 <!-- 사이드 메뉴 종료 -->
             </nav>
@@ -128,14 +213,46 @@
 	                    <input class="form-control bg-dark border-0" type="search" placeholder="사원을 검색하세요">
 	                </form>
                 </div>
-                <div class="navbar-nav align-items-center ms-auto">
-             	   <span class="d-none d-lg-inline-flex">출근</span>
-                	<span class="d-none d-lg-inline-flex">&nbsp;|&nbsp;</span>
-                	<span class="d-none d-lg-inline-flex">운영1팀</span>
-                	<span class="d-none d-lg-inline-flex">&nbsp;|&nbsp;</span>
-                	<span class="d-none d-lg-inline-flex">제이든</span>
-                	
+                
+                <div class="navbar-nav align-items-center ms-auto" style="margin-right:20px;">
+                
                     <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                            <i class="fa fa-bell me-lg-2"></i>
+                            <span class="d-none d-lg-inline-flex">알림</span>                   
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
+                            <a href="#" class="dropdown-item">
+                                <h6 class="fw-normal mb-0">전체 공지사항 업데이트</h6>
+                                <small>15분 전</small>
+                            </a>
+                            <hr class="dropdown-divider">
+                            <a href="#" class="dropdown-item">
+                                <h6 class="fw-normal mb-0">휴가 신청 승인 완료</h6>
+                                <small>1시간 전</small>
+                            </a>
+                        </div>
+                        
+                   	</div>
+					<div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                           <i class="fa bi-person-fill me-lg-2"></i>
+                            <span class="d-none d-lg-inline-flex">제이든</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
+                            <a href="#" class="dropdown-item">마이페이지</a>
+                            <a href="#" class="dropdown-item">로그아웃</a>
+                        </div>
+                    </div>                   	
+              	</div>
+                    
+              <%-- <div class="nav-item dropdown">                
+	                	<span class="d-none d-lg-inline-flex">운영1팀</span>
+	                	<span class="d-none d-lg-inline-flex">&nbsp;|&nbsp;</span>
+	                	<span class="d-none d-lg-inline-flex">제이든</span>
+	                	<span class="d-none d-lg-inline-flex">&nbsp;|&nbsp;</span>
+	                	<span class="d-none d-lg-inline-flex">로그아웃</span>
+                  	<div class="nav-item dropdown">
                         <a href="#" class="nav-link " data-bs-toggle="dropdown">
                             <img class=" me-lg-2" src="<c:url value='/img/user.jpg'/>" alt="사원프로필" style="width: 40px; height:40px;">
                         </a>
@@ -145,7 +262,7 @@
                             <a href="#" class="dropdown-item">Log Out</a>
                         </div>
                     </div>
-                </div>
+                </div> --%>
             </nav>
             <!-- Navbar End -->
             <!-- top 메뉴 종료 -->

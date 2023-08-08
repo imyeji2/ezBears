@@ -152,7 +152,7 @@
 
 .sidebar .navbar .dropdown-toggle::after {
     position: absolute;
-   /* top: 15px;*/
+    top: 15px;
     right: 15px;
     border: none;
     content: "\f107";
@@ -166,7 +166,8 @@
 }
 
 .sidebar .navbar .dropdown-item {
-    padding-left: 25px;
+    padding-left: 40px;
+    line-height: 35px;
     border-radius: 0 30px 30px 0;
     color: var(--light);
 }

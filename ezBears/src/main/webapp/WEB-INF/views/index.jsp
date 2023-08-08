@@ -4,7 +4,7 @@
 
 
  <!-- Navbar End -->
- <!-- top 메뉴 종료 -->
+ <!-- top ë©”ë‰´ ì¢…ë£Œ -->
 <%@include file="inc/top.jsp"%>
 
 	<!-- Sales Chart Start -->
@@ -21,7 +21,7 @@
              <div class="col-sm-12 col-xl-6">
                  <div class="bg-secondary text-center rounded p-4">
                      <div class="d-flex align-items-center justify-content-between mb-4">
-                         <h6 class="mb-0">2023시즌</h6>
+                         <h6 class="mb-0">2023 경기 기록</h6>
                      </div>
                      <canvas id="salse-revenue"></canvas>
                  </div>
@@ -34,7 +34,7 @@
     <div class="container-fluid pt-4 px-4">
         <div class="bg-secondary text-center rounded p-4">
             <div class="d-flex align-items-center justify-content-between mb-4">
-                <h6 class="mb-0">경기 및 훈련스케줄</h6>
+                <h6 class="mb-0">이젠 베어스 일정</h6>
                 <a href="">Show All</a>
             </div>
             <div class="table-responsive">
@@ -45,5 +45,5 @@
     <!-- Recent Sales End -->
 
 
-   
- <%@include file="inc/bottom.jsp"%>       
+
+ <%@include file="inc/bottom.jsp"%>    
