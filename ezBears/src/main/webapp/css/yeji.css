@@ -9,11 +9,51 @@
 }/*나의보드(board) css*/
 
 
+
+/*top 멤버 정보 */
+#top_membox{
+	width:100%;
+	margin: 0 auto;
+	overflow: hidden;
+	padding:0px 0px 20px 0px;
+	text-align: center;	
+	
+	.meminfo{
+		overflow: hidden;
+	}
+	
+	.member_img{
+		width: 40px;
+		border-radius: 10px;
+	}
+	
+	.inoutBtn{
+		margin-top:10px;
+		width:80%;
+		line-height:35px;
+		background:#31354e;
+		border-radius: 10px;
+		border: none;
+		outline: none;
+		color: #fff;
+	}
+	
+	.user_info{
+		width:fit-content;
+		margin:0 auto;
+	}
+
+	
+	
+	
+	
+}/*top 멤버 정보 */
+
 /*팀별 공지사항 리스트(피드형) css*/
 #teamNoticeList{
 	
 	.btnBox{
-		width: 86%;
+		width: 90%;
 		margin:20px 0px 20px 0px;
 		overflow: hidden;
 	}
@@ -24,7 +64,7 @@
 	}
 	
 	.notice_list_box{
-		width:70%;
+		width:80%;
 		border-top:1px solid #6C7293;
 		padding:30px 10px 30px 10px;
 		margin:0 auto;
@@ -82,7 +122,7 @@
 	}
 	
 	.list_line{
-		width: 70%;
+		width: 80%;
 		border-bottom:1px solid #6C7293;
 		margin:0 auto;
 	}
@@ -103,7 +143,7 @@
 	
 	
 	.teamNotice_serch{
-		width: 70%;
+		width: 80%;
 		margin:0 auto;
 	}
 	
@@ -112,7 +152,7 @@
 	}
 	
 	.select_box{
-		width:10%;
+		width:15%;
 		margin-right: 1%;
 		float: left;
 		line-height: 1.5;
@@ -123,13 +163,13 @@
 	}
 	
 	.text_box{
-		width: 80%;
+		width: 73%;
 		margin-right: 1%;
 		float: left;
 	}
 	
 	.serch_btn{
-		width: 8%;
+		width: 10%;
 		float: left;
 	}
 	
@@ -389,6 +429,7 @@
 	}	
 	
 }/*팀별 업무 게시판 리스트*/
+
 
 
 /*팀별 업무 게시판 등록*/
