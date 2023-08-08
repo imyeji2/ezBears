@@ -245,24 +245,7 @@
                         </div>
                     </div>                   	
               	</div>
-                    
-              <%-- <div class="nav-item dropdown">                
-	                	<span class="d-none d-lg-inline-flex">운영1팀</span>
-	                	<span class="d-none d-lg-inline-flex">&nbsp;|&nbsp;</span>
-	                	<span class="d-none d-lg-inline-flex">제이든</span>
-	                	<span class="d-none d-lg-inline-flex">&nbsp;|&nbsp;</span>
-	                	<span class="d-none d-lg-inline-flex">로그아웃</span>
-                  	<div class="nav-item dropdown">
-                        <a href="#" class="nav-link " data-bs-toggle="dropdown">
-                            <img class=" me-lg-2" src="<c:url value='/img/user.jpg'/>" alt="사원프로필" style="width: 40px; height:40px;">
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
-                            <a href="#" class="dropdown-item">My Profile</a>
-                            <a href="#" class="dropdown-item">Settings</a>
-                            <a href="#" class="dropdown-item">Log Out</a>
-                        </div>
-                    </div>
-                </div> --%>
+                   
             </nav>
             <!-- Navbar End -->
             <!-- top 메뉴 종료 -->
