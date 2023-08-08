@@ -19,6 +19,7 @@ public class MyBoardController {
 		return "myBoard/board";
 	}
 
+	//예지
 	
 	@RequestMapping("/teamNoticeList")
 	public String teamNoticeList() {
@@ -30,7 +31,44 @@ public class MyBoardController {
 		return "myBoard/teamNoticeList";
 	}
 	
+	@RequestMapping("/teamNoticeDetail")
+	public String teamBoardDetil(/* @RequestParam (defaultValue = "0")int no */) {
+		//1
+		logger.info("팀 공지사항 디테일 페이지 파라미터 no={}");
+		//2
+		//3
+		//4
+		return "myBoard/teamNoticeDetail";
+	}
 	
+	
+	
+	@RequestMapping("/teamNoticeWrite")
+	public String teamNoticeWrite() {
+		logger.info("팀 공지사항 등록하기 페이지");
+		return "myBoard/teamNoticeWrite";
+	}
+	
+	@RequestMapping("/teamWorkBoardWrite")
+	public String teamWorkBoardWrite() {
+		logger.info("팀 업무 게시판 등록하기 페이지");
+		return "myBoard/teamWorkBoardWrite";
+	}
+	
+	@RequestMapping("/teamWorkBoardDetail")
+	public String teamWorkBoardDetail() {
+		logger.info("팀 업무 게시판 상세 보기");
+		return "myBoard/teamWorkBoardDetail";
+	}
+	
+
+	
+	
+	
+	
+	
+	
+	//희진
 	
 	@RequestMapping("/Approval_wr")
 	public String Approval_wr() {
@@ -61,35 +99,7 @@ public class MyBoardController {
 	}
 	
 	
-	@RequestMapping("/teamNoticeDetail")
-	public String teamBoardDetil(/* @RequestParam (defaultValue = "0")int no */) {
-		//1
-		logger.info("팀보드 게시물 디테일 페이지 파라미터 no={}");
-		//2
-		//3
-		//4
-		return "myBoard/teamNoticeDetail";
-	}
-	
-	
-	
-	@RequestMapping("/teamNoticeWrite")
-	public String teamNoticeWrite() {
-		logger.info("팀 공지사항 등록하기 페이지");
-		return "myBoard/teamNoticeWrite";
-	}
-	
-	@RequestMapping("/teamWorkBoardWrite")
-	public String teamWorkBoardWrite() {
-		logger.info("팀 업무 게시판 등록하기 페이지");
-		return "myBoard/teamWorkBoardWrite";
-	}
-	
-	@RequestMapping("/teamWorkBoardDetail")
-	public String teamWorkBoardDetail() {
-		logger.info("팀 업무 게시판 상세 보기");
-		return "myBoard/teamWorkBoardDetail";
-	}
+
 }
 
 
