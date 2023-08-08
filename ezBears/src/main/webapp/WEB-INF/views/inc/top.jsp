@@ -72,7 +72,6 @@
     <!-- 개인 css -->
     <link href="${pageContext.request.contextPath}/css/park.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/css/gopanju.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/css/Dcss.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/css/yeji.css" rel="stylesheet">
 
 </head>
@@ -141,7 +140,7 @@
                             <a href="<c:url value='/Member/list'/>" class="dropdown-item">
                             	<i class="bi bi-person-badge me-2"></i>사원관리
                             </a>
-                            <a href="#" class="dropdown-item">
+                            <a href="<c:url value='/attendanceManagement/attendanceSearch'/>" class="dropdown-item">
                             	<i class="bi bi-calendar3 me-2"></i>근태관리
                             </a>
                             <a href="#" class="dropdown-item">
@@ -150,10 +149,10 @@
                             <a href="#" class="dropdown-item">
                             	<i class="bi bi-briefcase-fill me-2"></i>부서관리
                             </a>
-                            <a href="#" class="dropdown-item">
+                            <a href="<c:url value='/staff/staffList'/>" class="dropdown-item">
                             <i class="bi bi-person me-2"></i>스태프관리
                             </a>
-                            <a href="#" class="dropdown-item">
+                            <a href="<c:url value='/team/teamList'/>" class="dropdown-item">
                            		<i class="bi bi-person-square me-2"></i>선수단관리
                             </a>                         
                         </div>
