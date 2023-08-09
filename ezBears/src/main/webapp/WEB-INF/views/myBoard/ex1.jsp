@@ -16,26 +16,33 @@
 				</nav>
                 <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link tap_txt active" href="<c:url value='/myBoard/teamNotice'/>">공지사항</a>
+                        <button class="nav-link active tap_txt" id="pills-home-tab" data-bs-toggle="pill"
+                            data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
+                            aria-selected="true">공지사항</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link tap_txt"  href="<c:url value='/myBoard/teamWorkBoard'/>">업무게시판</a>
+                        <button class="nav-link tap_txt" id="pills-profile-tab" data-bs-toggle="pill"
+                            data-bs-target="#pills-profile" type="button" role="tab"
+                            aria-controls="pills-profile" aria-selected="false">업무게시판</button>
                     </li>
                     <li class="nav-item" role="presentation">
-
-                        <a class="nav-link tap_txt"  href="<c:url value='/myBoard/teamNoticeList'/>">스케줄</a>
-                        <a class="nav-link tap_txt"  href="<c:url value='/myBoard/Calender'/>">스케줄</a>
-
+                        <button class="nav-link tap_txt" id="pills-contact-tab" data-bs-toggle="pill"
+                            data-bs-target="#pills-contact" type="button" role="tab"
+                            aria-controls="pills-contact" aria-selected="false">스케줄</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link tap_txt"  href="<c:url value='/myBoard/Approval'/>">결재</a>
+                        <button class="nav-link tap_txt" id="pills-contact-tab" data-bs-toggle="pill"
+                            data-bs-target="#pills-contact1" type="button" role="tab"
+                            aria-controls="pills-contact1" aria-selected="false">결재</button>
                     </li>      
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link tap_txt"  href="<c:url value='/myBoard/webhard'/>">웹하드</a>
+                        <button class="nav-link tap_txt" id="pills-contact-tab" data-bs-toggle="pill"
+                            data-bs-target="#pills-contact2" type="button" role="tab"
+                            aria-controls="pills-contact2" aria-selected="false">웹하드</button>
                     </li>                                  
                 </ul>
                 <div class="tab-content" id="pills-tabContent">
-                    <div class="tab-pane fade show active">
+                    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
 						<div id="teamNoticeList">
 							<br><br>
 							<div class="teamNotice_serch">
@@ -169,8 +176,9 @@
 									</nav>
 							</div>
 						</div><!-- teamNoticeList -->
-					</div>
-				</div>
+                    </div>
+                                                            
+                </div>
             </div>
         </div>
     </div>
@@ -178,4 +186,5 @@
 
 
    
- <%@include file="../inc/bottom.jsp"%>    					
+ <%@include file="../inc/bottom.jsp"%>       
+

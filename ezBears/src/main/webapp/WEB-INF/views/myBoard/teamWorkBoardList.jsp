@@ -22,7 +22,7 @@
                         <a class="nav-link tap_txt active"  href="<c:url value='/myBoard/teamWorkBoard'/>">업무게시판</a>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link tap_txt"  href="<c:url value='/myBoard/Calender'/>">스케줄</a>
+                        <a class="nav-link tap_txt"  href="<c:url value='/myBoard/teamNoticeList'/>">스케줄</a>
                     </li>
                     <li class="nav-item" role="presentation">
                         <a class="nav-link tap_txt"  href="<c:url value='/myBoard/Approval'/>">결재</a>

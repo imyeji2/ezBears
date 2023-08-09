@@ -100,7 +100,7 @@ public class MyBoardController {
 		logger.info("웹하드 삭제");
 		return "myBoard/webhard_delete";
 	}
-	
+
    /* 캘린더 */
    @RequestMapping("/Calender")
    public String Calender() {
