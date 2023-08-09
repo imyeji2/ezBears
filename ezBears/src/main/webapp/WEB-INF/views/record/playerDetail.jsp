@@ -59,44 +59,10 @@
 						<div id="contents" class="content01">
 							<!--sub title & location -->
 							<div class="location">
-								<h3 class="tit-page">선수조회</h3>
+								<h3 class="tit-page">선수 상세 정보</h3><br>
 								<!-- // sub title & location -->
-								<div class="sub-content">
-									<div id="cphContents_cphContents_cphContents_udpRecord">
-
-										<div class="compare">
-											<div class="styled-select03 mt5 bar01"></div>
-											<div class="styled-select03 mt5">
-												<select
-													name="ctl00$ctl00$ctl00$cphContents$cphContents$cphContents$ddlPosition"
-													onchange="javascript:setTimeout(&#39;__doPostBack(\&#39;ctl00$ctl00$ctl00$cphContents$cphContents$cphContents$ddlPosition\&#39;,\&#39;\&#39;)&#39;, 0)"
-													id="cphContents_cphContents_cphContents_ddlPosition"
-													class="select02">
-													<option selected="selected" value="">포지션 선택</option>
-													<option value="1">투수</option>
-													<option value="2">포수</option>
-													<option value="3,4,5,6">내야수</option>
-													<option value="7,8,9">외야수</option>
-												</select>
-											</div>
-											<span class=""><input
-												name="ctl00$ctl00$ctl00$cphContents$cphContents$cphContents$txtSearchPlayerName"
-												type="text"
-												id="cphContents_cphContents_cphContents_txtSearchPlayerName"
-												class="srch_all"
-												onkeypress="if(event.keyCode == 13){__doPostBack(&#39;ctl00$ctl00$ctl00$cphContents$cphContents$cphContents$btnSearch&#39;,&#39;&#39;);return false;}" /></span>
-											<input type="submit"
-												name="ctl00$ctl00$ctl00$cphContents$cphContents$cphContents$btnSearch"
-												value="검색"
-												id="cphContents_cphContents_cphContents_btnSearch"
-												class="btn_srch02" />
-										</div>
 
 										<div class="inquiry">
-											<p class="title">
-												<strong>검색결과 : <span class="point">0</span>건
-												</strong>
-											</p>
 											<div class="table-responsive">
 												<table class="table">
 													<thead>
