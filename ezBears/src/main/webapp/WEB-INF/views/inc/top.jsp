@@ -140,11 +140,11 @@
                             <a href="<c:url value='/Member/list'/>" class="dropdown-item">
                             	<i class="bi bi-person-badge me-2"></i>사원관리
                             </a>
-                            <a href="#" class="dropdown-item">
+                            <a href="<c:url value='/attendanceManagement/attendanceSearch'/>" 
+                            class="dropdown-item">
                             	<i class="bi bi-calendar3 me-2"></i>근태관리
                             </a>
-                            <a href="<c:url value='/attendanceManagement/attendanceSearch'/>"
-                            class="dropdown-item">
+                            <a href="#" class="dropdown-item">
                             	<i class="bi bi-list-task me-2"></i>게시글관리
                             </a>
                             <a href="#" class="dropdown-item">
@@ -164,12 +164,14 @@
                         	<i class="bi bi-text-center me-2"></i>나의보드
                         </a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="<c:url value='/myBoard/board'/>" class="dropdown-item">
+                           <%--  <a href="<c:url value='/myBoard/teamNoticeList?boardNo=2'/>" class="dropdown-item"> --%>
+                           <%-- <a href="<c:url value='/myBoard/board?boardNo=2'/>" class="dropdown-item">
                            		<i class="bi bi-pin-angle-fill me-2"></i>운영1팀
                             </a>
                             <a href="#" class="dropdown-item">
                             	<i class="bi bi-pin-angle-fill me-2"></i>프로젝트팀
-                            </a>
+                            </a> --%>
+                            <c:import url="/myBoard/myBoardList"></c:import>
                         </div>
                     </div>
                     
@@ -245,7 +247,6 @@
                         </div>
                     </div>                   	
               	</div>
-                   
             </nav>
             <!-- Navbar End -->
             <!-- top 메뉴 종료 -->
