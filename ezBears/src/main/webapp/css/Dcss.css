@@ -51,7 +51,7 @@
 	width: 100%;
 }
 
-.firstdiv .dup input {
+.firstdiv .findZipcode input {
 	outline: none;
 	background-color: #7000D8;
 	border: 0;
@@ -61,8 +61,28 @@
 	transition: all 0.35s linear;
 }
 
-.firstdiv .dup input:hover {
+.firstdiv .dup input {
+	outline: none;
+	background-color: #191C24;
+	border: 0;
+	color: #fff;
+	padding: 15px 20px;
+	border-radius: 5px;
+}
+
+.firstdiv .findZipcode input:hover {
 	background-color: #953de7;
+}
+
+input#addressDetail, input#contract{
+	outline: none;
+	cursor: pointer;
+	padding: 10px 15px;
+	border-radius: 5px;
+	width: 100%;
+	background-color: #000;
+	color: #6C7293;
+	border: 0;
 }
 
 .confirm {
