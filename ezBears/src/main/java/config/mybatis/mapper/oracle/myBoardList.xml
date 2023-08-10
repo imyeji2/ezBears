@@ -24,5 +24,9 @@
 		on m.M_BOARD_NO = n.M_BOARD_NO
 		WHERE m.MEM_NO=#{memNo}
 	</select>
+<<<<<<< HEAD
 >>>>>>> branch 'main' of https://github.com/GunwooRoh/FinalProject.git
 </mapper>
+=======
+</mapper>
+>>>>>>> branch 'main' of https://github.com/GunwooRoh/FinalProject.git
