@@ -2,6 +2,7 @@ package com.ez.ezBears.staff.model;
 
 import org.springframework.stereotype.Service;
 
+<<<<<<< HEAD
 import com.ez.ezBears.member.model.MemberService;
 
 import lombok.RequiredArgsConstructor;
@@ -42,4 +43,12 @@ public class StaffServiceImpl implements StaffService{
 
 		return result;
 	}
+=======
+import lombok.RequiredArgsConstructor;
+
+@Service
+@RequiredArgsConstructor
+public class StaffServiceImpl {
+	private final StaffDAO staffDao;
+>>>>>>> branch 'main' of https://github.com/GunwooRoh/FinalProject.git
 }

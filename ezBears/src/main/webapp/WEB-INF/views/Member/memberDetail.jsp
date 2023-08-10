@@ -17,6 +17,10 @@
     gap: 0 11%;
     margin-top: 5%;
 }
+
+@media (max-width: 720px) {
+	
+}
 </style>
 	<div class="col-12">
 	    <div class="bg-secondary rounded h-100 p-4">
@@ -27,43 +31,43 @@
 			</form>
 	        <div class="inner">
 	        	<div class="memImg">
-	        		<img alt="" src="" style="width:150px; height:200px;">
+	        		<img alt="" src="<c:url value ='/img/hong.jpg'/> " style="width:150px; height:200px;">
 	        	</div>
 	        	<div class = "memInfo" style="width:50%;">
 	        	 <table class="table">
 	                    <tr>
 	                        <th scope="col">부서</th>
-	                        <td></td>
+	                        <td>경영지원팀</td>
 	                        <th scope="col">직급</th>
-	                        <td></td>
+	                        <td>팀장</td>
 	                    </tr>
 	                    <tr>
 	                        <th scope="col">이름</th>
-	                        <td></td>
+	                        <td>홍길동</td>
 	                        <th scope="col">아이디</th>
-	                        <td></td>
+	                        <td>hong</td>
 	                    </tr>
 	                    <tr>
 	                        <th scope="col">연봉</th>
-	                        <td></td>
+	                        <td>8000</td>
 	                        <th scope="col">고용형태</th>
-	                        <td></td>
+	                        <td>정규직</td>
 	                    </tr>
 	                    <tr>
 	                        <th scope="col">전화번호</th>
-	                        <td></td>
+	                        <td>010-1111-2222</td>
 	                        <th scope="col">생일</th>
-	                        <td></td>
+	                        <td>1990-01-01</td>
 	                    </tr>
 	                    <tr>
 	                        <th scope="col">입사일</th>
-	                        <td></td>
+	                        <td>2015.01.01</td>
 	                        <th scope="col">퇴사일</th>
 	                        <td></td>
 	                    </tr>
 	                    <tr>
 	                        <th scope="col">주소</th>
-	                        <td></td>
+	                        <td colspan="3">서울시 서초구 방배동</td>
 	                    </tr>
 	                    
 	            </table>

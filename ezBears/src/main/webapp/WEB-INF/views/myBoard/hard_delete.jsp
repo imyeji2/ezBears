@@ -3,17 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%@include file="../inc/top.jsp"%>
-<style>
-.center{
-margin-top: 15px;
-margin-left: 60px;
-}
 
-input#pwd {
-    width: 200px;
-}
-</style>
-<div class="container-fluid pt-4 px-4">
+<div class="container-fluid pt-4 px-4" id="harddelete">
 	<div class="bg-secondary rounded h-100 p-4">
 		<form name="frmDelete" method="post"
 			action="<c:url value='/myBoard/hard_delete'/>">
@@ -31,7 +22,7 @@ input#pwd {
                                 <div class="row mb-3">
                                     <label for="inputEmail3" class="col-sm-2 col-form-label">비밀번호</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="pwd">
+                                        <input type="text" class="form-control" class="pwd">
                                     </div>
                                 </div>
                                 </form>

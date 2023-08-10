@@ -1,46 +1,86 @@
 @charset "EUC-KR";
 
 
-/* write */
+/* Approval_write */
 #Approval_wr {	
 	
-.appbox{
-	width: 70%;
-	margin: 0 auto;
-}
-.Appfrm{
-  width: 1250px;
-}
-.btn{
- 	width: 70px;
-    margin-left: 1135px;
-    margin-top: 14px;	
-}
+	.appbox{
+		width: 70%;
+		margin: 0 auto;
+	}
+	.Appfrm{
+	  width: 1250px;
+	}
+	.btn{
+	 	width: 70px;
+	    margin-left: 1135px;
+	    margin-top: 14px;	
+	}
+	
+	.textarea{
+		resize: none;
+	}
 
+}
+/*Appdetail*/
+#Appdetail{
+	.appbox{
+		width: 70%;
+		margin: 0 auto;
+	}
+.appfrm {
+    width: 1250px;
+}	
+	
+.Appbtn{
+	text-align: center;
+}	
+.btn {
+	width: 70px;	
+	margin-top: 14px;
+} 	
 .textarea{
-	resize: none;
+		resize: none;
+	}	
 }
 
+
+/*Appdelete*/
+#Appdelete{
+	.pwd{
+	 width: 230px;	
+	}	
+	.center{
+	margin-top: 15px;
+	margin-left: 60px;
+	}	
 }
 
+/* webhard_detail */
 #harddetail{
 	.appbox{
-	width: 70%;
-	margin: 0 auto;
+		width: 70%;
+		margin: 0 auto;
+	}
+	.hardfrm{
+	  width: 1250px;
+	}
+	.hardbtn{
+	 	text-align:  center;
+	 	margin-top: 14px;
+	}
+	.textarea{
+		resize: none;
+	}
+		
 }
-.hardfrm{
-  width: 1250px;
-}
-.btn{
- 	width: 70px;
-    margin-left: 1135px;
-    margin-top: 14px;	
-}
-
-.textarea{
-	resize: none;
-}
-	
-	
-	
+/* harddelete*/
+#harddelete{
+	.center{
+	margin-top: 15px;
+	margin-left: 60px;
+	}	
+	.pwd{
+		 width: 230px;	
+	}	
 }

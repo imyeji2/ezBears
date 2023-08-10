@@ -4,24 +4,7 @@
 
 <%@include file="../inc/top.jsp"%>
 
-<style>
-/* .bg-secondary.rounded.h-100.p-4 {
-    width: 1250px;
-}  
 
-input.btn.btn-sm.btn-primary {
-    width: 70px;
-    margin-left: 1135px;
-    margin-top: 14px;
-} 
- .appbox{
-	width: 70%;
-	margin: 0 auto;
-} 
-#floatingTextarea{
-	resize: none;
-} */
-</style>
 <div class="container-fluid pt-4 px-4" id ="Approval_wr">
 	<div class="col-sm-12 col-xl-6">
 		<div class="bg-secondary rounded h-100 p-4 Appfrm">
