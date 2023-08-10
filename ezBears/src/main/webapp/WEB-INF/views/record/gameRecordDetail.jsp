@@ -3,52 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%@include file="../inc/top.jsp"%>
-<html lang="ko">
-<head>
-<meta charset="utf-8">
-<title>이젠 베어스 - 그룹웨어 시스템</title>
-<meta content="width=device-width, initial-scale=1.0" name="viewport">
-
-<!-- Favicon -->
-<link href="/ezBears/img/favicon.ico" rel="icon">
-
-<!-- Google Web Fonts -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link
-	href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto:wght@500;700&display=swap"
-	rel="stylesheet">
-
-<!-- Icon Font Stylesheet -->
-<link
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
-	rel="stylesheet">
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css"
-	rel="stylesheet">
-
-<!-- Libraries Stylesheet -->
-<link href="/ezBears/lib/owlcarousel/assets/owl.carousel.min.css"
-	rel="stylesheet">
-<link
-	href="/ezBears/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css"
-	rel="stylesheet" />
-
-<!-- Customized Bootstrap Stylesheet -->
-<link href="/ezBears/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="/ezBears/css/custom.css">
-
-<!-- Template Stylesheet -->
-<link href="/ezBears/css/style.css" rel="stylesheet">
-<script type="text/javascript" src="/ezBears/js/jquery-3.7.0.min.js"></script>
-
-<!-- 개인 css -->
-<link href="/ezBears/css/yeji.css" rel="stylesheet">
-
-</head>
 
 <div class="container-fluid" id="board_style">
-	<div class="bg-secondary text-center rounded">
+	<div class="col-sm-12 col-xl-12">
 		<div class="bg-secondary rounded h-100 p-4">
 			<nav
 				style="--bs-breadcrumb-divider: url(&amp; amp; #34; data: image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&amp;amp;#34;);"
@@ -93,5 +50,6 @@
 			</div>
 		</div>
 	</div>
+</div>
 
 <%@include file="../inc/bottom.jsp"%>
