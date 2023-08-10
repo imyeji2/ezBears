@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 package com.ez.ezBears.myBoard.model;
 
 import lombok.Data;
@@ -22,4 +23,18 @@ public class MyBoardListVO {
 
 
 }
+>>>>>>> branch 'main' of https://github.com/GunwooRoh/FinalProject.git
+=======
+package com.ez.ezBears.myBoard.model;
+
+import lombok.Data;
+
+@Data
+public class MyBoardListVO {
+	private String mBoardName;
+	private int mBoardNo;
+
+
+}
+
 >>>>>>> branch 'main' of https://github.com/GunwooRoh/FinalProject.git

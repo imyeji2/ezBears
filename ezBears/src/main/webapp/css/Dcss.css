@@ -11,10 +11,11 @@
 
 .select-box {
 	display: flex;
-	gap: 0 30px;
+	gap: 10px 30px;
 	padding: 0;
-	gap: 0 30px;
 	justify-content: center;
+	flex-direction: column;
+    width: 100%;
 }
 
 .select-box li {
@@ -51,7 +52,7 @@
 	width: 100%;
 }
 
-.firstdiv .dup input {
+.firstdiv .findZipcode input {
 	outline: none;
 	background-color: #7000D8;
 	border: 0;
@@ -61,8 +62,28 @@
 	transition: all 0.35s linear;
 }
 
-.firstdiv .dup input:hover {
+.firstdiv .dup input {
+	outline: none;
+	background-color: #191C24;
+	border: 0;
+	color: #fff;
+	padding: 15px 20px;
+	border-radius: 5px;
+}
+
+.firstdiv .findZipcode input:hover {
 	background-color: #953de7;
+}
+
+input#addressDetail, input#contract, input#zipcode {
+	outline: none;
+	cursor: pointer;
+	padding: 10px 15px;
+	border-radius: 5px;
+	width: 100%;
+	background-color: #000;
+	color: #6C7293;
+	border: 0;
 }
 
 .confirm {
@@ -80,9 +101,47 @@
 	background-color: #953de7;
 }
 
+
+.side {
+    display: flex;
+	justify-content: space-between;
+    align-items: center;
+    gap: 0 30px;
+}
+
+.imgdiv {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+	width: 200px;
+}
+
+.innerSide {
+    width: 100%;
+}
+
+.imgdiv label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 @media (max-width: 720px) {
 	.register-form {
 		margin: 0;
+	}
+	
+	.side {
+    display: flex;
+	justify-content: space-between;
+    align-items: center;
+    gap: 0 30px;
+    flex-direction: column;
+	}
+	
+	.imgdiv {
+    display: none;
+
 	}
 	
 	.select-box {
