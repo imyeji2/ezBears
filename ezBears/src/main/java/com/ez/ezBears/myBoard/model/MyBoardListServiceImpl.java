@@ -1,3 +1,4 @@
+
 package com.ez.ezBears.myBoard.model;
 
 import java.util.List;
@@ -12,8 +13,9 @@ import lombok.RequiredArgsConstructor;
 public class MyBoardListServiceImpl implements MyBoardListService {
 	private final MyBoardListDAO myBoardListDao;
 	@Override
-	public List<Map<String, Object>> selectBoardList(int memNo) {
+	public List<MyBoardListVO> selectBoardList(int memNo) {
 		return myBoardListDao.selectBoardList(memNo);
 	}
 
 }
+

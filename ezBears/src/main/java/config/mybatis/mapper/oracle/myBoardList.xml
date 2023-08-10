@@ -11,3 +11,5 @@
 		WHERE m.MEM_NO=#{memNo}
 	</select>
 </mapper>
+
+

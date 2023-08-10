@@ -1,11 +1,10 @@
+
 package com.ez.ezBears.myBoard.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/myBoard")
@@ -100,7 +99,7 @@ public class MyBoardController {
 		logger.info("웹하드 삭제");
 		return "myBoard/webhard_delete";
 	}
-	
+
    /* 캘린더 */
    @RequestMapping("/Calender")
    public String Calender() {
@@ -111,5 +110,4 @@ public class MyBoardController {
 
 
 }
-
 

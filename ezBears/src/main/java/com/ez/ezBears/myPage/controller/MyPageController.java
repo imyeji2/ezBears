@@ -1,6 +1,7 @@
 package com.ez.ezBears.myPage.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import lombok.RequiredArgsConstructor;
@@ -13,5 +14,13 @@ public class MyPageController {
 	public String wirte() {
 		
 		return "mypage/edit";
+	}
+	
+	@GetMapping("/attendanceCheck")
+	public String attendanceCheck() {
+		
+		return "/mypage/attendanceCheck";
+		
+		//http://localhost:9091/ezBears/mypage/attendanceCheck
 	}
 }

@@ -192,6 +192,4 @@
     </div>
     <!-- Recent Sales End -->
 
-
-   
  <%@include file="../inc/bottom.jsp"%>   						
