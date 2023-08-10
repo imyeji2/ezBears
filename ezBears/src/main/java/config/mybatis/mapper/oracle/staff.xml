@@ -2,7 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<<<<<<< HEAD
 <mapper namespace="com.ez.ezBears.staff.model.StaffDAO">
 	<select id="selectCheckId" parameterType="string"
 		resultType="int">
@@ -16,11 +15,4 @@
 		where STAFF_ID=#{STAFF_ID}
 		and CONTRACT_DONE is null
 	</select>
-=======
-<mapper namespace="com.ez.ezBears.staff.model">
-
-
-
-
->>>>>>> branch 'main' of https://github.com/GunwooRoh/FinalProject.git
 </mapper>
