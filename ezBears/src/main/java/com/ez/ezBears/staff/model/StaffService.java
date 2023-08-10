@@ -1,7 +1,6 @@
 package com.ez.ezBears.staff.model;
 
 public interface StaffService {
-<<<<<<< HEAD
 	//아이디 중복확인 관련 상수
 	int EXIST_ID=1;  //이미 해당 아이디가 존재함
 	int NONE_EXIST_ID=2; //아이디 존재하지 않음 => 사용가능
@@ -13,7 +12,4 @@ public interface StaffService {
 	
 	int selectCheckId(String STAFF_ID);
 	int loginCheck(String STAFF_ID, String STAFF_PWD);
-=======
-
->>>>>>> branch 'main' of https://github.com/GunwooRoh/FinalProject.git
 }
