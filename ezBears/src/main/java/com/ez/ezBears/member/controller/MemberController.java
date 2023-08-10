@@ -1,10 +1,19 @@
 package com.ez.ezBears.member.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.ez.ezBears.dept.model.DeptService;
+import com.ez.ezBears.dept.model.DeptVO;
+import com.ez.ezBears.member.model.MemberVO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -13,22 +22,53 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MemberController {
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
-
+	
+	private final DeptService deptService;
+	
+	
 	@GetMapping("/write")
-	public String write() {
+	public String write(Model model) {
+		
+		//1
 		logger.info("회원 등록 페이지");
+		
+		//2
+		List<DeptVO> list = deptService.selectDeptList();
+		
+		//3
+		model.addAttribute("deptList", list);
+		
 		return "Member/MemberWrite";
 	}
+	
+	@PostMapping("/write")
+	public String write_post(@ModelAttribute MemberVO vo) {
+		
+		//1
+		logger.info("회원등록 처리, 파라미터 vo={}",vo);
+		//2
+		
+		//3
+		
+		//4
+		return "";
+	}
 
-	@GetMapping("/list")
+	@RequestMapping("/list")
 	public String list() {
-		logger.info("회원 등록 페이지");
+		logger.info("회원 리스트 페이지");
 		return "Member/memberList";
+	}
+	
+	@RequestMapping("/zipcode")
+	public String zipcode() {
+		logger.info("우편번호 페이지");
+		return "Member/zipcode";
 	}
 	
 	@GetMapping("/detail")
 	public String detail() {
-		logger.info("회원 등록 페이지");
+		logger.info("회원 상세 페이지");
 		return "Member/memberDetail";
 	}
 }

@@ -1,19 +1,17 @@
-package com.ez.ezBears.staff.model;
+package com.ez.ezBears.member.model;
 
 import org.springframework.stereotype.Service;
-
-import com.ez.ezBears.member.model.MemberService;
 
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class StaffServiceImpl implements StaffService{
-	private final StaffDAO staffDao;
-
+public class MemberServiceImpl implements MemberService{
+	private final MemberDAO memberDao;
+	
 	@Override
-	public int selectCheckId(String STAFF_ID) {
-		int count = staffDao.selectCheckId(STAFF_ID);
+	public int selectCheckId(String MEM_ID) {
+		int count = memberDao.selectCheckId(MEM_ID);
 
 		int result=0;
 		if(count>0) {
@@ -26,14 +24,14 @@ public class StaffServiceImpl implements StaffService{
 	}
 
 	@Override
-	public int loginCheck(String STAFF_ID, String STAFF_PWD) {
-		String dbPwd=staffDao.selectPwd(STAFF_ID);
+	public int loginCheck(String MEM_ID, String MEM_PWD) {
+		String dbPwd=memberDao.selectPwd(MEM_ID);
 
 		int result=0;
 		if(dbPwd==null || dbPwd.isEmpty()) {
 			result=MemberService.USERID_NONE;
 		}else {
-			if(dbPwd.equals(STAFF_PWD)) {
+			if(dbPwd.equals(MEM_PWD)) {
 				result=MemberService.LOGIN_OK;				
 			}else {
 				result=MemberService.PWD_DISAGREE;

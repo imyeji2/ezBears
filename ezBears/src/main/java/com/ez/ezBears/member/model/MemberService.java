@@ -1,6 +1,6 @@
-package com.ez.ezBears.staff.model;
+package com.ez.ezBears.member.model;
 
-public interface StaffService {
+public interface MemberService {
 	//아이디 중복확인 관련 상수
 	int EXIST_ID=1;  //이미 해당 아이디가 존재함
 	int NONE_EXIST_ID=2; //아이디 존재하지 않음 => 사용가능
@@ -10,6 +10,7 @@ public interface StaffService {
 	int PWD_DISAGREE=2; //비밀번호 불일치
 	int USERID_NONE=3; //해당 아이디가 존재하지 않음
 	
-	int selectCheckId(String STAFF_ID);
-	int loginCheck(String STAFF_ID, String STAFF_PWD);
+	int selectCheckId(String MEM_ID);
+	int loginCheck(String MEM_ID, String MEM_PWD);
+
 }
