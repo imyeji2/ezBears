@@ -1,4 +1,4 @@
-<%-- <%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -58,7 +58,7 @@
                     <div class="tab-pane fade" id="pills-contact2" role="tabpanel" aria-labelledby="pills-contact2-tab">
 						<%@include file="webhard.jsp" %>
                     </div>
-                                                            
+                                                       
                 </div>
             </div>
         </div>
@@ -67,4 +67,5 @@
 
 
    
- <%@include file="../inc/bottom.jsp"%>        --%>
+ <%@include file="../inc/bottom.jsp"%>       
+>>>>>>> branch 'main' of https://github.com/GunwooRoh/FinalProject.git
