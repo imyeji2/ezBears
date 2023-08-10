@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService{
-<<<<<<< HEAD
 	private final MemberDAO memberDao;
 	
 	@Override
@@ -41,16 +40,4 @@ public class MemberServiceImpl implements MemberService{
 
 		return result;
 	}
-
-=======
-	private final MemberDAO dao;
-
-	@Override
-	public String createId(String memId) {
-		
-		int cnt = dao.selectChkId(memId);
-		
-		
-	}
->>>>>>> branch 'main' of https://github.com/GunwooRoh/FinalProject.git
 }
