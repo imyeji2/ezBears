@@ -31,18 +31,18 @@
 							<li>
 						        <select name="grade" id="grade">
 						        	<option value="" >직급</option>
-						            <option value="1">사원</option>
-						            <option value="2">대리</option>
-						            <option value="4">과장</option>
-						            <option value="5">차장</option>
-						            <option value="6">팀장</option>
+						        	<!-- 반복문 -->
+									<c:forEach var="positionVo" items="${positionList}">
+										<option value ="${positionVo.positionNo}">${positionVo.positionName}</option>
+									</c:forEach>
+						        	<!-- 반복문 -->
 						       	</select>
 							</li>
 							<li>
 						        <select name="test" id="test">
 						        	<option value="" >고용형태</option>
-						            <option value="1">계약직</option>
-						            <option value="2">정규직</option>
+						            <option value="계약직">계약직</option>
+						            <option value="정규직">정규직</option>
 						       	</select>
 							</li>
 						</ul>
@@ -114,5 +114,4 @@
 		</div>
 	</div>
 </div>
-  2023080901001   mg-230809001
  <%@include file="../inc/bottom.jsp"%>    

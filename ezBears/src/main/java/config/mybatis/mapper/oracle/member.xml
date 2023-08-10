@@ -13,4 +13,5 @@
 		where MEM_ID=#{MEM_ID}
 		and CONTRACT_DONE is null
 	</select>
+
 </mapper>

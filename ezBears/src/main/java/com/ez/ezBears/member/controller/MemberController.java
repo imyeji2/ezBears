@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.ez.ezBears.dept.model.DeptService;
 import com.ez.ezBears.dept.model.DeptVO;
 import com.ez.ezBears.member.model.MemberVO;
+import com.ez.ezBears.position.model.PositionService;
+import com.ez.ezBears.position.model.PositionVO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,6 +26,7 @@ public class MemberController {
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 	
 	private final DeptService deptService;
+	private final PositionService positionService;
 	
 	
 	@GetMapping("/write")
@@ -33,10 +36,12 @@ public class MemberController {
 		logger.info("회원 등록 페이지");
 		
 		//2
-		List<DeptVO> list = deptService.selectDeptList();
+		List<DeptVO> deptList = deptService.selectDeptList();
+		List<PositionVO> positionList = positionService.selectPositionList();
 		
 		//3
-		model.addAttribute("deptList", list);
+		model.addAttribute("deptList", deptList);
+		model.addAttribute("positionList", positionList);
 		
 		return "Member/MemberWrite";
 	}
