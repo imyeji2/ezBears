@@ -1,5 +1,7 @@
 package com.ez.ezBears.dept.model;
 
-public interface DeptService {
+import java.util.List;
 
+public interface DeptService {
+	List<DeptVO> selectDeptList();
 }

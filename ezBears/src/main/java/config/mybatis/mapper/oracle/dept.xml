@@ -4,4 +4,7 @@
 
 <mapper namespace="com.ez.ezBears.dept.model.DeptDAO">
 	
+	<select id="selectDeptList" resultType="deptVo">
+		SELECT * FROM DEPT ORDER BY DEPT_NO
+	</select>
 </mapper>

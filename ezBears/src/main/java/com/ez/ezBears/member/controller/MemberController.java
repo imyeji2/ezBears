@@ -1,13 +1,18 @@
 package com.ez.ezBears.member.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.ez.ezBears.dept.model.DeptService;
+import com.ez.ezBears.dept.model.DeptVO;
 import com.ez.ezBears.member.model.MemberVO;
 
 import lombok.RequiredArgsConstructor;
@@ -17,10 +22,22 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MemberController {
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
-
+	
+	private final DeptService deptService;
+	
+	
 	@GetMapping("/write")
-	public String write() {
+	public String write(Model model) {
+		
+		//1
 		logger.info("회원 등록 페이지");
+		
+		//2
+		List<DeptVO> list = deptService.selectDeptList();
+		
+		//3
+		model.addAttribute("deptList", list);
+		
 		return "Member/MemberWrite";
 	}
 	
@@ -28,7 +45,7 @@ public class MemberController {
 	public String write_post(@ModelAttribute MemberVO vo) {
 		
 		//1
-		logger.info("회원가입 처리, 파라미터 vo={}",vo);
+		logger.info("회원등록 처리, 파라미터 vo={}",vo);
 		//2
 		
 		//3
