@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package com.ez.ezBears.myBoard.controller;
 
 import org.slf4j.Logger;
@@ -229,5 +228,3 @@ public class MyBoardController {
 
 }
 
-
->>>>>>> branch 'main' of https://github.com/GunwooRoh/FinalProject.git
