@@ -1,5 +1,6 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -361,6 +362,9 @@
 
    
 =======
+=======
+
+>>>>>>> branch 'main' of https://github.com/GunwooRoh/FinalProject
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -385,10 +389,7 @@
                         <a class="nav-link tap_txt"  href="<c:url value='/myBoard/teamWorkBoard'/>">업무게시판</a>
                     </li>
                     <li class="nav-item" role="presentation">
-
-                        <a class="nav-link tap_txt"  href="<c:url value='/myBoard/teamNoticeList'/>">스케줄</a>
                         <a class="nav-link tap_txt"  href="<c:url value='/myBoard/Calender'/>">스케줄</a>
-
                     </li>
                     <li class="nav-item" role="presentation">
                         <a class="nav-link tap_txt"  href="<c:url value='/myBoard/Approval'/>">결재</a>
@@ -539,6 +540,7 @@
     </div>
     <!-- Recent Sales End -->
 
+<<<<<<< HEAD
 
    
 >>>>>>> branch 'main' of https://github.com/GunwooRoh/FinalProject.git
@@ -720,4 +722,6 @@
 
 >>>>>>> branch 'main' of https://github.com/GunwooRoh/FinalProject.git
 >>>>>>> branch 'main' of https://github.com/GunwooRoh/FinalProject.git
+=======
+>>>>>>> branch 'main' of https://github.com/GunwooRoh/FinalProject
  <%@include file="../inc/bottom.jsp"%>    					
