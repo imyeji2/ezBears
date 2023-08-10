@@ -9,3 +9,4 @@ public interface MyBoardListDAO {
 	List<MyBoardListVO> selectBoardList(int memNo);
 
 }
+
