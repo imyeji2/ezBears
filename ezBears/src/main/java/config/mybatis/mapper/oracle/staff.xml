@@ -2,9 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.ez.ezBears.staff.model">
-
-
-
-
+<mapper namespace="com.ez.ezBears.staff.model.StaffDAO">
+	<select id="selectCheckId" parameterType="string"
+		resultType="int">
+		select count(*) from STAFF  
+		where STAFF_ID=#{STAFF_ID}
+	</select>
+	
+	<select id="selectPwd" parameterType="string"
+		resultType="string">
+		select STAFF_PWD  from STAFF 
+		where STAFF_ID=#{STAFF_ID}
+		and CONTRACT_DONE is null
+	</select>
 </mapper>
