@@ -112,14 +112,13 @@
        	                <div class="form-floating mb-3">
                             <select class="form-select" id="floatingSelect"
                                 aria-label="Floating label select example">
-                                <option selected>부서를 선택하세요</option>
 								<!-- 반복문 -->
 								<c:forEach var="deptVo" items="${deptList}">
 									<option value ="${deptVo.deptNo}">${deptVo.deptName}</option>
 								</c:forEach>
 								<!-- 반복문 -->
                             </select>
-                            <label for="floatingSelect">부서</label>
+                            <label for="floatingSelect">부서를 선택하세요</label>
                         </div>
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="floatingInput" placeholder="staff_name">
