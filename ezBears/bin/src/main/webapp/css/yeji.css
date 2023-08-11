@@ -1,0 +1,714 @@
+@charset "UTF-8";
+
+/*나의보드(board) css*/
+#board_style{
+	.tap_txt{
+		color: #6C7293;
+	}
+	
+}/*나의보드(board) css*/
+
+
+
+/*top 멤버 정보 */
+#top_membox{
+	width:100%;
+	margin: 0 auto;
+	overflow: hidden;
+	padding:0px 0px 20px 0px;
+	text-align: center;	
+	
+	.meminfo{
+		overflow: hidden;
+	}
+	
+	.member_img{
+		width: 40px;
+		border-radius: 10px;
+	}
+	
+	.inoutBtn{
+		margin-top:10px;
+		width:80%;
+		line-height:35px;
+		background:#31354e;
+		border-radius: 10px;
+		border: none;
+		outline: none;
+		color: #fff;
+	}
+	
+	.user_info{
+		width:fit-content;
+		margin:0 auto;
+	}
+
+	
+	
+	
+	
+}/*top 멤버 정보 */
+
+/*팀별 공지사항 리스트(피드형) css*/
+#teamNoticeList{
+	
+	.btnBox{
+		width: 90%;
+		margin:20px 0px 20px 0px;
+		overflow: hidden;
+	}
+	
+	.btnBox a{
+		float:right;
+		margin-right:10px;
+	}
+	
+	.notice_list_box{
+		width:80%;
+		border-top:1px solid #6C7293;
+		padding:30px 10px 30px 10px;
+		margin:0 auto;
+		text-align: left;
+	}
+	
+	.list_box_title{
+		overflow:hidden;
+		line-height:50px;
+		width:100%;
+	}
+	
+	.user_img{
+		float:left;
+	}
+	
+	.user_img img{
+		width:40px;
+		border-radius:10px 10px 10px 10px;
+	}
+	
+	.user_txt{
+		float:left	
+	
+	}
+	
+	.user_txt_name{
+		font-size: 1em;
+		margin-left:10px;
+		font-weight:800;
+	}
+	
+	.user_txt_time{
+		font-size:0.9em;
+		margin-left:5px;
+	}
+	
+	
+	.list_box_content{
+		margin:20px 0px 20px 0px;
+		line-height:1.8em;
+	}
+	
+	.content_title{
+		font-weight: 900;
+		margin-bottom: 20px;
+	}
+	
+	.list_box_file{
+		width:fit-content;
+		border: 1px solid #6C7293;
+		border-radius:5px 5px 5px 5px;
+		padding:5px 5px 5px 5px;
+		margin-bottom:20px;
+	}
+	
+	.list_line{
+		width: 80%;
+		border-bottom:1px solid #6C7293;
+		margin:0 auto;
+	}
+	
+	.page_box{
+		margin-top:80px;
+	}
+	
+	.user_dept{
+		width:fit-content;
+		border:1px solid #6C7293;
+		border-radius:5px 5px 5px 5px;
+		padding:5px 5px 5px 5px;
+		float:right;
+		line-height:25px;
+		font-size:0.9em;
+	}
+	
+	
+	.teamNotice_serch{
+		width: 80%;
+		margin:0 auto;
+	}
+	
+	.serch_input{
+		overflow: hidden;
+	}
+	
+	.select_box{
+		width:15%;
+		margin-right: 1%;
+		float: left;
+		line-height: 1.5;
+	}
+	
+	.select_box select{
+		text-align: center;
+	}
+	
+	.text_box{
+		width: 73%;
+		margin-right: 1%;
+		float: left;
+	}
+	
+	.serch_btn{
+		width: 10%;
+		float: left;
+	}
+	
+	.serch_btn button{
+		width: 100%;
+	    font-size: 1rem;
+	    font-weight: 400;
+	    line-height: 38px;
+	    border:0px;
+	    background: #000;
+	    color: #fff;
+	    border-radius: 5px;
+	}
+
+	
+}/*팀별 공지사항 리스트(피드형) css*/
+
+
+
+
+/*팀별 공지사항 디테일 css*/
+#teamNoticeDetail{
+	min-height:50vh;
+	
+	.detail_title{
+		width:100%;
+		border-bottom:1px solid #6C7293;
+		margin:50px 0px 10px 0px;
+		padding: 10px 10px 10px 10px;
+		line-height: 2em;
+		text-align: left;
+		overflow: hidden;
+	}	
+	
+	.detail_left{
+		float: left;
+	}
+	.title_txt{
+		font-weight: 900;
+	}
+	
+	.title_date{
+		margin-left: 10px;
+	}
+	
+	.detail_right{
+		text-align: right;
+	}
+	
+	.detail_content{
+		margin:50px 0px 50px 0px;
+		line-height:1.8em;
+		text-align: left;
+	}
+	
+	.detail_file{
+		overflow: hidden;
+	}
+	
+	
+	
+	.detail_info{
+		overflow: hidden;
+		margin:10px 0px 0px 0px;
+	}
+	
+	.user_info{
+		overflow: hidden;
+		margin-bottom: 30px;
+	}
+		
+	.user_img{
+		float: left;
+	}
+	
+	.user_img img{
+		width:40px;
+		border-radius: 10px 10px 10px 10px;
+	}
+	
+
+	.user_name{
+		margin-left:10px;
+		line-height: 40px;
+	}
+
+	.user_dept{
+		margin-left: 3px;
+		line-height: 40px;
+	}
+	
+	
+	.detail_reply_wrap{
+		padding: 20px 20px 20px 20px;
+		background:#202335;
+		text-align: left;
+	}
+	
+	.reply_write{
+		margin:20px 0px 0px 0px;
+		overflow: hidden;
+	}
+	
+	.form-floating{
+		width:90%;
+		float: left;
+	}
+	
+	.reply_add{
+		width: 9%;
+		float:left;
+		margin-left:1%;
+	}
+	
+	.reply_add_btn{
+		width: 100%;
+		line-height: 100px;;
+		border:0px;
+		background: #191C24;
+		color: #6C7293;
+		border-radius: 5px;
+	}
+	
+	.form-control{
+		background-color: #191C24;
+		border: 1px solid #191C24;
+		resize: none;
+	}
+	
+	.reply_list{
+		margin: 20px 0px 20px 0px;
+	}
+	
+	.reply_content{
+		border-bottom: 1px solid #191C24;
+	}
+	
+	.reply_user{
+		overflow: hidden;
+	}
+	
+	.reply_txt{
+		margin:10px 0px 10px 0px;
+	}
+	
+	.reply_txt span{
+		font-size: 0.9em;
+	}
+	
+	.r_reply_content{
+		margin: 20px 0px 20px 20px;
+	}
+	
+	.reply_line{
+		border-bottom: 1px solid #191C24;
+	}
+	
+	.detail_option_btn{
+		width: fit-content;
+		margin:20px 0px 0px 0px;
+	}
+	
+
+}/*팀별 공지사항 디테일 css*/
+
+
+
+/*팀별 공지사항 등록*/
+#teamNoticeWrite{
+	width:70%;
+	margin:0 auto;
+
+	.writeWrap{
+		margin: 50px 0px 30px 0px;
+	}
+	
+	.write_content{
+		margin:20px 0px 20px 0px;
+	}
+	
+	.write_title input{
+		line-height: 30px;
+	}
+	.write_form{
+		resize: none;
+		height: 500px;
+	}
+	
+	.write_option_btn{
+		margin:30px 0px 0px 0px;
+	}
+	
+	.write_file{
+		margin: 20px 0px 20px 0px;
+
+	}
+	
+	.write_file input{
+		background: #000;
+	}
+	
+}
+
+
+/*팀별 업무 게시판 리스트*/
+#teamWorkBoardList{
+	.btnBox{
+		margin:20px 0px 20px 0px;
+		overflow:hidden;
+	}
+	
+	.btnBox a{
+		float:right;
+		margin-right:10px;
+	}
+	
+	.teamNotice_serch{
+		width: 80%;
+		margin:0 auto;
+	}
+	
+	.serch_input{
+		overflow: hidden;
+	}
+	
+	.select_box{
+		width:10%;
+		margin-right: 1%;
+		float: left;
+		line-height: 1.5;
+	}
+	
+	.select_box select{
+		text-align: center;
+	}
+	
+	.text_box{
+		width: 80%;
+		margin-right: 1%;
+		float: left;
+	}
+	
+	.serch_btn{
+		width: 8%;
+		float: left;
+	}
+	
+	.serch_btn button{
+		width: 100%;
+	    font-size: 1rem;
+	    font-weight: 400;
+	    line-height: 38px;
+	    border:0px;
+	    background: #000;
+	    color: #fff;
+	    border-radius: 5px;
+	}	
+	
+}/*팀별 업무 게시판 리스트*/
+
+
+
+/*팀별 업무 게시판 등록*/
+#teamWorkBoardWrite{
+	width:70%;
+	margin:0 auto;
+
+	.writeWrap{
+		margin: 50px 0px 30px 0px;
+	}
+	
+	.write_content{
+		margin:20px 0px 20px 0px;
+		
+	}
+	
+	.write_title input{
+		line-height: 30px;
+	}
+	.write_form{
+		resize: none;
+		height:300px;
+	}
+	
+	.write_option_btn{
+		margin:30px 0px 0px 0px;
+	}
+	
+	.write_file{
+		margin: 20px 0px 20px 0px;
+
+	}
+	
+	.write_file input{
+		background: #000;
+	}
+	
+	.writeTodoList{
+		margin:0px 0px 30px 0px;
+		background: #000;
+		border-radius: 5px;
+		padding: 30px 30px 30px 30px;
+	}
+	
+	.todoTitle{
+		text-align: left;
+		margin-bottom: 10px;
+	}
+	.todoList{
+		background: #191C24;
+		padding: 0px 10px 0px 10px;
+		border-radius: 5px;
+		margin:0px 0px 5px 0px;
+	}
+	
+	.form-check-input{
+		border: 1px solid #6C7293;
+	}
+	
+	.todoInput{
+		background:#191C24;
+	}
+	
+	.todoDate{
+		overflow: hidden;
+		margin:10px 0px 20px 0px;
+		text-align: center;
+	}
+	
+	.dateBox_left{
+		width: 49.5%;
+		float: left;
+		background: #191C24;
+		line-height: 38px;
+		border-radius: 5px;
+	}
+	
+	.dateBox_right{
+		width: 49.5%;
+		float: right;
+		background: #191C24;
+		line-height: 38px;
+		border-radius: 5px;
+	}
+	
+	.dateinput{
+		width:70%;
+		line-height: 30px;
+		background: #191C24;
+		color:#6C7293;
+		border: none;
+		outline: none;
+		margin-left:10px;
+		text-align: right;
+	}
+
+}/*teamWorkBoardWrite*/
+
+
+/*팀별 업무게시판 디테일 css*/
+#teamWorkBoardDetail{
+	min-height:50vh;
+	
+	.detail_title{
+		width:100%;
+		border-bottom:1px solid #6C7293;
+		margin:50px 0px 10px 0px;
+		padding: 10px 10px 10px 10px;
+		line-height: 2em;
+		text-align: left;
+		overflow: hidden;
+	}	
+	
+	.detail_left{
+		float: left;
+	}
+	.title_txt{
+		font-weight: 900;
+	}
+	
+	.title_date{
+		margin-left: 10px;
+	}
+	
+	.detail_right{
+		text-align: right;
+	}
+	
+	.detail_content{
+		margin:50px 0px 50px 0px;
+		line-height:1.8em;
+		text-align: left;
+	}
+	
+	.detail_file{
+		overflow: hidden;
+	}
+	
+	
+	
+	.detail_info{
+		overflow: hidden;
+		margin:10px 0px 0px 0px;
+	}
+	
+	.user_info{
+		overflow: hidden;
+		margin-bottom: 30px;
+	}
+		
+	.user_img{
+		float: left;
+	}
+	
+	.user_img img{
+		width:40px;
+		border-radius: 10px 10px 10px 10px;
+	}
+	
+
+	.user_name{
+		margin-left:10px;
+		line-height: 40px;
+	}
+
+	.user_dept{
+		margin-left: 3px;
+		line-height: 40px;
+	}
+	
+	
+	.detail_reply_wrap{
+		padding: 20px 20px 20px 20px;
+		background:#202335;
+		text-align: left;
+	}
+	
+	.reply_write{
+		margin:20px 0px 0px 0px;
+		overflow: hidden;
+	}
+	
+	.form-floating{
+		width:90%;
+		float: left;
+	}
+	
+	.reply_add{
+		width: 9%;
+		float:left;
+		margin-left:1%;
+	}
+	
+	.reply_add_btn{
+		width: 100%;
+		line-height: 100px;;
+		border:0px;
+		background: #191C24;
+		color: #6C7293;
+		border-radius: 5px;
+	}
+	
+	.form-control{
+		background-color: #191C24;
+		border: 1px solid #191C24;
+		resize: none;
+	}
+	
+	.reply_list{
+		margin: 20px 0px 20px 0px;
+	}
+	
+	.reply_content{
+		border-bottom: 1px solid #191C24;
+	}
+	
+	.reply_user{
+		overflow: hidden;
+	}
+	
+	.reply_txt{
+		margin:10px 0px 10px 0px;
+	}
+	
+	.reply_txt span{
+		font-size: 0.9em;
+	}
+	
+	.r_reply_content{
+		margin: 20px 0px 20px 20px;
+	}
+	
+	.reply_line{
+		border-bottom: 1px solid #191C24;
+	}
+	
+	.detail_option_btn{
+		width: fit-content;
+		margin:20px 0px 0px 0px;
+	}
+	
+	
+	.detailTodoList{
+		margin:50px 0px 50px 0px;
+	}
+	
+	.todoTitle{
+		text-align: left;
+		margin-bottom: 10px;
+	}
+	.todoList{
+		background: #191C24;
+		padding: 0px 10px 0px 10px;
+		border-radius: 5px;
+		margin:0px 0px 5px 0px;
+	}
+	
+	.form-check-input{
+		border: 1px solid #6C7293;
+	}
+	
+	.todoInput{
+		background:#000;
+	}
+	
+	.todoDate{
+		overflow: hidden;
+		margin:10px 0px 20px 0px;
+		text-align: left;
+	}
+	
+	.checkListBox{
+		width: 90%;
+		margin:0 auto;
+	}
+	
+	.checkedList span{
+		 text-decoration:line-through
+	}
+	
+
+}/*팀별 공지사항 디테일 css*/
