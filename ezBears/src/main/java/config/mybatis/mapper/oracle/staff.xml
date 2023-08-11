@@ -9,10 +9,17 @@
 		where STAFF_ID=#{staffId}
 	</select>
 	
-	<select id="selectPwd" parameterType="string"
+	<select id="selectPwd" parameterType="String"
 		resultType="string">
-		select STAFF_PWD  from STAFF 
+		select STAFF_PWD from STAFF 
 		where STAFF_ID=#{staffId}
-		and CONTRACT_DONE is null
-	</select>
+	</select> 
+
+	<select id="selectStatus" parameterType="String"
+		resultType="string">
+		select STAFF_STATUS from STAFF 
+		where STAFF_ID=#{staffId}
+	</select> <!-- vo랑 map가 NULL값이 들어오면 return이 안된다 -->
+	
+	
 </mapper>
