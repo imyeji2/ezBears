@@ -6,13 +6,13 @@
 	<select id="selectCheckId" parameterType="string"
 		resultType="int">
 		select count(*) from STAFF  
-		where STAFF_ID=#{STAFF_ID}
+		where STAFF_ID=#{staffId}
 	</select>
 	
 	<select id="selectPwd" parameterType="string"
 		resultType="string">
 		select STAFF_PWD  from STAFF 
-		where STAFF_ID=#{STAFF_ID}
+		where STAFF_ID=#{staffId}
 		and CONTRACT_DONE is null
 	</select>
 </mapper>
