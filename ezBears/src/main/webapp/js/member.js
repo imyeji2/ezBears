@@ -1,20 +1,32 @@
 	$(function(){
-	
+        $('#imageUpload').on('change', function() {
+            var file = $(this)[0].files[0];
+            if (file) {
+                var imageUrl = URL.createObjectURL(file);
+
+                $('#previewImage').attr('src', imageUrl);
+            }
+        });
 		
 		
 		$('.confirm').click(function(){
+			
+			//아이디
 			if($('#registerId').val().length < 5){
 				alert("아이디를 입력해주세요.");
 				$('#registerId').focus();
 				return false;
 			}
 			
+			//비밀번호
 			if($('#registerPassword').val().length < 1){
 				alert("비밀번호를 입력해주세요.");
 				$('#registerPassword').focus();
 				return false;
 			}
-
+			
+			
+			//이름
 			if($('#registerName').val().length < 1){
 				alert("이름을 입력해주세요.");
 				$('#registerName').focus();
@@ -31,6 +43,8 @@
 		
 		//ajax
 		
+		
+		//id 영어, 숫자, '_' 만 가능
 		$('#registerId').keyup(function(event) {
 		    var key = event.charCode || event.keyCode || 0;
 		    $input = $(this);
@@ -45,7 +59,7 @@
 		    return true;
 		});
 		 
-		
+		//password 일치
 		$('#registerPassword2').keyup(function(){
 			var pwd1 = $('#registerPassword').val();
 			var pwd2 = $(this).val();
@@ -60,7 +74,7 @@
 			
 		});
 		
-		
+		//전화번호 '-' 자동 삽입, 숫자만 입력 가능
 		$('#phoneNum').on('input', function(event) {
 		    var $text = $(this);
 		    var inputValue = $text.val();
@@ -76,7 +90,9 @@
 		    // 입력값 업데이트
 		    $text.val(cleanedValue);
 		});
-		 
+		
+		
+		//생년월일 자동 '-' 삽입, 숫자만 입력가능 
 		$('#birth').on('input', function(event) {
 		    var $text = $(this);
 		    var inputValue = $text.val();
@@ -92,7 +108,9 @@
 		    // 입력값 업데이트
 		    $text.val(cleanedValue);
 		});
-		 
+		
+		
+		//입사일 자동 '-' 삽입, 숫자만 입력가능 
 		$('#contract').on('input', function(event) {
 		    var $text = $(this);
 		    var inputValue = $text.val();
@@ -110,8 +128,10 @@
 		});
 	});
 		
-		//우편번호
-		//본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
+		
+		
+	//우편번호 카카오 주소 api
+	//본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
     function sample4_execDaumPostcode() {
         new daum.Postcode({
             oncomplete: function(data) {
