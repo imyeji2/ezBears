@@ -4,6 +4,7 @@
 
 <%@include file="../inc/top.jsp"%>
 <link href="${pageContext.request.contextPath}/css/Dcss.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/css/choong/chi.css" rel="stylesheet">
 
 <!-- <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br> -->
 <input type="hidden" id="sample6_detailAddress" placeholder="상세주소">
@@ -93,7 +94,7 @@
 		});
 	})
 </script>
-
+	<form name="frmWrite" method="post" action="<c:url value='/staff/staffWrite'/>">
         <!-- Sign In Start -->
         <div class="container-fluid">
             <div class="row h-100 align-items-center justify-content-center" style="min-height: 100vh;">
@@ -108,9 +109,16 @@
                             <h3>Staff Write</h3>
                         </div>
                         <div style="width: 60%; margin: 0 auto;" >
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="dept_no">
-                            <label for="floatingInput">부서번호</label>
+       	                <div class="form-floating mb-3">
+                            <select class="form-select" id="floatingSelect"
+                                aria-label="Floating label select example">
+								<!-- 반복문 -->
+								<c:forEach var="deptVo" items="${deptList}">
+									<option value ="${deptVo.deptNo}">${deptVo.deptName}</option>
+								</c:forEach>
+								<!-- 반복문 -->
+                            </select>
+                            <label for="floatingSelect">부서를 선택하세요</label>
                         </div>
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="floatingInput" placeholder="staff_name">
@@ -189,6 +197,7 @@
                 </div>
             </div>
         </div>
+	</form>
         <!-- Sign In End -->
 
 

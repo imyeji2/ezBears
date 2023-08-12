@@ -12,5 +12,8 @@ public interface MemberService {
 	
 	int selectCheckId(String memId);
 	int loginCheck(String memId, String memPwd);
-
+	
+	//아이디 자동 생성
+	String createMemId();
+	
 }

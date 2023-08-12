@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ez.ezBears.dept.model.DeptService;
 import com.ez.ezBears.dept.model.DeptVO;
+import com.ez.ezBears.member.model.MemberService;
 import com.ez.ezBears.member.model.MemberVO;
 import com.ez.ezBears.position.model.PositionService;
 import com.ez.ezBears.position.model.PositionVO;
@@ -27,6 +28,7 @@ public class MemberController {
 	
 	private final DeptService deptService;
 	private final PositionService positionService;
+	private final MemberService memberService;
 	
 	
 	@GetMapping("/write")
@@ -35,13 +37,20 @@ public class MemberController {
 		//1
 		logger.info("회원 등록 페이지");
 		
-		//2
+		//2 
+		
+		//카테고리 가지고오기
 		List<DeptVO> deptList = deptService.selectDeptList();
 		List<PositionVO> positionList = positionService.selectPositionList();
+		
+		//아이디 자동 생성
+		String memberId = memberService.createMemId();
+		
 		
 		//3
 		model.addAttribute("deptList", deptList);
 		model.addAttribute("positionList", positionList);
+		model.addAttribute("memberId", memberId);
 		
 		return "Member/MemberWrite";
 	}
