@@ -12,7 +12,7 @@
 			<form class="register-form" name="frmRegist" method="post" action="<%=request.getContextPath() %>/Member/write">
 				<div class = "side">
 					<div class ="imgdiv">
-						<img alt="" src="" style="width:150px; height:200px;">
+						<img alt="" src="<c:url value = '/img/defaultUSER.png'/>" style="width:180px; height:200px;" id="previewImage">
 						<label for="imageUpload">사진 등록</label>
 						<input type ="file" name="imageUpload" id="imageUpload"  class="infobox" style="display:none">
 					</div>
@@ -48,7 +48,7 @@
 						</ul>
 						
 					<div class="form-floating">
-						<input type="text" class="form-control" id="registerId" name="userId"> 
+						<input type="text" class="form-control" id="registerId" name="userId" value="${memberId}"> 
 						<label for="registerId">아이디</label>
 					</div>
 				</div>
