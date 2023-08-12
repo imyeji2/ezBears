@@ -78,4 +78,12 @@ public class RecordController {
 		return "/record/lineup";
 	}
 	
+	@RequestMapping("/calander2")
+	public String calander2() {
+		//1,4
+		logger.info("캘린더");
+		return "/record/gameRecordCal";
+	}
+	
+	
 }
