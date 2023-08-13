@@ -12,27 +12,6 @@ public class MyBoardController {
 	private static final Logger logger = LoggerFactory.getLogger(MyBoardController.class);
 
 	//예지
-	/*팀별 공지사항 게시판 */
-	@RequestMapping("/teamNotice")
-	public String teamNotice() {
-		logger.info("팀 공지사항 리스트 페이지");
-		return "myBoard/teamNoticeList";
-	}
-	
-	@RequestMapping("/teamNoticeDetail")
-	public String teamBoardDetil(/* @RequestParam (defaultValue = "0")int no */) {
-		logger.info("팀 공지사항 디테일 페이지 파라미터 no={}");
-		return "myBoard/teamNoticeDetail";
-	}
-	
-	
-	@RequestMapping("/teamNoticeWrite")
-	public String teamNoticeWrite() {
-		logger.info("팀 공지사항 등록하기 페이지");
-		return "myBoard/teamNoticeWrite";
-	}
-	
-
 	/*팀별 업무 게시판 */
 	@RequestMapping("/teamWorkBoard")
 	public String teamWorkBoard() {
