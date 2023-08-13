@@ -16,6 +16,11 @@ public class MyBoardListServiceImpl implements MyBoardListService {
 	public List<Map<String, Object>> selectBoardList(String userid) {
 		return myBoardListDao.selectBoardList(userid);
 	}
+	
+	@Override
+	public String selectByMyBoardName(int myBoardNo) {
+		return myBoardListDao.selectByMyBoardName(myBoardNo);
+	}
 
 }
 

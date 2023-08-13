@@ -7,6 +7,11 @@
 		select * from myBoardListView
 		where mem_id=#{userid}
 	</select>
+	
+	<select id="selectByMyBoardName" parameterType="int" resultType="String">
+		select m_board_name from myBoardListView
+		where my_board_no=${myBoardNo}
+	</select>
 </mapper>
 
 

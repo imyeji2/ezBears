@@ -6,5 +6,6 @@ import java.util.Map;
 
 public interface MyBoardListService {
 	List<Map<String, Object>> selectBoardList(String userid);
+	String selectByMyBoardName(int myBoardNo);
 }
 

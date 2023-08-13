@@ -8,26 +8,36 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ez.ezBears.myBoard.controller.MyBoardController;
+import com.ez.ezBears.myBoard.model.MyBoardListService;
+import com.ez.ezBears.temNotice.model.TeamNoticeService;
+
+import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequestMapping("/myBoard")
+@RequiredArgsConstructor
 public class TeamNoticeController {
 	private static final Logger logger = LoggerFactory.getLogger(MyBoardController.class);
-
+	private final MyBoardListService myBoardListService;
+	//private final TeamNoticeService teamNoticeService;
 	//예지
 	/*팀별 공지사항 게시판 */
 	@RequestMapping("/teamNotice")
-	public String teamNotice(@RequestParam (defaultValue = "0") int myBoardNo, Model model) {
-		logger.info("팀 공지사항 리스트 페이지, 파라미터 myBoardNo={}", myBoardNo);
+	public String teamNotice(@RequestParam (defaultValue = "0") int myBoardNo, Model  model) {
+		
+		//1.
+		logger.info("팀 공지사항 리스트 페이지, 파라미터 myBoardNo={}",myBoardNo);
+		
+		//2.
+		String myBoardName=myBoardListService.selectByMyBoardName(myBoardNo);
+		logger.info("팀 게시판 이름 검색 결과 myBoardName={}",myBoardName);
+		
+		//3.
+		model.addAttribute("myBoardName",myBoardName); 
+		model.addAttribute("myBoardNo",myBoardNo);
 		
 		
-		if(myBoardNo<1) {
-			
-		}else {
-			
-			model.addAttribute("myBoardNo",myBoardNo);
-		}
-		
+		//4.
 		return "myBoard/teamNoticeList";
 	}
 	
