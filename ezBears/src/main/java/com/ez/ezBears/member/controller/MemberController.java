@@ -56,10 +56,11 @@ public class MemberController {
 	}
 	
 	@PostMapping("/write")
-	public String write_post(@ModelAttribute MemberVO vo) {
+	public String write_post(@ModelAttribute MemberVO vo, Model model) {
 		
 		//1
 		logger.info("회원등록 처리, 파라미터 vo={}",vo);
+		
 		//2
 		
 		//3
