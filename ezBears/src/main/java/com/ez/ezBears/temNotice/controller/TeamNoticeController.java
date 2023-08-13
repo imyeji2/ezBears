@@ -29,11 +29,9 @@ public class TeamNoticeController {
 		logger.info("팀 공지사항 리스트 페이지, 파라미터 myBoardNo={}",myBoardNo);
 		
 		//2.
-		String myBoardName=myBoardListService.selectByMyBoardName(myBoardNo);
-		logger.info("팀 게시판 이름 검색 결과 myBoardName={}",myBoardName);
+
 		
 		//3.
-		model.addAttribute("myBoardName",myBoardName); 
 		model.addAttribute("myBoardNo",myBoardNo);
 		
 		
