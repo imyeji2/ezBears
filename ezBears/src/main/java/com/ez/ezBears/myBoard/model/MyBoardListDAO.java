@@ -8,6 +8,6 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface MyBoardListDAO {
-	List<MyBoardListVO> selectBoardList(int memNo);
+	List<Map<String, Object>> selectBoardList(String userid);
 
 }
