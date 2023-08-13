@@ -42,4 +42,9 @@ public class StaffServiceImpl implements StaffService{
 
 		return result;
 	}
+
+	@Override
+	public int insertStaff(StaffVO staffVo) {
+		return staffDao.insertStaff(staffVo);
+	}
 }

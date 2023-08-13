@@ -46,12 +46,12 @@ public class StaffController {
 		logger.info("스태프 등록 처리 파라미터, staffVo={}", staffVo);
 		
 		//2
-		
+		int cnt = staffService.insertStaff(staffVo);
+		logger.info("스태프 등록 처리 결과, cnt={}", cnt);
 		
 		//3
-		
 		//4
-		return "";
+		return "/staff/staffList";
 	}
 	
 	@GetMapping("/staffEdit")

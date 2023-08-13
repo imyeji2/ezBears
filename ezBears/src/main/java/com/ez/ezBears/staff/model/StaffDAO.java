@@ -6,4 +6,5 @@ import org.apache.ibatis.annotations.Mapper;
 public interface StaffDAO {
 	int selectCheckId(String staffId);
 	String selectPwd(String staffId);
+	int insertStaff(StaffVO staffVo);
 }
