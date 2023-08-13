@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="../inc/top.jsp"%>	
 <!-- Recent Sales Start -->
-	<!-- 클래식 에디터 -->
-<script src="https://cdn.ckeditor.com/ckeditor5/29.1.0/classic/ckeditor.js"></script>
 	<!-- 넓이 높이 조절 -->
 	<style>
 	.ck.ck-editor {
@@ -15,6 +13,13 @@
 	
 	</style>
 
+	<script>
+		$(function () {
+			CKEDITOR.replace('content', {
+				filebrowserUploadUrl : "<c:url value='/adm/fileupload'/>"
+			});
+		});
+	</script>
 <div class="container-fluid pt-4 px-4" id="board_style">
 	<div class="bg-secondary text-center rounded p-4">
     	<div class="bg-secondary rounded h-100 p-4">
@@ -27,49 +32,33 @@
 			  </ol>
 			</nav>   			
 			<div id="teamNoticeWrite">
-	        	<div class="writeWrap">
-	        	
-		        	<div class="write_title">
-		        		<input type="text" class="form-control" id="exampleFormControlInput1"
-						 placeholder="제목을 입력해주세요">
-		        	</div><!-- write_title -->
-		        
-		       				 
-		       		<div class="write_content">
-		       			<div class="write_view">
-		       			   <div id="editor">
-						   
-						    </div>
-						    <script>
-							    ClassicEditor
-								.create(document.querySelector('#editor'), {
-									ckfinder: {
-										uploadUrl : '/image/upload'
-									}
-								})
-								.then(editor => {
-									console.log('Editor was initialized');
-								})
-								.catch(error => {
-									console.error(error);
-								});
-						    </script>
-			       			 <!-- <div class="form-floating">
-							  <textarea class="form-control write_form" placeholder="내용을 입력해주세요" id="#"></textarea>
-							</div>	 -->
-		       			</div>
-		       			
-		       			<div class="write_file">
-							<input class="form-control" type="file" id="formFile">
-		       			</div>
-		       			<div class="write_option_btn">
-		       				<button class="btn btn-sm btn-primary">등록</button>&nbsp;
-		       				<button class="btn btn-sm btn-primary">취소</button>
-		       			</div>
-		       		</div><!-- write_content -->
-	       		</div><!-- writeWrap -->	 
-	       		
-	   		
+				<form name="teamNotiFrm" method="post" enctype="multipart/form-data"
+						action="">
+		        	<div class="writeWrap">
+		        		<input type="hidden" name="myBoardNo" value="">
+			        	<div class="write_title">
+			        		<input type="text" class="form-control" id="title" name="title"
+							 placeholder="제목을 입력해주세요">
+			        	</div><!-- write_title -->
+			        
+			       				 
+			       		<div class="write_content">
+			       			<div class="write_view">
+				       			 <div class="form-floating">
+								  <textarea class="form-control write_form" placeholder="내용을 입력해주세요" id="content"></textarea>
+								</div>
+			       			</div>
+			       			
+			       			<div class="write_file">
+								<input class="form-control" type="file" name="notiFile" id="notiFile">
+			       			</div>
+			       			<div class="write_option_btn">
+			       				<button class="btn btn-sm btn-primary">등록</button>&nbsp;
+			       				<button class="btn btn-sm btn-primary">취소</button>
+			       			</div>
+			       		</div><!-- write_content -->
+		       		</div><!-- writeWrap -->	 
+		   		</form>
 			</div><!-- teamNoticeWrite -->
 		</div>
 	</div>
