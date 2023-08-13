@@ -13,8 +13,13 @@ import lombok.RequiredArgsConstructor;
 public class MyBoardListServiceImpl implements MyBoardListService {
 	private final MyBoardListDAO myBoardListDao;
 	@Override
-	public List<MyBoardListVO> selectBoardList(int memNo) {
-		return myBoardListDao.selectBoardList(memNo);
+	public List<Map<String, Object>> selectBoardList(String userid) {
+		return myBoardListDao.selectBoardList(userid);
+	}
+	
+	@Override
+	public String selectByMyBoardName(int myBoardNo) {
+		return myBoardListDao.selectByMyBoardName(myBoardNo);
 	}
 
 }

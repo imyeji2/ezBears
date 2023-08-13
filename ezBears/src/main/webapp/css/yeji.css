@@ -3,12 +3,14 @@
 /*나의보드(board) css*/
 #board_style{
 	.tap_txt{
-		color: #6C7293;
+		color: #fff;
 	}
 	
 }/*나의보드(board) css*/
 
-
+.breadcrumb-item.active {
+    color: #fff;
+}
 
 /*top 멤버 정보 */
 #top_membox{
@@ -51,6 +53,7 @@
 
 /*팀별 공지사항 리스트(피드형) css*/
 #teamNoticeList{
+	color:#fff;
 	
 	.btnBox{
 		width: 90%;
@@ -193,6 +196,7 @@
 /*팀별 공지사항 디테일 css*/
 #teamNoticeDetail{
 	min-height:50vh;
+	color:#fff;
 	
 	.detail_title{
 		width:100%;
@@ -341,7 +345,8 @@
 #teamNoticeWrite{
 	width:70%;
 	margin:0 auto;
-
+	color:#fff;
+	
 	.writeWrap{
 		margin: 50px 0px 30px 0px;
 	}
@@ -376,6 +381,26 @@
 
 /*팀별 업무 게시판 리스트*/
 #teamWorkBoardList{
+	color:#fff;
+	
+	.table{
+		color:#fff;
+	}
+	
+	.table tbody tr:hover{
+		color:#7000D8;
+		cursor: pointer;
+	}
+	
+	.table a{
+		color:#fff;
+	}
+	
+	.table a:hover{
+		color:#7000D8;
+		cursor: pointer;
+	}
+	
 	.btnBox{
 		margin:20px 0px 20px 0px;
 		overflow:hidden;
@@ -436,6 +461,7 @@
 #teamWorkBoardWrite{
 	width:70%;
 	margin:0 auto;
+	color:#fff;
 
 	.writeWrap{
 		margin: 50px 0px 30px 0px;
@@ -532,6 +558,7 @@
 /*팀별 업무게시판 디테일 css*/
 #teamWorkBoardDetail{
 	min-height:50vh;
+	color:#fff;
 	
 	.detail_title{
 		width:100%;
