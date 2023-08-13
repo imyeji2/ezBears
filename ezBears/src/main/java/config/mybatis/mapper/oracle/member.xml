@@ -13,4 +13,23 @@
 		where MEM_ID=#{MEM_ID}
 		and CONTRACT_DONE is null
 	</select>
+	
+	<!-- 자동 아이디 생성 관리 및 멤버 등록  -->
+	<select id="getTodayMem" resultType="int">
+		SELECT COUNT(*) FROM MEMBER WHERE CONTRACT_START = #{contractStart}
+	</select>
+	
+	<select id="isMemId" resultType="int">
+		SELECT COUNT(*) FROM MEMBER WHERE MEM_ID = #{memId}
+	</select>
+	
+	<insert id="insertMem" parameterType="memberVo">
+		<selectKey keyProperty="memNo" order="BEFORE" resultType="int">
+		 SELECT MEMBER_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO MEMBER(MEM_NO, DEPT_NO, POSITION_NO, MEM_NAME, MEM_ID, MEM_PWD, MEM_TEL,MEM_SAL, 
+				CONTRACT_START, TYPE, MEM_ADDRESS, MEM_ADDRESS_dETAIL, MEM_ZIPCODE, MEM_IMAGE, MEM_BIRTH)
+		VALUES(#{memNo},#{deptNo},#{positionNo},#{memName},#{memId},#{memPwd},#{memTel}, #{memSal},
+				#{contractStart},#{type},#{memAddress},#{memAddressDetail},#{memZipcode},#{memImage},#{memBirth})
+	</insert>
 </mapper>
