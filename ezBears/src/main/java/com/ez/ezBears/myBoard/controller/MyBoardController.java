@@ -103,10 +103,9 @@ public class MyBoardController {
 	   
 	   
 		/* 캘린더 */
-	   @RequestMapping("/Calender")
-	   public String Calender() {
-	      logger.info("결재 리스트");
-	      return "myBoard/Calender";
-	   }
+		/*
+		  @RequestMapping("/Calender") public String Calender() { logger.info("캘린더 뷰");
+		  return "myBoard/Calender"; }
+		 */
 }
 

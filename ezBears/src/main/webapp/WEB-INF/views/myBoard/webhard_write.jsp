@@ -21,7 +21,7 @@
 			<h6 class="mb-4">웹하드 등록</h6>
 			<div class="appbox">
 				<div class="form-floating mb-3">
-					<input type="email" class="form-control" id="floatingInput"
+					<input type="email" class="form-control" id="title" name ="title"
 						placeholder="name@example.com">
 						 <label for="floatingInput">제목 </label>
 
