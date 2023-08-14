@@ -78,4 +78,11 @@ public class RecordController {
 		return "/record/lineup";
 	}
 	
+	@RequestMapping("/firstInning")
+	public String firstInning() {
+		//1,4
+		logger.info("라인업");
+		return "/record/firstInning";
+	}
+	
 }

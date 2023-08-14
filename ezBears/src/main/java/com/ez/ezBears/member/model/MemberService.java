@@ -16,4 +16,8 @@ public interface MemberService {
 	//아이디 자동 생성
 	String createMemId();
 	
+	//멤버 등록
+	int insertMem(MemberVO memberVo);
+    MemberVO getMemberById(String memId);
+    void updateMember(MemberVO memberVO);
 }

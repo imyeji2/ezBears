@@ -12,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService{
 	private final MemberDAO memberDao;
-	private int todayMem = 0; // 등록된 사원 수 유지하려고 전역에 선언
 	
 	@Override
 	public int selectCheckId(String memId) {
@@ -46,6 +45,7 @@ public class MemberServiceImpl implements MemberService{
 		return result;
 	}
 
+	//자동 아이디 생성
 	@Override
 	public String createMemId() {
 		
@@ -54,10 +54,40 @@ public class MemberServiceImpl implements MemberService{
 		String today = sdf.format(new Date());
 		
 		//오늘 생성된 사원 수 증가
-		todayMem++;
+		int todayMemCnt = memberDao.getTodayMem(today);
 		
-		String memberId = "ez_fr_" + today + String.format("%03d", todayMem);
+		String memberId = "ez_fr_" + today + String.format("%03d", todayMemCnt+1);
 		
-		return memberId;
+        if (isMemberIdExists(memberId)) {
+            int increment = 1;
+            do {
+                memberId = "ez_fr_" + today + String.format("%03d", todayMemCnt + increment);
+                increment++;
+            } while (isMemberIdExists(memberId));
+        }
+
+        return memberId;
 	}
+
+    private boolean isMemberIdExists(String memId) {
+        return memberDao.isMemId(memId) > 0;
+    }
+    
+    
+    //멤버 등록
+	@Override
+	public int insertMem(MemberVO memberVo) {
+		return memberDao.insertMem(memberVo);
+	}
+
+	@Override
+	public MemberVO getMemberById(String memId) {
+		return memberDao.getMemberById(memId);
+	}
+
+	@Override
+	public void updateMember(MemberVO memberVO) {
+		memberDao.updateMember(memberVO);
+	}
+	
 }

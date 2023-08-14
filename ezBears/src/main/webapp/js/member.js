@@ -18,6 +18,27 @@
 				return false;
 			}
 			
+			//부서
+			if($('#dept').val().length < 1){
+				alert("부서를 선택해주세요.");
+				$('#dept').focus();
+				return false;
+			}
+			
+			//직급
+			if($('#grade').val().length < 1){
+				alert("직급을 선택해주세요.");
+				$('#grade').focus();
+				return false;
+			}
+			
+			//부서
+			if($('#test').val().length < 1){
+				alert("고용형태를 선택해주세요.");
+				$('#test').focus();
+				return false;
+			}
+			
 			//비밀번호
 			if($('#registerPassword').val().length < 1){
 				alert("비밀번호를 입력해주세요.");
@@ -38,7 +59,8 @@
 				$('#sal').focus();
 				return false;
 			}
-			
+
+
 		});
 		
 		//ajax
@@ -75,57 +97,82 @@
 		});
 		
 		//전화번호 '-' 자동 삽입, 숫자만 입력 가능
-		$('#phoneNum').on('input', function(event) {
-		    var $text = $(this);
-		    var inputValue = $text.val();
-		    
-		    // 정규식을 사용하여 숫자와 하이픈(-)만 남기고 다른 문자 제거
-		    var cleanedValue = inputValue.replace(/[^\d-]/g, '');
-		    
-		    // 숫자가 3개와 8개가 아닐 경우 하이픈 추가
-		    if (cleanedValue.length === 3 || cleanedValue.length === 8) {
-		        cleanedValue += '-';
-		    }
-		    
-		    // 입력값 업데이트
-		    $text.val(cleanedValue);
-		});
+	    $('#phoneNum').on('input', function(event) {
+	        var $text = $(this);
+	        var inputValue = $text.val();
+	
+	        // 숫자와 하이픈만 남기고 다른 문자 제거
+	        var cleanedValue = inputValue.replace(/[^\d-]/g, '');
+	
+	        // 하이픈을 삽입하여 포맷팅
+	        var formattedValue = '';
+	        var digitCount = 0;
+	
+	        for (var i = 0; i < cleanedValue.length; i++) {
+	            if (cleanedValue[i] === '-') {
+	                if (digitCount === 3 || digitCount === 7) {
+	                    continue; // 이미 하이픈이 있는 위치면 스킵
+	                }
+	            }
+	
+	            if (digitCount === 3 || digitCount === 7) {
+	                formattedValue += '-';
+	            }
+	
+	            formattedValue += cleanedValue[i];
+	            digitCount++;
+	        }
+	
+	        // 입력값 업데이트
+	        $text.val(formattedValue);
+	    });
+			
+			
+/*		//생년월일 자동 '-' 삽입, 숫자만 입력가능 
+	    $('#birth').on('input', function(event) {
+        var $text = $(this);
+        var inputValue = $text.val();
+
+        // 입력값에서 하이픈 제거
+        var cleanedValue = inputValue.replace(/-/g, '');
+
+        // 정규식을 사용하여 숫자만 남기고 다른 문자 제거
+        cleanedValue = cleanedValue.replace(/[^\d]/g, '');
+
+        // 하이픈을 삽입하여 포맷팅
+        if (cleanedValue.length > 4) {
+            cleanedValue = cleanedValue.substring(0, 4) + '-' + cleanedValue.substring(4);
+        }
+        if (cleanedValue.length > 7) {
+            cleanedValue = cleanedValue.substring(0, 7) + '-' + cleanedValue.substring(7);
+        }
+
+        // 입력값 업데이트
+        $text.val(cleanedValue);
+    	});
 		
 		
-		//생년월일 자동 '-' 삽입, 숫자만 입력가능 
-		$('#birth').on('input', function(event) {
-		    var $text = $(this);
-		    var inputValue = $text.val();
-		    
-		    // 정규식을 사용하여 숫자와 하이픈(-)만 남기고 다른 문자 제거
-		    var cleanedValue = inputValue.replace(/[^\d-]/g, '');
-		    
-		    // 숫자가 3개와 8개가 아닐 경우 하이픈 추가
-		    if (cleanedValue.length === 4 || cleanedValue.length === 7) {
-		        cleanedValue += '-';
-		    }
-		    
-		    // 입력값 업데이트
-		    $text.val(cleanedValue);
-		});
-		
-		
-		//입사일 자동 '-' 삽입, 숫자만 입력가능 
-		$('#contract').on('input', function(event) {
-		    var $text = $(this);
-		    var inputValue = $text.val();
-		    
-		    // 정규식을 사용하여 숫자와 하이픈(-)만 남기고 다른 문자 제거
-		    var cleanedValue = inputValue.replace(/[^\d-]/g, '');
-		    
-		    // 숫자가 3개와 8개가 아닐 경우 하이픈 추가
-		    if (cleanedValue.length === 4 || cleanedValue.length === 7) {
-		        cleanedValue += '-';
-		    }
-		    
-		    // 입력값 업데이트
-		    $text.val(cleanedValue);
-		});
+	    $('#contract').on('input', function(event) {
+	        var $text = $(this);
+	        var inputValue = $text.val();
+	
+	        // 입력값에서 하이픈 제거
+	        var cleanedValue = inputValue.replace(/-/g, '');
+	
+	        // 정규식을 사용하여 숫자만 남기고 다른 문자 제거
+	        cleanedValue = cleanedValue.replace(/[^\d]/g, '');
+	
+	        // 하이픈을 삽입하여 포맷팅
+	        if (cleanedValue.length > 4) {
+	            cleanedValue = cleanedValue.substring(0, 4) + '-' + cleanedValue.substring(4);
+	        }
+	        if (cleanedValue.length > 7) {
+	            cleanedValue = cleanedValue.substring(0, 7) + '-' + cleanedValue.substring(7);
+	        }
+	
+	        // 입력값 업데이트
+	        $text.val(cleanedValue);
+	    });*/
 	});
 		
 		

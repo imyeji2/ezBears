@@ -35,6 +35,7 @@
     <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/css/custom.css" rel="stylesheet">
     <script type="text/javascript" src="<c:url value='/js/jquery-3.7.0.min.js'/>"></script>
+    <script src="//cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
     
     <style>
     	a{
@@ -164,13 +165,6 @@
                         	<i class="bi bi-text-center me-2"></i>나의보드
                         </a>
                         <div class="dropdown-menu bg-transparent border-0">
-                           <%--  <a href="<c:url value='/myBoard/teamNoticeList?boardNo=2'/>" class="dropdown-item"> --%>
-                           <%-- <a href="<c:url value='/myBoard/board?boardNo=2'/>" class="dropdown-item">
-                           		<i class="bi bi-pin-angle-fill me-2"></i>운영1팀
-                            </a>
-                            <a href="#" class="dropdown-item">
-                            	<i class="bi bi-pin-angle-fill me-2"></i>프로젝트팀
-                            </a> --%>
                             <c:import url="/myBoard/myBoardList"></c:import>
                         </div>
                     </div>
@@ -243,7 +237,7 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
                             <a href="#" class="dropdown-item">마이페이지</a>
-                            <a href="#" class="dropdown-item">로그아웃</a>
+                            <a href="<c:url value='/login/logout'/>" class="dropdown-item">로그아웃</a>
                         </div>
                     </div>                   	
               	</div>

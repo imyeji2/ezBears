@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface MyBoardListService {
-	List<MyBoardListVO> selectBoardList(int memNo);
+	List<Map<String, Object>> selectBoardList(String userid);
+	String selectByMyBoardName(int myBoardNo);
 }
 

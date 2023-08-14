@@ -41,12 +41,15 @@ public class LoginController {
 			@RequestParam(required = false) String chkSave, 
 			HttpServletRequest request, HttpServletResponse response, 
 			Model model) {
-		
+
 		logger.info("로그인 파라마터 userid={},pwd={},chkSave={}",userid,pwd,chkSave);
-		
+
 		String msg="로그인 처리 실패", url="/login/login";
+		
 		if(position.equals("front")) {
 			int result=memberService.loginCheck(userid, pwd);
+			String type="사원";
+			logger.info("로그인 체크 결과 result={}",result);
 			if(result==memberService.LOGIN_OK) {
 				if(result>0) {
 					msg=userid + "님 로그인되었습니다.";
@@ -55,6 +58,7 @@ public class LoginController {
 					//session
 					HttpSession session=request.getSession();
 					session.setAttribute("userid", userid);
+					session.setAttribute("type", type);
 
 					//cookie
 					Cookie ck = new Cookie("ck_userid", userid);
@@ -66,17 +70,18 @@ public class LoginController {
 						ck.setMaxAge(0); //쿠키 제거
 						response.addCookie(ck);
 					}
-				}else if(result==memberService.PWD_DISAGREE) {
-					msg="비밀번호가 일치하지 않습니다.";
-				}else if(result==memberService.USERID_NONE) {
-					msg="해당 아이디가 존재하지 않습니다.";			
 				}
+			}else if(result==memberService.PWD_DISAGREE) {
+				msg="프론트 비밀번호가 일치하지 않습니다.";
+			}else if(result==memberService.USERID_NONE) {
+				msg="해당 프론트 아이디가 존재하지 않습니다.";			
 			}
-		}
-		
-		if(position.equals("player")) {
+		}else if(position.equals("player")) {
 			int result1=staffService.loginCheck(userid, pwd);
+			String type="스태프";
+			logger.info("로그인 체크 결과 result1={}",result1);
 			if(result1==staffService.LOGIN_OK) {
+				
 				if(result1>0) {
 					msg=userid + "님 로그인되었습니다.";
 					url="/";
@@ -84,6 +89,7 @@ public class LoginController {
 					//session
 					HttpSession session=request.getSession();
 					session.setAttribute("userid", userid);
+					session.setAttribute("type", type);
 
 					//cookie
 					Cookie ck = new Cookie("ck_userid", userid);
@@ -95,14 +101,15 @@ public class LoginController {
 						ck.setMaxAge(0); //쿠키 제거
 						response.addCookie(ck);
 					}
-				}else if(result1==staffService.PWD_DISAGREE) {
-					msg="비밀번호가 일치하지 않습니다.";
-				}else if(result1==staffService.USERID_NONE) {
-					msg="해당 아이디가 존재하지 않습니다.";			
 				}
+			}else if(result1==staffService.PWD_DISAGREE) {
+				msg="플레이어 비밀번호가 일치하지 않습니다.";
+			}else if(result1==staffService.USERID_NONE) {
+				msg="해당 플레이어 아이디가 존재하지 않습니다.";			
+			}else if(result1==staffService.USERID_DONE) {
+				msg="해당 플레이어는 상태가 정지되었습니다";
 			}
 		}
-		
 
 		//3
 		model.addAttribute("msg", msg);
@@ -111,5 +118,15 @@ public class LoginController {
 		//4
 		return "common/message";
 	}
-
+	
+	
+	@RequestMapping("/logout")
+	public String logout(HttpSession session) {
+		logger.info("로그아웃");
+		
+		session.removeAttribute("userid");
+		
+		return "redirect:/login/login";
+	}
+	
 }
