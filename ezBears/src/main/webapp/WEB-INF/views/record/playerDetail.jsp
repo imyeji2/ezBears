@@ -171,8 +171,6 @@
 						</div>
 					</div>
 			</div>
-		</div>
-	</div>
 
 
 <%@include file="../inc/bottom.jsp"%>
