@@ -18,4 +18,6 @@ public interface MemberService {
 	
 	//멤버 등록
 	int insertMem(MemberVO memberVo);
+    MemberVO getMemberById(String memId);
+    void updateMember(MemberVO memberVO);
 }

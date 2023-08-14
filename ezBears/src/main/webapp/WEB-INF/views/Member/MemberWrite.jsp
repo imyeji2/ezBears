@@ -71,7 +71,7 @@
 				</div>
 				<div class="detail">
 					<div class="form-floating">
-						<input type="text" class="form-control" id="birth" name="memBirth" maxlength="10"> 
+						<input type="date" class="form-control" id="birth" name="memBirth" maxlength="10"> 
 						<label for="birth">생년월일</label>
 					</div>
 					<div class="form-floating">
@@ -85,7 +85,7 @@
 						<label for="sal">연봉</label>
 					</div>
 					<div class="form-floating">
-						<input type="text" class="form-control" id="contract" name="contractStart" maxlength="10"> 
+						<input type="date" class="form-control" id="contract" name="contractStart" maxlength="10"> 
 						<label for="contract">입사일</label>
 					</div>
 

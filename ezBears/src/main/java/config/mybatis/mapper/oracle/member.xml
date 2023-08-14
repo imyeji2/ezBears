@@ -28,8 +28,20 @@
 		 SELECT MEMBER_SEQ.NEXTVAL FROM DUAL
 		</selectKey>
 		INSERT INTO MEMBER(MEM_NO, DEPT_NO, POSITION_NO, MEM_NAME, MEM_ID, MEM_PWD, MEM_TEL,MEM_SAL, 
-				CONTRACT_START, TYPE, MEM_ADDRESS, MEM_ADDRESS_dETAIL, MEM_ZIPCODE, MEM_IMAGE, MEM_BIRTH)
+				CONTRACT_START, TYPE, MEM_ADDRESS, MEM_ADDRESS_DETAIL, MEM_ZIPCODE, MEM_IMAGE, MEM_BIRTH)
 		VALUES(#{memNo},#{deptNo},#{positionNo},#{memName},#{memId},#{memPwd},#{memTel}, #{memSal},
 				#{contractStart},#{type},#{memAddress},#{memAddressDetail},#{memZipcode},#{memImage},#{memBirth})
 	</insert>
+	
+	    <select id="getMemberById" parameterType="String" resultType="memberVo">
+        SELECT * FROM MEMBER WHERE MEM_ID = #{memId}
+    </select>
+    
+    <update id="updateMember" parameterType="memberVo">
+        UPDATE MEMBER
+        SET MEM_NAME = #{memName},
+            MEM_BIRTH = #{memBirth},
+            CONTRACT_START = #{contractStart}
+        WHERE MEM_ID = #{memId}
+    </update>
 </mapper>
