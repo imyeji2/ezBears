@@ -6,15 +6,21 @@
 	<select id="selectCheckId" parameterType="string"
 		resultType="int">
 		select count(*) from STAFF  
-		where STAFF_ID=#{STAFF_ID}
+		where STAFF_ID=#{staffId}
 	</select>
 	
-	<select id="selectPwd" parameterType="string"
+	<select id="selectPwd" parameterType="String"
 		resultType="string">
-		select STAFF_PWD  from STAFF 
-		where STAFF_ID=#{STAFF_ID}
-		and CONTRACT_DONE is null
-	</select>
+		select STAFF_PWD from STAFF 
+		where STAFF_ID=#{staffId}
+	</select> 
+
+	<select id="selectStatus" parameterType="String"
+		resultType="string">
+		select STAFF_STATUS from STAFF 
+		where STAFF_ID=#{staffId}
+	</select> <!-- vo랑 map가 NULL값이 들어오면 return이 안된다 -->
+	
 	
 	<insert id="insertStaff" parameterType="staffVo">
 		<selectKey keyProperty="staffNo" order="BEFORE" resultType="int">
