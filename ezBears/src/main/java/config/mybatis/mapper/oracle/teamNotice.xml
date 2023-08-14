@@ -3,7 +3,11 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ez.ezBears.temNotice.model.TeamNoticeDAO">
 
-	<select id="">
-	
-	</select>
+<!-- 	<insert id="insertTeamNotice" parameterType="teamNoticeVo">
+		<selectKey keyProperty="teamNoticeNo" resultType="int">
+			select teamNotice_seq.nextval from teamNotice
+		</selectKey>
+		insert into teamNotice(teamNoticeNo, memNo, myBoardNo, teamNoticeTitle, teamNoticeContent,fsize,fileName,originname)
+		values()
+	</insert> -->
 </mapper>

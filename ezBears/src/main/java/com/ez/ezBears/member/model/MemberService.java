@@ -20,4 +20,5 @@ public interface MemberService {
 	int insertMem(MemberVO memberVo);
     MemberVO getMemberById(String memId);
     void updateMember(MemberVO memberVO);
+    int selectMemberNo(String memId);
 }

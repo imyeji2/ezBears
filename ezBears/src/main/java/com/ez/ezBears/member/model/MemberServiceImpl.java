@@ -1,6 +1,5 @@
 package com.ez.ezBears.member.model;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -88,6 +87,11 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public void updateMember(MemberVO memberVO) {
 		memberDao.updateMember(memberVO);
+	}
+
+	@Override
+	public int selectMemberNo(String memId) {
+		return memberDao.selectMemberNo(memId);
 	}
 	
 }
