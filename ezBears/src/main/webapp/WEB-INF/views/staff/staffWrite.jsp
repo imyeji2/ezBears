@@ -121,40 +121,40 @@
                             <label for="floatingSelect">부서를 선택하세요</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="staff_name">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="staff_name" name="staffName">
                             <label for="floatingInput">staff_이름</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="staff_position">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="staff_position" name="staffPosition">
                             <label for="floatingInput">staff_포지션</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="staff_back_no">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="staff_back_no" name="staffBackNo">
                             <label for="floatingInput">staff_등번호</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="date" class="form-control" id="staffBirth" placeholder="staff_birth" max="9999-12-31">
+                            <input type="date" class="form-control" id="staffBirth" placeholder="staff_birth" max="9999-12-31" name="staffBirth">
                             <label for="floatingInput">staff_생일</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="staff_sal">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="staff_sal" name="staffSal">
                             <label for="floatingInput">staff_연봉</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="date" class="form-control" id="contractStart" placeholder="contract_start" max="9999-12-31">
+                            <input type="date" class="form-control" id="contractStart" placeholder="contract_start" max="9999-12-31" name="contractStart">
                             <label for="floatingInput">계약 시작일</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="date" class="form-control" id="contractDone" placeholder="contract_done" max="9999-12-31">
+                            <input type="date" class="form-control" id="contractDone" placeholder="contract_done" max="9999-12-31" name="contractDone">
                             <label for="floatingInput">계약 종료일</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="staff_info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="staff_info" name="staffInfo">
                             <label for="floatingInput">staff_정보</label>
                         </div>
 	                    <div class="firstdiv">
 					    	<div class="form-floating address">
-					    		<input type="text" class="form-control" id="contract" placeholder="staff_zipcode">
+					    		<input type="text" class="form-control" id="contract" placeholder="staff_zipcode" name="staffZipcode">
 						        <label for="zipcode">우편번호</label>
 					    	</div>
 					    	<div class="dup">
@@ -164,23 +164,23 @@
 				    	</div>	
 				    	<br>
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="staff_addr" placeholder="staff_addr">
+                            <input type="text" class="form-control" id="staff_addr" placeholder="staff_addr" name="staffAddr">
                             <label for="floatingInput">staff_주소</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="staff_addr_detail" placeholder="staff_addr_detail">
+                            <input type="text" class="form-control" id="staff_addr_detail" placeholder="staff_addr_detail" name="staffAddrDetail">
                             <label for="floatingInput">staff_주소상세</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="staffTel" placeholder="staff_tel" maxlength="13">
+                            <input type="text" class="form-control" id="staffTel" placeholder="staff_tel" maxlength="13" name="staffTel">
                             <label for="floatingInput">staff_전화번호</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="staff_id">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="staff_id" name="staffId">
                             <label for="floatingInput">staff_id</label>
                         </div>
                         <div class="form-floating mb-4">
-                            <input type="password" class="form-control" id="floatingPassword" placeholder="staff_pwd">
+                            <input type="password" class="form-control" id="floatingPassword" placeholder="staff_pwd" name="staffPwd">
                             <label for="floatingPassword">staff_pwd</label>
                         </div>
                         <!-- <div class="d-flex align-items-center justify-content-between mb-4">
