@@ -10,6 +10,8 @@ public interface StaffService {
 	int PWD_DISAGREE=2; //비밀번호 불일치
 	int USERID_NONE=3; //해당 아이디가 존재하지 않음
 	
+	int USERID_DONE=4; //스태프계약 상태 N
+	
 	int selectCheckId(String staffId);
 	int loginCheck(String staffId, String staffPwd);
 }

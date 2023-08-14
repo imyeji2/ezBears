@@ -4,6 +4,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import com.ez.ezBears.login.controller.LoginInterceptor;
+
 @Configuration
 public class MvcConfiguration implements WebMvcConfigurer{
 
@@ -14,13 +16,11 @@ public class MvcConfiguration implements WebMvcConfigurer{
 		.addPathPatterns("/shop/cart/*", "/shop/order/*",
 				"/member/memberEdit","/member/memberOut");
 
-	
-		registry.addInterceptor(new AdminLoginInterceptor())
-		.excludePathPatterns("/admin/login/adminLogin")
-		.addPathPatterns("/admin/**"); 
-		//**->admin아래 폴더가 와도 되고 안되도 되고
-
-		 */
+	 */
+		registry.addInterceptor(new LoginInterceptor())
+		.excludePathPatterns("/login/login")
+		.addPathPatterns("/*"); 
+		
 	}
 
 	/*
