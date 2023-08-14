@@ -82,8 +82,12 @@ public class StaffController {
 	}
 	
 	@GetMapping("/staffList")
-	public String list_get() {
+	public String list_get(Model model) {
 		logger.info("스태프 목록페이지로 이동");
+		
+		List<StaffVO> list = staffService.selectAllStaff();
+		
+		model.addAttribute("list", list);
 		
 		return "/staff/staffList";
 		

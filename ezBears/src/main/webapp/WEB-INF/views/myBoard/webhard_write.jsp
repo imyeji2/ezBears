@@ -21,7 +21,7 @@
 			<h6 class="mb-4">웹하드 등록</h6>
 			<div class="appbox">
 				<div class="form-floating mb-3">
-					<input type="email" class="form-control" id="floatingInput"
+					<input type="email" class="form-control" id="title" name ="title"
 						placeholder="name@example.com">
 						 <label for="floatingInput">제목 </label>
 
@@ -29,7 +29,8 @@
 				<div class="form-floating mb-3">
 					<span class="sp1">첨부파일</span> <span> <img
 						src="<c:url value=''/>" alt="파일 이미지">
-					</span> <span>다운</span>
+					</span> 
+					<span>다운</span>
 				</div>
 				<div class="form-floating">
 					<textarea class="form-control textarea" placeholder="Leave a comment here"

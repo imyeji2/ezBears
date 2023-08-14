@@ -1,5 +1,7 @@
 package com.ez.ezBears.staff.model;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.ez.ezBears.member.model.MemberService;
@@ -53,6 +55,11 @@ public class StaffServiceImpl implements StaffService {
 	@Override
 	public int insertStaff(StaffVO staffVo) {
 		return staffDao.insertStaff(staffVo);
+	}
+
+	@Override
+	public List<StaffVO> selectAllStaff() {
+		return staffDao.selectAllStaff();
 	}
 	
 	

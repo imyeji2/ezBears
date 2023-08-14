@@ -18,4 +18,7 @@ public interface MemberDAO {
     MemberVO getMemberById(String memId);
     void updateMember(MemberVO memberVO);
     
+    //회원 아이디로 회원 번호 검색하기
+    int selectMemberNo(String memId);
+    
 }

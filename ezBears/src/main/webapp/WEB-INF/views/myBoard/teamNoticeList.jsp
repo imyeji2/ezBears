@@ -119,7 +119,8 @@
 					        <div class="btnBox">
 								<a class="btn btn-sm btn-primary" href="">삭제</a>
 								<a class="btn btn-sm btn-primary" href="">수정</a>
-								<a class="btn btn-sm btn-primary" href="<c:url value='/myBoard/teamNoticeWrite'/>">등록</a>
+								<a class="btn btn-sm btn-primary" 
+									href="<c:url value='/myBoard/teamNoticeWrite?myBoardNo=${myBoardNo}'/>">등록</a>
 							</div><!-- btnBox -->          
 							             
 						      <div class="page_box">

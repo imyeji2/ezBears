@@ -27,11 +27,15 @@
 			select staff_seq.nextval from dual
 		</selectKey>
 		insert into staff(staff_no, dept_no, staff_name, staff_position, staff_back_no, 
-    		staff_birth, staff_sal, contract_start, contract_done, staff_tel, staff_info, 
+    		staff_birth, staff_sal, contract_start, contract_done, staff_tel, staff_info, staff_zipcode,
     		staff_addr, staff_addr_detail, staff_status, staff_id, staff_pwd, staff_image)
 		values(#{staffNo}, #{deptNo}, #{staffName}, #{staffPosition}, #{staffBackNo}, 
-			#{staffBirth}, #{staffSal}, #{contractStart}, #{contractDone}, #{staffTel}, #{staffInfo},
-			#{staffAddr}, #{staffAddrDetail}, #{staffZipcode}, #{staffId}, #{staffPwd}, #{staffImage})
+			#{staffBirth}, #{staffSal}, #{contractStart}, #{contractDone}, #{staffTel}, #{staffInfo}, #{staffZipcode},
+			#{staffAddr}, #{staffAddrDetail}, 'Y', #{staffId}, #{staffPwd}, #{staffImage})
 	</insert>
+	
+	<select id="selectAllStaff" resultType="staffVo">
+		select * from staff order by staff_no
+	</select>
 	
 </mapper>
