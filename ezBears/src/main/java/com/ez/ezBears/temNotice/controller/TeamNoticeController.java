@@ -1,16 +1,29 @@
 package com.ez.ezBears.temNotice.controller;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.ez.ezBears.common.ConstUtil;
+import com.ez.ezBears.common.FileUploadUtil;
+import com.ez.ezBears.member.model.MemberService;
 import com.ez.ezBears.myBoard.controller.MyBoardController;
 import com.ez.ezBears.myBoard.model.MyBoardListService;
 import com.ez.ezBears.temNotice.model.TeamNoticeService;
+import com.ez.ezBears.temNotice.model.TeamNoticeVO;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -19,17 +32,20 @@ import lombok.RequiredArgsConstructor;
 public class TeamNoticeController {
 	private static final Logger logger = LoggerFactory.getLogger(MyBoardController.class);
 	private final MyBoardListService myBoardListService;
+	private final MemberService memberService;
+	private final FileUploadUtil fileUploadUtil;	
 	//private final TeamNoticeService teamNoticeService;
+	
 	//예지
 	/*팀별 공지사항 게시판 */
 	@RequestMapping("/teamNotice")
-	public String teamNotice(@RequestParam (defaultValue = "0") int myBoardNo, Model  model) {
+	public String teamNotice(@RequestParam (defaultValue = "0") int myBoardNo, 
+			Model  model) {
 		
 		//1.
 		logger.info("팀 공지사항 리스트 페이지, 파라미터 myBoardNo={}",myBoardNo);
-		
 		//2.
-
+		
 		
 		//3.
 		model.addAttribute("myBoardNo",myBoardNo);
@@ -40,17 +56,61 @@ public class TeamNoticeController {
 	}
 	
 	
-	@RequestMapping("/teamNoticeDetail")
-	public String teamBoardDetil(/* @RequestParam (defaultValue = "0")int no */) {
-		logger.info("팀 공지사항 디테일 페이지 파라미터 no={}");
+	@GetMapping("/teamNoticeDetail")
+	public String teamBoardDetil(@RequestParam (defaultValue = "0") int myBoardNo,
+			Model model) {
+		//1
+		logger.info("팀 공지사항 디테일 화면, 파라미터 myBoardNo={}",myBoardNo);
+		
+		//2
+		String myBoardName=myBoardListService.selectByMyBoardName(myBoardNo);
+		logger.info("팀 게시판 이름 찾기 결과 myBoardName={}",myBoardName);
+		
+		//3.
+		model.addAttribute("myBoardNo",myBoardNo);
+		model.addAttribute("myBoardName",myBoardName);
+		
 		return "myBoard/teamNoticeDetail";
 	}
 	
 	
-	@RequestMapping("/teamNoticeWrite")
-	public String teamNoticeWrite() {
+
+		
+	
+	@GetMapping("/teamNoticeWrite")
+	public String teamNoticeWrite(@RequestParam (defaultValue = "0") int myBoardNo,
+			Model model, HttpSession session) {
+		//1.
 		logger.info("팀 공지사항 등록하기 페이지");
+		String userid=(String)session.getAttribute("userid");
+		
+		//2
+		int userNo = memberService.selectMemberNo(userid);
+		logger.info("회원 아이디 userid={}, 회원 번호 userNo={}",userid,userNo);
+		
+		String myBoardName=myBoardListService.selectByMyBoardName(myBoardNo);
+		logger.info("팀 게시판 이름 찾기 결과 myBoardName={}",myBoardName);
+
+		//3.
+		model.addAttribute("myBoardNo",myBoardNo);
+		model.addAttribute("userNo",userNo);
+		model.addAttribute("myBoardName",myBoardName);
+		
+		
+		//4.
 		return "myBoard/teamNoticeWrite";
+	}
+	
+	@PostMapping("/teamNoticeWrite")
+	public String teamNoticeWrite_post(@ModelAttribute TeamNoticeVO teamNoticeVo,
+			HttpServletRequest request) {
+		
+		//1
+		logger.info("팀 공지사항 등록, 파라미터 TeamNoticeVO={}",teamNoticeVo);
+		
+		
+		//4
+		return "myBoard/teamNoticeDetail";
 	}
 	
 }

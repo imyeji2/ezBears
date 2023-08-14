@@ -7,6 +7,11 @@
 		var id= url.substr(type+1);
 		
 		$('#'+id).addClass('active');
+		
+		
+		if(id==="teamNotice"){
+			$('#detail_li').text("공지사항");
+		}
 	});
 </script>
 
