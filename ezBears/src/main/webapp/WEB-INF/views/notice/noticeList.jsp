@@ -69,7 +69,7 @@
 						       		<div class="list_box_file">test.zip 300.42MB</div>
 					       		</div>
 					       		<div class="notice_reply">
-					       			<div><a href="<c:url value='/myBoard/teamNoticeDetail'/>">댓글 달기</a></div>
+					       			<div><a href="<c:url value='/notice/noticeDetail'/>">댓글 달기</a></div>
 					       		</div>
 					        </div><!-- notice_list_box -->		
 					
@@ -95,7 +95,7 @@
 						       		</div>
 					       		</div>
 					       		<div class="notice_reply">
-					       			<div><a href="<c:url value='/myBoard/teamNoticeDetail'/>">댓글 달기</a></div>
+					       			<div><a href="<c:url value='/notice/noticeDetail'/>">댓글 달기</a></div>
 					       		</div>
 					        </div><!-- notice_list_box -->		
 					        <div class="notice_list_box">
@@ -122,7 +122,7 @@
 						       		<div class="list_box_file">config.zip 300.42MB</div>
 					       		</div>
 					       		<div class="notice_reply">
-					       			<div><a href="<c:url value='/myBoard/teamNoticeDetail'/>">댓글 달기</a></div>
+					       			<div><a href="<c:url value='/notice/noticeDetail'/>">댓글 달기</a></div>
 					       		</div>
 					        </div><!-- notice_list_box -->		 
 					                    
@@ -131,7 +131,7 @@
 					        <div class="btnBox">
 								<a class="btn btn-sm btn-primary" href="">삭제</a>
 								<a class="btn btn-sm btn-primary" href="">수정</a>
-								<a class="btn btn-sm btn-primary" href="<c:url value='/myBoard/teamNoticeWrite'/>">등록</a>
+								<a class="btn btn-sm btn-primary" href="<c:url value='/notice/noticeWrite'/>">등록</a>
 							</div><!-- btnBox -->          
 							             
 						      <div class="page_box">

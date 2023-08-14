@@ -22,16 +22,19 @@ public class LoginInterceptor implements HandlerInterceptor{
 		logger.info("컨트롤러 수행전 preHandle() 호출!");
 		
 		String userid=(String) request.getSession().getAttribute("userid");
+		logger.info("세션 파라미터 userid={}",userid);
 		
-		//관리자 로그인되지 않은 경우 에러 처리
+		//로그인되지 않은 경우 에러 처리
 		if(userid==null || userid.isEmpty()) {
 			response.setContentType("text/html;charset=utf-8");
 			PrintWriter out = response.getWriter();
 			
 			out.print("<script>");
 			out.print("alert('먼저 로그인하세요');");
-			out.print("location.href='"+ request.getContextPath() 
-				+"/login/login';");			
+			out.print("location.href='"+ request.getContextPath() +"/';");			
+			/*
+			 * out.print("location.href='"+ request.getContextPath() +"/login/login';");
+			 */			
 			out.print("</script>");
 			
 			return false;
