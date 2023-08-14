@@ -1,7 +1,5 @@
 package com.ez.ezBears.staff.model;
 
-import java.sql.Timestamp;
-
 import lombok.Data;
 
 @Data
@@ -11,10 +9,10 @@ public class StaffVO {
 	private String staffName; 
 	private String staffPosition; 
 	private int staffBackNo;        
-	private Timestamp staffBirth;          
+	private String staffBirth;          
 	private int staffSal;        
-	private Timestamp contractStart;
-	private Timestamp contractDone;
+	private String contractStart;
+	private String contractDone;
 	private String staffTel;
 	private String staffInfo; 
 	private String staffAddr; 

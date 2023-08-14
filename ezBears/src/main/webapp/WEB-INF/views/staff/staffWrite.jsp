@@ -92,6 +92,66 @@
 		    // Update the value of the input field
 		    $(this).val(cleanedTel);
 		});
+		
+		$('#staffBirth').on('input', function() {
+		    var inputTel = $(this).val();
+		    
+		    // Remove existing "-" characters
+		    var cleanedTel = inputTel.replace(/-/g, '');
+
+		    if (cleanedTel.length >= 5) {
+		        cleanedTel = cleanedTel.substring(0, 4) + '-' + cleanedTel.substring(4);
+		    }
+		    if (cleanedTel.length >= 8) {
+		        cleanedTel = cleanedTel.substring(0, 7) + '-' + cleanedTel.substring(7);
+		    }
+		    
+		    // Update the value of the input field
+		    $(this).val(cleanedTel);
+		});
+		
+		$('#contractStart').on('input', function() {
+		    var inputTel = $(this).val();
+		    
+		    // Remove existing "-" characters
+		    var cleanedTel = inputTel.replace(/-/g, '');
+
+		    if (cleanedTel.length >= 5) {
+		        cleanedTel = cleanedTel.substring(0, 4) + '-' + cleanedTel.substring(4);
+		    }
+		    if (cleanedTel.length >= 8) {
+		        cleanedTel = cleanedTel.substring(0, 7) + '-' + cleanedTel.substring(7);
+		    }
+		    
+		    // Update the value of the input field
+		    $(this).val(cleanedTel);
+		});
+		
+		$('#contractDone').on('input', function() {
+		    var inputTel = $(this).val();
+		    
+		    // Remove existing "-" characters
+		    var cleanedTel = inputTel.replace(/-/g, '');
+
+		    if (cleanedTel.length >= 5) {
+		        cleanedTel = cleanedTel.substring(0, 4) + '-' + cleanedTel.substring(4);
+		    }
+		    if (cleanedTel.length >= 8) {
+		        cleanedTel = cleanedTel.substring(0, 7) + '-' + cleanedTel.substring(7);
+		    }
+		    
+		    // Update the value of the input field
+		    $(this).val(cleanedTel);
+		});
+		
+        $('#imageUpload').on('change', function() {
+            var file = $(this)[0].files[0];
+            if (file) {
+                var imageUrl = URL.createObjectURL(file);
+
+                $('#previewImage').attr('src', imageUrl);
+            }
+        });
 	})
 </script>
 	<form name="frmWrite" method="post" action="<c:url value='/staff/staffWrite'/>">
@@ -101,97 +161,97 @@
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                     <div class="bg-secondary rounded p-4 p-sm-5 my-4 mx-3">
                         <div class="d-flex align-items-center justify-content-between mb-3">
-                            <a href="#" class="">
-                                <h3 style="color:  #6f42c1;">
-                                <img src="<c:url value='/img/free-icon-baseball-5407760.png'/>" alt="logo" style="width:30%">
-                                Ezen Bears</h3>
-                            </a>
                             <h3>Staff Write</h3>
                         </div>
                         <div style="width: 60%; margin: 0 auto;" >
-       	                <div class="form-floating mb-3">
-                            <select class="form-select" id="floatingSelect"
-                                aria-label="Floating label select example">
-								<!-- 반복문 -->
-								<c:forEach var="deptVo" items="${deptList}">
-									<option value ="${deptVo.deptNo}">${deptVo.deptName}</option>
-								</c:forEach>
-								<!-- 반복문 -->
-                            </select>
-                            <label for="floatingSelect">부서를 선택하세요</label>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="staff_name" name="staffName">
-                            <label for="floatingInput">staff_이름</label>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="staff_position" name="staffPosition">
-                            <label for="floatingInput">staff_포지션</label>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="staff_back_no" name="staffBackNo">
-                            <label for="floatingInput">staff_등번호</label>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <input type="date" class="form-control" id="staffBirth" placeholder="staff_birth" max="9999-12-31" name="staffBirth">
-                            <label for="floatingInput">staff_생일</label>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="staff_sal" name="staffSal">
-                            <label for="floatingInput">staff_연봉</label>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <input type="date" class="form-control" id="contractStart" placeholder="contract_start" max="9999-12-31" name="contractStart">
-                            <label for="floatingInput">계약 시작일</label>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <input type="date" class="form-control" id="contractDone" placeholder="contract_done" max="9999-12-31" name="contractDone">
-                            <label for="floatingInput">계약 종료일</label>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="staff_info" name="staffInfo">
-                            <label for="floatingInput">staff_정보</label>
-                        </div>
-	                    <div class="firstdiv">
-					    	<div class="form-floating address">
-					    		<input type="text" class="form-control" id="contract" placeholder="staff_zipcode" name="staffZipcode">
-						        <label for="zipcode">우편번호</label>
-					    	</div>
-					    	<div class="dup">
-						        <input type="Button" value="우편번호 찾기" id="btnZipcode" title="새창열림" onclick="sample6_execDaumPostcode()">		    	
-						        
-					    	</div>
-				    	</div>	
-				    	<br>
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="staff_addr" placeholder="staff_addr" name="staffAddr">
-                            <label for="floatingInput">staff_주소</label>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="staff_addr_detail" placeholder="staff_addr_detail" name="staffAddrDetail">
-                            <label for="floatingInput">staff_주소상세</label>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="staffTel" placeholder="staff_tel" maxlength="13" name="staffTel">
-                            <label for="floatingInput">staff_전화번호</label>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="staff_id" name="staffId">
-                            <label for="floatingInput">staff_id</label>
-                        </div>
-                        <div class="form-floating mb-4">
-                            <input type="password" class="form-control" id="floatingPassword" placeholder="staff_pwd" name="staffPwd">
-                            <label for="floatingPassword">staff_pwd</label>
-                        </div>
-                        <!-- <div class="d-flex align-items-center justify-content-between mb-4">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                <label class="form-check-label" for="exampleCheck1">Check me out</label>
-                            </div>
-                            <a href="">Forgot Password</a>
-                        </div> -->
-                        <button type="submit" class="btn btn-primary py-3 w-100 mb-4">스태프 등록</button>
-                        <!-- <p class="text-center mb-0">Don't have an Account? <a href="">Sign Up</a></p> -->
+	                   		<div class ="imgdiv">
+								<img alt="" src="<c:url value = '/img/defaultUSER.png'/>" style="width:180px; height:200px;" id="previewImage" name="memImage">
+								<label for="imageUpload" style="margin: 3px">사진 등록</label>
+								<input type ="file" name="staffImage" id="imageUpload"  class="infobox" style="display:none">
+							</div>
+	       	                <div class="form-floating mb-3">
+	                            <select class="form-select" id="floatingSelect"
+	                                aria-label="Floating label select example" name="deptNo">
+									<!-- 반복문 -->
+									<c:forEach var="deptVo" items="${deptList}">
+										<option value ="${deptVo.deptNo}">${deptVo.deptName}</option>
+									</c:forEach>
+									<!-- 반복문 -->
+	                            </select>
+	                            <label for="floatingSelect">부서를 선택하세요</label>
+	                        </div>
+	                        <div class="form-floating mb-3">
+	                            <input type="text" class="form-control" id="floatingInput" placeholder="staff_name" name="staffName">
+	                            <label for="floatingInput">staff_이름</label>
+	                        </div>
+	                        <div class="form-floating mb-3">
+	                            <input type="text" class="form-control" id="floatingInput" placeholder="staff_position" name="staffPosition">
+	                            <label for="floatingInput">staff_포지션</label>
+	                        </div>
+	                        <div class="form-floating mb-3">
+	                            <input type="text" class="form-control" id="floatingInput" placeholder="staff_back_no" name="staffBackNo">
+	                            <label for="floatingInput">staff_등번호</label>
+	                        </div>
+	                        <div class="form-floating mb-3">
+	                            <input type="text" class="form-control" id="staffBirth" placeholder="staff_birth" max="9999-12-31" name="staffBirth" maxlength="10">
+	                            <label for="floatingInput">staff_생일</label>
+	                        </div>
+	                        <div class="form-floating mb-3">
+	                            <input type="text" class="form-control" id="floatingInput" placeholder="staff_sal" name="staffSal">
+	                            <label for="floatingInput">staff_연봉</label>
+	                        </div>
+	                        <div class="form-floating mb-3">
+	                            <input type="text" class="form-control" id="contractStart" placeholder="contract_start" max="9999-12-31" name="contractStart" maxlength="10">
+	                            <label for="floatingInput">계약 시작일</label>
+	                        </div>
+	                        <div class="form-floating mb-3">
+	                            <input type="text" class="form-control" id="contractDone" placeholder="contract_done" max="9999-12-31" name="contractDone" maxlength="10">
+	                            <label for="floatingInput">계약 종료일</label>
+	                        </div>
+	                        <div class="form-floating mb-3">
+	                            <input type="text" class="form-control" id="floatingInput" placeholder="staff_info" name="staffInfo">
+	                            <label for="floatingInput">staff_정보</label>
+	                        </div>
+		                    <div class="firstdiv">
+						    	<div class="form-floating address">
+						    		<input type="text" class="form-control" id="contract" placeholder="staff_zipcode" name="staffZipcode">
+							        <label for="zipcode">우편번호</label>
+						    	</div>
+						    	<div class="dup">
+							        <input type="Button" value="우편번호 찾기" id="btnZipcode" title="새창열림" onclick="sample6_execDaumPostcode()">		    	
+							        
+						    	</div>
+					    	</div>	
+					    	<br>
+	                        <div class="form-floating mb-3">
+	                            <input type="text" class="form-control" id="staff_addr" placeholder="staff_addr" name="staffAddr">
+	                            <label for="floatingInput">staff_주소</label>
+	                        </div>
+	                        <div class="form-floating mb-3">
+	                            <input type="text" class="form-control" id="staff_addr_detail" placeholder="staff_addr_detail" name="staffAddrDetail">
+	                            <label for="floatingInput">staff_주소상세</label>
+	                        </div>
+	                        <div class="form-floating mb-3">
+	                            <input type="text" class="form-control" id="staffTel" placeholder="staff_tel" maxlength="13" name="staffTel">
+	                            <label for="floatingInput">staff_전화번호</label>
+	                        </div>
+	                        <div class="form-floating mb-3">
+	                            <input type="text" class="form-control" id="floatingInput" placeholder="staff_id" name="staffId">
+	                            <label for="floatingInput">staff_id</label>
+	                        </div>
+	                        <div class="form-floating mb-4">
+	                            <input type="password" class="form-control" id="floatingPassword" placeholder="staff_pwd" name="staffPwd">
+	                            <label for="floatingPassword">staff_pwd</label>
+	                        </div>
+	                        <!-- <div class="d-flex align-items-center justify-content-between mb-4">
+	                            <div class="form-check">
+	                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+	                                <label class="form-check-label" for="exampleCheck1">Check me out</label>
+	                            </div>
+	                            <a href="">Forgot Password</a>
+	                        </div> -->
+	                        <button type="submit" class="btn btn-primary py-3 w-100 mb-4">스태프 등록</button>
+	                        <!-- <p class="text-center mb-0">Don't have an Account? <a href="">Sign Up</a></p> -->
                         </div>
                     </div>
                 </div>

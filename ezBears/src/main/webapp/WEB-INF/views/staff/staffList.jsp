@@ -11,41 +11,35 @@
 		        <table class="table table-hover">
 		            <thead>
 		                <tr>
-		                    <th scope="col">Staff_NO</th>
-		                    <th scope="col">부서번호</th>
 		                    <th scope="col">이름</th>
 		                    <th scope="col">포지션</th>
-		                    <th scope="col">Back_No</th>
+		                    <th scope="col">특이사항</th>
 		                </tr>
 		            </thead>
 		            <tbody>
-		                <tr>
-		                    <th scope="row">1</th>
-		                    <td>100</td>
-		                    <td>Doe</td>
-		                    <td>TeamDoctor</td>
-		                    <td>1</td>
-		                </tr>
-		                <tr>
-		                    <th scope="row">2</th>
-		                    <td>200</td>
-		                    <td>Otto</td>
-		                    <td>coach</td>
-		                    <td>2</td>
-		                </tr>
-		                <tr>
-		                    <th scope="row">3</th>
-		                    <td>300</td>
-		                    <td>Jacob</td>
-		                    <td>coach</td>
-		                    <td>3</td>
-		                </tr>
+		            	<c:if test="${empty list }">
+		            		<tr>
+		            			<th colspan="3">등록된 사원이 존재하지 않습니다.</th>
+		            		</tr>
+		            	</c:if>
+		            	<c:if test="${!empty list }">
+			            	<c:forEach var="vo" items="${list }">
+				                <tr>
+				                    <td>${vo.staffName }</td>
+				                    <td>${vo.staffPosition }</td>
+				                    <td>${vo.staffInfo }</td>
+				                </tr>
+			            	</c:forEach>
+		            	</c:if>
 		            </tbody>
 		        </table>
+		        
+		        
 		        
 				<div class="divBtn">
 				    <a href="<c:url value='/staff/staffWrite'/>">스태프 등록</a>
 				</div>
+				
 		    </div>
 		</div>
 	</div>
