@@ -4,8 +4,8 @@
 
 
 <c:forEach var="map" items="${boardlist}">
-	<a href="<c:url value='/myBoard/teamNotice?myBoardNo=${map.MY_BOARD_NO}'/>" class="dropdown-item">
-	  <i class="bi bi-pin-angle-fill me-2"></i>${map.M_BOARD_NAME}
+	<a href="<c:url value='/myBoard/teamNotice?myBoardNo=${map["MY_BOARD_NO"]}'/>" class="dropdown-item">
+	  <i class="bi bi-pin-angle-fill me-2"></i>${map['M_BOARD_NAME']}
 	</a>
 </c:forEach>
 
