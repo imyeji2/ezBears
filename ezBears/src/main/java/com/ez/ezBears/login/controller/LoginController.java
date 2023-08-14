@@ -28,13 +28,12 @@ public class LoginController {
 	private final StaffService staffService;
 
 
-	@GetMapping("/login")
-	public String login() {
-		logger.info("로그인 화면");
-
-		return "login/login";
-	}
-
+	/*
+	 * @GetMapping("/login") public String login() { logger.info("로그인 화면");
+	 * 
+	 * return "login/login"; }
+	 */
+	
 	@PostMapping("/login")
 	public String login_post(@RequestParam String userid, @RequestParam String pwd,
 			@RequestParam String position,
@@ -123,10 +122,12 @@ public class LoginController {
 	@RequestMapping("/logout")
 	public String logout(HttpSession session) {
 		logger.info("로그아웃");
+		String userid=(String) session.getAttribute("userid");
 		
 		session.removeAttribute("userid");
+		logger.info("로그아웃 세션 userid={}",userid);
 		
-		return "redirect:/login/login";
+		return "redirect:/";
 	}
 	
 }
