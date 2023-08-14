@@ -29,7 +29,8 @@
 				<div class="form-floating mb-3">
 					<span class="sp1">첨부파일</span> <span> <img
 						src="<c:url value=''/>" alt="파일 이미지">
-					</span> <span>다운</span>
+					</span> 
+					<span>다운</span>
 				</div>
 				<div class="form-floating">
 					<textarea class="form-control textarea" placeholder="Leave a comment here"

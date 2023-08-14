@@ -39,7 +39,7 @@ public class MyBoardController {
 	
 	   //희진
 	   /*팀별 결재 게시판 */
-
+/*
 	   @RequestMapping("/Approval")
 	   public String Approval() {
 	      logger.info("결재 리스트");
@@ -70,7 +70,7 @@ public class MyBoardController {
 	      return "myBoard/Approval_delete";
 	   }
 	   
-	   
+*/	   
 	   /*팀별 웹하드 게시판 */
 	   @RequestMapping("/webhard")
 	   public String hard() {

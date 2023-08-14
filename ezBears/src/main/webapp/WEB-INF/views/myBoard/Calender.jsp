@@ -54,6 +54,25 @@
             center : 'title',
             end : 'dayGridMonth,dayGridWeek,dayGridDay'
          },
+         /* 일정등록 json으로 변환후 ajax 방식으로 등록   */
+    	 events: [
+   	      
+   	      {
+   	        title: '워크샵',
+   	        start: '2023-08-07',
+   	        end: '2023-08-10',
+   	        backgroundColor: '#D1C4E9', // 일정 배경색    
+   	    	 textColor : 'black'
+   	      },
+   	      {
+   	    	 title: '휴가',
+    	     start: '2023-08-16',
+    	     end: '2023-08-18',
+    	     backgroundColor: '#F48FB1',
+    	     textColor : 'black'
+   	      }],
+   	      
+   	      
          titleFormat : function(date) {
             return date.date.year + '년 ' + (parseInt(date.date.month) + 1) + '월';
          },
@@ -63,6 +82,8 @@
          editable : true,
          nowIndicator: true, 
          locale: 'ko' // 한국어로 변경해주기
+        
+       
       });
       calendar.render();
    });
