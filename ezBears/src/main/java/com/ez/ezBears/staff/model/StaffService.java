@@ -18,5 +18,6 @@ public interface StaffService {
 	int loginCheck(String staffId, String staffPwd);
 	int insertStaff(StaffVO staffVo);
 	List<StaffVO> selectAllStaff();
+	StaffVO getStaffById(String staffId);
 
 }

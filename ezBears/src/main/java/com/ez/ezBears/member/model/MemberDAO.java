@@ -1,6 +1,7 @@
 package com.ez.ezBears.member.model;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -20,5 +21,7 @@ public interface MemberDAO {
     
     //회원 아이디로 회원 번호 검색하기
     int selectMemberNo(String memId);
+    
+    Map<String, Object> selectMemberView(String memId);
     
 }

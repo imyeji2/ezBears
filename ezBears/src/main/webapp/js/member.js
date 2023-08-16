@@ -128,7 +128,7 @@
 	    });
 			
 			
-/*		//생년월일 자동 '-' 삽입, 숫자만 입력가능 
+		//생년월일 자동 '-' 삽입, 숫자만 입력가능 
 	    $('#birth').on('input', function(event) {
         var $text = $(this);
         var inputValue = $text.val();
@@ -172,7 +172,7 @@
 	
 	        // 입력값 업데이트
 	        $text.val(cleanedValue);
-	    });*/
+	    });
 	});
 		
 		
