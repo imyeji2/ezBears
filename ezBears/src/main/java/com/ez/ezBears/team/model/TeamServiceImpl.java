@@ -8,5 +8,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class TeamServiceImpl implements TeamService{
 	public final TeamDAO teamDao;
+
+	@Override
+	public int insertTeam(TeamVO teamVo) {
+		return teamDao.insertTeam(teamVo);
+	}
 	
 }
