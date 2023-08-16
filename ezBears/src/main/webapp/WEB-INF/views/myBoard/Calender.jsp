@@ -35,7 +35,7 @@
                     <div class="tab-pane fade show active">
 
 <!DOCTYPE html>
-<html lang='en'>
+<html lang='UTF-8'>
   <head>
     <meta charset='utf-8' />
     <link href= "<c:url value='/lib/fullcalendar/main.css'/>"  rel='stylesheet' />
@@ -74,7 +74,8 @@
             });
                 */
         /* 일정등록 json으로 변환후 ajax 방식으로 등록   */
-   	 events: [
+    
+        events: [
   	      
   	      {
   	        title: '워크샵',
@@ -83,15 +84,14 @@
   	        backgroundColor: '#D1C4E9', // 일정 배경색    
   	    	 textColor : 'black'
   	      },
+  	  		
   	      {
   	    	 title: '휴가',
    	     start: '2023-08-16',
    	     end: '2023-08-18',
    	     backgroundColor: '#F48FB1',
    	     textColor : 'black'
-  	      }],
-  	      
-  	      
+  	      }], 
   	      
         titleFormat : function(date) {
            return date.date.year + '년 ' + (parseInt(date.date.month) + 1) + '월';
@@ -110,7 +110,7 @@
  
 	$(function(){
 		$('.schedulein').click(function(){
-			open('/ezBears/myBoard/Calender_write','CalenderWrite','width=600,height=700,left=500,top=50, location=yes,resizable=yes');
+			open('/ezBears/myBoard/Calender_write','CalenderWrite','width=600,height=700,left=500,top=50, location=no,resizable=yes');
 			
 		});
 	});

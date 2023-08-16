@@ -1,5 +1,7 @@
 package com.ez.ezBears.schedule.model;
 
-public interface ScheduleService {
+import java.util.List;
 
+public interface ScheduleService {
+	List<ScheduleVO> scheduleAll(int myBoardNo);
 }

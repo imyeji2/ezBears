@@ -4,8 +4,10 @@
 
 <mapper namespace="com.ez.ezBears.schedule.model.ScheduleDAO">
 	
-	<select id="scheduleAll">
-		select * from schedule
+	<select id="scheduleAll" resultType="scheduleVo" parameterType="int">
+		select schedule_start,schedule_end,schedule_title
+		from schedule
+		where my_board_no = #{myBoardNo}
 	</select>
 	
 </mapper>
