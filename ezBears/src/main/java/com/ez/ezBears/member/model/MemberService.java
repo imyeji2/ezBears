@@ -1,5 +1,7 @@
 package com.ez.ezBears.member.model;
 
+import java.util.Map;
+
 public interface MemberService {
 	//아이디 중복확인 관련 상수
 	int EXIST_ID=1;  //이미 해당 아이디가 존재함
@@ -21,4 +23,6 @@ public interface MemberService {
     MemberVO getMemberById(String memId);
     void updateMember(MemberVO memberVO);
     int selectMemberNo(String memId);
+    
+    Map<String, Object> selectMemberView(String memId);
 }

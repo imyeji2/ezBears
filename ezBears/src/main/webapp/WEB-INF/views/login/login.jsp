@@ -107,7 +107,7 @@
 					</div>
 					<div class="d-flex align-items-center justify-content-between mb-4">
 						<div>
-							 <select class="form-select mb-3" name="position" id="position">
+							 <select class="form-select mb-3" name="dept" id="dept">
                                 <option selected value="front">프론트</option>
                                 <option value="player">선수</option>
                             </select>
@@ -122,9 +122,9 @@
 						</div>
 					</div>
 					<input type="submit" class="btn btn-primary py-3 w-100 mb-4" id="lg_submit" value="Sign In">
-					<p class="text-center mb-0">
+					<!-- <p class="text-center mb-0">
 						Would you like to go back? <a href="">back</a>
-					</p>
+					</p> -->
 				</div>
 			</div>
 		</div>

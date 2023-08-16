@@ -8,7 +8,7 @@
 	<div class="bg-secondary rounded h-100 p-4">
 	<h6 class="mb-4">사원 등록</h6>
 		<div class="register">
-			<form class="register-form" name="frmRegist" method="post" action="<%=request.getContextPath() %>/Member/write">
+			<form class="register-form" name="frmRegist" method="post" action="<%=request.getContextPath() %>/Member/write" enctype="multipart/form-data">
 				<div class = "side">
 					<div class ="imgdiv">
 						<img alt="" src="<c:url value = '/img/defaultUSER.png'/>" style="width:180px; height:200px;" id="previewImage" name="memImage">
@@ -71,7 +71,7 @@
 				</div>
 				<div class="detail">
 					<div class="form-floating">
-						<input type="date" class="form-control" id="birth" name="memBirth" maxlength="10"> 
+						<input type="text" class="form-control" id="birth" name="memBirth" maxlength="10"> 
 						<label for="birth">생년월일</label>
 					</div>
 					<div class="form-floating">
@@ -85,7 +85,7 @@
 						<label for="sal">연봉</label>
 					</div>
 					<div class="form-floating">
-						<input type="date" class="form-control" id="contract" name="contractStart" maxlength="10"> 
+						<input type="text" class="form-control" id="contract" name="contractStart" maxlength="10"> 
 						<label for="contract">입사일</label>
 					</div>
 

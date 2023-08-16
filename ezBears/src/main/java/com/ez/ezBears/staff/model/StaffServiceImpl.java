@@ -61,6 +61,11 @@ public class StaffServiceImpl implements StaffService {
 	public List<StaffVO> selectAllStaff() {
 		return staffDao.selectAllStaff();
 	}
+
+	@Override
+	public StaffVO getStaffById(String staffId) {
+		return staffDao.getStaffById(staffId);
+	}
 	
 	
 }

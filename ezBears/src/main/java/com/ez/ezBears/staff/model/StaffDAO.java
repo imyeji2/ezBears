@@ -11,4 +11,5 @@ public interface StaffDAO {
 	String selectStatus(String staffId);
 	int insertStaff(StaffVO staffVo);
 	List<StaffVO> selectAllStaff();
+	StaffVO getStaffById(String staffId);
 }

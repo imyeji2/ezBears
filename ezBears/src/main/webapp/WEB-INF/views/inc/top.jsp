@@ -2,7 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -102,7 +101,7 @@
 	                        <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
 	                    </div>
 	                    <div class="ms-3 lign-items-center">
-	                        <h6 class="mb-0">김민석/대리</h6>
+	                        <h6 class="mb-0">${sessionScope.name }/${sessionScope.position}</h6>
 	                        <span>💼운영1팀</span>
 	                    </div>
 	                </div>
@@ -233,7 +232,7 @@
 					<div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                            <i class="fa bi-person-fill me-lg-2"></i>
-                            <span class="d-none d-lg-inline-flex">제이든</span>
+                            <span class="d-none d-lg-inline-flex">${sessionScope.name }</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
                             <a href="#" class="dropdown-item">마이페이지</a>

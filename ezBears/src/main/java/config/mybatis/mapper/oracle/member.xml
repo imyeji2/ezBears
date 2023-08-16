@@ -49,4 +49,9 @@
     	SELECT MEM_NO FROM MEMBER
     	WHERE MEM_ID=#{MEM_ID}
     </select>
+    
+    <select id="selectMemberView" parameterType="String" resultType="map">
+    	select * from memberView where MEM_ID = #{memId}
+    </select>
+    
 </mapper>
