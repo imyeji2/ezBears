@@ -62,11 +62,11 @@ public class MemberController {
 	}
 	
 	@PostMapping("/write")
-	public String write_post(@ModelAttribute MemberVO vo, HttpServletRequest request, 
-			@RequestParam String memBirthStr, @RequestParam String contractStartStr, Model model) {
+	public String write_post(@ModelAttribute MemberVO vo, HttpServletRequest request, Model model) {
 		
 		//1
 		logger.info("회원등록 처리, 파라미터 vo={}",vo);
+		
 		
 		//2
 		

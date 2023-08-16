@@ -14,7 +14,7 @@ public interface ConstUtil {
 	String FILE_UPLOAD_PATH_TEST = "C:\\Users\\yj\\Desktop\\lecture\\workspace_list\\sp_ws\\spherb\\src\\main\\webapp\\pds_upload";
 	
 	//멤버 등록 페이지 - 멤버 등록시 이미지 저장 경로
-	String IMAGE_FILE_UPLOAD_PATH="mem_images";
+	String IMAGE_FILE_UPLOAD_PATH="img/mem_images";
 	String IMAGE_FILE_UPLOAD_PATH_TEST="C:\\Users\\yj\\Desktop\\lecture\\workspace_list\\sp_ws\\spherb\\src\\main\\webapp\\pd_images";
 
 	//자료실 업로드인지, 멤버 등록시 업로드인지 구분값
