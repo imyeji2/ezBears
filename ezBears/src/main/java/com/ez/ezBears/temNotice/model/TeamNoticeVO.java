@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class TeamNoticeVO {
-	private int noticeNo;
+	private int teamNoticeNo;
 	private int memNo;
 	private int MyBoardNo;
 	private String teamNoticeTitle;
