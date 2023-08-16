@@ -1,0 +1,27 @@
+[예지]---------------------------------------------------------------------
+create or replace view myBoardListView
+as
+SELECT n.M_BOARD_NAME, n.M_BOARD_NO, m.mem_no
+FROM MY_BOARD m
+join M_BOARD n
+on m.M_BOARD_NO = n.M_BOARD_NO;
+
+create or replace view myBoardListView
+as
+SELECT M.MEM_ID, M.MEM_NO, MY.MY_BOARD_NO, B.M_BOARD_NO, B.M_BOARD_NAME  
+FROM MEMBER M
+LEFT JOIN my_board MY
+ON M.MEM_NO = MY.MEM_NO
+LEFT JOIN M_BOARD B
+ON MY.M_BOARD_NO = B.M_BOARD_NO;
+[다희]---------------------------------------------------------------------
+
+
+[희진]---------------------------------------------------------------------
+
+
+[충혁]---------------------------------------------------------------------
+
+[판주]---------------------------------------------------------------------
+
+[건우]---------------------------------------------------------------------

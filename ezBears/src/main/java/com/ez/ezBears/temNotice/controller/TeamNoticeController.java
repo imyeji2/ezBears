@@ -34,7 +34,7 @@ public class TeamNoticeController {
 	private final MyBoardListService myBoardListService;
 	private final MemberService memberService;
 	private final FileUploadUtil fileUploadUtil;	
-	//private final TeamNoticeService teamNoticeService;
+	private final TeamNoticeService teamNoticeService;
 	
 	//예지
 	/*팀별 공지사항 게시판 */
@@ -83,6 +83,7 @@ public class TeamNoticeController {
 		//1.
 		logger.info("팀 공지사항 등록하기 페이지");
 		String userid=(String)session.getAttribute("userid");
+		logger.info("userid={}",userid);
 		
 		//2
 		int userNo = memberService.selectMemberNo(userid);
@@ -101,12 +102,41 @@ public class TeamNoticeController {
 		return "myBoard/teamNoticeWrite";
 	}
 	
+	
 	@PostMapping("/teamNoticeWrite")
 	public String teamNoticeWrite_post(@ModelAttribute TeamNoticeVO teamNoticeVo,
 			HttpServletRequest request) {
 		
 		//1
 		logger.info("팀 공지사항 등록, 파라미터 TeamNoticeVO={}",teamNoticeVo);
+		
+		try {
+			List<Map<String, Object>> fileList
+			=fileUploadUtil.fileupload(request, ConstUtil.UPLOAD_TEAMNOTICE_FLAG);
+
+			String fileName="", originalFileName="";
+			long fileSize = 0;
+			for(Map<String, Object> map : fileList) {
+				fileName=(String) map.get("fileName");
+				originalFileName=(String) map.get("originalFileName");
+				fileSize= (long) map.get("fileSize");				
+			}//for
+
+			teamNoticeVo.setFileName(fileName);
+			teamNoticeVo.setOriginname(originalFileName);
+			teamNoticeVo.setFsize(fileSize);	
+			
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		int cnt=teamNoticeService.insertTeamNotice(teamNoticeVo);
+		logger.info("글쓰기 결과, cnt={}", cnt);
+
+		//3		
+		//4
 		
 		
 		//4
