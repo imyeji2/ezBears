@@ -73,6 +73,8 @@ public class FileUploadUtil {
 				path=ConstUtil.FILE_UPLOAD_PATH_TEST;
 			}else if(pathFlag==ConstUtil.UPLOAD_MEMIMAGE_FLAG) { //상품 이미지 업로드
 				path=ConstUtil.IMAGE_FILE_UPLOAD_PATH_TEST;				
+			}else if(pathFlag==ConstUtil.UPLOAD_STAFFIMAGE_FLAG) {	//스태프 이미지 업로드
+				path=ConstUtil.STAFFIMAGE_FILE_UPLOAD_PATH_TEST;
 			}
 		}else {  //deploy
 			if(pathFlag== ConstUtil.UPLOAD_FILE_FLAG) {  //자료실

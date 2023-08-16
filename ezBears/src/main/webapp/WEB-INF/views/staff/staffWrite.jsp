@@ -165,7 +165,7 @@
                         </div>
                         <div style="width: 60%; margin: 0 auto;" >
 	                   		<div class ="imgdiv">
-								<img alt="" src="<c:url value = '/img/defaultUSER.png'/>" style="width:180px; height:200px;" id="previewImage" name="memImage">
+								<img alt="" src="<c:url value = '/img/defaultUSER.png'/>" style="width:180px; height:200px;" id="previewImage">
 								<label for="imageUpload" style="margin: 3px">사진 등록</label>
 								<input type ="file" name="staffImage" id="imageUpload"  class="infobox" style="display:none">
 							</div>
