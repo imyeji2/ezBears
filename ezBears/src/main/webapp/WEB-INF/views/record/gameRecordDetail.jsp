@@ -38,6 +38,7 @@
 				<div class="tab-pane fade show active" id="pills-home"
 					role="tabpanel" aria-labelledby="pills-home-tab">
 						<%@include file="summary.jsp" %>
+						</div>
 					<div class="tab-pane fade" id="pills-profile" role="tabpanel"
 						aria-labelledby="pills-profile-tab">
 						<%@include file="gameRecordDetail2.jsp" %>
@@ -50,6 +51,6 @@
 			</div>
 		</div>
 	</div>
-</div>
+
 
 <%@include file="../inc/bottom.jsp"%>

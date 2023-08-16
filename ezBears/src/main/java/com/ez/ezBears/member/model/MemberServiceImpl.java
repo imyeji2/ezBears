@@ -1,8 +1,8 @@
 package com.ez.ezBears.member.model;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
@@ -89,5 +89,16 @@ public class MemberServiceImpl implements MemberService{
 	public void updateMember(MemberVO memberVO) {
 		memberDao.updateMember(memberVO);
 	}
+
+	@Override
+	public int selectMemberNo(String memId) {
+		return memberDao.selectMemberNo(memId);
+	}
+
+	@Override
+	public Map<String, Object> selectMemberView(String memId) {
+		return memberDao.selectMemberView(memId);
+	}
+
 	
 }

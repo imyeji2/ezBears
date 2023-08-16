@@ -17,12 +17,14 @@ public class MvcConfiguration implements WebMvcConfigurer{
 				"/member/memberEdit","/member/memberOut");
 
 	 */
-		registry.addInterceptor(new LoginInterceptor())
-		.excludePathPatterns("/login/login")
-		.addPathPatterns("/*"); 
 		
+		
+/*		registry.addInterceptor(new LoginInterceptor())
+		.excludePathPatterns("/","/css/**","/login/login")
+		.addPathPatterns("/**");
+ */
 	}
-
+	
 	/*
 	@Bean
 	public CommonsMultipartResolver multipartResolver() {
