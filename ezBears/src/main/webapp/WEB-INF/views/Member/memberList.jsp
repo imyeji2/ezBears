@@ -7,6 +7,8 @@
 	    <div class="bg-secondary rounded h-100 p-4">
 	        <h6 class="mb-4">사원 리스트</h6>
 			<form class="btn-form" name="frm1" method="get" action="<c:url value ='/Member/write'/>">
+				<input type="text" class ="txtboxSearch" id="txtboxSearch" value="검색어를 입력해주세요">
+				<button class="btnSearch" id="btnSearch" value="검색">검색</button>
 				<button type="submit" class="btnAdd" id="btnAdd" value="등록">등록</button>
 				<button class="btnDelete" type="button" id="btnDelete">삭제</button>
 			</form>
@@ -29,6 +31,9 @@
 	                    </tr>
 	                </thead>
 	                <tbody>
+	                <c:if test="${empty list}">
+	                
+	                </c:if>
 	                    <tr>
 	                        <td><input type="checkbox"></td>
 	                        <th scope="row">1</th>
