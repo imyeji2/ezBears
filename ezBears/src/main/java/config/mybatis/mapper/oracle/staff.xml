@@ -38,4 +38,8 @@
 		select * from staff order by staff_no
 	</select>
 	
+	<select id="getStaffById" parameterType="String" resultType="staffVo">
+        SELECT * FROM STAFF WHERE STAFF_ID = #{staffId}
+    </select>
+	
 </mapper>

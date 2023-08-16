@@ -1,5 +1,7 @@
 package com.ez.ezBears.login.controller;
 
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -10,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ez.ezBears.member.model.MemberService;
+import com.ez.ezBears.member.model.MemberVO;
 import com.ez.ezBears.staff.model.StaffService;
+import com.ez.ezBears.staff.model.StaffVO;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -36,7 +40,7 @@ public class LoginController {
 	
 	@PostMapping("/login")
 	public String login_post(@RequestParam String userid, @RequestParam String pwd,
-			@RequestParam String position,
+			@RequestParam String dept,
 			@RequestParam(required = false) String chkSave, 
 			HttpServletRequest request, HttpServletResponse response, 
 			Model model) {
@@ -45,9 +49,10 @@ public class LoginController {
 
 		String msg="로그인 처리 실패", url="/login/login";
 		
-		if(position.equals("front")) {
+		if(dept.equals("front")) {
 			int result=memberService.loginCheck(userid, pwd);
 			String type="사원";
+			Map<String, Object> map = memberService.selectMemberView(userid);
 			logger.info("로그인 체크 결과 result={}",result);
 			if(result==memberService.LOGIN_OK) {
 				if(result>0) {
@@ -58,7 +63,9 @@ public class LoginController {
 					HttpSession session=request.getSession();
 					session.setAttribute("userid", userid);
 					session.setAttribute("type", type);
-
+					session.setAttribute("name", map.get("MEM_NAME"));
+					session.setAttribute("position", map.get("POSITION_NAME"));
+					
 					//cookie
 					Cookie ck = new Cookie("ck_userid", userid);
 					ck.setPath("/");
@@ -75,9 +82,10 @@ public class LoginController {
 			}else if(result==memberService.USERID_NONE) {
 				msg="해당 프론트 아이디가 존재하지 않습니다.";			
 			}
-		}else if(position.equals("player")) {
+		}else if(dept.equals("player")) {
 			int result1=staffService.loginCheck(userid, pwd);
 			String type="스태프";
+			StaffVO vo = staffService.getStaffById(userid);
 			logger.info("로그인 체크 결과 result1={}",result1);
 			if(result1==staffService.LOGIN_OK) {
 				
@@ -89,7 +97,9 @@ public class LoginController {
 					HttpSession session=request.getSession();
 					session.setAttribute("userid", userid);
 					session.setAttribute("type", type);
-
+					session.setAttribute("name", vo.getStaffName());
+					session.setAttribute("position", vo.getStaffPosition());
+					
 					//cookie
 					Cookie ck = new Cookie("ck_userid", userid);
 					ck.setPath("/");
