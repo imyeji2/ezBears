@@ -41,17 +41,9 @@ public class TeamNoticeController {
 	@RequestMapping("/teamNotice")
 	public String teamNotice(@RequestParam (defaultValue = "0") int myBoardNo, 
 			Model  model) {
-		
 		//1.
 		logger.info("팀 공지사항 리스트 페이지, 파라미터 myBoardNo={}",myBoardNo);
-		//2.
-		
-		
-		//3.
 		model.addAttribute("myBoardNo",myBoardNo);
-		
-		
-		//4.
 		return "myBoard/teamNoticeList";
 	}
 	
@@ -105,7 +97,7 @@ public class TeamNoticeController {
 	
 	@PostMapping("/teamNoticeWrite")
 	public String teamNoticeWrite_post(@ModelAttribute TeamNoticeVO teamNoticeVo,
-			HttpServletRequest request) {
+			HttpServletRequest request, Model model) {
 		
 		//1
 		logger.info("팀 공지사항 등록, 파라미터 TeamNoticeVO={}",teamNoticeVo);
@@ -134,13 +126,10 @@ public class TeamNoticeController {
 
 		int cnt=teamNoticeService.insertTeamNotice(teamNoticeVo);
 		logger.info("글쓰기 결과, cnt={}", cnt);
-
-		//3		
-		//4
 		
-		
+		//3
 		//4
-		return "myBoard/teamNoticeDetail";
+		return "redirect:/myBoard/teamNotice?myBoardNo="+teamNoticeVo.getMyBoardNo();
 	}
 	
 }

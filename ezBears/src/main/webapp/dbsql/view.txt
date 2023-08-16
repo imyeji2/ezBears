@@ -14,6 +14,16 @@ LEFT JOIN my_board MY
 ON M.MEM_NO = MY.MEM_NO
 LEFT JOIN M_BOARD B
 ON MY.M_BOARD_NO = B.M_BOARD_NO;
+
+create or replace view teamNoticeListView
+as
+select t.*, m.mem_name, d.dept_name
+from team_notice t
+left join member m
+on t.mem_no = m.mem_no
+join dept d
+on m.dept_no = d.dept_no;
+
 [다희]---------------------------------------------------------------------
 
 
@@ -23,5 +33,12 @@ ON MY.M_BOARD_NO = B.M_BOARD_NO;
 [충혁]---------------------------------------------------------------------
 
 [판주]---------------------------------------------------------------------
+create or replace view memberView
+as
+select m.*,p.position_name
+from member m join position p
+on m.position_no = p.position_no;
+
+select * from memberView;
 
 [건우]---------------------------------------------------------------------
