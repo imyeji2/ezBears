@@ -75,7 +75,7 @@ public class MemberController {
 		long fileSize = 0;
 		
 		try {
-			List<Map<String, Object>> list = fileUploadUtil.fileupload(request, ConstUtil.UPLOAD_IMAGE_FLAG);
+			List<Map<String, Object>> list = fileUploadUtil.fileupload(request, ConstUtil.UPLOAD_MEMIMAGE_FLAG);
 			
 			for(Map<String, Object> map : list) {
 				fileName = (String) map.get("fileName");
