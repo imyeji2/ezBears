@@ -13,30 +13,23 @@ public interface ConstUtil {
 	String FILE_UPLOAD_PATH = "pds_upload";
 	
 	//멤버 등록 페이지 - 멤버 등록시 이미지 저장 경로
-<<<<<<< HEAD
-	String IMAGE_FILE_UPLOAD_PATH="mem_images";
-	String IMAGE_FILE_UPLOAD_PATH_TEST="C:\\Users\\yj\\Desktop\\lecture\\workspace_list\\sp_ws\\spherb\\src\\main\\webapp\\pd_images";
-	
-	//스태프 등록 페이지 - 멤버 등록시 이미지 저장 경로
-	String STAFFIMAGE_FILE_UPLOAD_PATH="staff_images";
-	String STAFFIMAGE_FILE_UPLOAD_PATH_TEST="C:\\Users\\yj\\Desktop\\lecture\\workspace_list\\sp_ws\\spherb\\src\\main\\webapp\\img\\staffImages";
-
-=======
   String IMAGE_FILE_UPLOAD_PATH="img/mem_images";
 	
 	//팀별 공지사항 첨부파일
 	String TEAM_NOTICE_FILE_PACH="file/teamNotice";
-  
+	
+	//스태프 등록 페이지 - 멤버 등록시 이미지 저장 경로
+	String STAFFIMAGE_FILE_UPLOAD_PATH="staff_images";
+	
 	//공통으로 위치 맞추기
 	//String TEAM_NOTICE_FILE_PACH_TEST="C:\\FinalProject\\ezBears\\src\\main\\webapp\\file\\teamNotice";
   
->>>>>>> branch 'main' of https://github.com/GunwooRoh/FinalProject.git
 	//자료실 업로드인지, 멤버 등록시 업로드인지 구분값
 	int UPLOAD_FILE_FLAG=1;//자료실 업로드
 	int UPLOAD_MEMIMAGE_FLAG=2;//멤버 등록시 이미지 업로드
-<<<<<<< HEAD
-	int UPLOAD_STAFFIMAGE_FLAG=3;	//스태프 등록 플래그
-=======
 	int UPLOAD_TEAMNOTICE_FLAG=3;//팀별 공지사항
->>>>>>> branch 'main' of https://github.com/GunwooRoh/FinalProject.git
+	int UPLOAD_STAFFIMAGE_FLAG=4;	//스태프 등록 플래그
 }
+
+
+
