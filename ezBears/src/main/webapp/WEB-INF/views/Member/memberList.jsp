@@ -49,12 +49,16 @@
 	                </c:if>
 	                <c:if test="${!empty list}">
 	                	<c:forEach var="memberVo" items="${list}"> 
-	                		<tr>
+	                		<tr class="memList">
 	                			<td><input type="checkbox"></td>
 	                			<td>${memberVo.deptName}</td>
 	                			<td>${memberVo.positionName}</td>
-	                			<td>${memberVo.memName}</td>
-	                			<td>${memberVo.memId}</td>
+	                			<td>
+	                				<a href="<c:url value='/Member/detail?memNo=${memberVo.memNo}'/>">${memberVo.memName}</a>
+	                			</td>
+	                			<td>
+	                				<a href="<c:url value='/Member/detail?memNo=${memberVo.memNo}'/>">${memberVo.memId}</a>
+	                			</td>
 	                			<td>${memberVo.memTel}</td>
 	                			<td>${memberVo.memBirth.substring(0, 10)}</td>
 	                			<td>${memberVo.memAddress} ${memberVo.memAddressDetail}</td>
@@ -78,11 +82,11 @@
 				<c:forEach var="i" begin="${pagingInfo.firstPage }" 
 				end="${pagingInfo.lastPage }">
 					<c:if test="${i==pagingInfo.currentPage }">
-						<span style="color:white;font-weight:bold">${i }</span>
+						<span style="color:#7000D8;font-weight:bold">${i}</span>
 					</c:if>
 					<c:if test="${i!=pagingInfo.currentPage }">						
-						<a href="#" onclick="pageFunc(${i})">
-							[${i }]
+						<a href="#" onclick="pageFunc(${i})" style="color:white">
+							[${i}]
 						</a>
 					</c:if>
 				</c:forEach>
