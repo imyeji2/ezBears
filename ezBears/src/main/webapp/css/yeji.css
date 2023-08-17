@@ -122,7 +122,13 @@
 		border-radius:5px 5px 5px 5px;
 		padding:5px 5px 5px 5px;
 		margin-bottom:20px;
+		
 	}
+	
+	.list_box_file a{
+		color: #6C7293;
+	}
+		
 	
 	.list_line{
 		width: 80%;
@@ -358,6 +364,7 @@
 	.write_title input{
 		line-height: 30px;
 	}
+	
 	.write_form{
 		resize: none;
 		height: 500px;
