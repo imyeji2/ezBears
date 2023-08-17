@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ez.ezBears.common.ConstUtil;
 import com.ez.ezBears.common.FileUploadUtil;
+import com.ez.ezBears.common.PaginationInfo;
+import com.ez.ezBears.common.SearchVO;
 import com.ez.ezBears.dept.model.DeptService;
 import com.ez.ezBears.dept.model.DeptVO;
 import com.ez.ezBears.staff.model.StaffService;
@@ -56,22 +58,22 @@ public class StaffController {
 		//파일 업로드 처리
 		String fileName="", originalFileName="";
 		long fileSize=0;
-			try {
-				List<Map<String, Object>> list
-					= fileUploadUtil.fileupload(request, ConstUtil.UPLOAD_STAFFIMAGE_FLAG);
-				
-				for(Map<String, Object> map : list) {
-					fileName=(String)map.get("fileName");
-					originalFileName=(String)map.get("originalFileName");
-					fileSize=(long)map.get("fileSize");
-				}//for
-			} catch (IllegalStateException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+		try {
+			List<Map<String, Object>> list
+				= fileUploadUtil.fileupload(request, ConstUtil.UPLOAD_STAFFIMAGE_FLAG);
 			
-		
+			for(Map<String, Object> map : list) {
+				fileName=(String)map.get("fileName");
+				originalFileName=(String)map.get("originalFileName");
+				fileSize=(long)map.get("fileSize");
+			}//for
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+			
+		staffVo.setStaffImage(fileName);
 		
 		//db
 		int cnt = staffService.insertStaff(staffVo);
@@ -109,13 +111,31 @@ public class StaffController {
 		//http://localhost:9091/ezBears/staff/staffDetail
 	}
 	
-	@GetMapping("/staffList")
-	public String list_get(Model model) {
-		logger.info("스태프 목록페이지로 이동");
+	@RequestMapping("/staffList")
+	public String staffList(@ModelAttribute SearchVO searchVo, Model model) {
+		logger.info("스태프 목록페이지, 파라미터 searchVo={}", searchVo);
+		
+		//pagination 객체 생성해서 없는 변수들 선언해준다
+		PaginationInfo pagination = new PaginationInfo();
+		pagination.setBlockSize(ConstUtil.BLOCK_SIZE);
+		pagination.setRecordCountPerPage(ConstUtil.RECORD_COUNT);
+		pagination.setCurrentPage(searchVo.getCurrentPage());
+		
+		//pagination 객체 이용해서 searchVo에 필요한 변수 마저 선언해주기
+		searchVo.setFirstRecordIndex(pagination.getFirstRecordIndex());
+		searchVo.setRecordCountPerPage(ConstUtil.RECORD_COUNT);
+		logger.info("설정 후 searchVo={}", searchVo);
+		
+		int totalRecord = staffService.getTotalRecord();
 		
 		List<StaffVO> list = staffService.selectAllStaff();
+		logger.info("스태프 전체 조회결과, list.size={}", list.size());
+		
+		pagination.setTotalRecord(totalRecord);
+		logger.info("설정 후 pagination={}", pagination);
 		
 		model.addAttribute("list", list);
+		model.addAttribute("pagination", pagination);
 		
 		return "/staff/staffList";
 		

@@ -33,86 +33,53 @@
 							</div><!-- teamNotice_serch -->
 							
 							<br><br>
-					        <div class="notice_list_box">
-					        	<div>
-						        	<div class="list_box_title">
-						        		<div class="user_img">
-						        			<img src="<c:url value='/img/user.jpg'/>" alt="사원프로필">
-						        		</div>
-						        		<div class="user_txt">
-						        			<span class="user_txt_name">제이든</span>
-						        			<span class="user_txt_time"> &#183 오늘 오후 3:45</span>
-						        		</div>
-						        		<div class="user_dept">개발1팀</div>
-						        	</div>
-						       		<div class="list_box_content">
-						       			<div class="content_title">공지사항 전달드립니다</div>
-						       			<div class="content_txt">
-						       			인사팀에서 법정 의무 교육을 한다고 합니다 :)<br>
-						       			올해 입사한 신입사원분들을 포함해 모든 직원분들이 수강해주셔야 합니다.<br>
-						       			자세한 수강방법 안내는 아래 내용을 확인해주세요.
-						       			</div>
-						       		</div>
-						       		
-						       		<div class="list_box_file">config.zip 300.42MB</div>
-					       		</div>
-					       		<div class="notice_reply">
-					       			<div><a href="<c:url value='/myBoard/teamNoticeDetail'/>">댓글 달기</a></div>
-					       		</div>
-					        </div><!-- notice_list_box -->		
-					
-					       <div class="notice_list_box">
-					        	<div>
-						        	<div class="list_box_title">
-						        		<div class="user_img">
-						        			<img src="<c:url value='/img/user.jpg'/>" alt="사원프로필">
-						        		</div>
-						        		<div class="user_txt">
-						        			<span class="user_txt_name">박진수</span>
-						        			<span class="user_txt_time"> &#183 2023-07-31 오전 10:28</span>
-						        		</div>
-						        		<div class="user_dept">개발1팀</div>
-						        	</div>
-						       		<div class="list_box_content">
-						       			<div class="content_title">회식관련 공지 드립니다.</div>
-						       			<div class="content_txt">
-						       			금일 오후 6시부터 회식이 있을 예정입니다.<br>
-						       			장소는 서울 강남구 봉은사로4길 21 "무월"이며 <br>
-						       			참여 가능하신 분들을 댓글로 알려주세요
-						       			</div>
-						       		</div>
-					       		</div>
-					       		<div class="notice_reply">
-					       			<div><a href="<c:url value='/myBoard/teamNoticeDetail'/>">댓글 달기</a></div>
-					       		</div>
-					        </div><!-- notice_list_box -->		
-					        <div class="notice_list_box">
-					        	<div>
-						        	<div class="list_box_title">
-						        		<div class="user_img">
-						        			<img src="<c:url value='/img/user.jpg'/>" alt="사원프로필">
-						        		</div>
-						        		<div class="user_txt">
-						        			<span class="user_txt_name">어피치 (apeach)</span>
-						        			<span class="user_txt_time"> &#183 오늘 오후 3:45</span>
-						        		</div>
-						        		<div class="user_dept">개발1팀</div>
-						        	</div>
-						       		<div class="list_box_content">
-						       			<div class="content_title">안녕하세요. 인사팀 어피치 입니다.</div>
-						       			<div class="content_txt">
-						       			인사팀엣 법정 의무 교육 수강 공지 드립니다 :)<br>
-						       			올해 입사한 신입사원분들을 포함해 모든 직원분들이 수강해주셔야 합니다.<br>
-						       			자세한 수강방법 안내는 아래 내용을 확인해주세요.
-						       			</div>
-						       		</div>
-						       		
-						       		<div class="list_box_file">config.zip 300.42MB</div>
-					       		</div>
-					       		<div class="notice_reply">
-					       			<div><a href="<c:url value='/myBoard/teamNoticeDetail'/>">댓글 달기</a></div>
-					       		</div>
-					        </div><!-- notice_list_box -->		 
+						
+							<c:if test="${empty list}">
+								<div class="notice_list_box">
+						        	<div style="text-align:center">등록된 글이 없습니다.</div>
+						        </div>
+							</c:if>
+							
+							<c:if test="${!empty list}">
+								<!-- 반복시작 -->
+								<c:forEach var="map" items="${list}">
+									<div class="notice_list_box">
+							        	<div>
+								        	<div class="list_box_title">
+								        		<div class="user_img">
+								        			<c:set var="userimg" value="default_user.png"/>
+								        			<c:if test="${!empty map['MEM_IMAGE']}">
+								        				<c:set var="userimg" value="map['MEM_IMAGE']"/>
+								        			</c:if>
+								        			<img src="<c:url value='/img/mem_images/${userimg}'/>" alt="사원프로필">
+								        		</div>
+								        		<div class="user_txt">
+								        			<span class="user_txt_name">${map['MEM_NAME']}</span>
+								        			<span class="user_txt_time"> 
+								        				&#183 <fmt:formatDate value="${map['REGDATE']}" pattern="yyyy-MM-dd a hh:mm"/>
+								        			</span>
+								        		</div>
+								        		<div class="user_dept">${map['DEPT_NAME']}</div>
+								        	</div>
+								       		<div class="list_box_content">
+								       			<div class="content_title">${map['TEAM_NOTICE_TITLE']}</div>
+								       			<div class="content_txt">
+								       			${map['TEAM_NOTICE_CONTENT']}
+								       			</div>
+								       		</div>
+								       		<c:if test="${!empty map['FILENAME']}">
+								       			<div class="list_box_file">${map['ORIGINNAME']} ${map['FSIZE']/1024}MB</div>
+								       		</c:if>
+								       		
+							       		</div>
+							       		<div class="notice_reply">
+							       			<div><a href="<c:url value='/myBoard/teamNoticeDetail'/>">댓글 달기</a></div>
+							       		</div>
+							        </div><!-- notice_list_box -->		
+														
+								</c:forEach>
+						        <!-- 반복 끝 -->
+					        </c:if>
 					                    
 					        <div class="list_line"></div>     
 					        
@@ -121,8 +88,9 @@
 								<a class="btn btn-sm btn-primary" href="">수정</a>
 								<a class="btn btn-sm btn-primary" 
 									href="<c:url value='/myBoard/teamNoticeWrite?myBoardNo=${myBoardNo}'/>">등록</a>
-							</div><!-- btnBox -->          
-							             
+							</div><!-- btnBox --> 
+							         
+							  <c:if test="${!empty list}">          
 						      <div class="page_box">
 							      <nav aria-label="Page navigation example">
 									  <ul class="pagination justify-content-center">
@@ -141,7 +109,8 @@
 									    </li>
 									  </ul>
 									</nav>
-							</div>
+							</div><!-- page_box -->
+							</c:if>
 						</div><!-- teamNoticeList -->
 					</div>
 				</div>

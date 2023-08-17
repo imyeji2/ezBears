@@ -19,5 +19,6 @@ public interface StaffService {
 	int insertStaff(StaffVO staffVo);
 	List<StaffVO> selectAllStaff();
 	StaffVO getStaffById(String staffId);
+	int getTotalRecord();
 
 }
