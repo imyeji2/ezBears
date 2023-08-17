@@ -10,4 +10,11 @@
 		insert into team_Notice(TEAM_NOTICE_NO, MEM_NO, MY_BOARD_NO, TEAM_NOTICE_TITLE, TEAM_NOTICE_CONTENT,FSIZE,FILENAME,ORIGINNAME)
 		values(#{teamNoticeNo},#{memNo}, #{myBoardNo}, #{teamNoticeTitle}, #{teamNoticeContent},#{fsize},#{fileName},#{originname})
 	</insert> 
+	
+	<select id="selectTeamNoticeList" parameterType="int" resultType="map">
+		select * from teamNoticeListView
+		where my_board_no = #{my_board_no}
+		order by team_notice_no desc
+	
+	</select>
 </mapper>
