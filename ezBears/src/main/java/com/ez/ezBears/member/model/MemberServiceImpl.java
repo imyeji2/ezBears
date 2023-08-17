@@ -104,6 +104,11 @@ public class MemberServiceImpl implements MemberService{
 		return memberDao.totalList(searchVo);
 	}
 	
+	@Override
+	public MemberVO memberDetail(int memNo) {
+		return memberDao.memberDetail(memNo);
+	}
+	
 	
 	//
 
