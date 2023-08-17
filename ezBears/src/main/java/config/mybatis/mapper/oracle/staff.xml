@@ -42,4 +42,9 @@
         SELECT * FROM STAFF WHERE STAFF_ID = #{staffId}
     </select>
 	
+	<select id="getTotalRecord" resultType="int">
+		select count(*) from staff
+	</select>
+	
+	
 </mapper>
