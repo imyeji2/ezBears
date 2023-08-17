@@ -21,4 +21,7 @@ public class MemberVO {
 	private String memAddressDetail; /* 주소상세 */
 	private String memZipcode; /* 우편번호 */
 	private String memImage; /* 이미지 */
+	
+	private String deptName;
+	private String positionName;
 }

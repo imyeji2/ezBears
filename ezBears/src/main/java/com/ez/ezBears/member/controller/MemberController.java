@@ -16,8 +16,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ez.ezBears.common.ConstUtil;
 import com.ez.ezBears.common.FileUploadUtil;
+import com.ez.ezBears.common.PaginationInfo;
+import com.ez.ezBears.common.SearchVO;
 import com.ez.ezBears.dept.model.DeptService;
 import com.ez.ezBears.dept.model.DeptVO;
+import com.ez.ezBears.member.model.MemberListVO;
 import com.ez.ezBears.member.model.MemberService;
 import com.ez.ezBears.member.model.MemberVO;
 import com.ez.ezBears.position.model.PositionService;
@@ -87,6 +90,8 @@ public class MemberController {
 		}
 		
 		vo.setMemImage(fileName);
+		int salary = vo.getMemSal() * 10000;
+		vo.setMemSal(salary);
 		
 		int result = memberService.insertMem(vo);
 		logger.info("멤버 등록 완료, result = {}",result);
@@ -107,8 +112,32 @@ public class MemberController {
 	}
 
 	@RequestMapping("/list")
-	public String list() {
+	public String list(@ModelAttribute SearchVO searchVo, Model model) {
+		
+		//1
 		logger.info("회원 리스트 페이지");
+		
+		//2
+		PaginationInfo pagingInfo = new PaginationInfo();
+		pagingInfo.setBlockSize(ConstUtil.BLOCK_SIZE);
+		pagingInfo.setCurrentPage(searchVo.getCurrentPage());
+		pagingInfo.setRecordCountPerPage(ConstUtil.RECORD_COUNT);
+		
+		searchVo.setRecordCountPerPage(ConstUtil.RECORD_COUNT);
+		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
+		
+		
+		List<MemberVO> list = memberService.selectAllMem(searchVo);
+		logger.info("멤버 조회 결과, list.size={}", list.size());
+		
+		int totalRecord = memberService.totalList(searchVo);
+		pagingInfo.setTotalRecord(totalRecord);
+		
+		//3
+		model.addAttribute("list", list);
+		model.addAttribute("pagingInfo", pagingInfo);
+		//4
+		
 		return "Member/memberList";
 	}
 	
