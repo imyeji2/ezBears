@@ -56,22 +56,22 @@ public class StaffController {
 		//파일 업로드 처리
 		String fileName="", originalFileName="";
 		long fileSize=0;
-			try {
-				List<Map<String, Object>> list
-					= fileUploadUtil.fileupload(request, ConstUtil.UPLOAD_STAFFIMAGE_FLAG);
-				
-				for(Map<String, Object> map : list) {
-					fileName=(String)map.get("fileName");
-					originalFileName=(String)map.get("originalFileName");
-					fileSize=(long)map.get("fileSize");
-				}//for
-			} catch (IllegalStateException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+		try {
+			List<Map<String, Object>> list
+				= fileUploadUtil.fileupload(request, ConstUtil.UPLOAD_STAFFIMAGE_FLAG);
 			
-		
+			for(Map<String, Object> map : list) {
+				fileName=(String)map.get("fileName");
+				originalFileName=(String)map.get("originalFileName");
+				fileSize=(long)map.get("fileSize");
+			}//for
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+			
+		staffVo.setStaffImage(fileName);
 		
 		//db
 		int cnt = staffService.insertStaff(staffVo);
