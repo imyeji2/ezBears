@@ -1,5 +1,7 @@
 package com.ez.ezBears.staff.model;
 
+import java.util.List;
+
 public interface StaffService {
 	//아이디 중복확인 관련 상수
 	int EXIST_ID=1;  //이미 해당 아이디가 존재함
@@ -10,6 +12,12 @@ public interface StaffService {
 	int PWD_DISAGREE=2; //비밀번호 불일치
 	int USERID_NONE=3; //해당 아이디가 존재하지 않음
 	
+	int USERID_DONE=4; //스태프계약 상태 N
+	
 	int selectCheckId(String staffId);
 	int loginCheck(String staffId, String staffPwd);
+	int insertStaff(StaffVO staffVo);
+	List<StaffVO> selectAllStaff();
+	StaffVO getStaffById(String staffId);
+
 }

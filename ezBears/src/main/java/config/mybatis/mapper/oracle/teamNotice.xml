@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ez.ezBears.temNotice.model.TeamNoticeDAO">
+
+	<insert id="insertTeamNotice" parameterType="teamNoticeVo">
+		<selectKey keyProperty="teamNoticeNo" resultType="int" order="BEFORE">
+			select TEAM_NOTICE_SEQ.nextval from dual
+		</selectKey>
+		insert into team_Notice(TEAM_NOTICE_NO, MEM_NO, MY_BOARD_NO, TEAM_NOTICE_TITLE, TEAM_NOTICE_CONTENT,FSIZE,FILENAME,ORIGINNAME)
+		values(#{teamNoticeNo},#{memNo}, #{myBoardNo}, #{teamNoticeTitle}, #{teamNoticeContent},#{fsize},#{fileName},#{originname})
+	</insert> 
+</mapper>

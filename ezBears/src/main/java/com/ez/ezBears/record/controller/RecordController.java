@@ -78,6 +78,7 @@ public class RecordController {
 		return "/record/lineup";
 	}
 	
+<<<<<<< HEAD
 	@RequestMapping("/calander2")
 	public String calander2() {
 		//1,4
@@ -85,5 +86,13 @@ public class RecordController {
 		return "/record/gameRecordCal";
 	}
 	
+=======
+	@RequestMapping("/firstInning")
+	public String firstInning() {
+		//1,4
+		logger.info("라인업");
+		return "/record/firstInning";
+	}
+>>>>>>> branch 'main' of https://github.com/GunwooRoh/FinalProject.git
 	
 }
