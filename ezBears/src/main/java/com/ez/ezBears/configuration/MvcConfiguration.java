@@ -19,10 +19,10 @@ public class MvcConfiguration implements WebMvcConfigurer{
 	 */
 		
 		
-/*		registry.addInterceptor(new LoginInterceptor())
+		registry.addInterceptor(new LoginInterceptor())
 		.excludePathPatterns("/","/css/**","/login/login")
 		.addPathPatterns("/**");
- */
+
 	}
 	
 	/*
