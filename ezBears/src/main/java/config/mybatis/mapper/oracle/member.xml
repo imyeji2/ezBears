@@ -53,5 +53,25 @@
     <select id="selectMemberView" parameterType="String" resultType="map">
     	select * from memberView where MEM_ID = #{memId}
     </select>
+
+	<!-- 전체멤버 페이징처리후 뿌려주기 -->
+    <select id="selectAllMem" parameterType="searchVo" resultType="memberVo">
+    	SELECT * FROM 
+    	(
+    		SELECT ROWNUM AS RNUM, A.* FROM 
+    		(
+        		SELECT * FROM MEMLISTVIEW ORDER BY DEPT_NAME, POSITION_NO DESC, MEM_NAME
+    		)A
+		)
+		
+		<![CDATA[
+		WHERE RNUM > #{firstRecordIndex} 
+		AND RNUM <= #{firstRecordIndex} + #{recordCountPerPage}
+		]]>
+    </select>
+    
+    <select id="totalList" parameterType="searchVo" resultType="int">
+    	SELECT COUNT(*) FROM MEMBER
+    </select>
     
 </mapper>

@@ -2,6 +2,17 @@
     pageEncoding="UTF-8"%>
 <%@include file="../inc/top.jsp"%>
 <link href="${pageContext.request.contextPath}/css/Dcss.css" rel="stylesheet">
+<script type="text/javascript">
+	function pageFunc(curPage){
+		$('input[name=currentPage]').val(curPage);
+		$('form[name=frmPage]').submit();
+	}
+</script>
+<!-- 페이징 처리를 위한 form 시작-->
+<form name="frmPage" method="post" action="<c:url value='/Member/memberList'/>">
+	<input type="hidden" name="currentPage">	
+</form>
+<!-- 페이징 처리 form 끝 -->
 
 	<div class="col-12">
 	    <div class="bg-secondary rounded h-100 p-4">
@@ -12,12 +23,12 @@
 				<button type="submit" class="btnAdd" id="btnAdd" value="등록">등록</button>
 				<button class="btnDelete" type="button" id="btnDelete">삭제</button>
 			</form>
+			<br>
 	        <div class="table-responsive">
 	            <table class="table">
 	                <thead>
 	                    <tr>
-	                        <th scope="col">-</th>
-	                        <th scope="col">번호</th>
+	                        <th scope="col" style="text-align: center">-</th>
 	                        <th scope="col">부서</th>
 	                        <th scope="col">직급</th>
 	                        <th scope="col">이름</th>
@@ -32,39 +43,57 @@
 	                </thead>
 	                <tbody>
 	                <c:if test="${empty list}">
-	                
+	                	<tr>
+	                		<td colspan="12">사원이 존재하지 않습니다.</td>
+	                	</tr>
 	                </c:if>
-	                    <tr>
-	                        <td><input type="checkbox"></td>
-	                        <th scope="row">1</th>
-	                        <td>경영지원팀</td>
-	                        <td>팀장</td>
-	                        <td>홍길동</td>
-	                        <td>hong</td>
-	                        <td>010-1111-2222</td>
-	                        <td>1990-01-01</td>
-	                        <td>서울시 서초구 방배동</td>
-	                        <td>정규직</td>
-	                        <td>2023.08.01</td>
-	                        <td></td>
-	                    </tr>
-	                    <tr>
-	                        <td><input type="checkbox"></td>
-	                        <th scope="row">2</th>
-	                        <td>경영지원팀</td>
-	                        <td>사원</td>
-	                        <td>김길동</td>
-	                        <td>kim</td>
-	                        <td>010-2222-3333</td>
-	                        <td>2000-01-01</td>
-	                        <td>서울시 동작구 사당동</td>
-	                        <td>정규직</td>
-	                        <td>2023.08.01</td>
-	                        <td></td>
-	                    </tr>
+	                <c:if test="${!empty list}">
+	                	<c:forEach var="memberVo" items="${list}"> 
+	                		<tr>
+	                			<td><input type="checkbox"></td>
+	                			<td>${memberVo.deptName}</td>
+	                			<td>${memberVo.positionName}</td>
+	                			<td>${memberVo.memName}</td>
+	                			<td>${memberVo.memId}</td>
+	                			<td>${memberVo.memTel}</td>
+	                			<td>${memberVo.memBirth.substring(0, 10)}</td>
+	                			<td>${memberVo.memAddress} ${memberVo.memAddressDetail}</td>
+	                			<td>${memberVo.type}</td>
+	                			<td>${memberVo.contractStart.substring(0, 10)}</td>
+	                			<td>${memberVo.contractDone.substring(0, 10)}</td>
+	                		</tr>
+	                	</c:forEach>
+	                </c:if>
 	                </tbody>
 	            </table>
 	        </div>
+	        <div class="divPage" style="text-align: center" >		
+				<!-- 페이지 번호 추가 -->		
+				<c:if test="${pagingInfo.firstPage>1 }">
+					<a href="#" onclick="pageFunc(${pagingInfo.firstPage-1})">			
+					    <img src='<c:url value="/images/first.JPG" />'  border="0">	</a>
+				</c:if>
+								
+				<!-- [1][2][3][4][5][6][7][8][9][10] -->
+				<c:forEach var="i" begin="${pagingInfo.firstPage }" 
+				end="${pagingInfo.lastPage }">
+					<c:if test="${i==pagingInfo.currentPage }">
+						<span style="color:white;font-weight:bold">${i }</span>
+					</c:if>
+					<c:if test="${i!=pagingInfo.currentPage }">						
+						<a href="#" onclick="pageFunc(${i})">
+							[${i }]
+						</a>
+					</c:if>
+				</c:forEach>
+					
+				<c:if test="${pagingInfo.lastPage<pagingInfo.totalPage }">
+					<a href="#" onclick="pageFunc(${pagingInfo.lastPage+1})">			
+						<img src="<c:url value="/images/last.JPG" />" border="0">
+					</a>
+				</c:if>
+				<!--  페이지 번호 끝 -->
+			</div>
 	    </div>
 	</div>
 
