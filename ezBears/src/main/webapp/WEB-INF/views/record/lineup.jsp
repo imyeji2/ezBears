@@ -96,7 +96,9 @@
 <meta http-equiv="origin-trial"
 	content="AwnOWg2dzaxHPelVjqOT/Y02cSxnG2FkjXO7DlX9VZF0eyD0In8IIJ9fbDFZGXvxNvn6HaF51qFHycDGLOkj1AUAAACAeyJvcmlnaW4iOiJodHRwczovL2NyaXRlby5jb206NDQzIiwiZmVhdHVyZSI6IlByaXZhY3lTYW5kYm94QWRzQVBJcyIsImV4cGlyeSI6MTY5NTE2Nzk5OSwiaXNTdWJkb21haW4iOnRydWUsImlzVGhpcmRQYXJ0eSI6dHJ1ZX0=">
 </head>
-
+<div class="container-fluid" id="board_style">
+	<div class="bg-secondary text-center rounded">
+		<div class="bg-secondary rounded h-100 p-4">
 <div class="lf__lineUp">
 	<div class="section">
 		<div class="section__title lf__header  section__title--center">타자</div>
@@ -373,4 +375,6 @@
 			</div>
 		</div>
 	</div>
+</div>
+
 </div>
