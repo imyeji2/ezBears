@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ez.ezBears.common.ConstUtil;
 import com.ez.ezBears.common.FileUploadUtil;
+import com.ez.ezBears.common.MyBoardSearchVo;
+import com.ez.ezBears.common.PaginationInfo;
+import com.ez.ezBears.common.SearchVO;
 import com.ez.ezBears.member.model.MemberService;
 import com.ez.ezBears.myBoard.controller.MyBoardController;
 import com.ez.ezBears.myBoard.model.MyBoardListService;
@@ -39,18 +42,30 @@ public class TeamNoticeController {
 	//예지
 	/*팀별 공지사항 게시판 */
 	@RequestMapping("/teamNotice")
-	public String teamNotice(@RequestParam (defaultValue = "0") int myBoardNo, 
-			Model  model) {
+	public String teamNotice(@RequestParam (defaultValue = "0") int mBoardNo, 
+			MyBoardSearchVo searchVo,Model  model) {
 		//1.
-		logger.info("팀 공지사항 리스트 페이지, 파라미터 myBoardNo={}",myBoardNo);
+		logger.info("팀 공지사항 리스트 페이지, 파라미터 mBoardNo={}",mBoardNo);
+		
 		
 		//2
-		List<Map<String, Object>> list = teamNoticeService.selectTeamNoticeList(myBoardNo);
+		//페이징 처리
+		PaginationInfo pagingInfo = new PaginationInfo();
+		pagingInfo.setBlockSize(ConstUtil.BLOCK_SIZE);
+		pagingInfo.setCurrentPage(searchVo.getCurrentPage());
+		pagingInfo.setRecordCountPerPage(ConstUtil.RECORD_COUNT);
+		
+		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
+		searchVo.setRecordCountPerPage(ConstUtil.RECORD_COUNT);
+		searchVo.setMBoardNo(mBoardNo);
+		
+		List<Map<String, Object>> list = teamNoticeService.selectTeamNoticeList(searchVo);
 		logger.info("팀 공지사항 리스트 조회 결과 list.size={}",list.size());
 		
 		//3
 		model.addAttribute("list",list);
-		model.addAttribute("myBoardNo",myBoardNo);
+		model.addAttribute("myBoardNo",mBoardNo);
+		model.addAttribute("pagingInfo",pagingInfo);
 		
 		//4
 		return "myBoard/teamNoticeList";

@@ -1,7 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@include file="../inc/top.jsp"%>
-
+<script>
+	function pageFunc(curPage){
+		$('input[name="currentPage"]').val(curPage);
+		$('form[name="teamNoticeFrom"]').submit();
+	}
+</script>
     <!-- Recent Sales Start -->
     <div class="container-fluid pt-4 px-4" id="board_style">
         <div class="bg-secondary text-center rounded">
@@ -9,8 +14,12 @@
  				<c:import url="/myBoard/myBoardNavTab?myBoardNo=${myBoardNo}"></c:import>
                 <div class="tab-content" id="pills-tabContent">
                     <div class="tab-pane fade show active">
+                        <form action="<c:url value='/myBoard/teamNotice?myBoardNo=${myBoardNo}'/>" method="post" name="teamNoticeFrom">
+							<input type="text" name="currentPage">
+							<input type="text" name="searchKeyword" value="${param.searchKeyword}">
+							<input type="text" name="searchCondition" value="${param.searchCondition}">
 						<div id="teamNoticeList">
-							<br><br>
+						<br><br>
 							<div class="teamNotice_serch">
 								<div class="serch_input">
 									<div class="select_box">
@@ -96,28 +105,38 @@
 									href="<c:url value='/myBoard/teamNoticeWrite?myBoardNo=${myBoardNo}'/>">등록</a>
 							</div><!-- btnBox --> 
 							         
-							  <c:if test="${!empty list}">          
+						        
 						      <div class="page_box">
 							      <nav aria-label="Page navigation example">
 									  <ul class="pagination justify-content-center">
-									    <li class="page-item">
-									      <a class="page-link">Previous</a>
-									    </li>
-									    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-									    <li class="page-item">
-									    	<a class="page-link" href="#">2</a>
-									    </li>
-									    <li class="page-item">
-									    	<a class="page-link" href="#">3</a>
-									    </li>
-									    <li class="page-item">
-									      <a class="page-link" href="#">Next</a>
-									    </li>
+									  <c:if test="${pagingInfo.firstPage>1 }">
+										    <li class="page-item">
+										      <a class="page-link" onclick="pageFunc(${pagingInfo.firstPage-1})">
+										      	<
+										      </a>
+										    </li>
+									    </c:if>
+									    <c:forEach var="i" begin="${pagingInfo.firstPage}" end="${pagingInfo.lastPage }">		
+											<c:if test="${i == pagingInfo.currentPage }">		
+											    <li class="page-item active" >${i}</li>
+											   </c:if>
+												<c:if test="${i != pagingInfo.currentPage }">
+												    <li class="page-item">
+												    	<a class="page-link" href="#" onclick="pageFunc(${i})">${i}</a>
+												    </li>
+											    </c:if>   		
+											</c:forEach>
+										<c:if test="${pagingInfo.lastPage < pagingInfo.totalPage}">													    
+										    <li class="page-item">
+										      <a class="page-link"  href="#" onclick="pageFunc(${pagingInfo.lastPage+1})">Next</a>
+										    </li>
+									    </c:if>
 									  </ul>
 									</nav>
 							</div><!-- page_box -->
-							</c:if>
+					
 						</div><!-- teamNoticeList -->
+						</form>
 					</div>
 				</div>
             </div>

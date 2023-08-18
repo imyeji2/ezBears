@@ -3,6 +3,15 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ez.ezBears.temNotice.model.TeamNoticeDAO">
 
+   <sql id="searchWhere">
+      <where>
+     	 m_board_no=#{MBoardNo}
+         <if test="searchKeyword!=null and searchKeyword!=''">
+             and  ${searchCondition} like '%' || #{searchKeyword} || '%'
+         </if>
+      </where>
+   </sql>
+   
 	<insert id="insertTeamNotice" parameterType="teamNoticeVo">
 		<selectKey keyProperty="teamNoticeNo" resultType="int" order="BEFORE">
 			select TEAM_NOTICE_SEQ.nextval from dual
@@ -11,10 +20,19 @@
 		values(#{teamNoticeNo},#{memNo}, #{myBoardNo}, #{teamNoticeTitle}, #{teamNoticeContent},#{fsize},#{fileName},#{originname})
 	</insert> 
 	
-	<select id="selectTeamNoticeList" parameterType="int" resultType="map">
-		select * from teamNoticeListView
-		where my_board_no = #{my_board_no}
-		order by team_notice_no desc
-	
+	<select id="selectTeamNoticeList" parameterType="myBoardSearchVo" resultType="map">
+      select *
+      from
+      (
+	      select rownum as RNUM, A.* from
+	      (		
+			select * from teamNoticeListView
+			<include refid="searchWhere"></include>
+			order by regdate desc
+	      )A
+      )
+      <![CDATA[
+      where RNUM> #{firstRecordIndex} 
+      and RNUM<=#{firstRecordIndex} + #{recordCountPerPage}]]>		
 	</select>
 </mapper>

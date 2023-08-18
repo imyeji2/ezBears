@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.ez.ezBears.common.MyBoardSearchVo;
+
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -18,8 +20,8 @@ public class TeamNoticeServiceImpl implements TeamNoticeService {
 	}
 
 	@Override
-	public List<Map<String, Object>> selectTeamNoticeList(int myBoardNo) {
-		return teamNoticeDao.selectTeamNoticeList(myBoardNo);
+	public List<Map<String, Object>> selectTeamNoticeList(MyBoardSearchVo searchVo) {
+		return teamNoticeDao.selectTeamNoticeList(searchVo);
 	}
 
 }

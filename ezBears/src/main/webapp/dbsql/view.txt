@@ -17,10 +17,12 @@ ON MY.M_BOARD_NO = B.M_BOARD_NO;
 
 create or replace view teamNoticeListView
 as
-select t.*, m.mem_name, d.dept_name
+select b.m_board_no, t.*, m.mem_name, d.dept_name
 from team_notice t
 left join member m
 on t.mem_no = m.mem_no
+join my_board b
+on m.mem_no = b.mem_no
 join dept d
 on m.dept_no = d.dept_no;
 

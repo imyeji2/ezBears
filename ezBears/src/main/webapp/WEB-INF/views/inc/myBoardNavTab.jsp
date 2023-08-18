@@ -24,18 +24,18 @@
 
 <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
     <li class="nav-item" role="presentation">
-        <a class="nav-link tap_txt" id="teamNotice" href="<c:url value='/myBoard/teamNotice?myBoardNo=${myBoardNo}'/>">공지사항</a>
+        <a class="nav-link tap_txt" id="teamNotice" href="<c:url value='/myBoard/teamNotice?mBoardNo=${MBoardNo}'/>">공지사항</a>
     </li>
     <li class="nav-item" role="presentation">
-        <a class="nav-link tap_txt" id="teamWorkBoard" href="<c:url value='/myBoard/teamWorkBoard?myBoardNo=${myBoardNo}'/>">업무게시판</a>
+        <a class="nav-link tap_txt" id="teamWorkBoard" href="<c:url value='/myBoard/teamWorkBoard?mBoardNo=${MBoardNo}'/>">업무게시판</a>
     </li>
     <li class="nav-item" role="presentation">
-        <a class="nav-link tap_txt" id="Calender"  href="<c:url value='/myBoard/Calender?myBoardNo=${myBoardNo}'/>">스케줄</a>
+        <a class="nav-link tap_txt" id="Calender"  href="<c:url value='/myBoard/Calender?mBoardNo=${MBoardNo}'/>">스케줄</a>
     </li>
     <li class="nav-item" role="presentation">
-        <a class="nav-link tap_txt" id="Approval" href="<c:url value='/myBoard/Approval?myBoardNo=${myBoardNo}'/>">결재</a>
+        <a class="nav-link tap_txt" id="Approval" href="<c:url value='/myBoard/Approval?mBoardNo=${MBoardNo}'/>">결재</a>
     </li>      
     <li class="nav-item" id="webhard" role="presentation">
-        <a class="nav-link tap_txt"  href="<c:url value='/myBoard/webhard?myBoardNo=${myBoardNo}'/>">웹하드</a>
+        <a class="nav-link tap_txt"  href="<c:url value='/myBoard/webhard?mBoardNo=${MBoardNo}'/>">웹하드</a>
     </li>                                  
 </ul>
