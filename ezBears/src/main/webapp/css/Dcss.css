@@ -126,6 +126,15 @@ input#addressDetail, input#contract, input#zipcode {
     align-items: center;
 }
 
+.memList a {
+    color: #6C7293;
+}
+
+.memList a:hover {
+    color: #953de7;
+}
+
+
 @media (max-width: 720px) {
 	.register-form {
 		margin: 0;
@@ -191,4 +200,26 @@ input#addressDetail, input#contract, input#zipcode {
 
 .btn-form button:hover {
 	background-color: #953de7;
+}
+
+.memImg {
+    float: left;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.memInfo {
+    float: right;
+}
+
+.inner {
+    display: flex;
+    justify-content: center;
+    gap: 0 5%;
+    margin: 7% 0; 
+}
+
+@media (max-width: 720px) {
+	
 }
