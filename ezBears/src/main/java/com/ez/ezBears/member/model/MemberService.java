@@ -30,10 +30,13 @@ public interface MemberService {
     List<MemberVO> selectAllMem(SearchVO searchVo);
     int totalList(SearchVO searchVo);
     
+    //멤버 디테일
+    MemberVO memberDetail(int memNo);
+    
     //
     int selectMemberNo(String memId);
     
-    //멤버 리스트
+    
     
     Map<String, Object> selectMemberView(String memId);
 }
