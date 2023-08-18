@@ -20,7 +20,6 @@ import com.ez.ezBears.common.PaginationInfo;
 import com.ez.ezBears.common.SearchVO;
 import com.ez.ezBears.dept.model.DeptService;
 import com.ez.ezBears.dept.model.DeptVO;
-import com.ez.ezBears.member.model.MemberListVO;
 import com.ez.ezBears.member.model.MemberService;
 import com.ez.ezBears.member.model.MemberVO;
 import com.ez.ezBears.position.model.PositionService;

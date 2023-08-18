@@ -41,8 +41,6 @@
 	                        <th scope="col">이름</th>
 	                        <th scope="col">아이디</th>
 	                        <th scope="col">핸드폰번호</th>
-	                        <th scope="col">생년월일</th>
-	                        <th scope="col">주소</th>
 	                        <th scope="col">고용형태</th>
 	                        <th scope="col">입사일</th>
 	                        <th scope="col">퇴사일</th>
@@ -67,8 +65,6 @@
 	                				<a href="<c:url value='/Member/detail?memNo=${memberVo.memNo}'/>">${memberVo.memId}</a>
 	                			</td>
 	                			<td>${memberVo.memTel}</td>
-	                			<td>${memberVo.memBirth.substring(0, 10)}</td>
-	                			<td>${memberVo.memAddress} ${memberVo.memAddressDetail}</td>
 	                			<td>${memberVo.type}</td>
 	                			<td>${memberVo.contractStart.substring(0, 10)}</td>
 	                			<td>${memberVo.contractDone.substring(0, 10)}</td>
