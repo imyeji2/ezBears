@@ -77,6 +77,11 @@ public class StaffServiceImpl implements StaffService {
 		return staffDao.getTotalRecord(searchVo);
 	}
 
+	@Override
+	public StaffVO selectByStaffNo(int staffNo) {
+		return staffDao.selectByStaffNo(staffNo);
+	}
+
 
 	
 	

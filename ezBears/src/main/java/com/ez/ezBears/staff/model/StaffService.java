@@ -22,5 +22,6 @@ public interface StaffService {
 	StaffVO getStaffById(String staffId);
 	List<StaffVO> selectAllStaff(SearchVO searchVo);
 	int getTotalRecord(SearchVO searchVo);
+	StaffVO selectByStaffNo(int staffNo);
 
 }

@@ -50,8 +50,8 @@
 			            	<c:forEach var="vo" items="${list }">
 				                <tr>
 				                    <td>${vo.staffPosition }</td>
-				                    <td>${vo.staffName }</td>
-				                    <td>${vo.staffId }</td>
+				                    <td><a href="<c:url value='/staff/staffDetail?staffNo=${vo.staffNo }'/>" style="color: #fff">${vo.staffName }</a></td>
+				                    <td><a href="<c:url value='/staff/staffDetail?staffNo=${vo.staffNo }'/>" style="color: #fff">${vo.staffId }</a></td>
 				                    <td>${vo.staffInfo }</td>
 				                    <td>${vo.staffTel }</td>
 				                    <td>${vo.staffAddr }</td>
