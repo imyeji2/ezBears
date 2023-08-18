@@ -1,4 +1,4 @@
-package com.ez.ezBears.webhard;
+package com.ez.ezBears.webhard.controller;
 
 import java.util.List;
 
@@ -48,12 +48,20 @@ public class WebHardController {
 	
 	@GetMapping("/webhard_write")
 	public String webHardget() {
+		
 		return null;
 		
 	}
 	@PostMapping("/webhard_write")
-	public String webHardpost(@ModelAttribute WebHardVO webHardVo, HttpServletRequest trquest, Model model) {
+	public String webHardpost(@ModelAttribute WebHardVO webHardVo, HttpServletRequest request, Model model) {
+		//
+		logger.info("웹하드 등록 파라미터 webHardVo={}",webHardVo);
 		
+		try {
+			
+		}catch (Exception e) {
+			
+		}
 		
 		return null;
 		

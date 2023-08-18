@@ -21,8 +21,7 @@
 					<input type="email" class="form-control" id="floatingInput"
 						placeholder="name@example.com">
 						 <label for="floatingInput"> 제목 </label>
-						 <%-- <input type="text" name="docNo" value="${docNo}"> --%>
-		
+						
 				</div>
 				<div class="form-floating mb-3">
 					<select class="form-select" id="floatingSelect"
