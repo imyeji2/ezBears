@@ -22,5 +22,17 @@ public class MyBoardListServiceImpl implements MyBoardListService {
 		return myBoardListDao.selectByMyBoardName(myBoardNo);
 	}
 
+	//부서 이름으로 동적 게시판 번호 찾기
+	@Override
+	public int findBoardNoByBoardName(String MBoardName) {
+		return myBoardListDao.findBoardNoByBoardName(MBoardName);
+	}
+	
+	//내 동적 게시판에 부서 번호로 게시판 등록
+	@Override
+	public int insertMyBoard(MyBoardListVO myBoardListVo) {
+		return myBoardListDao.insertMyBoard(myBoardListVo);
+	}
+
 }
 

@@ -15,4 +15,10 @@ public class DeptServiceImpl implements DeptService{
 	public List<DeptVO> selectDeptList() {
 		return deptDao.selectDeptList();
 	}
+	
+	//멤버 등록 시 부서 번호로 부서 이름 찾아오기
+	@Override
+	public String findDeptName(int deptNo) {
+		return deptDao.findDeptName(deptNo);
+	}
 }

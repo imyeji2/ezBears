@@ -7,4 +7,9 @@
 	<select id="selectDeptList" resultType="deptVo">
 		SELECT * FROM DEPT ORDER BY DEPT_NO
 	</select>
+	
+	<!-- 멤버 등록 시 부서 번호로 부서 이름 찾아오기 -->
+	<select id="findDeptName" parameterType="int" resultType="string">
+    	SELECT DEPT_NAME FROM DEPT WHERE DEPT_NO = #{deptNo}
+    </select>
 </mapper>
