@@ -8,10 +8,11 @@
     outline: none;
     background-color: #191C24;
     border: 1px solid #6C7293;
-    color: #6C7293;
+    color: #fff;
     padding: 5px 15px;
     border-radius: 5px;
 }
+
 
 </style>
 	<div class="col-12">

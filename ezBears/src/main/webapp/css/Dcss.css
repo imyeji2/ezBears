@@ -33,7 +33,7 @@
 	border-radius: 5px;
 	width: 100%;
 	background-color: #000;
-	color: #6C7293;
+	color: #fff;
 	border: 0;
 }
 
@@ -82,7 +82,7 @@ input#addressDetail, input#contract, input#zipcode {
 	border-radius: 5px;
 	width: 100%;
 	background-color: #000;
-	color: #6C7293;
+	color: #fff;
 	border: 0;
 }
 
@@ -124,16 +124,30 @@ input#addressDetail, input#contract, input#zipcode {
     display: flex;
     justify-content: center;
     align-items: center;
+    color: #fff;
 }
 
 .memList a {
-    color: #6C7293;
+    color: #fff;
 }
 
 .memList a:hover {
     color: #953de7;
 }
 
+thead, tbody, tfoot, tr, td, th {
+    color: #fff !important;
+}
+
+.form-floating>.form-control:focus, .form-floating>.form-control:not(:placeholder-shown) {
+    padding-top: 1.625rem;
+    padding-bottom: 0.625rem;
+    color: #fff;
+}
+
+label{
+	color: #fff;
+}
 
 @media (max-width: 720px) {
 	.register-form {
@@ -173,6 +187,7 @@ input#addressDetail, input#contract, input#zipcode {
 		gap: 15px 0;
 	}
 }
+
 
 /* List */
 .rounded {

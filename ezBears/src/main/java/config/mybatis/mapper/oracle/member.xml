@@ -82,4 +82,7 @@
     <select id="memberDetail" parameterType="int" resultType="memberVo">
     	SELECT * FROM MEMLISTVIEW WHERE MEM_NO = #{memNo}
     </select>
+    
+    
+
 </mapper>
