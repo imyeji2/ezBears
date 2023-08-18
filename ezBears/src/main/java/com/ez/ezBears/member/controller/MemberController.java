@@ -113,7 +113,7 @@ public class MemberController {
 	public String list(@ModelAttribute SearchVO searchVo, Model model) {
 		
 		//1
-		logger.info("회원 리스트 페이지");
+		logger.info("회원 리스트 페이지, 파라미터 searchVo={}",searchVo);
 		
 		//2
 		PaginationInfo pagingInfo = new PaginationInfo();
@@ -145,9 +145,20 @@ public class MemberController {
 		return "Member/zipcode";
 	}
 	
-	@GetMapping("/detail")
-	public String detail() {
-		logger.info("회원 상세 페이지");
+	@RequestMapping("/detail")
+	public String detail(@RequestParam(defaultValue = "0") int memNo, Model model) {
+		//1
+		logger.info("회원 상세 페이지, 파라미터 memNo={}", memNo);
+		
+		//2
+		MemberVO memberVo = memberService.memberDetail(memNo);
+		logger.info("회원 상세보기 결과, memberVo={}", memberVo);
+		
+		//3
+		model.addAttribute("memberVo", memberVo);
+		
+		//4
 		return "Member/memberDetail";
 	}
+
 }

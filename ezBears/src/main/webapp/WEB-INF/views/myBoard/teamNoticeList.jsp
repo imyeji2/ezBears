@@ -49,7 +49,7 @@
 								        		<div class="user_img">
 								        			<c:set var="userimg" value="default_user.png"/>
 								        			<c:if test="${!empty map['MEM_IMAGE']}">
-								        				<c:set var="userimg" value="map['MEM_IMAGE']"/>
+								        				<c:set var="userimg" value="${map['MEM_IMAGE']}"/>
 								        			</c:if>
 								        			<img src="<c:url value='/img/mem_images/${userimg}'/>" alt="사원프로필">
 								        		</div>
@@ -68,12 +68,18 @@
 								       			</div>
 								       		</div>
 								       		<c:if test="${!empty map['FILENAME']}">
-								       			<div class="list_box_file">${map['ORIGINNAME']} ${map['FSIZE']/1024}MB</div>
+								       			<div class="list_box_file">
+								       				<a href="#"> ${map['ORIGINNAME']}&nbsp;
+								       				(<fmt:formatNumber value="${map['FSIZE'] /1024.0}" type="number" pattern="#.##"/> KB)
+								       				</a>
+								       			</div>
 								       		</c:if>
 								       		
 							       		</div>
 							       		<div class="notice_reply">
-							       			<div><a href="<c:url value='/myBoard/teamNoticeDetail'/>">댓글 달기</a></div>
+							       			<div>
+							       				<a href="<c:url value='/myBoard/teamNoticeDetail?myBoardNo=${map["MY_BOARD_NO"]}&teamNoticeNo=${map["TEAM_NOTICE_NO"]}'/>">댓글 달기</a>
+							       			</div>
 							       		</div>
 							        </div><!-- notice_list_box -->		
 														

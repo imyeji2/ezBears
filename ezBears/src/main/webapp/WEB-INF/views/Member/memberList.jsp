@@ -16,7 +16,14 @@
 
 	<div class="col-12">
 	    <div class="bg-secondary rounded h-100 p-4">
-	        <h6 class="mb-4">사원 리스트</h6>
+		    <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+	           <ol class="breadcrumb">
+	             <li class="breadcrumb-item active" aria-current="page">
+	                <a href="<c:url value='/Member/list'/>">사원관리</a>
+	             </li>
+	             <li class="breadcrumb-item active" aria-current="page">사원 리스트</li>
+	           </ol>
+	         </nav>   
 			<form class="btn-form" name="frm1" method="get" action="<c:url value ='/Member/write'/>">
 				<input type="text" class ="txtboxSearch" id="txtboxSearch" value="검색어를 입력해주세요">
 				<button class="btnSearch" id="btnSearch" value="검색">검색</button>
@@ -34,8 +41,6 @@
 	                        <th scope="col">이름</th>
 	                        <th scope="col">아이디</th>
 	                        <th scope="col">핸드폰번호</th>
-	                        <th scope="col">생년월일</th>
-	                        <th scope="col">주소</th>
 	                        <th scope="col">고용형태</th>
 	                        <th scope="col">입사일</th>
 	                        <th scope="col">퇴사일</th>
@@ -49,15 +54,17 @@
 	                </c:if>
 	                <c:if test="${!empty list}">
 	                	<c:forEach var="memberVo" items="${list}"> 
-	                		<tr>
+	                		<tr class="memList">
 	                			<td><input type="checkbox"></td>
 	                			<td>${memberVo.deptName}</td>
 	                			<td>${memberVo.positionName}</td>
-	                			<td>${memberVo.memName}</td>
-	                			<td>${memberVo.memId}</td>
+	                			<td>
+	                				<a href="<c:url value='/Member/detail?memNo=${memberVo.memNo}'/>">${memberVo.memName}</a>
+	                			</td>
+	                			<td>
+	                				<a href="<c:url value='/Member/detail?memNo=${memberVo.memNo}'/>">${memberVo.memId}</a>
+	                			</td>
 	                			<td>${memberVo.memTel}</td>
-	                			<td>${memberVo.memBirth.substring(0, 10)}</td>
-	                			<td>${memberVo.memAddress} ${memberVo.memAddressDetail}</td>
 	                			<td>${memberVo.type}</td>
 	                			<td>${memberVo.contractStart.substring(0, 10)}</td>
 	                			<td>${memberVo.contractDone.substring(0, 10)}</td>
@@ -78,11 +85,11 @@
 				<c:forEach var="i" begin="${pagingInfo.firstPage }" 
 				end="${pagingInfo.lastPage }">
 					<c:if test="${i==pagingInfo.currentPage }">
-						<span style="color:white;font-weight:bold">${i }</span>
+						<span style="color:#7000D8;font-weight:bold">${i}</span>
 					</c:if>
 					<c:if test="${i!=pagingInfo.currentPage }">						
-						<a href="#" onclick="pageFunc(${i})">
-							[${i }]
+						<a href="#" onclick="pageFunc(${i})" style="color:white">
+							[${i}]
 						</a>
 					</c:if>
 				</c:forEach>
