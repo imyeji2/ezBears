@@ -3,6 +3,14 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ez.ezBears.staff.model.StaffDAO">
+	<sql id="searchWhere">
+		<where>
+			<if test="searchKeyword!=null and searchKeyword!=''">
+				${searchCondition} like '%' || #{searchKeyword} || '%'
+			</if>
+		</where>
+	</sql>
+
 	<select id="selectCheckId" parameterType="string"
 		resultType="int">
 		select count(*) from STAFF  
@@ -34,16 +42,30 @@
 			#{staffAddr}, #{staffAddrDetail}, 'Y', #{staffId}, #{staffPwd}, #{staffImage})
 	</insert>
 	
-	<select id="selectAllStaff" resultType="staffVo">
-		select * from staff order by staff_no
+	<select id="selectAllStaff" resultType="staffVo" parameterType="searchVo">
+		select *
+		from
+		(
+			select rownum as RNUM, A.* from
+			(
+				select * from staff
+				<include refid="searchWhere"></include>
+					<!-- where staff_id like '%ez_st%' -->
+				order by staff_no desc
+			)A
+		)
+		<![CDATA[
+		where RNUM> #{firstRecordIndex} 
+		and RNUM<=#{firstRecordIndex} + #{recordCountPerPage}]]>
 	</select>
 	
 	<select id="getStaffById" parameterType="String" resultType="staffVo">
         SELECT * FROM STAFF WHERE STAFF_ID = #{staffId}
     </select>
 	
-	<select id="getTotalRecord" resultType="int">
+	<select id="getTotalRecord" resultType="int" parameterType="searchVo">
 		select count(*) from staff
+		<include refid="searchWhere"></include>
 	</select>
 	
 	

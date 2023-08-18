@@ -125,11 +125,12 @@ public class StaffController {
 		searchVo.setFirstRecordIndex(pagination.getFirstRecordIndex());
 		searchVo.setRecordCountPerPage(ConstUtil.RECORD_COUNT);
 		logger.info("설정 후 searchVo={}", searchVo);
+				
+		int totalRecord = staffService.getTotalRecord(searchVo);
 		
-		int totalRecord = staffService.getTotalRecord();
-		
-		List<StaffVO> list = staffService.selectAllStaff();
+		List<StaffVO> list = staffService.selectAllStaff(searchVo);
 		logger.info("스태프 전체 조회결과, list.size={}", list.size());
+		
 		
 		pagination.setTotalRecord(totalRecord);
 		logger.info("설정 후 pagination={}", pagination);
@@ -141,7 +142,6 @@ public class StaffController {
 		
 		//http://localhost:9091/ezBears/staff/staffList
 	}
-	
 
 
 }
