@@ -2,9 +2,12 @@ package com.ez.ezBears.member.model;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
+
+import com.ez.ezBears.common.SearchVO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -89,6 +92,25 @@ public class MemberServiceImpl implements MemberService{
 	public void updateMember(MemberVO memberVO) {
 		memberDao.updateMember(memberVO);
 	}
+	
+	//멤버 리스트
+	@Override
+	public List<MemberVO> selectAllMem(SearchVO searchVo) {
+		return memberDao.selectAllMem(searchVo);
+	}
+	
+	@Override
+	public int totalList(SearchVO searchVo) {
+		return memberDao.totalList(searchVo);
+	}
+	
+	@Override
+	public MemberVO memberDetail(int memNo) {
+		return memberDao.memberDetail(memNo);
+	}
+	
+	
+	//
 
 	@Override
 	public int selectMemberNo(String memId) {

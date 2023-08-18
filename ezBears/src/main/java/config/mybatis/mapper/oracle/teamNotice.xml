@@ -3,11 +3,18 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ez.ezBears.temNotice.model.TeamNoticeDAO">
 
-<!-- 	<insert id="insertTeamNotice" parameterType="teamNoticeVo">
-		<selectKey keyProperty="teamNoticeNo" resultType="int">
-			select teamNotice_seq.nextval from teamNotice
+	<insert id="insertTeamNotice" parameterType="teamNoticeVo">
+		<selectKey keyProperty="teamNoticeNo" resultType="int" order="BEFORE">
+			select TEAM_NOTICE_SEQ.nextval from dual
 		</selectKey>
-		insert into teamNotice(teamNoticeNo, memNo, myBoardNo, teamNoticeTitle, teamNoticeContent,fsize,fileName,originname)
-		values()
-	</insert> -->
+		insert into team_Notice(TEAM_NOTICE_NO, MEM_NO, MY_BOARD_NO, TEAM_NOTICE_TITLE, TEAM_NOTICE_CONTENT,FSIZE,FILENAME,ORIGINNAME)
+		values(#{teamNoticeNo},#{memNo}, #{myBoardNo}, #{teamNoticeTitle}, #{teamNoticeContent},#{fsize},#{fileName},#{originname})
+	</insert> 
+	
+	<select id="selectTeamNoticeList" parameterType="int" resultType="map">
+		select * from teamNoticeListView
+		where my_board_no = #{my_board_no}
+		order by team_notice_no desc
+	
+	</select>
 </mapper>

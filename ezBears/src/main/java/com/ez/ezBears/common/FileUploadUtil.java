@@ -70,17 +70,18 @@ public class FileUploadUtil {
 
 		if(ConstUtil.FILE_UPLOAD_TYPE.equals("test")) {
 			if(pathFlag== ConstUtil.UPLOAD_FILE_FLAG) {  //자료실
-				path=ConstUtil.FILE_UPLOAD_PATH_TEST;
-			}else if(pathFlag==ConstUtil.UPLOAD_MEMIMAGE_FLAG) { //멤버 이미지 업로드
-				path=ConstUtil.IMAGE_FILE_UPLOAD_PATH_TEST;				
+				//path=ConstUtil.FILE_UPLOAD_PATH_TEST;
+      }else if(pathFlag==ConstUtil.UPLOAD_MEMIMAGE_FLAG) { //멤버 이미지 업로드
+				//path=ConstUtil.IMAGE_FILE_UPLOAD_PATH_TEST;				
 			}
-		}else {  //deploy
+		}else {//deploy
 			if(pathFlag== ConstUtil.UPLOAD_FILE_FLAG) {  //자료실
-				path=ConstUtil.FILE_UPLOAD_PATH;  //pds_upload
-			}else if(pathFlag==ConstUtil.UPLOAD_MEMIMAGE_FLAG) { //상품 이미지 업로드
-				path=ConstUtil.IMAGE_FILE_UPLOAD_PATH;// mem_images				
+				path=ConstUtil.FILE_UPLOAD_PATH; //pds_upload
+			}else if(pathFlag==ConstUtil.UPLOAD_MEMIMAGE_FLAG) { //멤버 이미지 업로드
+        path=ConstUtil.IMAGE_FILE_UPLOAD_PATH;// mem_images					
+			}else if(pathFlag ==ConstUtil.UPLOAD_TEAMNOTICE_FLAG) {//팀 공지사항
+				path=ConstUtil.TEAM_NOTICE_FILE_PACH;
 			}
-
 			//실제 물리적인 경로 구하기
 			path=request.getSession().getServletContext().getRealPath(path);
 		}
@@ -110,4 +111,6 @@ public class FileUploadUtil {
 		
 		return result;
 	}
+	
+
 }

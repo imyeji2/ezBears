@@ -6,7 +6,14 @@
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <div class="col-12">
 	<div class="bg-secondary rounded h-100 p-4">
-	<h6 class="mb-4">사원 등록</h6>
+	   	<nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+         <ol class="breadcrumb">
+           <li class="breadcrumb-item active" aria-current="page">
+              <a href="<c:url value='/Member/list'/>">사원관리</a>
+           </li>
+           <li class="breadcrumb-item active" aria-current="page">사원 등록</li>
+         </ol>
+       </nav>
 		<div class="register">
 			<form class="register-form" name="frmRegist" method="post" action="<%=request.getContextPath() %>/Member/write" enctype="multipart/form-data">
 				<div class = "side">

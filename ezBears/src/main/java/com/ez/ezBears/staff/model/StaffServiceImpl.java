@@ -66,6 +66,11 @@ public class StaffServiceImpl implements StaffService {
 	public StaffVO getStaffById(String staffId) {
 		return staffDao.getStaffById(staffId);
 	}
+
+	@Override
+	public int getTotalRecord() {
+		return staffDao.getTotalRecord();
+	}
 	
 	
 }

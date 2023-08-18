@@ -1,6 +1,9 @@
 package com.ez.ezBears.member.model;
 
+import java.util.List;
 import java.util.Map;
+
+import com.ez.ezBears.common.SearchVO;
 
 public interface MemberService {
 	//아이디 중복확인 관련 상수
@@ -22,7 +25,18 @@ public interface MemberService {
 	int insertMem(MemberVO memberVo);
     MemberVO getMemberById(String memId);
     void updateMember(MemberVO memberVO);
+    
+    //멤버 리스트
+    List<MemberVO> selectAllMem(SearchVO searchVo);
+    int totalList(SearchVO searchVo);
+    
+    //멤버 디테일
+    MemberVO memberDetail(int memNo);
+    
+    //
     int selectMemberNo(String memId);
+    
+    
     
     Map<String, Object> selectMemberView(String memId);
 }

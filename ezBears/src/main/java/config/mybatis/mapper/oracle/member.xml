@@ -44,14 +44,42 @@
             CONTRACT_START = #{contractStart}
         WHERE MEM_ID = #{memId}
     </update>
+    <!-- 여기까지 -->
+    
+    
     
     <select id="selectMemberNo" parameterType="String" resultType="int">
     	SELECT MEM_NO FROM MEMBER
-    	WHERE MEM_ID=#{MEM_ID}
+    	WHERE MEM_ID=#{memId}
     </select>
     
     <select id="selectMemberView" parameterType="String" resultType="map">
     	select * from memberView where MEM_ID = #{memId}
     </select>
+
+	<!-- 전체멤버 페이징처리후 뿌려주기 -->
+    <select id="selectAllMem" parameterType="searchVo" resultType="memberVo">
+    	SELECT * FROM 
+    	(
+    		SELECT ROWNUM AS RNUM, A.* FROM 
+    		(
+        		SELECT * FROM MEMLISTVIEW ORDER BY DEPT_NAME, POSITION_NO DESC, MEM_NAME
+    		)A
+		)
+		
+		<![CDATA[
+		WHERE RNUM > #{firstRecordIndex} 
+		AND RNUM <= #{firstRecordIndex} + #{recordCountPerPage}
+		]]>
+    </select>
     
+    <!-- 총 멤버 리스트 수 -->
+    <select id="totalList" parameterType="searchVo" resultType="int">
+    	SELECT COUNT(*) FROM MEMBER
+    </select>
+    
+    <!-- 멤버 디테일 페이지 -->
+    <select id="memberDetail" parameterType="int" resultType="memberVo">
+    	SELECT * FROM MEMLISTVIEW WHERE MEM_NO = #{memNo}
+    </select>
 </mapper>

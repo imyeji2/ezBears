@@ -1,22 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="../inc/top.jsp"%>	
 <!-- Recent Sales Start -->
-	<!-- 넓이 높이 조절 -->
-	<style>
-	.ck.ck-editor {
-    	max-width: 100%;
-	}
-	.ck-editor__editable {
-	    min-height: 500px;
-	    background: #000;
-	}
-	
-	</style>
 
 	<script>
 		$(function () {
-			CKEDITOR.replace('content', {
-				filebrowserUploadUrl : "<c:url value='/adm/fileupload'/>"
+			CKEDITOR.replace('teamNoticeContent', {
+				filebrowserUploadUrl : "<c:url value='/adm/fileupload'/>",
+				height : '300px',
+				resize_enabled: false
 			});
 			
 			$('#write').click(function(){
@@ -51,7 +42,8 @@
 			       			<div class="write_view">
 				       			 <div class="form-floating">
 								  <textarea class="form-control write_form"
-								  	 placeholder="내용을 입력해주세요"  name="teamNoticeContent" id="content"></textarea>
+								  	 placeholder="내용을 입력해주세요"  
+								  	 name="teamNoticeContent" id="teamNoticeContent"></textarea>
 								</div>
 			       			</div>
 			       			
