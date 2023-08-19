@@ -102,7 +102,7 @@
 	                    </div>
 	                    <div class="ms-3 lign-items-center">
 	                        <h6 class="mb-0">${sessionScope.name }/${sessionScope.position}</h6>
-	                        <span>💼운영1팀</span>
+		                       <span>💼${sessionScope.dept_name }</span>
 	                    </div>
 	                </div>
 	               	<button class="inoutBtn">출근</button>
@@ -124,7 +124,7 @@
                       	 	<i class="bi bi-building me-2"></i>공용
                         </a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="#" class="dropdown-item">
+                            <a href="<c:url value='/notice/noticeList'/>" class="dropdown-item">
                            		<i class="far fa-bell me-2"></i>공지사항
                            	</a>
                             <a href="#" class="dropdown-item">

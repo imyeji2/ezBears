@@ -109,7 +109,7 @@
 						<div>
 							 <select class="form-select mb-3" name="dept" id="dept">
                                 <option selected value="front">프론트</option>
-                                <option value="player">선수</option>
+                                <option value="staff">스태프</option>
                             </select>
 						</div>
 						<div class="form-check">

@@ -1,6 +1,7 @@
 package com.ez.ezBears.staff.model;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -13,4 +14,6 @@ public interface StaffDAO {
 	List<StaffVO> selectAllStaff();
 	StaffVO getStaffById(String staffId);
 	int getTotalRecord();
+	
+	Map<String, Object> selectStaffView(String staffId);
 }

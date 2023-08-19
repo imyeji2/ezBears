@@ -1,6 +1,7 @@
 package com.ez.ezBears.staff.model;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
@@ -71,6 +72,10 @@ public class StaffServiceImpl implements StaffService {
 	public int getTotalRecord() {
 		return staffDao.getTotalRecord();
 	}
-	
-	
+
+	@Override
+	public Map<String, Object> selectStaffView(String staffId) {
+		return staffDao.selectStaffView(staffId);
+	}
+
 }

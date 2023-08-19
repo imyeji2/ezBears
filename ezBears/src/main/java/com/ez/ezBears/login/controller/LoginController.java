@@ -56,7 +56,7 @@ public class LoginController {
 			logger.info("로그인 체크 결과 result={}",result);
 			if(result==memberService.LOGIN_OK) {
 				if(result>0) {
-					msg=userid + "님 로그인되었습니다.";
+					msg= map.get("MEM_NAME") + "님 로그인되었습니다.";
 					url="/";
 
 					//session
@@ -65,6 +65,8 @@ public class LoginController {
 					session.setAttribute("type", type);
 					session.setAttribute("name", map.get("MEM_NAME"));
 					session.setAttribute("position", map.get("POSITION_NAME"));
+					session.setAttribute("dept_name", map.get("DEPT_NAME"));
+					
 					
 					//cookie
 					Cookie ck = new Cookie("ck_userid", userid);
@@ -82,23 +84,25 @@ public class LoginController {
 			}else if(result==memberService.USERID_NONE) {
 				msg="해당 프론트 아이디가 존재하지 않습니다.";			
 			}
-		}else if(dept.equals("player")) {
+		}else if(dept.equals("staff")) {
 			int result1=staffService.loginCheck(userid, pwd);
 			String type="스태프";
-			StaffVO vo = staffService.getStaffById(userid);
+			Map<String, Object> map = staffService.selectStaffView(userid);
+			/* StaffVO vo = staffService.getStaffById(userid); */
 			logger.info("로그인 체크 결과 result1={}",result1);
 			if(result1==staffService.LOGIN_OK) {
 				
 				if(result1>0) {
-					msg=userid + "님 로그인되었습니다.";
+					msg= map.get("STAFF_NAME") + "님 로그인되었습니다.";
 					url="/";
 
 					//session
 					HttpSession session=request.getSession();
 					session.setAttribute("userid", userid);
 					session.setAttribute("type", type);
-					session.setAttribute("name", vo.getStaffName());
-					session.setAttribute("position", vo.getStaffPosition());
+					session.setAttribute("name", map.get("STAFF_NAME"));
+					session.setAttribute("position", map.get("STAFF_POSITION"));
+					session.setAttribute("dept_name", map.get("DEPT_NAME"));
 					
 					//cookie
 					Cookie ck = new Cookie("ck_userid", userid);

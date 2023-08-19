@@ -46,5 +46,8 @@
 		select count(*) from staff
 	</select>
 	
+	<select id="selectStaffView" parameterType="String" resultType="map">
+    	select * from staffView where STAFF_ID = #{staffId}
+    </select>
 	
 </mapper>
