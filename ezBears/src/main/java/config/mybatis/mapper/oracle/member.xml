@@ -44,10 +44,13 @@
             CONTRACT_START = #{contractStart}
         WHERE MEM_ID = #{memId}
     </update>
+    <!-- 여기까지 -->
+    
+    
     
     <select id="selectMemberNo" parameterType="String" resultType="int">
     	SELECT MEM_NO FROM MEMBER
-    	WHERE MEM_ID=#{MEM_ID}
+    	WHERE MEM_ID=#{memId}
     </select>
     
     <select id="selectMemberView" parameterType="String" resultType="map">
@@ -70,8 +73,16 @@
 		]]>
     </select>
     
+    <!-- 총 멤버 리스트 수 -->
     <select id="totalList" parameterType="searchVo" resultType="int">
     	SELECT COUNT(*) FROM MEMBER
     </select>
     
+    <!-- 멤버 디테일 페이지 -->
+    <select id="memberDetail" parameterType="int" resultType="memberVo">
+    	SELECT * FROM MEMLISTVIEW WHERE MEM_NO = #{memNo}
+    </select>
+    
+    
+
 </mapper>

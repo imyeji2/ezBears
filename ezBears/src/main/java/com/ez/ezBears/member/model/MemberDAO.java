@@ -28,6 +28,9 @@ public interface MemberDAO {
     //회원 아이디로 회원 번호 검색하기
     int selectMemberNo(String memId);
     
+    //멤버 번호로 멤버 정보 조회하기
+    MemberVO memberDetail(int memNo);
+    
     Map<String, Object> selectMemberView(String memId);
     
 }

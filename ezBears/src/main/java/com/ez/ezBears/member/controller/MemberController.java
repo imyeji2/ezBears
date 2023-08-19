@@ -20,9 +20,10 @@ import com.ez.ezBears.common.PaginationInfo;
 import com.ez.ezBears.common.SearchVO;
 import com.ez.ezBears.dept.model.DeptService;
 import com.ez.ezBears.dept.model.DeptVO;
-import com.ez.ezBears.member.model.MemberListVO;
 import com.ez.ezBears.member.model.MemberService;
 import com.ez.ezBears.member.model.MemberVO;
+import com.ez.ezBears.myBoard.model.MyBoardListService;
+import com.ez.ezBears.myBoard.model.MyBoardListVO;
 import com.ez.ezBears.position.model.PositionService;
 import com.ez.ezBears.position.model.PositionVO;
 
@@ -38,6 +39,9 @@ public class MemberController {
 	private final DeptService deptService;
 	private final PositionService positionService;
 	private final MemberService memberService;
+	private final MyBoardListService myBoardService;
+	
+	//파일 업로드
 	private final FileUploadUtil fileUploadUtil;
 	
 	@GetMapping("/write")
@@ -94,13 +98,34 @@ public class MemberController {
 		vo.setMemSal(salary);
 		
 		int result = memberService.insertMem(vo);
-		logger.info("멤버 등록 완료, result = {}",result);
 		
 		String msg = "사원 등록에 실패하였습니다.", url = "/Member/write";
-		
 		if(result > 0) {
-			msg = "사원 등록이 완료되었습니다.";
-			url = "/Member/list";
+		
+			//부서 번호 값으로 부서 이름 검색
+			logger.info("부서 번호 값 deptNo={}", vo.getDeptNo());
+			String deptName = deptService.findDeptName(vo.getDeptNo());
+			////부서 이름으로 동적 게시판 번호 찾기
+			logger.info("부서 이름 deptName={}", deptName);
+			int MdeptNo = myBoardService.findBoardNoByBoardName(deptName);
+			//내 동적 게시판에 부서 번호로 게시판 등록
+			logger.info("동적게시판 부서번호 MdeptNo={}", MdeptNo);
+			
+			MyBoardListVO myBoardListVo = new MyBoardListVO();
+			
+			myBoardListVo.setMBoardNo(MdeptNo);
+			myBoardListVo.setMemNo(vo.getMemNo());
+			
+			logger.info("동적게시판 myBoardListVo={}", myBoardListVo);
+			
+			int cnt = myBoardService.insertMyBoard(myBoardListVo);
+			
+			if(cnt > 0) {
+				msg = "사원 등록이 완료되었습니다.";
+				url = "/Member/list";
+			}else {
+				msg ="오류가 발생하였습니다.";
+			}
 		}
 		
 		//3
@@ -115,7 +140,7 @@ public class MemberController {
 	public String list(@ModelAttribute SearchVO searchVo, Model model) {
 		
 		//1
-		logger.info("회원 리스트 페이지");
+		logger.info("회원 리스트 페이지, 파라미터 searchVo={}",searchVo);
 		
 		//2
 		PaginationInfo pagingInfo = new PaginationInfo();
@@ -147,9 +172,20 @@ public class MemberController {
 		return "Member/zipcode";
 	}
 	
-	@GetMapping("/detail")
-	public String detail() {
-		logger.info("회원 상세 페이지");
+	@RequestMapping("/detail")
+	public String detail(@RequestParam(defaultValue = "0") int memNo, Model model) {
+		//1
+		logger.info("회원 상세 페이지, 파라미터 memNo={}", memNo);
+		
+		//2
+		MemberVO memberVo = memberService.memberDetail(memNo);
+		logger.info("회원 상세보기 결과, memberVo={}", memberVo);
+		
+		//3
+		model.addAttribute("memberVo", memberVo);
+		
+		//4
 		return "Member/memberDetail";
 	}
+
 }
