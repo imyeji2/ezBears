@@ -27,19 +27,19 @@
 			        			<img src="<c:url value='/img/user.jpg'/>" alt="사원프로필">
 			        		</div><!-- user_img -->
 			        		<div class="detail_left">
-			        			<span class="user_name"><a href="#">제이든</a></span>
+			        			<span class="user_name"><a href="#">${sessionScope.name }</a></span>
 			        			<span class="user_dept">/ 💼개발1팀</span>
 			        		</div><!-- detail_left -->
 		        		</div><!-- detail_left -->
 		        				       		        		       				        	
 		        		<div class="detail_right">
-		        			첨부파일 : <a href="#">config.zip(300.42MB)</a>
+		        			첨부파일 : <a href="#">${map['ORIGIN_FILENAME']}</a>
 		        		</div><!-- detail_right -->
 		       		</div><!-- user_info -->
 		       				 
 		       		<div class="detail_content">
 		       			<div class="detail_view"></div>
-		       			인사팀에서 법정 의무 교육을 한다고 합니다 :)<br>
+		       			인사팀에서 법정 의무 교육을 한다고 합니다 :)테스트테스트테스트<br>
 		       			올해 입사한 신입사원분들을 포함해 모든 직원분들이 수강해주셔야 합니다.<br>
 		       			자세한 수강방법 안내는 아래 내용을 확인해주세요.
 		       			

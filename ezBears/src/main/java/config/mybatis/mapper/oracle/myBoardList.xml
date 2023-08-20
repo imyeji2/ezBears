@@ -12,6 +12,20 @@
 		select m_board_name from myBoardListView
 		where my_board_no=${myBoardNo}
 	</select>
+	
+	<!-- 부서 이름으로 동적 게시판 번호 찾기 -->
+	<select id="findBoardNoByBoardName" parameterType="String" resultType="int">
+		SELECT M_BOARD_NO FROM M_BOARD WHERE M_BOARD_NAME = #{MBoardName}
+	</select>
+	
+	<!-- 내 동적 게시판에 부서 번호로 게시판 등록 -->
+	<insert id="insertMyBoard" parameterType="myBoardListVo">
+		<selectKey keyProperty="myBoardNo" order="BEFORE" resultType="int">
+			SELECT MY_BOARD_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO MY_BOARD(MY_BOARD_NO, MEM_NO, M_BOARD_NO) VALUES(#{myBoardNo}, #{memNo}, #{MBoardNo} )
+	</insert>
+	
 </mapper>
 
 

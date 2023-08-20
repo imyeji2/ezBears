@@ -43,7 +43,16 @@ public class TeamNoticeController {
 			Model  model) {
 		//1.
 		logger.info("팀 공지사항 리스트 페이지, 파라미터 myBoardNo={}",myBoardNo);
+		
+		//2
+		List<Map<String, Object>> list = teamNoticeService.selectTeamNoticeList(myBoardNo);
+		logger.info("팀 공지사항 리스트 조회 결과 list.size={}",list.size());
+		
+		//3
+		model.addAttribute("list",list);
 		model.addAttribute("myBoardNo",myBoardNo);
+		
+		//4
 		return "myBoard/teamNoticeList";
 	}
 	

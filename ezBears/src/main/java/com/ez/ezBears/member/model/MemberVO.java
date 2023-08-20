@@ -21,4 +21,8 @@ public class MemberVO {
 	private String memAddressDetail; /* 주소상세 */
 	private String memZipcode; /* 우편번호 */
 	private String memImage; /* 이미지 */
+	
+	//join 한 view에서 가지고 올 것들
+	private String deptName;
+	private String positionName;
 }

@@ -36,6 +36,10 @@
 						id="floatingTextarea" style="height: 150px;" ></textarea>
 					<label for="floatingTextarea">내용</label>
 				</div>
+				<br>
+				<div class="app_file">
+					<input class="form-control appfile" type="file" id="app_file">
+		       	</div>
 			</div>
 		<div>
 		<input type="button" value="수정" class="btn btn-sm btn-primary btn"/>

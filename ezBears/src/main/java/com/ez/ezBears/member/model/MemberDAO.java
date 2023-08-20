@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.ez.ezBears.common.SearchVO;
+
 @Mapper
 public interface MemberDAO {
 	int selectCheckId(String memId);
@@ -19,8 +21,15 @@ public interface MemberDAO {
     MemberVO getMemberById(String memId);
     void updateMember(MemberVO memberVO);
     
+    //멤버 리스트
+    List<MemberVO> selectAllMem(SearchVO searchVo);
+    int totalList(SearchVO searchVo);
+    
     //회원 아이디로 회원 번호 검색하기
     int selectMemberNo(String memId);
+    
+    //멤버 번호로 멤버 정보 조회하기
+    MemberVO memberDetail(int memNo);
     
     Map<String, Object> selectMemberView(String memId);
     

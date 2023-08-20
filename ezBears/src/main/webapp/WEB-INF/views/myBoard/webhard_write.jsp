@@ -36,7 +36,10 @@
 					<textarea class="form-control textarea" placeholder="Leave a comment here"
 						id="floatingTextarea" style="height: 150px;"></textarea>
 					<label for="floatingTextarea">내용</label>
-				</div>
+				</div> <br>
+				<div class="web_hard">
+					<input class="form-control webFile" type="file" id="webFile">
+		       	</div>
 			</div>
 			<div class="hardbtn">
 				<input type="Button"  value="등록" class="btn btn-sm btn-primary btn"

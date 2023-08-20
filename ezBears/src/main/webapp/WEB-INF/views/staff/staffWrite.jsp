@@ -154,7 +154,7 @@
         });
 	})
 </script>
-	<form name="frmWrite" method="post" action="<c:url value='/staff/staffWrite'/>">
+	<form name="frmWrite" method="post" action="<c:url value='/staff/staffWrite'/>" enctype="multipart/form-data">
         <!-- Sign In Start -->
         <div class="container-fluid">
             <div class="row h-100 align-items-center justify-content-center" style="min-height: 100vh;">
@@ -167,7 +167,7 @@
 	                   		<div class ="imgdiv">
 								<img alt="" src="<c:url value = '/img/defaultUSER.png'/>" style="width:180px; height:200px;" id="previewImage">
 								<label for="imageUpload" style="margin: 3px">사진 등록</label>
-								<input type ="file" name="staffImage" id="imageUpload"  class="infobox" style="display:none">
+								<input type ="file" name="staffImageFile" id="imageUpload"  class="infobox" style="display:none">
 							</div>
 	       	                <div class="form-floating mb-3">
 	                            <select class="form-select" id="floatingSelect"

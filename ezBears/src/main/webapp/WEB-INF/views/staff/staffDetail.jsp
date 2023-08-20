@@ -28,60 +28,64 @@
 				<h2>스태프 상세보기</h2>
 					<div class="divForm">
 						<div class="firstDiv">
-							<span class="sp1">스태프 번호</span> <span>스태프 번호</span>
+							<c:if test="${!empty staffVo.staffImage }">
+								<img alt="staffImage" src="<c:url value='/img/staffImages/${staffVo.staffImage }'/>" style="width:180px; height:200px;"> </span>
+							</c:if>
+							<c:if test="${empty staffVo.staffImage }">
+								<img alt="defaultImage" src="<c:url value='/img/defaultUSER.png'/>" style="width:180px; height:200px;">
+							</c:if>
 						</div>
 						<div>
-							<span class="sp1">부서번호</span> <span>부서번호</span>
+							<span class="sp1">스태프 번호</span> <span>${staffVo.staffNo }</span>
 						</div>
 						<div>
-							<span class="sp1">스태프 명</span> <span>스태프 명</span>
+							<span class="sp1">부서번호</span> <span>${staffVo.deptNo }</span>
 						</div>
 						<div>
-							<span class="sp1">포지션</span> <span>포지션</span>
+							<span class="sp1">스태프 명</span> <span>${staffVo.staffName }</span>
 						</div>
 						<div>
-							<span class="sp1">등번호</span> <span>등번호</span>
+							<span class="sp1">포지션</span> <span>${staffVo.staffPosition }</span>
 						</div>
 						<div>
-							<span class="sp1">생년월일</span> <span>생년월일</span>
+							<span class="sp1">등번호</span> <span>${staffVo.staffBackNo }</span>
 						</div>
 						<div>
-							<span class="sp1">연봉</span> <span>연봉</span>
+							<span class="sp1">생년월일</span> <span>${staffVo.staffBirth }</span>
 						</div>
 						<div>
-							<span class="sp1">계약시작일</span> <span>계약시작일</span>
+							<span class="sp1">연봉</span> <span>${staffVo.staffSal }</span>
 						</div>
 						<div>
-							<span class="sp1">연락처</span> <span>연락처</span>
+							<span class="sp1">계약시작일</span> <span>${staffVo.contractStart }</span>
 						</div>
 						<div>
-							<span class="sp1">특이사항</span> <span>특이사항</span>
+							<span class="sp1">연락처</span> <span>${staffVo.staffTel }</span>
 						</div>
 						<div>
-							<span class="sp1">주소</span> <span>주소</span>
+							<span class="sp1">특이사항</span> <span>${staffVo.staffInfo }</span>
 						</div>
 						<div>
-							<span class="sp1">주소상세</span> <span>주소상세</span>
+							<span class="sp1">주소</span> <span>${staffVo.staffAddr }</span>
 						</div>
 						<div>
-							<span class="sp1">우편번호</span> <span>우편번호</span>
+							<span class="sp1">주소상세</span> <span>${staffVo.staffAddrDetail }</span>
 						</div>
 						<div>
-							<span class="sp1">스태프 상태</span> <span>스태프 상태</span>
+							<span class="sp1">우편번호</span> <span>${staffVo.staffZipcode }</span>
 						</div>
 						<div>
-							<span class="sp1">아이디</span> <span>아이디</span>
-						</div>
-						<div>
-							<span class="sp1">비밀번호</span> <span>비밀번호</span>
+							<span class="sp1">스태프 상태</span> <span>${staffVo.staffStatus }</span>
 						</div>
 						<div class="lastDiv">
-							<span class="sp1">이미지</span> <span>이미지</span>
+							<span class="sp1">아이디</span> <span>${staffVo.staffId }</span>
 						</div>
-						
-				
+<%-- 						<div>
+							<span class="sp1">비밀번호</span> <span>${staffVo.staffPwd }</span>
+						</div> --%>
+
 						<div class="center" >
-							<a href="<c:url value='/staff/staffEdit'/>" style="color: white;">수정</a> |
+							<a href="<c:url value='/staff/staffEdit?staffNo=${staffVo.staffNo }'/>" style="color: white;">수정</a> |
 				        	<a href="<c:url value='/staff/staffDelete'/>" style="color: white;">삭제</a> |
 				        	<a href="<c:url value='/staff/staffList'/>" style="color: white;">목록</a>			
 						</div>

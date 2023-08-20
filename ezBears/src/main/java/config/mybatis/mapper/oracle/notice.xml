@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ez.ezBears.notice.model.NoticeDAO">
+
+	<insert id="insertNotice" parameterType="noticeVo">
+		<selectKey keyProperty="noticeNo" resultType="int" order="BEFORE">
+			select NOTICE_SEQ.nextval from dual
+		</selectKey>
+		insert into team_Notice(NOTICE_NO, MEM_NO,NOTICE_TITLE, NOTICE_CONTENT, FSIZE,FILENAME, ORIGIN_FILENAME)
+		values(#{noticeNo},#{memNo}, #{noticeTitle}, #{noticeContent}, #{fsize},#{filename},#{originFilename})
+	</insert> 
+	
+	<select id="selectNoticeList" parameterType="int" resultType="map">
+		select * from noticeView
+		order by NOTICE_NO desc
+	</select>
+	
+</mapper>
