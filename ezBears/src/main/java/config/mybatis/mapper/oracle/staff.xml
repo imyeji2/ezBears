@@ -72,6 +72,10 @@
 		select * from staff where STAFF_NO=#{staffNo}
 	</select>
 	
+	<select id="selectStaffView" parameterType="String" resultType="map">
+    	select * from staffView where STAFF_ID = #{staffId}
+    </select>
+  
 	<update id="updateStaff" parameterType="staffVo">
 		update staff
 		set

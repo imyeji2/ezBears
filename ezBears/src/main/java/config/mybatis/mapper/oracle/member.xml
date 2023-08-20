@@ -54,7 +54,7 @@
     </select>
     
     <select id="selectMemberView" parameterType="String" resultType="map">
-    	select * from memberView where MEM_ID = #{memId}
+    	select * from memberView1 where MEM_ID = #{memId}
     </select>
 
 	<!-- 전체멤버 페이징처리후 뿌려주기 -->

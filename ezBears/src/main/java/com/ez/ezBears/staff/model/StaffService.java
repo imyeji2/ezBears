@@ -1,6 +1,7 @@
 package com.ez.ezBears.staff.model;
 
 import java.util.List;
+import java.util.Map;
 
 import com.ez.ezBears.common.SearchVO;
 
@@ -24,4 +25,5 @@ public interface StaffService {
 	int getTotalRecord(SearchVO searchVo);
 	StaffVO selectByStaffNo(int staffNo);
 
+	Map<String, Object> selectStaffView(String staffId);
 }

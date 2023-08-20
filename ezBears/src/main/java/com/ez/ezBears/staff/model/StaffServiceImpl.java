@@ -1,6 +1,7 @@
 package com.ez.ezBears.staff.model;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
@@ -78,11 +79,11 @@ public class StaffServiceImpl implements StaffService {
 	}
 
 	@Override
+	public Map<String, Object> selectStaffView(String staffId) {
+		return staffDao.selectStaffView(staffId);
+	}
+
 	public StaffVO selectByStaffNo(int staffNo) {
 		return staffDao.selectByStaffNo(staffNo);
 	}
-
-
-	
-	
 }
