@@ -122,5 +122,10 @@ public class MemberServiceImpl implements MemberService{
 		return memberDao.selectMemberView(memId);
 	}
 
+	@Override
+	public int updateMemberFromAdmin(MemberVO memberVo) {
+		return memberDao.updateMemberFromAdmin(memberVo);
+	}
+
 	
 }
