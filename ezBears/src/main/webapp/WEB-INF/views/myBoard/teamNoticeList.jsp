@@ -7,32 +7,48 @@
 		$('form[name="teamNoticeFrom"]').submit();
 	}
 </script>
+
+<form action="<c:url value='/myBoard/teamNotice?mBoardNo=${mBoardNo}'/>" method="post" name="teamNoticeFrom">
+	<input type="hidden" name="currentPage">
+	<input type="hidden" name="searchKeyword" value="${param.searchKeyword}">
+	<input type="hidden" name="searchCondition" value="${param.searchCondition}">
+</form>
+
     <!-- Recent Sales Start -->
     <div class="container-fluid pt-4 px-4" id="board_style">
         <div class="bg-secondary text-center rounded">
             <div class="bg-secondary rounded h-100 p-4">
- 				<c:import url="/myBoard/myBoardNavTab?myBoardNo=${myBoardNo}"></c:import>
+ 				<c:import url="/myBoard/myBoardNavTab?mBoardNo=${mBoardNo}"></c:import>
                 <div class="tab-content" id="pills-tabContent">
                     <div class="tab-pane fade show active">
-                        <form action="<c:url value='/myBoard/teamNotice?myBoardNo=${myBoardNo}'/>" method="post" name="teamNoticeFrom">
-							<input type="text" name="currentPage">
-							<input type="text" name="searchKeyword" value="${param.searchKeyword}">
-							<input type="text" name="searchCondition" value="${param.searchCondition}">
 						<div id="teamNoticeList">
 						<br><br>
+						<form name="serchFrm" method="post" action="<c:url value='/myBoard/teamNotice?mBoardNo=${mBoardNo}'/>">
 							<div class="teamNotice_serch">
 								<div class="serch_input">
 									<div class="select_box">
-										<select class="form-select" aria-label="Default select example">
+										<select class="form-select" aria-label="Default select example" name="searchCondition">
 										  <option selected>선택</option>
-										  <option value="name">이름</option>
-										  <option value="subject">제목</option>
-										  <option value="content">내용</option>
+										  <option value="mem_name"
+										  	<c:if test="${param.searchCondition=='mem_name'}">
+							            		selected="selected"
+							            	</c:if>            	
+										  >이름</option>
+										  <option value="team_notice_title"
+										  	<c:if test="${param.searchCondition=='team_notice_title'}">
+							            		selected="selected"
+							            	</c:if>										  
+										  >제목</option>
+										  <option value="team_notice_content"
+										  	<c:if test="${param.searchCondition=='team_notice_content'}">
+							            		selected="selected"
+							            	</c:if>											  
+										  >내용</option>
 										</select>				
 									</div>
 									<div class="text_box">
-										<input type="text" class="form-control" id="exampleFormControlInput1"
-											 placeholder="검색어를 입력해주세요">
+										<input type="text" class="form-control" name="searchKeyword"
+											 placeholder="검색어를 입력해주세요" value="${param.searchKeyword }">
 									</div>
 									
 									<div class="serch_btn">
@@ -40,8 +56,8 @@
 									</div><!-- serch_btn -->
 								</div><!-- serch_input -->
 							</div><!-- teamNotice_serch -->
-							
-							<br><br>
+						</form>
+						<br><br>
 						
 							<c:if test="${empty list}">
 								<div class="notice_list_box">
@@ -50,6 +66,12 @@
 							</c:if>
 							
 							<c:if test="${!empty list}">
+								<c:if test="${!empty param.searchKeyword}">
+									<div style="text-align:center">
+										${totalCount}건이 검색되었습니다.
+									</div>
+									<br><br>
+								</c:if>	
 								<!-- 반복시작 -->
 								<c:forEach var="map" items="${list}">
 									<div class="notice_list_box">
@@ -99,10 +121,12 @@
 					        <div class="list_line"></div>     
 					        
 					        <div class="btnBox">
+					        	<!-- 
 								<a class="btn btn-sm btn-primary" href="">삭제</a>
 								<a class="btn btn-sm btn-primary" href="">수정</a>
+								 -->
 								<a class="btn btn-sm btn-primary" 
-									href="<c:url value='/myBoard/teamNoticeWrite?myBoardNo=${myBoardNo}'/>">등록</a>
+									href="<c:url value='/myBoard/teamNoticeWrite?mBoardNo=${mBoardNo}'/>">등록</a>
 							</div><!-- btnBox --> 
 							         
 						        
@@ -116,8 +140,8 @@
 										      </a>
 										    </li>
 									    </c:if>
-									    <c:forEach var="i" begin="${pagingInfo.firstPage}" end="${pagingInfo.lastPage }">		
-											<c:if test="${i == pagingInfo.currentPage }">		
+									    <c:forEach var="i" begin="${pagingInfo.firstPage}" end="${pagingInfo.lastPage}">		
+											<c:if test="${i == pagingInfo.currentPage}">		
 											    <li class="page-item active" >${i}</li>
 											   </c:if>
 												<c:if test="${i != pagingInfo.currentPage }">
@@ -136,7 +160,6 @@
 							</div><!-- page_box -->
 					
 						</div><!-- teamNoticeList -->
-						</form>
 					</div>
 				</div>
             </div>
