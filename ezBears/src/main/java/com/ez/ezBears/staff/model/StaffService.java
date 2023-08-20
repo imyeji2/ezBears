@@ -26,4 +26,5 @@ public interface StaffService {
 	StaffVO selectByStaffNo(int staffNo);
 
 	Map<String, Object> selectStaffView(String staffId);
+	int updateStaff(StaffVO staffVo);
 }

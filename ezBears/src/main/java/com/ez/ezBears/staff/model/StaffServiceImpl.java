@@ -86,4 +86,9 @@ public class StaffServiceImpl implements StaffService {
 	public StaffVO selectByStaffNo(int staffNo) {
 		return staffDao.selectByStaffNo(staffNo);
 	}
+
+	@Override
+	public int updateStaff(StaffVO staffVo) {
+		return staffDao.updateStaff(staffVo);
+	}
 }

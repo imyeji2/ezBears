@@ -51,13 +51,13 @@
 							<span class="sp1">등번호</span> <span>${staffVo.staffBackNo }</span>
 						</div>
 						<div>
-							<span class="sp1">생년월일</span> <span>${staffVo.staffBirth }</span>
+							<span class="sp1">생년월일</span> <span>${staffVo.staffBirth.substring(0, 10) }</span>
 						</div>
 						<div>
 							<span class="sp1">연봉</span> <span>${staffVo.staffSal }</span>
 						</div>
 						<div>
-							<span class="sp1">계약시작일</span> <span>${staffVo.contractStart }</span>
+							<span class="sp1">계약시작일</span> <span>${staffVo.contractStart.substring(0, 10) }</span>
 						</div>
 						<div>
 							<span class="sp1">연락처</span> <span>${staffVo.staffTel }</span>
