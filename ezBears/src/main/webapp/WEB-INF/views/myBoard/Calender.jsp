@@ -75,6 +75,8 @@
                 */
         /* 일정등록 json으로 변환후 ajax 방식으로 등록   */
     
+        
+      
         events: [
   	      
   	      {
@@ -92,7 +94,8 @@
    	     backgroundColor: '#F48FB1',
    	     textColor : 'black'
   	      }], 
-  	      
+  	   
+  	    
         titleFormat : function(date) {
            return date.date.year + '년 ' + (parseInt(date.date.month) + 1) + '월';
         },
