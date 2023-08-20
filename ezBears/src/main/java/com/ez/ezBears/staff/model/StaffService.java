@@ -2,6 +2,8 @@ package com.ez.ezBears.staff.model;
 
 import java.util.List;
 
+import com.ez.ezBears.common.SearchVO;
+
 public interface StaffService {
 	//아이디 중복확인 관련 상수
 	int EXIST_ID=1;  //이미 해당 아이디가 존재함
@@ -17,8 +19,9 @@ public interface StaffService {
 	int selectCheckId(String staffId);
 	int loginCheck(String staffId, String staffPwd);
 	int insertStaff(StaffVO staffVo);
-	List<StaffVO> selectAllStaff();
 	StaffVO getStaffById(String staffId);
-	int getTotalRecord();
+	List<StaffVO> selectAllStaff(SearchVO searchVo);
+	int getTotalRecord(SearchVO searchVo);
+	StaffVO selectByStaffNo(int staffNo);
 
 }

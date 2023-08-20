@@ -17,9 +17,9 @@
 <!-- /staff/staffList?currentPage=2&searchKeyword=gil&searchCondition=name -->
 <form action="<c:url value='/staff/staffList'/>" 
 	name="frmPage" method="post">
-	<input type="hidden" name="currentPage">
-	<input type="hidden" name="searchKeyword" value="${param.searchKeyword}">
-	<input type="hidden" name="searchCondition" value="${param.searchCondition}">
+	<input type="text" name="currentPage">
+	<input type="text" name="searchKeyword" value="${param.searchKeyword}">
+	<input type="text" name="searchCondition" value="${param.searchCondition}">
 </form>
 
 <div class="container-fluid pt-4 px-4">
@@ -50,8 +50,8 @@
 			            	<c:forEach var="vo" items="${list }">
 				                <tr>
 				                    <td>${vo.staffPosition }</td>
-				                    <td>${vo.staffName }</td>
-				                    <td>${vo.staffId }</td>
+				                    <td><a href="<c:url value='/staff/staffDetail?staffNo=${vo.staffNo }'/>" style="color: #fff">${vo.staffName }</a></td>
+				                    <td><a href="<c:url value='/staff/staffDetail?staffNo=${vo.staffNo }'/>" style="color: #fff">${vo.staffId }</a></td>
 				                    <td>${vo.staffInfo }</td>
 				                    <td>${vo.staffTel }</td>
 				                    <td>${vo.staffAddr }</td>
@@ -95,23 +95,23 @@
 				</div>
 				<br>
 				<div class="divSearch">
-				   	<form name="frmSearch" method="post" action="<c:url value='/reBoard/list'/>">
+				   	<form name="frmSearch" method="POST" action="<c:url value='/staff/staffList'/>">
 				        <select name="searchCondition">
-				            <option value="title" 
-				            	<c:if test="${param.searchCondition=='title'}">
+				            <option value="STAFF_NAME" 
+				            	<c:if test="${param.searchCondition=='STAFF_NAME'}">
 				            		selected="selected"
 				            	</c:if>            	
-				            >제목</option>
-				            <option value="content"
-				            	<c:if test="${param.searchCondition=='content'}">
+				            >이름</option>
+				            <option value="STAFF_POSITION"
+				            	<c:if test="${param.searchCondition=='STAFF_POSITION'}">
 				            		selected="selected"
 				            	</c:if> 
-				            >내용</option>
-				            <option value="name" 
-				            	<c:if test="${param.searchCondition=='name'}">
+				            >포지션</option>
+				            <option value="STAFF_ID" 
+				            	<c:if test="${param.searchCondition=='STAFF_ID'}">
 				            		selected="selected"
 				            	</c:if> 
-				            >작성자</option>
+				            >아이디</option>
 				        </select>   
 				        <input type="text" name="searchKeyword" title="검색어 입력" 
 				        	value="${param.searchKeyword }">   
