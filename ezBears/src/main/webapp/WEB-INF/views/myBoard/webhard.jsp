@@ -57,6 +57,31 @@
 					</tr>
 				</thead>
 				<tbody>
+			<%-- 	
+			<tbody>
+				<c:if test="${empty list }">  
+			  		<tr><td colspan="5" class="align_center">존재하지 않습니다.</td></tr>
+			  	</c:if>
+				<c:if test="${!empty list }">			
+				  	<!--반복 시작  -->	
+				  	<c:forEach var="vo" items="${list}"> 
+						<tr  style="text-align:center">
+							<td>${vo.regdate}</td>
+							<td style="text-align:left">
+								<a href="#">
+									${vo.hardTitle}</a>
+							</td>
+							<td>${vo.memNo}</td>
+							<td>
+								<fmt:formatDate value="${vo.regdate}" pattern="yyyy-MM-dd"/>
+							</td>
+							<td>${vo.}</td>		
+						</tr> 				
+					</c:forEach>
+				  	<!--반복 끝  --> 
+			  	</c:if>--%>
+			  
+			  </tbody>
 					<tr>
 						<td><input class="form-check-input" type="checkbox"></td>
 						<td>01 Jan 2045</td>

@@ -43,4 +43,31 @@ on m.position_no = p.position_no;
 
 select * from memberView;
 
+create or replace view staffView
+as
+select s.*,dept_name
+from staff s join dept d
+on s.dept_no = d.dept_no;
+
+select * from staffView;
+
+
+create or replace view memberView1
+as
+select m.*,d.dept_name
+from memberView m join dept d
+on m.dept_no = d.dept_no;
+
+select * from memberView1;
+
+
+create or replace view noticeView
+as
+select n.*,m.mem_name,m.dept_no
+from notice n join member m
+on n.mem_no = m.mem_no;
+
+select * from noticeView;
+
+
 [건우]---------------------------------------------------------------------

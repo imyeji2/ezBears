@@ -1,6 +1,9 @@
 package com.ez.ezBears.staff.model;
 
 import java.util.List;
+import java.util.Map;
+
+import com.ez.ezBears.common.SearchVO;
 
 public interface StaffService {
 	//아이디 중복확인 관련 상수
@@ -17,8 +20,10 @@ public interface StaffService {
 	int selectCheckId(String staffId);
 	int loginCheck(String staffId, String staffPwd);
 	int insertStaff(StaffVO staffVo);
-	List<StaffVO> selectAllStaff();
 	StaffVO getStaffById(String staffId);
-	int getTotalRecord();
+	List<StaffVO> selectAllStaff(SearchVO searchVo);
+	int getTotalRecord(SearchVO searchVo);
+	StaffVO selectByStaffNo(int staffNo);
 
+	Map<String, Object> selectStaffView(String staffId);
 }

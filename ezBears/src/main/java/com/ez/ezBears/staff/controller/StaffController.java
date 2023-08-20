@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ez.ezBears.common.ConstUtil;
 import com.ez.ezBears.common.FileUploadUtil;
@@ -85,12 +86,32 @@ public class StaffController {
 	}
 	
 	@GetMapping("/staffEdit")
-	public String edit_get() {
-		logger.info("스태프 수정 화면 이동");
+	public String edit_get(@RequestParam(defaultValue = "0") int staffNo,
+			Model model) {
+		logger.info("스태프 수정 화면 이동, 파라미터 staffNo={}", staffNo);
+		
+		StaffVO staffVo = staffService.selectByStaffNo(staffNo);
+		logger.info("스태프 수정 화면 이동 결과, staffVo={}", staffVo);
+		List<DeptVO> deptList = deptService.selectDeptList();
+		
+		model.addAttribute("staffVo", staffVo);
+		model.addAttribute("deptList", deptList);
 		
 		return "/staff/staffEdit";
 		
 		//http://localhost:9091/ezBears/staff/staffEdit
+	}
+	
+	@PostMapping("/staffEdit")
+	public String edit_post() {
+		//1
+		
+		//2
+		
+		//3
+		
+		//4
+		return "";
 	}
 	
 	@GetMapping("/staffDelete")
@@ -103,8 +124,14 @@ public class StaffController {
 	}
 	
 	@GetMapping("/staffDetail")
-	public String detail_get() {
-		logger.info("스태프 상세페이지로 이동");
+	public String detail_get(@RequestParam(defaultValue = "0") int staffNo,
+			Model model) {
+		logger.info("스태프 상세페이지로 이동 파라미터, staffNo={}", staffNo);
+		
+		StaffVO staffVo = staffService.selectByStaffNo(staffNo);
+		logger.info("스태프 상세페이지 조회, 결과 staffVo = {}", staffVo);
+		
+		model.addAttribute("staffVo", staffVo);
 		
 		return "/staff/staffDetail";
 		
@@ -125,11 +152,12 @@ public class StaffController {
 		searchVo.setFirstRecordIndex(pagination.getFirstRecordIndex());
 		searchVo.setRecordCountPerPage(ConstUtil.RECORD_COUNT);
 		logger.info("설정 후 searchVo={}", searchVo);
+				
+		int totalRecord = staffService.getTotalRecord(searchVo);
 		
-		int totalRecord = staffService.getTotalRecord();
-		
-		List<StaffVO> list = staffService.selectAllStaff();
+		List<StaffVO> list = staffService.selectAllStaff(searchVo);
 		logger.info("스태프 전체 조회결과, list.size={}", list.size());
+		
 		
 		pagination.setTotalRecord(totalRecord);
 		logger.info("설정 후 pagination={}", pagination);
@@ -141,7 +169,6 @@ public class StaffController {
 		
 		//http://localhost:9091/ezBears/staff/staffList
 	}
-	
 
 
 }

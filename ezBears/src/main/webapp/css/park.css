@@ -27,6 +27,9 @@
 	.textarea{
 		resize: none;
 	}
+	.appfile{
+	background: black;
+	}
 
 }
 /*Appdetail*/
@@ -79,7 +82,10 @@
 	.textarea{
 		resize: none;
 	}
-		
+	.webFile{
+	background: black;
+	}	
+	
 }
 /* harddelete*/
 #harddelete{
