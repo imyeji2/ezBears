@@ -3,6 +3,14 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ez.ezBears.staff.model.StaffDAO">
+	<sql id="searchWhere">
+		<where>
+			<if test="searchKeyword!=null and searchKeyword!=''">
+				${searchCondition} like '%' || #{searchKeyword} || '%'
+			</if>
+		</where>
+	</sql>
+
 	<select id="selectCheckId" parameterType="string"
 		resultType="int">
 		select count(*) from STAFF  
@@ -34,20 +42,47 @@
 			#{staffAddr}, #{staffAddrDetail}, 'Y', #{staffId}, #{staffPwd}, #{staffImage})
 	</insert>
 	
-	<select id="selectAllStaff" resultType="staffVo">
-		select * from staff order by staff_no
+	<select id="selectAllStaff" resultType="staffVo" parameterType="searchVo">
+		select *
+		from
+		(
+			select rownum as RNUM, A.* from
+			(
+				select * from staff
+				<include refid="searchWhere"></include>
+					<!-- where staff_id like '%ez_st%' -->
+				order by staff_no desc
+			)A
+		)
+		<![CDATA[
+		where RNUM> #{firstRecordIndex} 
+		and RNUM<=#{firstRecordIndex} + #{recordCountPerPage}]]>
 	</select>
 	
 	<select id="getStaffById" parameterType="String" resultType="staffVo">
         SELECT * FROM STAFF WHERE STAFF_ID = #{staffId}
     </select>
 	
-	<select id="getTotalRecord" resultType="int">
+	<select id="getTotalRecord" resultType="int" parameterType="searchVo">
 		select count(*) from staff
+		<include refid="searchWhere"></include>
+	</select>
+	
+	<select id="selectByStaffNo" parameterType="int" resultType="staffVo">
+		select * from staff where STAFF_NO=#{staffNo}
 	</select>
 	
 	<select id="selectStaffView" parameterType="String" resultType="map">
     	select * from staffView where STAFF_ID = #{staffId}
     </select>
+  
+	<update id="updateStaff" parameterType="staffVo">
+		update staff
+		set
+		dept_no=#{deptNo}, staff_name=#{staffName}, staff_position=#{staffPosition}, staff_back_no=#{staffBackNo},
+		staff_birth=#{staffBirth}, staff_sal=#{staffSal}, contract_start=#{contractStart}, contract_done=#{contractDone},
+		staff_tel=#{staffTel}, staff_info=#{staffInfo}, staff_zipcode=#{staffZipcode}, staff_addr=#{staffAddr},
+		staff_addr_detail=#{staffAddrDetail}, staff_status=${staffStatus}, staff_id=#{staffId}, staff_pwd=#{staffPwd}; 
+	</update>
 	
 </mapper>
