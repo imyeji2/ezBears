@@ -3,9 +3,12 @@ package com.ez.ezBears.webhard.model;
 import java.sql.Date;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-public class WebHardVO {
+@Getter
+@Setter
+public class WebHardVO extends WebHardDetailVO {
 	private int webHardNo;	 /* 웹하드번호 */
 	private int memNo; /* 사원번호 */
 	private int mBoardNo;  /* 보드리스트번호 */

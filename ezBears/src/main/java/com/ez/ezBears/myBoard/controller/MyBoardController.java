@@ -70,14 +70,17 @@ public class MyBoardController {
 	      return "myBoard/Approval_delete";
 	   }
 	   
-*/	   
+	   /*
+	    
+	   
 	   /*팀별 웹하드 게시판 */
-	   @RequestMapping("/webhard")
+	 /*   
+	@RequestMapping("/webhard")
 	   public String hard() {
 	      logger.info("웹하드 리스트");
 	      return "myBoard/webhard";
 	   }   
-
+	*/
 	   @RequestMapping("/webhard_write")
 	   public String hard_write() {
 		   logger.info("웹하드 작성페이지");
