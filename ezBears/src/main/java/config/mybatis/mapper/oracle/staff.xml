@@ -86,4 +86,9 @@
 		where staff_no=#{staffNo}
 	</update>
 	
+	<update id="deleteStaff" parameterType="int">
+		update staff
+		set staff_status='N'
+	</update>
+	
 </mapper>

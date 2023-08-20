@@ -10,7 +10,7 @@
 		insert into team(player_no, b_position_no, dept_no, back_no, player_name, player_birth,
     		height, weight, player_sal, contract_start, contract_done, player_tel, player_info, 
     		player_status, player_address, player_address_detail, player_zipcode, player_image)
-		values(playerNo, #{positionNo}, #{deptNo}, #{backNo}, #{playerName}, #{playerBirth}, 
+		values(#{playerNo}, #{positionNo}, #{deptNo}, #{backNo}, #{playerName}, #{playerBirth}, 
 			#{height}, #{weight}, #{playerSal}, #{contractStart}, #{contractDone}, #{playerTel}, #{playerInfo}, 
     		#{playerStatus}, #{playerAddress}, #{playerAddressDetail}, #{playerZipcode}, #{playerImage})
 	</insert>

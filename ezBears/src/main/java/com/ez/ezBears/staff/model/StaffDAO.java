@@ -24,4 +24,5 @@ public interface StaffDAO {
 	int getTotalRecord(SearchVO searchVo);
 	StaffVO selectByStaffNo(int staffNo);
 	int updateStaff(StaffVO staffVo);
+	int deleteStaff(int staffNo);
 }

@@ -146,8 +146,13 @@ public class StaffController {
 	}
 	
 	@GetMapping("/staffDelete")
-	public String delete_get() {
-		logger.info("스태프 삭제 화면 이동");
+	public String delete_get(@RequestParam(defaultValue = "0") int staffNo, Model model) {
+		logger.info("스태프 삭제 화면 이동, 파라미터 staffNo={}", staffNo);
+		
+		StaffVO staffVo = staffService.selectByStaffNo(staffNo);
+		logger.info("스태프 삭제 화면 처리 결과, 파라미터 staffVo={}", staffVo);
+		
+		model.addAttribute("staffVo", staffVo);
 		
 		return "/staff/staffDelete";
 		

@@ -27,4 +27,5 @@ public interface StaffService {
 
 	Map<String, Object> selectStaffView(String staffId);
 	int updateStaff(StaffVO staffVo);
+	int deleteStaff(int staffNo);
 }
