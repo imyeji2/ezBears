@@ -7,7 +7,7 @@
 	<select id="scheduleAll" resultType="scheduleVo" parameterType="int">
 		select schedule_start,schedule_end,schedule_title
 		from schedule
-		where my_board_no = #{myBoardNo}
+		where my_board_no = #{myBoardNo} 
 	</select>
 	
 </mapper>
