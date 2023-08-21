@@ -14,16 +14,9 @@ public class RecordController {
 	
 	@RequestMapping("/playerList")
 	public String playerList() {
-		//1,4
+		//기록 검색
 		logger.info("선수 리스트 보여주기");
 		return "/record/playerList";
-	}
-	
-	@RequestMapping("/playerDetail")
-	public String playerDetail() {
-		//1,4
-		logger.info("선수 상세 기록 보여주기");
-		return "/record/playerDetail";
 	}
 	
 	@RequestMapping("/gameRecord")
@@ -78,11 +71,84 @@ public class RecordController {
 		return "/record/lineup";
 	}
 	
+
+	@RequestMapping("/calander2")
+	public String calander2() {
+		//1,4
+		logger.info("캘린더");
+		return "/record/gameRecordCal";
+	}
+	
 	@RequestMapping("/firstInning")
 	public String firstInning() {
 		//1,4
 		logger.info("라인업");
 		return "/record/firstInning";
 	}
+	
+	@RequestMapping("/playerDetail2")
+	public String playerDetail2() {
+		//1,4
+		logger.info("라인업");
+		return "/record/playerDetail2";
+	}
+	
+	
+	@RequestMapping("/hitterRecordWrite")
+	public String hitterRecordWrite() {
+		//1,4
+		logger.info("타자기록입력");
+		return "/record/hitterRecordWrite";
+	}
+	
+	@RequestMapping("/hitterRecordEdit")
+	public String hitterRecordEdit() {
+		//1,4
+		logger.info("타자기록수정");
+		return "/record/hitterRecordEdit";
+	}
+	
+	@RequestMapping("/hitterRecordDelete")
+	public String hitterRecordDelete() {
+		//1,4
+		logger.info("타자기록삭제");
+		return "/record/hitterRecordDelete";
+	}
+	
+	@RequestMapping("/hitterRecordDetail")
+	public String hitterRecordDetail() {
+		//1,4
+		logger.info("타자기록정보");
+		return "/record/hitterRecordDetail";
+	}
+	
+	@RequestMapping("/pitcherRecordWrite")
+	public String pitcherRecordWrite() {
+		//1,4
+		logger.info("투수기록입력");
+		return "/record/pitcherRecordWrite";
+	}
+	
+	@RequestMapping("/pitcherRecordEdit")
+	public String pitcherRecordEdit() {
+		//1,4
+		logger.info("투수기록수정");
+		return "/record/pitcherRecordEdit";
+	}
+	
+	@RequestMapping("/pitcherRecordDelete")
+	public String pitcherRecordDelete() {
+		//1,4
+		logger.info("투수기록삭제");
+		return "/record/pitcherRecordDelete";
+	}
+	
+	@RequestMapping("/pitcherRecordDetail")
+	public String pitcherRecordDetail() {
+		//1,4
+		logger.info("투수기록정보");
+		return "/record/pitcherRecordDetail";
+	}
+	
 	
 }

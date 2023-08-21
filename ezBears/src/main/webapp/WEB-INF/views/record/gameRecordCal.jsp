@@ -16,7 +16,7 @@
 				</ol>
 			</nav>
 		<div>
-		<%@include file="../myBoard/Calender.jsp" %>
+		<%@include file="../record/Calender2.jsp" %>
 		
 		</div>
 		</div>
