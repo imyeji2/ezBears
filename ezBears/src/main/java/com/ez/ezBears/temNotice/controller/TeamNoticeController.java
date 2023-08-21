@@ -16,9 +16,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ez.ezBears.common.ConstUtil;
 import com.ez.ezBears.common.FileUploadUtil;
+import com.ez.ezBears.common.MyBoardSearchVo;
+import com.ez.ezBears.common.PaginationInfo;
+import com.ez.ezBears.common.SearchVO;
 import com.ez.ezBears.member.model.MemberService;
 import com.ez.ezBears.myBoard.controller.MyBoardController;
 import com.ez.ezBears.myBoard.model.MyBoardListService;
+import com.ez.ezBears.myBoard.model.MyBoardListVO;
 import com.ez.ezBears.temNotice.model.TeamNoticeService;
 import com.ez.ezBears.temNotice.model.TeamNoticeVO;
 
@@ -37,76 +41,70 @@ public class TeamNoticeController {
 	private final TeamNoticeService teamNoticeService;
 	
 	//예지
-	/*팀별 공지사항 게시판 */
+	/*팀별 공지사항 게시판 리스트 */
 	@RequestMapping("/teamNotice")
-	public String teamNotice(@RequestParam (defaultValue = "0") int myBoardNo, 
-			Model  model) {
+	public String teamNotice(@RequestParam (defaultValue = "0") int mBoardNo, 
+			MyBoardSearchVo searchVo,Model  model) {
 		//1.
-		logger.info("팀 공지사항 리스트 페이지, 파라미터 myBoardNo={}",myBoardNo);
+		logger.info("팀 공지사항 리스트 페이지, 파라미터 mBoardNo={}",mBoardNo);
+		
 		
 		//2
-		List<Map<String, Object>> list = teamNoticeService.selectTeamNoticeList(myBoardNo);
+		//페이징 처리
+		PaginationInfo pagingInfo = new PaginationInfo();
+		pagingInfo.setBlockSize(ConstUtil.BLOCK_SIZE);
+		pagingInfo.setCurrentPage(searchVo.getCurrentPage());
+		pagingInfo.setRecordCountPerPage(ConstUtil.RECORD_COUNT);
+		
+		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
+		searchVo.setRecordCountPerPage(ConstUtil.RECORD_COUNT);
+		searchVo.setMBoardNo(mBoardNo);
+		
+		List<Map<String, Object>> list = teamNoticeService.selectTeamNoticeList(searchVo);
 		logger.info("팀 공지사항 리스트 조회 결과 list.size={}",list.size());
+		
+		int totalCount = teamNoticeService.selectTotalCount(searchVo);
 		
 		//3
 		model.addAttribute("list",list);
-		model.addAttribute("myBoardNo",myBoardNo);
+		model.addAttribute("mBoardNo",mBoardNo);
+		model.addAttribute("pagingInfo",pagingInfo);
+		model.addAttribute("totalCount",totalCount);
 		
 		//4
 		return "myBoard/teamNoticeList";
 	}
 	
-	
-	@GetMapping("/teamNoticeDetail")
-	public String teamBoardDetil(@RequestParam (defaultValue = "0") int myBoardNo,
-			Model model) {
-		//1
-		logger.info("팀 공지사항 디테일 화면, 파라미터 myBoardNo={}",myBoardNo);
-		
-		//2
-		String myBoardName=myBoardListService.selectByMyBoardName(myBoardNo);
-		logger.info("팀 게시판 이름 찾기 결과 myBoardName={}",myBoardName);
-		
-		//3.
-		model.addAttribute("myBoardNo",myBoardNo);
-		model.addAttribute("myBoardName",myBoardName);
-		
-		return "myBoard/teamNoticeDetail";
-	}
-	
-	
 
-		
-	
+	//팀별 공지사항 글 등록 화면
 	@GetMapping("/teamNoticeWrite")
-	public String teamNoticeWrite(@RequestParam (defaultValue = "0") int myBoardNo,
+	public String teamNoticeWrite(@ModelAttribute MyBoardListVO myBoardListVo,
 			Model model, HttpSession session) {
 		//1.
 		logger.info("팀 공지사항 등록하기 페이지");
+		
 		String userid=(String)session.getAttribute("userid");
-		logger.info("userid={}",userid);
+		logger.info("팀 동지사항 등록 페이지 파라미터 myBoardListVo={},userid={}",myBoardListVo,userid);
 		
 		//2
-		int userNo = memberService.selectMemberNo(userid);
-		logger.info("회원 아이디 userid={}, 회원 번호 userNo={}",userid,userNo);
+		myBoardListVo.setMemId(userid);
 		
-		String myBoardName=myBoardListService.selectByMyBoardName(myBoardNo);
-		logger.info("팀 게시판 이름 찾기 결과 myBoardName={}",myBoardName);
+		myBoardListVo=myBoardListService.selectMyBoardInfo(myBoardListVo);
+		logger.info("팀 게시판 정보 찾기 결과 myBoardListVo={}",myBoardListVo);
+		
 
 		//3.
-		model.addAttribute("myBoardNo",myBoardNo);
-		model.addAttribute("userNo",userNo);
-		model.addAttribute("myBoardName",myBoardName);
-		
-		
+		model.addAttribute("myBoardListVo",myBoardListVo);
+
 		//4.
 		return "myBoard/teamNoticeWrite";
 	}
 	
 	
+	//팀별 공지사항 글 등록
 	@PostMapping("/teamNoticeWrite")
 	public String teamNoticeWrite_post(@ModelAttribute TeamNoticeVO teamNoticeVo,
-			HttpServletRequest request, Model model) {
+			@RequestParam(defaultValue = "0") int mBoardNo,HttpServletRequest request, Model model) {
 		
 		//1
 		logger.info("팀 공지사항 등록, 파라미터 TeamNoticeVO={}",teamNoticeVo);
@@ -138,7 +136,32 @@ public class TeamNoticeController {
 		
 		//3
 		//4
-		return "redirect:/myBoard/teamNotice?myBoardNo="+teamNoticeVo.getMyBoardNo();
+		return "redirect:/myBoard/teamNotice?mBoardNo="+mBoardNo;
 	}
+	
+	
+	//팀별 공지사항 디테일 페이지
+	@RequestMapping("/teamNoticeDetail")
+	public String teamBoardDetil(@ModelAttribute TeamNoticeVO teamNoticeVo,
+			Model model) {
+		//1
+		logger.info("팀 공지사항 디테일 화면, 파라미터 teamNoticeVo={}",teamNoticeVo);
+		
+		//2
+		Map<String, Object> map = teamNoticeService.selectDetail(teamNoticeVo);
+		logger.info("팀 공지사항 디테일 결과 map={}",map);
+		
+		//System.out.println((int) detileMap.get("MY_BOARD_NO"));
+		
+		String myBoardName = myBoardListService.selectByBoardName(teamNoticeVo.getTeamNoticeNo());
+		logger.info("마이보드 이름 myBoardName={}",myBoardName);	
+
+		//3.
+		model.addAttribute("map",map);
+		model.addAttribute("myBoardName",myBoardName);
+		
+		return "myBoard/teamNoticeDetail";
+	}
+	
 	
 }

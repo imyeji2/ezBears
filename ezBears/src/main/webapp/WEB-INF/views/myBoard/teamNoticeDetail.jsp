@@ -6,8 +6,9 @@
     	<div class="bg-secondary rounded h-100 p-4">
           	<nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
 			  <ol class="breadcrumb">
-			    <li class="breadcrumb-item"><a href="#">마이보드</a></li>
-			    <li class="breadcrumb-item active" aria-current="page"><a href="#">개발1팀</a></li>
+			    <li class="breadcrumb-item active" aria-current="page">
+			    	<a href="<c:url value='/myBoard/teamNotice?mBoardNo=${map["M_BOARD_NO"]}'/>">${myBoardName}</a>
+			    </li>
 			    <li class="breadcrumb-item active" aria-current="page">공지사항</li>
 			  </ol>
 			</nav>   			
@@ -16,36 +17,43 @@
 	        	
 		        	<div class="detail_title">
 		        		<div class="detail_left">
-			        		<span class="title_txt">공지사항 전달드립니다</span>
-							<span class="title_date">오늘 오후 3:45</span>
+			        		<span class="title_txt">${map["TEAM_NOTICE_TITLE"]}</span>
+							<span class="title_date">
+								<fmt:formatDate value="${map['REGDATE']}" pattern="yyyy-MM-dd a hh:mm"/>
+							</span>
 						</div><!-- detail_left -->
-						<div class="detail_right">조회수 10</div>
+						<div class="detail_right">${map["VIEW"]}</div>
 		        	</div><!-- detail_title -->
 		        	
 		       		<div class="user_info">		
 		       			<div class="detail_left">
 							<div class="user_img">
-			        			<img src="<c:url value='/img/user.jpg'/>" alt="사원프로필">
+			        			<c:set var="userimg" value="default_user.png"/>
+			        			<c:if test="${!empty map['MEM_IMAGE']}">
+			        				<c:set var="userimg" value="${map['MEM_IMAGE']}"/>
+			        			</c:if>								
+			        			<img src="<c:url value='/img/mem_images/${userimg}'/>" alt="사원프로필">
 			        		</div><!-- user_img -->
 			        		<div class="detail_left">
-			        			<span class="user_name"><a href="#">제이든</a></span>
-			        			<span class="user_dept">/ 💼개발1팀</span>
+			        			<span class="user_name"><a href="#">${map['MEM_NAME']}</a></span>
+			        			<span class="user_dept">/ 💼${map['DEPT_NAME']}</span>
 			        		</div><!-- detail_left -->
 		        		</div><!-- detail_left -->
 		        				       		        		       				        	
 		        		<div class="detail_right">
-		        			첨부파일 : <a href="#">config.zip(300.42MB)</a>
+		        			첨부파일 : <a href="#">${map['ORIGINNAME']}</a>
 		        		</div><!-- detail_right -->
 		       		</div><!-- user_info -->
 		       				 
 		       		<div class="detail_content">
-		       			<div class="detail_view"></div>
-		       			인사팀에서 법정 의무 교육을 한다고 합니다 :)<br>
-		       			올해 입사한 신입사원분들을 포함해 모든 직원분들이 수강해주셔야 합니다.<br>
-		       			자세한 수강방법 안내는 아래 내용을 확인해주세요.
+		       			<div class="detail_view">
+		       				${map['TEAM_NOTICE_CONTENT']}
+		       			</div>
 		       			
 		       			<div class="detail_option_btn">
-		       				<span class="user_dept"><a href="#">목록</a></span>
+		       				<span class="user_dept">
+		       					<a href="<c:url value='/myBoard/teamNotice?mBoardNo=${map["M_BOARD_NO"]}'/>">목록</a>
+		       				</span>
 	       					<span class="user_dept"><a href="#">수정</a></span>
 		        			<span class="user_dept"><a href="#">삭제</a></span>
 		       			</div>

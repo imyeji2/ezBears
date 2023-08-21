@@ -6,7 +6,7 @@ import lombok.Data;
 public class TeamNoticeVO {
 	private int teamNoticeNo;
 	private int memNo;
-	private int MyBoardNo;
+	private int myBoardNo;
 	private String teamNoticeTitle;
 	private String teamNoticeContent;
 	private String regdate;
