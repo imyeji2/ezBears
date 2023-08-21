@@ -151,9 +151,8 @@ public class TeamNoticeController {
 		Map<String, Object> map = teamNoticeService.selectDetail(teamNoticeVo);
 		logger.info("팀 공지사항 디테일 결과 map={}",map);
 		
-		//System.out.println((int) detileMap.get("MY_BOARD_NO"));
 		
-		String myBoardName = myBoardListService.selectByBoardName(teamNoticeVo.getTeamNoticeNo());
+		String myBoardName = myBoardListService.selectByBoardName(teamNoticeVo.getMyBoardNo());
 		logger.info("마이보드 이름 myBoardName={}",myBoardName);	
 
 		//3.
