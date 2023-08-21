@@ -9,7 +9,7 @@
 	}
 </script>
 <!-- 페이징 처리를 위한 form 시작-->
-<form name="frmPage" method="post" action="<c:url value='/Member/memberList'/>">
+<form name="frmPage" method="post" action="<c:url value='/Member/list'/>">
 	<input type="hidden" name="currentPage">	
 </form>
 <!-- 페이징 처리 form 끝 -->
