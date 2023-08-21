@@ -3,16 +3,38 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ez.ezBears.myBoard.model.MyBoardListDAO">
+
+<!-- 예지 -->
+	<!-- 마이보드 메뉴 출력  -->
 	<select id="selectBoardList" parameterType="String" resultType="map">
 		select * from myBoardListView
 		where mem_id=#{userid}
 	</select>
 	
-	<select id="selectByMyBoardName" parameterType="int" resultType="String">
+	
+	<!-- 마이보드 탭 -->
+	<select id="selectByMyBoardName" parameterType="myBoardListVo" resultType="String">
 		select m_board_name from myBoardListView
-		where my_board_no=${myBoardNo}
+		where m_board_no=#{MBoardNo} and mem_id=#{memId}
 	</select>
 	
+	
+	<!-- 마이보드 정보 -->
+	<select id="selectMyBoardInfo" parameterType="myBoardListVo" resultType="myBoardListVo">
+		select my_board_no, m_board_no, mem_no, m_board_name
+		from myBoardListView
+		where m_board_no=#{MBoardNo} and mem_id=#{memId}
+	</select>
+	
+	<select id="selectByBoardName" parameterType="int" resultType="String">
+		select m_board_name
+		from myBoardListView
+		where my_board_no=#{myBoardNo}
+	</select>
+	
+<!-- 예지 -->
+
+<!-- 다희 -->	
 	<!-- 부서 이름으로 동적 게시판 번호 찾기 -->
 	<select id="findBoardNoByBoardName" parameterType="String" resultType="int">
 		SELECT M_BOARD_NO FROM M_BOARD WHERE M_BOARD_NAME = #{MBoardName}
@@ -26,6 +48,7 @@
 		INSERT INTO MY_BOARD(MY_BOARD_NO, MEM_NO, M_BOARD_NO) VALUES(#{myBoardNo}, #{memNo}, #{MBoardNo} )
 	</insert>
 	
+<!-- 다희 -->		
 </mapper>
 
 

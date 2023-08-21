@@ -9,10 +9,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ez.ezBears.myBoard.model.MyBoardListService;
+import com.ez.ezBears.myBoard.model.MyBoardListVO;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -42,17 +44,20 @@ public class MyBoardListController {
 	}
 	
 	@RequestMapping("/myBoardNavTab")
-	public String selectNav(@RequestParam (defaultValue = "0") int myBoardNo, Model  model) {
+	public String selectNav(@ModelAttribute MyBoardListVO myBoardListVo,
+			HttpSession session, Model  model) {
 		//1
-		logger.info("네비게이션 페이지 파라미터 myBoardNo={}",myBoardNo);
-		
+		String userid = (String)session.getAttribute("userid");
+		logger.info("네비게이션 페이지 파라미터 myBoardListVo={}, userid={}",myBoardListVo,userid);		
 		//2
-		String myBoardName=myBoardListService.selectByMyBoardName(myBoardNo);
-		logger.info("팀 게시판 이름 검색 결과 myBoardName={}",myBoardName);
+		myBoardListVo.setMemId(userid);
+		
+		String mBoardName=myBoardListService.selectByMyBoardName(myBoardListVo);
+		logger.info("팀 게시판 이름 검색 결과 mBoardName={}",mBoardName);
 		
 		//3
-		model.addAttribute("myBoardName",myBoardName); 
-		model.addAttribute("myBoardNo",myBoardNo);
+		model.addAttribute("mBoardName",mBoardName); 
+		model.addAttribute("mBoardNo",myBoardListVo.getMBoardNo());
 		
 		//4.
 		return "inc/myBoardNavTab";

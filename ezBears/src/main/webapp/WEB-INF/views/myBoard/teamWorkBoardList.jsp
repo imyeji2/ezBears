@@ -14,7 +14,7 @@
 							<div id="teamNotice_serch">
 								<div class="serch_input">
 									<div class="select_box">
-										<select class="form-select" aria-label="Default select example">
+										<select class="form-select" aria-label="Default select example" name="searchCondition">
 										  <option selected>선택</option>
 										  <option value="name">이름</option>
 										  <option value="subject">제목</option>
@@ -22,7 +22,7 @@
 										</select>				
 									</div>
 									<div class="text_box">
-										<input type="text" class="form-control" id="exampleFormControlInput1"
+										<input type="text" class="form-control" name="searchKeyword"
 											 placeholder="검색어를 입력해주세요">
 									</div>
 									

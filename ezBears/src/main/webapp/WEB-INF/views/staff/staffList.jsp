@@ -43,7 +43,7 @@
 		            <tbody>
 		            	<c:if test="${empty list }">
 		            		<tr>
-		            			<th colspan="3">등록된 사원이 존재하지 않습니다.</th>
+		            			<th colspan="6">등록된 사원이 존재하지 않습니다.</th>
 		            		</tr>
 		            	</c:if>
 		            	<c:if test="${!empty list }">

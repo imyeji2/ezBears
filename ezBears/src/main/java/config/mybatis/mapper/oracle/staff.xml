@@ -80,9 +80,15 @@
 		update staff
 		set
 		dept_no=#{deptNo}, staff_name=#{staffName}, staff_position=#{staffPosition}, staff_back_no=#{staffBackNo},
-		staff_birth=#{staffBirth}, staff_sal=#{staffSal}, contract_start=#{contractStart}, contract_done=#{contractDone},
+		staff_birth=#{staffBirth}, staff_sal=#{staffSal}, contract_done=#{contractDone},
 		staff_tel=#{staffTel}, staff_info=#{staffInfo}, staff_zipcode=#{staffZipcode}, staff_addr=#{staffAddr},
-		staff_addr_detail=#{staffAddrDetail}, staff_status=${staffStatus}, staff_id=#{staffId}, staff_pwd=#{staffPwd}; 
+		staff_addr_detail=#{staffAddrDetail}, staff_id=#{staffId}, staff_pwd=#{staffPwd}, staff_image=#{staffImage}
+		where staff_no=#{staffNo}
+	</update>
+	
+	<update id="deleteStaff" parameterType="int">
+		update staff
+		set staff_status='N'
 	</update>
 	
 </mapper>
