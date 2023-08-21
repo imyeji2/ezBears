@@ -8,9 +8,21 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface MyBoardListDAO {
+	//예지
+	//마이보드 메뉴 출력
 	List<Map<String, Object>> selectBoardList(String userid);
-	String selectByMyBoardName(int myBoardNo);
 	
+	//마이보드 탭 
+	String selectByMyBoardName(MyBoardListVO myBoardListVo);
+	
+	//마이보드 정보
+	MyBoardListVO selectMyBoardInfo(MyBoardListVO myBoardListVo);
+	
+	//마이보드 이름
+	String selectByBoardName(int myBoardNo);
+	
+	
+	//다희
 	//부서 이름으로 동적 게시판 번호 찾기
 	int findBoardNoByBoardName(String MBoardName);
 	

@@ -81,7 +81,11 @@ public class FileUploadUtil {
         path=ConstUtil.IMAGE_FILE_UPLOAD_PATH;// mem_images					
 			}else if(pathFlag ==ConstUtil.UPLOAD_TEAMNOTICE_FLAG) {//팀 공지사항
 				path=ConstUtil.TEAM_NOTICE_FILE_PACH;
+			}else if(pathFlag == ConstUtil.UPLOAD_STAFFIMAGE_FLAG) {	//스태프 이미지 업로드
+				path=ConstUtil.STAFFIMAGE_FILE_UPLOAD_PATH;
 			}
+			
+			
 			//실제 물리적인 경로 구하기
 			path=request.getSession().getServletContext().getRealPath(path);
 		}

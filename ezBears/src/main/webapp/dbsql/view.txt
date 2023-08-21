@@ -1,13 +1,6 @@
 [예지]---------------------------------------------------------------------
 create or replace view myBoardListView
 as
-SELECT n.M_BOARD_NAME, n.M_BOARD_NO, m.mem_no
-FROM MY_BOARD m
-join M_BOARD n
-on m.M_BOARD_NO = n.M_BOARD_NO;
-
-create or replace view myBoardListView
-as
 SELECT M.MEM_ID, M.MEM_NO, MY.MY_BOARD_NO, B.M_BOARD_NO, B.M_BOARD_NAME  
 FROM MEMBER M
 LEFT JOIN my_board MY
@@ -15,14 +8,24 @@ ON M.MEM_NO = MY.MEM_NO
 LEFT JOIN M_BOARD B
 ON MY.M_BOARD_NO = B.M_BOARD_NO;
 
+
 create or replace view teamNoticeListView
 as
-select t.*, m.mem_name, d.dept_name
-from team_notice t
-left join member m
-on t.mem_no = m.mem_no
-join dept d
-on m.dept_no = d.dept_no;
+SELECT A.*, B.MEM_ID,B.MEM_NAME, B.MEM_IMAGE, B.DEPT_NAME
+FROM
+(
+    SELECT T.*, MY.M_BOARD_NO
+    FROM TEAM_NOTICE T
+    JOIN MY_BOARD MY
+    ON T.MY_BOARD_NO = my.my_board_no
+)A JOIN
+(
+    SELECT M.MEM_NO,M.MEM_ID, MEM_NAME, MEM_IMAGE, D.DEPT_NAME
+    FROM MEMBER M
+    JOIN DEPT D
+    ON M.DEPT_NO = D.DEPT_NO
+) B
+ON A.MEM_NO = B.MEM_NO;
 
 [다희]---------------------------------------------------------------------
 

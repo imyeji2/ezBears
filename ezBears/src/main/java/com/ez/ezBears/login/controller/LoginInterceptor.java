@@ -19,7 +19,7 @@ public class LoginInterceptor implements HandlerInterceptor{
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		logger.info("컨트롤러 수행전 preHandle() 호출!");
+		//logger.info("컨트롤러 수행전 preHandle() 호출!");
 		
 		String userid=(String) request.getSession().getAttribute("userid");
 		logger.info("세션 파라미터 userid={}",userid);

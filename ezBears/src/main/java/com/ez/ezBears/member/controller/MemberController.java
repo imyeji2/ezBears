@@ -105,9 +105,11 @@ public class MemberController {
 			//부서 번호 값으로 부서 이름 검색
 			logger.info("부서 번호 값 deptNo={}", vo.getDeptNo());
 			String deptName = deptService.findDeptName(vo.getDeptNo());
+			
 			////부서 이름으로 동적 게시판 번호 찾기
 			logger.info("부서 이름 deptName={}", deptName);
 			int MdeptNo = myBoardService.findBoardNoByBoardName(deptName);
+			
 			//내 동적 게시판에 부서 번호로 게시판 등록
 			logger.info("동적게시판 부서번호 MdeptNo={}", MdeptNo);
 			
@@ -172,20 +174,67 @@ public class MemberController {
 		return "Member/zipcode";
 	}
 	
-	@RequestMapping("/detail")
+	@GetMapping("/detail")
 	public String detail(@RequestParam(defaultValue = "0") int memNo, Model model) {
 		//1
 		logger.info("회원 상세 페이지, 파라미터 memNo={}", memNo);
 		
 		//2
+		
+		//부서 직급 가지고오기	
+		List<DeptVO> deptList = deptService.selectDeptList();
+		List<PositionVO> positionList = positionService.selectPositionList();
+		
+		
 		MemberVO memberVo = memberService.memberDetail(memNo);
 		logger.info("회원 상세보기 결과, memberVo={}", memberVo);
 		
 		//3
 		model.addAttribute("memberVo", memberVo);
+		model.addAttribute("deptList", deptList);
+		model.addAttribute("positionList", positionList);
+		
 		
 		//4
 		return "Member/memberDetail";
+	}
+	
+	@PostMapping("/detail")
+	public String detail_post(@ModelAttribute MemberVO memberVo, String sal, Model model) {
+		//1
+		logger.info("회원 수정, 파라미터 memberVo ={}", memberVo);
+		
+		//2
+		//연봉 int로 변환
+		String strSal = sal.replace(",", "");
+		strSal = strSal+"0000";
+		int memSal = Integer.parseInt(strSal);
+		
+		memberVo.setMemSal(memSal);
+		
+		//퇴사일 없을때 처리
+		String contractDone = memberVo.getContractDone();
+		
+		if(contractDone == null || contractDone.isEmpty()) {
+			memberVo.setContractDone("");
+		}
+		
+		
+		int result = memberService.updateMemberFromAdmin(memberVo);
+		logger.info("회원 수정 결과, result={}", result);
+		
+		String msg="수정에 실패하였습니다.", url="/Member/list";
+		if(result > 0) {
+			msg = "수정 되었습니다.";
+			url = "/Member/list";
+		}
+		
+		//3
+		model.addAttribute("msg",msg);
+		model.addAttribute("url",url);
+		
+		//4
+		return "common/message";
 	}
 
 }
