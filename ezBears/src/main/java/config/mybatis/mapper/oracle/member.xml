@@ -83,6 +83,11 @@
     	SELECT * FROM MEMLISTVIEW WHERE MEM_NO = #{memNo}
     </select>
     
-    
+    <!-- 멤버 디테일 수정 페이지 -->
+    <update id="updateMemberFromAdmin" parameterType="memberVo">
+    	UPDATE MEMBER 
+		SET DEPT_NO = #{deptNo}, POSITION_NO = #{positionNo}, MEM_SAL =#{memSal}, CONTRACT_DONE = #{contractDone}, TYPE= #{type}
+		WHERE MEM_NO = #{memNo}
+    </update>
 
 </mapper>
