@@ -33,6 +33,9 @@ public interface MemberService {
     //멤버 디테일
     MemberVO memberDetail(int memNo);
     
+    //경영지원팀이 멤버 정보 수정
+    int updateMemberFromAdmin(MemberVO memberVo);
+    
     //
     int selectMemberNo(String memId);
     
