@@ -3,18 +3,50 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ez.ezBears.temNotice.model.TeamNoticeDAO">
 
+   <sql id="searchWhere">
+      <where>
+     	 m_board_no=#{mBoardNo} and sortNo is null  and status='Y'
+         <if test="searchKeyword!=null and searchKeyword!=''">
+             and  ${searchCondition} like '%' || #{searchKeyword} || '%'
+         </if>   
+      </where>
+   </sql>
+   
 	<insert id="insertTeamNotice" parameterType="teamNoticeVo">
 		<selectKey keyProperty="teamNoticeNo" resultType="int" order="BEFORE">
 			select TEAM_NOTICE_SEQ.nextval from dual
 		</selectKey>
-		insert into team_Notice(TEAM_NOTICE_NO, MEM_NO, MY_BOARD_NO, TEAM_NOTICE_TITLE, TEAM_NOTICE_CONTENT,FSIZE,FILENAME,ORIGINNAME)
-		values(#{teamNoticeNo},#{memNo}, #{myBoardNo}, #{teamNoticeTitle}, #{teamNoticeContent},#{fsize},#{fileName},#{originname})
+		insert into team_Notice(TEAM_NOTICE_NO, MEM_NO, MY_BOARD_NO, TEAM_NOTICE_TITLE, 
+				TEAM_NOTICE_CONTENT,FSIZE,FILENAME,ORIGINNAME,GROUPNO)
+		values(#{teamNoticeNo},#{memNo}, #{myBoardNo}, #{teamNoticeTitle},
+				#{teamNoticeContent},#{fsize},#{fileName},#{originname},#{teamNoticeNo})
 	</insert> 
 	
-	<select id="selectTeamNoticeList" parameterType="int" resultType="map">
-		select * from teamNoticeListView
-		where my_board_no = #{my_board_no}
-		order by team_notice_no desc
+	<select id="selectTeamNoticeList" parameterType="myBoardSearchVo" resultType="map">
+      select *
+      from
+      (
+	      select rownum as RNUM, A.* from
+	      (		
+			select * from teamNoticeListView
+			<include refid="searchWhere"></include>
+			order by regdate desc
+	      )A
+      )
+      <![CDATA[
+      where RNUM> #{firstRecordIndex} 
+      and RNUM<=#{firstRecordIndex} + #{recordCountPerPage}]]>		
+	</select>
 	
+	<select id="selectTotalCount" parameterType="myBoardSearchVo" resultType="int">
+		select count(*) from teamNoticeListView
+		<include refid="searchWhere"></include>
+	</select>
+	
+	<select id="selectDetail" parameterType="teamNoticeVo" resultType="map">
+		select * from teamNoticeListView
+		where team_notice_no=#{teamNoticeNo}
+		and my_board_no=#{myBoardNo}
+		and sortNo is null
 	</select>
 </mapper>

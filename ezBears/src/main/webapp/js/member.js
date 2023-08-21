@@ -173,6 +173,32 @@
 	        // 입력값 업데이트
 	        $text.val(cleanedValue);
 	    });
+	    
+	    $('.showEditDept').hide();
+		$('.showEditPosition').hide();
+		$('.showEditType').hide();
+		
+        $('.editIcon').click(function() {
+            var findInput = $(this).siblings('input');
+            findInput.prop('disabled', false);
+            findInput.focus();
+        });
+        
+        
+        $('#editDept').click(function() {
+        	$('.showEditDept').show();
+        	$('#deptName').hide();
+        });
+        
+        $('#editPosition').click(function() {
+        	$('.showEditPosition').show();
+        	$('#position').hide();
+        });
+        
+        $('#editType').click(function() {
+        	$('.showEditType').show();
+        	$('#type').hide();
+        });
 	});
 		
 		

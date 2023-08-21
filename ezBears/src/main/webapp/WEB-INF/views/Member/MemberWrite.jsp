@@ -87,7 +87,7 @@
 				</div>
 				<div class='detail'>
 					<div class="form-floating">
-						<input type="text" class="form-control" id="sal" name="memSal">
+						<input type="text" class="form-control" id="sal" name="memSal" style="width:100%;">
 						<label for="sal">연봉</label>
 					</div>
 					<div class="form-floating">

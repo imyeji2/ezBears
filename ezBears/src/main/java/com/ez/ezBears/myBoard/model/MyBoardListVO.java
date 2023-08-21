@@ -4,7 +4,9 @@ import lombok.Data;
 
 @Data
 public class MyBoardListVO {
-	private int myBoardNo;
+	private String memId;
 	private int memNo;
+	private int myBoardNo;
 	private int MBoardNo;
+	private String MBoardName;
 }

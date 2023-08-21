@@ -197,7 +197,7 @@ label{
     margin-top: 2%;
 }
 
-.btn-form {
+.btn-form .btns {
     display: flex;
     justify-content: right;
     gap: 0 15px;
@@ -235,6 +235,27 @@ label{
     margin: 7% 0; 
 }
 
+
 @media (max-width: 720px) {
+	.memImg {
+    	display: none;
+
+	}
 	
+}
+/* detail */
+
+.editIcon{
+    width: 20px;
+    height: 20px;
+    float: right;
+}
+
+input.edittext {
+    background-color: #191C24;
+    border: none;
+    color: #fff;
+}
+#sal{
+	width:50%;
 }
