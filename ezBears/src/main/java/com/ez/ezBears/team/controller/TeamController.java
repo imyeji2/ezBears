@@ -124,11 +124,11 @@ public class TeamController {
 		searchVo.setRecordCountPerPage(pagination.getRecordCountPerPage());
 		logger.info("설정 후 searchVo={}", searchVo);
 		
-		int totalRecord = teamService.getTotalRecord();
+		int totalRecord = teamService.getTotalRecord(searchVo);
 		pagination.setTotalRecord(totalRecord);
 		logger.info("pagination 설정 완");
 		
-		List<Map<String, Object>> list = teamService.selectAllTeam();
+		List<Map<String, Object>> list = teamService.selectAllTeam(searchVo);
 		logger.info("선수 목록 화면 처리 결과, list.size()={}", list.size());
 		
 		model.addAttribute("list", list);

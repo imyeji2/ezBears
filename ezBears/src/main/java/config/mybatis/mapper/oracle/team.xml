@@ -3,6 +3,14 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ez.ezBears.team.model.TeamDAO">
+	<sql id="searchWhere">
+		<where>
+			<if test="searchKeyword!=null and searchKeyword!=''">
+				${searchCondition} like '%' || #{searchKeyword} || '%'
+			</if>
+		</where>
+	</sql>
+
 	<insert id="insertTeam" parameterType="teamVo">
 		<selectKey keyProperty="playerNo" order="BEFORE" resultType="int">
 			select team_seq.nextval from dual
@@ -16,12 +24,26 @@
 	</insert>
 	
 	<select id="selectAllTeam" resultType="map" parameterType="searchVo">
-		select * from teamSelectView order by player_no desc
-		
+		select * 
+		from
+		(
+		    select rownum as RNUM, A.*
+		    from
+		    (
+        		select * from teamSelectView 
+				<include refid="searchWhere"></include>
+				order by player_no desc
+		    )A
+		)
+		<![CDATA[
+		where RNUM > #{firstRecordIndex}
+		and RNUM <= #{firstRecordIndex} + #{recordCountPerPage}
+		]]> 
 	</select>
 	
-	<select id="getTotalRecord" resultType="int">
-		select count(*) from team
+	<select id="getTotalRecord" resultType="int" parameterType="searchVo">
+		select count(*) from teamSelectView
+		<include refid="searchWhere"></include>
 	</select>
 	
 </mapper>

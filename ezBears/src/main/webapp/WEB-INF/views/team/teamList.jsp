@@ -53,7 +53,7 @@
 				                    <td><a href="<c:url value='/team/teamDetail?playerNo=${map["PLAYER_NO"]}' />" style="color: #fff">${map['PLAYER_NAME'] }</a></td>
 				                    <td>${map['B_POSITION_NAME'] }</td>
 				                    <td>${map['BACK_NO'] }</td>
-				                    <td>${map['PLAYER_BIRTH'] }</td>
+				                    <td><fmt:formatDate value="${map['PLAYER_BIRTH'] }" pattern="yyyy-MM-dd"/> </td>
 				                    <td>${map['PLAYER_SAL']}</td>
 				                </tr>
 			            	</c:forEach>

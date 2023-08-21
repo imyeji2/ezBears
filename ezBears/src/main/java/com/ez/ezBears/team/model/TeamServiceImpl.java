@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.ez.ezBears.common.SearchVO;
+
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -18,13 +20,13 @@ public class TeamServiceImpl implements TeamService{
 	}
 
 	@Override
-	public List<Map<String, Object>> selectAllTeam() {
-		return teamDao.selectAllTeam();
+	public List<Map<String, Object>> selectAllTeam(SearchVO searchVo) {
+		return teamDao.selectAllTeam(searchVo);
 	}
 
 	@Override
-	public int getTotalRecord() {
-		return teamDao.getTotalRecord();
+	public int getTotalRecord(SearchVO searchVo) {
+		return teamDao.getTotalRecord(searchVo);
 	}
 	
 }

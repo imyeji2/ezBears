@@ -5,9 +5,11 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.ez.ezBears.common.SearchVO;
+
 @Mapper
 public interface TeamDAO {
 	int insertTeam(TeamVO teamVo);
-	List<Map<String, Object>> selectAllTeam();
-	int getTotalRecord();
+	List<Map<String, Object>> selectAllTeam(SearchVO searchVo);
+	int getTotalRecord(SearchVO searchVo);
 }
