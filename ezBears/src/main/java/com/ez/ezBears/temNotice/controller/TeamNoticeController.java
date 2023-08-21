@@ -1,6 +1,8 @@
 package com.ez.ezBears.temNotice.controller;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,12 +15,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.ez.ezBears.common.ConstUtil;
 import com.ez.ezBears.common.FileUploadUtil;
 import com.ez.ezBears.common.MyBoardSearchVo;
 import com.ez.ezBears.common.PaginationInfo;
-import com.ez.ezBears.common.SearchVO;
 import com.ez.ezBears.member.model.MemberService;
 import com.ez.ezBears.myBoard.controller.MyBoardController;
 import com.ez.ezBears.myBoard.model.MyBoardListService;
@@ -47,6 +49,12 @@ public class TeamNoticeController {
 			MyBoardSearchVo searchVo,Model  model) {
 		//1.
 		logger.info("팀 공지사항 리스트 페이지, 파라미터 mBoardNo={}",mBoardNo);
+		
+		if(mBoardNo==0) {
+			model.addAttribute("msg","잘못된 접근입니다.");
+			model.addAttribute("url","/");
+			return "common/message";
+		}
 		
 		
 		//2
@@ -88,10 +96,8 @@ public class TeamNoticeController {
 		
 		//2
 		myBoardListVo.setMemId(userid);
-		
 		myBoardListVo=myBoardListService.selectMyBoardInfo(myBoardListVo);
 		logger.info("팀 게시판 정보 찾기 결과 myBoardListVo={}",myBoardListVo);
-		
 
 		//3.
 		model.addAttribute("myBoardListVo",myBoardListVo);
@@ -140,26 +146,75 @@ public class TeamNoticeController {
 	}
 	
 	
-	//팀별 공지사항 디테일 페이지
-	@RequestMapping("/teamNoticeDetail")
-	public String teamBoardDetil(@ModelAttribute TeamNoticeVO teamNoticeVo,
-			Model model) {
+	@GetMapping("/countUpdate")
+	public String countUpdate(@RequestParam(defaultValue = "0") int mBoardNo, 
+			@RequestParam(defaultValue = "0") int teamNoticeNo, Model model) {
 		//1
-		logger.info("팀 공지사항 디테일 화면, 파라미터 teamNoticeVo={}",teamNoticeVo);
+		logger.info("공지사항 조회수 업로드 파라미터 mBoardNo={},teamNoticeNo={} ",mBoardNo,teamNoticeNo);
+		
+		if(teamNoticeNo==0) {
+			model.addAttribute("msg","잘못된 접근입니다.");
+			model.addAttribute("url","/myBoard/teamNotice?mBoardNo="+mBoardNo);
+			return "common/message";
+		}
 		
 		//2
-		Map<String, Object> map = teamNoticeService.selectDetail(teamNoticeVo);
+		int cnt = teamNoticeService.updateViewCount(teamNoticeNo);
+		logger.info("조회수 업데이트 결과 cnt={}",cnt);
+		
+		//3
+		//4
+		return "redirect:/myBoard/teamNoticeDetail?mBoardNo="+mBoardNo+"&teamNoticeNo="+teamNoticeNo;
+	}
+	
+	
+	//팀별 공지사항 디테일 페이지
+	@RequestMapping("/teamNoticeDetail")
+	public String teamBoardDetil(@RequestParam(defaultValue = "0") int mBoardNo, 
+			@RequestParam(defaultValue = "0") int teamNoticeNo, Model model, HttpSession session) {
+		//1
+		logger.info("팀 공지사항 디테일 화면, 파라미터 mBoardNo={},teamNoticeNo={}",mBoardNo,teamNoticeNo);
+		String userid=(String)session.getAttribute("userid");
+		logger.info("팀 공지사항 디테일 접속 사용자 아이디 userid={}",userid);
+		
+		//2
+		Map<String, Object> map = teamNoticeService.selectDetail(teamNoticeNo);
 		logger.info("팀 공지사항 디테일 결과 map={}",map);
 		
 		
-		String myBoardName = myBoardListService.selectByBoardName(teamNoticeVo.getMyBoardNo());
+		String myBoardName = myBoardListService.selectByBoardName(mBoardNo);
 		logger.info("마이보드 이름 myBoardName={}",myBoardName);	
 
 		//3.
 		model.addAttribute("map",map);
 		model.addAttribute("myBoardName",myBoardName);
+		model.addAttribute("userid",userid);
 		
 		return "myBoard/teamNoticeDetail";
+	}
+	
+	
+	@RequestMapping("/downloadFile")
+	//ModelAndView => 데이터와 뷰를 동시에 설정 가능
+	public ModelAndView downloadFile(@RequestParam(defaultValue = "0") int teamNoticeNo,
+			@RequestParam String fileName,HttpServletRequest request) {
+		
+		//1
+		logger.info("공지사항 파일 다운로드 처리 파라미터 teamNoticeNo={}, fileName={}",teamNoticeNo, fileName);
+		
+		//강제 다운로드 처리를 위한 뷰페이지로 보내준다
+
+		Map<String, Object> map = new HashMap<>();
+		//업로드 경로
+		String upPath = fileUploadUtil.getUploadPath(request, ConstUtil.UPLOAD_TEAMNOTICE_FLAG);
+		File file = new File(upPath, fileName);
+		map.put("file", file);
+
+		//ModelAndView(String viewName, Map<String, ?> model)
+		ModelAndView mav = new ModelAndView("DownloadView", map);
+		return mav;
+		
+		
 	}
 	
 	
