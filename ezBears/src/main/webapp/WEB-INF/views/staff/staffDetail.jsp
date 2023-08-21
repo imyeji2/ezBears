@@ -51,13 +51,13 @@
 							<span class="sp1">등번호</span> <span>${staffVo.staffBackNo }</span>
 						</div>
 						<div>
-							<span class="sp1">생년월일</span> <span>${staffVo.staffBirth }</span>
+							<span class="sp1">생년월일</span> <span>${staffVo.staffBirth.substring(0, 10) }</span>
 						</div>
 						<div>
-							<span class="sp1">연봉</span> <span>${staffVo.staffSal }</span>
+							<span class="sp1">연봉</span> <span>${staffVo.staffSal } 만원</span>
 						</div>
 						<div>
-							<span class="sp1">계약시작일</span> <span>${staffVo.contractStart }</span>
+							<span class="sp1">계약시작일</span> <span>${staffVo.contractStart.substring(0, 10) }</span>
 						</div>
 						<div>
 							<span class="sp1">연락처</span> <span>${staffVo.staffTel }</span>
@@ -86,7 +86,7 @@
 
 						<div class="center" >
 							<a href="<c:url value='/staff/staffEdit?staffNo=${staffVo.staffNo }'/>" style="color: white;">수정</a> |
-				        	<a href="<c:url value='/staff/staffDelete'/>" style="color: white;">삭제</a> |
+				        	<a href="<c:url value='/staff/staffDelete?staffNo=${staffVo.staffNo }'/>" style="color: white;">삭제</a> |
 				        	<a href="<c:url value='/staff/staffList'/>" style="color: white;">목록</a>			
 						</div>
 					</div>

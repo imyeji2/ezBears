@@ -40,7 +40,7 @@ public class TeamController {
 		//http://localhost:9091/ezBears/team/teamWrite
 	}
 	
-	@PostMapping("/teamWirte")
+	@PostMapping("/teamWrite")
 	public String write_post(@ModelAttribute TeamVO teamVo) {
 		logger.info("선수 등록 처리 파라미터 teamVo={}", teamVo);
 		
