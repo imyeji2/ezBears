@@ -3,7 +3,7 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ez.ezBears.team.model.TeamDAO">
-	<insert id="insertTeam">
+	<insert id="insertTeam" parameterType="teamVo">
 		<selectKey keyProperty="playerNo" order="BEFORE" resultType="int">
 			select team_seq.nextval from dual
 		</selectKey>
@@ -15,5 +15,13 @@
     		#{playerStatus}, #{playerAddress}, #{playerAddressDetail}, #{playerZipcode}, #{playerImage})
 	</insert>
 	
+	<select id="selectAllTeam" resultType="map" parameterType="searchVo">
+		select * from teamSelectView order by player_no desc
+		
+	</select>
+	
+	<select id="getTotalRecord" resultType="int">
+		select count(*) from team
+	</select>
 	
 </mapper>
