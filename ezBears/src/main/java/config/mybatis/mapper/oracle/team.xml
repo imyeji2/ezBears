@@ -46,4 +46,20 @@
 		<include refid="searchWhere"></include>
 	</select>
 	
+	<select id="selectByPlayerNo" parameterType="int" resultType="map">
+		select * from teamSelectView where player_no = #{playerNo}
+	</select>
+	
+	<update id="updateTeam" parameterType="teamVo">
+		update team
+		set
+		dept_no=#{deptNo}, b_position_no=#{positionNo}, back_no=#{backNo},
+		player_name=#{playerName}, player_birth=#{playerBirth}, height=#{height},
+		weight=#{weight}, player_sal=#{playerSal}, contract_start=#{contractStart}, contract_done=#{contractDone},
+		player_tel=#{playerTel}, player_info=#{playerInfo}, player_status=#{playerStatus}, player_address=#{playerAddress},
+		player_address_detail=#{playerAddressDetail},player_zipcode=#{playerZipcode},player_image=#{playerImage}
+		where player_no=#{playerNo}
+	</update>
+	
+	
 </mapper>

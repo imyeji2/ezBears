@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ez.ezBears.common.ConstUtil;
 import com.ez.ezBears.common.FileUploadUtil;
@@ -81,14 +82,52 @@ public class TeamController {
 		return "redirect:/team/teamList";
 	}
 	
-	
 	@GetMapping("/teamEdit")
-	public String edit_get() {
-		logger.info("선수 수정 화면 이동");
+	public String edit_get(@RequestParam(defaultValue = "0") int playerNo, Model model) {
+		logger.info("선수 수정 화면 이동, 파라미터 playerNo={}", playerNo);
+		
+		Map<String, Object> map = teamService.selectByPlayerNo(playerNo);
+		model.addAttribute("map", map);
+		
+		List<DeptVO> deptList = deptService.selectDeptList();
+		model.addAttribute("deptList", deptList);
+		logger.info("선수 수정 화면 이동 처리 결과, map={}", map);
 		
 		return "/team/teamEdit";
 		
 		//http://localhost:9091/ezBears/team/teamEdit
+	}
+	
+	@PostMapping("/teamEdit")
+	public String edit_post(@ModelAttribute TeamVO teamVo, HttpServletRequest request) {
+		logger.info("선수 수정 처리, 파라미터 teamVo={}", teamVo);
+		
+		//파일 업로드 처리
+		String fileName="", originalFileName="";
+		long fileSize=0;
+		
+		try {
+			List<Map<String, Object>> list = 
+					fileUploadUtil.fileupload(request, ConstUtil.UPLOAD_TEAMIMAGE_FLAG);
+			
+			for(Map<String, Object> map : list) {
+				fileName = (String)map.get("fileName");
+				originalFileName = (String)map.get("originalFileName");
+				fileSize = (long)map.get("fileSize");
+			}//for
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		teamVo.setPlayerImage(fileName);
+		
+		//db
+		int cnt = teamService.updateTeam(teamVo);
+		logger.info("선수 수정 처리 결과, cnt={}", cnt);
+		
+		return "redirect:/team/teamDetail?playerNo="+teamVo.getPlayerNo();
 	}
 	
 	@GetMapping("/teamDelete")
@@ -101,8 +140,13 @@ public class TeamController {
 	}
 	
 	@GetMapping("/teamDetail")
-	public String detail_get() {
-		logger.info("선수 상세보기 화면 이동");
+	public String detail_get(@RequestParam(defaultValue = "0") int playerNo, Model model) {
+		logger.info("선수 상세보기 화면 이동, 파라미터 playerNo = {}", playerNo);
+		
+		Map<String, Object> detailMap = teamService.selectByPlayerNo(playerNo);
+		logger.info("선수 상세보기 처리 결과, detailMap={}", detailMap);
+		
+		model.addAttribute("map", detailMap);
 		
 		return "/team/teamDetail";
 		

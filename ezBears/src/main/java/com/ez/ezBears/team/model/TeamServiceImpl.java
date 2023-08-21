@@ -28,5 +28,15 @@ public class TeamServiceImpl implements TeamService{
 	public int getTotalRecord(SearchVO searchVo) {
 		return teamDao.getTotalRecord(searchVo);
 	}
+
+	@Override
+	public Map<String, Object> selectByPlayerNo(int playerNo) {
+		return teamDao.selectByPlayerNo(playerNo);
+	}
+
+	@Override
+	public int updateTeam(TeamVO teamVo) {
+		return teamDao.updateTeam(teamVo);
+	}
 	
 }

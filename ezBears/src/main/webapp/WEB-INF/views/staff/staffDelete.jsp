@@ -9,6 +9,7 @@
 </style>
 <%@include file="../inc/top.jsp"%>
 
+
 <!-- Blank Start -->
 <div class="container-fluid pt-4 px-4" style="width: 80%">
     <div class="row vh-100 bg-secondary rounded align-items-center justify-content-center mx-0">
@@ -22,15 +23,14 @@
 					<article class="simpleForm">
 						<form name="frmOut" method="post" action="<c:url value='/staff/staffDelete'/>" >
 							<fieldset>	
-								<legend>사번, 사원이름</legend>
+								<legend>사원번호 : ${staffVo.staffNo }<br>
+								사원 이름 : ${staffVo.staffName }</legend>
 								<br><br>
 								<p class="p">스태프 삭제 하시겠습니까?</p>
 								<br>
 								<div> 	
-									<label for="pwd"  class="p">비밀번호</label>
-									<input type="password" name="pwd" id="pwd">
+									<input type="hidden" name="staffNo" value="${staffVo.staffNo }">
 								</div>
-								<br><br>
 								<div class="align_center">
 									<input type="submit" id="submit" value="삭제">
 									<input type="reset" value="취소">
