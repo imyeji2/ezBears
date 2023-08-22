@@ -61,7 +61,12 @@
 		       					<a href="<c:url value='/myBoard/teamNotice?mBoardNo=${map["M_BOARD_NO"]}'/>">목록</a>
 		       				</span>
 		       				<c:if test="${userid==map['MEM_ID']}">
-		       					<span class="user_dept"><a href="#">수정</a></span>
+		       					<span class="user_dept">
+		       						<a href="<c:url value='/myBoard/teamNoticeEdit?mBoardNo=${map["M_BOARD_NO"]}&teamNoticeNo=${map["TEAM_NOTICE_NO"]}'/>">
+		       						수정
+		       						</a>
+		       					</span>
+		       					
 			        			<span class="user_dept"><a href="#">삭제</a></span>
 		        			</c:if>
 		       			</div>

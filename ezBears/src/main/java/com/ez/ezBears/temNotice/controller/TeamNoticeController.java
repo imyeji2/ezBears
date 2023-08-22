@@ -28,6 +28,7 @@ import com.ez.ezBears.myBoard.model.MyBoardListVO;
 import com.ez.ezBears.temNotice.model.TeamNoticeService;
 import com.ez.ezBears.temNotice.model.TeamNoticeVO;
 
+import jakarta.mail.Session;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -92,6 +93,8 @@ public class TeamNoticeController {
 		logger.info("팀 공지사항 등록하기 페이지");
 		
 		String userid=(String)session.getAttribute("userid");
+		String type="write";
+		
 		logger.info("팀 동지사항 등록 페이지 파라미터 myBoardListVo={},userid={}",myBoardListVo,userid);
 		
 		//2
@@ -101,6 +104,7 @@ public class TeamNoticeController {
 
 		//3.
 		model.addAttribute("myBoardListVo",myBoardListVo);
+		model.addAttribute("type",type);
 
 		//4.
 		return "myBoard/teamNoticeWrite";
@@ -217,5 +221,92 @@ public class TeamNoticeController {
 		
 	}
 	
+	
+	@GetMapping("/teamNoticeEdit")
+	public String teamNoticeEdit_get(@ModelAttribute MyBoardListVO myBoardListVo,
+			@RequestParam (defaultValue = "0") int teamNoticeNo,Model model, HttpSession session) {
+		//1
+		String userid = (String)session.getAttribute("userid");
+		String type="edite";
+		logger.info("팀 공지사항 수정 페이지 파라미터 myBoardListVo,={},userid={}",myBoardListVo,userid);
+		
+		//2
+		myBoardListVo.setMemId(userid);
+		myBoardListVo=myBoardListService.selectMyBoardInfo(myBoardListVo);
+		logger.info("팀 게시판 정보 찾기 결과 myBoardListVo={}",myBoardListVo);
+		
+		Map<String, Object> map = teamNoticeService.selectDetail(teamNoticeNo);
+		logger.info("디테일 정보 map={}",map);
+		
+		
+		//3
+		model.addAttribute("map",map);
+		model.addAttribute("myBoardListVo",myBoardListVo);
+		model.addAttribute("teamNoticeNo",teamNoticeNo);
+		model.addAttribute("type",type);
+		
+		//4
+		return "/myBoard/teamNoticeWrite";
+	}
+	
+	@PostMapping("teamNoticeEdit")
+	public String teamNoticeEdit_post(@ModelAttribute TeamNoticeVO teamNoticeVo,
+			@RequestParam(defaultValue = "0") int mBoardNo,@RequestParam String oldFileName,
+			HttpServletRequest request, Model model) {
+		//1
+		logger.info("공지사항 수정 처리 파라미터 teamNoticeVo={},mBoardNo={}",teamNoticeVo,mBoardNo);
+		
+		String fileName="", originalFileName="";
+		try {
+			List<Map<String, Object>> fileList
+			=fileUploadUtil.fileupload(request, ConstUtil.UPLOAD_TEAMNOTICE_FLAG);
+
+			long fileSize = 0;
+			for(Map<String, Object> map : fileList) {
+				fileName=(String) map.get("fileName");
+				originalFileName=(String) map.get("originalFileName");
+				fileSize= (long) map.get("fileSize");				
+			}//for
+
+			teamNoticeVo.setFileName(fileName);
+			teamNoticeVo.setOriginname(originalFileName);
+			teamNoticeVo.setFsize(fileSize);	
+			
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	
+		//2
+		int cnt = teamNoticeService.updateTeamNotice(teamNoticeVo);
+		logger.info("팀별 공지사항 수정 결과 cnt={}",cnt);
+		
+		String msg="공지사항 글 수정 실패";
+		String url="/myBoard/teamNoticeEdit?mBoardNo="+mBoardNo+"&teamNoticeNo="+teamNoticeVo.getTeamNoticeNo();
+		
+		if(cnt>0) {
+			msg="공지사항 글 수정 성공";
+			url="/myBoard/teamNoticeDetail?mBoardNo="+mBoardNo+"&teamNoticeNo="+teamNoticeVo.getTeamNoticeNo();
+			
+			if(fileName!=null && !fileName.isEmpty()) { //
+				if(oldFileName!=null && !oldFileName.isEmpty()) {//
+					String upPath
+					=fileUploadUtil.getUploadPath(request, ConstUtil.UPLOAD_TEAMNOTICE_FLAG);
+					File file= new File(upPath,oldFileName);
+					if(file.exists()) {
+						boolean bool=file.delete();
+						logger.info("글 수정- 파일삭제 여부:{}", bool);
+					}
+				}
+			}
+		}//if
+		
+		//3
+		model.addAttribute("msg",msg);
+		model.addAttribute("url",url);
+		//4
+		return "common/message";
+	}
 	
 }

@@ -20,4 +20,7 @@ public interface TeamNoticeService {
 	
 	//팀별 공지사항 조회수 업데이트 
 	int updateViewCount(int teamNoticeNo);
+	
+	//팀별 공지사항 업데이트
+	int updateTeamNotice(TeamNoticeVO teamNoticeVo);
 }
