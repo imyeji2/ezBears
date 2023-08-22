@@ -51,7 +51,9 @@
 						        	<div style="text-align:center">등록된 글이 없습니다.</div>
 						        </div>
 							</c:if>
-							<c:set var="yesNo" value="N"/>
+							
+							<c:set var="yesNo" value="N"/> <!-- 경영지원팀만 댓글가능하게  -->
+							
 							<c:if test="${!empty list}">
 								<!-- 반복시작 -->
 								<c:forEach var="map" items="${list}">
@@ -93,9 +95,12 @@
 							       		</div>
 							     
 							        </div><!-- notice_list_box -->		
+									
+									<!-- 경영지원팀만 댓글가능하게  -->
 									<c:if test="${map['DEPT_NO']==1}">
 										<c:set var="yesNo" value="Y"/>
-									</c:if>					
+									</c:if>	
+													
 								</c:forEach>
 						        <!-- 반복 끝 -->
 					        </c:if>
