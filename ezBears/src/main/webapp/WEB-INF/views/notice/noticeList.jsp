@@ -51,7 +51,7 @@
 						        	<div style="text-align:center">등록된 글이 없습니다.</div>
 						        </div>
 							</c:if>
-							
+							<c:set var="yesNo" value="N"/>
 							<c:if test="${!empty list}">
 								<!-- 반복시작 -->
 								<c:forEach var="map" items="${list}">
@@ -74,9 +74,12 @@
 								        		<div class="user_dept">${map['DEPT_NAME']}</div>
 								        	</div>
 								       		<div class="list_box_content">
-								       			<div class="content_title">${map['NOTICE_TITLE']}</div>
+								       			<div class="content_title">
+								       				<a href="<c:url value='/notice/noticeDetail?noticeNo=${map["NOTICE_NO"]}'/>">${map['NOTICE_TITLE']}</a>
+								       			</div>
+								       			
 								       			<div class="content_txt">
-								       			${map['NOTICE_CONTENT']}
+								       				<a href="<c:url value='/notice/noticeDetail?noticeNo=${map["NOTICE_NO"]}'/>">${map['NOTICE_CONTENT']}</a>
 								       			</div>
 								       		</div>
 								       		<c:if test="${!empty map['FILENAME']}">
@@ -88,24 +91,23 @@
 								       		</c:if>
 								       		
 							       		</div>
-							       		<div class="notice_reply">
-							       			<div>
-							       				<a href="<c:url value='/notice/noticeDetail?noticeNo=${map["NOTICE_NO"]}'/>">댓글 달기</a>
-							       			</div>
-							       		</div>
+							     
 							        </div><!-- notice_list_box -->		
-														
+									<c:if test="${map['DEPT_NO']==1}">
+										<c:set var="yesNo" value="Y"/>
+									</c:if>					
 								</c:forEach>
 						        <!-- 반복 끝 -->
 					        </c:if>
 					                    
 					        <div class="list_line"></div>     
-					        
-					        <div class="btnBox">
-								<a class="btn btn-sm btn-primary" href="">삭제</a>
-								<a class="btn btn-sm btn-primary" href="">수정</a>
-								<a class="btn btn-sm btn-primary" href="<c:url value='/notice/noticeWrite'/>">등록</a>
-							</div><!-- btnBox -->          
+						        <div class="btnBox">
+						        	<c:if test="${yesNo == 'Y'}">
+										<a class="btn btn-sm btn-primary" href="">삭제</a>
+										<a class="btn btn-sm btn-primary" href="">수정</a>
+										<a class="btn btn-sm btn-primary" href="<c:url value='/notice/noticeWrite'/>">등록</a>
+									</c:if>
+								</div><!-- btnBox -->          
 						      <div class="page_box">
 							      <nav aria-label="Page navigation example">
 									  <ul class="pagination justify-content-center">

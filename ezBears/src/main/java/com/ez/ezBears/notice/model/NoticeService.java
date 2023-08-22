@@ -6,4 +6,5 @@ import java.util.Map;
 public interface NoticeService {
 	int insertNotice(NoticeVO noticeVo);
 	List<Map<String, Object>> selectNoticeList(int noticeNo);
+	Map<String, Object> selectDetail(int noticeNo);
 }
