@@ -74,10 +74,8 @@ public class MemberController {
 		//1
 		logger.info("회원등록 처리, 파라미터 vo={}",vo);
 		
-		
 		//2
-		
-		
+
 		String fileName = "", originalFileName = "";
 		long fileSize = 0;
 		

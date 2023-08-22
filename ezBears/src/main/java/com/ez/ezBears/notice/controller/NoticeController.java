@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ez.ezBears.notice.model.NoticeService;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -30,7 +31,7 @@ public class NoticeController {
 		
 		//2
 		List<Map<String, Object>> list=noticeService.selectNoticeList(noticeNo);
-		logger.info("공지사항 리스트 페이지 결과 list.size={}",list.size());
+		logger.info("공지사항 리스트 페이지 결과 list.size={}",list);
 		
 		//3
 		model.addAttribute("list",list);
@@ -46,8 +47,25 @@ public class NoticeController {
 	}
 	
 	@RequestMapping("/noticeDetail")
-	public String teamBoardDetil(/* @RequestParam (defaultValue = "0")int no */) {
-		logger.info("공지사항 디테일 페이지 파라미터 no={}");
+	public String teamBoardDetil(@RequestParam(defaultValue = "0") int noticeNo,  Model model, HttpSession session) {
+		//1
+		logger.info("공지사항 디테일 화면 파라미터 noticeNo={}",noticeNo);
+		
+		String userid=(String)session.getAttribute("userid");
+		logger.info("공지사항 아이디 userid={}",userid);
+		
+		//2
+		Map<String, Object> map=noticeService.selectDetail(noticeNo);
+		logger.info("공지사항 결과 map={}",map);
+		
+		List<Map<String, Object>> list=noticeService.selectNoticeList(noticeNo);
+		logger.info("공지사항 리스트 페이지 결과 list.size={}",list.size());
+
+		//3.
+		model.addAttribute("map",map);
+		model.addAttribute("userid",userid);
+		model.addAttribute("list",list);
+		
 		return "notice/noticeDetail";
 	}
 	

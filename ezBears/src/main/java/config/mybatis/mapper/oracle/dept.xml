@@ -18,4 +18,21 @@
     <select id="totalList" parameterType="searchVo" resultType="int">
     	SELECT COUNT(*) FROM DEPT
     </select>
+    
+    <!-- 부서 수정 -->
+    <update id="editDept" parameterType="deptVo">
+            UPDATE DEPT
+       		SET DEPT_NAME = #{deptName},
+            DEPT_TEL = #{deptTel}
+        	WHERE DEPT_NO = #{deptNo}
+    </update>
+    
+    <!-- 부서 등록 -->
+    <insert id="insertDept" parameterType="deptVo">
+    	<selectKey>
+    		SELECT DEPT_SEQ.NEXTVAL FROM DUAL
+    	</selectKey>
+    	INSERT INTO DEPT
+		VALUES(#{deptNo}, #{deptName},#{deptTel})
+    </insert>
 </mapper>

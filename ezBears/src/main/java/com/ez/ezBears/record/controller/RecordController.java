@@ -150,5 +150,13 @@ public class RecordController {
 		return "/record/pitcherRecordDetail";
 	}
 	
+	@RequestMapping("/gameList")
+	public String gameList() {
+		//1,4
+		logger.info("경기정보");
+		return "/record/gameList";
+	}
+	
+	
 	
 }

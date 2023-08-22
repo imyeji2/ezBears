@@ -342,6 +342,7 @@
 		margin:20px 0px 0px 0px;
 	}
 	
+	
 
 }/*팀별 공지사항 디테일 css*/
 
@@ -382,6 +383,22 @@
 	.write_file input{
 		background: #000;
 	}
+	
+	.fileText{
+		text-align: left;
+		margin-top:10px;
+		color: red;
+	}
+	
+	.list_box_file{
+		width:fit-content;
+		border: 1px solid #6C7293;
+		border-radius:5px 5px 5px 5px;
+		padding:5px 5px 5px 5px;
+		margin-bottom:20px;
+		
+	}
+			
 	
 }
 

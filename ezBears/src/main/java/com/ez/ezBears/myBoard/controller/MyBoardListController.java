@@ -62,5 +62,7 @@ public class MyBoardListController {
 		//4.
 		return "inc/myBoardNavTab";
 	}
+
 }
+
 

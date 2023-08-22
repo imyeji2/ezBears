@@ -1,58 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-<html lang="ko">
-<head>
-<meta http-equiv="content-type" content="text/html; charset=utf-8">
-<meta name="robots" content="index,follow">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, minimal-ui">
-
-<link rel="shortcut icon"
-	href="https://static.flashscore.com/res/_fs/image/4_favicons/_fs/favicon.ico?v=8">
-<link rel="apple-touch-icon" sizes="180x180"
-	href="https://static.flashscore.com/res/_fs/image/4_favicons/_fs/touch-icon-180x180.png?v=4">
-<link rel="icon" type="image/png" sizes="32x32"
-	href="https://static.flashscore.com/res/_fs/image/4_favicons/_fs/favicon-32x32.png?v=4">
-<link rel="icon" type="image/png" sizes="16x16"
-	href="https://static.flashscore.com/res/_fs/image/4_favicons/_fs/favicon-16x16.png?v=4">
-<link rel="manifest" href="/manifest/6/?v=5">
-<meta name="theme-color" content="#001e28">
-<meta name="og:title" content="두산 - 삼성 5:3">
-<meta name="og:description" content="대한민국: KBO 리그">
-<meta name="og:image"
-	content="https://static.flashscore.com/res/image/data/bJkMHaZA-4ztdyWas-UV1Mu7H3.png">
-
-<link type="text/css" rel="stylesheet"
-	href="https://static.flashscore.com/res/_fs/build/LivesportFinderLatin.06df268.css"
-	media="all">
-<link type="text/css" rel="stylesheet"
-	href="https://static.flashscore.com/res/_fs/build/variables.b647ed2.css"
-	media="all">
-<link type="text/css" rel="stylesheet"
-	href="https://static.flashscore.com/res/_fs/build/themes.17e5560.css"
-	media="all">
-<link type="text/css" rel="stylesheet"
-	href="https://static.flashscore.com/res/_fs/build/detail_section_form.86751c8.css"
-	media="all">
-<link type="text/css" rel="stylesheet"
-	href="https://static.flashscore.com/res/_fs/build/detail_sections.b6db74e.css"
-	media="all">
-<link type="text/css" rel="stylesheet"
-	href="https://static.flashscore.com/res/_fs/build/tabs_filters.0656451.css"
-	media="all">
-
-
-
-<title></title>
-
-
-<meta http-equiv="origin-trial"
-	content="A15LsJSPgMV7w0Kc5TYHyc1UNzggyebBmE3sj4JP9UJSUVJgucSFQRyN470L3hnsTddsFRSgM695VmLGwBiFngwAAACAeyJvcmlnaW4iOiJodHRwczovL2NyaXRlby5uZXQ6NDQzIiwiZmVhdHVyZSI6IlByaXZhY3lTYW5kYm94QWRzQVBJcyIsImV4cGlyeSI6MTY5NTE2Nzk5OSwiaXNTdWJkb21haW4iOnRydWUsImlzVGhpcmRQYXJ0eSI6dHJ1ZX0=">
-<meta http-equiv="origin-trial"
-	content="AwnOWg2dzaxHPelVjqOT/Y02cSxnG2FkjXO7DlX9VZF0eyD0In8IIJ9fbDFZGXvxNvn6HaF51qFHycDGLOkj1AUAAACAeyJvcmlnaW4iOiJodHRwczovL2NyaXRlby5jb206NDQzIiwiZmVhdHVyZSI6IlByaXZhY3lTYW5kYm94QWRzQVBJcyIsImV4cGlyeSI6MTY5NTE2Nzk5OSwiaXNTdWJkb21haW4iOnRydWUsImlzVGhpcmRQYXJ0eSI6dHJ1ZX0=">
-</head>
+<div class = "background" style = "background-color: white;">
 <div role="tablist" class="subFilter__group">
 	<a title="경기" aria-current="page" class="active"
 		href="#/match-summary/match-statistics/0"><button role="tab"
@@ -531,11 +479,7 @@
 		</div>
 	</div>
 </div>
-
-
-
-
-</html>
+</div>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     // 모든 탭 버튼 요소를 선택

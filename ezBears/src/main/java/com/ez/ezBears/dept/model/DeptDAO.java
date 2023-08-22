@@ -15,4 +15,10 @@ public interface DeptDAO {
 	
 	//총 부서 수
 	int totalList(SearchVO searchVo);
+	
+	//부서 수정
+	int editDept(DeptVO deptVo);
+	
+	//부서 등록
+	int insertDept(DeptVO deptVo);
 }
