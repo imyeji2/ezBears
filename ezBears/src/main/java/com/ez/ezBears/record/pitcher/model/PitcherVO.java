@@ -4,9 +4,11 @@ import lombok.Data;
 
 @Data
 public class PitcherVO {
-	private int pitcherRecordNo;
+	private int pitcherNo;
 	private int recodeNo;
 	private int playerNo;
+	private int staffNo;
+	private String regdate;
 	private double BB;
 	private int SO;
 	private int IP;
