@@ -33,7 +33,7 @@
 				#{contractStart},#{type},#{memAddress},#{memAddressDetail},#{memZipcode},#{memImage},#{memBirth})
 	</insert>
 	
-	    <select id="getMemberById" parameterType="String" resultType="memberVo">
+	<select id="getMemberById" parameterType="String" resultType="memberVo">
         SELECT * FROM MEMBER WHERE MEM_ID = #{memId}
     </select>
     

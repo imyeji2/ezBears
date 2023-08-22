@@ -106,7 +106,7 @@ public class MemberController {
 			logger.info("부서 번호 값 deptNo={}", vo.getDeptNo());
 			String deptName = deptService.findDeptName(vo.getDeptNo());
 			
-			////부서 이름으로 동적 게시판 번호 찾기
+			//부서 이름으로 동적 게시판 번호 찾기
 			logger.info("부서 이름 deptName={}", deptName);
 			int MdeptNo = myBoardService.findBoardNoByBoardName(deptName);
 			

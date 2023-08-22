@@ -40,7 +40,7 @@
 					   <p>전체 ${pagingInfo.totalRecord}명의 사원이 검색되었습니다.</p>
 					</c:if>   
 					<c:if test="${!empty param.searchKeyword}">
-					   <p>${param.searchKeyword}로 검색한 결과, ${pagingInfo.totalRecord}명의 사원이 검색되었습니다.</p>
+					   <p>'${param.searchKeyword}' 검색한 결과, ${pagingInfo.totalRecord}명의 사원이 검색되었습니다.</p>
 					</c:if>   
 				</div>
 		        <div class="table-responsive">
