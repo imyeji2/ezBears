@@ -203,7 +203,7 @@ label{
     gap: 0 15px;
 }
 
-.btn-form button {
+.btn-form button , #btnAdd {
 	outline: none;
 	background-color: #7000D8;
 	border: 0;
@@ -214,6 +214,10 @@ label{
 }
 
 .btn-form button:hover {
+	background-color: #953de7;
+}
+
+#btnAdd:hover {
 	background-color: #953de7;
 }
 
@@ -235,6 +239,28 @@ label{
     margin: 7% 0; 
 }
 
+.divPage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0 7px;
+}
+
+.curPageNum {
+    display: flex;
+    justify-content: center;
+    background-color: #7000D8 ;
+    color: #fff !important;
+    align-items: center;
+    flex-direction: column;
+    width: 30px;
+    border-radius: 5px;
+}
+
+.txtboxSearch{
+	border-radius: 5px;
+	width: 250px;
+}
 
 @media (max-width: 720px) {
 	.memImg {
@@ -259,3 +285,5 @@ input.edittext {
 #sal{
 	width:50%;
 }
+
+

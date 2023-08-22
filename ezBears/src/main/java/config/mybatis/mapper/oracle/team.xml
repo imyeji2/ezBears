@@ -3,7 +3,15 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ez.ezBears.team.model.TeamDAO">
-	<insert id="insertTeam">
+	<sql id="searchWhere">
+		<where>
+			<if test="searchKeyword!=null and searchKeyword!=''">
+				${searchCondition} like '%' || #{searchKeyword} || '%'
+			</if>
+		</where>
+	</sql>
+
+	<insert id="insertTeam" parameterType="teamVo">
 		<selectKey keyProperty="playerNo" order="BEFORE" resultType="int">
 			select team_seq.nextval from dual
 		</selectKey>
@@ -14,6 +22,44 @@
 			#{height}, #{weight}, #{playerSal}, #{contractStart}, #{contractDone}, #{playerTel}, #{playerInfo}, 
     		#{playerStatus}, #{playerAddress}, #{playerAddressDetail}, #{playerZipcode}, #{playerImage})
 	</insert>
+	
+	<select id="selectAllTeam" resultType="map" parameterType="searchVo">
+		select * 
+		from
+		(
+		    select rownum as RNUM, A.*
+		    from
+		    (
+        		select * from teamSelectView 
+				<include refid="searchWhere"></include>
+				order by player_no desc
+		    )A
+		)
+		<![CDATA[
+		where RNUM > #{firstRecordIndex}
+		and RNUM <= #{firstRecordIndex} + #{recordCountPerPage}
+		]]> 
+	</select>
+	
+	<select id="getTotalRecord" resultType="int" parameterType="searchVo">
+		select count(*) from teamSelectView
+		<include refid="searchWhere"></include>
+	</select>
+	
+	<select id="selectByPlayerNo" parameterType="int" resultType="map">
+		select * from teamSelectView where player_no = #{playerNo}
+	</select>
+	
+	<update id="updateTeam" parameterType="teamVo">
+		update team
+		set
+		dept_no=#{deptNo}, b_position_no=#{positionNo}, back_no=#{backNo},
+		player_name=#{playerName}, player_birth=#{playerBirth}, height=#{height},
+		weight=#{weight}, player_sal=#{playerSal}, contract_start=#{contractStart}, contract_done=#{contractDone},
+		player_tel=#{playerTel}, player_info=#{playerInfo}, player_status=#{playerStatus}, player_address=#{playerAddress},
+		player_address_detail=#{playerAddressDetail},player_zipcode=#{playerZipcode},player_image=#{playerImage}
+		where player_no=#{playerNo}
+	</update>
 	
 	
 </mapper>

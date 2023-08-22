@@ -3,15 +3,31 @@
 <!-- Recent Sales Start -->
 
 	<script>
-		$(function () {
-			CKEDITOR.replace('teamNoticeContent', {
+		$(function(){
+			
+			var editor = CKEDITOR.replace('teamNoticeContent', {
 				filebrowserUploadUrl : "<c:url value='/adm/fileupload'/>",
 				height : '300px',
 				resize_enabled: false
 			});
 			
+			
 			$('#write').click(function(){
+				var editorContent = editor.getData().trim();
+				
+			    if ($('#title').val().length < 1) {
+			        $('#title').focus();
+			        alert('제목을 입력하세요');
+			        return false;
+				}else if (editorContent === "") {
+		            // CKEditor 내용이 비어있을 때
+		            editor.focus();
+		            alert('내용을 입력하세요');
+		            return false;
+		        }
+			    
 				$('form[name=teamNotiFrm]').submit();
+				
 			});
 		});
 	</script>
@@ -41,7 +57,7 @@
 			       		<div class="write_content">
 			       			<div class="write_view">
 				       			 <div class="form-floating">
-								  <textarea class="form-control write_form"
+								  <textarea class="form-control write_form" 
 								  	 placeholder="내용을 입력해주세요"  
 								  	 name="teamNoticeContent" id="teamNoticeContent"></textarea>
 								</div>

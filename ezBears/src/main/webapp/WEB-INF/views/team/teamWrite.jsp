@@ -154,7 +154,7 @@
         });
 	})
 </script>
-	<form name="frmWrite" method="post" action="<c:url value='/team/teamWrite'/>">
+	<form name="frmWrite" method="post" action="<c:url value='/team/teamWrite'/>" enctype="multipart/form-data">
         <!-- Sign In Start -->
         <div class="container-fluid">
             <div class="row h-100 align-items-center justify-content-center" style="min-height: 100vh;">
@@ -165,9 +165,9 @@
                         </div>
                         <div style="width: 60%; margin: 0 auto;" >
 	                   		<div class ="imgdiv">
-								<img alt="" src="<c:url value = '/img/defaultUSER.png'/>" style="width:180px; height:200px;" id="previewImage" name="memImage">
+								<img alt="" src="<c:url value = '/img/defaultUSER.png'/>" style="width:180px; height:200px;" id="previewImage">
 								<label for="imageUpload" style="margin: 3px">사진 등록</label>
-								<input type ="file" name="teamImage" id="imageUpload"  class="infobox" style="display:none">
+								<input type ="file" name="playerImageFile" id="imageUpload"  class="infobox" style="display:none">
 							</div>
 	       	                <div class="form-floating mb-3">
 	                            <select class="form-select" id="floatingSelect"
@@ -180,25 +180,39 @@
 	                            </select>
 	                            <label for="floatingSelect">부서를 선택하세요</label>
 	                        </div>
-	                        <div class="form-floating mb-3">
-	                            <input type="text" class="form-control" id="floatingInput" placeholder="team_name" name="teamName">
-	                            <label for="floatingInput">team_이름</label>
+	       	                <div class="form-floating mb-3">
+	                            <select class="form-select" id="floatingSelect"
+	                                aria-label="Floating label select example" name="positionNo">
+	                                <option value="1">투수</option>
+	                                <option value="2">포수</option>
+	                                <option value="3">외야수</option>
+	                                <option value="4">내야수</option>
+	                            </select>
+	                            <label for="floatingSelect">포지션을 선택하세요</label>
 	                        </div>
 	                        <div class="form-floating mb-3">
-	                            <input type="text" class="form-control" id="floatingInput" placeholder="team_position" name="teamPosition">
-	                            <label for="floatingInput">team_포지션</label>
+	                            <input type="text" class="form-control" id="floatingInput" placeholder="team_name" name="playerName">
+	                            <label for="floatingInput">선수_이름</label>
 	                        </div>
 	                        <div class="form-floating mb-3">
-	                            <input type="text" class="form-control" id="floatingInput" placeholder="team_back_no" name="teamBackNo">
-	                            <label for="floatingInput">team_등번호</label>
+	                            <input type="text" class="form-control" id="floatingInput" placeholder="team_back_no" name="backNo">
+	                            <label for="floatingInput">선수_등번호</label>
 	                        </div>
 	                        <div class="form-floating mb-3">
-	                            <input type="text" class="form-control" id="teamBirth" placeholder="team_birth" max="9999-12-31" name="teamBirth" maxlength="10">
-	                            <label for="floatingInput">team_생일</label>
+	                            <input type="text" class="form-control" id="teamBirth" placeholder="team_birth" max="9999-12-31" name="playerBirth" maxlength="10">
+	                            <label for="floatingInput">선수_생일</label>
 	                        </div>
 	                        <div class="form-floating mb-3">
-	                            <input type="text" class="form-control" id="floatingInput" placeholder="team_sal" name="teamSal">
-	                            <label for="floatingInput">team_연봉</label>
+	                            <input type="text" class="form-control" id="teamheight" placeholder="team_height" name="height">
+	                            <label for="floatingInput">선수_키</label>
+	                        </div>
+	                        <div class="form-floating mb-3">
+	                            <input type="text" class="form-control" id="teamweight" placeholder="team_weight" name="weight">
+	                            <label for="floatingInput">선수_몸무게</label>
+	                        </div>
+	                        <div class="form-floating mb-3">
+	                            <input type="text" class="form-control" id="floatingInput" placeholder="team_sal" name="playerSal">
+	                            <label for="floatingInput">선수_연봉</label>
 	                        </div>
 	                        <div class="form-floating mb-3">
 	                            <input type="text" class="form-control" id="contractStart" placeholder="contract_start" max="9999-12-31" name="contractStart" maxlength="10">
@@ -209,12 +223,16 @@
 	                            <label for="floatingInput">계약 종료일</label>
 	                        </div>
 	                        <div class="form-floating mb-3">
-	                            <input type="text" class="form-control" id="floatingInput" placeholder="team_info" name="teamInfo">
-	                            <label for="floatingInput">team_정보</label>
+	                            <input type="text" class="form-control" id="floatingInput" placeholder="team_info" name="playerInfo">
+	                            <label for="floatingInput">선수_정보</label>
+	                        </div>
+	                        <div class="form-floating mb-3">
+	                            <input type="text" class="form-control" id="floatingInput" placeholder="team_status" name="playerStatus">
+	                            <label for="floatingInput">선수_상태</label>
 	                        </div>
 		                    <div class="firstdiv">
 						    	<div class="form-floating address">
-						    		<input type="text" class="form-control" id="contract" placeholder="team_zipcode" name="teamZipcode">
+						    		<input type="text" class="form-control" id="contract" placeholder="team_zipcode" name="playerZipcode">
 							        <label for="zipcode">우편번호</label>
 						    	</div>
 						    	<div class="dup">
@@ -224,25 +242,25 @@
 					    	</div>	
 					    	<br>
 	                        <div class="form-floating mb-3">
-	                            <input type="text" class="form-control" id="team_addr" placeholder="team_addr" name="teamAddr">
-	                            <label for="floatingInput">team_주소</label>
+	                            <input type="text" class="form-control" id="team_addr" placeholder="team_addr" name="playerAddress">
+	                            <label for="floatingInput">선수_주소</label>
 	                        </div>
 	                        <div class="form-floating mb-3">
-	                            <input type="text" class="form-control" id="team_addr_detail" placeholder="team_addr_detail" name="teamAddrDetail">
-	                            <label for="floatingInput">team_주소상세</label>
+	                            <input type="text" class="form-control" id="team_addr_detail" placeholder="team_addr_detail" name="playerAddressDetail">
+	                            <label for="floatingInput">선수_주소상세</label>
 	                        </div>
 	                        <div class="form-floating mb-3">
-	                            <input type="text" class="form-control" id="teamTel" placeholder="team_tel" maxlength="13" name="teamTel">
-	                            <label for="floatingInput">team_전화번호</label>
+	                            <input type="text" class="form-control" id="teamTel" placeholder="team_tel" maxlength="13" name="playerTel">
+	                            <label for="floatingInput">선수_전화번호</label>
 	                        </div>
-	                        <div class="form-floating mb-3">
+<!-- 	                        <div class="form-floating mb-3">
 	                            <input type="text" class="form-control" id="floatingInput" placeholder="team_id" name="teamId">
 	                            <label for="floatingInput">team_id</label>
 	                        </div>
 	                        <div class="form-floating mb-4">
 	                            <input type="password" class="form-control" id="floatingPassword" placeholder="team_pwd" name="teamPwd">
 	                            <label for="floatingPassword">team_pwd</label>
-	                        </div>
+	                        </div> -->
 	                        <!-- <div class="d-flex align-items-center justify-content-between mb-4">
 	                            <div class="form-check">
 	                                <input type="checkbox" class="form-check-input" id="exampleCheck1">

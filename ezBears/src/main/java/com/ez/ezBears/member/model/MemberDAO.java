@@ -34,6 +34,9 @@ public interface MemberDAO {
     //경영지원팀이 멤버 정보 수정
     int updateMemberFromAdmin(MemberVO memberVo);
     
+    //경영지원팀에서 멤버 검색
+    List<MemberVO> searchMem(String keyword);
+    
     Map<String, Object> selectMemberView(String memId);
     
 }

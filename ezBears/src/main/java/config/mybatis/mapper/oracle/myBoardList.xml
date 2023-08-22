@@ -28,8 +28,8 @@
 	
 	<select id="selectByBoardName" parameterType="int" resultType="String">
 		select m_board_name
-		from myBoardListView
-		where my_board_no=#{myBoardNo}
+		from m_board
+		where m_board_no=#{mBoardNo}
 	</select>
 	
 <!-- 예지 -->

@@ -35,12 +35,12 @@
 								<img alt="defaultImage" src="<c:url value='/img/defaultUSER.png'/>" style="width:180px; height:200px;">
 							</c:if>
 						</div>
-						<div>
+						<div >
 							<span class="sp1">스태프 번호</span> <span>${staffVo.staffNo }</span>
 						</div>
-						<div>
+<%-- 						<div>
 							<span class="sp1">부서번호</span> <span>${staffVo.deptNo }</span>
-						</div>
+						</div> --%>
 						<div>
 							<span class="sp1">스태프 명</span> <span>${staffVo.staffName }</span>
 						</div>
