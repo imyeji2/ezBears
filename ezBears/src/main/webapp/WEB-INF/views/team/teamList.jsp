@@ -47,14 +47,14 @@
 		            		</tr>
 		            	</c:if>
 		            	<c:if test="${!empty list }">
-			            	<c:forEach var="vo" items="${list }">
+			            	<c:forEach var="map" items="${list }">
 				                <tr>
-				                    <td>${vo.playerNo }</td>
-				                    <td><a href="<c:url value='/team/teamDetail?playerNo=${vo.playerNo }'/>" style="color: #fff">${vo.playerName }</a></td>
-				                    <td>${vo.positionNo }</td>
-				                    <td>${vo.backNo }</td>
-				                    <td>${vo.playerBirth.substring(0, 10) }</td>
-				                    <td>${vo.playerSal}</td>
+				                    <td>${map['PLAYER_NO'] }</td>
+				                    <td><a href="<c:url value='/team/teamDetail?playerNo=${map["PLAYER_NO"]}' />" style="color: #fff">${map['PLAYER_NAME'] }</a></td>
+				                    <td>${map['B_POSITION_NAME'] }</td>
+				                    <td>${map['BACK_NO'] }</td>
+				                    <td><fmt:formatDate value="${map['PLAYER_BIRTH'] }" pattern="yyyy-MM-dd"/> </td>
+				                    <td>${map['PLAYER_SAL']}</td>
 				                </tr>
 			            	</c:forEach>
 		            	</c:if>
@@ -102,8 +102,8 @@
 				            		selected="selected"
 				            	</c:if>            	
 				            >이름</option>
-				            <option value="STAFF_POSITION"
-				            	<c:if test="${param.searchCondition=='STAFF_POSITION'}">
+				            <option value="B_POSITION_NAME"
+				            	<c:if test="${param.searchCondition=='B_POSITION_NAME'}">
 				            		selected="selected"
 				            	</c:if> 
 				            >포지션</option>

@@ -32,10 +32,19 @@ public class TeamNoticeServiceImpl implements TeamNoticeService {
 		return teamNoticeDao.selectTotalCount(searchVo);
 	}
 
-	////팀별 공지사항 디테일
+	//팀별 공지사항 디테일
 	@Override
-	public Map<String, Object> selectDetail(TeamNoticeVO teamNoticeVo) {
-		return teamNoticeDao.selectDetail(teamNoticeVo);
+	public Map<String, Object> selectDetail(int teamNoticeNo) {
+		return teamNoticeDao.selectDetail(teamNoticeNo);
 	}
+	
+	
+	//팀별 공지사항 조회수 업데이트 
+	@Override
+	public int updateViewCount(int teamNoticeNo) {
+		return teamNoticeDao.updateViewCount(teamNoticeNo);
+	}
+	
+	
 
 }

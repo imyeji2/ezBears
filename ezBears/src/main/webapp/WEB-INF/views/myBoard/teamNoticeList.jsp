@@ -100,8 +100,9 @@
 								       		</div>
 								       		<c:if test="${!empty map['FILENAME']}">
 								       			<div class="list_box_file">
-								       				<a href="#"> ${map['ORIGINNAME']}&nbsp;
-								       				(<fmt:formatNumber value="${map['FSIZE'] /1024.0}" type="number" pattern="#.##"/> KB)
+								       				<a href="<c:url value='/myBoard/downloadFile?teamNoticeNo=${map["TEAM_NOTICE_NO"]}&fileName=${map["FILENAME"]}'/>"> 
+									       				${map['ORIGINNAME']}&nbsp;
+									       				(<fmt:formatNumber value="${map['FSIZE'] /1024.0}" type="number" pattern="#.##"/> KB)
 								       				</a>
 								       			</div>
 								       		</c:if>
@@ -109,7 +110,7 @@
 							       		</div>
 							       		<div class="notice_reply">
 							       			<div>
-							       				<a href="<c:url value='/myBoard/teamNoticeDetail?myBoardNo=${map["MY_BOARD_NO"]}&teamNoticeNo=${map["TEAM_NOTICE_NO"]}'/>">댓글 달기</a>
+							       				<a href="<c:url value='/myBoard/countUpdate?mBoardNo=${mBoardNo}&teamNoticeNo=${map["TEAM_NOTICE_NO"]}'/>">댓글 달기</a>
 							       			</div>
 							       		</div>
 							        </div><!-- notice_list_box -->		

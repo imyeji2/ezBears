@@ -22,15 +22,15 @@
 					<article class="simpleForm">
 						<form name="frmOut" method="post" action="<c:url value='/member/memberOut'/>" >
 							<fieldset>	
-								<legend>선수 번호, 선수 이름</legend>
+								<legend>선수 번호
+								<br>
+								선수 이름</legend>
 								<br><br>
 								<p class="p">선수 삭제 하시겠습니까?</p>
-								<br>
 								<div> 	
-									<label for="pwd"  class="p">비밀번호</label>
-									<input type="password" name="pwd" id="pwd">
+									<input type="hidden" name="playerNo" value="">
 								</div>
-								<br><br>
+								<br>
 								<div class="align_center">
 									<input type="submit" id="submit" value="삭제">
 									<input type="reset" value="취소">
