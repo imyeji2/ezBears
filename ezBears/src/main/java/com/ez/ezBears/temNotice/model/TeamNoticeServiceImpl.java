@@ -46,5 +46,12 @@ public class TeamNoticeServiceImpl implements TeamNoticeService {
 	}
 	
 	
+	//팀별 공지사항 업데이트
+	@Override
+	public int updateTeamNotice(TeamNoticeVO teamNoticeVo) {
+		return teamNoticeDao.updateTeamNotice(teamNoticeVo);
+	}
+	
+	
 
 }

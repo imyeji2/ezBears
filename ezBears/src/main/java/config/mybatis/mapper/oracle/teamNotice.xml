@@ -54,4 +54,15 @@
         set views = views+1
         where team_Notice_no=#{teamNoticeNo}
 	</update>
+	
+	<update id="updateTeamNotice" parameterType="teamNoticeVo">
+		update team_notice
+		set team_notice_title = #{teamNoticeTitle},
+		team_notice_content=#{teamNoticeContent}
+		<if test="fileName != null and fileName !=''">
+			,fsize=#{fsize},fileName=#{fileName},
+			originname=#{originname}
+		</if>
+		where team_Notice_No =#{teamNoticeNo}
+	</update>
 </mapper>
