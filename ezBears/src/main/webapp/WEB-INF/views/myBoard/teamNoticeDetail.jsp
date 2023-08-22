@@ -1,6 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="../inc/top.jsp"%>	
 <!-- Recent Sales Start -->
+<script>
+	$(function(){
+		$('#del').click(function(){
+			event.preventDefault();
+			 if (confirm("정말 삭제하시겠습니까?")){
+			 	location.href="<c:url value='/myBoard/teamNoticeDel?mBoardNo=${map["M_BOARD_NO"]}&teamNoticeNo=${map["TEAM_NOTICE_NO"]}&oldFileName=${map["FILENAME"]}'/>"
+			 }
+		});
+	});
+</script>
 <div class="container-fluid pt-4 px-4" id="board_style">
 	<div class="bg-secondary text-center rounded p-4">
     	<div class="bg-secondary rounded h-100 p-4">
@@ -67,7 +77,9 @@
 		       						</a>
 		       					</span>
 		       					
-			        			<span class="user_dept"><a href="#">삭제</a></span>
+			        			<span class="user_dept">
+			        				<a href="#" id="del">삭제</a>
+			        			</span>
 		        			</c:if>
 		       			</div>
 		       		</div><!-- detail_content -->

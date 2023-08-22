@@ -51,6 +51,19 @@ public class TeamNoticeServiceImpl implements TeamNoticeService {
 	public int updateTeamNotice(TeamNoticeVO teamNoticeVo) {
 		return teamNoticeDao.updateTeamNotice(teamNoticeVo);
 	}
+
+	
+	//팀별 공지사항 삭제
+	@Override
+	public int deleteTeamNotice(Map<String, String> map) {
+		return teamNoticeDao.deleteTeamNotice(map);
+	}
+
+	//팀별 공지사항 번호로 조회
+	@Override
+	public TeamNoticeVO selectTeamNoticeByNo(int teamNoticeNo) {
+		return teamNoticeDao.selectTeamNoticeByNo(teamNoticeNo);
+	}
 	
 	
 

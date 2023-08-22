@@ -15,7 +15,7 @@ public class TeamNoticeVO {
 	private long fsize;
 	private String fileName;
 	private String originname;
-	private int gropno;
+	private int groupno;
 	private int sortno;
 	private int step;
 	private String status;

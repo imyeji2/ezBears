@@ -2,6 +2,7 @@ package com.ez.ezBears.temNotice.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.ProcessHandle.Info;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +29,6 @@ import com.ez.ezBears.myBoard.model.MyBoardListVO;
 import com.ez.ezBears.temNotice.model.TeamNoticeService;
 import com.ez.ezBears.temNotice.model.TeamNoticeVO;
 
-import jakarta.mail.Session;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -49,7 +49,7 @@ public class TeamNoticeController {
 	public String teamNotice(@RequestParam (defaultValue = "0") int mBoardNo, 
 			MyBoardSearchVo searchVo,Model  model) {
 		//1.
-		logger.info("팀 공지사항 리스트 페이지, 파라미터 mBoardNo={}",mBoardNo);
+		logger.info("팀 공지사항 리스트 페이지, 파라미터 mBoardNo={},searchVo={}",mBoardNo,searchVo);
 		
 		if(mBoardNo==0) {
 			model.addAttribute("msg","잘못된 접근입니다.");
@@ -60,19 +60,26 @@ public class TeamNoticeController {
 		
 		//2
 		//페이징 처리
+		//[1]PaginationInfo 객체 생성
 		PaginationInfo pagingInfo = new PaginationInfo();
 		pagingInfo.setBlockSize(ConstUtil.BLOCK_SIZE);
 		pagingInfo.setCurrentPage(searchVo.getCurrentPage());
 		pagingInfo.setRecordCountPerPage(ConstUtil.RECORD_COUNT);
 		
-		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
+		
+		//2)searchVo에 값 세팅 -> xml에 전달할 값 
 		searchVo.setRecordCountPerPage(ConstUtil.RECORD_COUNT);
-		searchVo.setMBoardNo(mBoardNo);
+		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
+		
+		//searchVo.setMBoardNo(mBoardNo);
 		
 		List<Map<String, Object>> list = teamNoticeService.selectTeamNoticeList(searchVo);
 		logger.info("팀 공지사항 리스트 조회 결과 list.size={}",list.size());
+		logger.info("pagingInfo={}",pagingInfo.getTotalRecord());
 		
 		int totalCount = teamNoticeService.selectTotalCount(searchVo);
+		pagingInfo.setTotalRecord(totalCount);
+		logger.info("totalCount={}",totalCount);
 		
 		//3
 		model.addAttribute("list",list);
@@ -305,6 +312,50 @@ public class TeamNoticeController {
 		//3
 		model.addAttribute("msg",msg);
 		model.addAttribute("url",url);
+		//4
+		return "common/message";
+	}
+	
+	@RequestMapping("/teamNoticeDel")
+	public String teamNoticeDel(@RequestParam (defaultValue = "0") int mBoardNo,
+			@RequestParam (defaultValue = "0") int teamNoticeNo, 
+			@RequestParam String oldFileName,HttpServletRequest request,  Model model) {
+		//1
+		logger.info("삭제처리 파라미터 mBoardNo={}",mBoardNo);
+
+		//2
+		TeamNoticeVO teamNoticeVo = teamNoticeService.selectTeamNoticeByNo(teamNoticeNo);
+		logger.info("hh teamNoticeVo={}",teamNoticeVo);
+		
+		Map<String, String> map = new HashMap<>();
+		//key 이름은 xml의 key 이름과 동일해야함, 순서는 상관 없음
+		map.put("teamNoticeNo", teamNoticeNo+"");
+		map.put("step", teamNoticeVo.getStep()+"");
+		map.put("groupNo", teamNoticeVo.getGroupno()+"");
+		
+		logger.info("삭제 처리 파라미터, map={}",map);
+		int cnt = teamNoticeService.deleteTeamNotice(map);
+		logger.info("삭제 처리 결과 cnt={}",cnt);
+		
+
+		String msg="삭제가 완료되었습니다.";
+		String url="/myBoard/teamNotice?mBoardNo="+mBoardNo;
+
+
+		if(oldFileName!=null && !oldFileName.isEmpty()) { //
+			String upPath=fileUploadUtil.getUploadPath(request, ConstUtil.UPLOAD_TEAMNOTICE_FLAG);
+			File file = new File(upPath,oldFileName);
+
+			if(file.exists()) {
+				boolean bool=file.delete();
+				logger.info("파일 삭제 여부 : {}", bool);
+			}
+		}
+			
+		//3
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+
 		//4
 		return "common/message";
 	}

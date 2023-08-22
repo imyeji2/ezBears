@@ -116,6 +116,11 @@
 		margin-bottom: 20px;
 	}
 	
+	.content_txt{
+		max-height:90px;
+		overflow: hidden;
+	}	
+	
 	.list_box_file{
 		width:fit-content;
 		border: 1px solid #6C7293;

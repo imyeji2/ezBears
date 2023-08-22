@@ -5,7 +5,7 @@
 
    <sql id="searchWhere">
       <where>
-     	 m_board_no=#{mBoardNo} and sortNo is null  and status='Y'
+     	 m_board_no=#{mBoardNo} and sortNo is null and status='Y'
          <if test="searchKeyword!=null and searchKeyword!=''">
              and  ${searchCondition} like '%' || #{searchKeyword} || '%'
          </if>   
@@ -65,4 +65,21 @@
 		</if>
 		where team_Notice_No =#{teamNoticeNo}
 	</update>
+
+	<select id="selectTeamNoticeByNo" parameterType="int" resultType="teamNoticeVo">
+		select * from team_Notice
+		where team_notice_no=#{teamNoticeNo}
+	</select>
+	
+	<parameterMap type="map" id="deleteTeamNoticeProc">
+		<!-- 아래 ?의 순서에 맞춰서 만들어야함 -->
+		<parameter property="teamNoticeN" javaType="string" jdbcType="VARCHAR" mode="IN"/>
+		<parameter property="step" javaType="string" jdbcType="VARCHAR" mode="IN"/>
+		<parameter property="groupNo" javaType="string" jdbcType="VARCHAR" mode="IN"/>
+	</parameterMap>
+	
+   <delete id="deleteTeamNotice" parameterMap="deleteTeamNoticeProc">
+   		call DELETETEAMNOTICE(?,?,?)
+   </delete>
+   	
 </mapper>

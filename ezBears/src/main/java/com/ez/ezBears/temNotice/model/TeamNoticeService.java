@@ -23,4 +23,10 @@ public interface TeamNoticeService {
 	
 	//팀별 공지사항 업데이트
 	int updateTeamNotice(TeamNoticeVO teamNoticeVo);
+	
+	//팀별 공지사항 삭제
+	int deleteTeamNotice(Map<String, String> map);
+	
+	//팀별 공지사항 번호로 조회
+	TeamNoticeVO selectTeamNoticeByNo(int teamNoticeNo);
 }
