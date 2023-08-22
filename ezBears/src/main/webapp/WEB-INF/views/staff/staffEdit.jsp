@@ -180,12 +180,17 @@
 	                                aria-label="Floating label select example" name="deptNo">
 									<!-- 반복문 -->
 									<c:forEach var="deptVo" items="${deptList}">
-										<option value ="${deptVo.deptNo}">${deptVo.deptName}</option>
+										<option value ="${deptVo.deptNo}"
+											<c:if test="${staffVo.deptNo == deptVo.deptNo }">
+												selected="selected"
+											</c:if>
+										>${deptVo.deptName}</option>
 									</c:forEach>
 									<!-- 반복문 -->
 	                            </select>
 	                            <label for="floatingSelect">부서를 선택하세요</label>
 	                        </div>
+	                        <input type="hidden" name="staffNo" value="${staffVo.staffNo }">
 	                        <div class="form-floating mb-3">
 	                            <input type="text" class="form-control" id="floatingInput" placeholder="staff_name" name="staffName" value="${staffVo.staffName }">
 	                            <label for="floatingInput">staff_이름</label>
@@ -199,7 +204,7 @@
 	                            <label for="floatingInput">staff_등번호</label>
 	                        </div>
 	                        <div class="form-floating mb-3">
-	                            <input type="text" class="form-control" id="staffBirth" placeholder="staff_birth" max="9999-12-31" name="staffBirth" maxlength="10" value="${staffVo.staffBirth }">
+	                            <input type="text" class="form-control" id="staffBirth" placeholder="staff_birth" max="9999-12-31" name="staffBirth" maxlength="10" value="${staffVo.staffBirth.substring(0, 10) }">
 	                            <label for="floatingInput">staff_생일</label>
 	                        </div>
 	                        <div class="form-floating mb-3">
@@ -211,7 +216,7 @@
 	                            <label for="floatingInput">계약 시작일</label>
 	                        </div> --%>
 	                        <div class="form-floating mb-3">
-	                            <input type="text" class="form-control" id="contractDone" placeholder="contract_done" max="9999-12-31" name="contractDone" maxlength="10" value="${staffVo.contractDone }">
+	                            <input type="text" class="form-control" id="contractDone" placeholder="contract_done" max="9999-12-31" name="contractDone" maxlength="10" value="${staffVo.contractDone.substring(0, 10) }">
 	                            <label for="floatingInput">계약 종료일</label>
 	                        </div>
 	                        <div class="form-floating mb-3">
@@ -248,14 +253,6 @@
 	                        <div class="form-floating mb-4">
 	                            <input type="password" class="form-control" id="floatingPassword" placeholder="staff_pwd" name="staffPwd" value="${staffVo.staffPwd }">
 	                            <label for="floatingPassword">staff_pwd</label>
-	                        </div>
-	                        <div class="form-floating mb-3">
-	                            <select class="form-select" id="floatingSelect"
-	                                aria-label="Floating label select example" name="staffStatus">
-									<option value ="Y">Y</option>
-									<option value ="N">N</option>
-	                            </select>
-	                            <label for="floatingSelect">staff_status</label>
 	                        </div>
 	                        <!-- <div class="d-flex align-items-center justify-content-between mb-4">
 	                            <div class="form-check">

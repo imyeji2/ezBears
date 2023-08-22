@@ -90,6 +90,13 @@ public class StaffController {
 			Model model) {
 		logger.info("스태프 수정 화면 이동, 파라미터 staffNo={}", staffNo);
 		
+		if(staffNo == 0) {
+			model.addAttribute("msg", "잘못된 URL입니다");
+			model.addAttribute("url", "/staff/staffList");
+			
+			return "common/message";
+		}
+		
 		StaffVO staffVo = staffService.selectByStaffNo(staffNo);
 		logger.info("스태프 수정 화면 이동 결과, staffVo={}", staffVo);
 		List<DeptVO> deptList = deptService.selectDeptList();
@@ -103,20 +110,49 @@ public class StaffController {
 	}
 	
 	@PostMapping("/staffEdit")
-	public String edit_post() {
+	public String edit_post(@ModelAttribute StaffVO staffVo, HttpServletRequest request,
+			Model model) {
 		//1
+		logger.info("스태프 수정 처리, 파라미터 staffVo={}", staffVo);
 		
 		//2
+		//파일 업로드 처리
+		String fileName="", originalFileName="";
+		long fileSize=0;
+		try {
+			List<Map<String, Object>> list
+				= fileUploadUtil.fileupload(request, ConstUtil.UPLOAD_STAFFIMAGE_FLAG);
+			
+			for(Map<String, Object> map : list) {
+				fileName=(String)map.get("fileName");
+				originalFileName=(String)map.get("originalFileName");
+				fileSize=(long)map.get("fileSize");
+			}//for
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+			
+		staffVo.setStaffImage(fileName);
+		
+		//db
+		int cnt = staffService.updateStaff(staffVo);
+		logger.info("스태프 수정 처리 결과, cnt={}", cnt);
 		
 		//3
-		
 		//4
-		return "";
+		return "redirect:/staff/staffDetail?staffNo="+staffVo.getStaffNo();
 	}
 	
 	@GetMapping("/staffDelete")
-	public String delete_get() {
-		logger.info("스태프 삭제 화면 이동");
+	public String delete_get(@RequestParam(defaultValue = "0") int staffNo, Model model) {
+		logger.info("스태프 삭제 화면 이동, 파라미터 staffNo={}", staffNo);
+		
+		StaffVO staffVo = staffService.selectByStaffNo(staffNo);
+		logger.info("스태프 삭제 화면 처리 결과, 파라미터 staffVo={}", staffVo);
+		
+		model.addAttribute("staffVo", staffVo);
 		
 		return "/staff/staffDelete";
 		

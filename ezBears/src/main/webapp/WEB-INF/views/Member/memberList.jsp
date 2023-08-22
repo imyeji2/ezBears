@@ -25,55 +25,58 @@
 	           </ol>
 	         </nav>   
 			<form class="btn-form" name="frm1" method="get" action="<c:url value ='/Member/write'/>">
-				<input type="text" class ="txtboxSearch" id="txtboxSearch" value="검색어를 입력해주세요">
-				<button class="btnSearch" id="btnSearch" value="검색">검색</button>
-				<button type="submit" class="btnAdd" id="btnAdd" value="등록">등록</button>
-				<button class="btnDelete" type="button" id="btnDelete">삭제</button>
-			</form>
-			<br>
-	        <div class="table-responsive">
-	            <table class="table">
-	                <thead>
-	                    <tr>
-	                        <th scope="col" style="text-align: center">-</th>
-	                        <th scope="col">부서</th>
-	                        <th scope="col">직급</th>
-	                        <th scope="col">이름</th>
-	                        <th scope="col">아이디</th>
-	                        <th scope="col">핸드폰번호</th>
-	                        <th scope="col">고용형태</th>
-	                        <th scope="col">입사일</th>
-	                        <th scope="col">퇴사일</th>
-	                    </tr>
-	                </thead>
-	                <tbody>
-	                <c:if test="${empty list}">
-	                	<tr>
-	                		<td colspan="12">사원이 존재하지 않습니다.</td>
-	                	</tr>
-	                </c:if>
-	                <c:if test="${!empty list}">
-	                	<c:forEach var="memberVo" items="${list}"> 
-	                		<tr class="memList">
-	                			<td><input type="checkbox"></td>
-	                			<td>${memberVo.deptName}</td>
-	                			<td>${memberVo.positionName}</td>
-	                			<td>
-	                				<a href="<c:url value='/Member/detail?memNo=${memberVo.memNo}'/>">${memberVo.memName}</a>
-	                			</td>
-	                			<td>
-	                				<a href="<c:url value='/Member/detail?memNo=${memberVo.memNo}'/>">${memberVo.memId}</a>
-	                			</td>
-	                			<td>${memberVo.memTel}</td>
-	                			<td>${memberVo.type}</td>
-	                			<td>${memberVo.contractStart.substring(0, 10)}</td>
-	                			<td>${memberVo.contractDone.substring(0, 10)}</td>
-	                		</tr>
-	                	</c:forEach>
-	                </c:if>
-	                </tbody>
-	            </table>
-	        </div>
+				<div class="btns">
+					<input type="text" class ="txtboxSearch" id="txtboxSearch" value="검색어를 입력해주세요">
+					<button class="btnSearch" id="btnSearch" value="검색">검색</button>
+					<button type="submit" class="btnAdd" id="btnAdd" value="등록">등록</button>
+					<button class="btnDelete" type="button" id="btnDelete">삭제</button>
+				</div>
+			
+				<br>
+		        <div class="table-responsive">
+		            <table class="table">
+		                <thead>
+		                    <tr>
+		                        <th scope="col" style="text-align: center">-</th>
+		                        <th scope="col">부서</th>
+		                        <th scope="col">직급</th>
+		                        <th scope="col">이름</th>
+		                        <th scope="col">아이디</th>
+		                        <th scope="col">핸드폰번호</th>
+		                        <th scope="col">고용형태</th>
+		                        <th scope="col">입사일</th>
+		                        <th scope="col">퇴사일</th>
+		                    </tr>
+		                </thead>
+		                <tbody>
+		                <c:if test="${empty list}">
+		                	<tr>
+		                		<td colspan="12">사원이 존재하지 않습니다.</td>
+		                	</tr>
+		                </c:if>
+		                <c:if test="${!empty list}">
+		                	<c:forEach var="memberVo" items="${list}"> 
+		                		<tr class="memList">
+		                			<td><input type="checkbox"></td>
+		                			<td>${memberVo.deptName}</td>
+		                			<td>${memberVo.positionName}</td>
+		                			<td>
+		                				<a href="<c:url value='/Member/detail?memNo=${memberVo.memNo}'/>">${memberVo.memName}</a>
+		                			</td>
+		                			<td>
+		                				<a href="<c:url value='/Member/detail?memNo=${memberVo.memNo}'/>">${memberVo.memId}</a>
+		                			</td>
+		                			<td>${memberVo.memTel}</td>
+		                			<td>${memberVo.type}</td>
+		                			<td>${memberVo.contractStart.substring(0, 10)}</td>
+		                			<td>${memberVo.contractDone.substring(0, 10)}</td>
+		                		</tr>
+		                	</c:forEach>
+		                </c:if>
+		                </tbody>
+		            </table>
+		        </div>
+	        </form>
 	        <div class="divPage" style="text-align: center" >		
 				<!-- 페이지 번호 추가 -->		
 				<c:if test="${pagingInfo.firstPage>1 }">

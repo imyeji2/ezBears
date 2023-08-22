@@ -20,7 +20,7 @@
         	<div class="deleteDiv">
 	            <br>
 					<article class="simpleForm">
-						<form name="frmOut" method="post" action="<c:url value='/member/memberOut'/>" >
+						<form name="frmOut" method="post" action="<c:url value='/staff/staffDelete'/>" >
 							<fieldset>	
 								<legend>사번, 사원이름</legend>
 								<br><br>
