@@ -37,12 +37,18 @@
 			        		<div class="detail_left">
 			        			<span class="user_name"><a href="#">${map['MEM_NAME']}</a></span>
 			        			<span class="user_dept">/ 💼${map['DEPT_NAME']}</span>
+			        			<span class="user_dept">[조회수 : ${map['VIEWS']}]</span>
 			        		</div><!-- detail_left -->
 		        		</div><!-- detail_left -->
-		        				       		        		       				        	
-		        		<div class="detail_right">
-		        			첨부파일 : <a href="#">${map['ORIGINNAME']}</a>
-		        		</div><!-- detail_right -->
+		        				       		      
+		        		<c:if test="${!empty map['ORIGINNAME']}">
+			        		<div class="detail_right">
+			        			첨부파일 :
+			        			<a href="<c:url value='/myBoard/downloadFile?teamNoticeNo=${map["TEAM_NOTICE_NO"]}&fileName=${map["FILENAME"]}'/>">
+			        				${map['ORIGINNAME']}
+			        			</a>
+			        		</div><!-- detail_right -->
+		        		</c:if> 
 		       		</div><!-- user_info -->
 		       				 
 		       		<div class="detail_content">
@@ -54,15 +60,16 @@
 		       				<span class="user_dept">
 		       					<a href="<c:url value='/myBoard/teamNotice?mBoardNo=${map["M_BOARD_NO"]}'/>">목록</a>
 		       				</span>
-	       					<span class="user_dept"><a href="#">수정</a></span>
-		        			<span class="user_dept"><a href="#">삭제</a></span>
+		       				<c:if test="${userid==map['MEM_ID']}">
+		       					<span class="user_dept"><a href="#">수정</a></span>
+			        			<span class="user_dept"><a href="#">삭제</a></span>
+		        			</c:if>
 		       			</div>
 		       		</div><!-- detail_content -->
 	       		</div><!-- detailWrap -->	 
 	       		
 	       		<div class="detail_reply_wrap">
 	       			<div class="reply_tit">댓글(100)</div>
-	       			
 	       			<div class="reply_list">
 	       				<div class="reply_content"> 
 	       					<div class="reply_user">    					

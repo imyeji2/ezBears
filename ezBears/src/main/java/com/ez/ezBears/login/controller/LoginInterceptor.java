@@ -46,13 +46,13 @@ public class LoginInterceptor implements HandlerInterceptor{
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
-		logger.info("postHandle() 호출!");
+		//logger.info("postHandle() 호출!");
 	}
 
 	@Override
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
 			throws Exception {
-		logger.info("afterCompletion() 호출!");
+		//logger.info("afterCompletion() 호출!");
 	}
 	
 }

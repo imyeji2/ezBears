@@ -19,8 +19,9 @@ public interface TeamNoticeDAO {
 	int selectTotalCount(MyBoardSearchVo searchVo);
 	
 	//팀별 공지사항 디테일
-	Map<String, Object> selectDetail(TeamNoticeVO teamNoticeVo);
+	Map<String, Object> selectDetail(int teamNoticeNo);
 	
-	
+	//팀별 공지사항 조회수 업데이트 
+	int updateViewCount(int teamNoticeNo);
 
 }
