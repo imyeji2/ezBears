@@ -7,6 +7,8 @@ public class HitterVO {
 	private int hitterNo;
 	private int recodeNo;
 	private int playerNo;
+	private int staffNo;
+	private String regdate;
 	private int AB;
 	private int RS;
 	private int H;

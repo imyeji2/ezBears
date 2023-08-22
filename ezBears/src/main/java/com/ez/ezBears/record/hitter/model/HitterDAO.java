@@ -6,5 +6,5 @@ import org.apache.ibatis.annotations.Mapper;
 public interface HitterDAO {
 	int insertHitter(HitterVO hitterVo);
 	HitterVO selectByPlayerNo(int playerNo);
-
+	int editHitter(HitterVO hitterVo);
 }
