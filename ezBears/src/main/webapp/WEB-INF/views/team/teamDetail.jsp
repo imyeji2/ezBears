@@ -25,65 +25,71 @@
       <div class="row vh-100 bg-secondary rounded align-items-center justify-content-center mx-0">
           <div class="col-md-6 text-center">
           
-				<h2 style="color:  #6f42c1;">선수단 상세보기</h2>
+				<h2>선수 상세정보</h2>
 					<div class="divForm">
 						<div class="firstDiv">
-							<span class="sp1">선수 번호</span> <span>선수 번호</span>
+							<c:if test="${!empty map['PLAYER_IMAGE'] }">
+								<img alt="teamImage" src="<c:url value='/img/teamImages/${map["PLAYER_IMAGE"] }'/>" style="width:180px; height:200px;"> </span>
+							</c:if>
+							<c:if test="${empty map['PLAYER_IMAGE'] }">
+								<img alt="defaultImage" src="<c:url value='/img/defaultUSER.png'/>" style="width:180px; height:200px;">
+							</c:if>
 						</div>
 						<div>
-							<span class="sp1">부지션 번호</span> <span>포지션 번호</span>
+							<span class="sp1">선수 번호</span> <span>${map['PLAYER_NO']}</span>
 						</div>
 						<div>
+							<span class="sp1">선수 포지션</span> <span>${map['B_POSITION_NAME']}</span>
+						</div>
+<!-- 						<div>
 							<span class="sp1">부서 번호</span> <span>부서 번호</span>
+						</div> -->
+						<div>
+							<span class="sp1">등번호</span> <span>${map['BACK_NO'] }</span>
 						</div>
 						<div>
-							<span class="sp1">등번호</span> <span>등번호</span>
+							<span class="sp1">선수 이름</span> <span>${map['PLAYER_NAME'] }</span>
 						</div>
 						<div>
-							<span class="sp1">선수 이름</span> <span>선수 이름</span>
+							<span class="sp1">생년월일</span> <span>
+							<fmt:formatDate value="${map['PLAYER_BIRTH'] }" pattern="yyyy-MM-dd"/></span>
 						</div>
 						<div>
-							<span class="sp1">생년월일</span> <span>생년월일 </span>
+							<span class="sp1">키</span> <span>${map['HEIGHT'] }</span>
 						</div>
 						<div>
-							<span class="sp1">키</span> <span>키</span>
+							<span class="sp1">몸무게</span> <span>${map['WEIGHT'] }</span>
 						</div>
 						<div>
-							<span class="sp1">몸무게</span> <span>몸무게</span>
+							<span class="sp1">연봉</span> <span>${map['PLAYER_SAL'] }</span>
 						</div>
 						<div>
-							<span class="sp1">연봉</span> <span>연봉</span>
+							<span class="sp1">계약시작일</span> <span>
+							<fmt:formatDate value="${map['CONTRACT_START'] }" pattern="yyyy-MM-dd"/></span>
 						</div>
 						<div>
-							<span class="sp1">계약시작일</span> <span>계약시작일</span>
+							<span class="sp1">연락처</span> <span>${map['PLAYER_TEL'] }</span>
 						</div>
 						<div>
-							<span class="sp1">연락처</span> <span>연락처</span>
+							<span class="sp1">특이사항</span> <span>${map['PLAYER_INFO'] }</span>
 						</div>
 						<div>
-							<span class="sp1">특이사항</span> <span>특이사항</span>
+							<span class="sp1">상태</span> <span>${map['PLAYER_STATUS'] }</span>
 						</div>
 						<div>
-							<span class="sp1">상태</span> <span>상태</span>
+							<span class="sp1">주소</span> <span>${map['PLAYER_ADDRESS'] }</span>
 						</div>
 						<div>
-							<span class="sp1">주소</span> <span>주소</span>
-						</div>
-						<div>
-							<span class="sp1">주소상세</span> <span>주소상세</span>
-						</div>
-						<div>
-							<span class="sp1">우편번호</span> <span>우편번호</span>
+							<span class="sp1">주소상세</span> <span>${map['PLAYER_ADDRESS_DETAIL'] }</span>
 						</div>
 						<div class="lastDiv">
-							<span class="sp1">이미지</span> <span>이미지</span>
+							<span class="sp1">우편번호</span> <span>${map['PLAYER_ZIPCODE'] }</span>
 						</div>
-						
-				
+
 						<div class="center" >
-							<a href="<c:url value='/staff/staffEdit'/>" style="color: white;">수정</a> |
-				        	<a href="<c:url value='/staff/staffDelete'/>" style="color: white;">삭제</a> |
-				        	<a href="<c:url value='/staff/staffList'/>" style="color: white;">목록</a>			
+							<a href="<c:url value='/team/teamEdit?playerNo=${map["PLAYER_NO"] }'/>" style="color: white;">수정</a> |
+				        	<a href="<c:url value='/team/teamDelete?playerNo=${map["PLAYER_NO"] }'/>" style="color: white;">삭제</a> |
+				        	<a href="<c:url value='/team/teamList'/>" style="color: white;">목록</a>			
 						</div>
 					</div>
 
@@ -93,3 +99,5 @@
             <!-- Blank End -->
 
  <%@include file="../inc/bottom.jsp"%> 
+
+

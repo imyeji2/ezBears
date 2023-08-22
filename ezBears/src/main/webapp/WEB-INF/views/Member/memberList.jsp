@@ -9,8 +9,9 @@
 	}
 </script>
 <!-- 페이징 처리를 위한 form 시작-->
-<form name="frmPage" method="post" action="<c:url value='/Member/memberList'/>">
+<form name="frmPage" method="post" action="<c:url value='/Member/list'/>">
 	<input type="hidden" name="currentPage">	
+	<input type="hidden" name="searchKeyword" value="${param.searchKeyword}">
 </form>
 <!-- 페이징 처리 form 끝 -->
 
@@ -23,16 +24,25 @@
 	             </li>
 	             <li class="breadcrumb-item active" aria-current="page">사원 리스트</li>
 	           </ol>
-	         </nav>   
-			<form class="btn-form" name="frm1" method="get" action="<c:url value ='/Member/write'/>">
+	         </nav>
+	      
+			<form class="btn-form" name="frm1" method="post" action="<c:url value ='/Member/list'/>">
 				<div class="btns">
-					<input type="text" class ="txtboxSearch" id="txtboxSearch" value="검색어를 입력해주세요">
-					<button class="btnSearch" id="btnSearch" value="검색">검색</button>
-					<button type="submit" class="btnAdd" id="btnAdd" value="등록">등록</button>
+					<input type="text" class ="txtboxSearch" id="txtboxSearch" name="searchKeyword" value="${param.searchKeyword}"placeholder="검색어를 입력해주세요">
+					<button type="submit" class="btnSearch" id="btnSearch" >검색</button>
+					<a href = "<c:url value='/Member/write'/>" class="btnAdd" id ="btnAdd">등록</a>
 					<button class="btnDelete" type="button" id="btnDelete">삭제</button>
 				</div>
 			
 				<br>
+				<div>
+					<c:if test="${empty param.searchKeyword}">
+					   <p>전체 ${pagingInfo.totalRecord}명의 사원이 검색되었습니다.</p>
+					</c:if>   
+					<c:if test="${!empty param.searchKeyword}">
+					   <p>'${param.searchKeyword}' 검색한 결과, ${pagingInfo.totalRecord}명의 사원이 검색되었습니다.</p>
+					</c:if>   
+				</div>
 		        <div class="table-responsive">
 		            <table class="table">
 		                <thead>
@@ -51,7 +61,7 @@
 		                <tbody>
 		                <c:if test="${empty list}">
 		                	<tr>
-		                		<td colspan="12">사원이 존재하지 않습니다.</td>
+		                		<td colspan="12" style="text-align: center">사원이 존재하지 않습니다.</td>
 		                	</tr>
 		                </c:if>
 		                <c:if test="${!empty list}">
@@ -77,6 +87,7 @@
 		            </table>
 		        </div>
 	        </form>
+	     
 	        <div class="divPage" style="text-align: center" >		
 				<!-- 페이지 번호 추가 -->		
 				<c:if test="${pagingInfo.firstPage>1 }">
@@ -88,11 +99,11 @@
 				<c:forEach var="i" begin="${pagingInfo.firstPage }" 
 				end="${pagingInfo.lastPage }">
 					<c:if test="${i==pagingInfo.currentPage }">
-						<span style="color:#7000D8;font-weight:bold">${i}</span>
+						<span style="color:#7000D8;font-weight:bold" class="curPageNum">${i}</span>
 					</c:if>
 					<c:if test="${i!=pagingInfo.currentPage }">						
-						<a href="#" onclick="pageFunc(${i})" style="color:white">
-							[${i}]
+						<a href="#" onclick="pageFunc(${i})" style="color:white" class="etcPageNum">
+							${i}
 						</a>
 					</c:if>
 				</c:forEach>

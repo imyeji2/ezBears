@@ -43,10 +43,15 @@
 		<include refid="searchWhere"></include>
 	</select>
 	
-	<select id="selectDetail" parameterType="teamNoticeVo" resultType="map">
+	<select id="selectDetail" parameterType="int" resultType="map">
 		select * from teamNoticeListView
 		where team_notice_no=#{teamNoticeNo}
-		and my_board_no=#{myBoardNo}
 		and sortNo is null
 	</select>
+	
+	<update id="updateViewCount" parameterType="int">
+		update team_notice
+        set views = views+1
+        where team_Notice_no=#{teamNoticeNo}
+	</update>
 </mapper>

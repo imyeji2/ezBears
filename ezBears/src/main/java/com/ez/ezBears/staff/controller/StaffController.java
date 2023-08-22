@@ -158,6 +158,16 @@ public class StaffController {
 		
 		//http://localhost:9091/ezBears/staff/staffDelete
 	}
+
+	@PostMapping("/staffDelete")
+	public String delete_post(@RequestParam(defaultValue = "0") int staffNo) {
+		logger.info("스태프 삭제 처리, 파라미터 staffNo={}", staffNo);
+		
+		int cnt = staffService.deleteStaff(staffNo);
+		logger.info("스태프 삭제 처리 결과, cnt={}", cnt);
+		
+		return "redirect:/staff/staffList";
+	}
 	
 	@GetMapping("/staffDetail")
 	public String detail_get(@RequestParam(defaultValue = "0") int staffNo,

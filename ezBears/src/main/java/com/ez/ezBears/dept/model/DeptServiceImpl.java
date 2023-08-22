@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.ez.ezBears.common.SearchVO;
+
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -20,5 +22,10 @@ public class DeptServiceImpl implements DeptService{
 	@Override
 	public String findDeptName(int deptNo) {
 		return deptDao.findDeptName(deptNo);
+	}
+
+	@Override
+	public int totalList(SearchVO searchVo) {
+		return deptDao.totalList(searchVo);
 	}
 }

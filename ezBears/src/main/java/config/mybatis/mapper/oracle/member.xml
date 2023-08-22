@@ -33,7 +33,7 @@
 				#{contractStart},#{type},#{memAddress},#{memAddressDetail},#{memZipcode},#{memImage},#{memBirth})
 	</insert>
 	
-	    <select id="getMemberById" parameterType="String" resultType="memberVo">
+	<select id="getMemberById" parameterType="String" resultType="memberVo">
         SELECT * FROM MEMBER WHERE MEM_ID = #{memId}
     </select>
     
@@ -63,7 +63,9 @@
     	(
     		SELECT ROWNUM AS RNUM, A.* FROM 
     		(
-        		SELECT * FROM MEMLISTVIEW ORDER BY DEPT_NAME, POSITION_NO DESC, MEM_NAME
+        		SELECT * FROM MEMLISTVIEW 
+        		<include refid="searchWhere"></include>
+        		ORDER BY DEPT_NAME, POSITION_NO DESC, MEM_NAME
     		)A
 		)
 		
@@ -75,7 +77,8 @@
     
     <!-- 총 멤버 리스트 수 -->
     <select id="totalList" parameterType="searchVo" resultType="int">
-    	SELECT COUNT(*) FROM MEMBER
+    	SELECT COUNT(*) FROM MEMLISTVIEW
+    	<include refid="searchWhere"></include>
     </select>
     
     <!-- 멤버 디테일 페이지 -->
@@ -89,5 +92,19 @@
 		SET DEPT_NO = #{deptNo}, POSITION_NO = #{positionNo}, MEM_SAL =#{memSal}, CONTRACT_DONE = #{contractDone}, TYPE= #{type}
 		WHERE MEM_NO = #{memNo}
     </update>
+    
+    <!-- 검색where조건 -->
+    <sql id="searchWhere">
+		<where>
+			<if test="searchKeyword!=null and searchKeyword!=''">
+			    TO_CHAR(MEMLISTVIEW.MEM_NAME) LIKE '%'|| #{searchKeyword} ||'%'
+			    OR TO_CHAR(MEMLISTVIEW.MEM_ID) LIKE '%'|| #{searchKeyword} ||'%'
+			    OR TO_CHAR(MEMLISTVIEW.MEM_TEL) LIKE '%'|| #{searchKeyword} ||'%'
+			    OR TO_CHAR(MEMLISTVIEW.TYPE) LIKE '%'|| #{searchKeyword} ||'%'
+			    OR TO_CHAR(MEMLISTVIEW.DEPT_NAME) LIKE '%'|| #{searchKeyword} ||'%'
+			    OR TO_CHAR(MEMLISTVIEW.POSITION_NAME) LIKE '%'|| #{searchKeyword} ||'%'
+			</if>
+		</where>
+	</sql>
 
 </mapper>

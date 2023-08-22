@@ -56,7 +56,8 @@
 		)
 		<![CDATA[
 		where RNUM> #{firstRecordIndex} 
-		and RNUM<=#{firstRecordIndex} + #{recordCountPerPage}]]>
+		and RNUM<=#{firstRecordIndex} + #{recordCountPerPage}
+		and staff_status='Y']]>
 	</select>
 	
 	<select id="getStaffById" parameterType="String" resultType="staffVo">
@@ -89,6 +90,7 @@
 	<update id="deleteStaff" parameterType="int">
 		update staff
 		set staff_status='N'
+		where staff_no=#{staffNo}
 	</update>
 	
 </mapper>
