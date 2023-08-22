@@ -16,4 +16,15 @@
 		order by NOTICE_NO desc
 	</select>
 	
+	<select id="selectDetail" parameterType="int" resultType="map">
+		select * from noticeView
+		where NOTICE_NO=#{noticeNo}
+	</select>
+	
+	<update id="updateViewsCount" parameterType="int">
+		update notice
+        set views = views+1
+        where NOTICE_NO=#{noticeNo}
+	</update>
+	
 </mapper>

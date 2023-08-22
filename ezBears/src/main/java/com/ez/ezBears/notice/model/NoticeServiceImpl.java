@@ -22,4 +22,10 @@ public class NoticeServiceImpl implements NoticeService{
 		return noticeDao.selectNoticeList(noticeNo);
 	}
 
+	@Override
+	public Map<String, Object> selectDetail(int noticeNo) {
+		int cnt = noticeDao.updateViewsCount(noticeNo);
+		
+		return noticeDao.selectDetail(noticeNo);
+	}
 }
