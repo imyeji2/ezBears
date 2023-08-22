@@ -1,6 +1,6 @@
 @charset "UTF-8";
 
-/* write */
+/* MemWrite */
 
 .register-form{
 	margin: 0 100px;
@@ -189,7 +189,7 @@ label{
 }
 
 
-/* List */
+/* MemList */
 .rounded {
     border-radius: 5px !important;
     width: 97%;
@@ -269,7 +269,7 @@ label{
 	}
 	
 }
-/* detail */
+/* MemDetail */
 
 .editIcon{
     width: 20px;
@@ -287,3 +287,11 @@ input.edittext {
 }
 
 
+/* deptLis*/
+
+.addDeptPart {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0 10px;
+}

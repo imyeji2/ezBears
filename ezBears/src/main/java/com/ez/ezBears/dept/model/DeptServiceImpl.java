@@ -28,4 +28,14 @@ public class DeptServiceImpl implements DeptService{
 	public int totalList(SearchVO searchVo) {
 		return deptDao.totalList(searchVo);
 	}
+
+	@Override
+	public int editDept(DeptVO deptVo) {
+		return deptDao.editDept(deptVo);
+	}
+
+	@Override
+	public int insertDept(DeptVO deptVo) {
+		return deptDao.insertDept(deptVo);
+	}
 }
