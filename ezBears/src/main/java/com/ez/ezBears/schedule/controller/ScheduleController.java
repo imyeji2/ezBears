@@ -6,6 +6,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -41,12 +44,16 @@ public class ScheduleController {
 	      
 	   }
 	   
-	   @RequestMapping("/Calender_write")
+	   @GetMapping("/Calender_write")
 	   public String Calender_wr() {
 	      logger.info("일정등록 뷰");
 	      return "myBoard/Calender_write";
 	   }
 	   
-
+	   @PostMapping("/Calender_write")
+	   public String Calender_post(@ModelAttribute ScheduleVO scheduleVo,@RequestParam (defaultValue = "0")int myBoardNo) {
+		   
+		   return"";
+	   }
 
 }

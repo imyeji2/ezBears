@@ -111,17 +111,12 @@
      
   });
  
-	$(function(){
-		$('.schedulein').click(function(){
-			open('/ezBears/myBoard/Calender_write','CalenderWrite','width=600,height=700,left=500,top=50, location=no,resizable=yes');
-			
-		});
-	});
 </script>
 <body>
 <div id='calendar'></div>
 	<div class="btn">
-				<input type="Button"  value="일정등록" class="btn btn-sm btn-primary btn schedulein"/>
+				<a href='<c:url value='/myBoard/Calender_write'/>' role="button"
+						 class="btn btn-sm btn-primary schedulein" >일정등록</a>
 			</div>
 </body>
                   </div>
