@@ -25,4 +25,5 @@ public class MemberVO {
 	//join 한 view에서 가지고 올 것들
 	private String deptName;
 	private String positionName;
+
 }

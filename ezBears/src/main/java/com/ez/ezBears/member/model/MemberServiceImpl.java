@@ -127,5 +127,10 @@ public class MemberServiceImpl implements MemberService{
 		return memberDao.updateMemberFromAdmin(memberVo);
 	}
 
+	@Override
+	public List<MemberVO> searchMem(String keyword) {
+		return memberDao.searchMem(keyword);
+	}
+
 	
 }
