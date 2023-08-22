@@ -28,7 +28,7 @@ public class DeptController {
 
 	private final DeptService deptService;
 	
-	@RequestMapping("/list")
+	@GetMapping("/list")
 	public String list(@ModelAttribute SearchVO searchVo, Model model) {
 		//1
 		logger.info("부서 목록 페이지");
@@ -56,9 +56,40 @@ public class DeptController {
 	}
 	
 	
-	@PostMapping("/list")
-	public String write() {
+	@RequestMapping("/edit")
+	public String edit(@ModelAttribute DeptVO deptVo, Model model) {
+		//
+		logger.info("부서 수정 파라미터 deptVo={}", deptVo);
+
+		//2
+		int result = deptService.editDept(deptVo);
+		logger.info("부서 수정 결과, result={}",result);
+		
+		String msg = "수정에 실패하였습니다.", url ="/dept/list";
+		if(result > 0) {
+			
+			
+			msg = "수정되었습니다.";
+		}
+		
+		//3
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		//4
+		return "common/message";
+	}
+	
+	@RequestMapping("/insert")
+	public String insert() {
+		//
 		logger.info("부서 등록");
+		
+		//2
+		
+		//3
+		
+		//4
 		return "dept/deptList";
 	}
 }
