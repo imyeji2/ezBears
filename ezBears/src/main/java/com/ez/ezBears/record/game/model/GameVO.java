@@ -6,6 +6,8 @@ import lombok.Data;
 public class GameVO {
 	private int recodeNo;
 	private String regdate;
-	private String Ground;
-	private String Win;
+	private String ground;
+	private String win;
+	private String firstPitcher;
+	private String otherTeam;
 }
