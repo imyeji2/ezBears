@@ -111,9 +111,10 @@ public class StaffController {
 	
 	@PostMapping("/staffEdit")
 	public String edit_post(@ModelAttribute StaffVO staffVo, HttpServletRequest request,
-			Model model) {
+			@RequestParam String oldFileName, Model model) {
 		//1
 		logger.info("스태프 수정 처리, 파라미터 staffVo={}", staffVo);
+		logger.info("oldFileName={}", oldFileName);
 		
 		//2
 		//파일 업로드 처리
@@ -135,6 +136,10 @@ public class StaffController {
 		}
 			
 		staffVo.setStaffImage(fileName);
+		
+		if(staffVo.getStaffImage()==null || staffVo.getStaffImage().isEmpty()) {
+			staffVo.setStaffImage(oldFileName);
+		}
 		
 		//db
 		int cnt = staffService.updateStaff(staffVo);

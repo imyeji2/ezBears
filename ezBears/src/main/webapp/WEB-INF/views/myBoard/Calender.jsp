@@ -4,36 +4,12 @@
 
 <%@include file="../inc/top.jsp"%>
 
-    <!-- Recent Sales Start -->
     <div class="container-fluid pt-4 px-4" id="board_style">
         <div class="bg-secondary text-center rounded">
             <div class="bg-secondary rounded h-100 p-4">
-               <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
-              <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">마이보드</a></li>
-                <li class="breadcrumb-item active" aria-current="page">개발1팀</li>
-              </ol>
-            </nav>
-                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link tap_txt" href="<c:url value='/myBoard/teamNotice'/>">공지사항</a>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link tap_txt "  href="<c:url value='/myBoard/teamWorkBoard'/>">업무게시판</a>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link tap_txt active"  href="<c:url value='/myBoard/Calender'/>">스케줄</a>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link tap_txt "  href="<c:url value='/myBoard/Approval'/>">결재</a>
-                    </li>      
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link tap_txt"  href="<c:url value='/myBoard/webhard'/>">웹하드</a>
-                    </li>                                  
-                </ul>
+			<c:import url="/myBoard/myBoardNavTab?mBoardNo=${mBoardNo}"></c:import>
                 <div class="tab-content" id="pills-tabContent">
                     <div class="tab-pane fade show active">
-
 <!DOCTYPE html>
 <html lang='UTF-8'>
   <head>
@@ -75,6 +51,8 @@
                 */
         /* 일정등록 json으로 변환후 ajax 방식으로 등록   */
     
+        
+      
         events: [
   	      
   	      {
@@ -92,7 +70,8 @@
    	     backgroundColor: '#F48FB1',
    	     textColor : 'black'
   	      }], 
-  	      
+  	   
+  	    
         titleFormat : function(date) {
            return date.date.year + '년 ' + (parseInt(date.date.month) + 1) + '월';
         },
@@ -108,18 +87,14 @@
      
   });
  
-	$(function(){
-		$('.schedulein').click(function(){
-			open('/ezBears/myBoard/Calender_write','CalenderWrite','width=600,height=700,left=500,top=50, location=no,resizable=yes');
-			
-		});
-	});
 </script>
 <body>
 <div id='calendar'></div>
 	<div class="btn">
-				<input type="Button"  value="일정등록" class="btn btn-sm btn-primary btn schedulein"/>
+				<a href='<c:url value='/myBoard/Calender_write'/>' role="button"
+						 class="btn btn-sm btn-primary schedulein" >일정등록</a>
 			</div>
+			
 </body>
                   </div>
             </div>

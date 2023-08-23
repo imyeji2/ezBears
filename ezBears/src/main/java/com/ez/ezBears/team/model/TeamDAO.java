@@ -14,4 +14,5 @@ public interface TeamDAO {
 	int getTotalRecord(SearchVO searchVo);
 	Map<String, Object> selectByPlayerNo(int playerNo);
 	int updateTeam(TeamVO teamVo);
+	int deleteTeam(int playerNo);
 }

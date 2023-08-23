@@ -3,6 +3,9 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ez.ezBears.member.model.MemberDAO">
+
+	<!-- 판주 -->
+	<!-- 로그인 관련 -->
 	<select id="selectCheckId" parameterType="string" resultType="int">
 		select count(*) from member 
 		where MEM_ID=#{memId}
@@ -14,6 +17,8 @@
 		and CONTRACT_DONE is null
 	</select>
 	
+	
+	<!-- 다희 -->
 	<!-- 자동 아이디 생성 관리 및 멤버 등록  -->
 	<select id="getTodayMem" resultType="int">
 		SELECT COUNT(*) FROM MEMBER WHERE CONTRACT_START = #{contractStart}

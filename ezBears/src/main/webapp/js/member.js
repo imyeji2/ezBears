@@ -180,7 +180,7 @@
 		
         $('.editIcon').click(function() {
             var findInput = $(this).siblings('input');
-            findInput.prop('disabled', false);
+            findInput.prop('readonly', false);
             findInput.focus();
         });
         

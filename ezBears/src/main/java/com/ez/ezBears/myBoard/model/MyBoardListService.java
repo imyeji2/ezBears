@@ -28,5 +28,8 @@ public interface MyBoardListService {
 	
 	//내 동적 게시판에 부서 번호로 게시판 등록
 	int insertMyBoard(MyBoardListVO myBoardListVo);
+	
+	//희진
+	List<Map<String, Object>> selectBoardInfo(String userid);
 }
 

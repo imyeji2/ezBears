@@ -2,13 +2,27 @@
     pageEncoding="UTF-8"%>
 <%@include file="../inc/top.jsp"%>
 <link href="${pageContext.request.contextPath}/css/Dcss.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/css/jquery-ui.min.css" rel="stylesheet">
 <script type="text/javascript" src="<c:url value ='/js/member.js"'/>"></script>
+<script type="text/javascript" src="<c:url value ='/js/jquery-ui.min.js"'/>"></script>
 <script>
 function confirmAndSubmit() {
     if (confirm("수정하시겠습니까?")) {
         $('.btn-form').submit();
     }
 }
+
+	var jb = jQuery.noConflict();
+	jb(function(){
+		jb('#contractDone').datepicker({
+			dateFormat:'yy-mm-dd',
+			changeYear:true,
+			dayNamesMin:['일','월','화','수','목','금','토'],
+			monthNames:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월']
+		});
+		
+	});
+
 </script>
 	<div class="col-12">
 	    <div class="bg-secondary rounded h-100 p-4">
@@ -20,7 +34,7 @@ function confirmAndSubmit() {
 	             <li class="breadcrumb-item active" aria-current="page">사원 상세페이지</li>
 	           </ol>
 	         </nav>
-			<form class="btn-form" name="frm1" method="post" action="<c:url value ='/Member/detail'/>">
+			<form class="btn-form" name="frm1" method="post" action="<c:url value ='/Member/edit'/>">
 				<div class = "btns">
 					<button type="submit" class="btnAdd" id="btnAdd" value="수정" onclick="confirmAndSubmit()">수정</button>
 					<button class="btnDelete" type="button" id="btnDelete">삭제</button>
@@ -29,13 +43,15 @@ function confirmAndSubmit() {
 		        <input type="hidden" name="memNo" value="${memberVo.memNo}">
 		        	<div class="memImg">
 		        		<img alt="" src="<c:url value ='/img/mem_images/${memberVo.memImage }'/> " style="width:180px; height:200px;">
+		        		<label id = "editLable" for="imageUpload">사진 수정</label>
+						<input type ="file" name="imageUpload" id="imageUpload"  class="infobox" style="display:none">
 		        	</div>
 		        	<div class = "memInfo" style="width:70%;">
-		        	 <table class="table">
+		        	 <table class="table" style="width:800px;">
 		                    <tr>
 		                        <th scope="col">부서</th>
 		                        <td>
-		                        	<input type="text" class="edittext" id="deptName" value="${memberVo.deptName}" disabled="disabled">
+		                        	<input type="text" class="edittext" id="deptName" value="${memberVo.deptName}" readonly="readonly">
 		                        	
 		                        	<select class="showEditDept" name="deptNo" id="dept">
 							        	<option value="" >부서</option>
@@ -55,7 +71,7 @@ function confirmAndSubmit() {
 		                        </td>
 		                        <th scope="col">직급</th>
 		                        <td>
-		                        	<input type="text" class="edittext" id="position" value="${memberVo.positionName}"  disabled="disabled">
+		                        	<input type="text" class="edittext" id="position" value="${memberVo.positionName}"  readonly="readonly">
 		                        	<select class="showEditPosition"name="positionNo" id="grade">
 							        	<option value="" >직급</option>
 							        	<!-- 반복문 -->
@@ -73,21 +89,22 @@ function confirmAndSubmit() {
 		                    </tr>
 		                    <tr>
 		                        <th scope="col">이름</th>
-		                        <td>${memberVo.memName}</td>
+		                        <td name = "memName">${memberVo.memName}</td>
 		                        <th scope="col">아이디</th>
 		                        <td>${memberVo.memId}</td>
 		                    </tr>
 		                    <tr>
 		                        <th scope="col">연봉</th>
 		                        <td>
+
 			                        <input type="text" class="edittext" id="sal" name="sal"
-			                        value="<fmt:formatNumber value="${memberVo.memSal/10000}" pattern="#,###"/>" disabled="disabled">
+			                        value="<fmt:formatNumber value="${memberVo.memSal/10000}" pattern="#,###"/>" readonly="readonly">
 			                        	만원
 		                        	<img class="editIcon" id="editSal" src="<c:url value='/img/editIcon.png'/>" >
 		                        </td>
 		                        <th scope="col">고용형태</th>
 		                        <td>
-		                        	<input type="text" class="edittext" id="type" value="${memberVo.type}"  disabled="disabled">
+		                        	<input type="text" class="edittext" id="type" value="${memberVo.type}"  readonly="readonly">
 		                        	<select class ="showEditType" name="type" id="test">
 							        	<option value="" >고용형태</option>
 							            <option value="계약직"
@@ -107,25 +124,25 @@ function confirmAndSubmit() {
 		                    <tr>
 		                        <th scope="col">전화번호</th>
 		                        <td>
-		                        	<input type="text" class="edittext" value="${memberVo.memTel}" disabled="disabled">
+		                        	<input type="text" class="edittext" value="${memberVo.memTel}" readonly="readonly">
 		                        </td>
 		                        <th scope="col">생일</th>
-		                        <td disabled="disabled">${memberVo.memBirth.substring(0, 10)}</td>
+		                        <td readonly="readonly">${memberVo.memBirth.substring(0, 10)}</td>
 		                    </tr>
 		                    <tr>
 		                        <th scope="col">입사일</th>
 		                        <td >${memberVo.contractStart.substring(0, 10)}</td>
 		                        <th scope="col">퇴사일</th>
 		                        <td >
-		                        	<input type="text" class="edittext" name="contractDone" value="${memberVo.contractDone.substring(0, 10)}"  disabled="disabled">
+		                        	<input type="text" class="edittext" id="contractDone" name="contractDone" value="${memberVo.contractDone.substring(0, 10)}"  readonly="readonly">
 		                        	<img class="editIcon" id="editConDone" src="<c:url value='/img/editIcon.png'/>" >
 		                        </td>
 		                    </tr>
 		                    <tr>
 		                        <th scope="col">주소</th>
 		                        <td colspan="3">
-		                        	<input type="text" class="edittext" name= "memAddress" value="${memberVo.memAddress}" disabled="disabled" style="width:80%">
-		                        	<input type="text" class="edittext" name= "memAddressDetail" value="${memberVo.memAddressDetail}" disabled="disabled" style="width:80%">
+		                        	<input type="text" class="edittext" name= "memAddress" value="${memberVo.memAddress}" readonly="readonly" style="width:80%">
+		                        	<input type="text" class="edittext" name= "memAddressDetail" value="${memberVo.memAddressDetail}" readonly="readonly" style="width:80%">
 		                        </td>
 		                    </tr>
 		                    

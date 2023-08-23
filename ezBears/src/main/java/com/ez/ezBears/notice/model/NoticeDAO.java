@@ -8,7 +8,9 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface NoticeDAO {
 	int insertNotice(NoticeVO noticeVo);
+	int insertFileNotice(NoticeFileVO noticeFileVo);
 	List<Map<String, Object>> selectNoticeList(int noticeNo);
 	Map<String, Object> selectDetail(int noticeNo);
 	int updateViewsCount(int noticeNo);
+	
 }

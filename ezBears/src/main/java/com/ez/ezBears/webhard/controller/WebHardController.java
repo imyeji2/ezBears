@@ -29,18 +29,21 @@ public class WebHardController {
 	
 	
 	@RequestMapping("/webhard")
-	public String webHardList(@RequestParam (defaultValue = "0") int myBoardNo, Model model) {
+	public String webHardList(@RequestParam (defaultValue = "0") int mBoardNo, Model model) {
 		
 		//
-		logger.info("웹하드 리스트 출력 ");
+		logger.info("웹하드 리스트 출력 mBoardNo={}",mBoardNo);
+
 		
 		//
-		List<WebHardVO> list = webHardSerivce.selectAllWebHard(myBoardNo);
-		logger.info("웹하드 리스트 조회 결과");
+		/*
+		  List<WebHardVO> list = webHardSerivce.selectAllWebHard(mBoardNo);
+		  logger.info("웹하드 리스트 조회 결과");
+		 */
 		
 		//
-		model.addAttribute("list",list);
-		
+		//model.addAttribute("list",list);
+		model.addAttribute("mBoardNo",mBoardNo);
 		//
 		return "/myBoard/webhard";
 	}
