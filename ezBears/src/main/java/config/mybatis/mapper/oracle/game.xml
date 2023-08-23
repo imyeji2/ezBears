@@ -10,11 +10,27 @@
 		</where>
 	</sql>
 	
+	<select id="selectAllGame" resultType="gameVo" parameterType="searchVo">
+		select * from recode
+	</select>
+	
 	<insert id="insertGame" parameterType="gameVo">
 		<selectKey keyProperty="recodeNo" order="BEFORE" resultType="int">
 			select recode_seq.nextval from dual
 		</selectKey>
-		insert into recode(recode_no, regdate, ground, win)
-		values(#{recodeNo}, #{regdate}, #{ground}, #{win})
+		insert into recode(recode_no, regdate, ground, win, first_pitcher, other_team)
+		values(#{recodeNo}, #{regdate}, #{ground}, #{win}, #{firstPitcher}, #{otherTeam})
 	</insert>
+	
+	<update id="updateGame" parameterType="gameVo">
+		update recode
+		set
+		regdate=#{regdate}, ground=#{ground}, win=#{win}, first_pitcher=#{firstPitcher}, other_team=#{otherTeam}
+		where recode_no=#{recodeNo}
+	</update>
+	
+	<delete id="deleteGame">
+		delete recode
+		where recode_no=#{recodeNo}
+	</delete>
 </mapper>

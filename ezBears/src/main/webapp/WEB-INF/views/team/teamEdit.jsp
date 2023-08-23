@@ -45,15 +45,15 @@
                         extraAddr = ' (' + extraAddr + ')';
                     }
                     // 조합된 참고항목을 해당 필드에 넣는다.
-                    document.getElementById("staff_addr").value = extraAddr;
+                    document.getElementById("team_addr").value = extraAddr;
                 
                 } else {
-                    document.getElementById("staff_addr").value = '';
+                    document.getElementById("team_addr").value = '';
                 }
 
                 // 우편번호와 주소 정보를 해당 필드에 넣는다.
                 document.getElementById('contract').value = data.zonecode;
-                document.getElementById("staff_addr").value = addr;
+                document.getElementById("team_addr").value = addr;
                 // 커서를 상세주소 필드로 이동한다.
                 document.getElementById("sample6_detailAddress").focus();
             }
@@ -76,7 +76,7 @@
 			$(this).val(inputTel);
 		}); */
 		
-		$('#staffTel').on('input', function() {
+		$('#teamTel').on('input', function() {
 		    var inputTel = $(this).val();
 		    
 		    // Remove existing "-" characters
@@ -93,7 +93,7 @@
 		    $(this).val(cleanedTel);
 		});
 		
-		$('#staffBirth').on('input', function() {
+		$('#teamBirth').on('input', function() {
 		    var inputTel = $(this).val();
 		    
 		    // Remove existing "-" characters
@@ -191,7 +191,7 @@
 	                            <label for="floatingSelect">부서를 선택하세요</label>
 	                        </div>
 	                        <input type="hidden" name="playerNo" value="${map['PLAYER_NO'] }">
-	                        
+	                        <input type="hidden" name="oldFileName" value="${map['PLAYER_IMAGE'] }">
                     		<div class="form-floating mb-3">
 	                            <select class="form-select" id="floatingSelect"
 	                                aria-label="Floating label select example" name="positionNo">
@@ -249,11 +249,7 @@
 	                        </div>
 	                        <div class="form-floating mb-3">
 	                            <input type="text" class="form-control" id="floatingInput" placeholder="team_info" name="playerInfo" value="${map['PLAYER_INFO'] }">
-	                            <label for="floatingInput">선수_정보</label>
-	                        </div>
-	                        <div class="form-floating mb-3">
-	                            <input type="text" class="form-control" id="floatingInput" placeholder="team_status" name="playerStatus" value="${map['PLAYER_STATUS'] }">
-	                            <label for="floatingInput">선수_상태</label>
+	                            <label for="floatingInput">선수_등록상태</label>
 	                        </div>
 		                    <div class="firstdiv">
 						    	<div class="form-floating address">

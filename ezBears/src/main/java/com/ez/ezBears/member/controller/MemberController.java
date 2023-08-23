@@ -172,7 +172,7 @@ public class MemberController {
 		return "Member/zipcode";
 	}
 	
-	@GetMapping("/detail")
+	@RequestMapping("/detail")
 	public String detail(@RequestParam(defaultValue = "0") int memNo, Model model) {
 		//1
 		logger.info("회원 상세 페이지, 파라미터 memNo={}", memNo);
@@ -197,7 +197,7 @@ public class MemberController {
 		return "Member/memberDetail";
 	}
 	
-	@PostMapping("/detail")
+	@RequestMapping("/edit")
 	public String detail_post(@ModelAttribute MemberVO memberVo, String sal, Model model) {
 		//1
 		logger.info("회원 수정, 파라미터 memberVo ={}", memberVo);
@@ -217,14 +217,14 @@ public class MemberController {
 			memberVo.setContractDone("");
 		}
 		
-		
+		int memNo = memberVo.getMemNo();
 		int result = memberService.updateMemberFromAdmin(memberVo);
 		logger.info("회원 수정 결과, result={}", result);
 		
-		String msg="수정에 실패하였습니다.", url="/Member/list";
+		String msg="수정에 실패하였습니다.", url="/Member/detail?memNo="+memNo;
 		if(result > 0) {
 			msg = "수정 되었습니다.";
-			url = "/Member/list";
+			url = "/Member/detail?memNo="+memNo;
 		}
 		
 		//3

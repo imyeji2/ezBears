@@ -73,6 +73,7 @@
 
 .firstdiv .findZipcode input:hover {
 	background-color: #953de7;
+	
 }
 
 input#addressDetail, input#contract, input#zipcode {
@@ -211,6 +212,7 @@ label{
 	padding: 5px 15px;
 	border-radius: 5px;
 	transition: all 0.35s linear;
+	
 }
 
 .btn-form button:hover {
@@ -226,12 +228,27 @@ label{
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
+    gap: 10px 0;
 }
 
 .memInfo {
     float: right;
 }
 
+#editLable {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #7000D8;
+    border-radius: 5px;
+    width: 180px;
+    transition: all 0.35s linear;
+    cursor: pointer;
+}
+#editLable:hover {
+	background-color: #953de7;
+}
 .inner {
     display: flex;
     justify-content: center;

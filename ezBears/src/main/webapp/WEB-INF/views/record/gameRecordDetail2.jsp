@@ -4,7 +4,7 @@
 <div role="tablist" class="subFilter__group">
 	<a title="경기" aria-current="page" class="active"
 		href="#/match-summary/match-statistics/0"><button role="tab"
-			class="subFilter__filter subFilter__filter--selected">경기</button></a><a
+			class="subFilter__filter subFilter__filter--selected" id="tab-main">경기</button></a><a
 		title="1회" class="" href="#/match-summary/match-statistics/1"><button
 			role="tab" class="subFilter__filter" id="tab-1">1회</button></a><a title="2" class=""
 		href="#/match-summary/match-statistics/2"><button role="tab"
@@ -24,7 +24,7 @@
 		href="#/match-summary/match-statistics/9"><button role="tab"
 			class="subFilter__filter" id="tab-9">9</button></a>
 </div>
-<div class="tab-content">
+<div class="tab-content" id="tab-main">
 <div>
 <div class="section">
     <div class="stat__row">
@@ -446,7 +446,7 @@
 	</div>
 	<div class="stat__row">
 		<div class="stat__category">
-			<div class="stat__homeValue">3</div>
+			<div class="stat__homeValue">5</div>
 			<div class="stat__categoryName">타석</div>
 			<div class="stat__awayValue">3</div>
 		</div>
