@@ -1,9 +1,5 @@
 package com.ez.ezBears.schedule.controller;
 
-
-import java.util.List;
-import java.util.Map;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -20,7 +16,7 @@ import com.ez.ezBears.schedule.model.ScheduleService;
 import com.ez.ezBears.schedule.model.ScheduleVO;
 
 import jakarta.servlet.http.HttpSession;
-import lombok.RequiredArgsConstructor;
+import lombok.RequiredArgsConstructor; 
 
 @Controller
 @RequestMapping("/myBoard")
