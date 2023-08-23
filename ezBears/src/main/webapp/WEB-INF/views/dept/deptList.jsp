@@ -63,6 +63,7 @@ $(function(){
 					<button type="submit" class="btnEdit" id="btnEdit" onclick = "EditDept()"value="수정">수정</button>
 					<button type="button" class="btnDelete" id="btnDelete">삭제</button>
 				</div>
+				<br>
 		        <div class="table-responsive">
 		            <table class="table">
 		                <thead>
