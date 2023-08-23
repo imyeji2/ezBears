@@ -15,7 +15,7 @@
 			headerToolbar : {
 				start : 'prev next today',
 				center : 'title',
-				end : 'dayGridMonth,dayGridWeek,dayGridDay'
+				end : ''
 			},
 			titleFormat : function(date) {
 				return date.date.year + '년 ' + (parseInt(date.date.month) + 1) + '월';
