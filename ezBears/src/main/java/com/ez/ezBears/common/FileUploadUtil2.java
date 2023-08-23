@@ -19,8 +19,8 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Component
-public class FileUploadUtil {
-	private static final Logger logger = LoggerFactory.getLogger(FileUploadUtil.class);
+public class FileUploadUtil2 {
+	private static final Logger logger = LoggerFactory.getLogger(FileUploadUtil2.class);
 
 	public List<Map<String, Object>> fileupload(HttpServletRequest request,
 			int pathFlag) throws IllegalStateException, IOException {
@@ -28,17 +28,18 @@ public class FileUploadUtil {
 		MultipartHttpServletRequest multiRequest 
 						= (MultipartHttpServletRequest) request;
 
-		Map<String, MultipartFile> fileMap=multiRequest.getFileMap();
-		//List<MultipartFile> files =multiRequest.getFiles("upfile");
+		//Map<String, MultipartFile> fileMap=multiRequest.getFileMap();
+		List<MultipartFile> files =multiRequest.getFiles("upfile");
 		//multiful로 설정해서 여러개 파일을 업로드 하고 싶을때 이렇게 활용
 
 		//여러개 업로드된 파일의 정보를 저장할 리스트
 		List<Map<String, Object>> resultList = new ArrayList<>();
-		Iterator<String> iter = fileMap.keySet().iterator();
+		//Iterator<String> iter = fileMap.keySet().iterator();
+		int i=0;
 		
-		while(iter.hasNext()) {
-			String key=iter.next();
-			MultipartFile tempFile = fileMap.get(key);//업로드된 파일을 임시파일 형태로 제공
+		while(i<files.size()) {
+			//String key=iter.next();
+			MultipartFile tempFile = files.get(i);//fileMap.get(key);//업로드된 파일을 임시파일 형태로 제공
 			if(!tempFile.isEmpty()) { //파일이 업로드된 경우
 				long fileSize=tempFile.getSize(); //파일 크기
 				String originName=tempFile.getOriginalFilename(); //변경전 파일명
@@ -58,6 +59,8 @@ public class FileUploadUtil {
 				resultMap.put("fileSize", fileSize);
 
 				resultList.add(resultMap);
+				
+				i++;
 			}//if			
 		}//while
 
@@ -78,13 +81,15 @@ public class FileUploadUtil {
 			if(pathFlag== ConstUtil.UPLOAD_FILE_FLAG) {  //자료실
 				path=ConstUtil.FILE_UPLOAD_PATH; //pds_upload
 			}else if(pathFlag==ConstUtil.UPLOAD_MEMIMAGE_FLAG) { //멤버 이미지 업로드
-        path=ConstUtil.IMAGE_FILE_UPLOAD_PATH;// mem_images					
+				path=ConstUtil.IMAGE_FILE_UPLOAD_PATH;// mem_images					
 			}else if(pathFlag ==ConstUtil.UPLOAD_TEAMNOTICE_FLAG) {//팀 공지사항
 				path=ConstUtil.TEAM_NOTICE_FILE_PACH;
 			}else if(pathFlag == ConstUtil.UPLOAD_STAFFIMAGE_FLAG) {	//스태프 이미지 업로드
 				path=ConstUtil.STAFFIMAGE_FILE_UPLOAD_PATH;
 			}else if(pathFlag == ConstUtil.UPLOAD_TEAMIMAGE_FLAG) {	//선수 이미지 업로드
 				path=ConstUtil.TEAMIMAGE_FILE_UPLOAD_PATH;
+			}else if(pathFlag == ConstUtil.UPLOAD_NOTICE_FLAG) {
+				path=ConstUtil.NOTICE_FILE_UPLOAD_PATH;
 			}
 			
 			

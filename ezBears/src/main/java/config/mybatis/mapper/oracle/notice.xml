@@ -7,9 +7,17 @@
 		<selectKey keyProperty="noticeNo" resultType="int" order="BEFORE">
 			select NOTICE_SEQ.nextval from dual
 		</selectKey>
-		insert into team_Notice(NOTICE_NO, MEM_NO,NOTICE_TITLE, NOTICE_CONTENT, FSIZE,FILENAME, ORIGIN_FILENAME)
-		values(#{noticeNo},#{memNo}, #{noticeTitle}, #{noticeContent}, #{fsize},#{filename},#{originFilename})
+		insert into notice(NOTICE_NO, MEM_NO, NOTICE_TITLE, NOTICE_CONTENT)
+		values(#{noticeNo}, #{memNo}, #{noticeTitle}, #{noticeContent})
 	</insert> 
+	
+	<insert id="insertFileNotice" parameterType="noticefileVo">
+		<selectKey keyProperty="noticeFileNo" resultType="int" order="BEFORE">
+			select noticeFile_seq.nextval from dual
+		</selectKey>
+		insert into noticeFile(notice_file_no, notice_no, file_name, file_size, origin_fileName)
+		values(#{noticeFileNo},#{noticeNo},#{fileName},#{fileSize},#{originFileName})
+	</insert>
 	
 	<select id="selectNoticeList" parameterType="int" resultType="map">
 		select * from noticeView
@@ -26,5 +34,7 @@
         set views = views+1
         where NOTICE_NO=#{noticeNo}
 	</update>
+	
+	
 	
 </mapper>
