@@ -21,8 +21,8 @@ public interface MyBoardListDAO {
 	//마이보드 이름
 	String selectByBoardName(int myBoardNo);
 	
-	//마이보드 번호 사원 번호로 찾기
-	int seleectMyBoardNo(int memNo);
+	//댓글 동록 마이보드 번호 찾기
+	int seleectMyBoardNo(MyBoardListVO myBoardListVo);
 	
 	
 	//다희

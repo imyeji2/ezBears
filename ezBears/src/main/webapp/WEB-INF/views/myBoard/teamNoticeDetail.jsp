@@ -22,7 +22,7 @@
 					alert(error);
 				},
 				success : function(json){
-					alert(json)
+					alert(json.name)
 				}
 			});
 
@@ -165,13 +165,15 @@
 	       			<form name="reply_frm" method="post" action="#">
 	       				<input type="text" name="memNo" value="${userNo}">
 	       				<input type="text" name="groupno" value="${map['TEAM_NOTICE_NO']}">
-	       				<input type="text" name="groupno" value="${map['TEAM_NOTICE_TITLE']}">
+	       				<input type="text" name="mBoardNo" value="${map['M_BOARD_NO']}">
+	       				
+	       				
  		       			
  		       			
  		       			<div class="reply_write">
 							<div class="form-floating">
 							  <textarea class="form-control" placeholder="Comments" 
-							  id="floatingTextarea2" name="teamNoticeContent"
+							  id="floatingTextarea2" name="comments"
 							   style="height: 100px"></textarea>
 							  <label for="floatingTextarea2">Comments</label>
 							</div>	

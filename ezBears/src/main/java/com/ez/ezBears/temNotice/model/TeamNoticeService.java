@@ -29,4 +29,11 @@ public interface TeamNoticeService {
 	
 	//팀별 공지사항 번호로 조회
 	TeamNoticeVO selectTeamNoticeByNo(int teamNoticeNo);
+	
+	//댓글 등록
+	int reply(TeamNoticeVO teamNoticeVo);
+	
+	//팀별 공지사항 댓글 검색
+	List<Map<String, Object>> selectReply(int groupNo);
+	
 }

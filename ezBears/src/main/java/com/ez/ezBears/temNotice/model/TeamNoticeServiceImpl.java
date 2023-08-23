@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ez.ezBears.common.MyBoardSearchVo;
 
@@ -63,6 +64,19 @@ public class TeamNoticeServiceImpl implements TeamNoticeService {
 	@Override
 	public TeamNoticeVO selectTeamNoticeByNo(int teamNoticeNo) {
 		return teamNoticeDao.selectTeamNoticeByNo(teamNoticeNo);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectReply(int groupNo) {
+		return teamNoticeDao.selectReply(groupNo);
+	}
+
+	@Override
+	@Transactional
+	public int reply(TeamNoticeVO teamNoticeVo) {
+		int cnt = teamNoticeDao.updateSortNo(teamNoticeVo);
+		cnt = teamNoticeDao.insertReply(teamNoticeVo);
+		return cnt;
 	}
 	
 	

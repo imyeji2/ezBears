@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ez.ezBears.common.ConstUtil;
@@ -363,19 +364,35 @@ public class TeamNoticeController {
 		return "common/message";
 	}
 	
-	
+	@ResponseBody
 	@RequestMapping("/reply_insert")
-	public String reply_insert(@ModelAttribute TeamNoticeVO teamNoticeVo) {
+	public List<Map<String, Object>> reply_insert(@ModelAttribute TeamNoticeVO teamNoticeVo,
+			@RequestParam (defaultValue = "0") int mBoardNo) {
 		//1
 		logger.info("리플 등록 파라미터 teamNoticeVo={}",teamNoticeVo);
-		//int myBoarNo = myBoardListService.s
 		
 		//2
-		//int cnt = 
-		//3
-		//4
+		MyBoardListVO boardListVo = new MyBoardListVO();
+		boardListVo.setMemNo(teamNoticeVo.getMemNo());
+		boardListVo.setMBoardNo(mBoardNo);
+		logger.info("리플 등록 마이 보드 검색 파라미터 boardListVo={}",boardListVo);
 		
-		return "";
+
+		int myBoardNo = myBoardListService.seleectMyBoardNo(boardListVo);
+		teamNoticeVo.setMyBoardNo(myBoardNo);
+		logger.info("리플 등록 파라미터 수정 teamNoticeVo={}",teamNoticeVo);
+		
+		int cnt = teamNoticeService.reply(teamNoticeVo);
+		logger.info("리플 등록 결과 cnt={}",cnt);
+		
+		
+		List<Map<String, Object>> list = 
+				teamNoticeService.selectReply(teamNoticeVo.getGroupno());
+		logger.info("리플 검색 결과 list.size()", list.size());
+		
+		
+		
+		return list;
 	}
 	
 }

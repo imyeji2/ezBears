@@ -37,6 +37,12 @@ public class MyBoardListServiceImpl implements MyBoardListService {
 		return myBoardListDao.selectByBoardName(myBoardNo);
 	}
 
+	//댓글 동록 마이보드 번호 찾기
+	@Override
+	public int seleectMyBoardNo(MyBoardListVO myBoardListVo) {
+		return myBoardListDao.seleectMyBoardNo(myBoardListVo);
+	}
+
 	
 	
 	//다희
@@ -52,14 +58,14 @@ public class MyBoardListServiceImpl implements MyBoardListService {
 		return myBoardListDao.insertMyBoard(myBoardListVo);
 	}
 
-	@Override
-	public List<Map<String, Object>> selectBoardInfo(String userid) {
-		return myBoardListDao.selectBoardInfo(userid);
-	}
 
 	
 	//희진
 
+	@Override
+	public List<Map<String, Object>> selectBoardInfo(String userid) {
+		return myBoardListDao.selectBoardInfo(userid);
+	}
 
 
 
