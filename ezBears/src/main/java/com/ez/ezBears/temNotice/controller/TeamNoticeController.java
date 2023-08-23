@@ -388,7 +388,7 @@ public class TeamNoticeController {
 		
 		List<Map<String, Object>> list = 
 				teamNoticeService.selectReply(teamNoticeVo.getGroupno());
-		logger.info("리플 검색 결과 list.size()", list.size());
+		logger.info("리플 검색 결과 list.size()={}", list.size());
 		
 		
 		

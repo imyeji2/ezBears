@@ -10,23 +10,50 @@
 			 }
 		});
 		
-		$('#add_reply').click(function(){
-			var repply = $('form[name=reply_frm]').serialize();
-			
-			$.ajax({
-				type : 'post',
-				url : "<c:url value='/myBoard/reply_insert'/>",
-				data : repply,
-				dataType : 'json',
-				error: function(xhr, status, error){
-					alert(error);
-				},
-				success : function(json){
-					alert(json.name)
-				}
-			});
+		$('#add_reply').click(function(event){
+		    event.preventDefault(); // 이벤트의 기본 동작 방지
+		    var replyData = $('form[name=reply_frm]').serialize(); // 데이터 직렬화
+		    
+		    $.ajax({
+		        type: 'post',
+		        url: "<c:url value='/myBoard/reply_insert'/>",
+		        data: replyData,
+		        dataType: 'json',
+		        error: function(xhr, status, error){
+		            alert(error);
+		        },
+		        success: function(res){
+		            console.log(res); // 서버 응답 확인
+		            alert("댓글이 등록되었습니다.");
+		            
+		            $.each(res, function(idx, item){
 
-			
+							var reply_content = "<div class='reply_content'>"
+							reply_content+="<div class='reply_user'>";
+							reply_content+="<div class='detail_left'>";
+							reply_content+="<div class='user_img'>";
+							reply_content+="<img src='<c:url value='/img/user.jpg'/>' alt='사원프로필'>";
+							reply_content+="</div><!-- user_img -->";
+							reply_content+="</div>";
+							reply_content+="<div class='detail_left'>";
+							reply_content+="<span class='user_name'><a href=''#''>"+item.MEM_NAME+"</a></span>";
+							reply_content+="<span class='user_dept'>/ 💼"+item.DEPT_NAME+"</span>";
+							reply_content+="</div><!-- detail_left -->";
+							reply_content+="</div><!-- reply_user -->";
+							reply_content+="<div class='reply_txt'>"+item.COMMENTS+"</div>";
+							reply_content+="<div class='reply_txt'>";
+							reply_content+="<span>"+item.REGDATE+"</span>";
+							reply_content+="<span><a href='#'>수정</a></span>";
+							reply_content+="<span><a href='#'>삭제</a></span>";
+							reply_content+="<span><a href='#'>답글</a></span>";
+							reply_content+="</div><!-- reply_txt -->";
+							reply_content+="</div><!-- reply_content -->";
+							$('.reply_list').append(reply_content);
+						
+		       				
+					});
+		        }
+		    });
 		});
 	});
 </script>
