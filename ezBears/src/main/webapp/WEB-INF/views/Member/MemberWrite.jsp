@@ -2,8 +2,39 @@
     pageEncoding="UTF-8"%>
 <%@include file="../inc/top.jsp"%>
 <link href="${pageContext.request.contextPath}/css/Dcss.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/css/jquery-ui.min.css" rel="stylesheet">
 <script type="text/javascript" src="<c:url value ='/js/member.js"'/>"></script>
+<script type="text/javascript" src="<c:url value ='/js/jquery-ui.min.js"'/>"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+<script>
+
+	var jb = jQuery.noConflict();
+	jb(function(){
+		jb('#birth').datepicker({
+			dateFormat:'yy-mm-dd',
+			changeYear:true,
+			dayNamesMin:['일','월','화','수','목','금','토'],
+			monthNames:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월']
+
+		jb('#contract').datepicker({
+			dateFormat:'yy-mm-dd',
+			changeYear:true,
+			dayNamesMin:['일','월','화','수','목','금','토'],
+			monthNames:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월']
+
+		jb('#birth').datepicker({
+			dateFormat:'yy-mm-dd',
+			changeYear:true,
+			dayNamesMin:['일','월','화','수','목','금','토'],
+			monthNames:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월']
+		});
+		
+	});
+
+</script>
+
+
 <div class="col-12">
 	<div class="bg-secondary rounded h-100 p-4">
 	   	<nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
