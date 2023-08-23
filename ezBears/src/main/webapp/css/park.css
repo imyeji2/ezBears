@@ -65,7 +65,13 @@
 	margin-left: 60px;
 	}	
 }
-
+/*webhard*/
+#webhard{
+	.download{
+		margin: 0px;
+		text-align: center;
+	}
+}
 /* webhard_detail */
 #harddetail{
 	.appbox{

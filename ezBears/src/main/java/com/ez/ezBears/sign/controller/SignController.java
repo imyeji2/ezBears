@@ -3,7 +3,9 @@ package com.ez.ezBears.sign.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import lombok.RequiredArgsConstructor;
 
@@ -19,8 +21,10 @@ public class SignController {
 	
 	
 	  @RequestMapping("/Approval")
-	   public String Approval() {
-	      logger.info("결재 리스트");
+	   public String Approval(@RequestParam (defaultValue = "0") int mBoardNo, Model model) {
+		  logger.info("결재 리스트 출력 mBoardNo={}",mBoardNo);
+	      
+	      model.addAttribute("mBoardNo",mBoardNo);
 	      return "myBoard/Approval";
 	   }
 	   
