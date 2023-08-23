@@ -1,16 +1,29 @@
 package com.ez.ezBears.record.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+
+import com.ez.ezBears.common.SearchVO;
+import com.ez.ezBears.record.game.model.GameService;
+import com.ez.ezBears.record.game.model.GameVO;
+
+import lombok.RequiredArgsConstructor;
+
 
 @Controller
 @RequestMapping("/record")
+@RequiredArgsConstructor
 public class RecordController {
 	private static final Logger logger = LoggerFactory.getLogger(RecordController.class);
+	
+	private final GameService gameService; 
 	
 	@RequestMapping("/playerList")
 	public String playerList() {
@@ -151,12 +164,60 @@ public class RecordController {
 	}
 	
 	@RequestMapping("/gameList")
-	public String gameList() {
+	public String gameList(@ModelAttribute SearchVO searchVo, Model model) {
 		//1,4
-		logger.info("경기정보");
+		logger.info("경기정보, 파라미터 searchVo={}", searchVo);
+			
+		List<GameVO> list = gameService.selectAllGame(searchVo);
+		logger.info("경기 전체 조회결과, list.size={}", list.size());
+		
+		model.addAttribute("list", list);
+
 		return "/record/gameList";
 	}
 	
+	@RequestMapping("/gameWrite")
+	public String gameWrite(Model model) {
+		//1,4
+		logger.info("경기정보입력");
+		
+		return "/record/gameWrite";
+	}
+	
+	@RequestMapping("/gameUpdate")
+	public String gameUpdate() {
+		//1,4
+		logger.info("경기정보수정");
+		return "/record/gameUpdate";
+	}
+	
+	@RequestMapping("/gameDelete")
+	public String gameDelete() {
+		//1,4
+		logger.info("경기정보삭제");
+		return "/record/gameDelete";
+	}
+	
+	@RequestMapping("/inningWrite")
+	public String inningWrite() {
+		//1,4
+		logger.info("이닝정보등록");
+		return "/record/inningWrite";
+	}
 	
 	
+	@RequestMapping("/inningUpdate")
+	public String inningUpdate() {
+		//1,4
+		logger.info("이닝정보수정");
+		return "/record/inningUpdate";
+	}
+
+	
+	@RequestMapping("/inningDelete")
+	public String inningDelete() {
+		//1,4
+		logger.info("이닝정보삭제");
+		return "/record/inningDelete";
+	}
 }

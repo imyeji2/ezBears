@@ -6,7 +6,6 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.ez.ezBears.common.SearchVO;
 
-@Mapper
 public interface GameService {
 	int insertGame(GameVO gameVo);
 	int updateGame(GameVO gameVo);

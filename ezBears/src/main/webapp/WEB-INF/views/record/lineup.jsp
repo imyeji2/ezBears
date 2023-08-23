@@ -117,88 +117,6 @@
 						<div class="lf__incidents"></div>
 					</div>
 				</div>
-				<div class="lf__side">
-					<div class="lf__participant lf__isReversed">
-						<div class="lf__participantNumber">41</div>
-						<div class="lf__participantFlag" title="대한민국">
-							<span class="flag fl_106" title=""></span>
-						</div>
-						<div class="lf__participantName">김현준</div>
-						<div class="lf__incidents"></div>
-					</div>
-					<div class="lf__participant lf__isReversed">
-						<div class="lf__participantNumber">39</div>
-						<div class="lf__participantFlag" title="대한민국">
-							<span class="flag fl_106" title=""></span>
-						</div>
-						<div class="lf__participantName">김성윤</div>
-						<div class="lf__incidents"></div>
-					</div>
-					<div class="lf__participant lf__isReversed">
-						<div class="lf__participantNumber">5</div>
-						<div class="lf__participantFlag" title="대한민국">
-							<span class="flag fl_106" title=""></span>
-						</div>
-						<div class="lf__participantName">구자욱</div>
-						<div class="lf__incidents"></div>
-					</div>
-					<div class="lf__participant lf__isReversed">
-						<div class="lf__participantNumber">47</div>
-						<div class="lf__participantFlag" title="대한민국">
-							<span class="flag fl_106" title=""></span>
-						</div>
-						<div class="lf__participantName">강민호</div>
-						<div class="lf__incidents"></div>
-					</div>
-					<div class="lf__participant lf__isReversed">
-						<div class="lf__participantNumber">42</div>
-						<div class="lf__participantFlag" title="대한민국">
-							<span class="flag fl_106" title=""></span>
-						</div>
-						<div class="lf__participantName">류지혁</div>
-						<div class="lf__incidents"></div>
-					</div>
-					<div class="lf__participant lf__isReversed">
-						<div class="lf__participantNumber">63</div>
-						<div class="lf__participantFlag" title="베네수엘라">
-							<span class="flag fl_205" title=""></span>
-						</div>
-						<div class="lf__participantName">J. 피렐라</div>
-						<div class="lf__incidents"></div>
-					</div>
-					<div class="lf__participant lf__isReversed">
-						<div class="lf__participantNumber">44</div>
-						<div class="lf__participantFlag" title="대한민국">
-							<span class="flag fl_106" title=""></span>
-						</div>
-						<div class="lf__participantName">오재일</div>
-						<div class="lf__incidents"></div>
-					</div>
-					<div class="lf__participant lf__isReversed">
-						<div class="lf__participantNumber">7</div>
-						<div class="lf__participantFlag" title="대한민국">
-							<span class="flag fl_106" title=""></span>
-						</div>
-						<div class="lf__participantName">이재현</div>
-						<div class="lf__incidents"></div>
-					</div>
-					<div class="lf__participant lf__isReversed">
-						<div class="lf__participantNumber">3</div>
-						<div class="lf__participantFlag" title="대한민국">
-							<span class="flag fl_106" title=""></span>
-						</div>
-						<div class="lf__participantName">김동진</div>
-						<div class="lf__incidents"></div>
-					</div>
-					<div class="lf__participant lf__isReversed">
-						<div class="lf__participantNumber">6</div>
-						<div class="lf__participantFlag" title="대한민국">
-							<span class="flag fl_106" title=""></span>
-						</div>
-						<div class="lf__participantName">강한울</div>
-						<div class="lf__incidents"></div>
-					</div>
-				</div>
 			</div>
 		</div>
 	</div>
@@ -249,49 +167,6 @@
 						<div class="lf__incidents"></div>
 					</div>
 				</div>
-				<div class="lf__side">
-					<div class="lf__participant lf__isReversed">
-						<div class="lf__participantNumber">27</div>
-						<div class="lf__participantFlag" title="대한민국">
-							<span class="flag fl_106" title=""></span>
-						</div>
-						<div class="lf__participantName">김태훈</div>
-						<div class="lf__seasonResult" title="(승, 5-5)">(승, 5-5)</div>
-						<div class="lf__incidents"></div>
-					</div>
-					<div class="lf__participant lf__isReversed">
-						<div class="lf__participantNumber">2</div>
-						<div class="lf__participantFlag" title="대한민국">
-							<span class="flag fl_106" title=""></span>
-						</div>
-						<div class="lf__participantName">우규민</div>
-						<div class="lf__incidents"></div>
-					</div>
-					<div class="lf__participant lf__isReversed">
-						<div class="lf__participantNumber">45</div>
-						<div class="lf__participantFlag" title="대한민국">
-							<span class="flag fl_106" title=""></span>
-						</div>
-						<div class="lf__participantName">이재익</div>
-						<div class="lf__incidents"></div>
-					</div>
-					<div class="lf__participant lf__isReversed">
-						<div class="lf__participantNumber">18</div>
-						<div class="lf__participantFlag" title="대한민국">
-							<span class="flag fl_106" title=""></span>
-						</div>
-						<div class="lf__participantName">원태인</div>
-						<div class="lf__incidents"></div>
-					</div>
-					<div class="lf__participant lf__isReversed">
-						<div class="lf__participantNumber">21</div>
-						<div class="lf__participantFlag" title="대한민국">
-							<span class="flag fl_106" title=""></span>
-						</div>
-						<div class="lf__participantName">오승환</div>
-						<div class="lf__incidents"></div>
-					</div>
-				</div>
 			</div>
 		</div>
 	</div>
@@ -306,16 +181,6 @@
 							<span class="flag fl_106" title=""></span>
 						</div>
 						<div class="lf__participantName">이승엽</div>
-						<div class="lf__incidents"></div>
-					</div>
-				</div>
-				<div class="lf__side">
-					<div class="lf__participant lf__isReversed">
-						<div class="lf__participantNumber"></div>
-						<div class="lf__participantFlag" title="대한민국">
-							<span class="flag fl_106" title=""></span>
-						</div>
-						<div class="lf__participantName">박진만</div>
 						<div class="lf__incidents"></div>
 					</div>
 				</div>
