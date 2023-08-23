@@ -62,5 +62,12 @@
 		where player_no=#{playerNo}
 	</update>
 	
+	<update id="deleteTeam" parameterType="int">
+		update team
+		set 
+		player_status = 'N'
+		where player_no = #{playerNo}
+	</update>
+	
 	
 </mapper>

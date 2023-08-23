@@ -20,15 +20,16 @@
         	<div class="deleteDiv">
 	            <br>
 					<article class="simpleForm">
-						<form name="frmOut" method="post" action="<c:url value='/member/memberOut'/>" >
+						<form name="frmOut" method="post" action="<c:url value='/team/teamDelete'/>" >
 							<fieldset>	
-								<legend>선수 번호
+								<legend>선수 번호 : ${map['PLAYER_NO'] }
 								<br>
-								선수 이름</legend>
+								선수 이름 : ${map['PLAYER_NAME'] }
+								</legend>
 								<br><br>
 								<p class="p">선수 삭제 하시겠습니까?</p>
 								<div> 	
-									<input type="hidden" name="playerNo" value="">
+									<input type="hidden" name="playerNo" value="${map['PLAYER_NO'] }">
 								</div>
 								<br>
 								<div class="align_center">

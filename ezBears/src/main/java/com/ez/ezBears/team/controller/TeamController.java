@@ -138,12 +138,26 @@ public class TeamController {
 	}
 	
 	@GetMapping("/teamDelete")
-	public String delete_get() {
-		logger.info("선수 삭제 화면 이동");
+	public String delete_get(@RequestParam int playerNo, Model model) {
+		logger.info("선수 삭제 화면 이동, 파라미터 playerNo={}", playerNo);
+		Map<String, Object> map = teamService.selectByPlayerNo(playerNo);
+		logger.info("선수 삭제 화면 이동 결과, map={}", map);
+		
+		model.addAttribute("map", map);
 		
 		return "/team/teamDelete";
 		
 		//http://localhost:9091/ezBears/team/teamDelete
+	}
+	
+	@PostMapping("/teamDelete")
+	public String delete_post(@RequestParam(defaultValue = "0") int playerNo) {
+		logger.info("선수 삭제 작업, 파라미터 playerNo={}", playerNo);
+		
+		int cnt = teamService.deleteTeam(playerNo);
+		logger.info("선수 삭제 결과, cnt={}", cnt);
+		
+		return "redirect:/team/teamList";
 	}
 	
 	@GetMapping("/teamDetail")
