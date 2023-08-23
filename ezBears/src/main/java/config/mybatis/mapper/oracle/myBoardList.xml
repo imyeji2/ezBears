@@ -48,7 +48,14 @@
 		INSERT INTO MY_BOARD(MY_BOARD_NO, MEM_NO, M_BOARD_NO) VALUES(#{myBoardNo}, #{memNo}, #{MBoardNo} )
 	</insert>
 	
-<!-- 다희 -->		
+<!-- 다희 -->	
+
+<!-- 희진 -->
+<select id="selectBoardInfo" parameterType="String" resultType="map">
+	select my_board_no, m_board_no, mem_no, m_board_name
+		from myBoardListView
+		where mem_id=#{memId}
+</select>
 </mapper>
 
 
