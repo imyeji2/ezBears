@@ -224,13 +224,13 @@
 	                        </div>
 	                        <div class="form-floating mb-3">
 	                            <input type="text" class="form-control" id="floatingInput" placeholder="team_info" name="playerInfo">
-	                            <label for="floatingInput">선수_정보</label>
+	                            <label for="floatingInput">선수_등록상태</label>
 	                        </div>
-	                        <div class="form-floating mb-3">
+<!-- 	                        <div class="form-floating mb-3">
 	                            <input type="text" class="form-control" id="floatingInput" placeholder="team_status" name="playerStatus">
-	                            <label for="floatingInput">선수_상태</label>
+	                            <label for="floatingInput">선수_등록상태</label>
 	                        </div>
-		                    <div class="firstdiv">
+ -->		                    <div class="firstdiv">
 						    	<div class="form-floating address">
 						    		<input type="text" class="form-control" id="contract" placeholder="team_zipcode" name="playerZipcode">
 							        <label for="zipcode">우편번호</label>

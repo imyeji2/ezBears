@@ -191,6 +191,7 @@
 	                            <label for="floatingSelect">부서를 선택하세요</label>
 	                        </div>
 	                        <input type="hidden" name="staffNo" value="${staffVo.staffNo }">
+	                        <input type="hidden" name="oldFileName" value="${staffVo.staffImage }">
 	                        <div class="form-floating mb-3">
 	                            <input type="text" class="form-control" id="floatingInput" placeholder="staff_name" name="staffName" value="${staffVo.staffName }">
 	                            <label for="floatingInput">staff_이름</label>
