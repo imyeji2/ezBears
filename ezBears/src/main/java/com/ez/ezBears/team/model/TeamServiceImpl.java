@@ -38,5 +38,10 @@ public class TeamServiceImpl implements TeamService{
 	public int updateTeam(TeamVO teamVo) {
 		return teamDao.updateTeam(teamVo);
 	}
+
+	@Override
+	public int deleteTeam(int playerNo) {
+		return teamDao.deleteTeam(playerNo);
+	}
 	
 }
