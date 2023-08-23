@@ -21,6 +21,9 @@ public interface MyBoardListDAO {
 	//마이보드 이름
 	String selectByBoardName(int myBoardNo);
 	
+	//마이보드 번호 사원 번호로 찾기
+	int seleectMyBoardNo(int memNo);
+	
 	
 	//다희
 	//부서 이름으로 동적 게시판 번호 찾기

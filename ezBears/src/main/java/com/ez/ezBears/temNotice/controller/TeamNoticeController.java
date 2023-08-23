@@ -1,8 +1,6 @@
 package com.ez.ezBears.temNotice.controller;
-
 import java.io.File;
 import java.io.IOException;
-import java.lang.ProcessHandle.Info;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -188,6 +186,10 @@ public class TeamNoticeController {
 		String userid=(String)session.getAttribute("userid");
 		logger.info("팀 공지사항 디테일 접속 사용자 아이디 userid={}",userid);
 		
+		//사원의 시퀀스 번호
+		int userNo = memberService.selectMemberNo(userid);
+
+		
 		//2
 		Map<String, Object> map = teamNoticeService.selectDetail(teamNoticeNo);
 		logger.info("팀 공지사항 디테일 결과 map={}",map);
@@ -200,6 +202,7 @@ public class TeamNoticeController {
 		model.addAttribute("map",map);
 		model.addAttribute("myBoardName",myBoardName);
 		model.addAttribute("userid",userid);
+		model.addAttribute("userNo",userNo);
 		
 		return "myBoard/teamNoticeDetail";
 	}
@@ -358,6 +361,21 @@ public class TeamNoticeController {
 
 		//4
 		return "common/message";
+	}
+	
+	
+	@RequestMapping("/reply_insert")
+	public String reply_insert(@ModelAttribute TeamNoticeVO teamNoticeVo) {
+		//1
+		logger.info("리플 등록 파라미터 teamNoticeVo={}",teamNoticeVo);
+		//int myBoarNo = myBoardListService.s
+		
+		//2
+		//int cnt = 
+		//3
+		//4
+		
+		return "";
 	}
 	
 }

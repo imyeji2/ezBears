@@ -9,6 +9,25 @@
 			 	location.href="<c:url value='/myBoard/teamNoticeDel?mBoardNo=${map["M_BOARD_NO"]}&teamNoticeNo=${map["TEAM_NOTICE_NO"]}&oldFileName=${map["FILENAME"]}'/>"
 			 }
 		});
+		
+		$('#add_reply').click(function(){
+			var repply = $('form[name=reply_frm]').serialize();
+			
+			$.ajax({
+				type : 'post',
+				url : "<c:url value='/myBoard/reply_insert'/>",
+				data : repply,
+				dataType : 'json',
+				error: function(xhr, status, error){
+					alert(error);
+				},
+				success : function(json){
+					alert(json)
+				}
+			});
+
+			
+		});
 	});
 </script>
 <div class="container-fluid pt-4 px-4" id="board_style">
@@ -85,6 +104,7 @@
 		       		</div><!-- detail_content -->
 	       		</div><!-- detailWrap -->	 
 	       		
+	       		
 	       		<div class="detail_reply_wrap">
 	       			<div class="reply_tit">댓글(100)</div>
 	       			<div class="reply_list">
@@ -141,18 +161,26 @@
        					</div>	       				
 	       			</div><!-- r_reply_content -->	      
 	       			<div class="reply_line"></div> 
-	       						
-	       			<div class="reply_write">
-						<div class="form-floating">
-						  <textarea class="form-control" placeholder="Comments" 
-						  id="floatingTextarea2" style="height: 100px"></textarea>
-						  <label for="floatingTextarea2">Comments</label>
-						</div>	
-						       				
-	       				<div class="reply_add">
-	       					<button class="reply_add_btn">등록</button>
-	       				</div>
-	       			</div><!-- reply_write -->
+	       			
+	       			<form name="reply_frm" method="post" action="#">
+	       				<input type="text" name="memNo" value="${userNo}">
+	       				<input type="text" name="groupno" value="${map['TEAM_NOTICE_NO']}">
+	       				<input type="text" name="groupno" value="${map['TEAM_NOTICE_TITLE']}">
+ 		       			
+ 		       			
+ 		       			<div class="reply_write">
+							<div class="form-floating">
+							  <textarea class="form-control" placeholder="Comments" 
+							  id="floatingTextarea2" name="teamNoticeContent"
+							   style="height: 100px"></textarea>
+							  <label for="floatingTextarea2">Comments</label>
+							</div>	
+							       				
+		       				<div class="reply_add">
+		       					<button class="reply_add_btn" id="add_reply">등록</button>
+		       				</div>
+		       			</div><!-- reply_write -->
+	       			</form>
 	       			
 			        <div class="page_box">
 				    	<nav aria-label="Page navigation example">

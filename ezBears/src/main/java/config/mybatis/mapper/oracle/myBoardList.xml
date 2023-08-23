@@ -32,6 +32,11 @@
 		where m_board_no=#{mBoardNo}
 	</select>
 	
+	<select id="seleectMyBoardNo" parameterType="int" resultType="int">
+		select my_board_no
+		from my_board
+		where mem_no=#{mem_no}
+	</select>
 <!-- 예지 -->
 
 <!-- 다희 -->	

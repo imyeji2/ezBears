@@ -81,5 +81,14 @@
    <delete id="deleteTeamNotice" parameterMap="deleteTeamNoticeProc">
    		call DELETETEAMNOTICE(?,?,?)
    </delete>
+   
+   <insert id="insertReply">
+		<selectKey keyProperty="teamNoticeNo" resultType="int" order="BEFORE">
+			select TEAM_NOTICE_SEQ.nextval from dual
+		</selectKey>
+   		insert into team_notice(team_notice_no, mem_no, team_notice_content,groupno,sortNo,step, my_board_no)
+   		values(#{teamNoticeNo},#{memNo},#{teamNoticeContent},#{groupno},#{step}+1,#{sortNo}+1,#{myBoardNo})
+   	
+   </insert>
    	
 </mapper>
