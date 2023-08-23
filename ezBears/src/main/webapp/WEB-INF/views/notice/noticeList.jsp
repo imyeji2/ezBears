@@ -108,9 +108,9 @@
 					        <div class="list_line"></div>     
 						        <div class="btnBox">
 						        	<c:if test="${yesNo == 'Y'}">
-										<a class="btn btn-sm btn-primary" href="">삭제</a>
-										<a class="btn btn-sm btn-primary" href="">수정</a>
-										<a class="btn btn-sm btn-primary" href="<c:url value='/notice/noticeWrite'/>">등록</a>
+										<!-- <a class="btn btn-sm btn-primary" href="">삭제</a>
+										<a class="btn btn-sm btn-primary" href="">수정</a> -->
+										<a class="btn btn-sm btn-primary" href="<c:url value='/notice/noticeWrite'/>">글쓰기</a>
 									</c:if>
 								</div><!-- btnBox -->          
 						      <div class="page_box">

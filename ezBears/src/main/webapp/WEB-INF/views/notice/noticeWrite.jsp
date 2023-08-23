@@ -18,6 +18,26 @@
 			CKEDITOR.replace('content', {
 				filebrowserUploadUrl : "<c:url value='/adm/fileupload'/>"
 			});
+			
+			
+			 $('#title').focus();
+				
+				$('input[type=button]').click(function(){
+					location.href	= "<c:url value='/reBoard/list'/>";
+				});
+				
+				$('input[type=submit]').click(function(){
+				   $('.infobox').each(function(idx, item){
+				      if($(this).val().length <1){
+				         alert($(this).prev().text() + '를 입력하세요');
+				         $(this).focus();
+				         event.preventDefault();
+				         return false;
+				      }
+				   });
+				   
+				});
+			
 		});
 	</script>
 <div class="container-fluid pt-4 px-4" id="board_style">
@@ -32,24 +52,28 @@
 			</nav>   			
 			<div id="teamNoticeWrite">
 				<form name="teamNotiFrm" method="post" enctype="multipart/form-data"
-						action="">
+						action="<c:url value='/notice/noticeWrite'/>">
 		        	<div class="writeWrap">
-		        		<input type="hidden" name="myBoardNo" value="">
+		        	<c:if test="${!empty param.noticeNo}">
+		        		<input type="hidden" name="noticeNo" value="${param.noticeNo}">
+		        	</c:if>
+		        		<input type="text" name="memNo" value="${sessionScope.memNo}">
+						<%-- <input type="hidden" name="filename" value="${map['FILENAME']}"> --%>
 			        	<div class="write_title">
-			        		<input type="text" class="form-control" id="title" name="title"
-							 placeholder="제목을 입력해주세요">
+			        		<input type="text" class="form-control" id="title" name="noticeTitle" placeholder="제목을 입력해주세요"> <!-- name : VO컬럼이름  -->
+							 
 			        	</div><!-- write_title -->
 			        
 			       				 
 			       		<div class="write_content">
 			       			<div class="write_view">
 				       			 <div class="form-floating">
-								  <textarea class="form-control write_form" placeholder="내용을 입력해주세요" id="content"></textarea>
+								  <textarea class="form-control write_form" placeholder="내용을 입력해주세요"  id="content" name="noticeContent"></textarea>
 								</div>
 			       			</div>
 			       			
 			       			<div class="write_file">
-								<input class="form-control" type="file" name="notiFile" id="notiFile">
+								<input class="form-control bg-dark" type="file" id="formFileMultiple" name="upfile" multiple="multiple">
 			       			</div>
 			       			<div class="write_option_btn">
 			       				<button class="btn btn-sm btn-primary">등록</button>&nbsp;
