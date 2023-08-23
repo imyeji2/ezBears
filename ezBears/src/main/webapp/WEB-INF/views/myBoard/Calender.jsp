@@ -94,6 +94,7 @@
 				<a href='<c:url value='/myBoard/Calender_write'/>' role="button"
 						 class="btn btn-sm btn-primary schedulein" >일정등록</a>
 			</div>
+			
 </body>
                   </div>
             </div>

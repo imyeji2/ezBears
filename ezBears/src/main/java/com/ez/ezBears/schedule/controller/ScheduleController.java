@@ -1,6 +1,9 @@
 package com.ez.ezBears.schedule.controller;
 
 
+import java.util.List;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -46,23 +49,23 @@ public class ScheduleController {
 		return "myBoard/Calender";
 
 	}
-
 	@GetMapping("/Calender_write")
-	public String Calender_wr(@ModelAttribute MyBoardListVO myBoardListVo, HttpSession session ,Model model) {
+	public String Calender_wr(@RequestParam (defaultValue = "0") int mBoardNo ,@ModelAttribute MyBoardListVO myBoardListVo, HttpSession session ,Model model) {
 
 		//
 		String userid = (String)session.getAttribute("userid");   
 		logger.info("---------캘린더--------");
 		logger.info("일정등록 뷰");
-		logger.info("myBoardListVo={},userid={}",myBoardListVo,userid);
+		logger.info("userid={}",userid);
 		
-		
-		myBoardListVo.setMemId(userid);
-		myBoardListVo = myBoardListService.selectMyBoardInfo(myBoardListVo);
-
-		model.addAttribute("myBoardListVo",myBoardListVo);
-		logger.info("myBoardListVo={}",myBoardListVo);
-		
+		/*
+		 myBoardListVo.setMemId(userid); myBoardListVo.setMBoardNo(mBoardNo);
+		  
+		  List<Map<String, Object>> list = myBoardListService.selectBoardInfo(userid);
+		 
+		  model.addAttribute("list",list);
+		 */
+	
 		return "myBoard/Calender_write";
 	}
 

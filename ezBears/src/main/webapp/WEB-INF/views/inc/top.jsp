@@ -36,6 +36,8 @@
     <script type="text/javascript" src="<c:url value='/js/jquery-3.7.0.min.js'/>"></script>
     <script src="//cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
     
+
+    
     <style>
     	a{
     	color:#7000D8;
