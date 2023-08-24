@@ -8,4 +8,8 @@ public interface NoticeService {
 	int insertFileNotice(List<Map<String, Object>> files, int noticeNo);
 	List<Map<String, Object>> selectNoticeList(int noticeNo);
 	Map<String, Object> selectDetail(int noticeNo);
+	List<Map<String, Object>> selectNoticeFile(int noticeNo);
+	//List<Map<String, Object>> nextPage(int noticeNo);
+	List<Map<String, Object>> nextPage(int noticeNo);
+	List<Map<String, Object>> backPage(int noticeNo);
 }

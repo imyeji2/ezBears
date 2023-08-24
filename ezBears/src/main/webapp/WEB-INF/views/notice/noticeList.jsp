@@ -52,7 +52,7 @@
 						        </div>
 							</c:if>
 							
-							<c:set var="yesNo" value="N"/> <!-- 경영지원팀만 댓글가능하게  -->
+							<%-- <c:set var="yesNo" value="N"/> <!-- 경영지원팀만 댓글가능하게  --> --%>
 							
 							<c:if test="${!empty list}">
 								<!-- 반복시작 -->
@@ -97,9 +97,9 @@
 							        </div><!-- notice_list_box -->		
 									
 									<!-- 경영지원팀만 댓글가능하게  -->
-									<c:if test="${map['DEPT_NO']==1}">
+									<%-- <c:if test="${map['DEPT_NO']==1}">
 										<c:set var="yesNo" value="Y"/>
-									</c:if>	
+									</c:if>	 --%>
 													
 								</c:forEach>
 						        <!-- 반복 끝 -->
@@ -107,7 +107,8 @@
 					                    
 					        <div class="list_line"></div>     
 						        <div class="btnBox">
-						        	<c:if test="${yesNo == 'Y'}">
+						        	<%-- <c:if test="${yesNo == 'Y'}"> --%>
+						        	<c:if test="${sessionScope.dept_no==1}">
 										<!-- <a class="btn btn-sm btn-primary" href="">삭제</a>
 										<a class="btn btn-sm btn-primary" href="">수정</a> -->
 										<a class="btn btn-sm btn-primary" href="<c:url value='/notice/noticeWrite'/>">글쓰기</a>
