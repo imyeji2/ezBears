@@ -37,9 +37,15 @@
 		values(#{hitterNo}, #{recodeNo}, #{playerNo}, #{staffNo}, #{regdate} #{BB}, #{SO}, #{IP}, #{HA}, #{RC}, #{ER}, #{HR}, #{ERA})
 	</insert>
 	
-	<select id="selectByPlayerNo" resultType="pitcherVo" parameterType="searchVo">
-		select *
-		from pitcher
+	<select id="selectByPlayerNo" resultType="map" parameterType="map">
+		select * from pitcher_view
+		where player_no = #{playerNo}
+		and play_date = #{playDate}
+	</select>
+	
+	<select id="selectPitcherByPlayerNo" resultType="pitcherVo" parameterType="int">
+		select * from pitcher
 		where player_no = #{playerNo}
 	</select>
+	
 </mapper>

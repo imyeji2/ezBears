@@ -198,11 +198,29 @@ public class MemberController {
 	}
 	
 	@RequestMapping("/edit")
-	public String detail_post(@ModelAttribute MemberVO memberVo, String sal, Model model) {
+	public String detail_post(@ModelAttribute MemberVO memberVo, HttpServletRequest request, String sal, Model model) {
 		//1
 		logger.info("회원 수정, 파라미터 memberVo ={}", memberVo);
 		
 		//2
+		//사진 수정
+		String fileName = "", originalFileName = "";
+		long fileSize = 0;
+		
+		try {
+			List<Map<String, Object>> list = fileUploadUtil.fileupload(request, ConstUtil.UPLOAD_MEMIMAGE_FLAG);
+			
+			for(Map<String, Object> map : list) {
+				fileName = (String) map.get("fileName");
+				originalFileName = (String) map.get("originalFileName");
+				fileSize = (long) map.get("fileSize");
+			}
+		} catch (IllegalStateException | IOException e) {
+			e.printStackTrace();
+		}
+		
+		memberVo.setMemImage(fileName);
+		
 		//연봉 int로 변환
 		String strSal = sal.replace(",", "");
 		strSal = strSal+"0000";

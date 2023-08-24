@@ -21,4 +21,7 @@ public interface DeptDAO {
 	
 	//부서 등록
 	int insertDept(DeptVO deptVo);
+	
+	//부서 등록 시 이름으로 중복 체크
+	int checkDeptName(String deptName);
 }

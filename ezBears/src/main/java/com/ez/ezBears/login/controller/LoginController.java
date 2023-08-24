@@ -66,8 +66,9 @@ public class LoginController {
 					session.setAttribute("name", map.get("MEM_NAME"));
 					session.setAttribute("position", map.get("POSITION_NAME"));
 					session.setAttribute("dept_name", map.get("DEPT_NAME"));
+					session.setAttribute("dept_no", map.get("DEPT_NO"));
 					session.setAttribute("memNo", map.get("MEM_NO"));
-					logger.info("momNo 로그 확인 memNo={}",session.getAttribute("memNo"));
+					logger.info("dept_no 로그 확인 dept_no={}",session.getAttribute("dept_no"));
 					
 					
 					//cookie
@@ -105,6 +106,7 @@ public class LoginController {
 					session.setAttribute("name", map.get("STAFF_NAME"));
 					session.setAttribute("position", map.get("STAFF_POSITION"));
 					session.setAttribute("dept_name", map.get("DEPT_NAME"));
+					session.setAttribute("dept_no", map.get("DEPT_NO"));
 					
 					//cookie
 					Cookie ck = new Cookie("ck_userid", userid);

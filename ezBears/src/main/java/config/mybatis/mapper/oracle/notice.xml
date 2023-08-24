@@ -20,20 +20,42 @@
 	</insert>
 	
 	<select id="selectNoticeList" parameterType="int" resultType="map">
-		select * from noticeView
+		select * from notice1
 		order by NOTICE_NO desc
 	</select>
+<!-- 	<select id="selectNoticeList" parameterType="int" resultType="map">
+		select * from noticeView
+		order by NOTICE_NO desc
+	</select> -->
 	
 	<select id="selectDetail" parameterType="int" resultType="map">
-		select * from noticeView
+		select * from notice1
+		where NOTICE_NO=#{noticeNo}
+	</select>
+
+	<select id="selectNoticeFile" parameterType="int" resultType="map">
+		select * from noticefile
 		where NOTICE_NO=#{noticeNo}
 	</select>
 	
 	<update id="updateViewsCount" parameterType="int">
-		update notice
+		update notice1
         set views = views+1
         where NOTICE_NO=#{noticeNo}
 	</update>
+	
+	<select id="nextPage" resultType="map" parameterType="int">
+		SELECT NOTICE_NO, MEM_NO, NOTICE_TITLE, NOTICE_CONTENT, REGDATE, STATUS, VIEWS,
+		LAG(NOTICE_NO, 1,0) OVER(ORDER BY NOTICE_NO ) PREV_NUM,
+	    LAG(NOTICE_TITLE, 1,0) OVER(ORDER BY NOTICE_NO ) PREV_TITLE
+		FROM NOTICE
+	</select>
+	
+	<select id="backPage" parameterType="int" resultType="map">
+		SELECT NOTICE_NO, MEM_NO, NOTICE_TITLE, NOTICE_CONTENT, REGDATE, STATUS, VIEWS,
+	    LEAD(NOTICE_TITLE) OVER (ORDER BY NOTICE_NO) AS NEXT_NOTICE_TITLE
+		FROM NOTICE
+	</select>
 	
 	
 	

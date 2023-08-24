@@ -9,6 +9,8 @@
 function confirmAndSubmit() {
     if (confirm("수정하시겠습니까?")) {
         $('.btn-form').submit();
+    }else {
+    	event.preventDefault();
     }
 }
 
@@ -34,19 +36,21 @@ function confirmAndSubmit() {
 	             <li class="breadcrumb-item active" aria-current="page">사원 상세페이지</li>
 	           </ol>
 	         </nav>
-			<form class="btn-form" name="frm1" method="post" action="<c:url value ='/Member/edit'/>">
+			<form class="btn-form" name="frm1" method="post" action="<c:url value ='/Member/edit'/>" enctype="multipart/form-data">
 				<div class = "btns">
 					<button type="submit" class="btnAdd" id="btnAdd" value="수정" onclick="confirmAndSubmit()">수정</button>
 					<button class="btnDelete" type="button" id="btnDelete">삭제</button>
 				</div>
+	        	<p class = "errMsg" style="color: red;">상단 수정 버튼을 눌려야 수정이 완료됩니다.</p>
 		        <div class="inner">
 		        <input type="hidden" name="memNo" value="${memberVo.memNo}">
 		        	<div class="memImg">
-		        		<img alt="" src="<c:url value ='/img/mem_images/${memberVo.memImage }'/> " style="width:180px; height:200px;">
+		        		<img alt="" src="<c:url value ='/img/mem_images/${memberVo.memImage }'/> " style="width:180px; height:200px;" id="previewImage" name="memImage">
 		        		<label id = "editLable" for="imageUpload">사진 수정</label>
 						<input type ="file" name="imageUpload" id="imageUpload"  class="infobox" style="display:none">
 		        	</div>
 		        	<div class = "memInfo" style="width:70%;">
+		             <img class="editIcon" id="editDept" src="<c:url value='/img/editIcon.png'/>" >
 		        	 <table class="table" style="width:800px;">
 		                    <tr>
 		                        <th scope="col">부서</th>
@@ -67,7 +71,6 @@ function confirmAndSubmit() {
 										<!-- 반복문 -->
 							       	</select>
 							       	
-		                        	<img class="editIcon" id="editDept" src="<c:url value='/img/editIcon.png'/>" >
 		                        </td>
 		                        <th scope="col">직급</th>
 		                        <td>
@@ -84,7 +87,6 @@ function confirmAndSubmit() {
 										</c:forEach>
 							        	<!-- 반복문 -->
 							       	</select>
-		                        	<img class="editIcon" id="editPosition" src="<c:url value='/img/editIcon.png'/>" >
 	                        	</td>
 		                    </tr>
 		                    <tr>
@@ -100,7 +102,6 @@ function confirmAndSubmit() {
 			                        <input type="text" class="edittext" id="sal" name="sal"
 			                        value="<fmt:formatNumber value="${memberVo.memSal/10000}" pattern="#,###"/>" readonly="readonly">
 			                        	만원
-		                        	<img class="editIcon" id="editSal" src="<c:url value='/img/editIcon.png'/>" >
 		                        </td>
 		                        <th scope="col">고용형태</th>
 		                        <td>
@@ -118,7 +119,6 @@ function confirmAndSubmit() {
 											</c:if>
 							            >정규직</option>
 							       	</select>
-		                        	<img class="editIcon" id="editType" src="<c:url value='/img/editIcon.png'/>" >
 		                        </td>
 		                    </tr>
 		                    <tr>
@@ -135,7 +135,6 @@ function confirmAndSubmit() {
 		                        <th scope="col">퇴사일</th>
 		                        <td >
 		                        	<input type="text" class="edittext" id="contractDone" name="contractDone" value="${memberVo.contractDone.substring(0, 10)}"  readonly="readonly">
-		                        	<img class="editIcon" id="editConDone" src="<c:url value='/img/editIcon.png'/>" >
 		                        </td>
 		                    </tr>
 		                    <tr>
