@@ -28,4 +28,24 @@ public class NoticeServiceImpl implements NoticeService{
 		
 		return noticeDao.selectDetail(noticeNo);
 	}
+
+	@Override
+	public int insertFileNotice(List<Map<String, Object>> files, int noticeNo) {
+		int cnt = 0;
+		
+		if(files != null && !files.isEmpty()) {
+			for(Map<String, Object> map : files) {
+				NoticeFileVO vo = new NoticeFileVO();
+				
+				vo.setNoticeNo(noticeNo);
+				vo.setFileName((String) map.get("fileName"));
+				vo.setOriginFileName((String) map.get("originalFileName"));
+				vo.setFileSize((long) map.get("fileSize"));
+				
+				cnt += noticeDao.insertFileNotice(vo);
+			}
+		}
+		
+		return cnt;
+	}
 }
