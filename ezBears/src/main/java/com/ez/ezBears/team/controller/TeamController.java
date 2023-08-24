@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ez.ezBears.common.ConstUtil;
 import com.ez.ezBears.common.FileUploadUtil;
@@ -99,8 +100,10 @@ public class TeamController {
 	}
 	
 	@PostMapping("/teamEdit")
-	public String edit_post(@ModelAttribute TeamVO teamVo, HttpServletRequest request) {
+	public String edit_post(@ModelAttribute TeamVO teamVo, HttpServletRequest request,
+			@RequestParam String oldFileName) {
 		logger.info("선수 수정 처리, 파라미터 teamVo={}", teamVo);
+		logger.info("oldFileName={}", oldFileName);
 		
 		//파일 업로드 처리
 		String fileName="", originalFileName="";
@@ -123,6 +126,10 @@ public class TeamController {
 		
 		teamVo.setPlayerImage(fileName);
 		
+		if(teamVo.getPlayerImage()==null || teamVo.getPlayerImage().isEmpty()) {
+			teamVo.setPlayerImage(oldFileName);
+		}
+		
 		//db
 		int cnt = teamService.updateTeam(teamVo);
 		logger.info("선수 수정 처리 결과, cnt={}", cnt);
@@ -131,12 +138,26 @@ public class TeamController {
 	}
 	
 	@GetMapping("/teamDelete")
-	public String delete_get() {
-		logger.info("선수 삭제 화면 이동");
+	public String delete_get(@RequestParam int playerNo, Model model) {
+		logger.info("선수 삭제 화면 이동, 파라미터 playerNo={}", playerNo);
+		Map<String, Object> map = teamService.selectByPlayerNo(playerNo);
+		logger.info("선수 삭제 화면 이동 결과, map={}", map);
+		
+		model.addAttribute("map", map);
 		
 		return "/team/teamDelete";
 		
 		//http://localhost:9091/ezBears/team/teamDelete
+	}
+	
+	@PostMapping("/teamDelete")
+	public String delete_post(@RequestParam(defaultValue = "0") int playerNo) {
+		logger.info("선수 삭제 작업, 파라미터 playerNo={}", playerNo);
+		
+		int cnt = teamService.deleteTeam(playerNo);
+		logger.info("선수 삭제 결과, cnt={}", cnt);
+		
+		return "redirect:/team/teamList";
 	}
 	
 	@GetMapping("/teamDetail")

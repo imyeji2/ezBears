@@ -20,7 +20,7 @@
     		player_status, player_address, player_address_detail, player_zipcode, player_image)
 		values(#{playerNo}, #{positionNo}, #{deptNo}, #{backNo}, #{playerName}, #{playerBirth}, 
 			#{height}, #{weight}, #{playerSal}, #{contractStart}, #{contractDone}, #{playerTel}, #{playerInfo}, 
-    		#{playerStatus}, #{playerAddress}, #{playerAddressDetail}, #{playerZipcode}, #{playerImage})
+    		'Y', #{playerAddress}, #{playerAddressDetail}, #{playerZipcode}, #{playerImage})
 	</insert>
 	
 	<select id="selectAllTeam" resultType="map" parameterType="searchVo">
@@ -38,6 +38,7 @@
 		<![CDATA[
 		where RNUM > #{firstRecordIndex}
 		and RNUM <= #{firstRecordIndex} + #{recordCountPerPage}
+		and PLAYER_STATUS = 'Y'
 		]]> 
 	</select>
 	
@@ -56,9 +57,16 @@
 		dept_no=#{deptNo}, b_position_no=#{positionNo}, back_no=#{backNo},
 		player_name=#{playerName}, player_birth=#{playerBirth}, height=#{height},
 		weight=#{weight}, player_sal=#{playerSal}, contract_start=#{contractStart}, contract_done=#{contractDone},
-		player_tel=#{playerTel}, player_info=#{playerInfo}, player_status=#{playerStatus}, player_address=#{playerAddress},
+		player_tel=#{playerTel}, player_info=#{playerInfo}, player_address=#{playerAddress},
 		player_address_detail=#{playerAddressDetail},player_zipcode=#{playerZipcode},player_image=#{playerImage}
 		where player_no=#{playerNo}
+	</update>
+	
+	<update id="deleteTeam" parameterType="int">
+		update team
+		set 
+		player_status = 'N'
+		where player_no = #{playerNo}
 	</update>
 	
 	

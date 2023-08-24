@@ -16,6 +16,11 @@ public class ScheduleServiceImpl implements ScheduleService {
 		return scheduleDao.scheduleAll(myBoardNo);
 		
 	}
+
+	@Override
+	public int insertSchedule(ScheduleVO scheduleVo) {
+		return scheduleDao.insertSchedule(scheduleVo);
+	}
 	
 	
 	

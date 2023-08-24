@@ -13,7 +13,7 @@ public interface ConstUtil {
 	String FILE_UPLOAD_PATH = "pds_upload";
 	
 	//멤버 등록 페이지 - 멤버 등록시 이미지 저장 경로
-  String IMAGE_FILE_UPLOAD_PATH="img/mem_images";
+	String IMAGE_FILE_UPLOAD_PATH="img/mem_images";
 	
 	//팀별 공지사항 첨부파일
 	String TEAM_NOTICE_FILE_PACH="file/teamNotice";
@@ -29,7 +29,11 @@ public interface ConstUtil {
 	
 	//공통으로 위치 맞추기
 	//String TEAM_NOTICE_FILE_PACH_TEST="C:\\FinalProject\\ezBears\\src\\main\\webapp\\file\\teamNotice";
-  
+	
+	//다중파일 업로드
+	String NOTICE_FILE_UPLOAD_PATH="img/notice";
+	String NOTICE_FILE_PATH="file/notice";
+	
 	//자료실 업로드인지, 멤버 등록시 업로드인지 구분값
 	int UPLOAD_FILE_FLAG=1;//자료실 업로드
 	int UPLOAD_MEMIMAGE_FLAG=2;//멤버 등록시 이미지 업로드
@@ -37,6 +41,7 @@ public interface ConstUtil {
 	int UPLOAD_STAFFIMAGE_FLAG=4;	//스태프 이미지 등록 플래그
 	int UPLOAD_WEBHARD_FLAG=5;	// 웹하드 업로드
 	int UPLOAD_TEAMIMAGE_FLAG=6;	//선수 이미지 등록 플래그
+	int UPLOAD_NOTICE_FLAG=7;	//공지사항 등록 플래그
 	
 }
 

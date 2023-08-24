@@ -52,6 +52,16 @@ public class MyBoardListServiceImpl implements MyBoardListService {
 		return myBoardListDao.insertMyBoard(myBoardListVo);
 	}
 
+	@Override
+	public List<Map<String, Object>> selectBoardInfo(String userid) {
+		return myBoardListDao.selectBoardInfo(userid);
+	}
+
+	
+	//희진
+
+
+
 
 
 
