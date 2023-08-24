@@ -16,20 +16,20 @@
         <div class="col-md-9 text-center">
         	<!-- 내용 시작 -->
         	
-            <h3 style="color:  #6f42c1;">스태프 삭제</h3>
+            <h3 style="color:  #6f42c1;">선수 기록 삭제</h3>
             <br>
         	<div class="deleteDiv">
 	            <br>
 					<article class="simpleForm">
 						<form name="frmOut" method="post" action="<c:url value='/record/hitterRecordDelete'/>" >
 							<fieldset>	
-								<legend>선수번호 : ${HitterVo.playerNo }<br>
-								선수 이름 : ${HitterVo.playerName }</legend>
+								<legend>선수번호 : ${hitterVo.playerNo }<br>
+								선수 이름 : ${hitterVo.playerName }</legend>
 								<br><br>
-								<p class="p">선수 삭제 하시겠습니까?</p>
+								<p class="p">선수 기록을 삭제 하시겠습니까?</p>
 								<br>
 								<div> 	
-									<input type="hidden" name="staffNo" value="${HitterVo.playerNo }">
+									<input type="hidden" name="staffNo" value="${hitterVo.playerNo }">
 								</div>
 								<div class="align_center">
 									<input type="submit" id="submit" value="삭제">
