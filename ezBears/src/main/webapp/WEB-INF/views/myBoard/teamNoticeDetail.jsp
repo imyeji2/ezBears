@@ -1,14 +1,59 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="../inc/top.jsp"%>	
+<% pageContext.setAttribute("newLineChar", "\n"); %>
 <!-- Recent Sales Start -->
 <script>
+	
 	$(function(){
+		
+		//전체 댓글 불러오기 ajax처리
+		 var groupNo = $('#groupNo').serialize(); // 데이터 직렬화
+		 
+		 $.ajax({
+		        type: 'post',
+		        url: "<c:url value='/myBoard/reply_select'/>",
+		        data: groupNo,
+		        dataType: 'json',
+		        error: function(xhr, status, error){
+		            alert(error);
+		        },
+		        success: function(res){
+		            console.log(res); // 서버 응답 확인
+		            alert("댓글 불러오기");
+		            
+		            $.each(res, function(idx, item){
+		            	
+		            	
+		            });
+		        }
+		 });
+		
+		            
+		            
+		            
+		            
 		$('#del').click(function(){
 			event.preventDefault();
 			 if (confirm("정말 삭제하시겠습니까?")){
 			 	location.href="<c:url value='/myBoard/teamNoticeDel?mBoardNo=${map["M_BOARD_NO"]}&teamNoticeNo=${map["TEAM_NOTICE_NO"]}&oldFileName=${map["FILENAME"]}'/>"
 			 }
 		});
+		
+		$(".editReply").click(function(event){
+		    event.preventDefault();
+		    var $replyContainer = $(this).closest('.reply_content');
+		    $replyContainer.find('.replyWriteForm').hide();
+		    $replyContainer.find('.replyEditForm').show();
+		});
+
+		$(".reply_add_cencle").click(function(event){
+		    event.preventDefault();
+		    var $replyContainer = $(this).closest('.reply_content');
+		    $replyContainer.find('.replyEditForm').hide();
+		    $replyContainer.find('.replyWriteForm').show();
+
+		});
+		
 		
 		$('#add_reply').click(function(event){
 		    event.preventDefault(); // 이벤트의 기본 동작 방지
@@ -26,37 +71,52 @@
 		            console.log(res); // 서버 응답 확인
 		            alert("댓글이 등록되었습니다.");
 		            
-		            $.each(res, function(idx, item){
+		            var comment = res.COMMENTS.replace(/\r\n/ig, '<br>');
+		            var date = new Date(res.REGDATE);
+		            var userid='<%=session.getAttribute("userid")%>';
+		            const regdate = new Date(date.getTime()).toISOString().split('T')[0] + " " + date.toTimeString().split(' ')[0];
+		            
+					var reply_content = "<div class='reply_content'>";
+					reply_content+="<div class='reply_user'>";
+					reply_content+="<div class='detail_left'>";
+					reply_content+="<div class='user_img'>";
+					reply_content+="<img src='<c:url value='/img/mem_images/"+res.MEM_IMAGE+"'/>' alt='사원프로필'>";
+					reply_content+="</div><!-- user_img -->";
+					reply_content+="</div>";
+					reply_content+="<div class='detail_left'>";
+					reply_content+="<span class='user_name'><a href='#'>"+res.MEM_NAME+"</a></span>";
+					reply_content+="<span class='user_dept'>/ 💼"+res.DEPT_NAME+"</span>";
+					reply_content+="</div><!-- detail_left -->";
+					reply_content+="</div><!-- reply_user -->";
+					reply_content+="<div class='replyWriteForm'>";
+					reply_content+="<div class='reply_txt'>"+comment+"<div>";
+					reply_content+="<div class='reply_txt'>";
+					reply_content+="<span>"+regdate+"</span>";
+					
+					if(userid==res.MEM_ID){
+						reply_content+="<span><a href='#' class='editReply'> 수정</a></span>";
+						reply_content+="<span><a href='#' id='delReply'> 삭제</a></span>";
+					}else{
 
-							var reply_content = "<div class='reply_content'>"
-							reply_content+="<div class='reply_user'>";
-							reply_content+="<div class='detail_left'>";
-							reply_content+="<div class='user_img'>";
-							reply_content+="<img src='<c:url value='/img/user.jpg'/>' alt='사원프로필'>";
-							reply_content+="</div><!-- user_img -->";
-							reply_content+="</div>";
-							reply_content+="<div class='detail_left'>";
-							reply_content+="<span class='user_name'><a href=''#''>"+item.MEM_NAME+"</a></span>";
-							reply_content+="<span class='user_dept'>/ 💼"+item.DEPT_NAME+"</span>";
-							reply_content+="</div><!-- detail_left -->";
-							reply_content+="</div><!-- reply_user -->";
-							reply_content+="<div class='reply_txt'>"+item.COMMENTS+"</div>";
-							reply_content+="<div class='reply_txt'>";
-							reply_content+="<span>"+item.REGDATE+"</span>";
-							reply_content+="<span><a href='#'>수정</a></span>";
-							reply_content+="<span><a href='#'>삭제</a></span>";
-							reply_content+="<span><a href='#'>답글</a></span>";
-							reply_content+="</div><!-- reply_txt -->";
-							reply_content+="</div><!-- reply_content -->";
-							$('.reply_list').append(reply_content);
-						
-		       				
-					});
+						reply_content+="<span><a href='#' id='add_r_reply'> 답글</a></span>";
+					}
+
+					reply_content+="</div><!-- reply_txt -->";
+					reply_content+="</div><!-- replyWriteForm -->";
+					reply_content+="</div>";	
+
+					
+					
+					$('.reply_list').prepend(reply_content);
+					$('#addComment').val('');
+					$("html, body").animate({ scrollTop: 0 }, "slow");
+
 		        }
 		    });
 		});
 	});
 </script>
+<input type="hidden" id ="groupNo" name="groupno" value="${map['GROUPNO']}">
 <div class="container-fluid pt-4 px-4" id="board_style">
 	<div class="bg-secondary text-center rounded p-4">
     	<div class="bg-secondary rounded h-100 p-4">
@@ -78,7 +138,8 @@
 								<fmt:formatDate value="${map['REGDATE']}" pattern="yyyy-MM-dd a hh:mm"/>
 							</span>
 						</div><!-- detail_left -->
-						<div class="detail_right">${map["VIEW"]}</div>
+						
+						<div class="detail_right">조회수 : ${map["VIEWS"]}</div>
 		        	</div><!-- detail_title -->
 		        	
 		       		<div class="user_info">		
@@ -93,7 +154,6 @@
 			        		<div class="detail_left">
 			        			<span class="user_name"><a href="#">${map['MEM_NAME']}</a></span>
 			        			<span class="user_dept">/ 💼${map['DEPT_NAME']}</span>
-			        			<span class="user_dept">[조회수 : ${map['VIEWS']}]</span>
 			        		</div><!-- detail_left -->
 		        		</div><!-- detail_left -->
 		        				       		      
@@ -133,74 +193,22 @@
 	       		
 	       		
 	       		<div class="detail_reply_wrap">
-	       			<div class="reply_tit">댓글(100)</div>
+	       			<div class="reply_tit" id="totalCount"></div>
 	       			<div class="reply_list">
-	       				<div class="reply_content"> 
-	       					<div class="reply_user">    					
-		       					<div class="detail_left">
-									<div class="user_img">
-					        			<img src="<c:url value='/img/user.jpg'/>" alt="사원프로필">
-					        		</div><!-- user_img -->
-					        	</div>
-				        		<div class="detail_left">
-				        			<span class="user_name"><a href="#">박진수</a></span>
-				        			<span class="user_dept">/ 💼개발1팀</span>
-				        		</div><!-- detail_left -->	 					
-	       					</div><!-- reply_user -->
-	       					
-	       					<div class="reply_txt">
-		       					제이든님 공지 확인했습니다.<br>
-		       					참여 신청은 인사팀에 직접 해야하나요?
-	       					</div><!-- reply_txt -->
-	       					
-	       					<div class="reply_txt">
-	       						<span>2023-08-03 13:01</span>
-	       						<span><a href="#">수정</a></span>
-	       						<span><a href="#">삭제</a></span>
-	       						<span><a href="#">답글</a></span>
-	       					</div><!-- reply_txt -->
-	       				</div><!-- reply_content -->
-	       				
-	       					
-       					<div class="r_reply_content">
-	       					<div class="reply_user">    					
-		       					<div class="detail_left">
-									<div class="user_img">
-					        			<img src="<c:url value='/img/user.jpg'/>" alt="사원프로필">
-					        		</div><!-- user_img -->
-					        	</div>
-				        		<div class="detail_left">
-				        			<span class="user_name"><a href="#">제이든</a></span>
-				        			<span class="user_dept">/ 💼개발1팀</span>
-				        		</div><!-- detail_left -->	 					
-	       					</div><!-- reply_user -->
-	       					
-	       					<div class="reply_txt">
-		       					넵, 첨부한 파일 참고하셔서<br>
-		       					인사팀에 양식 전달해주시면 됩니다.
-	       					</div><!-- reply_txt -->
-	       					
-	       					<div class="reply_txt">
-	       						<span>2023-08-03 13:10</span>
-	       						<span><a href="#">수정</a></span>
-	       						<span><a href="#">삭제</a></span>
-	       					</div><!-- reply_txt -->	       					
-       					</div>	       				
-	       			</div><!-- r_reply_content -->	      
-	       			<div class="reply_line"></div> 
+
+		       	
+	       			
+	       			</div><!-- reply_list -->
 	       			
 	       			<form name="reply_frm" method="post" action="#">
-	       				<input type="text" name="memNo" value="${userNo}">
-	       				<input type="text" name="groupno" value="${map['TEAM_NOTICE_NO']}">
-	       				<input type="text" name="mBoardNo" value="${map['M_BOARD_NO']}">
+	       				<input type="hidden" name="memNo" value="${userNo}">
+	       				<%-- <input type="hidden" name="groupno" value="${map['GROUPNO']}"> --%>
+	       				<input type="hidden" name="mBoardNo" value="${map['M_BOARD_NO']}">
 	       				
-	       				
- 		       			
- 		       			
  		       			<div class="reply_write">
 							<div class="form-floating">
 							  <textarea class="form-control" placeholder="Comments" 
-							  id="floatingTextarea2" name="comments"
+							  id="addComment" name="comments"
 							   style="height: 100px"></textarea>
 							  <label for="floatingTextarea2">Comments</label>
 							</div>	
@@ -229,8 +237,7 @@
 						    </li>
 						  </ul>
 						</nav>
-					</div><!-- page_box -->   		
-						
+					</div><!-- page_box -->  
 	       		</div><!-- detail_reply_wrap -->   		
 			</div><!-- teamNoticeDetail -->
 		</div>

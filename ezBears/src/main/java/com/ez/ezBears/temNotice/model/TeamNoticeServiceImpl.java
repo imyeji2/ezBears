@@ -70,13 +70,23 @@ public class TeamNoticeServiceImpl implements TeamNoticeService {
 	public List<Map<String, Object>> selectReply(int groupNo) {
 		return teamNoticeDao.selectReply(groupNo);
 	}
-
+	
+	
+	//댓글 등록
 	@Override
 	@Transactional
-	public int reply(TeamNoticeVO teamNoticeVo) {
-		int cnt = teamNoticeDao.updateSortNo(teamNoticeVo);
-		cnt = teamNoticeDao.insertReply(teamNoticeVo);
-		return cnt;
+	public Map<String, Object> addreply(TeamNoticeVO teamNoticeVo) {
+		teamNoticeDao.updateSortNo(teamNoticeVo);
+		teamNoticeDao.insertReply(teamNoticeVo);
+		Map<String, Object> map= teamNoticeDao.selectReplyTeamNoticeNo(teamNoticeVo.getTeamNoticeNo());
+		return map;
+	}
+
+	
+	//팀별 공지사항 댓글 전체 카운트
+	@Override
+	public int selectReplyTotalCount(MyBoardSearchVo searchVo) {
+		return teamNoticeDao.selectReplyTotalCount(searchVo);
 	}
 	
 	

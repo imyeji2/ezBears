@@ -21,6 +21,7 @@ import com.ez.ezBears.common.ConstUtil;
 import com.ez.ezBears.common.FileUploadUtil;
 import com.ez.ezBears.common.MyBoardSearchVo;
 import com.ez.ezBears.common.PaginationInfo;
+import com.ez.ezBears.common.SearchVO;
 import com.ez.ezBears.member.model.MemberService;
 import com.ez.ezBears.myBoard.controller.MyBoardController;
 import com.ez.ezBears.myBoard.model.MyBoardListService;
@@ -190,14 +191,16 @@ public class TeamNoticeController {
 		//사원의 시퀀스 번호
 		int userNo = memberService.selectMemberNo(userid);
 
-		
 		//2
 		Map<String, Object> map = teamNoticeService.selectDetail(teamNoticeNo);
 		logger.info("팀 공지사항 디테일 결과 map={}",map);
 		
+
 		
 		String myBoardName = myBoardListService.selectByBoardName(mBoardNo);
 		logger.info("마이보드 이름 myBoardName={}",myBoardName);	
+		
+		
 
 		//3.
 		model.addAttribute("map",map);
@@ -205,6 +208,7 @@ public class TeamNoticeController {
 		model.addAttribute("userid",userid);
 		model.addAttribute("userNo",userNo);
 		
+		//4
 		return "myBoard/teamNoticeDetail";
 	}
 	
@@ -329,7 +333,6 @@ public class TeamNoticeController {
 
 		//2
 		TeamNoticeVO teamNoticeVo = teamNoticeService.selectTeamNoticeByNo(teamNoticeNo);
-		logger.info("hh teamNoticeVo={}",teamNoticeVo);
 		
 		Map<String, String> map = new HashMap<>();
 		//key 이름은 xml의 key 이름과 동일해야함, 순서는 상관 없음
@@ -364,9 +367,24 @@ public class TeamNoticeController {
 		return "common/message";
 	}
 	
+	
+	@ResponseBody
+	@RequestMapping("/reply_select")
+	public List<Map<String, Object>> reply_select(@RequestParam (defaultValue = "0") int groupNo) {
+		
+		//전체 댓글 검색
+		List<Map<String, Object>> replyList = teamNoticeService.selectReply(groupNo);
+		logger.info("댓글 검색 결과 replyList.size()={}",replyList);
+		
+		//전체 댓글 카운트
+		//int totalCount = teamNoticeService.selectReplyTotalCount(groupNo);
+		//logger.info("totalCount={}",totalCount);
+		return replyList;
+	}
+	
 	@ResponseBody
 	@RequestMapping("/reply_insert")
-	public List<Map<String, Object>> reply_insert(@ModelAttribute TeamNoticeVO teamNoticeVo,
+	public Map<String, Object> reply_insert(@ModelAttribute TeamNoticeVO teamNoticeVo,
 			@RequestParam (defaultValue = "0") int mBoardNo) {
 		//1
 		logger.info("리플 등록 파라미터 teamNoticeVo={}",teamNoticeVo);
@@ -377,22 +395,15 @@ public class TeamNoticeController {
 		boardListVo.setMBoardNo(mBoardNo);
 		logger.info("리플 등록 마이 보드 검색 파라미터 boardListVo={}",boardListVo);
 		
-
+		
 		int myBoardNo = myBoardListService.seleectMyBoardNo(boardListVo);
 		teamNoticeVo.setMyBoardNo(myBoardNo);
 		logger.info("리플 등록 파라미터 수정 teamNoticeVo={}",teamNoticeVo);
-		
-		int cnt = teamNoticeService.reply(teamNoticeVo);
-		logger.info("리플 등록 결과 cnt={}",cnt);
-		
-		
-		List<Map<String, Object>> list = 
-				teamNoticeService.selectReply(teamNoticeVo.getGroupno());
-		logger.info("리플 검색 결과 list.size()={}", list.size());
-		
-		
-		
-		return list;
+				
+		Map<String, Object> map = teamNoticeService.addreply(teamNoticeVo);
+		logger.info("등록 댓글 결과 map={}",map);
+	
+		return map;
 	}
 	
 }

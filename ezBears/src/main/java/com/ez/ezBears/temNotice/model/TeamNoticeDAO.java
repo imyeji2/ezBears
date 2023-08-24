@@ -37,8 +37,15 @@ public interface TeamNoticeDAO {
 	int insertReply(TeamNoticeVO teamNoticeVo);
 	int updateSortNo(TeamNoticeVO teamNoticeVo);
 	
+	
+	//게시물 번호로 공지사항 댓글 검색
+	Map<String, Object> selectReplyTeamNoticeNo(int teamNoticeNo);
+	
 	//팀별 공지사항 댓글 검색
 	List<Map<String, Object>> selectReply(int groupNo);
+	
+	//팀별 공지사항 댓글 전체 카운트
+	int selectReplyTotalCount(MyBoardSearchVo searchVo);
 	
 
 
