@@ -26,10 +26,10 @@
 								<legend>선수번호 : ${hitterVo.playerNo }<br>
 								선수 이름 : ${hitterVo.playerName }</legend>
 								<br><br>
-								<p class="p">선수 기록을 삭제 하시겠습니까?</p>
+								<p class="p">기록을 삭제 하시겠습니까?</p>
 								<br>
 								<div> 	
-									<input type="hidden" name="staffNo" value="${hitterVo.playerNo }">
+									<input type="hidden" name="pitcherNo" value="${hitterVo.playerNo }">
 								</div>
 								<div class="align_center">
 									<input type="submit" id="submit" value="삭제">

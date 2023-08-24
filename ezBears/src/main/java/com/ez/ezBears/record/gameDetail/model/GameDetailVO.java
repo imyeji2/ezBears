@@ -7,7 +7,5 @@ public class GameDetailVO {
 	private int recodeDetailNo;
 	private int recodeNo;
 	private int staffNo;
-	private String firstPitcher;
-	private String otherTeam;
 	private String staffRegdate;
 }

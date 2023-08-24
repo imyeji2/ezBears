@@ -16,20 +16,20 @@
         <div class="col-md-9 text-center">
         	<!-- 내용 시작 -->
         	
-            <h3 style="color:  #6f42c1;">이닝 기록 삭제</h3>
+            <h3 style="color:  #6f42c1;">경기 기록 삭제</h3>
             <br>
         	<div class="deleteDiv">
 	            <br>
 					<article class="simpleForm">
-						<form name="frmOut" method="post" action="<c:url value='/record/pitcherRecordDelete'/>" >
+						<form name="frmOut" method="post" action="<c:url value='/record/gameList'/>" >
 							<fieldset>	
-								<legend>이닝번호 : ${inningVo.inningNo }<br>
-								경기 날짜 : ${inningVo.regdate }</legend>
+								<legend>경기 기록 번호 : ${gameVo.recodeNo }<br>
+								경기 날짜 : ${gameVo.regdate }</legend>
 								<br><br>
-								<p class="p">이닝 기록을 기록 삭제 하시겠습니까?</p>
+								<p class="p">경기 기록을 삭제 하시겠습니까?</p>
 								<br>
 								<div> 	
-									<input type="hidden" name="staffNo" value="${inningVo.inningNo }">
+									<input type="hidden" name="recodeNo" value="${gameVo.recodeNo }">
 								</div>
 								<div class="align_center">
 									<input type="submit" id="submit" value="삭제">

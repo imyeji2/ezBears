@@ -17,15 +17,10 @@
 			<div class="bg-secondary rounded h-100 p-4">
 				<div class="col-12">
 					<div class="bg-secondary rounded h-100 p-4">
-
-
 						<div id="contents" class="content01">
-							<!--sub title & location -->
 							<div class="location">
-								<h3 class="tit-page">선수 상세 정보</h3>
+								<h3 class="tit-page">선수 기록 정보</h3>
 								<br>
-								<!-- // sub title & location -->
-
 								<div class="inquiry">
 									<div class="table-responsive">
 										<table class="table">
@@ -55,6 +50,33 @@
 											</tbody>
 										</table>
 										<br>
+										<div class="table-responsive">
+											<table class="table">
+												<thead>
+													<tr>
+														<th scope="col">타수</th>
+														<th scope="col">득점</th>
+														<th scope="col">안타</th>
+														<th scope="col">타점</th>
+														<th scope="col">사구</th>
+														<th scope="col">삼진</th>
+														<th scope="col">타율</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td>100</td>
+														<td>100</td>
+														<td>200</td>
+														<td>100</td>
+														<td>10</td>
+														<td>0</td>
+														<td>5.55</td>
+													</tr>
+												</tbody>
+											</table>
+											<br> <br>
+										</div>
 										<h6>2023 성적</h6>
 										<div class="table-responsive">
 											<table class="table">
@@ -83,6 +105,15 @@
 											</table>
 											<br>
 											<br>
+										</div>
+										<div class="divBtn">
+											<a href="<c:url value='/record/hitterRecordWrite'/>">기록정보 등록</a>
+										</div>
+										<div class="divBtn">
+											<a href="<c:url value='/record/hitterRecordEdit'/>">기록정보 수정</a>
+										</div>
+										<div class="divBtn">
+											<a href="<c:url value='/record/hitterRecordDelete'/>">기록정보 삭제</a>
 										</div>
 									</div>
 								</div>
