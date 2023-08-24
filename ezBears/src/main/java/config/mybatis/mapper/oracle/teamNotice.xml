@@ -99,19 +99,11 @@
    </insert>
    
    <select id="selectReply" parameterType="myBoardSearchVo" resultType="map">
-      select *
-      from
-      (
-	      select rownum as RNUM, A.* from
-	      (	   
+ 
 	   		select * from teamNoticeListView
 	   		where groupNo = #{groupno} and step>0
 	   		order by regdate desc
-	      )A
-      )
-      <![CDATA[
-      where RNUM> #{firstRecordIndex} 
-      and RNUM<=#{firstRecordIndex} + #{recordCountPerPage}]]>	   		
+	   		
    </select>
    
    <select id="selectReplyTotalCount" parameterType="myBoardSearchVo" resultType="int">
