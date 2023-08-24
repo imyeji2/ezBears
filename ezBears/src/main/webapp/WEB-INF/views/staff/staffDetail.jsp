@@ -8,6 +8,7 @@
 <link rel="stylesheet" type="text/css" href="<c:url value='/css/choong/clear.css'/>" />
 <link rel="stylesheet" type="text/css" href="<c:url value='/css/choong/formLayout.css'/>" />
 <link rel="stylesheet" type="text/css" href="<c:url value='/css/choong/mystyle.css'/>" />
+<link rel="stylesheet" type="text/css" href="<c:url value='/css/choong/chi.css'/>" />
 
 <script type="text/javascript" src="<c:url value='/js/jquery-3.7.0.min.js'/>"></script>
 <style type="text/css">
@@ -74,9 +75,9 @@
 						<div>
 							<span class="sp1">우편번호</span> <span>${staffVo.staffZipcode }</span>
 						</div>
-						<div>
+<%-- 						<div>
 							<span class="sp1">스태프 상태</span> <span>${staffVo.staffStatus }</span>
-						</div>
+						</div> --%>
 						<div class="lastDiv">
 							<span class="sp1">아이디</span> <span>${staffVo.staffId }</span>
 						</div>

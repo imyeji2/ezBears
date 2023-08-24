@@ -4,7 +4,7 @@
 body, td, th, span, p{
 	font-family: 'nanum gothic', 맑은 고딕, 한컴돋움, 돋움;
 	font-size: 0.9em;
-	color:#555555;
+	color:rgb(155, 155, 155);
 }
 	
 td, th{
