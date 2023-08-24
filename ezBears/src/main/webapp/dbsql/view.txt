@@ -27,6 +27,45 @@ FROM
 ) B
 ON A.MEM_NO = B.MEM_NO;
 
+create or replace procedure DELETETEAMNOTICE
+(
+--매개변수
+   m_team_notice_no number,
+   m_step number,
+   m_groupno number
+)
+is
+--변수선언부
+     cnt number;
+
+begin
+--처리할 내용
+    /*
+    답변이 있는 원본글인 경우에는 레코드를 삭제하지 말고 DelFlag="Y"로 update
+    */
+    if m_step = 0 then
+      --답변글이 존재하는지 체크
+      select count(*) into cnt from team_notice
+      where groupNo = m_groupno;
+
+         --답변글이 존재하는 경우
+         if cnt>1 then
+            update team_notice set status='Y'
+            where team_notice_no = m_team_notice_no;
+        else --답변글이 없는 경우
+            delete team_notice where team_notice_no = m_team_notice_no;
+        end if;
+    else --답변글 자체인 경우
+        delete team_notice where team_notice_no = m_team_notice_no;
+    end if;
+    commit;
+
+EXCEPTION
+    WHEN OTHERS THEN
+	raise_application_error(-20001, ' 실패!');
+        ROLLBACK;
+end;
+
 [다희]---------------------------------------------------------------------
 
 

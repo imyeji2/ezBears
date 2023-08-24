@@ -5,7 +5,9 @@
 
    <sql id="searchWhere">
       <where>
-     	 m_board_no=#{mBoardNo} and sortNo is null  and status='Y'
+     	 m_board_no=#{mBoardNo} 
+     	 and status='Y'
+     	<![CDATA[and step < 1]]>
          <if test="searchKeyword!=null and searchKeyword!=''">
              and  ${searchCondition} like '%' || #{searchKeyword} || '%'
          </if>   
@@ -46,7 +48,6 @@
 	<select id="selectDetail" parameterType="int" resultType="map">
 		select * from teamNoticeListView
 		where team_notice_no=#{teamNoticeNo}
-		and sortNo is null
 	</select>
 	
 	<update id="updateViewCount" parameterType="int">
@@ -65,4 +66,61 @@
 		</if>
 		where team_Notice_No =#{teamNoticeNo}
 	</update>
+
+	<select id="selectTeamNoticeByNo" parameterType="int" resultType="teamNoticeVo">
+		select * from team_Notice
+		where team_notice_no=#{teamNoticeNo}
+	</select>
+	
+	<parameterMap type="map" id="deleteTeamNoticeProc">
+		<!-- 아래 ?의 순서에 맞춰서 만들어야함 -->
+		<parameter property="teamNoticeN" javaType="string" jdbcType="VARCHAR" mode="IN"/>
+		<parameter property="step" javaType="string" jdbcType="VARCHAR" mode="IN"/>
+		<parameter property="groupNo" javaType="string" jdbcType="VARCHAR" mode="IN"/>
+	</parameterMap>
+	
+   <delete id="deleteTeamNotice" parameterMap="deleteTeamNoticeProc">
+   		call DELETETEAMNOTICE(?,?,?)
+   </delete>
+   
+ 
+	<update id="updateSortNo" parameterType="teamNoticeVo">
+		update team_Notice
+		set sortNo = sortNo+1
+		where groupNo=#{groupno} and sortNo>#{sortno}
+	</update>
+	
+   <insert id="insertReply" parameterType="teamNoticeVo">
+		<selectKey keyProperty="teamNoticeNo" resultType="int" order="BEFORE">
+			select TEAM_NOTICE_SEQ.nextval from dual
+		</selectKey>
+   		insert into team_Notice(TEAM_NOTICE_NO,MEM_NO,COMMENTS,GROUPNO,STEP,SORTNO,MY_BOARD_NO)
+   		values(#{teamNoticeNo},#{memNo},#{comments},#{groupno},#{step}+1,#{sortno}+1,#{myBoardNo})
+   </insert>
+   
+   <select id="selectReply" parameterType="myBoardSearchVo" resultType="map">
+      select *
+      from
+      (
+	      select rownum as RNUM, A.* from
+	      (	   
+	   		select * from teamNoticeListView
+	   		where groupNo = #{groupno} and step>0
+	   		order by regdate desc
+	      )A
+      )
+      <![CDATA[
+      where RNUM> #{firstRecordIndex} 
+      and RNUM<=#{firstRecordIndex} + #{recordCountPerPage}]]>	   		
+   </select>
+   
+   <select id="selectReplyTotalCount" parameterType="myBoardSearchVo" resultType="int">
+  	   	select count(*) from teamNoticeListView
+   		where groupNo = #{groupno} and step>0
+ 	</select>
+
+   <select id="selectReplyTeamNoticeNo" parameterType="int" resultType="map">
+   		select * from teamNoticeListView
+   		where team_notice_no = #{teamNoticeNo}
+   </select>   	
 </mapper>

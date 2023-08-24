@@ -64,10 +64,12 @@
 				<form name="teamNotiFrm" method="post" enctype="multipart/form-data" 
 					action="<c:url value='${url}'/>">
 		        	<div class="writeWrap">
-		        		<input type="hidden" name="myBoardNo" value="${myBoardListVo.MBoardNo}">
+		        		<input type="hidden" name="myBoardNo" value="${myBoardListVo.myBoardNo}">
 		        		<input type="hidden" name="memNo" value="${myBoardListVo.memNo}">
 		        		<input type="hidden" name="oldFileName" value="${map['FILENAME']}">
-		        		<input type="hidden" name="teamNoticeNo" value="${teamNoticeNo}">
+		        		<c:if test="${type=='edite'}">
+		        			<input type="hidden" name="teamNoticeNo" value="${teamNoticeNo}">
+		        		</c:if>
 			        	<div class="write_title">
 			        		<input type="text" class="form-control" name="teamNoticeTitle" id="title"
 							 placeholder="제목을 입력해주세요" value="${map['TEAM_NOTICE_TITLE']}">

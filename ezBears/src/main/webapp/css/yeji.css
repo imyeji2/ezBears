@@ -116,6 +116,11 @@
 		margin-bottom: 20px;
 	}
 	
+	.content_txt{
+		max-height:90px;
+		overflow: hidden;
+	}	
+	
 	.list_box_file{
 		width:fit-content;
 		border: 1px solid #6C7293;
@@ -302,7 +307,16 @@
 		color: #6C7293;
 		border-radius: 5px;
 	}
+
 	
+	.reply_add_btn2{
+		width: 100%;
+		line-height:46px;
+		border:0px;
+		background: #191C24;
+		color: #6C7293;
+		border-radius: 5px;
+	}	
 	.form-control{
 		background-color: #191C24;
 		border: 1px solid #191C24;
@@ -314,6 +328,7 @@
 	}
 	
 	.reply_content{
+		padding: 20px 5px 10px 5px;
 		border-bottom: 1px solid #191C24;
 	}
 	
@@ -322,7 +337,7 @@
 	}
 	
 	.reply_txt{
-		margin:10px 0px 10px 0px;
+		margin:15px 5px 5px 5px;
 	}
 	
 	.reply_txt span{

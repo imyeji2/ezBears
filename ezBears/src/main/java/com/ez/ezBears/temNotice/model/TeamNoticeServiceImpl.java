@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ez.ezBears.common.MyBoardSearchVo;
 
@@ -50,6 +51,42 @@ public class TeamNoticeServiceImpl implements TeamNoticeService {
 	@Override
 	public int updateTeamNotice(TeamNoticeVO teamNoticeVo) {
 		return teamNoticeDao.updateTeamNotice(teamNoticeVo);
+	}
+
+	
+	//팀별 공지사항 삭제
+	@Override
+	public int deleteTeamNotice(Map<String, String> map) {
+		return teamNoticeDao.deleteTeamNotice(map);
+	}
+
+	//팀별 공지사항 번호로 조회
+	@Override
+	public TeamNoticeVO selectTeamNoticeByNo(int teamNoticeNo) {
+		return teamNoticeDao.selectTeamNoticeByNo(teamNoticeNo);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectReply(int groupNo) {
+		return teamNoticeDao.selectReply(groupNo);
+	}
+	
+	
+	//댓글 등록
+	@Override
+	@Transactional
+	public Map<String, Object> addreply(TeamNoticeVO teamNoticeVo) {
+		teamNoticeDao.updateSortNo(teamNoticeVo);
+		teamNoticeDao.insertReply(teamNoticeVo);
+		Map<String, Object> map= teamNoticeDao.selectReplyTeamNoticeNo(teamNoticeVo.getTeamNoticeNo());
+		return map;
+	}
+
+	
+	//팀별 공지사항 댓글 전체 카운트
+	@Override
+	public int selectReplyTotalCount(MyBoardSearchVo searchVo) {
+		return teamNoticeDao.selectReplyTotalCount(searchVo);
 	}
 	
 	

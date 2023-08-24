@@ -6,6 +6,7 @@
 		$('input[name="currentPage"]').val(curPage);
 		$('form[name="teamNoticeFrom"]').submit();
 	}
+	
 </script>
 
 <form action="<c:url value='/myBoard/teamNotice?mBoardNo=${mBoardNo}'/>" method="post" name="teamNoticeFrom">
@@ -110,7 +111,7 @@
 							       		</div>
 							       		<div class="notice_reply">
 							       			<div>
-							       				<a href="<c:url value='/myBoard/countUpdate?mBoardNo=${mBoardNo}&teamNoticeNo=${map["TEAM_NOTICE_NO"]}'/>">댓글 달기</a>
+							       				<a href="<c:url value='/myBoard/countUpdate?mBoardNo=${mBoardNo}&teamNoticeNo=${map["TEAM_NOTICE_NO"]}'/>">더보기</a>
 							       			</div>
 							       		</div>
 							        </div><!-- notice_list_box -->		
@@ -134,7 +135,7 @@
 						      <div class="page_box">
 							      <nav aria-label="Page navigation example">
 									  <ul class="pagination justify-content-center">
-									  <c:if test="${pagingInfo.firstPage>1 }">
+									  <c:if test="${pagingInfo.firstPage>1}">
 										    <li class="page-item">
 										      <a class="page-link" onclick="pageFunc(${pagingInfo.firstPage-1})">
 										      	<
@@ -143,7 +144,9 @@
 									    </c:if>
 									    <c:forEach var="i" begin="${pagingInfo.firstPage}" end="${pagingInfo.lastPage}">		
 											<c:if test="${i == pagingInfo.currentPage}">		
-											    <li class="page-item active" >${i}</li>
+											    <li class="page-item active" >
+											    	<a class="page-link" href="#">${i}</a>
+											    </li>
 											   </c:if>
 												<c:if test="${i != pagingInfo.currentPage }">
 												    <li class="page-item">

@@ -23,4 +23,20 @@ public interface TeamNoticeService {
 	
 	//팀별 공지사항 업데이트
 	int updateTeamNotice(TeamNoticeVO teamNoticeVo);
+	
+	//팀별 공지사항 삭제
+	int deleteTeamNotice(Map<String, String> map);
+	
+	//팀별 공지사항 번호로 조회
+	TeamNoticeVO selectTeamNoticeByNo(int teamNoticeNo);
+	
+	//댓글 등록
+	Map<String, Object> addreply(TeamNoticeVO teamNoticeVo);
+	
+	//팀별 공지사항 댓글 검색
+	List<Map<String, Object>> selectReply(int groupNo);
+	
+	//팀별 공지사항 댓글 전체 카운트
+	int selectReplyTotalCount(MyBoardSearchVo searchVo);
+	
 }
