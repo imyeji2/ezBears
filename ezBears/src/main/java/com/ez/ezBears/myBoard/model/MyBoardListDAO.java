@@ -33,6 +33,6 @@ public interface MyBoardListDAO {
 	int insertMyBoard(MyBoardListVO myBoardListVo);
 	
 	//희진
-	List<Map<String, Object>> selectBoardInfo(String userid);
-
+	/* List<Map<String, Object>> selectBoardInfo(String userid); */
+	MyBoardInfoVO selectBoardInfo(MyBoardInfoVO myBoardInfoVo);
 }

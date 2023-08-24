@@ -189,4 +189,20 @@ margin-top: 5px;
 /* Add any other custom styling as needed */
 }
 
+#teamNoticeDetail{
+	.fileupload_right{
+		text-align: right;
+	}
+	.fileupload{
+		text-align: right;
+	}
+	
+	.noticeFiles {
+    position: absolute;
+    right: 80px;
+    top: auto;
+	}
+
+}
+
 

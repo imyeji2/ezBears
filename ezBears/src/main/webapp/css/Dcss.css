@@ -303,8 +303,22 @@ input.edittext {
 	width:50%;
 }
 
+.errMsg{
+	float: right;
+	margin-top: 30px;
+}
 
-/* deptLis*/
+.showEditDept ,.showEditPosition, .showEditType {
+    outline: none;
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: #000;
+    color: #fff;
+    border: 0;
+}
+
+
+/* deptList*/
 
 .addDeptPart {
     display: flex;

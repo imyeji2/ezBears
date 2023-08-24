@@ -3,11 +3,18 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@include file="../inc/top.jsp"%>
 
+<script type="text/javascript">
+	function pageFunc(page) {
+		$('input[name="currentPage"]').val(page);
+		$('form[name="frmPage"]').submit();
+	}
+</script>
+
 <div class="container-fluid" id="board_style" style="margin-top: 1.5%">
 	<div class="col-sm-12 col-xl-12">
 		<div class="bg-secondary rounded h-100 p-4">
 			<nav
-				style="--bs-breadcrumb-divider: url(&amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #34; data: image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&amp;amp;"
+				style="--bs-breadcrumb-divider: url(&amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #34; data: image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&amp;amp;"
 				aria-label="breadcrumb">
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="#">경기기록</a></li>
@@ -37,27 +44,83 @@
 						<c:if test="${!empty list }">
 							<c:forEach var="vo" items="${list }">
 								<tr>
-									<td>${vo.recodeNo }</td>
-									<td><c:set var="year"
-											value="${fn:substring(vo.regdate, 0, 4)}" /> <c:set
-											var="month" value="${fn:substring(vo.regdate, 5, 7)}" /> <c:set
-											var="day" value="${fn:substring(vo.regdate, 8, 10)}" />
-										${year}년 ${month}월 ${day}일</td>
-									<td>${vo.firstPitcher}</td>
-									<td>${vo.otherTeam}</td>
-									<td>${vo.ground}</td>
-									<td>${vo.win}</td>
+									<td><a
+										href="<c:url value='/record/gameRecordDetail?recodeNo=${vo.recodeNo}'/>"
+										style="color: #fff">${vo.recodeNo}</a></td>
+									<td><a
+										href="<c:url value='/record/gameRecordDetail?recodeNo=${vo.recodeNo}'/>"
+										style="color: #fff">${fn:substring(vo.playDate, 0, 10)}</a></td>
+									<td><a
+										href="<c:url value='/record/gameRecordDetail?recodeNo=${vo.recodeNo}'/>"
+										style="color: #fff">${vo.firstPitcher}</a></td>
+									<td><a
+										href="<c:url value='/record/gameRecordDetail?recodeNo=${vo.recodeNo}'/>"
+										style="color: #fff">${vo.otherTeam}</a></td>
+									<td><a
+										href="<c:url value='/record/gameRecordDetail?recodeNo=${vo.recodeNo}'/>"
+										style="color: #fff">${vo.ground}</a></td>
+									<td><a
+										href="<c:url value='/record/gameRecordDetail?recodeNo=${vo.recodeNo}'/>"
+										style="color: #fff">${vo.win}</a></td>
 								</tr>
 							</c:forEach>
 						</c:if>
 					</tbody>
 				</table>
 			</div>
+
+			<div class="divPage">
+				<!-- 페이지 번호 추가 -->
+				<!-- 이전 블럭으로 이동 -->
+				<c:if test="${pagination.firstPage>1 }">
+					<a href="#" onclick="pageFunc(${pagination.firstPage-1})"> <img
+						src="<c:url value='/img/first.JPG'/>">
+					</a>
+				</c:if>
+
+				<!-- [1][2][3][4][5][6][7][8][9][10] -->
+				<c:forEach var="i" begin="${pagination.firstPage }"
+					end="${pagination.lastPage }">
+					<c:if test="${i == pagination.currentPage }">
+						<span style="color: yellow; font-weight: bold; font-size: 1em">${i}</span>
+					</c:if>
+					<c:if test="${i != pagination.currentPage }">
+						<a href="#" onclick="pageFunc(${i})">[${i }]</a>
+					</c:if>
+				</c:forEach>
+
+				<!-- 다음 블럭으로 이동 -->
+				<c:if test="${pagination.lastPage < pagination.totalPage }">
+					<a href="#" onclick="pageFunc(${pagination.lastPage+1})"> <img
+						src="<c:url value='/img/last.JPG'/>">
+					</a>
+				</c:if>
+				<!--  페이지 번호 끝 -->
+			</div>
+			<br>
+			<div class="divSearch">
+				<form name="frmSearch" method="POST"
+					action="<c:url value='/record/gameList'/>">
+					<select name="searchCondition">
+						<option value="PLAYDATE"
+							<c:if test="${param.searchCondition=='PLAY_DATE'}">
+				            		selected="selected"
+				            	</c:if>>날짜</option>
+						<option value="FIRST_PITCHER"
+							<c:if test="${param.searchCondition=='FIRST_PITCHER'}">
+				            		selected="selected"
+				            	</c:if>>선발투수</option>
+					</select> <input type="text" name="searchKeyword" title="검색어 입력"
+						value="${param.searchKeyword }"> <input type="submit"
+						value="검색" id="btnSearch">
+				</form>
+			</div>
+
 			<div class="divBtn">
 				<a href="<c:url value='/record/gameWrite'/>">경기정보 등록</a>
 			</div>
 			<div class="divBtn">
-				<a href="<c:url value='/record/gameUpdate'/>">경기정보 수정</a>
+				<a href="<c:url value='/record/gameEdit'/>">경기정보 수정</a>
 			</div>
 			<div class="divBtn">
 				<a href="<c:url value='/record/gameDelete'/>">경기정보 삭제</a>

@@ -90,7 +90,7 @@ public class NoticeController {
 	
 	
 	@RequestMapping("/noticeDetail")
-	public String teamBoardDetil(@RequestParam(defaultValue = "0") int noticeNo,  Model model, HttpSession session) {
+	public String noticeDetail(@ModelAttribute NoticeVO noticeVo,@RequestParam(defaultValue = "0") int noticeNo,  Model model, HttpSession session) {
 		//1
 		logger.info("공지사항 디테일 화면 파라미터 noticeNo={}",noticeNo);
 		
@@ -104,10 +104,22 @@ public class NoticeController {
 		List<Map<String, Object>> list=noticeService.selectNoticeList(noticeNo);
 		logger.info("공지사항 리스트 페이지 결과 list.size={}",list.size());
 
+		List<Map<String, Object>>filemap=noticeService.selectNoticeFile(noticeNo);
+		logger.info("공지사항 리스트 파일 결과 filemap={}",filemap);
+		
+		List<Map<String, Object>>nextPage=noticeService.nextPage(noticeNo);
+		logger.info("이전페이지 결과 nextPage={}",nextPage);
+		
+		List<Map<String, Object>>backPage=noticeService.backPage(noticeNo);
+		logger.info("이전페이지 결과 backPage={}",backPage);
+		
 		//3.
 		model.addAttribute("map",map);
 		model.addAttribute("userid",userid);
 		model.addAttribute("list",list);
+		model.addAttribute("filemap",filemap);
+		model.addAttribute("nextPage",nextPage);
+		model.addAttribute("backPage",backPage);
 		
 		return "notice/noticeDetail";
 	}

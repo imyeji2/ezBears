@@ -4,10 +4,9 @@
 
 <mapper namespace="com.ez.ezBears.schedule.model.ScheduleDAO">
 	
- 	<select id="scheduleAll" resultType="scheduleVo" parameterType="int">
-		select schedule_start,schedule_end,schedule_title
-		from schedule
-		where my_board_no = #{myBoardNo} and mem_no = #{memNo}
+ 	<select id="selectAll" resultType="map" parameterType="scheduleVo">
+		select *from calenderInfo
+		where mem_id = #{memId} and m_board_no = #{mBoardNo}
 	</select>
 	
 	<!-- <select id="selectCalender" resultType="scheduleVo" parameterType="int">

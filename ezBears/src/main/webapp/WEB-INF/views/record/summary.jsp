@@ -193,8 +193,7 @@
 						<div class="smh__part  smh__away smh__part--hits">9</div>
 						<div class="smh__part  smh__away smh__part--errors">4</div>
 						<div class="smh__pitchers">
-							투수: <span class="smh__nbsp">최승용 [EZN] (승, 3-7)</span>, <span
-								class="smh__nbsp">최채흥 [SAM] (패, 0-4)</span>
+							투수: <span class="smh__nbsp">알칸타라 [EZN] (승, 3-7)</span>
 						</div>
 					</div>
 				</div>
@@ -206,13 +205,7 @@
 						<span class="mi__item__name"><svg class="spectators-ico ">
 								<title></title><use
 									xlink:href="/res/_fs/build/action.30f034d.svg#spectators"></use></svg>경기장:</span><span
-							class="mi__item__val">잠실야구장 (서울)</span>
-					</div>
-					<div class="mi__item">
-						<span class="mi__item__name"><svg class="attendance-ico ">
-								<title></title><use
-									xlink:href="/res/_fs/build/extra.ec618a4.svg#attendance"></use></svg>관중수:</span><span
-							class="mi__item__val">8519</span>
+							class="mi__item__val">잠실야구장</span>
 					</div>
 				</div>
 			</div>

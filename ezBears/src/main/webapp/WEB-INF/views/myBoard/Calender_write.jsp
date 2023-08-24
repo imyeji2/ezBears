@@ -21,15 +21,20 @@
 		});
 	});
 </script>
-
+<c:if test="${type=='write'}">
+	<c:set var="url" value="/myBoard/Calender_write?mBoardNo=${mBoardNo }"/>
+</c:if>
+<c:if test="${type=='edit'}">
+	<c:set var="url" value="/myBoard/Calender_edit/${sc.scheduleNo}"/>
+</c:if>
 <div class="container-fluid pt-4 px-4" id="board_style">
 	<div class="bg-secondary text-center rounded p-4">
 		<div class="bg-secondary rounded h-100 p-4">
 			<form method="post" action="<c:url value='/myBoard/Calender_write'/>">
-			<%-- 	<input type ="text" name ="userid" id="userid" value="${userid }">
-				<input type ="text" name ="MBoardNo" id="MBoardNo" value="${list.MBoardNo }">
-				<input type="text" name="myBoardNo" id="myBoardNo"value="${list.myBoardNo}"> 
-				<input type="text" name="memNo" id="memNo" value="${list.memNo}"> --%>
+			 	<input type ="hidden" name ="userid" id="userid" value="${userid }">
+				<input type="hidden" name="myBoardNo" id="myBoardNo"value="${myBoardInfoVo.myBoardNo}"> 
+				<input type="hidden" name="memNo" id="memNo" value="${myBoardInfoVo.memNo}"> 
+				<input type="text" name="scheduleNo" id="scheduleNo" value="${scheduleNo}"> 
 					
 				<h6 class="mb-4">일정 등록</h6>
 				<div class="appbox">
