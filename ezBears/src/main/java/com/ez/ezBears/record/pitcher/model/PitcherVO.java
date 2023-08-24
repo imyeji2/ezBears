@@ -11,7 +11,7 @@ public class PitcherVO {
 	private String regdate;
 	private double BB;
 	private int SO;
-	private int IP;
+	private double IP;
 	private int HA;
 	private int RC;
 	private int ER;

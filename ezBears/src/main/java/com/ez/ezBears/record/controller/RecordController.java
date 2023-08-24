@@ -184,11 +184,11 @@ public class RecordController {
 		return "/record/gameWrite";
 	}
 	
-	@RequestMapping("/gameUpdate")
+	@RequestMapping("/gameEdit")
 	public String gameUpdate() {
 		//1,4
 		logger.info("경기정보수정");
-		return "/record/gameUpdate";
+		return "/record/gameEdit";
 	}
 	
 	@RequestMapping("/gameDelete")
@@ -206,11 +206,11 @@ public class RecordController {
 	}
 	
 	
-	@RequestMapping("/inningUpdate")
+	@RequestMapping("/inningEdit")
 	public String inningUpdate() {
 		//1,4
 		logger.info("이닝정보수정");
-		return "/record/inningUpdate";
+		return "/record/inningEdit";
 	}
 
 	

@@ -22,7 +22,7 @@
 						<div id="contents" class="content01">
 							<!--sub title & location -->
 							<div class="location">
-								<h3 class="tit-page">선수 상세 정보</h3>
+								<h3 class="tit-page">선수 기록 정보</h3>
 								<br>
 								<!-- // sub title & location -->
 
@@ -43,7 +43,7 @@
 											</thead>
 											<tbody>
 												<tr>
-													<th scope="row">10</th>
+													<td>10</td>
 													<td>알칸타라</td>
 													<td>투수</td>
 													<td>1999 9 9</td>
@@ -54,6 +54,38 @@
 												</tr>
 											</tbody>
 										</table>
+										<br>
+										<div class="player_records">
+											<h6>${vo.regdate}기록</h6>
+										</div>
+										<div class="table-responsive">
+											<table class="table">
+												<thead>
+													<tr>
+														<th scope="col">사구</th>
+														<th scope="col">삼진</th>
+														<th scope="col">총 이닝</th>
+														<th scope="col">피안타</th>
+														<th scope="col">실점</th>
+														<th scope="col">자책점</th>
+														<th scope="col">피홈런</th>
+														<th scope="col">평균자책점</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td>2.65</td>
+														<td>45</td>
+														<td>0</td>
+														<td>0</td>
+														<td>4</td>
+														<td>0</td>
+														<td>2</td>
+														<td>1.1</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
 										<br>
 										<div class="player_records">
 											<h6>2023 성적</h6>
@@ -86,36 +118,18 @@
 												</tbody>
 											</table>
 										</div>
-										<br>
-										<div class="table-responsive">
-											<table class="table">
-												<thead>
-													<tr>
-														<th scope="col">타수</th>
-														<th scope="col">득점</th>
-														<th scope="col">안타</th>
-														<th scope="col">타점</th>
-														<th scope="col">사구</th>
-														<th scope="col">삼진</th>
-														<th scope="col">타율</th>
-													</tr>
-												</thead>
-												<tbody>
-													<tr>
-														<td>100</td>
-														<td>100</td>
-														<td>200</td>
-														<td>100</td>
-														<td>10</td>
-														<td>0</td>
-														<td>5.55</td>
-													</tr>
-												</tbody>
-											</table>
-											<br>
-											<br>
+										<div class="divBtn">
+											<a href="<c:url value='/record/pitcherRecordWrite'/>">기록정보
+												등록</a>
 										</div>
-
+										<div class="divBtn">
+											<a href="<c:url value='/record/pitcherRecordEdit'/>">기록정보
+												수정</a>
+										</div>
+										<div class="divBtn">
+											<a href="<c:url value='/record/pitcherRecordDelete'/>">기록정보
+												삭제</a>
+										</div>
 
 
 									</div>
