@@ -71,11 +71,11 @@
 							<span class="sp1">연락처</span> <span>${map['PLAYER_TEL'] }</span>
 						</div>
 						<div>
-							<span class="sp1">특이사항</span> <span>${map['PLAYER_INFO'] }</span>
+							<span class="sp1">선수 상태</span> <span>${map['PLAYER_INFO'] }</span>
 						</div>
-						<div>
+<%-- 						<div>
 							<span class="sp1">상태</span> <span>${map['PLAYER_STATUS'] }</span>
-						</div>
+						</div> --%>
 						<div>
 							<span class="sp1">주소</span> <span>${map['PLAYER_ADDRESS'] }</span>
 						</div>

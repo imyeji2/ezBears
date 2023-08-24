@@ -27,11 +27,11 @@
 	        				~ <input type="text" class="dateInput">년 <input type="text" class="dateInput">월 <input type="text" class="dateInput">일</td>
 	        		</tr>
 	        		<tr>
-	        			<th>사원명</th>
+	        			<th>부서명</th>
 	        			<td><input type="text" style="width: 80%"></td>
 	        		</tr>
 	        		<tr>
-	        			<th>부서</th>
+	        			<th>사원명</th>
 	        			<td><input type="text" style="width: 80%"></td>
 	        		</tr>
 	        	</table>
