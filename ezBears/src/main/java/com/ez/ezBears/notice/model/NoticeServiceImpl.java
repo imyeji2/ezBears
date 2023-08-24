@@ -3,13 +3,18 @@ package com.ez.ezBears.notice.model;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+
+import com.ez.ezBears.notice.controller.NoticeController;
 
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class NoticeServiceImpl implements NoticeService{
+	private static final Logger logger = LoggerFactory.getLogger(NoticeServiceImpl.class);
 	private final NoticeDAO noticeDao;
 	
 	@Override
@@ -25,10 +30,16 @@ public class NoticeServiceImpl implements NoticeService{
 	@Override
 	public Map<String, Object> selectDetail(int noticeNo) {
 		int cnt = noticeDao.updateViewsCount(noticeNo);
+		logger.info("조회스 증가 결과 cnt={}",cnt);
 		
 		return noticeDao.selectDetail(noticeNo);
 	}
 
+	@Override
+	public List<Map<String, Object>> selectNoticeFile(int noticeNo) {
+		return noticeDao.selectNoticeFile(noticeNo);
+	}
+	
 	@Override
 	public int insertFileNotice(List<Map<String, Object>> files, int noticeNo) {
 		int cnt = 0;
@@ -48,4 +59,23 @@ public class NoticeServiceImpl implements NoticeService{
 		
 		return cnt;
 	}
+
+	/*
+	 * @Override public List<Map<String, Object>> nextPage(int noticeNo) { return
+	 * noticeDao.nextPage(noticeNo); }
+	 */
+
+	@Override
+	public List<Map<String, Object>> backPage(int noticeNo) {
+		return noticeDao.backPage(noticeNo);
+	}
+
+	@Override
+	public List<Map<String, Object>> nextPage(int noticeNo) {
+		return noticeDao.nextPage(noticeNo);
+	}
+
+
+
+	
 }

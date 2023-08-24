@@ -11,6 +11,10 @@ public interface NoticeDAO {
 	int insertFileNotice(NoticeFileVO noticeFileVo);
 	List<Map<String, Object>> selectNoticeList(int noticeNo);
 	Map<String, Object> selectDetail(int noticeNo);
+	List<Map<String, Object>> selectNoticeFile(int noticeNo);
 	int updateViewsCount(int noticeNo);
+	
+	List<Map<String, Object>> nextPage(int noticeNo);
+	List<Map<String, Object>> backPage(int noticeNo);
 	
 }
