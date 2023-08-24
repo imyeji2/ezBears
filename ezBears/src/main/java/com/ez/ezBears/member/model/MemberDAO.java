@@ -37,6 +37,9 @@ public interface MemberDAO {
     //경영지원팀에서 멤버 검색
     List<MemberVO> searchMem(String keyword);
     
+    //부서 삭제시 남아있는 멤버 조회
+    int countMem(int deptNo);
+    
     Map<String, Object> selectMemberView(String memId);
     
 }
