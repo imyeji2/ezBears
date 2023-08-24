@@ -51,11 +51,10 @@
 <!-- 다희 -->	
 
 <!-- 희진 -->
-<select id="selectBoardInfo" parameterType="String" resultType="map">
-	select my_board_no, m_board_no, mem_no, m_board_name
-		from myBoardListView
-		where mem_id=#{memId}
-</select>
+	<select id="selectBoardInfo" parameterType="myBoardInfoVo" resultType="myBoardInfoVo">
+		select * from myBoardInfo
+		where m_board_no = #{mBoardNo} and mem_id = #{memId}
+	</select>
 </mapper>
 
 

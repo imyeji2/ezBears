@@ -13,4 +13,9 @@ public class ScheduleVO {
 	private Date schedulEnd;  /* 종료일 */
 	private String schedulTitle; /* 제목 */
 	private String schedulContent; /* 내용 */
+	
+	//뷰에서 받아온 memId 저장
+	private String memId;
+	private int mBoardNo;
+	
 }

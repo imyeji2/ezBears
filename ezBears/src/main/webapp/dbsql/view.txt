@@ -31,7 +31,18 @@ ON A.MEM_NO = B.MEM_NO;
 
 
 [희진]---------------------------------------------------------------------
+create or replace view myBoardInfo
+as
+select b.*,m.mem_id
+from member m join my_board b
+on m.mem_no = b.mem_no;
 
+
+create or replace view calenderInfo
+as
+select s.mem_no,info.mem_id,info.my_board_no,info.m_board_no,s.schedule_start,s.schedule_end,s.schedule_title  from
+myBoardInfo info join schedule s
+on info.my_board_no = s.my_board_no;
 
 [충혁]---------------------------------------------------------------------
 
