@@ -33,35 +33,47 @@ $(function(){
 	
     // "등록" 버튼 클릭 시
  	function InsertDept(){
-    	$('#deptNo').val('');
     	$('.btn-form').attr('action',"<c:url value='/dept/insert'/>");
     	$('.btn-form').submit();
     }
 
     // "수정" 버튼 클릭 시
  	function EditDept(){
+		$('#deptNo').prop('disabled', false);
+		
     	$('.btn-form').attr('action',"<c:url value='/dept/edit'/>");
     	$('.btn-form').submit();
     }
 
     // "삭제" 버튼 클릭 시
-    document.getElementById("btnDelete").onclick = function() {
-        document.forms["frm1"].action = "<c:url value='/dept/delete'/>";
-        document.forms["frm1"].submit();
-    };
+    
+    function DelDept(){
+
+		$('#deptNo').prop('disabled', false);
+		
+    	$('.btn-form').attr('action',"<c:url value='/dept/delete'/>");
+    	$('.btn-form').submit();
+    }
+    
 
 </script>
 	<div class="col-12">
 	    <div class="bg-secondary rounded h-100 p-4">
-	        <h6 class="mb-4">부서 관리</h6>
+	    	<nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+	           <ol class="breadcrumb">
+	             <li class="breadcrumb-item active" aria-current="page">
+	                <a href="<c:url value='/dept/list'/>">부서 관리</a>
+	             </li>
+	           </ol>
+	         </nav>
 	        <form class="btn-form" name="frm1" method="post">
 				<div class = "btns">
-					<input type="hidden" class="addDept" id = "deptNo" name ="deptNo" placeholder="부서번호">
+					<input type="hidden" class="addDept" id = "deptNo" name ="deptNo" placeholder="부서번호" disabled="disabled">
 					<input type="text" class="addDept" id = "deptName" name ="deptName" placeholder="부서명">
 					<input type="text" class="addDept" id = "deptTel"  name ="deptTel" placeholder="부서전화번호">
 					<button type="submit" class="btnAdd" id="btnAdd" onclick = "InsertDept()" value="등록">등록</button>
 					<button type="submit" class="btnEdit" id="btnEdit" onclick = "EditDept()"value="수정">수정</button>
-					<button type="button" class="btnDelete" id="btnDelete">삭제</button>
+					<button type="submit" class="btnDelete" id="btnDelete"  onclick = "DelDept()"value="삭제">삭제</button>
 				</div>
 				<br>
 		        <div class="table-responsive">
@@ -72,6 +84,7 @@ $(function(){
 		                        <th scope="col">번호</th>
 		                        <th scope="col">부서이름</th>
 		                        <th scope="col">전화번호</th>
+		                        <th scope="col">사원 수</th>
 		                    </tr>
 		                </thead>
 		                <tbody>
@@ -84,9 +97,10 @@ $(function(){
 			                	<c:forEach var="deptVo" items="${list}"> 
 			                		<tr class="memList">
 			                			<td><input type="checkbox"></td>
-			                			<td>${deptVo.deptNo}</td>
+			                			<td class = "selectdeptNo">${deptVo.deptNo}</td>
 			                			<td onclick="editDeptInfo('${deptVo.deptName}','${deptVo.deptNo}','${deptVo.deptTel}')">${deptVo.deptName}</td>
 			                			<td onclick="editDeptInfo('${deptVo.deptName}','${deptVo.deptNo}','${deptVo.deptTel}')">${deptVo.deptTel}</td>
+			                			<td onclick="editDeptInfo('${deptVo.deptName}','${deptVo.deptNo}','${deptVo.deptTel}')">${deptVo.memberCount}</td>
 			                		</tr>
 			                	</c:forEach>
 			                </c:if>

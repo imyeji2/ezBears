@@ -132,5 +132,10 @@ public class MemberServiceImpl implements MemberService{
 		return memberDao.searchMem(keyword);
 	}
 
+	@Override
+	public int countMem(int deptNo) {
+		return memberDao.countMem(deptNo);
+	}
+
 	
 }

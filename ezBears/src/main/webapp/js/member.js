@@ -174,34 +174,39 @@
 	        $text.val(cleanedValue);
 	    });
 	    
+	    // detail
 	    $('.showEditDept').hide();
 		$('.showEditPosition').hide();
 		$('.showEditType').hide();
+		$('#editLable').hide();
+		$('.errMsg').hide();
+		
 		
         $('.editIcon').click(function() {
-            var findInput = $(this).siblings('input');
-            findInput.prop('readonly', false);
-            findInput.focus();
-        });
-        
-        
-        $('#editDept').click(function() {
+			$('.errMsg').show();
+			$('#editLable').show();
+			//부서
         	$('.showEditDept').show();
         	$('#deptName').hide();
-        });
-        
-        $('#editPosition').click(function() {
+			
+			//직급
         	$('.showEditPosition').show();
         	$('#position').hide();
-        });
-        
-        $('#editType').click(function() {
+        	
+        	//고용형태
         	$('.showEditType').show();
         	$('#type').hide();
+        	
+        	//연봉, 퇴사일 수정가능
+            $('#sal').prop('readonly', false);
+            $('#sal').prop('style', "border: 1px solid #6C7293; border-radius: 5px;");
+            $('#contractDone').prop('readonly', false);
+            $('#contractDone').prop('style', "border: 1px solid #6C7293; border-radius: 5px;");
         });
+
 	});
 
-		
+	   	
 	//우편번호 카카오 주소 api
 	//본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
     function sample4_execDaumPostcode() {

@@ -38,4 +38,9 @@ public class DeptServiceImpl implements DeptService{
 	public int insertDept(DeptVO deptVo) {
 		return deptDao.insertDept(deptVo);
 	}
+
+	@Override
+	public int checkDeptName(String deptName) {
+		return deptDao.checkDeptName(deptName);
+	}
 }
