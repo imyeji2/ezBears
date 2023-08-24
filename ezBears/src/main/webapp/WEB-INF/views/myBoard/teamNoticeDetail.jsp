@@ -23,7 +23,6 @@
 		            
 		            $.each(res, function(idx, item){
 		            	
-		            	
 		            });
 		        }
 		 });
@@ -193,12 +192,109 @@
 	       		
 	       		
 	       		<div class="detail_reply_wrap">
-	       			<div class="reply_tit" id="totalCount"></div>
+	       			<div class="reply_tit">댓글(${totalCount})</div>
 	       			<div class="reply_list">
-
+	       				<div class="reply_content"> 
+	       					<div class="reply_user">    					
+		       					<div class="detail_left">
+									<div class="user_img">
+					        			<img src="<c:url value='/img/mem_images/${replyMap["MEM_IMAGE"]}'/>" alt="사원프로필">
+					        		</div><!-- user_img -->
+					        	</div>
+				        		<div class="detail_left">
+				        			<span class="user_name"><a href="#">${replyMap['MEM_NAME']}</a></span>
+				        			<span class="user_dept">/💼${replyMap['DEPT_NAME']}</span>
+				        		</div><!-- detail_left -->	 					
+	       					</div><!-- reply_user -->
+	       					
+	       					<div class="replyWriteForm">
+		       					<div class="reply_txt">
+									${fn:replace(replyMap['COMMENTS'], newLineChar, "<br/>")}
+		       					</div><!-- reply_txt -->
+		       					
+		       					<div class="reply_txt">
+		       						<span>
+		       							<fmt:formatDate value="${replyMap['REGDATE']}" pattern="yyyy-MM-dd hh:mm"/>
+		       						</span>
+		       						<c:if test="${userid==replyMap['MEM_ID']}">
+			       						<span><a href="#" class="editReply">수정</a></span>
+			       						<span><a href="#" id="delReply">삭제</a></span>
+			       					</c:if>
+			       					<c:if test="${userid!=replyMap['MEM_ID']}">
+		       							<span><a href="#" id="add_r_reply">답글</a></span>
+		       						</c:if>
+		       					</div><!-- reply_txt -->
+		       				</div><!-- replyWriteForm -->
+											       				
+							<div class="replyEditForm" style="display:none;">
+								<div class="reply_write">
+									<div class="form-floating">
+									  <textarea class="form-control" placeholder="Comments" 
+									  id="floatingTextarea2" name="comments"
+									   style="height: 100px">${replyMap['COMMENTS']}</textarea>
+									  <label for="floatingTextarea2">Comments</label>
+									</div>	
+									       				
+				       				<div class="reply_add">
+				       					<button class="reply_add_btn2" style="margin-bottom: 4px;">등록</button>
+				       					<button class="reply_add_btn2 reply_add_cencle">취소</button>
+				       				</div>
+				       			</div><!-- reply_write -->											
+							</div><!-- replyEditForm -->
+							
+	       				</div><!-- reply_content -->
+	      				
+	    						
+      					<div class="r_reply_content">
+      						<div>
+		       					<div class="reply_user">    					
+			       					<div class="detail_left">
+										<div class="user_img">
+						        			<img src="<c:url value='/img/mem_images/${replyMap["MEM_IMAGE"]}'/>" alt="사원프로필">
+						        		</div><!-- user_img -->
+						        	</div>
+					        		<div class="detail_left">
+					        			<span class="user_name"><a href="#">${replyMap['MEM_NAME']}</a></span>
+					        			<span class="user_dept">/ 💼${replyMap['DEPT_NAME']}</span>
+					        		</div><!-- detail_left -->	 					
+		       					</div><!-- reply_user -->
+		       					
+		       					<div class="reply_txt">
+			       					${fn:replace(replyMap['COMMENTS'], newLineChar, "<br/>")}
+		       					</div><!-- reply_txt -->
+		       					
+		       					<div class="reply_txt">
+		       						<span>
+		       							<fmt:formatDate value="${replyMap['REGDATE']}" pattern="yyyy-MM-dd hh:mm"/>
+		       						</span>
+		       						<c:if test="${userid==replyMap['MEM_ID']}">
+			       						<span><a href="#">수정</a></span>
+			       						<span><a href="#">삭제</a></span>
+		       						</c:if>
+		       					</div><!-- reply_txt -->
+		       				</div>
+		       				
+							<div id="replyaddForm" style="display:none;">
+								<div class="reply_write">
+									<div class="form-floating">
+									  <textarea class="form-control" placeholder="Comments" 
+									  id="floatingTextarea2" name="comments"
+									   style="height: 100px"></textarea>
+									  <label for="floatingTextarea2">Comments</label>
+									</div>
+									       				
+				       				<div class="reply_add">
+				       					<button class="reply_add_btn2" style="margin-bottom: 4px;" id="">등록</button>
+				       					<button class="reply_add_btn2" id="">취소</button>						       					
+				       				</div>
+				       			</div><!-- reply_write -->											
+							</div><!-- replyaddForm -->					       					       					
+      					</div><!-- r_reply_content -->	
+      				<div class="reply_line"></div>  	       				
+		       			
 		       	
 	       			
-	       			</div><!-- reply_list -->
+	       		</div><!-- reply_list -->
 	       			
 	       			<form name="reply_frm" method="post" action="#">
 	       				<input type="hidden" name="memNo" value="${userNo}">
