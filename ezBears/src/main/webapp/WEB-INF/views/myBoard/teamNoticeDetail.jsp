@@ -1,15 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="../inc/top.jsp"%>	
+<script type="text/javascript" src="<c:url value='/js/paging.js'/>"></script>
 <% pageContext.setAttribute("newLineChar", "\n"); %>
 <!-- Recent Sales Start -->
-<script>
-	
-	$(function(){
-		
-		//전체 댓글 불러오기 ajax처리
+<script type="text/javascript">
+
+	function send(curPage){			 
 		 var groupNo = $('input[name=groupno]').serialize(); // 데이터 직렬화
-		
-		 
 		 $.ajax({
 		        type: 'post',
 		        url: "<c:url value='/myBoard/reply_select'/>",
@@ -26,6 +23,7 @@
 		            	var step= item.STEP
 		            	var imagePath = "/img/mem_images/" + item.MEM_IMAGE;
 		            	var comment = item.COMMENTS.replace(/\r\n/ig, '<br>');
+		            	var recomment = comment.replace(/<br>/ig, "\n");
 			            var date = new Date(item.REGDATE);
 			            var userid='<%=session.getAttribute("userid")%>';
 			            const regdate = new Date(date.getTime()).toISOString().split('T')[0] + " " + date.toTimeString().split(' ')[0];
@@ -44,7 +42,6 @@
 		            		replyData+="</div><!-- detail_left -->";
 		            		replyData+="</div><!-- reply_user -->";
 		            		replyData+="<div class='replyWriteForm'>";
-		            		replyData+="<div class='reply_txt'>";
 		            		replyData+="<div class='reply_txt'>"+comment+"</div><!-- reply_txt -->";
 		            		replyData+="<div class='reply_txt'>";
 		            		replyData+="<span>"+regdate+"</span>";
@@ -60,15 +57,19 @@
 		            		replyData+="</div><!-- replyWriteForm -->";
 		            		replyData+="<!-- 댓글 수정 -->";
 		            		replyData+="<div class='replyEditForm' style='display:none;'>";
-		            		replyData+="<form name='replyEditForm' method='post' action='#'>";
+		            		replyData+="<form name='replyEForm' method='post' action='#'>";
+		            		replyData += "<input type='hidden' name='memNo' value='" + userid + "'>";
+		            		replyData+="<input type='hidden' name='groupno' value='"+item.groupno+"'>";
+		            		replyData+="<input type='hidden' name='mBoardNo' value='"+item.M_BOARD_NO+"'>";
+		            		replyData+="<input type='hidden' name='step' value='"+item.STEP+"'>";
 		            		replyData+="<div class='reply_write'>";
 		            		replyData+="<div class='form-floating'>";
-		            		replyData+="<textarea class='form-control' placeholder='Comments'id='floatingTextarea2' name='comments' style='height: 100px'>"+comment+"</textarea>";
+		            		replyData+="<textarea class='form-control' placeholder='Comments'id='floatingTextarea2' name='comments' style='height: 100px'>"+recomment+"</textarea>";
 		            		replyData+="<label for='floatingTextarea2'>Comments</label>";
 		            		replyData+="</div>";
 		            		replyData+="<div class='reply_add'>";
-		            		replyData+="<button class='reply_add_btn2' style='margin-bottom: 4px;'>등록</button>";
-		            		replyData+="<button class='reply_add_btn2 reply_add_cencle'>취소</button>";
+		            		replyData+="<button class='reply_add_btn2' style='margin-bottom: 4px;' id='r_replyAddBtn'>등록</button>";
+		            		replyData+="<button class='reply_add_btn2 reply_add_cencle'id='r_replyCencleBtn'>취소</button>";
 		            		replyData+="</div>";
 		            		replyData+="</div><!-- reply_write -->";
 		            		replyData+="</form><!--댓글 수정--->";
@@ -82,14 +83,15 @@
 		            	
 		            });
 		            
-
+	
 		        }
 		 });
+	}	
+	
+	$(function(){
+		send(1);
 		
-		            
-		            
-		            
-		            
+		//글 삭제
 		$('#del').click(function(){
 			event.preventDefault();
 			 if (confirm("정말 삭제하시겠습니까?")){
@@ -97,22 +99,35 @@
 			 }
 		});
 		
-		$(".editReply").click(function(event){
+		
+		
+		//전체 댓글 불러오기 ajax처리
+		
+		
+		            
+		 //댓글 수정     
+		$(document).on('click', '.editReply', function(event) {       
 		    event.preventDefault();
 		    var $replyContainer = $(this).closest('.reply_content');
 		    $replyContainer.find('.replyWriteForm').hide();
 		    $replyContainer.find('.replyEditForm').show();
 		});
-
-		$(".reply_add_cencle").click(function(event){
-		    event.preventDefault();
-		    var $replyContainer = $(this).closest('.reply_content');
-		    $replyContainer.find('.replyEditForm').hide();
-		    $replyContainer.find('.replyWriteForm').show();
-
-		});
+				 
+		 
+		 
+		 //댓글 수정 취소
+		  $(document).on('click', '.reply_add_cencle',function(e) {       
+			  	event.preventDefault();
+			    var $replyContainer = $(this).closest('.reply_content');
+			    $replyContainer.find('.replyEditForm').hide();
+			    $replyContainer.find('.replyWriteForm').show();
+		  });
 		
+		 
+
 		
+
+		//댓글 추가 ajax
 		$('#add_reply').click(function(event){
 		    event.preventDefault(); // 이벤트의 기본 동작 방지
 		    var replyData = $('form[name=reply_frm]').serialize(); // 데이터 직렬화
@@ -173,6 +188,8 @@
 		    });
 		});
 	});
+	
+	
 </script>
 <div class="container-fluid pt-4 px-4" id="board_style">
 	<div class="bg-secondary text-center rounded p-4">
@@ -253,12 +270,10 @@
 	       			<div class="reply_tit">댓글(${totalCount})</div>
 	       			<div class="reply_list">
 	       				<!-- 댓글 영역 -->
-	       				<!-- <div class="reply_content">
- 
-							
-	       				</div>reply_content
-	      				 -->
-	    						
+
+	    				<!-- 댓글 영역 -->		
+	    				
+	    				<!-- 대댓글 영영 -->
       					<div class="r_reply_content">
       						<%-- <!-- 대댓글 보기 -->
       						<div class="r_reply_write_form">
