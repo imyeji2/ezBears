@@ -108,7 +108,7 @@
 #insertcal {
     width: 100%;
     height: 58px;
-}
-.btn {
-    float: right;
+	.btn {
+	    float: right;
+	}
 }

@@ -17,36 +17,71 @@
            
 
 <script>
-$.ajax({
-    url: '<c:url value ="/myBoard/Calender"/>',
-    type: 'GET',
-    dataType: 'json',
-    success: function(res){
-       var list = res;
-       console.log(list);
-       alert(res);
+document.addEventListener('DOMContentLoaded', function() {
+    var calendarEl = document.getElementById('calendar');
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+       initialView : 'dayGridMonth', //초기 캘린더 화면
+       headerToolbar : {
+          start : 'prev next today',
+          center : 'title',
+          end : 'dayGridMonth,dayGridWeek,dayGridDay'
+       },
+ 
+    // --- ajax --------
+   /* $.ajax({
+       type: 'POST'
+       ,cache: false
+       ,url: "/myBoard/addEvent"
+       ,dataType: 'json'
+       ,contentType : "application/x-www-form-urlencoded; charset=UTF-8"
+       ,success: function(event){
+           var events = [];
+           console.log(event);
+           if(event.pValue != null && event.pValue === 'private'){
+               events.push({
+                   title : event.title
+                   ,start : event.start
+                   ,end : event.end
+                   ,color : 'red'
+           });
+               */
+       /* 일정등록 json으로 변환후 ajax 방식으로 등록   */
+   
        
-       
-        var calendarEl = document.getElementById('calendar');
-       
-       var events = list.map(function(item) {
-          return {
-            title : item.SCHEDULE_TITLE,
-            start : item.reservationDate + "T" + item.reservationTime
-         }
-       });
-       
-      var calendar = new FullCalendar.Calendar(calendarEl, {
-         events : events,
-         eventTimeFormat: { // like '14:30:00'
-             hour: '2-digit',
-             minute: '2-digit',
-             hour12: false
-           }
-      });
-      calendar.render();
-    },
+     
+       events: [
+ 	      
+ 	      {
+ 	        title: '워크샵',
+ 	        start: '2023-08-07',
+ 	        end: '2023-08-10',
+ 	        backgroundColor: '#D1C4E9', // 일정 배경색    
+ 	    	 textColor : 'black'
+ 	      },
+ 	  		
+ 	      {
+ 	    	 title: '휴가',
+  	     start: '2023-08-16',
+  	     end: '2023-08-18',
+  	     backgroundColor: '#F48FB1',
+  	     textColor : 'black'
+ 	      }], 
+ 	   	
+       titleFormat : function(date) {
+          return date.date.year + '년 ' + (parseInt(date.date.month) + 1) + '월';
+       },
+       //initialDate: '2023-08-01', // 초기 날짜 설정 (설정 x => 오늘날짜)
+       selectable : true, // 달력 일자 드래그 가능
+       droppable : true,
+       editable : true,
+       nowIndicator: true, 
+       locale: 'ko' // 한국어로 변경해주기
+      
+    });
+    calendar.render();
+    
  });
+
 </script>
 
 <div id="insertcal">
