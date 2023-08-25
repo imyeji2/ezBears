@@ -370,17 +370,20 @@ public class TeamNoticeController {
 	
 	@ResponseBody
 	@RequestMapping("/reply_select")
-	public List<Map<String, Object>> reply_select(@RequestParam (defaultValue = "0") int groupNo) {
+	public List<Map<String, Object>> reply_select(@RequestParam (defaultValue = "0") int groupno) {
 		
+		logger.info("댓글 검색 파라미터 groupno()={}",groupno);
 		//전체 댓글 검색
-		List<Map<String, Object>> replyList = teamNoticeService.selectReply(groupNo);
-		logger.info("댓글 검색 결과 replyList.size()={}",replyList);
+		List<Map<String, Object>> replyList = teamNoticeService.selectReply(groupno);
+		logger.info("댓글 검색 결과 replyList.size()={}",replyList.size());
 		
 		//전체 댓글 카운트
 		//int totalCount = teamNoticeService.selectReplyTotalCount(groupNo);
 		//logger.info("totalCount={}",totalCount);
 		return replyList;
 	}
+	
+	
 	
 	@ResponseBody
 	@RequestMapping("/reply_insert")

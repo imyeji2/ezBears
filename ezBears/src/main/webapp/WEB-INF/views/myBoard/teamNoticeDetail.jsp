@@ -1,14 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="../inc/top.jsp"%>	
+<script type="text/javascript" src="<c:url value='/js/paging.js'/>"></script>
 <% pageContext.setAttribute("newLineChar", "\n"); %>
 <!-- Recent Sales Start -->
-<script>
-	
-	$(function(){
-		
-		//전체 댓글 불러오기 ajax처리
-		 var groupNo = $('#groupNo').serialize(); // 데이터 직렬화
-		 
+<script type="text/javascript">
+
+	function send(curPage){			 
+		 var groupNo = $('input[name=groupno]').serialize(); // 데이터 직렬화
 		 $.ajax({
 		        type: 'post',
 		        url: "<c:url value='/myBoard/reply_select'/>",
@@ -22,16 +20,78 @@
 		            alert("댓글 불러오기");
 		            
 		            $.each(res, function(idx, item){
-		            	
+		            	var step= item.STEP
+		            	var imagePath = "/img/mem_images/" + item.MEM_IMAGE;
+		            	var comment = item.COMMENTS.replace(/\r\n/ig, '<br>');
+		            	var recomment = comment.replace(/<br>/ig, "\n");
+			            var date = new Date(item.REGDATE);
+			            var userid='<%=session.getAttribute("userid")%>';
+			            const regdate = new Date(date.getTime()).toISOString().split('T')[0] + " " + date.toTimeString().split(' ')[0];
+			           
+			            if(step=== 1){
+		            		var replyData="<div class='reply_content'>"
+		            		replyData+="<div class='reply_user'>";
+		            		replyData+="<div class='detail_left'>";
+		            		replyData+="<div class='user_img'>";
+		            		replyData+="<img src='<c:url value='/img/mem_images/"+item.MEM_IMAGE+"'/>' alt='사원프로필'>";
+		            		replyData+="</div><!-- user_img -->";
+		            		replyData+="</div><!--detail_left-->";
+		            		replyData+="<div class='detail_left'>";
+		            		replyData+="<span class='user_name'><a href='#'>"+item.MEM_NAME+"</a></span>";
+		            		replyData+="<span class='user_dept'>/💼"+item.DEPT_NAME+"</span>";
+		            		replyData+="</div><!-- detail_left -->";
+		            		replyData+="</div><!-- reply_user -->";
+		            		replyData+="<div class='replyWriteForm'>";
+		            		replyData+="<div class='reply_txt'>"+comment+"</div><!-- reply_txt -->";
+		            		replyData+="<div class='reply_txt'>";
+		            		replyData+="<span>"+regdate+"</span>";
+		            		
+		            		if(userid==item.MEM_ID){
+		            			replyData+="<span><a href='#' class='editReply'>수정</a></span>";
+		            			replyData+="<span><a href='#' id='delReply'>삭제</a></span>";
+		            		}else{
+		            			replyData+="<span><a href='#' id='add_r_reply'>답글</a></span>";
+		            		}
+		            		
+		            		replyData+="</div><!-- reply_txt -->";
+		            		replyData+="</div><!-- replyWriteForm -->";
+		            		replyData+="<!-- 댓글 수정 -->";
+		            		replyData+="<div class='replyEditForm' style='display:none;'>";
+		            		replyData+="<form name='replyEForm' method='post' action='#'>";
+		            		replyData += "<input type='hidden' name='memNo' value='" + userid + "'>";
+		            		replyData+="<input type='hidden' name='groupno' value='"+item.groupno+"'>";
+		            		replyData+="<input type='hidden' name='mBoardNo' value='"+item.M_BOARD_NO+"'>";
+		            		replyData+="<input type='hidden' name='step' value='"+item.STEP+"'>";
+		            		replyData+="<div class='reply_write'>";
+		            		replyData+="<div class='form-floating'>";
+		            		replyData+="<textarea class='form-control' placeholder='Comments'id='floatingTextarea2' name='comments' style='height: 100px'>"+recomment+"</textarea>";
+		            		replyData+="<label for='floatingTextarea2'>Comments</label>";
+		            		replyData+="</div>";
+		            		replyData+="<div class='reply_add'>";
+		            		replyData+="<button class='reply_add_btn2' style='margin-bottom: 4px;' id='r_replyAddBtn'>등록</button>";
+		            		replyData+="<button class='reply_add_btn2 reply_add_cencle'id='r_replyCencleBtn'>취소</button>";
+		            		replyData+="</div>";
+		            		replyData+="</div><!-- reply_write -->";
+		            		replyData+="</form><!--댓글 수정--->";
+		            		replyData+="</div><!--reply_user-->";
+		            		replyData+="</div><!--reply_content-->";
+		            		$('.reply_list').prepend(replyData);
+		            	}else{
+		            		
+		            	}
+			            
 		            	
 		            });
+		            
+	
 		        }
 		 });
+	}	
+	
+	$(function(){
+		send(1);
 		
-		            
-		            
-		            
-		            
+		//글 삭제
 		$('#del').click(function(){
 			event.preventDefault();
 			 if (confirm("정말 삭제하시겠습니까?")){
@@ -39,22 +99,35 @@
 			 }
 		});
 		
-		$(".editReply").click(function(event){
+		
+		
+		//전체 댓글 불러오기 ajax처리
+		
+		
+		            
+		 //댓글 수정     
+		$(document).on('click', '.editReply', function(event) {       
 		    event.preventDefault();
 		    var $replyContainer = $(this).closest('.reply_content');
 		    $replyContainer.find('.replyWriteForm').hide();
 		    $replyContainer.find('.replyEditForm').show();
 		});
-
-		$(".reply_add_cencle").click(function(event){
-		    event.preventDefault();
-		    var $replyContainer = $(this).closest('.reply_content');
-		    $replyContainer.find('.replyEditForm').hide();
-		    $replyContainer.find('.replyWriteForm').show();
-
-		});
+				 
+		 
+		 
+		 //댓글 수정 취소
+		  $(document).on('click', '.reply_add_cencle',function(e) {       
+			  	event.preventDefault();
+			    var $replyContainer = $(this).closest('.reply_content');
+			    $replyContainer.find('.replyEditForm').hide();
+			    $replyContainer.find('.replyWriteForm').show();
+		  });
 		
+		 
+
 		
+
+		//댓글 추가 ajax
 		$('#add_reply').click(function(event){
 		    event.preventDefault(); // 이벤트의 기본 동작 방지
 		    var replyData = $('form[name=reply_frm]').serialize(); // 데이터 직렬화
@@ -71,7 +144,7 @@
 		            console.log(res); // 서버 응답 확인
 		            alert("댓글이 등록되었습니다.");
 		            
-		            var comment = res.COMMENTS.replace(/\r\n/ig, '<br>');
+		            var comment = res.COMMENTS.replace(/\r\n/ig, '<br>');;
 		            var date = new Date(res.REGDATE);
 		            var userid='<%=session.getAttribute("userid")%>';
 		            const regdate = new Date(date.getTime()).toISOString().split('T')[0] + " " + date.toTimeString().split(' ')[0];
@@ -115,8 +188,9 @@
 		    });
 		});
 	});
+	
+	
 </script>
-<input type="hidden" id ="groupNo" name="groupno" value="${map['GROUPNO']}">
 <div class="container-fluid pt-4 px-4" id="board_style">
 	<div class="bg-secondary text-center rounded p-4">
     	<div class="bg-secondary rounded h-100 p-4">
@@ -191,18 +265,75 @@
 		       		</div><!-- detail_content -->
 	       		</div><!-- detailWrap -->	 
 	       		
-	       		
+	       		<!-- 댓글 리스트 -->
 	       		<div class="detail_reply_wrap">
-	       			<div class="reply_tit" id="totalCount"></div>
+	       			<div class="reply_tit">댓글(${totalCount})</div>
 	       			<div class="reply_list">
+	       				<!-- 댓글 영역 -->
 
+	    				<!-- 댓글 영역 -->		
+	    				
+	    				<!-- 대댓글 영영 -->
+      					<div class="r_reply_content">
+      						<%-- <!-- 대댓글 보기 -->
+      						<div class="r_reply_write_form">
+		       					<div class="reply_user">    					
+			       					<div class="detail_left">
+										<div class="user_img">
+						        			<img src="<c:url value='/img/mem_images/${replyMap["MEM_IMAGE"]}'/>" alt="사원프로필">
+						        		</div><!-- user_img -->
+						        	</div>
+					        		<div class="detail_left">
+					        			<span class="user_name"><a href="#">${replyMap['MEM_NAME']}</a></span>
+					        			<span class="user_dept">/ 💼${replyMap['DEPT_NAME']}</span>
+					        		</div><!-- detail_left -->	 					
+		       					</div><!-- reply_user -->
+		       					
+		       					<div class="reply_txt">
+			       					${fn:replace(replyMap['COMMENTS'], newLineChar, "<br/>")}
+		       					</div><!-- reply_txt -->
+		       					
+		       					<div class="reply_txt">
+		       						<span>
+		       							<fmt:formatDate value="${replyMap['REGDATE']}" pattern="yyyy-MM-dd hh:mm"/>
+		       						</span>
+		       						<c:if test="${userid==replyMap['MEM_ID']}">
+			       						<span><a href="#">수정</a></span>
+			       						<span><a href="#">삭제</a></span>
+		       						</c:if>
+		       					</div><!-- reply_txt -->
+		       				</div>
+		       				<!-- 대댓글 보기 -->
+		       				
+		       				<!-- 대댓글 등록 -->
+							<div id="replyaddForm" style="display:none;">
+								<form name="rAddForm" method="post" action="#">
+									<div class="reply_write">
+										<div class="form-floating">
+										  <textarea class="form-control" placeholder="Comments" 
+										  id="floatingTextarea2" name="comments"
+										   style="height: 100px"></textarea>
+										  <label for="floatingTextarea2">Comments</label>
+										</div>
+										       				
+					       				<div class="reply_add">
+					       					<button class="reply_add_btn2" style="margin-bottom: 4px;" id="">등록</button>
+					       					<button class="reply_add_btn2" id="">취소</button>						       					
+					       				</div>
+					       			</div><!-- reply_write -->	
+				       			</form>										
+							</div><!-- replyaddForm -->					       					       					
+      					</div><!-- r_reply_content -->	
+      				<div class="reply_line"></div>  	       				
+		       		<!-- 대댓글 등록 -->	 --%>
 		       	
 	       			
-	       			</div><!-- reply_list -->
-	       			
+	       		</div><!-- reply_list -->
+	       		
+	       			<!-- 댓글 등록 -->
 	       			<form name="reply_frm" method="post" action="#">
 	       				<input type="hidden" name="memNo" value="${userNo}">
-	       				<%-- <input type="hidden" name="groupno" value="${map['GROUPNO']}"> --%>
+	       				<input type="hidden" name="groupno" value="${map['TEAM_NOTICE_NO']}"> 
 	       				<input type="hidden" name="mBoardNo" value="${map['M_BOARD_NO']}">
 	       				
  		       			<div class="reply_write">
@@ -218,6 +349,8 @@
 		       				</div>
 		       			</div><!-- reply_write -->
 	       			</form>
+	       			<!-- 댓글 등록 -->
+	       		</div>
 	       			
 			        <div class="page_box">
 				    	<nav aria-label="Page navigation example">
@@ -240,7 +373,8 @@
 					</div><!-- page_box -->  
 	       		</div><!-- detail_reply_wrap -->   		
 			</div><!-- teamNoticeDetail -->
-		</div>
+		
+	</div>
 	</div>
 </div>
 <%@include file="../inc/bottom.jsp"%>  
