@@ -85,6 +85,10 @@ public class FileUploadUtil {
 				path=ConstUtil.STAFFIMAGE_FILE_UPLOAD_PATH;
 			}else if(pathFlag == ConstUtil.UPLOAD_TEAMIMAGE_FLAG) {	//선수 이미지 업로드
 				path=ConstUtil.TEAMIMAGE_FILE_UPLOAD_PATH;
+			}else if(pathFlag == ConstUtil.UPLOAD_WEBHARD_FLAG) {	//웹하드 업로드
+				path=ConstUtil.WEB_HARD_FILE_PATH;
+			}else if(pathFlag == ConstUtil.UPLOAD_APPROVAL_FLAG) {	//결재 업로드
+				path=ConstUtil.APPROVAL_FILE_UPLOAD_PATH;
 			}
 			
 			

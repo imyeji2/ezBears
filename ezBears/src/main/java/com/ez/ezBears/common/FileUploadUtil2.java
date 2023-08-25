@@ -90,6 +90,10 @@ public class FileUploadUtil2 {
 				path=ConstUtil.TEAMIMAGE_FILE_UPLOAD_PATH;
 			}else if(pathFlag == ConstUtil.UPLOAD_NOTICE_FLAG) {
 				path=ConstUtil.NOTICE_FILE_UPLOAD_PATH;
+			}else if(pathFlag == ConstUtil.UPLOAD_WEBHARD_FLAG) {	//웹하드 업로드
+				path=ConstUtil.WEB_HARD_FILE_PATH;
+			}else if(pathFlag == ConstUtil.UPLOAD_APPROVAL_FLAG) {	//결재 업로드
+				path=ConstUtil.APPROVAL_FILE_UPLOAD_PATH;
 			}
 			
 			
