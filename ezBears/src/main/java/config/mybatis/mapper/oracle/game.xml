@@ -5,15 +5,20 @@
 	<sql id="searchWhere">
 		<where>
 			<if test="searchKeyword!=null and searchKeyword!=''">
-				${searchCondition} like '%' || #{searchKeyword} || '%'
+	${searchCondition} like '%' || #{searchKeyword} || '%'
 			</if>
 		</where>
 	</sql>
 	
 	<select id="selectAllGame" resultType="gameVo" parameterType="searchVo">
 		select * from recode
-
 	</select>
+	
+	<select id="selectByRecodeNo" resultType="gameVo" parameterType="int">
+		select * from recode
+		where recode_no=#{recodeNo}
+	</select>
+	
 	
 	<insert id="insertGame" parameterType="gameVo">
 		<selectKey keyProperty="recodeNo" order="BEFORE" resultType="int">
@@ -30,7 +35,7 @@
 		where recode_no=#{recodeNo}
 	</update>
 	
-	<delete id="deleteGame">
+	<delete id="deleteGame" parameterType="int">
 		delete recode
 		where recode_no=#{recodeNo}
 	</delete>

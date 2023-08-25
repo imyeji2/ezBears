@@ -119,12 +119,6 @@
 			<div class="divBtn">
 				<a href="<c:url value='/record/gameWrite'/>">경기정보 등록</a>
 			</div>
-			<div class="divBtn">
-				<a href="<c:url value='/record/gameEdit'/>">경기정보 수정</a>
-			</div>
-			<div class="divBtn">
-				<a href="<c:url value='/record/gameDelete'/>">경기정보 삭제</a>
-			</div>
 		</div>
 	</div>
 </div>
