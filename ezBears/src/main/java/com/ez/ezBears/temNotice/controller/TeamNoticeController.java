@@ -157,6 +157,7 @@ public class TeamNoticeController {
 	}
 	
 	
+	//공지사항 조회수 증가
 	@GetMapping("/countUpdate")
 	public String countUpdate(@RequestParam(defaultValue = "0") int mBoardNo, 
 			@RequestParam(defaultValue = "0") int teamNoticeNo, Model model) {
@@ -177,6 +178,7 @@ public class TeamNoticeController {
 		//4
 		return "redirect:/myBoard/teamNoticeDetail?mBoardNo="+mBoardNo+"&teamNoticeNo="+teamNoticeNo;
 	}
+	
 	
 	
 	//팀별 공지사항 디테일 페이지
@@ -213,6 +215,7 @@ public class TeamNoticeController {
 	}
 	
 	
+	//파일 다운로드
 	@RequestMapping("/downloadFile")
 	//ModelAndView => 데이터와 뷰를 동시에 설정 가능
 	public ModelAndView downloadFile(@RequestParam(defaultValue = "0") int teamNoticeNo,
@@ -236,7 +239,7 @@ public class TeamNoticeController {
 		
 	}
 	
-	
+	//공지사항 수정 화면
 	@GetMapping("/teamNoticeEdit")
 	public String teamNoticeEdit_get(@ModelAttribute MyBoardListVO myBoardListVo,
 			@RequestParam (defaultValue = "0") int teamNoticeNo,Model model, HttpSession session) {
@@ -264,6 +267,8 @@ public class TeamNoticeController {
 		return "/myBoard/teamNoticeWrite";
 	}
 	
+	
+	//공지사항 수정
 	@PostMapping("teamNoticeEdit")
 	public String teamNoticeEdit_post(@ModelAttribute TeamNoticeVO teamNoticeVo,
 			@RequestParam(defaultValue = "0") int mBoardNo,@RequestParam String oldFileName,
@@ -324,6 +329,8 @@ public class TeamNoticeController {
 		return "common/message";
 	}
 	
+	
+	//공지사항 디테일 화면
 	@RequestMapping("/teamNoticeDel")
 	public String teamNoticeDel(@RequestParam (defaultValue = "0") int mBoardNo,
 			@RequestParam (defaultValue = "0") int teamNoticeNo, 
@@ -368,6 +375,7 @@ public class TeamNoticeController {
 	}
 	
 	
+	//댓글 조회
 	@ResponseBody
 	@RequestMapping("/reply_select")
 	public Map<String, Object> reply_select(@ModelAttribute MyBoardSearchVo searchVo) {
@@ -405,10 +413,10 @@ public class TeamNoticeController {
 	}
 	
 	
-	
+	//댓글 등록
 	@ResponseBody
 	@RequestMapping("/reply_insert")
-	public Map<String, Object> reply_insert(@ModelAttribute TeamNoticeVO teamNoticeVo,
+	public int reply_insert(@ModelAttribute TeamNoticeVO teamNoticeVo,
 			@RequestParam (defaultValue = "0") int mBoardNo) {
 		//1
 		logger.info("리플 등록 파라미터 teamNoticeVo={}",teamNoticeVo);
@@ -424,10 +432,35 @@ public class TeamNoticeController {
 		teamNoticeVo.setMyBoardNo(myBoardNo);
 		logger.info("리플 등록 파라미터 수정 teamNoticeVo={}",teamNoticeVo);
 				
-		Map<String, Object> map = teamNoticeService.addreply(teamNoticeVo);
-		logger.info("등록 댓글 결과 map={}",map);
+		int cnt= teamNoticeService.addreply(teamNoticeVo);
+		logger.info("등록 댓글 결과 cnt={}",cnt);
+		
+		return cnt;
 	
-		return map;
 	}
+	
+	
+	@ResponseBody
+	@RequestMapping("/reply_update")
+	public Map<String,Integer> reply_update(@ModelAttribute TeamNoticeVO teamNoticeVo, int curPage) {
+		//1.
+		logger.info("팀 공지사항 수정하기 파라미터 teamNoticeVo={},curPage",teamNoticeVo,curPage);
+		
+		//2.
+		int cnt = teamNoticeService.updeteReply(teamNoticeVo);
+		logger.info("댓글 수정 결과 cnt={}",cnt);
+		
+		//3.
+		Map<String, Integer> result = new HashMap<>();
+		result.put("cnt", cnt);
+		result.put("curPage", curPage);
+		
+		//4.
+		return result;
+	}
+	
+	
+	
+
 	
 }

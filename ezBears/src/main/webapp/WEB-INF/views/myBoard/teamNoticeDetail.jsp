@@ -20,7 +20,7 @@
 		
 		            
 		 //댓글 수정     
-		$(document).on('click', '.editReply', function(event) {       
+		$(document).on('click', '.editReply', function(e) {       
 		    event.preventDefault();
 		    var $replyContainer = $(this).closest('.reply_content');
 		    $replyContainer.find('.replyWriteForm').hide();
@@ -40,8 +40,9 @@
 		 
 
 		
-
-		//댓글 추가 ajax
+		//ajax
+		
+		//댓글 등록 ajax
 		$('#add_reply').click(function(event){
 		    event.preventDefault(); // 이벤트의 기본 동작 방지
 		    var replyData = $('form[name=reply_frm]').serialize(); // 데이터 직렬화
@@ -63,10 +64,34 @@
 		        
 		        }
 		    });
-		});
+		});//댓글 등록 끝
 		
-		$('#r_replyAddBtn').click(function(){
-			
+		
+		//댓글 수정 ajax
+		$(document).on('click', '#r_replyAddBtn', function(e) {       
+		    event.preventDefault(); // 이벤트의 기본 동작 방지
+		    var $replyContainer = $(this).closest('form[name=replyEditForm]');
+		    var replyData = $replyContainer.serialize(); // 데이터 직렬화
+		    
+		    $.ajax({
+		        type: 'post',
+		        url: "<c:url value='/myBoard/reply_update'/>",
+		        data: replyData,
+		        dataType: 'json',
+		        error: function(xhr, status, error){
+		            alert(error);
+		        },
+		        success: function(res){
+		            console.log(res); // 서버 응답 확인  
+		            if(res.cnt>0){
+			            $('#addComment').val('');
+			            send(res.curPage);
+			            alert("댓글이 수정되었습니다.");
+		            }else{
+		            	alert("댓글 수정 실패");
+		            }
+		        }
+		    });			
 		});
 		
 	});//$(functin(){})
@@ -137,11 +162,9 @@
 			            		replyData+="</div><!-- replyWriteForm -->";
 			            		replyData+="<!-- 댓글 수정 -->";
 			            		replyData+="<div class='replyEditForm' style='display:none;'>";
-			            		replyData+="<form name='replyEForm' method='post' action='#'>";
-			            		replyData += "<input type='hidden' name='memNo' value='" + userid + "'>";
-			            		replyData+="<input type='hidden' name='groupno' value='"+item.groupno+"'>";
-			            		replyData+="<input type='hidden' name='mBoardNo' value='"+item.M_BOARD_NO+"'>";
-			            		replyData+="<input type='hidden' name='step' value='"+item.STEP+"'>";
+			            		replyData+="<form name='replyEditForm' method='post' action='#'>";
+			            		replyData += "<input type='hidden' name='teamNoticeNo' value='" +item.TEAM_NOTICE_NO+ "'>";
+			            		replyData += "<input type='hidden' name='curPage' value='" +curPage+ "'>";
 			            		replyData+="<div class='reply_write'>";
 			            		replyData+="<div class='form-floating'>";
 			            		replyData+="<textarea class='form-control' placeholder='Comments'id='floatingTextarea2' name='comments' style='height: 100px'>"+recomment+"</textarea>";

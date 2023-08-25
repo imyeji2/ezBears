@@ -47,6 +47,9 @@ public interface TeamNoticeDAO {
 	//팀별 공지사항 댓글 전체 카운트
 	int selectReplyTotalCount(int groupNo);
 	
+	//팀별 공지사항 댓글 업데이트
+	int updeteReply(TeamNoticeVO teamNoticeVo);
+	
 
 
 }

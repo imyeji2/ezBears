@@ -75,11 +75,10 @@ public class TeamNoticeServiceImpl implements TeamNoticeService {
 	//댓글 등록
 	@Override
 	@Transactional
-	public Map<String, Object> addreply(TeamNoticeVO teamNoticeVo) {
+	public int addreply(TeamNoticeVO teamNoticeVo) {
 		teamNoticeDao.updateSortNo(teamNoticeVo);
-		teamNoticeDao.insertReply(teamNoticeVo);
-		Map<String, Object> map= teamNoticeDao.selectReplyTeamNoticeNo(teamNoticeVo.getTeamNoticeNo());
-		return map;
+		int cnt = teamNoticeDao.insertReply(teamNoticeVo);
+		return cnt;
 	}
 
 	
@@ -87,6 +86,11 @@ public class TeamNoticeServiceImpl implements TeamNoticeService {
 	@Override
 	public int selectReplyTotalCount(int groupNo) {
 		return teamNoticeDao.selectReplyTotalCount(groupNo);
+	}
+
+	@Override
+	public int updeteReply(TeamNoticeVO teamNoticeVo) {
+		return teamNoticeDao.updeteReply(teamNoticeVo);
 	}
 	
 	
