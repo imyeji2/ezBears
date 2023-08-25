@@ -34,9 +34,9 @@ public interface TeamNoticeService {
 	Map<String, Object> addreply(TeamNoticeVO teamNoticeVo);
 	
 	//팀별 공지사항 댓글 검색
-	List<Map<String, Object>> selectReply(int groupNo);
+	List<Map<String, Object>> selectReply(MyBoardSearchVo searchVo);
 	
 	//팀별 공지사항 댓글 전체 카운트
-	int selectReplyTotalCount(MyBoardSearchVo searchVo);
+	int selectReplyTotalCount(int groupNo);
 	
 }

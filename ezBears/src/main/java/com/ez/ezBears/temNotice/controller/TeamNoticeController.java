@@ -64,11 +64,11 @@ public class TeamNoticeController {
 		PaginationInfo pagingInfo = new PaginationInfo();
 		pagingInfo.setBlockSize(ConstUtil.BLOCK_SIZE);
 		pagingInfo.setCurrentPage(searchVo.getCurrentPage());
-		pagingInfo.setRecordCountPerPage(ConstUtil.RECORD_COUNT);
+		pagingInfo.setRecordCountPerPage(ConstUtil.RECORD_COUNT_FIVE);
 		
 		
 		//2)searchVo에 값 세팅 -> xml에 전달할 값 
-		searchVo.setRecordCountPerPage(ConstUtil.RECORD_COUNT);
+		searchVo.setRecordCountPerPage(ConstUtil.RECORD_COUNT_FIVE);
 		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
 		
 		//searchVo.setMBoardNo(mBoardNo);
@@ -370,17 +370,38 @@ public class TeamNoticeController {
 	
 	@ResponseBody
 	@RequestMapping("/reply_select")
-	public List<Map<String, Object>> reply_select(@RequestParam (defaultValue = "0") int groupno) {
+	public Map<String, Object> reply_select(@ModelAttribute MyBoardSearchVo searchVo) {
 		
-		logger.info("댓글 검색 파라미터 groupno()={}",groupno);
+		//1
+		logger.info("댓글 검색 파라미터 groupno()={}",searchVo);
+		
+		//2
+		//페이징 처리
+		//[1]PaginationInfo 객체 생성
+		PaginationInfo pagingInfo = new PaginationInfo();
+		pagingInfo.setBlockSize(ConstUtil.BLOCK_SIZE);
+		pagingInfo.setCurrentPage(searchVo.getCurrentPage());
+		pagingInfo.setRecordCountPerPage(ConstUtil.RECORD_COUNT_FIVE);
+		
+		
+		//2)searchVo에 값 세팅 -> xml에 전달할 값 
+		searchVo.setRecordCountPerPage(ConstUtil.RECORD_COUNT_FIVE);
+		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
 		//전체 댓글 검색
-		List<Map<String, Object>> replyList = teamNoticeService.selectReply(groupno);
+		List<Map<String, Object>> replyList = teamNoticeService.selectReply(searchVo);
 		logger.info("댓글 검색 결과 replyList.size()={}",replyList.size());
 		
 		//전체 댓글 카운트
-		//int totalCount = teamNoticeService.selectReplyTotalCount(groupNo);
-		//logger.info("totalCount={}",totalCount);
-		return replyList;
+		int totalCount = teamNoticeService.selectReplyTotalCount(searchVo.getGroupno());
+		logger.info("totalCount={}",totalCount);
+		pagingInfo.setTotalRecord(totalCount);
+		
+		
+		Map<String,Object> resultMap = new HashMap<>();
+		resultMap.put("replyList", replyList);
+		resultMap.put("pagingInfo", pagingInfo);
+		
+		return resultMap;
 	}
 	
 	

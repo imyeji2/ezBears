@@ -67,8 +67,8 @@ public class TeamNoticeServiceImpl implements TeamNoticeService {
 	}
 
 	@Override
-	public List<Map<String, Object>> selectReply(int groupNo) {
-		return teamNoticeDao.selectReply(groupNo);
+	public List<Map<String, Object>> selectReply(MyBoardSearchVo searchVo) {
+		return teamNoticeDao.selectReply(searchVo);
 	}
 	
 	
@@ -85,8 +85,8 @@ public class TeamNoticeServiceImpl implements TeamNoticeService {
 	
 	//팀별 공지사항 댓글 전체 카운트
 	@Override
-	public int selectReplyTotalCount(MyBoardSearchVo searchVo) {
-		return teamNoticeDao.selectReplyTotalCount(searchVo);
+	public int selectReplyTotalCount(int groupNo) {
+		return teamNoticeDao.selectReplyTotalCount(groupNo);
 	}
 	
 	

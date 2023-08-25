@@ -3,6 +3,7 @@ package com.ez.ezBears.common;
 public interface ConstUtil {
 	//게시판 페이징 처리 관련 상수
 	public static final int RECORD_COUNT=10;
+	int RECORD_COUNT_FIVE =5;
 	int BLOCK_SIZE=5; //인터페이스라 이렇게 가능 앞에 public static final가 붙어 있는거임
 	
 	//파일 업로드 처리 관련 상수
