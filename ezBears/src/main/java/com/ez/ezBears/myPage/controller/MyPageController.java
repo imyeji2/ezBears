@@ -47,6 +47,13 @@ public class MyPageController {
 		//http://localhost:9091/ezBears/mypage/attendanceCheck
 	}
 	
+	@RequestMapping("/attendanceInOut")
+	public String attendanceInOut() {
+		
+		
+		return "/";
+	}
+	
 	
 	
 	
