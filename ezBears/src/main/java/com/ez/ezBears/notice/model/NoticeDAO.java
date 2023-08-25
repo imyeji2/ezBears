@@ -15,6 +15,6 @@ public interface NoticeDAO {
 	int updateViewsCount(int noticeNo);
 	
 	List<Map<String, Object>> nextPage(int noticeNo);
-	List<Map<String, Object>> backPage(int noticeNo);
+	//List<Map<String, Object>> backPage(int noticeNo);
 	
 }
