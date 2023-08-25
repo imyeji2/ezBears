@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	calendar.setOption('events', events)
     console.log(events);
 
-    // calendar 객체를 렌더링
+    // calendar 객체를 렌더링	
     calendar.render()
 });
 </script>
