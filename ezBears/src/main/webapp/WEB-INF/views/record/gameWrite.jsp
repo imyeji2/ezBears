@@ -6,7 +6,7 @@
 <link href="${pageContext.request.contextPath}/css/Dcss.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/css/choong/chi.css" rel="stylesheet">
 
-	<form name="frmWrite" method="post" action="<c:url value='/record/gameList'/>">
+	<form name="frmWrite" method="post" action="<c:url value='/record/gameWrite'/>">
         <!-- Sign In Start -->
         <div class="container-fluid">
             <div class="row h-100 align-items-center justify-content-center">
@@ -17,8 +17,8 @@
                         </div>
                         <div style="width: 60%; height: 80%; margin: 0 auto;" >
 	                        <div class="form-floating mb-3">
-	                            <input type="text" class="form-control" id="floatingInput" placeholder="regdate" name="regdate">
-	                            <label for="floatingInput">경기날짜</label>
+	                            <input type="text" class="form-control" id="contractStart" placeholder="playDate" max="9999-12-31" name="playDate" maxlength="10">
+	                            <label for="floatingInput">경기 날짜</label>
 	                        </div>
 	                        <div class="form-floating mb-3">
 	                            <input type="text" class="form-control" id="floatingInput" placeholder="firstPitcher" name="firstPitcher">
@@ -46,7 +46,7 @@
 	
 <script type="text/javascript">
 $(function () {
-$('#regdate').on('input', function() {
+$('#playdate').on('input', function() {
     var inputTel = $(this).val();
     
     // Remove existing "-" characters

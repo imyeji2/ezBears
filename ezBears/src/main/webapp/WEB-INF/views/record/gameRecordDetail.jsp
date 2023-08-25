@@ -11,7 +11,7 @@
 	<div class="col-sm-12 col-xl-12">
 		<div class="bg-secondary rounded h-100 p-4">
 			<nav
-				style="--bs-breadcrumb-divider: url(&amp; amp; amp; amp; amp; #34; data: image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&amp;amp;"
+				style="--bs-breadcrumb-divider: url(&amp; amp; amp; amp; amp; amp; #34; data: image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&amp;amp;"
 				aria-label="breadcrumb">
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="#">경기기록</a></li>
@@ -51,6 +51,15 @@
 					<%@include file="lineup.jsp"%>
 				</div>
 			</div>
+			<div class="center">
+				<a
+					href="<c:url value='/record/gameEdit?recodeNo=${gameVo.recodeNo }'/>"
+					style="color: white;">수정</a> | <a
+					href="<c:url value='/record/gameDelete?recodeNo=${gameVo.recodeNo }'/>"
+					style="color: white;">삭제</a> | <a
+					href="<c:url value='/record/gameList'/>" style="color: white;">목록</a>
+			</div>
+
 		</div>
 	</div>
 </div>

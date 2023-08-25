@@ -11,4 +11,5 @@ public interface GameService {
 	int updateGame(GameVO gameVo);
 	int deleteGame(int recodeNo);
 	List<GameVO> selectAllGame(SearchVO searchVo);
+	GameVO selectByRecodeNo(int recodeNo);
 }

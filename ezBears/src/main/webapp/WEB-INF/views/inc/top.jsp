@@ -176,7 +176,7 @@
                        		<i class="bi bi-clipboard-data me-2"></i>팀관리
                        	</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="#" class="dropdown-item">
+                             <a href="<c:url value='/record/gameList'/>" class="dropdown-item">
                             	<i class="bi bi-trophy-fill me-2"></i>경기기록
                             </a>
                             <a href="#" class="dropdown-item">

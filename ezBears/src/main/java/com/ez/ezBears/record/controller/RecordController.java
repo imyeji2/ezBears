@@ -1,19 +1,28 @@
 package com.ez.ezBears.record.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.HttpServerErrorException;
 
+import com.ez.ezBears.common.ConstUtil;
+import com.ez.ezBears.common.PaginationInfo;
 import com.ez.ezBears.common.SearchVO;
 import com.ez.ezBears.record.game.model.GameService;
 import com.ez.ezBears.record.game.model.GameVO;
+import com.ez.ezBears.team.model.TeamService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
 
@@ -22,8 +31,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class RecordController {
 	private static final Logger logger = LoggerFactory.getLogger(RecordController.class);
+
+	private final GameService gameService;
+	private final TeamService teamService;
 	
-	private final GameService gameService; 
 	
 	@RequestMapping("/playerList")
 	public String playerList() {
@@ -39,10 +50,15 @@ public class RecordController {
 		return "/record/gameRecord";
 	}
 	
-	@RequestMapping("/gameRecordDetail")
-	public String gameRecordDetail() {
-		//1,4
-		logger.info("경기 상세 기록 보여주기");
+	@GetMapping("/gameRecordDetail")
+	public String gameRecordDetail_get(@RequestParam(defaultValue = "0") int recodeNo, Model model) {
+		logger.info("경기 기록 상세 페이지 이동 파라미터, recodeNo={}", recodeNo);
+		
+		GameVO gameVo = gameService.selectByRecodeNo(recodeNo);
+		logger.info("경기 기록 상세 페이지 조회, 결과 gameVo={} ", gameVo);
+		
+		model.addAttribute("gameVo", gameVo);
+		
 		return "/record/gameRecordDetail";
 	}
 	
@@ -163,39 +179,94 @@ public class RecordController {
 		return "/record/pitcherRecordDetail";
 	}
 	
-	@RequestMapping("/gameList")
-	public String gameList(@ModelAttribute SearchVO searchVo, Model model) {
-		//1,4
-		logger.info("경기정보, 파라미터 searchVo={}", searchVo);
-			
-		List<GameVO> list = gameService.selectAllGame(searchVo);
-		logger.info("경기 전체 조회결과, list.size={}", list.size());
-		
-		model.addAttribute("list", list);
 
-		return "/record/gameList";
-	}
+    @RequestMapping("/gameList")
+    public String gameList(@ModelAttribute SearchVO searchVo, Model model) {
+        logger.info("경기정보, 파라미터 searchVo={}", searchVo);
+            
+        List<GameVO> list = gameService.selectAllGame(searchVo);
+        logger.info("경기 전체 조회결과, list.size={}", list.size());
+        
+        model.addAttribute("list", list);
+
+        return "record/gameList"; 
+    }
+
+    @GetMapping("/gameWrite")
+    public String gameWrite_get(Model model, SearchVO searchVo) {
+        logger.info("경기 등록 화면 이동");
+        
+        List<GameVO> gameWrite = gameService.selectAllGame(searchVo);
+        
+        model.addAttribute("list", gameWrite);
+
+        return "record/gameWrite";
+    }
+    
+    @PostMapping("/gameWrite")
+    public String gameWrite_post(@ModelAttribute GameVO gameVo) {
+        logger.info("경기 등록 처리 파라미터, gameVo={}", gameVo);
+
+       int cnt = gameService.insertGame(gameVo);
+       logger.info("게임 등록 처리 결과, cnt={}", cnt);
+        
+        return "redirect:/record/gameList";
+    }
+
 	
-	@RequestMapping("/gameWrite")
-	public String gameWrite(Model model) {
-		//1,4
-		logger.info("경기정보입력");
+	@GetMapping("/gameEdit")
+	public String gameUpdate_get(@RequestParam int recodeNo, Model model, SearchVO searchVo) {
+		logger.info("경기 정보 수정 화면 이동, 파라미터 recodeNo={}", recodeNo);
 		
-		return "/record/gameWrite";
+		if(recodeNo == 0) {
+			model.addAttribute("msg", "잘못된 URL입니다");
+			model.addAttribute("url", "/record/gameList");
+			return "common/message";
+		}
+		
+	GameVO gameVo = gameService.selectByRecodeNo((recodeNo));
+	logger.info("경기 수정 화면 이동 결과, gameVo={}", gameVo);
+	List<GameVO> gameEdit = gameService.selectAllGame(searchVo);
+	
+	model.addAttribute("gameVo", gameVo);
+	model.addAttribute("gameEdit", gameEdit);
+	
+	return "/record/gameEdit";
 	}
 	
-	@RequestMapping("/gameEdit")
-	public String gameUpdate() {
+	
+	@PostMapping("/gameEdit")
+	public String gameUpdate_post(@ModelAttribute GameVO gameVo, HttpServletRequest rquest, Model model) {
 		//1,4
-		logger.info("경기정보수정");
-		return "/record/gameEdit";
+		logger.info("경기 수정 처리, 파라미터 gameVo={}", gameVo);
+		
+		int cnt = gameService.updateGame(gameVo);
+		logger.info("경기 수정 처리 결과, cnt={}", cnt);
+		
+		return "redirect:/record/gameEdit?recodeNo="+gameVo.getRecodeNo();
 	}
 	
-	@RequestMapping("/gameDelete")
-	public String gameDelete() {
-		//1,4
-		logger.info("경기정보삭제");
+	
+	@GetMapping("/gameDelete")
+	public String gameDelete_get(@RequestParam(defaultValue = "0") int recodeNo, Model model) {
+		logger.info("경기 삭제 화면 이동, 파라미터 recodeNo={}", recodeNo);
+		
+		GameVO gameVo = gameService.selectByRecodeNo(recodeNo);
+		logger.info("경기 삭제 화면 이동, 파라미터 gameVo={}", gameVo);
+		
+		model.addAttribute("gameVo", gameVo);
+		
 		return "/record/gameDelete";
+	}
+	
+	@PostMapping("/gameDelete")
+	public String gameDelete_post(@RequestParam(defaultValue = "0") int recodeNo, Model model) {
+		logger.info("경기 삭제 처리 , 파라미터 recodeNo={}", recodeNo);
+		
+		int cnt = gameService.deleteGame(recodeNo);
+		logger.info("경기 삭제 처리 결과, 파라미터 cnt={}", cnt);
+		
+		return "redirect:/record/gameList";
 	}
 	
 	@RequestMapping("/inningWrite")
@@ -214,10 +285,31 @@ public class RecordController {
 	}
 
 	
-	@RequestMapping("/inningDelete")
-	public String inningDelete() {
-		//1,4
-		logger.info("이닝정보삭제");
-		return "/record/inningDelete";
+	@RequestMapping("/teamList")
+	public String List_get(@ModelAttribute SearchVO searchVo, Model model) {
+		logger.info("선수 목록 화면 이동, 파라미터 searchVo={}", searchVo);
+		
+		//pagination 객체 생성하고 변수 없는 애들 선언해주기
+		PaginationInfo pagination = new PaginationInfo();
+		pagination.setBlockSize(ConstUtil.BLOCK_SIZE);
+		pagination.setCurrentPage(searchVo.getCurrentPage());
+		pagination.setRecordCountPerPage(ConstUtil.RECORD_COUNT);
+		
+		//searchVo 에 비어있는 변수 선언하기
+		searchVo.setFirstRecordIndex(pagination.getFirstRecordIndex());
+		searchVo.setRecordCountPerPage(pagination.getRecordCountPerPage());
+		logger.info("설정 후 searchVo={}", searchVo);
+		
+		int totalRecord = teamService.getTotalRecord(searchVo);
+		pagination.setTotalRecord(totalRecord);
+		logger.info("pagination 설정 완");
+		
+		List<Map<String, Object>> list = teamService.selectAllTeam(searchVo);
+		logger.info("선수 목록 화면 처리 결과, list.size()={}", list.size());
+		
+		model.addAttribute("list", list);
+		model.addAttribute("pagination", pagination);
+		
+		return "/record/teamList";
 	}
 }
