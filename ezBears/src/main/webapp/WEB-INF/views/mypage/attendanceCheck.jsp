@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page import="java.util.List"%>
+<%@page import="org.springframework.ui.Model"%>
+<%@page import="com.ez.ezBears.attendance.model.AttendanceVO"%>
 
 <%@include file="../inc/top.jsp"%>
 <link href= "<c:url value='/lib/fullcalendar/main.css'/>"  rel='stylesheet' />
@@ -21,11 +24,32 @@
 				return date.date.year + '년 ' + (parseInt(date.date.month) + 1) + '월';
 			},
 			//initialDate: '2023-08-01', // 초기 날짜 설정 (설정 x => 오늘날짜)
-			selectable : true, // 달력 일자 드래그 가능
-			droppable : true,
-			editable : true,
+			selectable : false, // 달력 일자 드래그 가능
+			droppable : false,
+			editable : false,
 			nowIndicator: true, 
-			locale: 'ko' // 한국어로 변경해주기
+			locale: 'ko', // 한국어로 변경해주기
+			events : [
+				<%List<AttendanceVO> attendanceList = (List<AttendanceVO>)request.getAttribute("list");  %>
+				<%if(attendanceList != null && !attendanceList.isEmpty()){ %>
+					<%for(AttendanceVO vo : attendanceList){ %>
+					{
+						title : '출근',
+						start : '<%=vo.getInTime()%>',
+						display : 'block'
+						
+					},
+					{
+						title : '퇴근',
+						start : '<%=vo.getOutTime()%>',
+						display : 'block',
+						backgroundColor : 'red'
+					},
+					<%}%>
+				<%}%>
+				
+			]
+			
 		});
 		calendar.render();
 	});

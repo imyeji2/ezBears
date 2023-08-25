@@ -7,6 +7,20 @@
 		select * from attendance where MEM_NO = #{memNo}
 	</select>
  
+ 	<insert id="insertAttendance" parameterType="attendanceVo">
+ 	
+ 	</insert>
+	
+	<update id="goHome" parameterType="attendanceVo">
+		update attendance 
+		set out_time = sysdate
+		where attendance_no = #{attendanceNo}
+	</update>
+	
+	<select id="selectAttendanceNo" parameterType="attendanceVo">
+		select count(*) from attendance
+		
+	</select>
  
  
  
