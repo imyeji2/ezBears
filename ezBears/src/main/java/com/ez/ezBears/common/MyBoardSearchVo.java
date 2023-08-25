@@ -11,7 +11,7 @@ public class MyBoardSearchVo extends SearchVO{
 
 	@Override
 	public String toString() {
-		return "MyBoardSearchVo [mBoardNo=" + mBoardNo + ",groupno="+groupno+" toString()=" + super.toString() + "]";
+		return "MyBoardSearchVo [mBoardNo=" + mBoardNo + ",groupno="+groupno+"toString()=" + super.toString() + "]";
 	}
 }
 
