@@ -26,62 +26,37 @@ document.addEventListener('DOMContentLoaded', function() {
           center : 'title',
           end : 'dayGridMonth,dayGridWeek,dayGridDay'
        },
- 
-    // --- ajax --------
-   /* $.ajax({
-       type: 'POST'
-       ,cache: false
-       ,url: "/myBoard/addEvent"
-       ,dataType: 'json'
-       ,contentType : "application/x-www-form-urlencoded; charset=UTF-8"
-       ,success: function(event){
-           var events = [];
-           console.log(event);
-           if(event.pValue != null && event.pValue === 'private'){
-               events.push({
-                   title : event.title
-                   ,start : event.start
-                   ,end : event.end
-                   ,color : 'red'
-           });
-               */
-       /* 일정등록 json으로 변환후 ajax 방식으로 등록   */
-   
-       
-     
-       events: [
- 	      
- 	      {
- 	        title: '워크샵',
- 	        start: '2023-08-07',
- 	        end: '2023-08-10',
- 	        backgroundColor: '#D1C4E9', // 일정 배경색    
- 	    	 textColor : 'black'
- 	      },
- 	  		
- 	      {
- 	    	 title: '휴가',
-  	     start: '2023-08-16',
-  	     end: '2023-08-18',
-  	     backgroundColor: '#F48FB1',
-  	     textColor : 'black'
- 	      }], 
- 	   	
-       titleFormat : function(date) {
-          return date.date.year + '년 ' + (parseInt(date.date.month) + 1) + '월';
-       },
-       //initialDate: '2023-08-01', // 초기 날짜 설정 (설정 x => 오늘날짜)
-       selectable : true, // 달력 일자 드래그 가능
-       droppable : true,
-       editable : true,
-       nowIndicator: true, 
-       locale: 'ko' // 한국어로 변경해주기
-      
+	    selectable : true, // 달력 일자 드래그 가능
+	    droppable : true,
+	    editable : true,
+	    nowIndicator: true, 
+	    locale: 'ko' // 한국어로 변경해주기
     });
-    calendar.render();
-    
- });
+    var events = [];
+		
+    <c:forEach items="${list}" var="event">
+	    var title = '<c:out value="${event.SCHEDULE_TITLE}" />';
+	    var start = '<c:out value="${event.SCHEDULE_START}" />';
+	    var end = '<c:out value="${event.SCHEDULE_END}" />';
+	 
+	    // JavaScript 객체를 생성하고 events 배열에 추가
+	    events.push({
+	        title: title,
+	        start: start,
+	        end: end
+	    });
+	    // 콘솔에 값 출력
+	    console.log("title: " + title + ", start: " + start + ", end: " + end);
+	</c:forEach>
 
+
+      
+	calendar.setOption('events', events)
+    console.log(events);
+
+    // calendar 객체를 렌더링
+    calendar.render()
+});
 </script>
 
 <div id="insertcal">
@@ -95,8 +70,9 @@ document.addEventListener('DOMContentLoaded', function() {
 		<div>
 			<input type="text" name="mBoardNo" value="${mBoardNo}"> 
 			<input type="text" name="userid" value="${userid}">
+			<input type="hidden" id="list" name="list" value="${list}">
 		</div>
-
+	
 				</div>
 			</div>
 		</div>

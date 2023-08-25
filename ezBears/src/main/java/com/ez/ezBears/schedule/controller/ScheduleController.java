@@ -1,6 +1,5 @@
 package com.ez.ezBears.schedule.controller;
 
-import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
 
@@ -8,22 +7,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ez.ezBears.myBoard.model.MyBoardInfoVO;
 import com.ez.ezBears.myBoard.model.MyBoardListService;
 import com.ez.ezBears.schedule.model.ScheduleService;
 import com.ez.ezBears.schedule.model.ScheduleVO;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor; 
 
@@ -37,7 +31,7 @@ public class ScheduleController {
 	private final ScheduleService scheduleService;
 
 	/* 캘린더 */
-
+	
 	@RequestMapping("/Calender")
 	public List<Map<String, Object>> Calender(@RequestParam(defaultValue = "0") int mBoardNo, @ModelAttribute ScheduleVO scheduleVo,
 			HttpSession session ,Model model) {
@@ -56,7 +50,7 @@ public class ScheduleController {
 		 logger.info("일정 조회 list.size ={}",list);
 		
 		 model.addAttribute("mBoardNo",mBoardNo);
-		// model.addAttribute("list",list);
+		 model.addAttribute("list",list);
 		//
 		return list;
 
