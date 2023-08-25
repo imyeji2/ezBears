@@ -1,5 +1,6 @@
 package com.ez.ezBears.schedule.controller;
 
+import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
 
@@ -7,20 +8,22 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ez.ezBears.myBoard.model.MyBoardInfoVO;
 import com.ez.ezBears.myBoard.model.MyBoardListService;
-import com.ez.ezBears.myBoard.model.MyBoardListVO;
 import com.ez.ezBears.schedule.model.ScheduleService;
 import com.ez.ezBears.schedule.model.ScheduleVO;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor; 
 
@@ -58,6 +61,7 @@ public class ScheduleController {
 		return list;
 
 	}
+
 	@GetMapping("/Calender_write")
 	public String Calender_wr(@RequestParam (defaultValue = "0") int mBoardNo ,@ModelAttribute MyBoardInfoVO myBoardInfoVo, 
 			HttpSession session ,Model model) {
