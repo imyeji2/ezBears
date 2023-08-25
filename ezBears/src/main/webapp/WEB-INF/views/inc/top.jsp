@@ -149,7 +149,7 @@
                             <a href="#" class="dropdown-item">
                             	<i class="bi bi-list-task me-2"></i>게시글관리
                             </a>
-                            <a href="#" class="dropdown-item">
+                            <a href="<c:url value='/dept/list'/>" class="dropdown-item">
                             	<i class="bi bi-briefcase-fill me-2"></i>부서관리
                             </a>
                             <a href="<c:url value='/staff/staffList'/>" class="dropdown-item">
