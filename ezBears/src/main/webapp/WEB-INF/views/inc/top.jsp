@@ -78,6 +78,15 @@
 
 </head>
 
+<script type="text/javascript">
+	function attendanceInOut() {
+		if(confirm('하시겠습니까?')){
+			location.href='';
+		}
+	}
+
+</script>
+
 <body>
     <div class="container-fluid position-relative d-flex p-0">
         <!-- Spinner Start -->
@@ -107,7 +116,7 @@
 		                       <span>💼${sessionScope.dept_name }</span>
 	                    </div>
 	                </div>
-	               	<button class="inoutBtn">출근</button>
+	               	<button class="inoutBtn" onclick="attendanceInOut()">출근</button>
                 </div>
                 <!-- 사원정보 끝-->
 
@@ -149,7 +158,7 @@
                             <a href="#" class="dropdown-item">
                             	<i class="bi bi-list-task me-2"></i>게시글관리
                             </a>
-                            <a href="#" class="dropdown-item">
+                            <a href="<c:url value='/dept/list'/>" class="dropdown-item">
                             	<i class="bi bi-briefcase-fill me-2"></i>부서관리
                             </a>
                             <a href="<c:url value='/staff/staffList'/>" class="dropdown-item">
@@ -176,7 +185,7 @@
                        		<i class="bi bi-clipboard-data me-2"></i>팀관리
                        	</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="#" class="dropdown-item">
+                             <a href="<c:url value='/record/gameList'/>" class="dropdown-item">
                             	<i class="bi bi-trophy-fill me-2"></i>경기기록
                             </a>
                             <a href="#" class="dropdown-item">
