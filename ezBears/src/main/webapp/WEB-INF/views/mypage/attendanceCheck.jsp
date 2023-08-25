@@ -34,9 +34,16 @@
 				<%if(attendanceList != null && !attendanceList.isEmpty()){ %>
 					<%for(AttendanceVO vo : attendanceList){ %>
 					{
-						<%-- title : '출근 : <%=vo.getInTime()%>', --%>
+						title : '출근',
 						start : '<%=vo.getInTime()%>',
-						end : '<%=vo.getOutTime()%>'
+						display : 'block'
+						
+					},
+					{
+						title : '퇴근',
+						start : '<%=vo.getOutTime()%>',
+						display : 'block',
+						backgroundColor : 'red'
 					},
 					<%}%>
 				<%}%>
