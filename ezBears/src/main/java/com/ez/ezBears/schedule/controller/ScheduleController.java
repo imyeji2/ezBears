@@ -10,14 +10,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ez.ezBears.myBoard.model.MyBoardInfoVO;
 import com.ez.ezBears.myBoard.model.MyBoardListService;
-import com.ez.ezBears.myBoard.model.MyBoardListVO;
 import com.ez.ezBears.schedule.model.ScheduleService;
 import com.ez.ezBears.schedule.model.ScheduleVO;
 
@@ -34,7 +31,7 @@ public class ScheduleController {
 	private final ScheduleService scheduleService;
 
 	/* 캘린더 */
-
+	
 	@RequestMapping("/Calender")
 	public List<Map<String, Object>> Calender(@RequestParam(defaultValue = "0") int mBoardNo, @ModelAttribute ScheduleVO scheduleVo,
 			HttpSession session ,Model model) {
@@ -53,11 +50,12 @@ public class ScheduleController {
 		 logger.info("일정 조회 list.size ={}",list);
 		
 		 model.addAttribute("mBoardNo",mBoardNo);
-		// model.addAttribute("list",list);
+		 model.addAttribute("list",list);
 		//
 		return list;
 
 	}
+
 	@GetMapping("/Calender_write")
 	public String Calender_wr(@RequestParam (defaultValue = "0") int mBoardNo ,@ModelAttribute MyBoardInfoVO myBoardInfoVo, 
 			HttpSession session ,Model model) {
