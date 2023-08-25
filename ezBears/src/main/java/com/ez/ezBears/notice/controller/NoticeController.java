@@ -110,8 +110,10 @@ public class NoticeController {
 		List<Map<String, Object>>nextPage=noticeService.nextPage(noticeNo);
 		logger.info("이전페이지 결과 nextPage={}",nextPage);
 		
-		List<Map<String, Object>>backPage=noticeService.backPage(noticeNo);
-		logger.info("이전페이지 결과 backPage={}",backPage);
+		/*
+		 * List<Map<String, Object>>backPage=noticeService.backPage(noticeNo);
+		 * logger.info("다음페이지 결과 backPage={}",backPage);
+		 */
 		
 		//3.
 		model.addAttribute("map",map);
@@ -119,7 +121,7 @@ public class NoticeController {
 		model.addAttribute("list",list);
 		model.addAttribute("filemap",filemap);
 		model.addAttribute("nextPage",nextPage);
-		model.addAttribute("backPage",backPage);
+		//model.addAttribute("backPage",backPage);
 		
 		return "notice/noticeDetail";
 	}

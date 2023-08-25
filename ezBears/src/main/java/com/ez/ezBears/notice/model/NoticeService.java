@@ -11,5 +11,5 @@ public interface NoticeService {
 	List<Map<String, Object>> selectNoticeFile(int noticeNo);
 	//List<Map<String, Object>> nextPage(int noticeNo);
 	List<Map<String, Object>> nextPage(int noticeNo);
-	List<Map<String, Object>> backPage(int noticeNo);
+	//List<Map<String, Object>> backPage(int noticeNo);
 }
