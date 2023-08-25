@@ -78,6 +78,15 @@
 
 </head>
 
+<script type="text/javascript">
+	function attendanceInOut() {
+		if(confirm('하시겠습니까?')){
+			location.href='';
+		}
+	}
+
+</script>
+
 <body>
     <div class="container-fluid position-relative d-flex p-0">
         <!-- Spinner Start -->
@@ -107,7 +116,7 @@
 		                       <span>💼${sessionScope.dept_name }</span>
 	                    </div>
 	                </div>
-	               	<button class="inoutBtn">출근</button>
+	               	<button class="inoutBtn" onclick="attendanceInOut()">출근</button>
                 </div>
                 <!-- 사원정보 끝-->
 
