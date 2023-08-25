@@ -34,7 +34,7 @@ public class ScheduleController {
 	private final ScheduleService scheduleService;
 
 	/* 캘린더 */
-	@ResponseBody
+
 	@RequestMapping("/Calender")
 	public List<Map<String, Object>> Calender(@RequestParam(defaultValue = "0") int mBoardNo, @ModelAttribute ScheduleVO scheduleVo,
 			HttpSession session ,Model model) {
@@ -52,7 +52,7 @@ public class ScheduleController {
 		 
 		 logger.info("일정 조회 list.size ={}",list);
 		
-		// model.addAttribute("mBoardNo",mBoardNo);
+		 model.addAttribute("mBoardNo",mBoardNo);
 		// model.addAttribute("list",list);
 		//
 		return list;
