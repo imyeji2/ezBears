@@ -43,7 +43,9 @@ document.addEventListener('DOMContentLoaded', function() {
 	    events.push({
 	        title: title,
 	        start: start,
-	        end: end
+	        end: end,
+	        backgroundColor: '#D1C4E9', // 일정 배경색    
+	    	textColor : 'black' //일정 글씨색
 	    });
 	    // 콘솔에 값 출력
 	    console.log("title: " + title + ", start: " + start + ", end: " + end);
