@@ -76,8 +76,8 @@ public class TeamNoticeServiceImpl implements TeamNoticeService {
 	@Override
 	@Transactional
 	public int addreply(TeamNoticeVO teamNoticeVo) {
-		teamNoticeDao.updateSortNo(teamNoticeVo);
-		int cnt = teamNoticeDao.insertReply(teamNoticeVo);
+		int cnt=teamNoticeDao.updateSortNo(teamNoticeVo);
+		cnt = teamNoticeDao.insertReply(teamNoticeVo);
 		return cnt;
 	}
 

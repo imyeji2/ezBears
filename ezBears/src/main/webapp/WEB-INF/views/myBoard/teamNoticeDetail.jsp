@@ -31,13 +31,28 @@
 		 
 		 //댓글 수정 취소
 		  $(document).on('click', '.reply_add_cencle',function(e) {       
+			  alert("야");
 			  	event.preventDefault();
 			    var $replyContainer = $(this).closest('.reply_content');
 			    $replyContainer.find('.replyEditForm').hide();
 			    $replyContainer.find('.replyWriteForm').show();
 		  });
-		
+			
 		 
+		 
+		  //대댓글 등록
+		  $(document).on('click', '.add_r_reply',function(e) {       
+			  	event.preventDefault();
+			    var $replyContainer = $(this).closest('.reply_content');
+			    $replyContainer.find('.replyaddForm').show();
+		  });	
+
+		  //대댓글 등록 취소
+		  $(document).on('click', '.add_R_replyCencleBtn',function(e) {       
+			  	event.preventDefault();
+			    var $replyContainer = $(this).closest('.reply_content');
+			    $replyContainer.find('.replyaddForm').hide();
+		  });
 
 		
 		//ajax
@@ -94,6 +109,49 @@
 		    });			
 		});
 		
+		
+		//대댓글 등록 ajax
+		$(document).on('click', '#add_R_replyBtn', function(e) {       	
+		    e.preventDefault(); // 이벤트의 기본 동작 방지
+		    var memNo = $('#memNo').val();
+            var groupno = $('#groupno').val();
+            var mBoardNo = $('#mBoardNo').val();
+            var sortno = $('#sortno').val();
+            var step = 1
+            
+            var $replyContainer = $(this).closest('.replyaddForm');
+            var comments = $replyContainer.find('textarea[name=comments]').val();
+            
+            console.log('Comments:', comments); // 확인을 위해 콘솔에 출력
+            
+            var replyData = {
+            	    memNo: memNo,
+            	    groupno: groupno,
+            	    mBoardNo: mBoardNo,
+            	    sortno: sortno,
+            	    comments: comments,
+            	    step:step
+            	    
+            	};
+		    
+		    $.ajax({
+		        type: 'post',
+		        url: "<c:url value='/myBoard/reply_insert'/>",
+		        data: replyData,
+		        dataType: 'json',
+		        error: function(xhr, status, error){
+		            alert(error);
+		        },
+		        success: function(res){
+		            console.log(res); // 서버 응답 확인  
+		            $('#addComment').val('');
+		            alert("댓글이 등록되었습니다.");
+		        
+		        }
+		    });
+		});//댓글 등록 끝		
+		
+		
 	});//$(functin(){})
 	
 	
@@ -116,7 +174,7 @@
 		            $('.reply_list').html("");
 	            
 		            if(res!=null){
-		            	
+		            	var replyData="";
 			            $.each(res.replyList, function(idx, item){
 			            	
 			            	//페이징 처리
@@ -131,10 +189,10 @@
 			            	var recomment = comment.replace(/<br>/ig, "\n");
 				            var date = new Date(item.REGDATE);
 				            var userid='<%=session.getAttribute("userid")%>';
-				            const regdate = new Date(date.getTime()).toISOString().split('T')[0] + " " + date.toTimeString().split(' ')[0];
+				            const regdate = new Date(date.getTime()).toISOString().split('T')[0] + " " + date.toTimeString().split(' ')[0];				            
 				           
 				            if(step=== 1){//댓글일 때
-			            		var replyData="<div class='reply_content'>"
+			            		replyData="<div class='reply_content'>"
 			            		replyData+="<div class='reply_user'>";
 			            		replyData+="<div class='detail_left'>";
 			            		replyData+="<div class='user_img'>";
@@ -154,35 +212,53 @@
 			            		if(userid==item.MEM_ID){
 			            			replyData+=" <span><a href='#' class='editReply'>수정</a></span>";
 			            			replyData+=" <span><a href='#' id='delReply'>삭제</a></span>";
-			            		}else{
-			            			replyData+=" <span><a href='#' id='add_r_reply'>답글</a></span>";
-			            		}
 			            		
-			            		replyData+="</div><!-- reply_txt -->";
-			            		replyData+="</div><!-- replyWriteForm -->";
-			            		replyData+="<!-- 댓글 수정 -->";
-			            		replyData+="<div class='replyEditForm' style='display:none;'>";
-			            		replyData+="<form name='replyEditForm' method='post' action='#'>";
-			            		replyData += "<input type='hidden' name='teamNoticeNo' value='" +item.TEAM_NOTICE_NO+ "'>";
-			            		replyData += "<input type='hidden' name='curPage' value='" +curPage+ "'>";
-			            		replyData+="<div class='reply_write'>";
-			            		replyData+="<div class='form-floating'>";
-			            		replyData+="<textarea class='form-control' placeholder='Comments'id='floatingTextarea2' name='comments' style='height: 100px'>"+recomment+"</textarea>";
-			            		replyData+="<label for='floatingTextarea2'>Comments</label>";
-			            		replyData+="</div>";
-			            		replyData+="<div class='reply_add'>";
-			            		replyData+="<button class='reply_add_btn2' style='margin-bottom: 4px;' id='r_replyAddBtn'>수정</button>";
-			            		replyData+="<button class='reply_add_btn2 reply_add_cencle'id='r_replyCencleBtn'>취소</button>";
-			            		replyData+="</div>";
-			            		replyData+="</div><!-- reply_write -->";
-			            		replyData+="</form><!--댓글 수정--->";
-			            		replyData+="</div><!--reply_user-->";
+				            		replyData+="</div><!-- reply_txt -->";
+				            		replyData+="</div><!-- replyWriteForm -->";
+				            		replyData+="<!-- 댓글 수정 -->";
+				            		replyData+="<div class='replyEditForm' style='display:none;'>";
+				            		replyData+="<form name='replyEditForm' method='post' action='#'>";
+				            		replyData += "<input type='hidden' name='teamNoticeNo' value='" +item.TEAM_NOTICE_NO+ "'>";
+				            		replyData += "<input type='hidden' name='curPage' value='" +curPage+ "'>";
+				            		replyData+="<div class='reply_write'>";
+				            		replyData+="<div class='form-floating'>";
+				            		replyData+="<textarea class='form-control' placeholder='Comments'id='floatingTextarea2' name='comments' style='height: 100px'>"+recomment+"</textarea>";
+				            		replyData+="<label for='floatingTextarea2'>Comments</label>";
+				            		replyData+="</div>";
+				            		replyData+="<div class='reply_add'>";
+				            		replyData+="<button class='reply_add_btn2' style='margin-bottom: 4px;' id='r_replyAddBtn'>수정</button>";
+				            		replyData+="<button class='reply_add_btn2 reply_add_cencle'id='r_replyCencleBtn'>취소</button>";
+				            		replyData+="</div>";
+				            		replyData+="</div><!-- reply_write -->";
+				            		replyData+="</form><!--댓글 수정--->";
+				            		replyData+="</div><!--reply_user-->";
+				            		
+			            		}else{
+			            			replyData+=" <span><a href='#' class='add_r_reply'>답글</a></span>";
+			            			replyData+="<!-- 대댓글 등록 -->";
+				            		replyData+="<div class='replyaddForm' style='display:none;>";
+				            		replyData+="<form name='rAddForm' method='post' action='#'>";
+				            		replyData+="<div class='reply_write'>";
+				            		replyData+="<div class='form-floating'>";
+				            		replyData+="<textarea class='form-control' placeholder='Comments'id='comments' name='comments'style='height: 100px'></textarea>";
+				            		replyData+="<label for='floatingTextarea2'>Comments</label>";
+				            		replyData+="</div>";
+				            		replyData+="<div class='reply_add'>";
+				            		replyData+="<button class='reply_add_btn2' id='add_R_replyBtn' style='margin-bottom: 4px;'>등록</button>";
+				            		replyData+="<button class='reply_add_btn2 add_R_replyCencleBtn'>취소</button>";
+				            		replyData+="</div><!--reply_add-->";
+				            		replyData+="</div><!-- reply_write -->";
+				            		replyData+="</form>";
+				            		replyData+="</div><!-- replyaddForm -->";
+			            		}
+
+			            		
 			            		replyData+="</div><!--reply_content-->";
-			            		$('.reply_list').append(replyData);
+			            		
 			            		
 			            	}else{//대댓글일때
 			            		
-			            		var replyData="<div class='r_reply_content'>";
+			            		replyData="<div class='r_reply_content'>";
 			            		replyData+="<!-- 대댓글 보기 -->";
 			            		replyData+="<div class='r_reply_write_form'>";
 			            		replyData+="<div class='reply_user'>";
@@ -204,50 +280,40 @@
 			            		if(userid==item.MEM_ID){
 				            		replyData+=" <span><a href='#'>수정</a></span>";
 				            		replyData+=" <span><a href='#'>삭제</a></span>";
-			            		}
 			            		
-			            		replyData+="</div><!-- reply_txt -->";
-			            		replyDate+="</div><!--r_replyWrite-->";
-			            		replyData+="</div><!--r_reply_write_form-->";
-			            		replyData+="<!-- 대댓글 보기 -->";
-			            		replyData+="<!-- 대댓글 등록 -->";
-			            		replyData+="<div id='replyaddForm' style='display:none;'>";
-			            		replyData+="<form name='rAddForm' method='post' action='#'>";
-			            		replyData+="<div class='reply_write'>";
-			            		replyData+="<div class='form-floating'>";
-			            		replyData+="<textarea class='form-control' placeholder='Comments'id='floatingTextarea2' name='comments'style='height: 100px'></textarea>";
-			            		replyData+="<label for='floatingTextarea2'>Comments</label>";
-			            		replyData+="</div>";
-			            		replyData+="<div class='reply_add'>";
-			            		replyData+="<button class='reply_add_btn2' style='margin-bottom: 4px;' id=''>등록</button>";
-			            		replyData+="<button class='reply_add_btn2' id=''>취소</button>";
-			            		replyData+="</div><!--reply_add-->";
-			            		replyData+="</div><!-- reply_write -->";
-			            		replyData+="</form>";
-			            		replyData+="</div><!-- replyaddForm -->";
-			            		
-			            		replyData+="<!--대댓글 수정-->"
-			            		replyData+="<div id='r_replyEditForm' style='display:none;'>";
-			            		replyData+="<form name='rEditForm' method='post' action='#'>";
-			            		replyData+="<div class='reply_write'>";
-			            		replyData+="<div class='form-floating'>";
-			            		replyData+="<textarea class='form-control' placeholder='Comments'id='floatingTextarea2' name='comments'style='height: 100px'>"+recomment+"</textarea>";
-			            		replyData+="<label for='floatingTextarea2'>Comments</label>";
-			            		replyData+="</div>";
-			            		replyData+="<div class='reply_add'>";
-			            		replyData+="<button class='reply_add_btn2' style='margin-bottom: 4px;' id=''>등록</button>";
-			            		replyData+="<button class='reply_add_btn2' id=''>취소</button>";
-			            		replyData+="</div>";
-			            		replyData+="</div><!-- reply_write -->";
-			            		replyData+="</form><!--rEditForm-->";
-			            		replyData+="</div><!-- r_replyEditForm -->";			            		
-			            		replyData+="<!--대댓글 수정-->"
-			            		replyData+="</div><!-- r_reply_content -->";
-			            		replyData+="<div class='reply_line'></div>";
-			            		$('.reply_list').append(replyData);   		
-			            	}//else
+				            		replyData+="</div><!-- reply_txt -->";
+				            		replyData+="</div><!--r_replyWrite-->";
+				            		replyData+="</div><!--r_reply_write_form-->";
+				            		replyData+="<!-- 대댓글 보기 -->";
+				            		
+				            		replyData+="<!--대댓글 수정-->"
+				            		replyData+="<div id='r_replyEditForm' style='display:none;'>";
+				            		replyData+="<form name='rEditForm' method='post' action='#'>";
+		       				
+				            		replyData+="<div class='reply_write'>";
+				            		replyData+="<div class='form-floating'>";
+				            		replyData+="<textarea class='form-control' placeholder='Comments'id='floatingTextarea2' name='comments'style='height: 100px'>"+recomment+"</textarea>";
+				            		replyData+="<label for='floatingTextarea2'>Comments</label>";
+				            		replyData+="</div>";
+				            		replyData+="<div class='reply_add'>";
+				            		replyData+="<button class='reply_add_btn2' style='margin-bottom: 4px;' id=''>등록</button>";
+				            		replyData+="<button class='reply_add_btn2' id=''>취소</button>";
+				            		replyData+="</div>";
+				            		replyData+="</div><!-- reply_write -->";
+				            		replyData+="</form><!--rEditForm-->";
+				            		replyData+="</div><!-- r_replyEditForm -->";			            		
+				            		replyData+="<!--대댓글 수정-->"
+				            		replyData+="</div><!-- r_reply_content -->";
+				            		replyData+="<div class='reply_line'></div>";
 	
+				            	}//else
+			            	}
+			            		
+				            $('.reply_list').after(replyData);
+			            	
 			            });//.each
+			            
+			            
 			            
 			            //페이징
 			            var str = "";
@@ -397,9 +463,11 @@
 	       		 
 	       			<!-- 댓글 등록 -->
 	       			<form name="reply_frm" method="post" action="#">
-	       				<input type="hidden" name="memNo" value="${userNo}">
-	       				<input type="hidden" name="groupno" value="${map['TEAM_NOTICE_NO']}"> 
-	       				<input type="hidden" name="mBoardNo" value="${map['M_BOARD_NO']}">
+	       				<input type="hidden" name="memNo" id="memNo" value="${userNo}">
+	       				<input type="hidden" name="groupno" id="groupno" value="${map['TEAM_NOTICE_NO']}"> 
+	       				<input type="text" name="mBoardNo" id="mBoardNo" value="${map['M_BOARD_NO']}">
+	       				<input type="hidden" name="sortno" id="sortno" value="${map['SORTNO']}">
+	       				<input type="hidden" name="step" value="${map['STEP']}">
 	       				
 			       			<div class="reply_write">
 							<div class="form-floating">

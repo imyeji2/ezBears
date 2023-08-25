@@ -136,7 +136,7 @@
 		      (	
 		   		select * from teamNoticeListView
 		   		where groupNo = #{groupno} and step>0
-		   		order by regdate desc
+		   		order by sortNo desc, step
  				)A
      		 )
       <![CDATA[
