@@ -113,7 +113,7 @@
 	<update id="updateSortNo" parameterType="teamNoticeVo">
 		update team_Notice
 		set sortNo = sortNo+1
-		where groupNo=#{groupno} and sortNo>#{sortno}
+		where CONTENTNO=#{contentno} and sortNo>#{sortno}
 	</update>
 	
 	
@@ -122,11 +122,16 @@
 		<selectKey keyProperty="teamNoticeNo" resultType="int" order="BEFORE">
 			select TEAM_NOTICE_SEQ.nextval from dual
 		</selectKey>
-   		insert into team_Notice(TEAM_NOTICE_NO,MEM_NO,COMMENTS,GROUPNO,STEP,SORTNO,MY_BOARD_NO)
-   		values(#{teamNoticeNo},#{memNo},#{comments},#{groupno},#{step}+1,#{sortno}+1,#{myBoardNo})
+		
+		<selectKey keyProperty="GROUPNO_SEQ" resultType="int" order="BEFORE">
+			select GROUPNO_SEQ.nextval from dual
+		</selectKey>
+		
+   		insert into team_Notice(TEAM_NOTICE_NO,MEM_NO,COMMENTS,GROUPNO,STEP,SORTNO,MY_BOARD_NO,CONTENTNO)
+   		values(#{teamNoticeNo},#{memNo},#{comments},#{groupNo},#{step}+1,#{sortno}+1,#{myBoardNo},#{contentNo})
    </insert>
    
-   
+ 
    
    <select id="selectReply" parameterType="myBoardSearchVo" resultType="map">
        select *
@@ -135,8 +140,8 @@
 	      select rownum as RNUM, A.* from
 		      (	
 		   		select * from teamNoticeListView
-		   		where groupNo = #{groupno} and step>0
-		   		order by sortNo desc, step
+		   		where CONTENTNO = #{contentno} and step>0
+		   		order by groupNo desc, step desc
  				)A
      		 )
       <![CDATA[
@@ -148,7 +153,7 @@
    
    <select id="selectReplyTotalCount" parameterType="myBoardSearchVo" resultType="int">
   	   	select count(*) from teamNoticeListView
-   		where groupNo = #{groupno} and step>0
+   		where CONTENTNO = #{contentno} and step>0
  	</select>
 
 
@@ -159,9 +164,22 @@
    </select>   	
    
    
+   
    <update id="updeteReply" parameterType="teamNoticeVo">
 	   	update team_Notice
 	   	set COMMENTS = #{comments}
 	   	where team_notice_no=#{teamNoticeNo}
    </update>
+   
+   
+   <insert id="insertReReply" parameterType="teamNoticeVo">
+		<selectKey keyProperty="teamNoticeNo" resultType="int" order="BEFORE">
+			select TEAM_NOTICE_SEQ.nextval from dual
+		</selectKey>
+		
+   		insert into team_Notice(TEAM_NOTICE_NO,MEM_NO,COMMENTS,GROUPNO,STEP,SORTNO,MY_BOARD_NO,CONTENTNO)
+   		values(#{teamNoticeNo},#{memNo},#{comments},#{groupNo},#{step}+1,#{sortno}+1,#{myBoardNo},#{contentNo})
+   </insert>
+   
+      
 </mapper>

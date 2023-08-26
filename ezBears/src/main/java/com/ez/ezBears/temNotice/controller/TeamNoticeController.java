@@ -400,7 +400,7 @@ public class TeamNoticeController {
 		logger.info("댓글 검색 결과 replyList.size()={}",replyList.size());
 		
 		//전체 댓글 카운트
-		int totalCount = teamNoticeService.selectReplyTotalCount(searchVo.getGroupno());
+		int totalCount = teamNoticeService.selectReplyTotalCount(searchVo.getContentno());
 		logger.info("totalCount={}",totalCount);
 		pagingInfo.setTotalRecord(totalCount);
 		

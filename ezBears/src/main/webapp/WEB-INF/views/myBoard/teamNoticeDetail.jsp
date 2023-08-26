@@ -109,31 +109,16 @@
 		    });			
 		});
 		
-		
+		 var sortno = 0;
+		 
 		//대댓글 등록 ajax
 		$(document).on('click', '#add_R_replyBtn', function(e) {       	
 		    e.preventDefault(); // 이벤트의 기본 동작 방지
-		    var memNo = $('#memNo').val();
-            var groupno = $('#groupno').val();
-            var mBoardNo = $('#mBoardNo').val();
-            var sortno = $('#sortno').val();
-            var step = 1
-            
-            var $replyContainer = $(this).closest('.replyaddForm');
-            var comments = $replyContainer.find('textarea[name=comments]').val();
-            
-            console.log('Comments:', comments); // 확인을 위해 콘솔에 출력
-            
-            var replyData = {
-            	    memNo: memNo,
-            	    groupno: groupno,
-            	    mBoardNo: mBoardNo,
-            	    sortno: sortno,
-            	    comments: comments,
-            	    step:step
-            	    
-            	};
-		    
+		    var $replyContainer = $(this).closest('form[name=rAddForm]');
+		    var replyData = $replyContainer.serialize(); // 데이터 직렬화      
+            console.log('replyData:', replyData); // 확인을 위해 콘솔에 출력
+
+
 		    $.ajax({
 		        type: 'post',
 		        url: "<c:url value='/myBoard/reply_insert'/>",
@@ -144,11 +129,14 @@
 		        },
 		        success: function(res){
 		            console.log(res); // 서버 응답 확인  
+		            console.log(res); // 서버 응답 확인  
 		            $('#addComment').val('');
+		            send(res.curPage);
 		            alert("댓글이 등록되었습니다.");
 		        
 		        }
 		    });
+		    
 		});//댓글 등록 끝		
 		
 		
@@ -190,7 +178,8 @@
 				            var date = new Date(item.REGDATE);
 				            var userid='<%=session.getAttribute("userid")%>';
 				            const regdate = new Date(date.getTime()).toISOString().split('T')[0] + " " + date.toTimeString().split(' ')[0];				            
-				           
+				         
+				           	
 				            if(step=== 1){//댓글일 때
 			            		replyData="<div class='reply_content'>"
 			            		replyData+="<div class='reply_user'>";
@@ -236,8 +225,16 @@
 			            		}else{
 			            			replyData+=" <span><a href='#' class='add_r_reply'>답글</a></span>";
 			            			replyData+="<!-- 대댓글 등록 -->";
-				            		replyData+="<div class='replyaddForm' style='display:none;>";
+				            		replyData+="<div class='replyaddForm' style='display:none;'>";
 				            		replyData+="<form name='rAddForm' method='post' action='#'>";
+				            		
+				            		replyData+="<input type='hidden' name='groupNo' value='" +item.GROUPNO+ "'>";
+				            		replyData+="<input type='hidden' name='step' value='"+item.STEP+"'>";
+				            		replyData+="<input type='hidden' name='mBoardNo' value='"+item.M_BOARD_NO+"'>";
+				            		replyData+="<input type='hidden' name='contentno' value='"+item.CONTENTNO+"'>";
+				            		replyData+="<input type='hidden' name='memNo' value='${userNo}'>";
+				            		replyData += "<input type='hidden' name='curPage' value='" +curPage+ "'>";
+
 				            		replyData+="<div class='reply_write'>";
 				            		replyData+="<div class='form-floating'>";
 				            		replyData+="<textarea class='form-control' placeholder='Comments'id='comments' name='comments'style='height: 100px'></textarea>";
@@ -254,7 +251,7 @@
 
 			            		
 			            		replyData+="</div><!--reply_content-->";
-			            		
+			            		 $('.reply_list').after(replyData);
 			            		
 			            	}else{//대댓글일때
 			            		
@@ -305,12 +302,10 @@
 				            		replyData+="<!--대댓글 수정-->"
 				            		replyData+="</div><!-- r_reply_content -->";
 				            		replyData+="<div class='reply_line'></div>";
-	
+				            		 $('.reply_list').after(replyData);
 				            	}//else
 			            	}
-			            		
-				            $('.reply_list').after(replyData);
-			            	
+				           
 			            });//.each
 			            
 			            
@@ -369,9 +364,10 @@
 
 <form method="post" name="sendFrom">
 	<input type="hidden" name="currentPage">
-	<input type="hidden" name="groupno" value="${map['TEAM_NOTICE_NO']}">
+	<input type="hidden" name="contentno" value="${map['TEAM_NOTICE_NO']}">
 </form>
 
+<input type="hidden" name="contentno" id="contentno">
 
 <div class="container-fluid pt-4 px-4" id="board_style">
 	<div class="bg-secondary text-center rounded p-4">
@@ -464,9 +460,8 @@
 	       			<!-- 댓글 등록 -->
 	       			<form name="reply_frm" method="post" action="#">
 	       				<input type="hidden" name="memNo" id="memNo" value="${userNo}">
-	       				<input type="hidden" name="groupno" id="groupno" value="${map['TEAM_NOTICE_NO']}"> 
-	       				<input type="text" name="mBoardNo" id="mBoardNo" value="${map['M_BOARD_NO']}">
-	       				<input type="hidden" name="sortno" id="sortno" value="${map['SORTNO']}">
+	       				<input type="hidden" name=contentno id="contentno" value="${map['TEAM_NOTICE_NO']}"> 
+	       				<input type="hidden" name="mBoardNo" id="mBoardNo" value="${map['M_BOARD_NO']}">
 	       				<input type="hidden" name="step" value="${map['STEP']}">
 	       				
 			       			<div class="reply_write">
