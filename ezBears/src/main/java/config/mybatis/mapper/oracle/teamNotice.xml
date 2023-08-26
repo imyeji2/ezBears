@@ -9,7 +9,7 @@
 			select TEAM_NOTICE_SEQ.nextval from dual
 		</selectKey>
 		insert into team_Notice(TEAM_NOTICE_NO, MEM_NO, MY_BOARD_NO, TEAM_NOTICE_TITLE, 
-				TEAM_NOTICE_CONTENT,FSIZE,FILENAME,ORIGINNAME,GROUPNO)
+				TEAM_NOTICE_CONTENT,FSIZE,FILENAME,ORIGINNAME,CONTENTNO)
 		values(#{teamNoticeNo},#{memNo}, #{myBoardNo}, #{teamNoticeTitle},
 				#{teamNoticeContent},#{fsize},#{fileName},#{originname},#{teamNoticeNo})
 	</insert> 
@@ -97,14 +97,15 @@
 	
 	<parameterMap type="map" id="deleteTeamNoticeProc">
 		<!-- 아래 ?의 순서에 맞춰서 만들어야함 -->
-		<parameter property="teamNoticeN" javaType="string" jdbcType="VARCHAR" mode="IN"/>
+		<parameter property="teamNoticeNo" javaType="string" jdbcType="VARCHAR" mode="IN"/>
 		<parameter property="step" javaType="string" jdbcType="VARCHAR" mode="IN"/>
-		<parameter property="groupNo" javaType="string" jdbcType="VARCHAR" mode="IN"/>
+		<parameter property="contentno" javaType="string" jdbcType="VARCHAR" mode="IN"/>
+		<parameter property="groupno" javaType="string" jdbcType="VARCHAR" mode="IN"/>
 	</parameterMap>
 	
 
    <delete id="deleteTeamNotice" parameterMap="deleteTeamNoticeProc">
-   		call DELETETEAMNOTICE(?,?,?)
+   		call DELETETEAMNOTICE(?,?,?,?)
    </delete>
    
  
@@ -117,18 +118,18 @@
 	</update>
 	
 	
+	<select id="selectGroupNo" resultType="int">
+		select GROUPNO_SEQ.nextval from dual
+	</select>
 	
    <insert id="insertReply" parameterType="teamNoticeVo">
+   
 		<selectKey keyProperty="teamNoticeNo" resultType="int" order="BEFORE">
 			select TEAM_NOTICE_SEQ.nextval from dual
 		</selectKey>
 		
-		<selectKey keyProperty="GROUPNO_SEQ" resultType="int" order="BEFORE">
-			select GROUPNO_SEQ.nextval from dual
-		</selectKey>
-		
    		insert into team_Notice(TEAM_NOTICE_NO,MEM_NO,COMMENTS,GROUPNO,STEP,SORTNO,MY_BOARD_NO,CONTENTNO)
-   		values(#{teamNoticeNo},#{memNo},#{comments},#{groupNo},#{step}+1,#{sortno}+1,#{myBoardNo},#{contentNo})
+   		values(#{teamNoticeNo},#{memNo},#{comments},#{groupno},#{step}+1,#{sortno}+1,#{myBoardNo},#{contentno})
    </insert>
    
  
@@ -141,7 +142,7 @@
 		      (	
 		   		select * from teamNoticeListView
 		   		where CONTENTNO = #{contentno} and step>0
-		   		order by groupNo desc, step desc
+		   		order by groupNo desc, step, sortno desc
  				)A
      		 )
       <![CDATA[
@@ -157,6 +158,7 @@
  	</select>
 
 
+	
 
    <select id="selectReplyTeamNoticeNo" parameterType="int" resultType="map">
    		select * from teamNoticeListView
@@ -178,8 +180,10 @@
 		</selectKey>
 		
    		insert into team_Notice(TEAM_NOTICE_NO,MEM_NO,COMMENTS,GROUPNO,STEP,SORTNO,MY_BOARD_NO,CONTENTNO)
-   		values(#{teamNoticeNo},#{memNo},#{comments},#{groupNo},#{step}+1,#{sortno}+1,#{myBoardNo},#{contentNo})
+   		values(#{teamNoticeNo},#{memNo},#{comments},#{groupno},#{step}+1,#{sortno}+1,#{myBoardNo},#{contentno})
    </insert>
+   
+   
    
       
 </mapper>

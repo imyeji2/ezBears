@@ -150,6 +150,7 @@ public class TeamNoticeController {
 
 		int cnt=teamNoticeService.insertTeamNotice(teamNoticeVo);
 		logger.info("글쓰기 결과, cnt={}", cnt);
+		logger.info("글쓰기 결과, teamNoticeVo={}", teamNoticeVo);
 		
 		//3
 		//4
@@ -330,7 +331,7 @@ public class TeamNoticeController {
 	}
 	
 	
-	//공지사항 디테일 화면
+	//공지사항 삭제
 	@RequestMapping("/teamNoticeDel")
 	public String teamNoticeDel(@RequestParam (defaultValue = "0") int mBoardNo,
 			@RequestParam (defaultValue = "0") int teamNoticeNo, 
@@ -345,7 +346,8 @@ public class TeamNoticeController {
 		//key 이름은 xml의 key 이름과 동일해야함, 순서는 상관 없음
 		map.put("teamNoticeNo", teamNoticeNo+"");
 		map.put("step", teamNoticeVo.getStep()+"");
-		map.put("groupNo", teamNoticeVo.getGroupno()+"");
+		map.put("contentno", teamNoticeVo.getContentno()+"");
+		map.put("groupno", teamNoticeVo.getGroupno()+"");
 		
 		logger.info("삭제 처리 파라미터, map={}",map);
 		int cnt = teamNoticeService.deleteTeamNotice(map);
@@ -398,6 +400,7 @@ public class TeamNoticeController {
 		//전체 댓글 검색
 		List<Map<String, Object>> replyList = teamNoticeService.selectReply(searchVo);
 		logger.info("댓글 검색 결과 replyList.size()={}",replyList.size());
+		logger.info("댓글 검색 결과 replyList={}",replyList);
 		
 		//전체 댓글 카운트
 		int totalCount = teamNoticeService.selectReplyTotalCount(searchVo.getContentno());
@@ -440,6 +443,8 @@ public class TeamNoticeController {
 	}
 	
 	
+	
+	//댓글 수정
 	@ResponseBody
 	@RequestMapping("/reply_update")
 	public Map<String,Integer> reply_update(@ModelAttribute TeamNoticeVO teamNoticeVo, int curPage) {
@@ -461,6 +466,58 @@ public class TeamNoticeController {
 	
 	
 	
+	//댓글 삭제
+	@ResponseBody
+	@RequestMapping("/reply_delete")
+	public int teamNoticeDelReply(@RequestParam (defaultValue = "0") int teamNoticeNo) {
+		//1
+		logger.info("댓글 삭제처리 파라미터 teamNoticeNo={}",teamNoticeNo);
+
+		//2
+		TeamNoticeVO teamNoticeVo = teamNoticeService.selectTeamNoticeByNo(teamNoticeNo);
+		
+		Map<String, String> map = new HashMap<>();
+		//key 이름은 xml의 key 이름과 동일해야함, 순서는 상관 없음
+		map.put("teamNoticeNo", teamNoticeNo+"");
+		map.put("step", teamNoticeVo.getStep()+"");
+		map.put("contentno", teamNoticeVo.getContentno()+"");
+		map.put("groupno", teamNoticeVo.getGroupno()+"");
+		
+		logger.info("댓글 삭제 처리 파라미터, map={}",map);
+		int cnt = teamNoticeService.deleteTeamNotice(map);
+		logger.info("댓글 삭제 처리 결과 cnt={}",cnt);
+
+		//4
+		return cnt;
+	}
+	
+	
+	
+	//대댓글 등록
+	@ResponseBody
+	@RequestMapping("reReply_insert")
+	public int reReply_insert(@ModelAttribute TeamNoticeVO teamNoticeVo,
+			@RequestParam (defaultValue = "0") int mBoardNo) {
+		
+		//1
+		logger.info("리_리플 등록 파라미터 teamNoticeVo={}",teamNoticeVo);
+		
+		//2
+		MyBoardListVO boardListVo = new MyBoardListVO();
+		boardListVo.setMemNo(teamNoticeVo.getMemNo());
+		boardListVo.setMBoardNo(mBoardNo);
+		logger.info("리_리플 등록 마이 보드 검색 파라미터 boardListVo={}",boardListVo);
+		
+		
+		int myBoardNo = myBoardListService.seleectMyBoardNo(boardListVo);
+		teamNoticeVo.setMyBoardNo(myBoardNo);
+		logger.info("리_리플 등록 파라미터 수정 teamNoticeVo={}",teamNoticeVo);
+				
+		int cnt= teamNoticeService.addReReply(teamNoticeVo);
+		logger.info("등록 리_댓글 결과 cnt={}",cnt);
+		
+		return cnt;		
+	}
 
 	
 }
