@@ -49,7 +49,7 @@
 		            	<c:if test="${!empty list }">
 			            	<c:forEach var="map" items="${list }">
 				                <tr>
-				                    <td>${map['PLAYER_NO'] }</td>
+				                    <td>${map.PLAYER_NO }</td>
 				                    <td><a href="<c:url value='/team/teamDetail?playerNo=${map["PLAYER_NO"]}' />" style="color: #fff">${map['PLAYER_NAME'] }</a></td>
 				                    <td>${map['B_POSITION_NAME'] }</td>
 				                    <td>${map['BACK_NO'] }</td>
