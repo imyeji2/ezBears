@@ -27,7 +27,6 @@ public class MyPageController {
 	
 	private final AttendanceService attendanceService;
 	
-	
 	@RequestMapping("/edit")
 	public String wirte() {
 		
