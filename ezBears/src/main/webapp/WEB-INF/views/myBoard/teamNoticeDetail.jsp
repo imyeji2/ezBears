@@ -16,7 +16,6 @@
 			 	location.href="<c:url value='/myBoard/teamNoticeDel?mBoardNo=${map["M_BOARD_NO"]}&teamNoticeNo=${map["TEAM_NOTICE_NO"]}&oldFileName=${map["FILENAME"]}'/>"
 			 }
 		});
-		
 
 		
 		//ajax
@@ -195,7 +194,65 @@
 		  });
 					
 
-		
+			//대댓글 수정 ajax
+			$(document).on('click', '#editReplyBtn2', function(e) {       
+			    event.preventDefault(); // 이벤트의 기본 동작 방지
+			    var $replyContainer = $(this).closest('form[name=rEditForm]');
+			    var replyData = $replyContainer.serialize(); // 데이터 직렬화
+			    
+			    $.ajax({
+			        type: 'post',
+			        url: "<c:url value='/myBoard/reply_update'/>",
+			        data: replyData,
+			        dataType: 'json',
+			        error: function(xhr, status, error){
+			            alert(error);
+			        },
+			        success: function(res){
+			            console.log(res); // 서버 응답 확인  
+			            var curPage = res.curPage;
+			            if(res.cnt>0){
+				            $('#addComment').val('');
+				            send(curPage);
+				            alert("댓글이 수정되었습니다.");
+			            }else{
+			            	alert("댓글 수정 실패");
+			            }
+			        }
+			    });			
+			});
+			
+			
+			
+			//대댓글 삭제 ajax
+			$(document).on('click', '.delteReplyBtn', function(e) {       
+			    event.preventDefault(); // 이벤트의 기본 동작 방지
+		        var $replyContainer = $(this).closest('.r_reply_write_form');
+		        var $replyDelForm = $replyContainer.find('form[name=reReplyDelFrom]'); // replyDelForm 선택
+		        var replyData = $replyDelForm.serialize(); // 데이터 직렬화
+			    console.log(replyData);
+			    if(confirm('정말 삭제하시겠습니까?')){
+				    $.ajax({
+				        type: 'post',
+				        url: "<c:url value='/myBoard/reply_delete'/>",
+				        data: replyData,
+				        dataType: 'json',
+				        error: function(xhr, status, error){
+				            alert(error);
+				        },
+				        success: function(res){
+				            console.log(res); // 서버 응답 확인  
+				           		if(res=-1){
+						            alert("삭제되었습니다.");
+						            send(1);
+				           		}else{
+				           			alert("댓글 삭제 실패");
+				           		}
+				             
+				        }
+				    });			
+			    }
+			});			  
 		
 	});//$(functin(){})
 	
@@ -228,7 +285,10 @@
 							
 							//출력 데이터
 							var step= item.STEP
-			            	var imagePath = "/img/mem_images/" + item.MEM_IMAGE;
+			            	var imagePath = "default_user.png";
+			            	if(tem.MEM_IMAGE!==null){
+			            		var imagePath =item.MEM_IMAGE;
+			            	}
 			            	var comment = item.COMMENTS.replace(/\r\n/ig, '<br>');
 			            	var recomment = comment.replace(/<br>/ig, "\n");
 				            var date = new Date(item.REGDATE);
@@ -246,7 +306,7 @@
 				            		replyData+="<div class='reply_user'>";
 				            		replyData+="<div class='detail_left'>";
 				            		replyData+="<div class='user_img'>";
-				            		replyData+="<img src='<c:url value='/img/mem_images/"+item.MEM_IMAGE+"'/>' alt='사원프로필'>";
+				            		replyData+="<img src='<c:url value='/img/mem_images/"+imagePath+"'/>' alt='사원프로필'>";
 				            		replyData+="</div><!-- user_img -->";
 				            		replyData+="</div><!--detail_left-->";
 				            		replyData+="<div class='detail_left'>";
@@ -320,8 +380,6 @@
 			            		
 			            	}else{//대댓글일때
 
-			            			
-			            		
 			            		replyData="<div class='r_reply_content'>";
 			            		replyData+="<!-- 대댓글 보기 -->";			       
 			            		replyData+="<div class='r_reply_write_form'>";
@@ -331,7 +389,7 @@
 			            		replyData+="<div class='reply_user'>";
 			            		replyData+="<div class='detail_left'>";
 			            		replyData+="<div class='user_img'>";
-			            		replyData+="<img src='<c:url value='/img/mem_images/"+item.MEM_IMAGE+"'/>' alt='사원프로필'>";
+			            		replyData+="<img src='<c:url value='/img/mem_images/"+imagePath+"'/>' alt='사원프로필'>";
 			            		replyData+="</div><!-- user_img -->";
 			            		replyData+="</div>";
 			            		replyData+="<div class='detail_left'>";
@@ -364,7 +422,7 @@
 				            		replyData+="<label for='floatingTextarea2'>Comments</label>";
 				            		replyData+="</div>";
 				            		replyData+="<div class='reply_add'>";
-				            		replyData+="<button class='reply_add_btn2' style='margin-bottom: 4px;' id='editReplyBtn1'>등록</button>";
+				            		replyData+="<button class='reply_add_btn2' style='margin-bottom: 4px;' id='editReplyBtn2'>수정</button>";
 				            		replyData+="<button class='reply_add_btn2' id='cenceleditreReplyBtn'>취소</button>";
 				            		replyData+="</div>";
 				            		replyData+="</div><!-- reply_write -->";

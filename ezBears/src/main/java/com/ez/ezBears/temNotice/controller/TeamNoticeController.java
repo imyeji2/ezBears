@@ -71,11 +71,8 @@ public class TeamNoticeController {
 		searchVo.setRecordCountPerPage(ConstUtil.RECORD_COUNT_FIVE);
 		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
 		
-		//searchVo.setMBoardNo(mBoardNo);
-		
 		List<Map<String, Object>> list = teamNoticeService.selectTeamNoticeList(searchVo);
 		logger.info("팀 공지사항 리스트 조회 결과 list.size={}",list.size());
-		logger.info("pagingInfo={}",pagingInfo.getTotalRecord());
 		
 		int totalCount = teamNoticeService.selectTotalCount(searchVo);
 		pagingInfo.setTotalRecord(totalCount);
@@ -85,13 +82,50 @@ public class TeamNoticeController {
 		model.addAttribute("list",list);
 		model.addAttribute("mBoardNo",mBoardNo);
 		model.addAttribute("pagingInfo",pagingInfo);
-		model.addAttribute("totalCount",totalCount);
 		
 		//4
 		return "myBoard/teamNoticeList";
 	}
 	
+	@ResponseBody
+	@RequestMapping("/teamNotice_ajax")
+	public Map<String, Object> teamNotice_ajax(@RequestParam (defaultValue = "0") int mBoardNo, 
+			MyBoardSearchVo searchVo) {
+		//1.
+		logger.info("팀 공지사항 리스트 페이지, 파라미터 mBoardNo={},searchVo={}",mBoardNo,searchVo);
+		
+		
+		//2
+		//페이징 처리
+		//[1]PaginationInfo 객체 생성
+		PaginationInfo pagingInfo = new PaginationInfo();
+		pagingInfo.setBlockSize(ConstUtil.BLOCK_SIZE);
+		pagingInfo.setCurrentPage(searchVo.getCurrentPage());
+		pagingInfo.setRecordCountPerPage(ConstUtil.RECORD_COUNT_FIVE);
+		
+		
+		//2)searchVo에 값 세팅 -> xml에 전달할 값 
+		searchVo.setRecordCountPerPage(ConstUtil.RECORD_COUNT_FIVE);
+		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
+		
+		List<Map<String, Object>> list = teamNoticeService.selectTeamNoticeList(searchVo);
+		logger.info("팀 공지사항 리스트 조회 결과 list.size={}",list.size());
+		
+		int totalCount = teamNoticeService.selectTotalCount(searchVo);
+		pagingInfo.setTotalRecord(totalCount);
+		logger.info("totalCount={}",totalCount);
+		
+		//3
+		Map<String, Object> resultMap = new HashMap<>();
+		resultMap.put("list", list);
+		resultMap.put("mBoardNo", mBoardNo);
+		resultMap.put("pagingInfo", pagingInfo);
 
+		
+		//4
+		return resultMap;
+	}
+	
 	//팀별 공지사항 글 등록 화면
 	@GetMapping("/teamNoticeWrite")
 	public String teamNoticeWrite(@ModelAttribute MyBoardListVO myBoardListVo,

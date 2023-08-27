@@ -62,7 +62,8 @@ begin
         if m_step = 1 then 
             --대댓글이 존재하는지 체크
             select count(*) into cnt from team_notice
-            where m_groupno = m_groupno;
+            where groupno = m_groupno
+            and team_notice_no != m_team_notice_no;
             --대댓글이 존재하면
             if cnt >0 then
                 update team_notice set status='N'

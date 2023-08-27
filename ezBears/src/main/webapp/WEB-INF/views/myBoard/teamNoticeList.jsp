@@ -1,20 +1,128 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@include file="../inc/top.jsp"%>
-<script>
-	function pageFunc(curPage){
-		$('input[name="currentPage"]').val(curPage);
-		$('form[name="teamNoticeFrom"]').submit();
-	}
+<script type="text/javascript">
+$(function(){
+	  send(1);
+	  
+	  $('#searchBtn').click(function(){
+		    event.preventDefault();
+
+		    if ($('#searchCondition').val() === "default") {
+		        alert("검색할 카테고리를 선택해주세요");
+		        $('#searchCondition').focus();
+		        return false;
+		    } else if ($('#searchKeyword').val().length < 1) {
+		        alert('검색어를 입력해주세요');
+		        $('#searchKeyword').focus();
+		        return false;
+		    }else{
+		    	$('form[name=serchFrm]').submit();
+		    }
+
+		});
+	  
+	  
+	  $(window).scroll(function() {	    	
+	        if (!isLoading && $(window).scrollTop() + $(window).height() >= $(document).height()-20) {
+	         	var curPage = $('input[name="currentPage"]').val();
+	        	var totalPage=$('input[name="totalPage"]').val();
+	        	
+	        	if(curPage<=totalPage){
+		            isLoading = true; // 스크롤 동작 처리 시작
+		            curPage++;
+		            send(curPage);
+	        	}else{
+	        		isLoading = true;
+	        		alert('더 이상 불러 올 게시글이 없습니다.');
+	        	}
+	        }
+	    });
+
+});
+
+
+
+function send(currentPage) {
+	$('input[name="currentPage"]').val(currentPage);
+    var sendDate = $('form[name=teamNoticeFrom]').serialize();
+
+    $.ajax({
+        url: "<c:url value='/myBoard/teamNotice_ajax?mBoardNo=${mBoardNo}'/>",
+        method: "POST",
+        data: sendDate,
+        dataType: 'json',
+        error: function(xhr, status, error) {
+            alert(error);
+        },
+        success: function(res) {
+            console.log(res); // 서버 응답 확인
+  
+            var replyData = "";
+			
+            $.each(res.list, function(idx, item) {
+                var imagePath = "default_user.png";
+                if (item.MEM_IMAGE !== null) {
+                    imagePath = item.MEM_IMAGE;
+                }
+                
+                var content = item.TEAM_NOTICE_CONTENT;
+                var date = new Date(item.REGDATE);
+                var fsizeKB = item.FSIZE / 1024.0;
+                var formattedFsize = Math.round(fsizeKB * 100) / 100;
+                var fileSizeText = formattedFsize + " KB";
+                const regdate = new Date(date.getTime()).toISOString().split('T')[0] + " " + date.toTimeString().split(' ')[0];
+                
+                replyData += "<div class='notice_list_box'>";
+                replyData += "<div>";
+                replyData += "<div class='list_box_title'>";
+                replyData += "<div class='user_img'>";
+                replyData += "<img src='<c:url value='/img/mem_images/" + imagePath + "'/>' alt='사원프로필'>";
+                replyData += "</div>";
+                replyData += "<div class='user_txt'>";
+                replyData += "<span class='user_txt_name'>" + item.MEM_NAME + "</span>";
+                replyData += "<span class='user_txt_time'>" + regdate + "</span>";
+                replyData += "</div>";
+                replyData += "<div class='user_dept'>" + item.DEPT_NAME + "</div>";
+                replyData += "</div>";
+                replyData += "<div class='list_box_content'>";
+                replyData += "<div class='content_title'>" + item.TEAM_NOTICE_TITLE + "</div>";
+                replyData += "<div class='content_txt'>" + content + "</div>";
+                replyData += "</div>";
+                
+                
+                if(item.FILENAME !== undefined){
+                    replyData += "<div class='list_box_file'>";
+                    replyData += "<a href='<c:url value='/myBoard/downloadFile?teamNoticeNo=" + item.TEAM_NOTICE_NO + "&fileName=" + item.FILENAME + "'/>'>";
+                    replyData += item.ORIGINNAME + "&nbsp;(" + fileSizeText + ")";
+                    replyData += "</a>";
+                    replyData += "</div>";
+                   ;
+                }
+                replyData += "</div>"
+                replyData += "<div class='notice_reply'>";
+                replyData += "<div>";
+                replyData += "<a href='<c:url value='/myBoard/countUpdate?mBoardNo=" + res.mBoardNo + "&teamNoticeNo=" + item.TEAM_NOTICE_NO + "'/>'>더보기</a>";
+                replyData += "</div>";
+                replyData += "</div>";
+                replyData += "</div><!-- notice_list_box -->";
+            });
+            
+            $("#list_content").append(replyData);
+            $('input[name="totalPage"]').val(res.pagingInfo.totalPage);
+            isLoading = false;
+        }
+    });
+
+}
 	
 </script>
-
+<input type="hidden" name="totalPage">
 <form action="<c:url value='/myBoard/teamNotice?mBoardNo=${mBoardNo}'/>" method="post" name="teamNoticeFrom">
 	<input type="hidden" name="currentPage">
 	<input type="hidden" name="searchKeyword" value="${param.searchKeyword}">
 	<input type="hidden" name="searchCondition" value="${param.searchCondition}">
 </form>
-
     <!-- Recent Sales Start -->
     <div class="container-fluid pt-4 px-4" id="board_style">
         <div class="bg-secondary text-center rounded">
@@ -28,8 +136,9 @@
 							<div class="teamNotice_serch">
 								<div class="serch_input">
 									<div class="select_box">
-										<select class="form-select" aria-label="Default select example" name="searchCondition">
-										  <option selected>선택</option>
+										<select class="form-select" aria-label="Default select example" 
+										id="searchCondition" name="searchCondition">
+										  <option value="default" selected>선택</option>
 										  <option value="mem_name"
 										  	<c:if test="${param.searchCondition=='mem_name'}">
 							            		selected="selected"
@@ -48,12 +157,12 @@
 										</select>				
 									</div>
 									<div class="text_box">
-										<input type="text" class="form-control" name="searchKeyword"
+										<input type="text" class="form-control" name="searchKeyword" id="searchKeyword"
 											 placeholder="검색어를 입력해주세요" value="${param.searchKeyword }">
 									</div>
 									
 									<div class="serch_btn">
-										<button>검색</button>
+										<button id="searchBtn">검색</button>
 									</div><!-- serch_btn -->
 								</div><!-- serch_input -->
 							</div><!-- teamNotice_serch -->
@@ -69,70 +178,26 @@
 							<c:if test="${!empty list}">
 								<c:if test="${!empty param.searchKeyword}">
 									<div style="text-align:center">
-										${totalCount}건이 검색되었습니다.
+										${pagingInfo.totalRecord}건이 검색되었습니다.
 									</div>
 									<br><br>
 								</c:if>	
 								<!-- 반복시작 -->
-								<c:forEach var="map" items="${list}">
-									<div class="notice_list_box">
-							        	<div>
-								        	<div class="list_box_title">
-								        		<div class="user_img">
-								        			<c:set var="userimg" value="default_user.png"/>
-								        			<c:if test="${!empty map['MEM_IMAGE']}">
-								        				<c:set var="userimg" value="${map['MEM_IMAGE']}"/>
-								        			</c:if>
-								        			<img src="<c:url value='/img/mem_images/${userimg}'/>" alt="사원프로필">
-								        		</div>
-								        		<div class="user_txt">
-								        			<span class="user_txt_name">${map['MEM_NAME']}</span>
-								        			<span class="user_txt_time"> 
-								        				&#183 <fmt:formatDate value="${map['REGDATE']}" pattern="yyyy-MM-dd a hh:mm"/>
-								        			</span>
-								        		</div>
-								        		<div class="user_dept">${map['DEPT_NAME']}</div>
-								        	</div>
-								       		<div class="list_box_content">
-								       			<div class="content_title">${map['TEAM_NOTICE_TITLE']}</div>
-								       			<div class="content_txt">
-								       			${map['TEAM_NOTICE_CONTENT']}
-								       			</div>
-								       		</div>
-								       		<c:if test="${!empty map['FILENAME']}">
-								       			<div class="list_box_file">
-								       				<a href="<c:url value='/myBoard/downloadFile?teamNoticeNo=${map["TEAM_NOTICE_NO"]}&fileName=${map["FILENAME"]}'/>"> 
-									       				${map['ORIGINNAME']}&nbsp;
-									       				(<fmt:formatNumber value="${map['FSIZE'] /1024.0}" type="number" pattern="#.##"/> KB)
-								       				</a>
-								       			</div>
-								       		</c:if>
-								       		
-							       		</div>
-							       		<div class="notice_reply">
-							       			<div>
-							       				<a href="<c:url value='/myBoard/countUpdate?mBoardNo=${mBoardNo}&teamNoticeNo=${map["TEAM_NOTICE_NO"]}'/>">더보기</a>
-							       			</div>
-							       		</div>
-							        </div><!-- notice_list_box -->		
-														
-								</c:forEach>
-						        <!-- 반복 끝 -->
+								<div id="list_content">
+								
+								
+								</div>
 					        </c:if>
 					                    
 					        <div class="list_line"></div>     
 					        
 					        <div class="btnBox">
-					        	<!-- 
-								<a class="btn btn-sm btn-primary" href="">삭제</a>
-								<a class="btn btn-sm btn-primary" href="">수정</a>
-								 -->
 								<a class="btn btn-sm btn-primary" 
 									href="<c:url value='/myBoard/teamNoticeWrite?mBoardNo=${mBoardNo}'/>">등록</a>
 							</div><!-- btnBox --> 
 							         
 						        
-						      <div class="page_box">
+						      <%-- <div class="page_box">
 							      <nav aria-label="Page navigation example">
 									  <ul class="pagination justify-content-center">
 									  <c:if test="${pagingInfo.firstPage>1}">
@@ -162,7 +227,7 @@
 									  </ul>
 									</nav>
 							</div><!-- page_box -->
-					
+					 --%>
 						</div><!-- teamNoticeList -->
 					</div>
 				</div>
