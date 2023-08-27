@@ -6,7 +6,7 @@
 <link href="${pageContext.request.contextPath}/css/Dcss.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/css/choong/chi.css" rel="stylesheet">
 
-	<form name="frmWrite" method="post" action="<c:url value='/record/gameEdit'/>" enctype="multipart/form-data">
+	<form name="frmEdit" method="post" action="<c:url value='/record/gameEdit'/>">
         <!-- Sign In Start -->
         <div class="container-fluid">
             <div class="row h-100 align-items-center justify-content-center">
@@ -15,10 +15,11 @@
                         <div class="d-flex align-items-center justify-content-between mb-3">
                             <h3>경기기록 수정</h3>
                         </div>
+                        <input type="hidden" name="recodeNo" value="${gameVo.recodeNo }">
                         <div style="width: 60%; height: 80%; margin: 0 auto;" >
 	                        <div class="form-floating mb-3">
-	                            <input type="text" class="form-control" id="floatingInput" placeholder="regdate" name="regdate">
-	                            <label for="floatingInput">경기날짜</label>
+	                            <input type="text" class="form-control" id="playDate" placeholder="playDate" max="9999-12-31" name="playDate" maxlength="10">
+	                            <label for="floatingInput">경기 날짜</label>
 	                        </div>
 	                        <div class="form-floating mb-3">
 	                            <input type="text" class="form-control" id="floatingInput" placeholder="firstPitcher" name="firstPitcher">

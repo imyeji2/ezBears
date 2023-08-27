@@ -39,11 +39,23 @@ public class MyPageController {
 		logger.info("개인근태조회 페이지 처리 결과, list.size={}", list.size());
 		
 		model.addAttribute("list", list);
-		
+	
 		
 		
 		return "/mypage/attendanceCheck";
 		
 		//http://localhost:9091/ezBears/mypage/attendanceCheck
 	}
+	
+	@RequestMapping("/attendanceInOut")
+	public String attendanceInOut() {
+		
+		
+		return "/";
+	}
+	
+	
+	
+	
+	
 }

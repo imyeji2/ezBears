@@ -5,7 +5,7 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!-- Recent Sales Start -->
 <script type="text/javascript">
-	$(function(){
+	$(function() {
 		$('.fileupload_right').hide();
 		$('.fileupload').click(function() {
 			$('.fileupload_right').toggle();
@@ -16,7 +16,7 @@
 	<div class="bg-secondary text-center rounded p-4">
 		<div class="bg-secondary rounded h-100 p-4">
 			<nav
-				style="--bs-breadcrumb-divider: url(&amp; #34; data: image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&amp;#34;);"
+				style="--bs-breadcrumb-divider: url(&amp; amp; #34; data: image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&amp;amp;#34;);"
 				aria-label="breadcrumb">
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="#">공용</a></li>
@@ -28,13 +28,14 @@
 				<div class="detailWrap">
 					<div class="detail_title">
 						<div class="detail_left">
-							<span class="title_txt">${map['NOTICE_TITLE']}</span> 
-							<span class="title_date">
-							<fmt:formatDate value="${map['REGDATE']}" pattern="yyyy-MM-dd" /> </span>
+							<span class="title_txt">${map['NOTICE_TITLE']}</span> <span
+								class="title_date"> <fmt:formatDate
+									value="${map['REGDATE']}" pattern="yyyy-MM-dd" />
+							</span>
 						</div>
 						<!-- detail_left -->
 						<c:if test="${!empty map }">
-						<div class="detail_right">조회수 : ${map['VIEWS']}</div>
+							<div class="detail_right">조회수 : ${map['VIEWS']}</div>
 						</c:if>
 					</div>
 					<!-- detail_title -->
@@ -53,17 +54,20 @@
 						</div>
 						<!-- detail_left -->
 						<c:if test="${!empty filemap }">
-						<div class="noticeFiles">
-						<div class="fileupload"><a href="#">첨부파일</a></div>
-						<div class="fileupload_right">
-							<c:forEach var="map" items="${filemap }">
-								<a href="#">${map['ORIGIN_FILENAME']}&nbsp; (<fmt:formatNumber
-											value="${map['FSIZE'] /1024.0}" type="number" pattern="#.##" />
-										KB)
-									</a><br>
-							</c:forEach>
-						</div>
-						</div>
+							<div class="noticeFiles">
+								<div class="fileupload">
+									<a href="#">첨부파일</a>
+								</div>
+								<div class="fileupload_right">
+									<c:forEach var="map" items="${filemap }">
+										<a href="#">${map['ORIGIN_FILENAME']}&nbsp; (<fmt:formatNumber
+												value="${map['FSIZE'] /1024.0}" type="number" pattern="#.##" />
+											KB)
+										</a>
+										<br>
+									</c:forEach>
+								</div>
+							</div>
 						</c:if>
 						<!-- detail_right -->
 					</div>
@@ -74,10 +78,10 @@
 						${map['NOTICE_CONTENT']}
 
 						<div class="detail_option_btn">
-							<span class="user_dept">
-							<a href="<c:url value='/notice/noticeList'/>">목록</a></span>
+							<span class="user_dept"> <a
+								href="<c:url value='/notice/noticeList'/>">목록</a></span>
 							<c:if test="${map['DEPT_NO']==1}">
-								<span class="user_dept"><a href="#">수정</a></span> 
+								<span class="user_dept"><a href="#">수정</a></span>
 								<span class="user_dept"><a href="#">삭제</a></span>
 							</c:if>
 						</div>
@@ -95,28 +99,45 @@
 							<div class="reply_user">
 								<div class="detail_left">
 									<%-- <c:forEach var="map" items="${list }" begin="0" end="5"> --%>
-									<c:set var="currentNo" value="${map.NOTICE_NO}"/>
-											<span class="user_name">
-											<c:if test="${!empty nextPage }">
-												다음게시판<br>
-											<c:forEach  var="map1" items="${nextPage}">
-												<c:if test="${currentNo != map1.NOTICE_NO}">
-													<a href="<c:url value='/notice/noticeDetail?noticeNo=${map1.PREV_NUM}'/>">asdf</a></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							       					<a href="<c:url value='/notice/noticeDetail?noticeNo=${map1["PREV_NUM"]}'/>">${map1['NOTICE_TITLE']}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-													<fmt:formatDate value="${map1['REGDATE']}" pattern="yyyy-MM-dd" />
+									<c:set var="currentNo" value="${map.NOTICE_NO}" />
+									<span class="user_name"> <c:if
+											test="${!empty nextPage }">
+											<c:forEach var="map1" items="${nextPage}">
+												<c:if test="${currentNo == map1.NOTICE_NO}">
+															이전글 : 
+														<a href="<c:url value='/notice/noticeDetail?noticeNo=${map1.PREV_NUM}'/>">
+															<c:choose>
+																<c:when test="${map1.PREV_NUM==0}">이전글이 없습니다</c:when>
+																<c:otherwise>
+																	<span style="color: blue;">${map1.PREV_TITLE}</span>
+																</c:otherwise>
+															</c:choose>
+														</a>
+														<input type="text" value="${currentNo }">
+														<input type="text" value="${map.NOTICE_NO }">
+														<input type="text" value="${map1.NOTICE_NO }">
+														<input type="text" value="${map1.PREV_NUM }">
+														<input type="text" value="${map1.PREV_TITLE }">
+														<input type="text" value="${map1.NOTICE_TITLE }">
+													다음글 :
+														<a href="<c:url value='/notice/noticeDetail?noticeNo=${map1.NEXT_NUM}'/>">
+															 <c:choose>
+																<c:when test="${map1.NEXT_NUM==0}">다음글이 없습니다</c:when>
+																<c:otherwise>
+																	<span style="color: blue;">${map1.NOTICE_TITLE}</span>
+																</c:otherwise>
+															</c:choose>
+														</a>
+														<input type="text" value="${currentNo }">
+														<input type="text" value="${map1.NOTICE_NO }">
+														<input type="text" value="${map1.NEXT_NUM }">
+														<input type="text" value="${map1.NEXT_TITLE }">
+														<input type="text" value="${map1.NOTICE_TITLE }">
 												</c:if>
 											</c:forEach>
 											<br>
-											</c:if>
-											<hr>
-											<%-- <c:if test="${!empty nextPage }">
-												다음게시판<br>
-												<a href="<c:url value='/notice/noticeDetail?noticeNo=${map["NOTICE_NO"]}'/>">${map['MEM_NAME']}</a></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						       					<a href="<c:url value='/notice/noticeDetail?noticeNo=${map["NOTICE_NO"]}'/>">${map['NOTICE_TITLE']}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-											<fmt:formatDate value="${map['REGDATE']}" pattern="yyyy-MM-dd" />
-											<br>
-											</c:if> --%>
-									<%-- </c:forEach> --%>
+										</c:if>
+									</span>
 								</div>
 							</div>
 							<!-- noticeDetail -->

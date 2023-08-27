@@ -32,6 +32,12 @@ public class GameServiceImpl implements GameService {
 	public List<GameVO> selectAllGame(SearchVO searchVo) {
 		return gameDao.selectAllGame(searchVo);
 	}
-	
 
+	@Override
+	public GameVO selectByRecodeNo(int recodeNo) {
+		// TODO Auto-generated method stub
+		return gameDao.selectByRecodeNo(recodeNo);
+	}
+	
+	
 }

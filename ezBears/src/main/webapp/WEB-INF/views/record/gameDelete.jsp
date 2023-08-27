@@ -21,10 +21,10 @@
         	<div class="deleteDiv">
 	            <br>
 					<article class="simpleForm">
-						<form name="frmOut" method="post" action="<c:url value='/record/gameList'/>" >
+						<form name="frmOut" method="post" action="<c:url value='/record/gameDelete'/>" >
 							<fieldset>	
 								<legend>경기 기록 번호 : ${gameVo.recodeNo }<br>
-								경기 날짜 : ${gameVo.regdate }</legend>
+								경기 날짜 : ${gameVo.playDate }</legend>
 								<br><br>
 								<p class="p">경기 기록을 삭제 하시겠습니까?</p>
 								<br>
