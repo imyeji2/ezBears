@@ -90,31 +90,16 @@ public class MyPageController {
 					
 				//2) 퇴근 날짜가 있는 경우(이미 출근처리 되었다고 표시)
 				}else {
-					String message= "이미 퇴근처리가 되었습니다.";
+					String msg= "이미 퇴근처리가 되었습니다.";
 					String url = "/";
 					
-					model.addAttribute("msg", message);
+					model.addAttribute("msg", msg);
 					model.addAttribute("url", url);
 					
 					return "/common/message";
 				}
-				
-				
 			}
-			
-			
-			
 		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		
 		return "/";
 	}
