@@ -7,6 +7,15 @@
 		$('input[name=currentPage]').val(curPage);
 		$('form[name=frmPage]').submit();
 	}
+	
+	function MemOut(){
+	    var selectedMemNos = [];
+	    $('.MemChk:checked').each(function() {
+	        var memNo = $(this).closest('tr').find('.hiddenMemNo').val();
+	        selectedMemNos.push(memNo);
+	    });
+
+	}
 </script>
 <!-- 페이징 처리를 위한 form 시작-->
 <form name="frmPage" method="post" action="<c:url value='/Member/list'/>">
@@ -31,7 +40,7 @@
 					<input type="text" class ="txtboxSearch" id="txtboxSearch" name="searchKeyword" value="${param.searchKeyword}"placeholder="검색어를 입력해주세요">
 					<button type="submit" class="btnSearch" id="btnSearch" >검색</button>
 					<a href = "<c:url value='/Member/write'/>" class="btnAdd" id ="btnAdd">등록</a>
-					<button class="btnDelete" type="button" id="btnDelete">삭제</button>
+					<button class="btnDelete" type="button" id="btnDelete" onclick="MemOut()">퇴사</button>
 				</div>
 			
 				<br>
@@ -67,7 +76,7 @@
 		                <c:if test="${!empty list}">
 		                	<c:forEach var="memberVo" items="${list}"> 
 		                		<tr class="memList">
-		                			<td><input type="checkbox"></td>
+		                			<td><input type="checkbox" class="MemChk"></td>
 		                			<td>${memberVo.deptName}</td>
 		                			<td>${memberVo.positionName}</td>
 		                			<td>
@@ -80,6 +89,7 @@
 		                			<td>${memberVo.type}</td>
 		                			<td>${memberVo.contractStart.substring(0, 10)}</td>
 		                			<td>${memberVo.contractDone.substring(0, 10)}</td>
+		                			<td><input type="hidden" id="hiddenMemNo" value = "${memberVo.memNo}"></td>
 		                		</tr>
 		                	</c:forEach>
 		                </c:if>
