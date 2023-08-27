@@ -7,11 +7,11 @@ import lombok.Setter;
 @Setter
 public class MyBoardSearchVo extends SearchVO{
 	private int mBoardNo;
-	private int groupno;
+	private int contentno;
 
 	@Override
 	public String toString() {
-		return "MyBoardSearchVo [mBoardNo=" + mBoardNo + ",groupno="+groupno+"toString()=" + super.toString() + "]";
+		return "MyBoardSearchVo [mBoardNo=" + mBoardNo + ",contentno="+contentno+ "toString()=" + super.toString() + "]";
 	}
 }
 

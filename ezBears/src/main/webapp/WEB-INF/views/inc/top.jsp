@@ -81,7 +81,18 @@
 <script type="text/javascript">
 	function attendanceInOut() {
 		if(confirm('하시겠습니까?')){
-			location.href='';
+			var today = new Date();
+	        var today_year = today.getFullYear();
+	        var today_month = today.getMonth() + 1; // 월은 0부터 시작하므로 1을 더해줌
+	        var today_date = today.getDate(); // 날짜를 가져와야 함
+
+	        // 날짜 값이 한 자리일 경우 앞에 0 추가하여 두 자리로 만듦
+	        var formattedMonth = today_month < 10 ? '0' + today_month : today_month;
+	        var formattedDate = today_date < 10 ? '0' + today_date : today_date;
+
+	        var day = today_year + '-' + formattedMonth + '-' + formattedDate; // 날짜 형식 조정
+			
+			location.href="<c:url value='/mypage/attendanceInOut?date='/>"+day;
 		}
 	}
 

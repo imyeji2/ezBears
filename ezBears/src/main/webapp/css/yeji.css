@@ -357,6 +357,11 @@
 		margin:20px 0px 0px 0px;
 	}
 	
+	.del_content{
+		height: 30px;
+		margin:0px 0px 10px 10px;
+	}
+	
 	
 
 }/*팀별 공지사항 디테일 css*/
