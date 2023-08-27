@@ -6,7 +6,7 @@
     <div class="container-fluid pt-4 px-4" id="board_style">
         <div class="bg-secondary text-center rounded">
             <div class="bg-secondary rounded h-100 p-4">
-				<c:import url="/myBoard/myBoardNavTab?myBoardNo=${myBoardNo}"></c:import>
+				<c:import url="/myBoard/myBoardNavTab?mBoardNo=${mBoardNo}"></c:import>
                 <div class="tab-content" id="pills-tabContent">
                     <div class="tab-pane fade show active">
 						<div id="teamWorkBoardList">
@@ -141,9 +141,9 @@
 					          </table>
 					      </div>
 					      <div class="btnBox">
-								<a class="btn btn-sm btn-primary" href="">삭제</a>
-								<a class="btn btn-sm btn-primary" href="">수정</a>
-								<a class="btn btn-sm btn-primary" href="<c:url value='/myBoard/teamWorkBoardWrite'/>">등록</a>
+<!-- 								<a class="btn btn-sm btn-primary" href="">삭제</a>
+								<a class="btn btn-sm btn-primary" href="">수정</a> -->
+								<a class="btn btn-sm btn-primary" href="<c:url value='/myBoard/teamWorkBoardWrite?mBoardNo=${mBoardNo}'/>">등록</a>
 						</div><!-- btnBox -->
 					      <div class="page_box">
 						      <nav aria-label="Page navigation example">

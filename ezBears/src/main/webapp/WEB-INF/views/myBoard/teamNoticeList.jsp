@@ -24,7 +24,7 @@ $(function(){
 	  
 	  
 	  $(window).scroll(function() {	    	
-	        if (!isLoading && $(window).scrollTop() + $(window).height() >= $(document).height()-20) {
+	        if (!isLoading && $(window).scrollTop() + $(window).height() >= $(document).height()-200) {
 	         	var curPage = $('input[name="currentPage"]').val();
 	        	var totalPage=$('input[name="totalPage"]').val();
 	        	
@@ -164,7 +164,13 @@ function send(currentPage) {
 									<div class="serch_btn">
 										<button id="searchBtn">검색</button>
 									</div><!-- serch_btn -->
+														        
+							        <div class="btnBox">
+										<a class="btn btn-sm btn-primary" 
+											href="<c:url value='/myBoard/teamNoticeWrite?mBoardNo=${mBoardNo}'/>">등록</a>
+									</div><!-- btnBox --> 
 								</div><!-- serch_input -->
+								
 							</div><!-- teamNotice_serch -->
 						</form>
 						<br><br>
@@ -190,44 +196,8 @@ function send(currentPage) {
 					        </c:if>
 					                    
 					        <div class="list_line"></div>     
-					        
-					        <div class="btnBox">
-								<a class="btn btn-sm btn-primary" 
-									href="<c:url value='/myBoard/teamNoticeWrite?mBoardNo=${mBoardNo}'/>">등록</a>
-							</div><!-- btnBox --> 
+
 							         
-						        
-						      <%-- <div class="page_box">
-							      <nav aria-label="Page navigation example">
-									  <ul class="pagination justify-content-center">
-									  <c:if test="${pagingInfo.firstPage>1}">
-										    <li class="page-item">
-										      <a class="page-link" onclick="pageFunc(${pagingInfo.firstPage-1})">
-										      	<
-										      </a>
-										    </li>
-									    </c:if>
-									    <c:forEach var="i" begin="${pagingInfo.firstPage}" end="${pagingInfo.lastPage}">		
-											<c:if test="${i == pagingInfo.currentPage}">		
-											    <li class="page-item active" >
-											    	<a class="page-link" href="#">${i}</a>
-											    </li>
-											   </c:if>
-												<c:if test="${i != pagingInfo.currentPage }">
-												    <li class="page-item">
-												    	<a class="page-link" href="#" onclick="pageFunc(${i})">${i}</a>
-												    </li>
-											    </c:if>   		
-											</c:forEach>
-										<c:if test="${pagingInfo.lastPage < pagingInfo.totalPage}">													    
-										    <li class="page-item">
-										      <a class="page-link"  href="#" onclick="pageFunc(${pagingInfo.lastPage+1})">Next</a>
-										    </li>
-									    </c:if>
-									  </ul>
-									</nav>
-							</div><!-- page_box -->
-					 --%>
 						</div><!-- teamNoticeList -->
 					</div>
 				</div>

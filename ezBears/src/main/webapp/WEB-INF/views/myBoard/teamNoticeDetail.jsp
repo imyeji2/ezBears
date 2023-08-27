@@ -4,8 +4,7 @@
 <!-- Recent Sales Start -->
 <script type="text/javascript">
 	
-	$(function(){
-		
+	$(function(){		
 		var totalCount=0;
 		send(1);
 		
@@ -286,7 +285,7 @@
 							//출력 데이터
 							var step= item.STEP
 			            	var imagePath = "default_user.png";
-			            	if(tem.MEM_IMAGE!==null){
+			            	if(item.MEM_IMAGE!==null){
 			            		var imagePath =item.MEM_IMAGE;
 			            	}
 			            	var comment = item.COMMENTS.replace(/\r\n/ig, '<br>');
@@ -613,9 +612,9 @@
 			      <div class="page_box">
 				      <nav aria-label="Page navigation example">
 						  <ul class="pagination justify-content-center" id="pageBox">
-	
+		
 						  </ul>
-						</nav>
+					</nav>
 				</div><!-- page_box --> 
       		</div><!-- detail_reply_wrap -->   		
 		</div><!-- teamNoticeDetail -->
