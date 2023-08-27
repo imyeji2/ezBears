@@ -57,6 +57,7 @@ public class MyPageController {
 		int memNo = bigDecimalMemNo.intValue();
 		logger.info("최근 출퇴근 조회, 파라미터 memNo={}", memNo);
 		
+		//해당 memNo 의 가장 최근 출근 데이터 뽑기
 		AttendanceVO attendanceVo = attendanceService.selectRecentAttendance(memNo);
 		logger.info("attendanceVo={}", attendanceVo);
 		
@@ -91,7 +92,7 @@ public class MyPageController {
 				//2) 퇴근 날짜가 있는 경우(이미 출근처리 되었다고 표시)
 				}else {
 					String msg= "이미 퇴근처리가 되었습니다.";
-					String url = "/";
+					String url = "/mypage/attendanceCheck?memNo="+memNo;
 					
 					model.addAttribute("msg", msg);
 					model.addAttribute("url", url);
@@ -100,8 +101,7 @@ public class MyPageController {
 				}
 			}
 		}
-		
-		return "/";
+		return "redirect:/mypage/attendanceCheck?memNo="+memNo;
 	}
 	
 	

@@ -14,7 +14,8 @@
 	
 	<update id="goHome" parameterType="int">
 		update attendance 
-		set out_time = sysdate
+		set out_time = sysdate,
+		status = '퇴근'
 		where attendance_no = #{attendanceNo}
 	</update>
 	
