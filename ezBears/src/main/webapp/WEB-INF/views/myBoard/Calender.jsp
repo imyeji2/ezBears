@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // 삭제 로직 추가
                  var eventId = event.id;
 
-                if (confirm('정말로 ' + eventId +' 이 일정을 삭제하시겠습니까?')) {
+                if (confirm('정말로 이 일정을 삭제하시겠습니까?')) {
                     $.ajax({
                         url: "<c:url value='/myBoard/deleteEvent'/>", 
                         type: 'POST',
