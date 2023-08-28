@@ -1,5 +1,6 @@
 package com.ez.ezBears.login.controller;
 
+import java.math.BigDecimal;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.ez.ezBears.attendance.model.AttendanceService;
+import com.ez.ezBears.attendance.model.AttendanceVO;
 import com.ez.ezBears.member.model.MemberService;
 import com.ez.ezBears.member.model.MemberVO;
 import com.ez.ezBears.staff.model.StaffService;
@@ -30,6 +33,7 @@ public class LoginController {
 
 	private final MemberService memberService;
 	private final StaffService staffService;
+	private final AttendanceService attendanceService;
 
 
 	/*
@@ -70,6 +74,15 @@ public class LoginController {
 					session.setAttribute("memNo", map.get("MEM_NO"));
 					logger.info("dept_no 로그 확인 dept_no={}",session.getAttribute("dept_no"));
 					
+					//출퇴근 처리 위한 session 설정
+					BigDecimal bigDecimalMemNo = (BigDecimal)map.get("MEM_NO");
+					logger.info("bigDecimalMemNo={}", bigDecimalMemNo);
+					// BigDecimal 값을 int로 변환
+					int memNo = bigDecimalMemNo.intValue();
+					AttendanceVO attendanceVo = attendanceService.selectRecentAttendance(memNo);
+					String status = attendanceVo.getStatus();
+					logger.info("status = {}", status);
+					session.setAttribute("status", status);
 					
 					//cookie
 					Cookie ck = new Cookie("ck_userid", userid);

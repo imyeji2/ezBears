@@ -9,7 +9,7 @@
  
  	<insert id="insertAttendance" parameterType="int">
  		insert into attendance(attendance_no, mem_no, in_time, status)
- 		values(attendance_seq.nextval, #{memNo}, sysdate, '출근 중')
+ 		values(attendance_seq.nextval, #{memNo}, sysdate, '근무 중')
  	</insert>
 	
 	<update id="goHome" parameterType="int">
