@@ -110,7 +110,7 @@ public class ScheduleController {
 	                                      @RequestParam("newStartDate") String newStartDate,
 	                                      @RequestParam("newEndDate") String newEndDate) {
 	    Map<String, Object> response = new HashMap<>();
-	    	logger.info("으음 response={}",response);
+	    	logger.info("response={}",response);
 	    try {
 	        Map<String, Object> parameters = new HashMap<>();
 	        parameters.put("scheduleNo", eventId);

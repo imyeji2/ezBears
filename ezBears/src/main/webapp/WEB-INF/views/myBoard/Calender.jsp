@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // 팝업 또는 컨텍스트 메뉴 표시
         var choice = confirm('일정을 수정 또는 삭제하시겠습니까?');
         if (choice) {
-            // 사용자가 [확인]  선택한 경우
+            // 사용자가 [확인] 선택한 경우
             var action = prompt('수정 또는 삭제를 입력하세요. (수정/삭제)');
 
             if (action === '수정') {
@@ -168,8 +168,8 @@ document.addEventListener('DOMContentLoaded', function() {
 	<div id='calendar'></div>
 	
 		<div>
-			<input type="text" name="mBoardNo" value="${mBoardNo}"> 
-			<input type="text" name="userid" value="${userid}">
+			<input type="hidden" name="mBoardNo" value="${mBoardNo}"> 
+			<input type="hidden" name="userid" value="${userid}">
 			<input type="hidden" id="list" name="list" value="${list}">
 		</div>
 	

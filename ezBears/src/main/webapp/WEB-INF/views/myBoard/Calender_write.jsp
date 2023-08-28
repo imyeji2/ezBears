@@ -27,11 +27,10 @@
 	<div class="bg-secondary text-center rounded p-4">
 		<div class="bg-secondary rounded h-100 p-4">
 			<form method="post" action="<c:url value='/myBoard/Calender_write'/>">
-			 	<input type ="text" name ="userid" id="userid" value="${userid }">
-				<input type="text" name="myBoardNo" id="myBoardNo"value="${myBoardInfoVo.myBoardNo}"> 
-				<input type="text" name="memNo" id="memNo" value="${myBoardInfoVo.memNo}"> 
-				<input type="text" name="MBoardNo" id="MBoardNo" value="${myBoardInfoVo.MBoardNo}"> 
-				<%-- <input type="text" name="scheduleNo" id="scheduleNo" value="${scheduleNo}"> --%> 
+			 	<input type ="hidden" name ="userid" id="userid" value="${userid }">
+				<input type="hidden" name="myBoardNo" id="myBoardNo"value="${myBoardInfoVo.myBoardNo}"> 
+				<input type="hidden" name="memNo" id="memNo" value="${myBoardInfoVo.memNo}"> 
+				<input type="hidden" name="MBoardNo" id="MBoardNo" value="${myBoardInfoVo.MBoardNo}"> 
 					
 				<h6 class="mb-4">일정 등록</h6>
 				<div class="appbox">
