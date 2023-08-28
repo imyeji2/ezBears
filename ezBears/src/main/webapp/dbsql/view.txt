@@ -29,6 +29,26 @@ ON A.MEM_NO = B.MEM_NO;
 
 
 
+create or replace view teamWorkBoardListView
+as
+SELECT A.*, B.MEM_ID,B.MEM_NAME, B.MEM_IMAGE, B.DEPT_NAME
+FROM
+(
+    SELECT T.*, MY.M_BOARD_NO
+    FROM TEAM_WORK_BOARD T
+    JOIN MY_BOARD MY
+    ON T.MY_BOARD_NO = my.my_board_no
+)A JOIN
+(
+    SELECT M.MEM_NO,M.MEM_ID, MEM_NAME, MEM_IMAGE, D.DEPT_NAME
+    FROM MEMBER M
+    JOIN DEPT D
+    ON M.DEPT_NO = D.DEPT_NO
+) B
+ON A.MEM_NO = B.MEM_NO;
+
+
+
 create or replace procedure DELETETEAMNOTICE
 (
 --매개변수
@@ -62,7 +82,8 @@ begin
         if m_step = 1 then 
             --대댓글이 존재하는지 체크
             select count(*) into cnt from team_notice
-            where m_groupno = m_groupno;
+            where groupno = m_groupno
+            and team_notice_no != m_team_notice_no;
             --대댓글이 존재하면
             if cnt >0 then
                 update team_notice set status='N'
