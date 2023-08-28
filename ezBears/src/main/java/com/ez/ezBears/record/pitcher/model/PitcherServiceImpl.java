@@ -28,13 +28,15 @@ public class PitcherServiceImpl implements PitcherService {
 	}
 
 	@Override
-	public List<PitcherVO> selectPitcherByPlayerNo(int playerNo) {
-	    return pitcherDao.selectPitcherByPlayerNo(playerNo);
+	public PitcherVO selectPitcherByPlayerNo(int playerNo) {
+		// TODO Auto-generated method stub
+		return pitcherDao.selectPitcherByPlayerNo(playerNo);
 	}
 
 	@Override
-	public Map<String, Object> selectByPlayerNo(int playerNo, String playDate) {
-		return pitcherDao.selectByPlayerNo(playerNo, playDate);
+	public List<Map<String, Object>> selectPitcherView(int playerNo) {
+		// TODO Auto-generated method stub
+		return pitcherDao.selectPitcherView(playerNo);
 	}
 	
 	

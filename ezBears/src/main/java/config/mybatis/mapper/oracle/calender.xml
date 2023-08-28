@@ -15,6 +15,18 @@
 		schedule s join my_board m
 		on s.my_board_no = m.my_board_no
 	</select> -->	
+	<update id="updateEvent" parameterType="map">
+	    update schedule
+	    set schedule_title = #{schedulTitle},
+	        schedule_start = #{schedulStart},
+	        schedule_end = #{schedulEnd}
+	    where schedule_no = #{scheduleNo}
+	</update>
+	
+	<delete id="deleteEvent" parameterType="map">
+		delete schedule
+		where schedule_no = #{scheduleNo}
+	</delete>
 	
 	<insert id="insertSchedule" parameterType="scheduleVo" >
 		<selectKey keyProperty="scheduleNo" order="BEFORE" resultType="int">

@@ -42,4 +42,12 @@
 		from hitter
 		where player_no = #{playerNo}
 	</select>
+	
+	<select id="selectHitterView" parameterType="int" resultType="map">
+    	select * from hitter_view where player_no = #{playerNo}
+    </select>
+    
+    <select id="selectHitterStatView" parameterType="int" resultType="map">
+    	select * from hitter_stat_view
+    </select>
 </mapper>

@@ -43,4 +43,9 @@ public class DeptServiceImpl implements DeptService{
 	public int checkDeptName(String deptName) {
 		return deptDao.checkDeptName(deptName);
 	}
+
+	@Override
+	public int deleteDept(int deptNo) {
+		return deptDao.deleteDept(deptNo);
+	}
 }

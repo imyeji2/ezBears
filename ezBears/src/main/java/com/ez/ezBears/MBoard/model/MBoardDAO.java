@@ -1,6 +1,10 @@
 package com.ez.ezBears.MBoard.model;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
+
+import com.ez.ezBears.common.SearchVO;
 
 @Mapper
 public interface MBoardDAO {
@@ -9,4 +13,10 @@ public interface MBoardDAO {
 	int checkSameName(String mBoardName);
 	// 부서 등록시 자동으로 보드 등록
 	int insertMBoard(MBoardVO mBoardVo);
+	
+	//전체 게시판 가지고오기
+	List<MBoardVO> selectAllboard(SearchVO searchVo);
+	
+	//전체 게시판 개수
+	int totalBoardList(SearchVO searchVo);
 }
