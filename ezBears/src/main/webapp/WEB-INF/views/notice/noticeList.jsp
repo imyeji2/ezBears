@@ -41,6 +41,16 @@
 									<div class="serch_btn">
 										<button>검색</button>
 									</div><!-- serch_btn -->
+									
+									<div class="btnBox">
+						        	<%-- <c:if test="${yesNo == 'Y'}"> --%>
+						        	<c:if test="${sessionScope.dept_no==1}">
+										<!-- <a class="btn btn-sm btn-primary" href="">삭제</a>
+										<a class="btn btn-sm btn-primary" href="">수정</a> -->
+										<a class="btn btn-sm btn-primary" href="<c:url value='/notice/noticeWrite'/>">글쓰기</a>
+									</c:if>
+								</div><!-- btnBox -->  
+									
 								</div><!-- serch_input -->
 							</div><!-- teamNotice_serch -->
 							
@@ -106,14 +116,7 @@
 					        </c:if>
 					                    
 					        <div class="list_line"></div>     
-						        <div class="btnBox">
-						        	<%-- <c:if test="${yesNo == 'Y'}"> --%>
-						        	<c:if test="${sessionScope.dept_no==1}">
-										<!-- <a class="btn btn-sm btn-primary" href="">삭제</a>
-										<a class="btn btn-sm btn-primary" href="">수정</a> -->
-										<a class="btn btn-sm btn-primary" href="<c:url value='/notice/noticeWrite'/>">글쓰기</a>
-									</c:if>
-								</div><!-- btnBox -->          
+						                
 						      <div class="page_box">
 							      <nav aria-label="Page navigation example">
 									  <ul class="pagination justify-content-center">
