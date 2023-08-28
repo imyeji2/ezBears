@@ -80,6 +80,23 @@
 </head>
 
 <script type="text/javascript">
+	$(function () {
+		  	var status = "<%=(String)session.getAttribute("status")%>";
+			
+			var topStatus = "";
+			var confirmText = "";
+			if(status =="퇴근" || status == ""){
+				  topStatus = "출근";
+				  confirmText = "출근 처리";
+			}else if(status=="근무 중"){
+				  topStatus = "근무 중";
+				  confirmText = "퇴근 처리";
+			}
+			
+			 $('#btnInOut').text(topStatus);
+		
+	})
+	
 	function attendanceInOut() {
 		  	var status = "<%=(String)session.getAttribute("status")%>";
 			alert(status);
@@ -146,7 +163,7 @@
 		                       <span>💼${sessionScope.dept_name }</span>
 	                    </div>
 	                </div>
-	               	<button class="inoutBtn" onclick="attendanceInOut()" id="btnInOut">출근</button>
+	               	<button class="inoutBtn" onclick="attendanceInOut()" id="btnInOut"></button>
                 </div>
                 <!-- 사원정보 끝-->
 
