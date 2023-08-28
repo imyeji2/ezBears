@@ -13,5 +13,9 @@ public interface ScheduleDAO {
 	
 	//일정등록
 	int insertSchedule(ScheduleVO scheduleVo);
-
+	
+	
+	//일정 수정
+ //Map<String, Object> updateEvent(int scheduleNo);
+	int updateEvent(Map<String, Object> parameters);
 }
