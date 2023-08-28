@@ -281,6 +281,10 @@ label{
     border: none;
 }
 
+.MemChk, .deptChk {
+    accent-color: #7000D8;
+}
+
 @media (max-width: 720px) {
 	.memImg {
     	display: none;
@@ -353,4 +357,38 @@ input.edittext {
 	    margin-bottom: 10px;
 	}
 	
+}
+
+/*deptList*/
+.selectdeptNo{
+	background-color: #191C24;
+    border: none;
+    color: #fff;
+    width: 20px;
+}
+
+#deptResp {
+    display: flex;
+   	width: 80%;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.table-out {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#mboardno{
+	text-align: center;
+}
+
+#mboardNameA{
+	color: #fff;
+}
+
+#mboardNameA:hover{
+	color: #953de7;
 }

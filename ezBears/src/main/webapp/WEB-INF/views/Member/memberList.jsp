@@ -8,14 +8,19 @@
 		$('form[name=frmPage]').submit();
 	}
 	
-	function MemOut(){
-	    var selectedMemNos = [];
-	    $('.MemChk:checked').each(function() {
-	        var memNo = $(this).closest('tr').find('.hiddenMemNo').val();
-	        selectedMemNos.push(memNo);
+	$(function(){
+	    $('.btnDelete').click(function(){
+			if (confirm("삭제하시겠습니까?")) {
+		        var memNo = $('.MemChk:checked').closest('tr').find('#hiddenMemNo').val();
+		        var url = "<c:url value='/Member/delete?memNo=" + memNo + "'/>";
+		        $('.btn-form').attr('action', url);
+		        $('.btn-form').submit();
+			}else {
+		    	event.preventDefault();
+			}
 	    });
-
-	}
+	});
+	
 </script>
 <!-- 페이징 처리를 위한 form 시작-->
 <form name="frmPage" method="post" action="<c:url value='/Member/list'/>">
@@ -40,7 +45,7 @@
 					<input type="text" class ="txtboxSearch" id="txtboxSearch" name="searchKeyword" value="${param.searchKeyword}"placeholder="검색어를 입력해주세요">
 					<button type="submit" class="btnSearch" id="btnSearch" >검색</button>
 					<a href = "<c:url value='/Member/write'/>" class="btnAdd" id ="btnAdd">등록</a>
-					<button class="btnDelete" type="button" id="btnDelete" onclick="MemOut()">퇴사</button>
+					<button class="btnDelete" type="button" id="btnDelete" >퇴사</button>
 				</div>
 			
 				<br>
