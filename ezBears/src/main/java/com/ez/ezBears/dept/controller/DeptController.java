@@ -5,11 +5,13 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ez.ezBears.MBoard.model.MBoardService;
 import com.ez.ezBears.MBoard.model.MBoardVO;
@@ -121,21 +123,41 @@ public class DeptController {
 		//4
 		return "common/message";
 	}
-	/*
-	 * @RequestMapping("/delete") public String delete(@ModelAttribute int deptNo) {
-	 * 
-	 * //1 logger.info("부서 삭제 파라미터 deptNo={}",deptNo);
-	 * 
-	 * //2 int memCnt = memberService.countMem(deptNo);
-	 * 
-	 * String msg = "해당 부서의 사원을 이동해주세요.", url="/dept/list"; if(memCnt > 0) {
-	 * 
-	 * 
-	 * }
-	 * 
-	 * //3
-	 * 
-	 * 
-	 * //4 }
-	 */
+	
+	@RequestMapping("/delete") 
+	@Transactional
+	public String delete(@RequestParam int deptNo, Model model) {
+	
+		//1 
+		logger.info("부서 삭제 파라미터 deptNo={}",deptNo);
+	
+		//2 
+		//부서에 사원이 남아있는지 체크
+		int memCnt = memberService.countMem(deptNo);
+		logger.info("부서 잔여 사원 memCnt={}",memCnt);
+		
+		String msg = "부서 삭제에 실패하였습니다.", url="/dept/list";
+		
+		if(memCnt < 1) {
+			
+			//부서 삭제 처리
+			int result = deptService.deleteDept(deptNo);
+			logger.info("부서 삭제 처리 결과, result={}", result);
+			
+			if(result > 0) {
+			
+				msg = "부서가 삭제되었습니다.";
+			}
+		}else {
+			msg = "부서에 남아있는 사원들을 이동해주세요.";
+		}
+
+		//3
+		model.addAttribute("msg",msg);
+		model.addAttribute("url",url);
+
+		//4
+		return "common/message";
+	}
+
 }
