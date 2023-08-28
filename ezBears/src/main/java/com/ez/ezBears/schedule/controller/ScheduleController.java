@@ -103,7 +103,7 @@ public class ScheduleController {
 	
 	
 	@ResponseBody
-	@PostMapping("/evendUpdate")
+	@PostMapping("/eventUpdate")
 	public Map<String, Object> updateEvent(@RequestParam("eventId") int eventId,
 	                                      @RequestParam("newTitle") String newTitle,
 	                                      @RequestParam("newStartDate") String newStartDate,

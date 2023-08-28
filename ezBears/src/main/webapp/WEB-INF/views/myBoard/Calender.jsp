@@ -19,18 +19,27 @@
 document.addEventListener('DOMContentLoaded', function() {
 	var calendarEl = document.getElementById('calendar');
     var calendar = new FullCalendar.Calendar(calendarEl, {
+    	
+    	timeZone: 'UTC',
        initialView : 'dayGridMonth', //초기 캘린더 화면
        headerToolbar : {
           start : 'prev next today',
           center : 'title',
           end : 'dayGridMonth,dayGridWeek,dayGridDay'
        },
-	    selectable : true, // 달력 일자 드래그 가능
+	    selectable : true, //일자 드래그 가능
 	    droppable : true,
 	    editable : true,
 	    nowIndicator: true, 
-	    locale: 'ko' // 한국어로 변경해주기
-	    
+	    locale: 'ko', // 한국어로 변경
+	    //일정 출력시 앞에 시간뜨는거 숨기기
+	    eventTimeFormat: { hour: 'numeric', minute: '2-digit', meridiem: false },
+
+        // 일정 렌더링을 사용자 정의
+        eventContent: function(arg) {
+            var eventTitle = arg.event.title;
+            return { html: '<div class="event-title">' + eventTitle + '</div>' };
+        }
 	    
 	    
 	  
@@ -44,12 +53,12 @@ document.addEventListener('DOMContentLoaded', function() {
 	    var start = '<c:out value="${event.SCHEDULE_START}" />';
 	    var end = '<c:out value="${event.SCHEDULE_END}" />';
 	 
-	    // JavaScript 객체를 생성하고 events 배열에 추가
+	    // events 배열에 추가
 	    events.push({
 	    	id : id,
 	        title: title,
 	        start: start,
-	        end: end,
+	        end: end + 'T23:59:59',
 	        backgroundColor: '#D1C4E9', // 일정 배경색    
 	    	textColor : 'black' //일정 글씨색
 	    });
@@ -67,31 +76,32 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // 일정을 클릭할 때 발생하는 이벤트 핸들러
     calendar.setOption('eventClick', function(info) {
-        var event = info.event; // 클릭한 일정 객체 가져오기
+        var event = info.event; // 클릭한 일정 가져오기
 
      
         var newTitle = prompt('새로운 일정 이름', event.title);
-        var newStartDate = prompt('새로운 시작 날짜 (YYYY-MM-DD)', event.startStr);
-        var newEndDate = prompt('새로운 종료 날짜 (YYYY-MM-DD)', event.endStr);
+        var newStartDate = prompt('새로운 시작 날짜 (YYYY-MM-DD)', event.startStr.split('T')[0]);
+        var newEndDate = prompt('새로운 종료 날짜 (YYYY-MM-DD)', event.endStr.split('T')[0]);
 
         if (newTitle !== null && newStartDate !== null && newEndDate !== null) {
             
             var eventId = event.id; 
+            
             $.ajax({
-                url: '<c:url value="/myBoard/evendUpdate"/>', 
+                url: "<c:url value= '/myBoard/eventUpdate'/>", 
                 type: 'POST',
                 data: {
                     eventId: eventId,
                     newTitle: newTitle,
                     newStartDate: newStartDate,
-                    newEndDate: newEndDate
+                    newEndDate: newEndDate 
                 },
                 success: function(response) {
                     if (response.success) {
                         alert('일정이 수정되었습니다.');
                         event.setProp('title', newTitle);
                         event.setStart(newStartDate); 
-                        event.setEnd(newEndDate); 
+                        event.setEnd(newEndDate+ 'T23:59:59'); 
                         calendar.render(); 
                     } else {
                         alert('일정 수정에 실패했습니다.');
@@ -102,7 +112,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
         }
+        
     });
+    
   
 });
 </script>
