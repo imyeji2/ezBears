@@ -568,6 +568,18 @@
 		text-align: center;
 	}
 	
+	
+	.dateBox{
+		width: 100%;
+		background: #191C24;
+		line-height: 38px;
+		border-radius: 5px;
+	}
+	
+	.dateBox span{
+		width: 10%;
+	}
+	
 	.dateBox_left{
 		width: 49.5%;
 		float: left;
