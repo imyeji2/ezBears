@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             var eventId = event.id; 
             $.ajax({
-                url: '/myBoard/evendUpdate', 
+                url: '<c:url value="/myBoard/evendUpdate"/>', 
                 type: 'POST',
                 data: {
                     eventId: eventId,
