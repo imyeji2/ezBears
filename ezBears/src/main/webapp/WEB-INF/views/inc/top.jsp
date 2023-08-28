@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@page import="com.ez.ezBears.attendance.model.AttendanceVO"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -79,8 +80,42 @@
 </head>
 
 <script type="text/javascript">
+	$(function () {
+		  	var status = "<%=(String)session.getAttribute("status")%>";
+			
+			var topStatus = "";
+			var confirmText = "";
+			if(status =="퇴근" || status == ""){
+				  topStatus = "출근";
+				  confirmText = "출근 처리";
+			}else if(status=="근무 중"){
+				  topStatus = "근무 중";
+				  confirmText = "퇴근 처리";
+			}
+			
+			 $('#btnInOut').text(topStatus);
+		
+	})
+	
 	function attendanceInOut() {
-		if(confirm('하시겠습니까?')){
+		  	var status = "<%=(String)session.getAttribute("status")%>";
+			alert(status);
+			
+			var topStatus = "";
+			var confirmText = "";
+			if(status =="퇴근" || status == ""){
+				  topStatus = "출근";
+				  confirmText = "출근 처리";
+			}else if(status=="근무 중"){
+				  topStatus = "근무 중";
+				  confirmText = "퇴근 처리";
+			}
+			alert(topStatus);
+			
+			 $('#btnInOut').text(topStatus);
+			alert(confirmText);
+		if(confirm(confirmText + '하시겠습니까?')){
+			
 			var today = new Date();
 	        var today_year = today.getFullYear();
 	        var today_month = today.getMonth() + 1; // 월은 0부터 시작하므로 1을 더해줌
@@ -92,6 +127,7 @@
 
 	        var day = today_year + '-' + formattedMonth + '-' + formattedDate; // 날짜 형식 조정
 			
+	        
 			location.href="<c:url value='/mypage/attendanceInOut?date='/>"+day;
 		}
 	}
@@ -127,7 +163,7 @@
 		                       <span>💼${sessionScope.dept_name }</span>
 	                    </div>
 	                </div>
-	               	<button class="inoutBtn" onclick="attendanceInOut()">출근</button>
+	               	<button class="inoutBtn" onclick="attendanceInOut()" id="btnInOut"></button>
                 </div>
                 <!-- 사원정보 끝-->
 
@@ -199,8 +235,8 @@
                              <a href="<c:url value='/record/gameList'/>" class="dropdown-item">
                             	<i class="bi bi-trophy-fill me-2"></i>경기기록
                             </a>
-                            <a href="#" class="dropdown-item">
-                            	<i class="bi bi-person-square me-2"></i>선수기록
+                            <a href="<c:url value='/record/teamList'/>" class="dropdown-item">
+                               <i class="bi bi-person-square me-2"></i>선수기록
                             </a>
                             <a href="#" class="dropdown-item">
                             	<i class="bi bi-pie-chart-fill me-2"></i>팀통계

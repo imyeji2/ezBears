@@ -14,7 +14,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 
 	
 
-
+	// 일정 등록
 	@Override
 	public int insertSchedule(ScheduleVO scheduleVo) {
 		return scheduleDao.insertSchedule(scheduleVo);
@@ -22,7 +22,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 
 
 
-
+	// 일정 출력
 	@Override
 	public List<Map<String, Object>> selectAll(ScheduleVO scheduleVo) {
 		return scheduleDao.selectAll(scheduleVo);
@@ -30,7 +30,37 @@ public class ScheduleServiceImpl implements ScheduleService {
 
 
 
+
+	@Override
+	public int updateEvent(Map<String, Object> parameters) {
+		return scheduleDao.updateEvent(parameters);
+	}
+
+
+
+	@Override
+	public boolean deleteEvent(int eventId) {
+		return scheduleDao.deleteEvent(eventId);
+	}
+
+
+
 	
+
+
+
+
+
+
+
+	
+
+
+
+
+	
+
+
 	
 	
 	

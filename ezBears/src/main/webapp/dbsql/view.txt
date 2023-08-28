@@ -116,7 +116,7 @@ on m.mem_no = b.mem_no;
 
 create or replace view calenderInfo
 as
-select s.mem_no,info.mem_id,info.my_board_no,info.m_board_no,s.schedule_start,s.schedule_end,s.schedule_title  from
+select s.mem_no,info.mem_id,info.my_board_no,info.m_board_no,s.schedule_start,s.schedule_end,s.schedule_title, s.schedule_no  from
 myBoardInfo info join schedule s
 on info.my_board_no = s.my_board_no;
 

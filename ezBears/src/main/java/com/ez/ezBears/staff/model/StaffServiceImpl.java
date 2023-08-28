@@ -1,5 +1,7 @@
 package com.ez.ezBears.staff.model;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -95,5 +97,28 @@ public class StaffServiceImpl implements StaffService {
 	@Override
 	public int deleteStaff(int staffNo) {
 		return staffDao.deleteStaff(staffNo);
+	}
+
+	@Override
+	public String getStaffId() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		String today = sdf.format(new Date());
+		
+		int todayCount = staffDao.getTodayStaff(today);
+		
+		String staffId = "ez_st_" + today + String.format("%03d", todayCount+1);
+		
+		int cnt = staffDao.isStaffId(staffId);
+		
+		//생성된 id 가 이미 있는 경우
+		if(cnt > 0) {
+			int increment = 1;
+			do {
+				staffId = "ez_st_" + today + String.format("%03d", todayCount+increment);
+				increment++;
+			}while(!(cnt > 0));
+		}
+		
+		return staffId;
 	}
 }

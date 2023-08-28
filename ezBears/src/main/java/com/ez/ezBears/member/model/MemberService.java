@@ -45,6 +45,9 @@ public interface MemberService {
     //부서 삭제시 남아있는 멤버 조회
     int countMem(int deptNo);
     
+    //사원 탈퇴 처리
+    int deleteMem(int memNo);
+    
     
     Map<String, Object> selectMemberView(String memId);
 }
