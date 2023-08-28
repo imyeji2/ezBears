@@ -61,11 +61,15 @@
 							<span class="sp1">몸무게</span> <span>${map['WEIGHT'] }</span>
 						</div>
 						<div>
-							<span class="sp1">연봉</span> <span>${map['PLAYER_SAL'] }</span>
+							<span class="sp1">연봉</span> <span>${map['PLAYER_SAL'] } 만원</span>
 						</div>
 						<div>
 							<span class="sp1">계약시작일</span> <span>
 							<fmt:formatDate value="${map['CONTRACT_START'] }" pattern="yyyy-MM-dd"/></span>
+						</div>
+						<div>
+							<span class="sp1">계약종료일</span> <span>
+							<fmt:formatDate value="${map['CONTRACT_DONE'] }" pattern="yyyy-MM-dd"/></span>
 						</div>
 						<div>
 							<span class="sp1">연락처</span> <span>${map['PLAYER_TEL'] }</span>

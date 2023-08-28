@@ -42,8 +42,10 @@ public class StaffController {
 		logger.info("스태프 등록 화면 이동");
 		
 		List<DeptVO> deptList = deptService.selectDeptList();
-		
 		model.addAttribute("deptList", deptList);
+		
+		String staffId = staffService.getStaffId();
+		model.addAttribute("staffId", staffId);
 		
 		return "/staff/staffWrite";
 		

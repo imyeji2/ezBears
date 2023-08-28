@@ -152,6 +152,53 @@
                 $('#previewImage').attr('src', imageUrl);
             }
         });
+        
+        $('#btnSubmit').click(function () {
+        	if ($('#floatingSelect option:selected').val().length < 1) {
+				alert("부서를 선택하세요");
+				$('#floatingSelect').focus();				
+				return false;
+			}
+        	
+        	if ($('#staffName').val().length < 1) {
+				alert("이름을 입력하세요");
+				$('#staffName').focus();				
+				return false;
+			}
+        	
+        	if ($('#staffPosition').val().length < 1) {
+				alert("포지션을 입력하세요");
+				$('#staffPosition').focus();				
+				return false;
+			}
+        	
+        	if ($('#staffSal').val().length < 1) {
+				alert("연봉을 입력하세요");
+				$('#staffSal').focus();				
+				return false;
+			}
+        	
+        	if ($('#contractStart').val().length < 1) {
+				alert("계약 시작일을 입력하세요");
+				$('#contractStart').focus();				
+				return false;
+			}
+        	
+        	if ($('#contractDone').val().length < 1) {
+				alert("계약 종료일을 입력하세요");
+				$('#contractDone').focus();				
+				return false;
+			}
+        	
+        	if ($('#staffPwd').val().length < 1) {
+				alert("비밀번호를 입력하세요");
+				$('#staffPwd').focus();				
+				return false;
+			}
+        	
+        	
+		})
+		
 	})
 </script>
 	<form name="frmWrite" method="post" action="<c:url value='/staff/staffWrite'/>" enctype="multipart/form-data">
@@ -173,6 +220,7 @@
 	                            <select class="form-select" id="floatingSelect"
 	                                aria-label="Floating label select example" name="deptNo">
 									<!-- 반복문 -->
+									<option value="" selected="selected">부서</option>
 									<c:forEach var="deptVo" items="${deptList}">
 										<option value ="${deptVo.deptNo}">${deptVo.deptName}</option>
 									</c:forEach>
@@ -181,40 +229,40 @@
 	                            <label for="floatingSelect">부서를 선택하세요</label>
 	                        </div>
 	                        <div class="form-floating mb-3">
-	                            <input type="text" class="form-control" id="floatingInput" placeholder="staff_name" name="staffName">
+	                            <input type="text" class="form-control staffInput" id="staffName" placeholder="staff_name" name="staffName">
 	                            <label for="floatingInput">staff_이름</label>
 	                        </div>
 	                        <div class="form-floating mb-3">
-	                            <input type="text" class="form-control" id="floatingInput" placeholder="staff_position" name="staffPosition">
+	                            <input type="text" class="form-control staffInput" id="staffPosition" placeholder="staff_position" name="staffPosition">
 	                            <label for="floatingInput">staff_포지션</label>
 	                        </div>
 	                        <div class="form-floating mb-3">
-	                            <input type="text" class="form-control" id="floatingInput" placeholder="staff_back_no" name="staffBackNo">
+	                            <input type="text" class="form-control staffInput" id="floatingInput" placeholder="staff_back_no" name="staffBackNo">
 	                            <label for="floatingInput">staff_등번호</label>
 	                        </div>
 	                        <div class="form-floating mb-3">
-	                            <input type="text" class="form-control" id="staffBirth" placeholder="staff_birth" max="9999-12-31" name="staffBirth" maxlength="10">
+	                            <input type="text" class="form-control staffInput" id="staffBirth" placeholder="staff_birth" max="9999-12-31" name="staffBirth" maxlength="10">
 	                            <label for="floatingInput">staff_생일</label>
 	                        </div>
 	                        <div class="form-floating mb-3">
-	                            <input type="text" class="form-control" id="floatingInput" placeholder="staff_sal" name="staffSal">
+	                            <input type="text" class="form-control staffInput" id="staffSal" placeholder="staff_sal" name="staffSal">
 	                            <label for="floatingInput">staff_연봉</label>
 	                        </div>
 	                        <div class="form-floating mb-3">
-	                            <input type="text" class="form-control" id="contractStart" placeholder="contract_start" max="9999-12-31" name="contractStart" maxlength="10">
+	                            <input type="text" class="form-control staffInput" id="contractStart" placeholder="contract_start" max="9999-12-31" name="contractStart" maxlength="10">
 	                            <label for="floatingInput">계약 시작일</label>
 	                        </div>
 	                        <div class="form-floating mb-3">
-	                            <input type="text" class="form-control" id="contractDone" placeholder="contract_done" max="9999-12-31" name="contractDone" maxlength="10">
+	                            <input type="text" class="form-control staffInput" id="contractDone" placeholder="contract_done" max="9999-12-31" name="contractDone" maxlength="10">
 	                            <label for="floatingInput">계약 종료일</label>
 	                        </div>
 	                        <div class="form-floating mb-3">
-	                            <input type="text" class="form-control" id="floatingInput" placeholder="staff_info" name="staffInfo">
+	                            <input type="text" class="form-control staffInput" id="floatingInput" placeholder="staff_info" name="staffInfo">
 	                            <label for="floatingInput">staff_정보</label>
 	                        </div>
 		                    <div class="firstdiv">
 						    	<div class="form-floating address">
-						    		<input type="text" class="form-control" id="contract" placeholder="staff_zipcode" name="staffZipcode">
+						    		<input type="text" class="form-control staffInput" id="contract" placeholder="staff_zipcode" name="staffZipcode">
 							        <label for="zipcode">우편번호</label>
 						    	</div>
 						    	<div class="dup">
@@ -224,23 +272,23 @@
 					    	</div>	
 					    	<br>
 	                        <div class="form-floating mb-3">
-	                            <input type="text" class="form-control" id="staff_addr" placeholder="staff_addr" name="staffAddr">
+	                            <input type="text" class="form-control staffInput" id="staff_addr" placeholder="staff_addr" name="staffAddr">
 	                            <label for="floatingInput">staff_주소</label>
 	                        </div>
 	                        <div class="form-floating mb-3">
-	                            <input type="text" class="form-control" id="staff_addr_detail" placeholder="staff_addr_detail" name="staffAddrDetail">
+	                            <input type="text" class="form-control staffInput" id="staff_addr_detail" placeholder="staff_addr_detail" name="staffAddrDetail">
 	                            <label for="floatingInput">staff_주소상세</label>
 	                        </div>
 	                        <div class="form-floating mb-3">
-	                            <input type="text" class="form-control" id="staffTel" placeholder="staff_tel" maxlength="13" name="staffTel">
+	                            <input type="text" class="form-control staffInput" id="staffTel" placeholder="staff_tel" maxlength="13" name="staffTel">
 	                            <label for="floatingInput">staff_전화번호</label>
 	                        </div>
 	                        <div class="form-floating mb-3">
-	                            <input type="text" class="form-control" id="floatingInput" placeholder="staff_id" name="staffId">
+	                            <input type="text" class="form-control staffInput" id="staffId" placeholder="staff_id" name="staffId" value="${staffId }" readonly="readonly">
 	                            <label for="floatingInput">staff_id</label>
 	                        </div>
 	                        <div class="form-floating mb-4">
-	                            <input type="password" class="form-control" id="floatingPassword" placeholder="staff_pwd" name="staffPwd">
+	                            <input type="password" class="form-control staffInput" id="staffPwd" placeholder="staff_pwd" name="staffPwd">
 	                            <label for="floatingPassword">staff_pwd</label>
 	                        </div>
 	                        <!-- <div class="d-flex align-items-center justify-content-between mb-4">
@@ -250,7 +298,7 @@
 	                            </div>
 	                            <a href="">Forgot Password</a>
 	                        </div> -->
-	                        <button type="submit" class="btn btn-primary py-3 w-100 mb-4">스태프 등록</button>
+	                        <button type="submit" class="btn btn-primary py-3 w-100 mb-4" id="btnSubmit">스태프 등록</button>
 	                        <!-- <p class="text-center mb-0">Don't have an Account? <a href="">Sign Up</a></p> -->
                         </div>
                     </div>
