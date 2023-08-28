@@ -19,27 +19,26 @@
 document.addEventListener('DOMContentLoaded', function() {
 	var calendarEl = document.getElementById('calendar');
     var calendar = new FullCalendar.Calendar(calendarEl, {
+	    	timeZone: 'UTC',
+	        initialView : 'dayGridMonth', //초기 캘린더 화면
+	        headerToolbar : {
+	        start : 'prev next today',
+	        center : 'title',
+	        end : 'dayGridMonth,dayGridWeek,dayGridDay'
+         },
+		    selectable : true, //일자 드래그 가능
+		    droppable : true,
+		    editable : true,
+		    nowIndicator: true, 
+		    locale: 'ko', // 한국어로 변경
+		    //일정 출력시 앞에 시간뜨는거 숨기기
+		    eventTimeFormat: { hour: 'numeric', minute: '2-digit', meridiem: false },
 
-    	timeZone: 'UTC',
-       initialView : 'dayGridMonth', //초기 캘린더 화면
-       headerToolbar : {
-          start : 'prev next today',
-          center : 'title',
-          end : 'dayGridMonth,dayGridWeek,dayGridDay'
-       },
-	    selectable : true, //일자 드래그 가능
-	    droppable : true,
-	    editable : true,
-	    nowIndicator: true, 
-	    locale: 'ko', // 한국어로 변경
-	    //일정 출력시 앞에 시간뜨는거 숨기기
-	    eventTimeFormat: { hour: 'numeric', minute: '2-digit', meridiem: false },
-
-        // 일정 렌더링을 사용자 정의
-        eventContent: function(arg) {
-            var eventTitle = arg.event.title;
-            return { html: '<div class="event-title">' + eventTitle + '</div>' };
-        }
+	        // 일정 렌더링을 사용자 정의
+	        eventContent: function(arg) {
+	            var eventTitle = arg.event.title;
+	            return { html: '<div class="event-title">' + eventTitle + '</div>' };
+	      }
 	    
 	    
 	  
@@ -59,8 +58,8 @@ document.addEventListener('DOMContentLoaded', function() {
 	        title: title,
 	        start: start,
 	        end: end + 'T23:59:59',
-	        backgroundColor: '#D1C4E9', // 일정 배경색    
-	    	textColor : 'black' //일정 글씨색
+	        backgroundColor: '#D1C4E9', // 일정 배경색 나중에 바꾸기
+	    	textColor : 'black' //일정 글씨색 나중에 바꾸기
 	    });
 	    // 콘솔에 값 출력
 	    console.log("id: "+ id +", title: " + title + ", start: " + start + ", end: " + end);
@@ -72,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	
    
     calendar.render();
-    
+/* ----------------- 일정 수정 & 삭제 ----------------- */    
     
     // 일정을 클릭할 때 발생하는 이벤트 핸들러
     calendar.setOption('eventClick', function(info) {
@@ -88,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // 수정 로직 
                 alert('일정을 수정합니다.');
                 var newTitle = prompt('새로운 일정 이름', event.title);
-                var newStartDate = prompt('새로운 시작 날짜 (YYYY-MM-DD)', event.startStr.split('T')[0]);
+                var newStartDate = prompt('새로운 시작 날짜 (YYYY-MM-DD)', event.startStr.split('T')[0]); //시간표시 제거
                 var newEndDate = prompt('새로운 종료 날짜 (YYYY-MM-DD)', event.endStr.split('T')[0]);
 
                 if (newTitle !== null && newStartDate !== null && newEndDate !== null) {
@@ -165,8 +164,9 @@ document.addEventListener('DOMContentLoaded', function() {
 				class="btn btn-sm btn-primary schedulein">일정등록</a>
 </div>
 </div>
-	<div id='calendar'></div>
-	
+<div id="cal">
+	<div id='calendar' class='calendar'></div>
+</div>	
 		<div>
 			<input type="hidden" name="mBoardNo" value="${mBoardNo}"> 
 			<input type="hidden" name="userid" value="${userid}">
