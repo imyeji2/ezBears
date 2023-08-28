@@ -23,10 +23,7 @@
 		select * from notice1
 		order by NOTICE_NO desc
 	</select>
-<!-- 	<select id="selectNoticeList" parameterType="int" resultType="map">
-		select * from noticeView
-		order by NOTICE_NO desc
-	</select> -->
+
 	
 	<select id="selectDetail" parameterType="int" resultType="map">
 		select * from notice1
@@ -54,11 +51,16 @@
 		FROM NOTICE1
 	</select>
 	
-<!-- 	<select id="backPage" parameterType="int" resultType="map">
-		SELECT NOTICE_NO, MEM_NO, NOTICE_TITLE, NOTICE_CONTENT, REGDATE, STATUS, VIEWS,VIEWS,MEM_NAME,
-	    LEAD(NOTICE_TITLE) OVER (ORDER BY NOTICE_NO) AS NEXT_NOTICE_TITLE
-		FROM NOTICE1
-	</select> -->
+	<update id="updateNotice" parameterType="noticeVo">
+		update notice
+		set NOTICE_TITLE = #{noticeTitle}, NOTICE_CONTENT=#{noticeContent}
+		where NOTICE_NO =#{noticeNo}
+	</update>
 	
+	<delete id="deleteNoticeFile">
+		delete from noticefile
+		where NOTICE_NO =#{noticeNo}
+	</delete>
+
 
 </mapper>
