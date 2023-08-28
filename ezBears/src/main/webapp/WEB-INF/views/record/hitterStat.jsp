@@ -37,8 +37,8 @@
 											</thead>
 											<tbody>
 												<tr>
-													<td>${list[0]['BACK_NO']}</td>
-													<td>${list[0].PLAYER_NAME}</td>
+													<td>${map['BACK_NO']}</td>
+													<td>${map.PLAYER_NAME}</td>
 													<td>타자</td>
 													<td><fmt:formatDate value="${list[0]['PLAYER_BIRTH'] }" pattern="yyyy-MM-dd"/></td>
 													<td>${list[0].HEIGHT}cm</td>
@@ -46,7 +46,6 @@
 													<td>${list[0].PLAYER_SAL}원</td>
 													<td>${list[0].PLAYER_STATUS}</td>
 												</tr>
-
 											</tbody>
 										</table>
 										<br>
@@ -54,7 +53,6 @@
 											<table class="table">
 												<thead>
 													<tr>
-														<th scope="col">날짜</th>
 														<th scope="col">타수</th>
 														<th scope="col">득점</th>
 														<th scope="col">안타</th>
@@ -71,9 +69,8 @@
 														</tr>
 													</c:if>
 													<c:if test="${!empty list }">
-														<c:forEach var="map" items="${list }">
+										
 															<tr>
-																<td><fmt:formatDate value="${map['REGDATE'] }" pattern="yyyy-MM-dd"/></td>
 																<td>${map.AB }</td>
 																<td>${map.RS }</td>
 																<td>${map.H }</td>
@@ -82,71 +79,13 @@
 																<td>${map.SO }</td>
 																<td>${map.BA }</td>
 															</tr>
-														</c:forEach>
+													
 													</c:if>
 												</tbody>
 											</table>
 											<br> <br>
 										</div>
-										<div class="divPage">
-											<!-- 페이지 번호 추가 -->
-											<!-- 이전 블럭으로 이동 -->
-											<c:if test="${pagination.firstPage>1 }">
-												<a href="#" onclick="pageFunc(${pagination.firstPage-1})">
-													<img src="<c:url value='/img/first.JPG'/>">
-												</a>
-											</c:if>
-
-											<!-- [1][2][3][4][5][6][7][8][9][10] -->
-											<c:forEach var="i" begin="${pagination.firstPage }"
-												end="${pagination.lastPage }">
-												<c:if test="${i == pagination.currentPage }">
-													<span
-														style="color: yellow; font-weight: bold; font-size: 1em">${i}</span>
-												</c:if>
-												<c:if test="${i != pagination.currentPage }">
-													<a href="#" onclick="pageFunc(${i})">[${i }]</a>
-												</c:if>
-											</c:forEach>
-
-											<!-- 다음 블럭으로 이동 -->
-											<c:if test="${pagination.lastPage < pagination.totalPage }">
-												<a href="#" onclick="pageFunc(${pagination.lastPage+1})">
-													<img src="<c:url value='/img/last.JPG'/>">
-												</a>
-											</c:if>
-											<!--  페이지 번호 끝 -->
-										</div>
 										<br>
-										<div class="divSearch">
-											<form name="frmSearch" method="POST"
-												action="<c:url value='/record/gameList'/>">
-												<select name="searchCondition">
-													<option value="PLAYDATE"
-														<c:if test="${param.searchCondition=='PLAY_DATE'}">
-				            		selected="selected"
-				            	</c:if>>날짜</option>
-													<option value="PLAYER_NAME"
-														<c:if test="${param.searchCondition=='PLAYER_NAME'}">
-				            		selected="selected"
-				            	</c:if>>이름</option>
-												</select> <input type="text" name="searchKeyword" title="검색어 입력"
-													value="${param.searchKeyword }"> <input
-													type="submit" value="검색" id="btnSearch">
-											</form>
-										</div>
-										<div class="divBtn">
-											<a href="<c:url value='/record/hitterRecordWrite'/>">기록정보
-												등록</a>
-										</div>
-										<div class="divBtn">
-											<a href="<c:url value='/record/hitterRecordEdit'/>">기록정보
-												수정</a>
-										</div>
-										<div class="divBtn">
-											<a href="<c:url value='/record/hitterRecordDelete'/>">기록정보
-												삭제</a>
-										</div>
 									</div>
 								</div>
 							</div>
