@@ -19,6 +19,11 @@
 		values(#{noticeFileNo},#{noticeNo},#{fileName},#{fileSize},#{originFileName})
 	</insert>
 	
+	<select id="selectnoticeByNo" parameterType="int" resultType="noticeVo">
+		select * from notice
+		where NOTICE_NO=#{noticeNo}
+	</select>
+	
 	<select id="selectNoticeList" parameterType="int" resultType="map">
 		select * from notice1
 		order by NOTICE_NO desc
@@ -61,6 +66,10 @@
 		delete from noticefile
 		where NOTICE_NO =#{noticeNo}
 	</delete>
-
+	
+	<delete id="deleteNotice">
+		delete from notice
+		where NOTICE_NO =#{noticeNo}
+	</delete>
 
 </mapper>

@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Mapper;
 public interface NoticeDAO {
 	int insertNotice(NoticeVO noticeVo);
 	int insertFileNotice(NoticeFileVO noticeFileVo);
+	NoticeVO selectnoticeByNo(int noticeNo);
 	List<Map<String, Object>> selectNoticeList(int noticeNo);
 	Map<String, Object> selectDetail(int noticeNo);
 	List<Map<String, Object>> selectNoticeFile(int noticeNo);
@@ -19,5 +20,6 @@ public interface NoticeDAO {
 	
 	int updateNotice(NoticeVO noticeVo);
 	void deleteNoticeFile(int noticeNo);
+	int deleteNotice(int noticeNo);
 	
 }

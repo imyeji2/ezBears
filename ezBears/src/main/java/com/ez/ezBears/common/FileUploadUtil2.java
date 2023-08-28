@@ -31,16 +31,15 @@ public class FileUploadUtil2 {
 		//Map<String, MultipartFile> fileMap=multiRequest.getFileMap();
 		List<MultipartFile> files =multiRequest.getFiles("upfile");
 		//multiful로 설정해서 여러개 파일을 업로드 하고 싶을때 이렇게 활용
-
+		
+		System.out.println(files.size());
+		
 		//여러개 업로드된 파일의 정보를 저장할 리스트
 		List<Map<String, Object>> resultList = new ArrayList<>();
 		//Iterator<String> iter = fileMap.keySet().iterator();
 		int i=0;
-		System.out.println("2222222");
-		System.out.println(files.size());
 		while(i<files.size()) {
 			//String key=iter.next();
-			System.out.println("123");
 			MultipartFile tempFile = files.get(i);//fileMap.get(key);//업로드된 파일을 임시파일 형태로 제공
 			if(!tempFile.isEmpty()) { //파일이 업로드된 경우
 				long fileSize=tempFile.getSize(); //파일 크기
@@ -62,8 +61,8 @@ public class FileUploadUtil2 {
 
 				resultList.add(resultMap);
 				
-				i++;
 			}//if			
+			i++;
 		}//while
 
 		return resultList;

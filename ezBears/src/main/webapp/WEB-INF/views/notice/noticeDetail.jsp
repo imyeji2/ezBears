@@ -10,7 +10,16 @@
 		$('.fileupload').click(function() {
 			$('.fileupload_right').toggle();
 		});
+		
+		$('#del').click(function(){
+			event.preventDefault();
+			 if (confirm("정말 삭제하시겠습니까?")){
+			 	location.href="<c:url value='/notice/noticeDelte?noticeNo=${map["NOTICE_NO"]}'/>"
+			 }
+		});
 	});
+	
+	
 </script>
 <div class="container-fluid pt-4 px-4" id="board_style">
 	<div class="bg-secondary text-center rounded p-4">

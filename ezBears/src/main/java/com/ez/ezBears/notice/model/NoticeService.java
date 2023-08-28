@@ -6,6 +6,7 @@ import java.util.Map;
 public interface NoticeService {
 	int insertNotice(NoticeVO noticeVo);
 	int insertFileNotice(List<Map<String, Object>> files, int noticeNo);
+	NoticeVO selectnoticeByNo(int noticeNo);
 	List<Map<String, Object>> selectNoticeList(int noticeNo);
 	Map<String, Object> selectDetail(int noticeNo);
 	List<Map<String, Object>> selectNoticeFile(int noticeNo);
@@ -15,4 +16,5 @@ public interface NoticeService {
 	
 	int updateNotice(NoticeVO noticeVo);
 	void deleteNoticeFile(int noticeNo);
+	int deleteNotice(int noticeNo);
 }

@@ -87,5 +87,15 @@ public class NoticeServiceImpl implements NoticeService{
 		noticeDao.deleteNoticeFile(noticeNo);
 	}
 
+	@Override
+	public int deleteNotice(int noticeNo) {
+		return noticeDao.deleteNotice(noticeNo);
+	}
+
+	@Override
+	public NoticeVO selectnoticeByNo(int noticeNo) {
+		return noticeDao.selectnoticeByNo(noticeNo);
+	}
+
 	
 }

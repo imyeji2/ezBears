@@ -70,17 +70,14 @@ public class NoticeController {
 		logger.info("글 등록 파라미터 noticeVo={}",noticeVo);
 		String msg="등록 실패", url="/notice/noticeWrite";
 		try {
-			logger.info("업로드파일 정보 files={}", files);
-
-		
 			List<Map<String, Object>> files = fileUploadUtil.fileupload(request, ConstUtil.UPLOAD_NOTICE_FLAG);
+			logger.info("업로드파일 정보 files={}", files);
 
 			int cnt = noticeService.insertNotice(noticeVo);
 			logger.info("공지사항 등록 결과 cnt = {}", cnt);
 
 			if(cnt>0) {
 				int cnt2=noticeService.insertFileNotice(files, noticeVo.getNoticeNo());
-				logger.info("다중파일 업로드 결과 cnt2={}",cnt2);
 				msg="글 작성 성공";
 			}
 		} catch (IllegalStateException e) {
@@ -93,7 +90,7 @@ public class NoticeController {
 		model.addAttribute("url", url);
 
 		// 4.
-		return "redirect:/notice/noticeList";
+		return "common/message"; // 메시지 출력 페이지로 이동
 	}
 
 
@@ -160,8 +157,9 @@ public class NoticeController {
 
 
 	@PostMapping("/noticeEdit")
-	public String noticeEdit_post(@ModelAttribute NoticeVO noticeVo,@ModelAttribute NoticeFileVO noticeFileVo,
-			@RequestParam(defaultValue = "0") int noticeNo,@RequestParam(required = false) String oldFileName,
+	public String noticeEdit_post(@ModelAttribute NoticeVO noticeVo,
+			@RequestParam(defaultValue = "0") int noticeNo,
+			@RequestParam(required = false) String oldFileName,
 			HttpServletRequest request, Model model) {
 		//1
 		logger.info("공지사항 수정 처리 파라미터 noticeVo={},noticeNo={}",noticeVo,noticeNo);
@@ -219,4 +217,38 @@ public class NoticeController {
 		//4
 		return "common/message";
 	}
+
+
+	@RequestMapping("/noticeDelte")
+	public String noticeDelte(@RequestParam (defaultValue = "0") int noticeNo,@RequestParam(required = false)  String oldFileName, Model model, HttpServletRequest request) {
+		logger.info("공지사항 삭제 매개변수 noticeNo={}",noticeNo);
+
+		NoticeVO noticeVo=noticeService.selectnoticeByNo(noticeNo);
+		
+		int cnt=noticeService.deleteNotice(noticeNo);
+		logger.info("공지사항 삭제 결과 cnt={}",cnt);
+
+		String msg="삭제 성공";
+		String url="/notice/noticeList";
+
+		if(oldFileName!=null && !oldFileName.isEmpty()) { //
+			String upPath=fileUploadUtil.getUploadPath(request, ConstUtil.UPLOAD_NOTICE_FLAG);
+			File file = new File(upPath,oldFileName);
+			if(file.exists()) {
+				boolean bool=file.delete();
+				logger.info("파일 삭제 여부 : {}", bool);
+			}
+		}
+		
+		noticeService.deleteNoticeFile(noticeNo);
+
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+
+		return "common/message";
+	}
+
+
+
+
 }
