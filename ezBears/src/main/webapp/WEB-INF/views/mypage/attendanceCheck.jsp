@@ -55,9 +55,22 @@
 	});
 
 </script>
+<style>
+	.vh-110{
+		height: 110vh;
+	}
+</style>
 <!-- Blank Start -->
 <div class="container-fluid pt-4 px-4">
-    <div class="row vh-100 bg-secondary rounded align-items-center justify-content-center mx-0">
+    <div class="row vh-110 bg-secondary rounded align-items-center justify-content-center mx-0">
+            <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+	           <ol class="breadcrumb" style="margin-left: 0.5%;">
+	             <li class="breadcrumb-item active" aria-current="page">
+	                <a href="<c:url value='/attendanceManagement/attendanceSearch'/>">근태 관리</a>
+	             </li>
+	             <li class="breadcrumb-item active" aria-current="page">출/퇴근 현황</li>
+	           </ol>
+         	</nav>
         <div class="col-md-8 text-center">
         	<h3>월별 근태조회</h3>
         	<br>
