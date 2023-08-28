@@ -61,6 +61,9 @@
 							<span class="sp1">계약시작일</span> <span>${staffVo.contractStart.substring(0, 10) }</span>
 						</div>
 						<div>
+							<span class="sp1">계약종료일</span> <span>${staffVo.contractDone.substring(0, 10) }</span>
+						</div>
+						<div>
 							<span class="sp1">연락처</span> <span>${staffVo.staffTel }</span>
 						</div>
 						<div>
