@@ -16,6 +16,9 @@ public interface ScheduleDAO {
 	
 	
 	//일정 수정
- //Map<String, Object> updateEvent(int scheduleNo);
+ 
 	int updateEvent(Map<String, Object> parameters);
+	
+	// 삭제
+	boolean deleteEvent(int eventId);
 }

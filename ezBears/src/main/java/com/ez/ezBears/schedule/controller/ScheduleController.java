@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -108,11 +109,6 @@ public class ScheduleController {
 	                                      @RequestParam("newTitle") String newTitle,
 	                                      @RequestParam("newStartDate") String newStartDate,
 	                                      @RequestParam("newEndDate") String newEndDate) {
-		
-		logger.info("newTitle",newTitle);
-		logger.info("newStartDate",newStartDate);
-		logger.info("newEndDate",newEndDate);
-		
 	    Map<String, Object> response = new HashMap<>();
 	    	logger.info("으음 response={}",response);
 	    try {
@@ -138,5 +134,30 @@ public class ScheduleController {
 	    }
 	    return response;
 	}
+	
+	@PostMapping("/deleteEvent")
+	@ResponseBody
+	public Map<String, Object> deleteEvent(@RequestBody Map<String, Object> request) {
+	    Map<String, Object> response = new HashMap<>();
+	    
+	    try {
+	        String eventIdStr = (String) request.get("eventId");
+	        int eventId = Integer.parseInt(eventIdStr); // 문자열을 정수로 변환
 
+	        boolean success = scheduleService.deleteEvent(eventId);
+
+	        if (success) {
+	            response.put("success", true);
+	        } else {
+	            response.put("success", false);
+	            response.put("message", "일정 삭제에 실패했습니다.");
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        response.put("success", false);
+	        response.put("message", "일정 삭제 중 오류가 발생했습니다.");
+	    }
+
+	    return response;
+	}
 }

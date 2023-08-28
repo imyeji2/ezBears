@@ -8,4 +8,6 @@ public interface ScheduleService {
 	int insertSchedule(ScheduleVO scheduleVo);
 	//Map<String, Object> updateEvent(int scheduleNo);
 	int updateEvent(Map<String, Object> parameters);
+
+	boolean deleteEvent(int eventId);
 }

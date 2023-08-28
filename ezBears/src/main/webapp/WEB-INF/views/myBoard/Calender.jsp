@@ -19,7 +19,7 @@
 document.addEventListener('DOMContentLoaded', function() {
 	var calendarEl = document.getElementById('calendar');
     var calendar = new FullCalendar.Calendar(calendarEl, {
-    	
+
     	timeZone: 'UTC',
        initialView : 'dayGridMonth', //초기 캘린더 화면
        headerToolbar : {
@@ -78,42 +78,82 @@ document.addEventListener('DOMContentLoaded', function() {
     calendar.setOption('eventClick', function(info) {
         var event = info.event; // 클릭한 일정 가져오기
 
-     
-        var newTitle = prompt('새로운 일정 이름', event.title);
-        var newStartDate = prompt('새로운 시작 날짜 (YYYY-MM-DD)', event.startStr.split('T')[0]);
-        var newEndDate = prompt('새로운 종료 날짜 (YYYY-MM-DD)', event.endStr.split('T')[0]);
+        // 팝업 또는 컨텍스트 메뉴 표시
+        var choice = confirm('일정을 수정 또는 삭제하시겠습니까?');
+        if (choice) {
+            // 사용자가 [확인]  선택한 경우
+            var action = prompt('수정 또는 삭제를 입력하세요. (수정/삭제)');
 
-        if (newTitle !== null && newStartDate !== null && newEndDate !== null) {
-            
-            var eventId = event.id; 
-            
-            $.ajax({
-                url: "<c:url value= '/myBoard/eventUpdate'/>", 
-                type: 'POST',
-                data: {
-                    eventId: eventId,
-                    newTitle: newTitle,
-                    newStartDate: newStartDate,
-                    newEndDate: newEndDate 
-                },
-                success: function(response) {
-                    if (response.success) {
-                        alert('일정이 수정되었습니다.');
-                        event.setProp('title', newTitle);
-                        event.setStart(newStartDate); 
-                        event.setEnd(newEndDate+ 'T23:59:59'); 
-                        calendar.render(); 
-                    } else {
-                        alert('일정 수정에 실패했습니다.');
-                    }
-                },
-                error: function() {
-                    alert('일정 수정 중 오류가 발생했습니다.');
+            if (action === '수정') {
+                // 수정 로직 
+                alert('일정을 수정합니다.');
+                var newTitle = prompt('새로운 일정 이름', event.title);
+                var newStartDate = prompt('새로운 시작 날짜 (YYYY-MM-DD)', event.startStr.split('T')[0]);
+                var newEndDate = prompt('새로운 종료 날짜 (YYYY-MM-DD)', event.endStr.split('T')[0]);
+
+                if (newTitle !== null && newStartDate !== null && newEndDate !== null) {
+                    
+                    var eventId = event.id; 
+                    
+                    $.ajax({
+                        url: "<c:url value= '/myBoard/eventUpdate'/>", 
+                        type: 'POST',
+                        data: {
+                            eventId: eventId,
+                            newTitle: newTitle,
+                            newStartDate: newStartDate,
+                            newEndDate: newEndDate 
+                        },
+                        success: function(response) {
+                            if (response.success) {
+                                alert('일정이 수정되었습니다.');
+                                event.setProp('title', newTitle);
+                                event.setStart(newStartDate); 
+                                event.setEnd(newEndDate+ 'T23:59:59'); 
+                                calendar.render(); 
+                            } else {
+                                alert('일정 수정에 실패했습니다.');
+                            }
+                        },
+                        error: function() {
+                            alert('일정 수정 중 오류가 발생했습니다.');
+                        }
+                    });
                 }
-            });
+                
+           
+            }else if (action === '삭제') {
+                // 삭제 로직 추가
+                 var eventId = event.id;
+
+                if (confirm('정말로 ' + eventId +' 이 일정을 삭제하시겠습니까?')) {
+                    $.ajax({
+                        url: "<c:url value='/myBoard/deleteEvent'/>", 
+                        type: 'POST',
+                        contentType: 'application/json', 
+                        data: JSON.stringify({
+								eventId: eventId 
+						}),
+                        success: function(response) {
+                            if (response.success) {
+                                alert('일정이 삭제되었습니다.');
+                                event.remove(); // 캘린더에서 일정 제거
+                            } else {
+                                alert('일정 삭제에 실패했습니다.');
+                            }
+                        },
+                        error: function() {
+                            alert('일정 삭제 중 오류가 발생했습니다.');
+                        }
+                    });
+                }
+            } else {
+                alert('올바른 작업을 선택해주세요. (수정/삭제)');
+            }
         }
-        
-    });
+ 
+    
+    }); 
     
   
 });

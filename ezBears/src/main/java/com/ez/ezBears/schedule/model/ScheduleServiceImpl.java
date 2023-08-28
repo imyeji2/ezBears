@@ -38,10 +38,27 @@ public class ScheduleServiceImpl implements ScheduleService {
 
 
 
-	/*
-	 * @Override public Map<String, Object> updateEvent(int scheduleNo) { return
-	 * scheduleDao.updateEvent(scheduleNo); }
-	 */
+	@Override
+	public boolean deleteEvent(int eventId) {
+		return scheduleDao.deleteEvent(eventId);
+	}
+
+
+
+	
+
+
+
+
+
+
+
+	
+
+
+
+
+	
 
 
 	
