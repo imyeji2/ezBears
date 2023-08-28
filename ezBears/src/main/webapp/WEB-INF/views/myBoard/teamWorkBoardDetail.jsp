@@ -6,9 +6,10 @@
     	<div class="bg-secondary rounded h-100 p-4">
           	<nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
 			  <ol class="breadcrumb">
-			    <li class="breadcrumb-item"><a href="#">마이보드</a></li>
-			    <li class="breadcrumb-item active" aria-current="page"><a href="#">개발1팀</a></li>
-			    <li class="breadcrumb-item active" aria-current="page">업무 게시판</li>
+			    <li class="breadcrumb-item active" aria-current="page">
+			    	<a href="<c:url value='/myBoard/teamNotice?mBoardNo=${map["M_BOARD_NO"]}'/>">${myBoardName}</a>
+			    </li>
+			    <li class="breadcrumb-item active" aria-current="page">업무게시판</li>
 			  </ol>
 			</nav>   			
 			<div id="teamWorkBoardDetail">

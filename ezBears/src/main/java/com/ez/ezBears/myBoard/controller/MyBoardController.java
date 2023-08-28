@@ -13,29 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class MyBoardController {
 	private static final Logger logger = LoggerFactory.getLogger(MyBoardController.class);
 
-	//예지
-	/*팀별 업무 게시판 */
-	@RequestMapping("/teamWorkBoard")
-	public String teamWorkBoard(@RequestParam (defaultValue = "0") int myBoardNo, Model  model) {
-		logger.info("팀 업무 게시판 리스트 페이지 파라미터 myBoardNo={}",myBoardNo);
-		
-		model.addAttribute("myBoardNo",myBoardNo);
-		return "myBoard/teamWorkBoardList";
-	}
-	
-	
-	@RequestMapping("/teamWorkBoardWrite")
-	public String teamWorkBoardWrite() {
-		logger.info("팀 업무 게시판 등록하기 페이지");
-		return "myBoard/teamWorkBoardWrite";
-	}
-	
-	@RequestMapping("/teamWorkBoardDetail")
-	public String teamWorkBoardDetail() {
-		logger.info("팀 업무 게시판 상세 보기");
-		return "myBoard/teamWorkBoardDetail";
-	}
-	
+
 	
 	   //희진
 	   /*팀별 결재 게시판 */
