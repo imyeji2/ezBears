@@ -100,6 +100,13 @@
     <select id="countMem" parameterType="int" resultType="int">
     	SELECT COUNT(*) FROM MEMBER WHERE DEPT_NO = #{deptNo}
     </select>
+	
+	<!-- 멤버 퇴사 처리 -->
+	<update id="deleteMem" parameterType="int" >
+		UPDATE MEMBER
+		SET CONTRACT_DONE = SYSDATE
+		WHERE MEM_NO = #{memNo}
+	</update>
     
     <!-- 검색where조건 -->
     <sql id="searchWhere">
