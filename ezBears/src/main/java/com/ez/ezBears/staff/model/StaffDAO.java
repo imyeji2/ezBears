@@ -26,4 +26,7 @@ public interface StaffDAO {
 	int updateStaff(StaffVO staffVo);
 	int deleteStaff(int staffNo);
 	
+	int getTodayStaff(String contractStart);
+	int isStaffId(String staffId);
+	
 }

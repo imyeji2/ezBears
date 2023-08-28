@@ -7,6 +7,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -253,4 +254,31 @@ public class MemberController {
 		return "common/message";
 	}
 
+	@RequestMapping("/delete")
+	public String delete(@RequestParam int memNo, Model model) {
+		
+		//1
+		logger.info("회원 삭제, 파라미터 memNo ={}", memNo);
+		
+		//2
+		
+		String msg="퇴사 처리에 실패하였습니다.",url ="/Member/list";
+		int result = memberService.deleteMem(memNo);
+		
+		logger.info("회원 삭제 결과, result={}", result);
+		
+		if(result > 0 ) {
+			msg = "퇴사 처리 되었습니다.";
+	
+		}
+
+		//3
+		model.addAttribute("msg",msg);
+		model.addAttribute("url",url);
+		
+		//4
+		
+		return "common/message";
+		
+	}
 }

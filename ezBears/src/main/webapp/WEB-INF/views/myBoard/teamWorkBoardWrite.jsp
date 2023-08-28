@@ -1,6 +1,192 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="../inc/top.jsp"%>	
+
+<style>
+	.selectBox{
+		border:1px solid#7000D8;
+	}
+	
+	.noneSelectBox{
+		border:none;
+	}
+	
+	input[type='date']::before {
+	  content: attr(data-placeholder);
+	  width: 100%;
+	}	
+
+	input[type='date']:focus::before,
+	input[type='date']:valid::before {
+  		display: none;
+	}
+</style>
+<script>
+$(function(){
+	var todoCount = 0;
+	$('#todoCountTxt').text(todoCount);
+	
+	
+	//ck에디터
+	var editor = CKEDITOR.replace('teamBoardContent', {
+		filebrowserUploadUrl : "<c:url value='/adm/fileupload'/>",
+		height : '300px',
+		resize_enabled: false
+	});
+	
+	$('#cencelBtn').click(function(){
+		event.preventDefault();
+		location.href="<c:url value='/myBoard/teamWorkBoard?mBoardNo=${myBoardListVo.MBoardNo}'/>";
+	});
+	
+	//투두리스트 추가
+	$('#addWorkBtn').click(function(){
+		var inputTxt = $('#writeWorkInput').val();
+		
+		if(inputTxt.length<1){
+			alert('항목을 입력하세요');
+			$('#writeWorkInput').focus();
+			return false;
+		}
+		
+		var add ="<div class='d-flex align-items-center border-bottom py-2 todoList'>";
+		add+="<div class='w-100 ms-3' id='addWrokBox'>"
+		add+="<div class='d-flex w-100 align-items-center justify-content-between toDoContentInputBox'>";
+		add+="<input class='form-control border-0 todoInput' type='text' name='items["+inputTxt.length+"].toDoContent' value='"+inputTxt+"'>";
+		add+="<button class='btn btn-sm' id='delWorkBtn'><i class='fa fa-times'></i></button>";
+		add+="</div>";
+		add+="</div>";
+		add+="</div><!--todoList-->";
+		
+		$('.todoListWrap').append(add);
+		$('#writeWorkInput').val('');
+		
+		todoCount = $('.todoList').length;
+		$('#todoCountTxt').text(todoCount);
+		
+	});
+	
+	//투두 삭제 버튼
+	$(document).on('click', '#delWorkBtn',function(e) {       
+		event.preventDefault(); // 이벤트의 기본 동작 방지
+		$delContent = $(this).closest('.todoList');
+		$delContent.remove();
+		todoCount = $('.todoList').length;
+		$('#todoCountTxt').text(todoCount);
+	});
+	
+	
+	//날짜 포커스
+	$('input[type=date]').focus(function(){
+		$(this).parent('div').css('border','1px solid #7000D8');
+	});
+	
+	$('input[type=date]').blur(function(){
+		$(this).parent('div').css('border','none');
+	})
+	
+	
+	//시작일 유효성 검사
+	$('#startDate').on('change',function(){
+		var startDay = $(this).val();
+		var endDay = $('#endDate').val();
+		
+		if(endDay!=='' && startDay > endDay){
+			alert('시작일은 종료일 이후 날짜로 설정할 수 없습니다.');
+			$(this).val('');
+			$(this).focus();
+			return false;
+		}
+	});
+	
+	//종료일 유효성 검사
+	$('#endDate').on('change',function(){
+		var startDay = $('#startDate').val();
+		var endDay = $(this).val();
+	         
+	    if(startDay!=='' && endDay < startDay) {
+			alert('종료일은 시작일 이전 날짜로 설정할 수 없습니다.')
+			$(this).val('');
+			$(this).focus();
+			return false;
+		}
+	});
+	
+	
+
+	
+	//등록 버튼
+	$('#writeBtn').click(function(){
+		event.preventDefault();//이벤트 기본 동작 방지
+		var editorContent = editor.getData().trim();
+		
+		//제목 유효성 검사
+		if($('#title').val().length<1){
+			alert('제목을 입력해주세요');
+			$('#title').focus();
+			return false;
+		}
+		
+		//내용 유효성 검사
+		if (editorContent === "") {
+            // CKEditor 내용이 비어있을 때
+            editor.focus();
+            alert('내용을 입력하세요');
+            return false;
+		}
+			    
+		
+		//시작일 유효성 검사
+ 		if($('#startDate').val().length<1){
+			alert('시작일을 입력해주세요');
+			$('#startDate').focus();
+			return false;
+		}
+		
+		//종료일 유효성 검사
+		if($('#endDate').val().length<1){
+			alert('종료일을 입력해주세요');
+			$('#endDate').focus();
+			return false;
+		}
+		
+		//두투 유효성 검사1
+		if($('.todoList').length<1){
+			alert('업무를 추가해주세요');
+			$(this).focus();
+			return false;
+		}
+		
+		//투두 유효성 검사(input)
+		var bool=true;
+		$('.toDoContentInputBox > input[type=text]').each(function() {
+			if($(this).val().length<1){
+				alert('항목을 입력해주세요');
+				$(this).focus();
+				bool = false;
+				return false;
+			}
+		});
+		
+		if(!bool){
+			return false;
+		}
+			 
+		$('form[name=workBoardWriteFrom]').submit();
+		
+	});
+	
+});//function
+</script>
 <!-- Recent Sales Start -->
+
+<c:if test="${type=='write'}">
+	<c:set var="url" value="/myBoard/teamWorkBoardWrite"/>
+</c:if>
+
+<c:if test="${type=='edit'}">
+	<c:set var="url" value="/myBoard/teamWorkBoardEdit"/>
+</c:if>
+
 <div class="container-fluid pt-4 px-4" id="board_style">
 	<div class="bg-secondary text-center rounded p-4">
     	<div class="bg-secondary rounded h-100 p-4">
@@ -13,10 +199,12 @@
 			  </ol>
 			</nav>   			
 			<div id="teamWorkBoardWrite">
-				<form name="teamNoticeWrite" method="post" action="">
+				<form name="workBoardWriteFrom" method="post" action="<c:url value='${url}'/>" enctype="multipart/form-data">
+		        	<input type="hidden" name="myBoardNo" value="${myBoardListVo.myBoardNo}">
+		        	<input type="hidden" name="memNo" value="${myBoardListVo.memNo}">
 		        	<div class="writeWrap">
 			        	<div class="write_title">
-			        		<input type="text" class="form-control" id="exampleFormControlInput1"
+			        		<input type="text" class="form-control" id="title"
 							 placeholder="제목을 입력해주세요">
 			        	</div><!-- write_title -->
 			        
@@ -24,47 +212,40 @@
 			       		<div class="write_content">
 			       			<div class="write_view">
 				       			 <div class="form-floating">
-								  <textarea class="form-control write_form" name="teamBoardContent" placeholder="내용을 입력해주세요" id="#"></textarea>
+								  <textarea class="form-control write_form" id="content"
+								  	name="teamBoardContent" placeholder="내용을 입력해주세요" id="#"></textarea>
 								</div>	
 			       			</div>
 			       			<br>
 			       			<div class="writeTodoList">
 			       				<div class="todoTitle">
-			       					<h6 class="mb-0">To Do List(2)</h6>
+			       					<h6 class="mb-0">
+			       						ToDoList(<span id="todoCountTxt"></span>)
+			       					</h6>
 			       					<div class="todoDate">
-			       						<div class="dateBox_left">
+			       						<div class="dateBox" style="margin-bottom:10px;">
 			       							<span>프로젝트 시작일</span>
-			       							<input class="dateinput" id="startDate" type="date" name="startRegdate">
+			       							<input class="dateinput" id="startDate" type="date" name="startRegdate" 
+			       							  data-placeholder="날짜 선택">
 						
 			       						</div>
-			       						<div class="dateBox_right">
+			       						<div class="dateBox">
 			       							<span>프로젝트 종료일</span>
-			       							<input class="dateinput" id="endDate" type="date" name="done_regdate">
+			       							<input class="dateinput" id="endDate" type="date" name="doneRegdate" 
+			       								data-placeholder="날짜 선택">
 			       						</div>
 			       					</div>
 			       				</div>
 	                            <div class="d-flex mb-2">
-	                                <input class="form-control border-0 todoInput" type="text" placeholder="업무를 입력하세요">
-	                                <button type="button" class="btn btn-primary ms-2">Add</button>
+	                                <input class="form-control border-0 todoInput" type="text" 
+	                                id ="writeWorkInput" placeholder="업무를 입력하세요">
+	                                <button type="button" class="btn btn-primary ms-2" id="addWorkBtn">Add</button>
 	                            </div>
-	                            <div class="d-flex align-items-center border-bottom py-2 todoList">
-	                              <!--   <input class="form-check-input m-0" type="checkbox"> -->
-	                                <div class="w-100 ms-3">
-	                                    <div class="d-flex w-100 align-items-center justify-content-between">
-	                                    	<input class="form-control border-0 todoInput" type="text" name="toDoContent" value="WBS 일정 확정 및 수정하기">
-	                                        <button class="btn btn-sm"><i class="fa fa-times"></i></button>
-	                                    </div>
-	                                </div>
-	                            </div>		     				
-	                            <div class="d-flex align-items-center border-bottom py-2 todoList">
-	                              <!--   <input class="form-check-input m-0" type="checkbox"> -->
-	                                <div class="w-100 ms-3">
-	                                    <div class="d-flex w-100 align-items-center justify-content-between">
-	                                    	<input class="form-control border-0 todoInput" type="text" name="toDoContent" value="EXERD 수정 및 ERD 확정">
-	                                        <button class="btn btn-sm"><i class="fa fa-times"></i></button>
-	                                    </div>
-	                                </div>
-	                            </div>		                              
+	                            <div class="todoListWrap">
+	                            <!-- todoList 입력 영역 -->
+	                            
+								<!-- todoList 입력 영역 -->
+		                    	</div><!-- todoListWrap -->                  
 			       			</div> <!--writeTodoList -->
 			       			
 			       			
@@ -72,8 +253,8 @@
 								<input class="form-control" type="file" id="formFile">
 			       			</div>
 			       			<div class="write_option_btn">
-			       				<button class="btn btn-sm btn-primary">등록</button>&nbsp;
-			       				<button class="btn btn-sm btn-primary">취소</button>
+			       				<button class="btn btn-sm btn-primary" id="writeBtn">등록</button>&nbsp;
+			       				<button class="btn btn-sm btn-primary" id="cencelBtn">취소</button>
 			       			</div>
 			       		</div><!-- write_content -->
 		       		</div><!-- writeWrap -->	 
