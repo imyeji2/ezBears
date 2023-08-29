@@ -1,6 +1,7 @@
 package com.ez.ezBears.record.inning.model;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
@@ -32,9 +33,9 @@ public class InningServiceImpl implements InningService {
 	}
 
 	@Override
-	public List<InningVO> selectByrecodeDetailNo(SearchVO searchVo, int recodeDetailNo) {
+	public List<Map<String, Object>> selectByrecodeDetailNo(int recodeDetailNo) {
 		// TODO Auto-generated method stub
-		return inningDao.selectByrecodeDetailNo(searchVo, recodeDetailNo);
+		return inningDao.selectByrecodeDetailNo(recodeDetailNo);
 	}
 
 	

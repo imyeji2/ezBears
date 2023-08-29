@@ -22,6 +22,8 @@ import com.ez.ezBears.record.game.model.GameService;
 import com.ez.ezBears.record.game.model.GameVO;
 import com.ez.ezBears.record.hitter.model.HitterService;
 import com.ez.ezBears.record.hitter.model.HitterVO;
+import com.ez.ezBears.record.inning.model.InningService;
+import com.ez.ezBears.record.inning.model.InningVO;
 import com.ez.ezBears.record.pitcher.model.PitcherService;
 import com.ez.ezBears.record.pitcher.model.PitcherVO;
 import com.ez.ezBears.team.model.TeamService;
@@ -40,6 +42,8 @@ public class RecordController {
 	private final TeamService teamService;
 	private final HitterService hitterService;
 	private final PitcherService pitcherService;
+	private final InningService inningService;
+	
 	
 	@RequestMapping("/playerList")
 	public String playerList() {
@@ -91,12 +95,6 @@ public class RecordController {
 	}
 	
 	
-	@RequestMapping("/summary")
-	public String summary() {
-		//1,4
-		logger.info("경기 개요");
-		return "/record/summary";
-	}
 	
 	@RequestMapping("/lineup")
 	public String lineup() {
@@ -127,6 +125,30 @@ public class RecordController {
 		return "/record/inningEdit";
 	}
 	
+	@RequestMapping("/inningDelete")
+	public String inningDelete() {
+		//1,4
+		logger.info("이닝정보수정");
+		return "/record/inningDelete";
+	}
+	
+	@GetMapping("/summary")
+	public String inningDetail_get(Model model, int recodeDetailNo) {
+		logger.info("이닝 파라미터, recodeDetailNo={}", recodeDetailNo);
+		
+		List<Map<String, Object>> list = inningService.selectByrecodeDetailNo(recodeDetailNo);
+		model.addAttribute("list", list);
+		return "/record/summary";
+	}
+	
+//	@GetMapping("/summary")
+//	public String summary_get(@RequestParam(defaultValue = "0") int recodeDetailNo, SearchVO searchVo, Model model) {
+//		logger.info("경기 개요 파라미터 recodeDetailNo = {}", recodeDetailNo);
+//		
+//		List<InningVO> list = inningService.selectByrecodeDetailNo(searchVo, recodeDetailNo);
+//		model.addAttribute("list", list);
+//		return "/record/summary";
+//	}
 	
 	@GetMapping("/hitterRecordWrite")
 	public String hitterRecordWrite_get(Model model, int playerNo) {
@@ -197,8 +219,7 @@ public class RecordController {
 	
 	
 	@PostMapping("/pitcherRecordWrite")
-	public String pitcherRecordWrite_post(@ModelAttribute PitcherVO pitcherVo, int playerNo, HttpServletRequest request,
-			Model model) {
+	public String pitcherRecordWrite_post(@ModelAttribute PitcherVO pitcherVo, int playerNo) {
 		//1,4
 		logger.info("투수 기록 등록 처리 파라미터 PitcherVo={}", pitcherVo);
 		

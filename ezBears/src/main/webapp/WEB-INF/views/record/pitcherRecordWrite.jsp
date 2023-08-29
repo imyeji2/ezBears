@@ -17,11 +17,6 @@
 					</div>
 					<div style="width: 60%; height: 80%; margin: 0 auto;">
 						<div class="form-floating mb-3">
-							<input type="text" class="form-control" id="playDate"
-								placeholder="playDate" max="9999-12-31" name="playDate"
-								maxlength="10"> <label for="floatingInput">경기 날짜</label>
-						</div>
-						<div class="form-floating mb-3">
 							<input type="text" class="form-control" id="floatingInput"
 								placeholder="BB" name="BB"> <label for="floatingInput">사구</label>
 						</div>
