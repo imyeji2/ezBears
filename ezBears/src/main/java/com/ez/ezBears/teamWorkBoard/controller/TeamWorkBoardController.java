@@ -1,7 +1,9 @@
 package com.ez.ezBears.teamWorkBoard.controller;
 
 
+import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,19 +15,26 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.ez.ezBears.common.ConstUtil;
 import com.ez.ezBears.common.FileUploadUtil;
 import com.ez.ezBears.common.MyBoardSearchVo;
 import com.ez.ezBears.common.PaginationInfo;
+import com.ez.ezBears.member.model.MemberService;
 import com.ez.ezBears.myBoard.controller.MyBoardController;
 import com.ez.ezBears.myBoard.model.MyBoardListService;
 import com.ez.ezBears.myBoard.model.MyBoardListVO;
 import com.ez.ezBears.teamWorkBoard.model.TeamWorkBoardService;
 import com.ez.ezBears.teamWorkBoard.model.TeamWorkBoardVO;
 import com.ez.ezBears.teamWorkBoard.model.ToDoListDetailListVO;
+import com.ez.ezBears.teamWorkBoard.model.ToDoListDetailService;
 import com.ez.ezBears.teamWorkBoard.model.ToDoListDetailVO;
+import com.ez.ezBears.teamWorkBoard.model.ToDoListService;
 import com.ez.ezBears.teamWorkBoard.model.ToDoListVO;
+import com.ez.ezBears.temNotice.model.TeamNoticeService;
+import com.ez.ezBears.temNotice.model.TeamNoticeVO;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -39,6 +48,9 @@ public class TeamWorkBoardController {
 	private final MyBoardListService myBoardListService;
 	private final FileUploadUtil fileUploadUtil;	
 	private final TeamWorkBoardService teamWorkBoardService;
+	private final MemberService memberService;
+	private final ToDoListService toDoListService;
+	private final ToDoListDetailService toDoListDetailService;
 
 	//예지
 	/*팀별 업무 게시판 리스트*/
@@ -171,12 +183,96 @@ public class TeamWorkBoardController {
 	}
 	
 	
+	@RequestMapping("teamWorkBoardCountUpdate")
+	public String CountUpdate(@RequestParam(defaultValue = "0") int mBoardNo, 
+		@RequestParam(defaultValue = "0") int teamBoardNo, Model model) {
 	
+			//1
+			logger.info("공지사항 조회수 업로드 파라미터 mBoardNo={},teamBoardNo={} ",mBoardNo,teamBoardNo);
+			
+			if(teamBoardNo==0) {
+				model.addAttribute("msg","잘못된 접근입니다.");
+				model.addAttribute("url","/myBoard/teamWorkBoardList?mBoardNo="+mBoardNo);
+				return "common/message";
+			}
+			
+			//2
+			int cnt = teamWorkBoardService.updateViewCount(teamBoardNo);
+			logger.info("조회수 업데이트 결과 cnt={}",cnt);
+			
+			//3
+			//4
+			return "redirect:/myBoard/teamWorkBoardDetail?mBoardNo="+mBoardNo+"&teamBoardNo="+teamBoardNo;		
+	}
+	
+	
+
 	/*팀별 업무 게시판 상세보기*/
 	@RequestMapping("/teamWorkBoardDetail")
-	public String teamWorkBoardDetail() {
-		logger.info("팀 업무 게시판 상세 보기");
+	public String teamBoardDetil(@RequestParam(defaultValue = "0") int mBoardNo, 
+			@RequestParam(defaultValue = "0") int teamBoardNo, Model model, HttpSession session) {
+		//1
+		logger.info("팀 업무 게시판 디테일 화면, 파라미터 mBoardNo={},teamBoardNo={}",mBoardNo,teamBoardNo);
+		
+		String userid=(String)session.getAttribute("userid");
+		logger.info("팀 공지사항 디테일 접속 사용자 아이디 userid={}",userid);
+		
+		
+		//사원의 시퀀스 번호
+		int userNo = memberService.selectMemberNo(userid);
+		logger.info(userid);
+
+		//2
+		Map<String, Object> map = teamWorkBoardService.selectDetail(teamBoardNo);
+		logger.info("투두 리스트 기본 값 map={}",map);
+		
+		ToDoListVO toDoList = toDoListService.selectTodoList(teamBoardNo);
+		List<ToDoListDetailVO> toDoListDetailList 
+							= toDoListDetailService.selectToDoListDetail(toDoList.getTodolistNo());
+		logger.info("팀 공지사항 디테일 결과 toDoListDetailList={}",toDoListDetailList);
+		logger.info("팀 공지사항 디테일 결과 toDoListDetailList.size={}",toDoListDetailList.size());
+		
+		
+		String myBoardName = myBoardListService.selectByBoardName(mBoardNo);
+		logger.info("마이보드 이름 myBoardName={}",myBoardName);	
+		
+		
+
+		//3.
+		model.addAttribute("map",map);
+		model.addAttribute("myBoardName",myBoardName);
+		model.addAttribute("userid",userid);
+		model.addAttribute("userNo",userNo);
+		model.addAttribute("toDoList",toDoList);
+		model.addAttribute("toDoListDetailList",toDoListDetailList);
+		
+		//4
 		return "myBoard/teamWorkBoardDetail";
 	}
+	
+	
+	
+	@RequestMapping("/teamWordBoardDownloadFile")
+	public ModelAndView downloadFile(@RequestParam(defaultValue = "0") int teamBoardNo,
+			@RequestParam String fileName,HttpServletRequest request) {
+		
+		//1
+		logger.info("공지사항 파일 다운로드 처리 파라미터 teamBoardNo={}, fileName={}",teamBoardNo, fileName);
+		
+		//강제 다운로드 처리를 위한 뷰페이지로 보내준다
+
+		Map<String, Object> map = new HashMap<>();
+		//업로드 경로
+		String upPath = fileUploadUtil.getUploadPath(request, ConstUtil.UPLOAD_TEAMWORKBOARD_FLAG);
+		File file = new File(upPath, fileName);
+		map.put("file", file);
+
+		//ModelAndView(String viewName, Map<String, ?> model)
+		ModelAndView mav = new ModelAndView("DownloadView", map);
+		return mav;
+		
+		
+	}
+	
 	
 }

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.ez.ezBears.common.MyBoardSearchVo;
+import com.ez.ezBears.temNotice.model.TeamNoticeVO;
 
 public interface TeamWorkBoardService {
 
@@ -16,4 +17,13 @@ public interface TeamWorkBoardService {
 	
 	//팀 업무 게시판 전체 카운트
 	int selectTotalCount(MyBoardSearchVo myBoardSearchVo);
+	
+	//팀 업무 게시판 조회수
+	int updateViewCount(int teamBoardNo);
+	
+	//업무 게시판 디테일
+	Map<String, Object> selectDetail(int teamBoardNo);
+	
+	
+	
 }

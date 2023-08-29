@@ -2,6 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ez.ezBears.teamWorkBoard.model.TeamWorkBoardDAO">
+
+
 	<insert id="insertTeamWorkBoard" parameterType="teamWorkBoardVo">
 		<selectKey keyProperty="teamBoardNo" order="BEFORE" resultType="int">	
 			select team_work_board_seq.nextval from dual
@@ -40,8 +42,22 @@
       and RNUM<=#{firstRecordIndex} + #{recordCountPerPage}]]>				
 	</select>
 	
+	
 	<select id="selectTotalCount" parameterType="myBoardSearchVo" resultType="int">
 		select count(*) from teamWorkBoardlistView
 		<include refid="searchWhere"></include>
 	</select>	
+	
+	<update id="updateViewCount" parameterType="int">
+		update team_Work_Board
+        set views = views+1
+        where team_Board_No=#{teamBoardNo}
+	</update>
+	
+	<select id="selectDetail" parameterType="int" resultType="map">
+		select * from teamWorkBoardlistView
+		where team_Board_No=#{teamBoardNo}
+	</select>
+	
+
 </mapper>

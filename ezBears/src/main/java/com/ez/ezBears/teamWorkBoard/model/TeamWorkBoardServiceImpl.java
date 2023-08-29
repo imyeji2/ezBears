@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import com.ez.ezBears.common.MyBoardSearchVo;
+import com.ez.ezBears.temNotice.model.TeamNoticeVO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -67,9 +68,16 @@ public class TeamWorkBoardServiceImpl implements TeamWorkBoardService{
 	}
 	
 	
-	
+	//팀 업무 게시판 조회수
+	@Override
+	public int updateViewCount(int teamBoardNo) {
+		return teamWorkBoardDao.updateViewCount(teamBoardNo);
+	}
 
+	//업무 게시판 디테일
+	@Override
+	public Map<String, Object> selectDetail(int teamBoardNo) {
+		return teamWorkBoardDao.selectDetail(teamBoardNo);
+	}
 	
-	
-
 }

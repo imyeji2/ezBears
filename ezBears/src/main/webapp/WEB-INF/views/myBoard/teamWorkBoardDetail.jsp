@@ -1,13 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="../inc/top.jsp"%>	
 <!-- Recent Sales Start -->
+<c:set var="checkedCount" value="0"/>
+<c:set var="uncheckedCount" value="0"/>
+<c:set var="totalCount" value="0"/>  
 <div class="container-fluid pt-4 px-4" id="board_style">
 	<div class="bg-secondary text-center rounded p-4">
     	<div class="bg-secondary rounded h-100 p-4">
           	<nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
 			  <ol class="breadcrumb">
 			    <li class="breadcrumb-item active" aria-current="page">
-			    	<a href="<c:url value='/myBoard/teamNotice?mBoardNo=${map["M_BOARD_NO"]}'/>">${myBoardName}</a>
+			    	<a href="<c:url value='/myBoard/teamWorkBoardList?mBoardNo=${map["M_BOARD_NO"]}'/>">${myBoardName}</a>
 			    </li>
 			    <li class="breadcrumb-item active" aria-current="page">업무게시판</li>
 			  </ol>
@@ -17,86 +20,116 @@
 	        	
 		        	<div class="detail_title">
 		        		<div class="detail_left">
-			        		<span class="title_txt">공지사항 전달드립니다</span>
-							<span class="title_date">오늘 오후 3:45</span>
+			        		<span class="title_txt">${map['TEAM_BOARD_TITLE']}</span>
+							<span class="title_date">
+								<fmt:formatDate value="${map['REGDATE']}" pattern="a hh:mm" />
+							</span>
 						</div><!-- detail_left -->
-						<div class="detail_right">조회수 10</div>
+						<div class="detail_right">조회수 : ${map['VIEWS']}</div>
 		        	</div><!-- detail_title -->
 		        	
 		       		<div class="user_info">		
 		       			<div class="detail_left">
 							<div class="user_img">
-			        			<img src="<c:url value='/img/user.jpg'/>" alt="사원프로필">
+			        			<c:set var="userimg" value="default_user.png"/>
+			        			<c:if test="${!empty map['MEM_IMAGE']}">
+			        				<c:set var="userimg" value="${map['MEM_IMAGE']}"/>
+			        			</c:if>								
+			        			<img src="<c:url value='/img/mem_images/${userimg}'/>" alt="사원프로필">
 			        		</div><!-- user_img -->
 			        		<div class="detail_left">
-			        			<span class="user_name"><a href="#">제이든</a></span>
-			        			<span class="user_dept">/ 💼개발1팀</span>
+			        			<span class="user_name"><a href="#">${map['MEM_NAME']}</a></span>
+			        			<span class="user_dept">/ 💼${map['DEPT_NAME']}</span>
 			        		</div><!-- detail_left -->
 		        		</div><!-- detail_left -->
-		        				       		        		       				        	
-		        		<div class="detail_right">
-		        			첨부파일 : <a href="#">config.zip(300.42MB)</a>
-		        		</div><!-- detail_right -->
+		        		
+		        		<c:if test="${!empty map['ORIGIN_FILENAME']}">		       		        		       				        	
+			        		<div class="detail_right">
+			        			첨부파일 : <a href="<c:url value='/myBoard/teamWordBoardDownloadFile?teamBoardNo=${map["TEAM_NOTICE_NO"]}&fileName=${map["FILENAME"]}'/>">
+			        				${map['ORIGIN_FILENAME']}(<fmt:formatNumber value="${map['FSIZE'] /1024.0}" type="number" pattern="#.##"/> KB)
+			        				</a>
+			        		</div><!-- detail_right -->
+			        	</c:if>
+			        	
 		       		</div><!-- user_info -->
 		       				 
 		       		<div class="detail_content">
-		       			<div class="detail_view"></div>
-		       			인사팀에서 법정 의무 교육을 한다고 합니다 :)<br>
-		       			올해 입사한 신입사원분들을 포함해 모든 직원분들이 수강해주셔야 합니다.<br>
-		       			자세한 수강방법 안내는 아래 내용을 확인해주세요.
+		       			<div class="detail_view">
+		       				${map['TEAM_BOARD_CONTENT']}
+		       			</div>
+		       			
 		       			
 		       			<div class="detailTodoList">
 		       				<div class="todoTitle">
-		       					<h6 class="mb-0">To Do List(1/10)</h6>
-		       					
-		       					<div class="todoDate">
-		       						<span>프로젝트 진행일 : </span>
-		       						<span>2023-01-01 ~ 2023-01-29</span>
-		       					</div>
+		       					<h6 class="mb-0">To Do List(1/${totalCount})</h6>
+								<fmt:parseDate var="startRegdateFmt" value="${toDoList.startRegdate}" pattern="yyyy-MM-dd HH:mm:ss" />
+								<fmt:parseDate var="doneRegdateFmt" value="${toDoList.doneRegdate}" pattern="yyyy-MM-dd HH:mm:ss" />
+								
+								<div class="todoDate">
+								    <span>프로젝트 진행일 : </span>
+								    <span>
+								        <fmt:formatDate value="${startRegdateFmt}" pattern="yyyy-MM-dd"/> ~ 
+								        <fmt:formatDate value="${doneRegdateFmt}" pattern="yyyy-MM-dd"/>
+								    </span>
+								</div>
 		       				</div>
 		       				
-<!--                             <div class="d-flex mb-2">
+                         <div class="d-flex mb-2">
                                 <input class="form-control border-0 todoInput" type="text" placeholder="업무를 입력하세요">
                                 <button type="button" class="btn btn-primary ms-2">Add</button>
-                            </div> -->
+                            </div>
                             <br>
                             <div class="uncheckList">
                             	<h8>[진행중]</h8>
-	                            <div class="d-flex align-items-center border-bottom py-2 todoList">
-	                               <input class="form-check-input m-0" type="checkbox">
-	                                <div class="w-100 ms-3">
-	                                    <div class="d-flex w-100 align-items-center justify-content-between">
-	                                        <span>WBS 일정 확정 및 수정하기</span>
-	                                    </div>
-	                                </div>
-	                            </div>		     				
-	                            <div class="d-flex align-items-center border-bottom py-2 todoList">
-	                                <input class="form-check-input m-0" type="checkbox">
-	                                <div class="w-100 ms-3">
-	                                    <div class="d-flex w-100 align-items-center justify-content-between">
-	                                        <span>EXERD 수정 및 ERD 확정</span>
-	                                    </div>
-	                                </div>
-	                            </div>		      
-                       		</div><!-- unChec -->   
+                            	<c:forEach var="list" items="${toDoListDetailList}">
+	                            	<c:if test="${list.status=='Y'}">
+	                            		<c:set var="uncheckedCount" value="${uncheckedCount + 1}"/>
+			                            <div class="d-flex align-items-center border-bottom py-2 todoList">
+			                               <input class="form-check-input m-0" type="checkbox">
+			                                <div class="w-100 ms-3">
+			                                    <div class="d-flex w-100 align-items-center justify-content-between">
+			                                        <span>${list.todoContent}</span>
+			                                    </div>
+			                                </div>
+			                            </div>		
+		                            </c:if> 
+	                            </c:forEach>   					      
+                       		</div>
 	                        <br>
 	                        <div class="checkedList">
 	                        	<h8>[완료]</h8>
-	                            <div class="d-flex align-items-center border-bottom py-2 todoList">
-	                                <input class="form-check-input m-0" type="checkbox" checked="checked">
-	                                <div class="w-100 ms-3">
-	                                    <div class="d-flex w-100 align-items-center justify-content-between">
-	                                        <span>EXERD 수정 및 ERD 확정</span>
-	                                    </div>
-	                                </div>
-	                            </div>	                        	
+	                        	<c:forEach var="list" items="${toDoListDetailList}" >
+	                        		<c:set var="checkedCount" value="${checkedCount }"/>	
+		                        	<c:if test="${list.status!='Y'}">
+			                            <div class="d-flex align-items-center border-bottom py-2 todoList">
+			                                <input class="form-check-input m-0" type="checkbox" checked="checked">
+			                                <div class="w-100 ms-3">
+			                                    <div class="d-flex w-100 align-items-center justify-content-between">
+			                                        <span>EXERD 수정 및 ERD 확정</span>
+			                                    </div>
+			                                </div>
+			                            </div>
+		                            </c:if>
+		                    	</c:forEach>
+		                    	<c:set var="totalCount" value="${checkedCount+uncheckedCount}"/>                         	
 	                        </div>                 
 		       			</div> <!--writeTodoList -->
 		       					     			
 		       			<div class="detail_option_btn">
-		       				<span class="user_dept"><a href="#">목록</a></span>
-	       					<span class="user_dept"><a href="#">수정</a></span>
-		        			<span class="user_dept"><a href="#">삭제</a></span>
+		       				<span class="user_dept">
+		       					<a href="<c:url value='/myBoard/teamWorkBoard?mBoardNo=${map["M_BOARD_NO"]}'/>">목록</a>
+		       				</span>
+		       				<c:if test="${userid==map['MEM_ID']}">
+		       					<span class="user_dept">
+		       						<a href="<c:url value='/myBoard/teamWorkBoardEdit?mBoardNo=${map["M_BOARD_NO"]}&teamNoticeNo=${map["TEAM_NOTICE_NO"]}'/>">
+		       						수정
+		       						</a>
+		       					</span>
+		       					
+			        			<span class="user_dept">
+			        				<a href="#" id="del">삭제</a>
+			        			</span>
+		        			</c:if>
 		       			</div>
 		       		</div><!-- detail_content -->
 	       		</div><!-- detailWrap -->	 
