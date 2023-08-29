@@ -29,9 +29,18 @@
 		border-radius: 10px;
 	}
 	
+	.btnBox{
+		width:80%;
+		margin: 0 auto;
+		overflow: hidden;
+		
+	}
+	
 	.inoutBtn{
 		margin-top:10px;
-		width:80%;
+		margin-left: 3%;
+		float: left;
+		width:47%;
 		line-height:35px;
 		background:#31354e;
 		border-radius: 10px;
@@ -39,7 +48,19 @@
 		outline: none;
 		color: #fff;
 	}
-	
+
+	.inoutBtn1{
+		margin-top:10px;
+		margin-right:3%;
+		float: left;
+		width:47%;
+		line-height:35px;
+		background:#31354e;
+		border-radius: 10px;
+		border: none;
+		outline: none;
+		color: #fff;
+	}	
 	.user_info{
 		width:fit-content;
 		margin:0 auto;

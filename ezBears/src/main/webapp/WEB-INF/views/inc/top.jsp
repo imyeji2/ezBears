@@ -163,7 +163,10 @@
 		                       <span>💼${sessionScope.dept_name }</span>
 	                    </div>
 	                </div>
-	               	<button class="inoutBtn" onclick="attendanceInOut()" id="btnInOut"></button>
+	                <div class="btnBox">
+		               	<button class="inoutBtn" onclick="attendanceInOut()" id="btnInOut"></button>
+		               	<button class="inoutBtn" onclick="attendanceInOut()" id="btnInOut">퇴근</button>
+              	 </div>
                 </div>
                 <!-- 사원정보 끝-->
 
