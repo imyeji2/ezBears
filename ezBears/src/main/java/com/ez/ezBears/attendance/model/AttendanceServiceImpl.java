@@ -37,8 +37,22 @@ public class AttendanceServiceImpl implements AttendanceService{
 
 
 	@Override
-	public int goHome(int memNo) {
-		return attendanceDao.goHome(memNo);
+	public int comeCompanyLate(int attendanceNo) {
+		return attendanceDao.comeCompanyLate(attendanceNo);
 	}
+
+
+	@Override
+	public int comeCompanyGood(int attendanceNo) {
+		return attendanceDao.comeCompanyGood(attendanceNo);
+	}
+
+
+	@Override
+	public int goHome(AttendanceVO attendanceVo) {
+		return attendanceDao.goHome(attendanceVo);
+	}
+
+
 
 }
