@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.ez.ezBears.common.SearchVO;
 import com.ez.ezBears.notice.controller.NoticeController;
 
 import lombok.RequiredArgsConstructor;
@@ -85,6 +86,36 @@ public class NoticeServiceImpl implements NoticeService{
 	@Override
 	public void deleteNoticeFile(int noticeNo) {
 		noticeDao.deleteNoticeFile(noticeNo);
+	}
+
+	@Override
+	public int deleteNotice(int noticeNo) {
+		return noticeDao.deleteNotice(noticeNo);
+	}
+
+	@Override
+	public NoticeVO selectnoticeByNo(int noticeNo) {
+		return noticeDao.selectnoticeByNo(noticeNo);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectnoticeFileByNo(int noticeNo) {
+		return noticeDao.selectnoticeFileByNo(noticeNo);
+	}
+
+	@Override
+	public int updateDowncount(int noticeFileNo) {
+		return noticeDao.updateDowncount(noticeFileNo);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectAllNotice(SearchVO searchVo) {
+		return noticeDao.selectAllNotice(searchVo);
+	}
+
+	@Override
+	public int selectTotalCount(SearchVO searchVo) {
+		return noticeDao.selectTotalCount(searchVo);
 	}
 
 	

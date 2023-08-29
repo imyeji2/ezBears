@@ -151,7 +151,7 @@ select * from memberView1;
 
 create or replace view notice1
 as
-select n.*,m.dept_no,m.mem_name,m.mem_id
+select n.*,m.dept_no,m.mem_name,m.mem_id,m.mem_image
 from notice n left join member m
 on m.mem_no = n.mem_no;
 

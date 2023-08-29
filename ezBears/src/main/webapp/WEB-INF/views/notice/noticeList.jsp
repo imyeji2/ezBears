@@ -4,6 +4,27 @@
 
 <%@include file="../inc/top.jsp"%>
 
+<script type="text/javascript">
+$(function(){
+	$('#searchBtn').click(function(){
+	    event.preventDefault();
+
+	    if ($('#searchCondition').val() === "default") {
+	        alert("검색할 카테고리를 선택해주세요");
+	        $('#searchCondition').focus();
+	        return false;
+	    } else if ($('#searchKeyword').val().length < 1) {
+	        alert('검색어를 입력해주세요');
+	        $('#searchKeyword').focus();
+	        return false;
+	    }else{
+	    	$('form[name=serchFrm]').submit();
+	    }
+
+	});
+});
+</script>
+
     <!-- Recent Sales Start -->
     <div class="container-fluid pt-4 px-4" id="board_style">
         <div class="bg-secondary text-center rounded">
@@ -26,22 +47,35 @@
 							<div class="teamNotice_serch">
 								<div class="serch_input">
 									<div class="select_box">
-										<select class="form-select" aria-label="Default select example">
-										  <option selected>선택</option>
-										  <option value="name">이름</option>
-										  <option value="subject">제목</option>
-										  <option value="content">내용</option>
+										<select class="form-select" aria-label="Default select example" 
+										id="searchCondition" name="searchCondition">
+										  <option value="default" selected>선택</option>
+										  <option value="mem_name"
+										  	<c:if test="${param.searchCondition=='MEM_NAME'}">
+							            		selected="selected"
+							            	</c:if>            	
+										  >이름</option>
+										  <option value="notice_title"
+										  	<c:if test="${param.searchCondition=='NOTICE_TITLE'}">
+							            		selected="selected"
+							            	</c:if>										  
+										  >제목</option>
+										  <option value="notice_content"
+										  	<c:if test="${param.searchCondition=='NOTICE_CONTENT'}">
+							            		selected="selected"
+							            	</c:if>											  
+										  >내용</option>
 										</select>				
 									</div>
 									<div class="text_box">
-										<input type="text" class="form-control" id="exampleFormControlInput1"
-											 placeholder="검색어를 입력해주세요">
+										<input type="text" class="form-control" name="searchKeyword" id="searchKeyword"
+											 placeholder="검색어를 입력해주세요" value="${param.searchKeyword }">
 									</div>
 									
 									<div class="serch_btn">
-										<button>검색</button>
+										<button id="searchBtn">검색</button>
 									</div><!-- serch_btn -->
-									
+											
 									<div class="btnBox">
 						        	<%-- <c:if test="${yesNo == 'Y'}"> --%>
 						        	<c:if test="${sessionScope.dept_no==1}">
