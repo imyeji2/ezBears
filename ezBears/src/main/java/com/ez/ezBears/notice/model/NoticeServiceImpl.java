@@ -97,5 +97,10 @@ public class NoticeServiceImpl implements NoticeService{
 		return noticeDao.selectnoticeByNo(noticeNo);
 	}
 
+	@Override
+	public List<Map<String, Object>> selectnoticeFileByNo(int noticeNo) {
+		return noticeDao.selectnoticeFileByNo(noticeNo);
+	}
+
 	
 }

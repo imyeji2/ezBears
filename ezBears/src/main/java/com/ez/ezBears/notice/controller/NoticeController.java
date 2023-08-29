@@ -220,27 +220,33 @@ public class NoticeController {
 
 
 	@RequestMapping("/noticeDelte")
-	public String noticeDelte(@RequestParam (defaultValue = "0") int noticeNo,@RequestParam(required = false)  String oldFileName, Model model, HttpServletRequest request) {
+	public String noticeDelte(@RequestParam (defaultValue = "0") int noticeNo, 
+			Model model, HttpServletRequest request) {
 		logger.info("공지사항 삭제 매개변수 noticeNo={}",noticeNo);
 
-		NoticeVO noticeVo=noticeService.selectnoticeByNo(noticeNo);
+		//NoticeVO noticeVo=noticeService.selectnoticeByNo(noticeNo);
+		List<Map<String, Object>> fileList=noticeService.selectnoticeFileByNo(noticeNo);
 		
 		int cnt=noticeService.deleteNotice(noticeNo);
 		logger.info("공지사항 삭제 결과 cnt={}",cnt);
+		noticeService.deleteNoticeFile(noticeNo);
 
 		String msg="삭제 성공";
 		String url="/notice/noticeList";
-
-		if(oldFileName!=null && !oldFileName.isEmpty()) { //
-			String upPath=fileUploadUtil.getUploadPath(request, ConstUtil.UPLOAD_NOTICE_FLAG);
-			File file = new File(upPath,oldFileName);
-			if(file.exists()) {
-				boolean bool=file.delete();
-				logger.info("파일 삭제 여부 : {}", bool);
-			}
-		}
 		
-		noticeService.deleteNoticeFile(noticeNo);
+		for (Map<String, Object> fileMap : fileList) {
+	        String oldFileName = (String) fileMap.get("FILE_NAME"); // 맵에서 파일 이름 가져오기
+
+	        if (oldFileName != null && !oldFileName.isEmpty()) {
+	            String upPath = fileUploadUtil.getUploadPath(request, ConstUtil.UPLOAD_NOTICE_FLAG);
+	            File file = new File(upPath, oldFileName);
+	            if (file.exists()) {
+	                boolean bool = file.delete();
+	                logger.info("파일 삭제 여부 : {}", bool);
+	            }
+	        }
+	    }
+		
 
 		model.addAttribute("msg", msg);
 		model.addAttribute("url", url);

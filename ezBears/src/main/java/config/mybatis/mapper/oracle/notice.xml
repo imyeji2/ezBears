@@ -40,6 +40,11 @@
 		where NOTICE_NO=#{noticeNo}
 	</select>
 	
+	<select id="selectnoticeFileByNo" parameterType="int" resultType="map">
+		select * from noticefile
+		where NOTICE_NO=#{noticeNo}
+	</select>
+	
 	<update id="updateViewsCount" parameterType="int">
 		update notice1
         set views = views+1
