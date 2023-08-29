@@ -196,8 +196,7 @@ function send(currentPage) {
 					        </c:if>
 					                    
 					        <div class="list_line"></div>     
-
-							         
+       
 						</div><!-- teamNoticeList -->
 					</div>
 				</div>
