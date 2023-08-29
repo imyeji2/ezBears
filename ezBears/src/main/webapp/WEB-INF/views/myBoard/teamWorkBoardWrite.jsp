@@ -43,7 +43,7 @@ $(function(){
 		var inputTxt = $('#writeWorkInput').val();
 		
 		if(inputTxt.length<1){
-			alert('항목을 입력하세요');
+			alert('업무를 입력하세요');
 			$('#writeWorkInput').focus();
 			return false;
 		}
