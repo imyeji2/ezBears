@@ -113,11 +113,20 @@ $(function(){
 			                			<td class ="deptNoTd"><input type="text" class = "selectdeptNo" value="${deptVo.deptNo}"></td>
 			                			<td onclick="editDeptInfo('${deptVo.deptName}','${deptVo.deptNo}','${deptVo.deptTel}')">${deptVo.deptName}</td>
 			                			<td onclick="editDeptInfo('${deptVo.deptName}','${deptVo.deptNo}','${deptVo.deptTel}')">${deptVo.deptTel}</td>
-			                			<td onclick="editDeptInfo('${deptVo.deptName}','${deptVo.deptNo}','${deptVo.deptTel}')">
-			                				
-			                				<a href="<c:url value='/Member/list?searchKeyword=${deptVo.deptName}'/>">
-					                			${deptVo.memberCount}
-			                				</a>
+			                			<td>
+			                				<c:choose>
+				                				<c:when test="${deptVo.deptNo eq '2'}">
+				                					<a href="<c:url value='/staff/staffList'/>">${staffCnt}</a>
+				                				</c:when>
+				                				<c:when test="${deptVo.deptNo eq '3'}">
+				                					<a href="<c:url value='/team/teamList'/>">${teamCnt}</a>
+				                				</c:when>
+				                				<c:otherwise>
+					                				<a href="<c:url value='/Member/list?searchKeyword=${deptVo.deptName}'/>">
+							                			${deptVo.memberCount}
+					                				</a>
+				                				</c:otherwise>
+			                				</c:choose>
 			                			</td>
 			                		</tr>
 			                	</c:forEach>

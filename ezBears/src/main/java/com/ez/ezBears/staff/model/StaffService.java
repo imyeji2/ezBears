@@ -30,4 +30,6 @@ public interface StaffService {
 	int deleteStaff(int staffNo);
 	
 	String getStaffId();
+	
+	int selectCntStaff();
 }

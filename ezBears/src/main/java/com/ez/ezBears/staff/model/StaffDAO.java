@@ -29,4 +29,5 @@ public interface StaffDAO {
 	int getTodayStaff(String contractStart);
 	int isStaffId(String staffId);
 	
+	int selectCntStaff();
 }

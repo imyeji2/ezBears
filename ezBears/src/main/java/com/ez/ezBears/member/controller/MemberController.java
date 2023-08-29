@@ -279,6 +279,37 @@ public class MemberController {
 		//4
 		
 		return "common/message";
+	}
+	
+	@RequestMapping("/memberInfo")
+	public String memberInfo(@ModelAttribute SearchVO searchVo, Model model){
+		
+		
+		//1
+		logger.info("회원 리스트 페이지, 파라미터 searchVo={}",searchVo);
+		
+		//2
+		PaginationInfo pagingInfo = new PaginationInfo();
+		pagingInfo.setBlockSize(ConstUtil.BLOCK_SIZE);
+		pagingInfo.setCurrentPage(searchVo.getCurrentPage());
+		pagingInfo.setRecordCountPerPage(ConstUtil.RECORD_COUNT);
+		
+		searchVo.setRecordCountPerPage(ConstUtil.RECORD_COUNT);
+		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
+		
+		
+		List<MemberVO> list = memberService.selectAllMem(searchVo);
+		logger.info("멤버 조회 결과, list.size={}", list.size());
+		
+		int totalRecord = memberService.totalList(searchVo);
+		pagingInfo.setTotalRecord(totalRecord);
+		
+		//3
+		model.addAttribute("list", list);
+		model.addAttribute("pagingInfo", pagingInfo);
+		//4
+		
+		return "/Member/list";
 		
 	}
 }

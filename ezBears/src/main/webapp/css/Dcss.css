@@ -114,7 +114,6 @@ input#addressDetail, input#contract, input#zipcode {
     display: flex;
     flex-direction: column;
     justify-content: center;
-	width: 200px;
 }
 
 .innerSide {
@@ -392,4 +391,23 @@ input.edittext {
 
 #mboardNameA:hover{
 	color: #953de7;
+}
+
+/*memberInfo*/
+
+img.searchImg {
+    width: 25px;
+}
+
+.memberImageInfo {
+    border-radius: 40px;
+}
+
+.perPerson {
+    display: flex;
+    gap: 0 30px;
+}
+
+a#AmemName {
+    font-size: larger;
 }
