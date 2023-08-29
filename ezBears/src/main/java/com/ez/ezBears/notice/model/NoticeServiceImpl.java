@@ -30,7 +30,7 @@ public class NoticeServiceImpl implements NoticeService{
 	@Override
 	public Map<String, Object> selectDetail(int noticeNo) {
 		int cnt = noticeDao.updateViewsCount(noticeNo);
-		logger.info("조회스 증가 결과 cnt={}",cnt);
+		logger.info("조회수 증가 결과 cnt={}",cnt);
 		
 		return noticeDao.selectDetail(noticeNo);
 	}
@@ -43,8 +43,9 @@ public class NoticeServiceImpl implements NoticeService{
 	@Override
 	public int insertFileNotice(List<Map<String, Object>> files, int noticeNo) {
 		int cnt = 0;
+		logger.info("files={},files.size={}",files,files.size());
 		
-		if(files != null && !files.isEmpty()) {
+		if(files != null || !files.isEmpty()) {
 			for(Map<String, Object> map : files) {
 				NoticeFileVO vo = new NoticeFileVO();
 				
@@ -53,7 +54,8 @@ public class NoticeServiceImpl implements NoticeService{
 				vo.setOriginFileName((String) map.get("originalFileName"));
 				vo.setFileSize((long) map.get("fileSize"));
 				
-				cnt += noticeDao.insertFileNotice(vo);
+				cnt = noticeDao.insertFileNotice(vo);
+				logger.info("파일 db 입력 결과 cnt={}", cnt);
 			}
 		}
 		
@@ -75,7 +77,15 @@ public class NoticeServiceImpl implements NoticeService{
 		return noticeDao.nextPage(noticeNo);
 	}
 
+	@Override
+	public int updateNotice(NoticeVO noticeVo) {
+		return noticeDao.updateNotice(noticeVo);
+	}
 
+	@Override
+	public void deleteNoticeFile(int noticeNo) {
+		noticeDao.deleteNoticeFile(noticeNo);
+	}
 
 	
 }
