@@ -187,20 +187,20 @@ public class RecordController {
 	
 	@GetMapping("/pitcherRecordWrite")
 	public String pitcherRecordWrite_get(Model model, int playerNo) {
-		//1,4
 		logger.info("투수 기록 등록 화면 이동");
+		
+		List<Map<String, Object>> list = pitcherService.selectPitcherView(playerNo);
+		model.addAttribute("list", list);
 		
 		return "/record/pitcherRecordWrite";
 	}
 	
 	
 	@PostMapping("/pitcherRecordWrite")
-	public String pitcherRecordWrite_post(@ModelAttribute PitcherVO pitcherVo, int playerNo, String playDate, HttpServletRequest request,
+	public String pitcherRecordWrite_post(@ModelAttribute PitcherVO pitcherVo, int playerNo, HttpServletRequest request,
 			Model model) {
 		//1,4
 		logger.info("투수 기록 등록 처리 파라미터 PitcherVo={}", pitcherVo);
-		
-		PitcherVO a = pitcherService.selectPitcherByPlayerNo(playerNo);
 		
 		int cnt = pitcherService.insertPitcher(pitcherVo);
 		logger.info("투수 기록 등록 처리 결과, cnt={}", cnt);
@@ -208,8 +208,15 @@ public class RecordController {
 		return "redirect:/record/pitcherRecordDetail?playerNo="+pitcherVo.getPlayerNo();
 	}
 	
-	@RequestMapping("/pitcherRecordEdit")
-	public String pitcherRecordEdit() {
+	@GetMapping("/pitcherRecordEdit")
+	public String pitcherRecordEdit_get() {
+		//1,4
+		logger.info("투수기록수정");
+		return "/record/pitcherRecordEdit";
+	}
+	
+	@PostMapping("/pitcherRecordEdit")
+	public String pitcherRecordEdit_post() {
 		//1,4
 		logger.info("투수기록수정");
 		return "/record/pitcherRecordEdit";
@@ -223,11 +230,29 @@ public class RecordController {
 	}
 	
 	@GetMapping("/pitcherRecordDetail")
-	public String pitcherRecordDetail_get(@RequestParam(defaultValue = "0") int playerNo, String playDate, Model model) {
+	public String pitcherRecordDetail_get(@RequestParam(defaultValue = "0") int playerNo, SearchVO searchVo, Model model) {
 		logger.info("투수 기록 정보 화면 이동, 파라미터 playerNo = {}", playerNo);
 		
-		List<Map<String, Object>> list = pitcherService.selectPitcherView(playerNo);
+		//pagination 객체 생성하고 변수 없는 애들 선언해주기
+		PaginationInfo pagination = new PaginationInfo();
+		pagination.setBlockSize(ConstUtil.BLOCK_SIZE);
+		pagination.setCurrentPage(searchVo.getCurrentPage());
+		pagination.setRecordCountPerPage(ConstUtil.RECORD_COUNT);
 		
+		//searchVo 에 비어있는 변수 선언하기
+		searchVo.setFirstRecordIndex(pagination.getFirstRecordIndex());
+		searchVo.setRecordCountPerPage(pagination.getRecordCountPerPage());
+		logger.info("설정 후 searchVo={}", searchVo);
+		
+		int totalRecord = teamService.getTotalRecord(searchVo);
+		pagination.setTotalRecord(totalRecord);
+		logger.info("pagination 설정 완");
+		
+		
+		List<Map<String, Object>> list = pitcherService.selectPitcherView(playerNo);
+		logger.info("list.size={}", list.size());
+		
+		model.addAttribute("pagination",pagination);
 		model.addAttribute("list", list);
 		
 		return "/record/pitcherRecordDetail";
@@ -297,7 +322,7 @@ public class RecordController {
 		int cnt = gameService.updateGame(gameVo);
 		logger.info("경기 수정 처리 결과, cnt={}", cnt);
 		
-		return "redirect:/record/gameEdit?recodeNo="+gameVo.getRecodeNo();
+		return "redirect:/record/gameRecordDetail?recodeNo="+gameVo.getRecodeNo();
 	}
 	
 	
