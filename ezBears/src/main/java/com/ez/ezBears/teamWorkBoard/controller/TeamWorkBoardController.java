@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ez.ezBears.common.ConstUtil;
 import com.ez.ezBears.common.FileUploadUtil;
+import com.ez.ezBears.common.MyBoardSearchVo;
+import com.ez.ezBears.common.PaginationInfo;
 import com.ez.ezBears.myBoard.controller.MyBoardController;
 import com.ez.ezBears.myBoard.model.MyBoardListService;
 import com.ez.ezBears.myBoard.model.MyBoardListVO;
@@ -42,15 +44,41 @@ public class TeamWorkBoardController {
 	/*팀별 업무 게시판 리스트*/
 	@RequestMapping("/teamWorkBoard")
 	public String teamWorkBoard(@RequestParam (defaultValue = "0") int mBoardNo, 
-			Model  model) {
+			MyBoardSearchVo searchVo,Model  model) {
 		//1
 		logger.info("팀 업무 게시판 리스트 페이지 파라미터 myBoardNo={}",mBoardNo);
 		
+		if(mBoardNo==0) {
+			model.addAttribute("msg","잘못된 접근입니다.");
+			model.addAttribute("url","/");
+			return "common/message";
+		}	
 		
 		//2
+		//페이징 처리
+		//[1]PaginationInfo 객체 생성
+		PaginationInfo pagingInfo = new PaginationInfo();
+		pagingInfo.setBlockSize(ConstUtil.BLOCK_SIZE);
+		pagingInfo.setCurrentPage(searchVo.getCurrentPage());
+		pagingInfo.setRecordCountPerPage(ConstUtil.RECORD_COUNT);
+		
+		
+		//2)searchVo에 값 세팅 -> xml에 전달할 값 
+		searchVo.setRecordCountPerPage(ConstUtil.RECORD_COUNT);
+		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
+		
+		List<Map<String, Object>> list = teamWorkBoardService.selectTeamWorkBoard(searchVo);
+		logger.info("팀 업무사항 게시판 리스트 조회 결과 list.size={}",list.size());
+		
+		int totalCount = teamWorkBoardService.selectTotalCount(searchVo);
+		pagingInfo.setTotalRecord(totalCount);
+		logger.info("totalCount={}",totalCount);
 		
 		//3
+		model.addAttribute("list",list);
 		model.addAttribute("mBoardNo",mBoardNo);
+		model.addAttribute("pagingInfo",pagingInfo);
+	
 		
 		//4
 		return "myBoard/teamWorkBoardList";

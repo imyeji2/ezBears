@@ -2,6 +2,25 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@include file="../inc/top.jsp"%>
 
+<script>
+$('#searchBtn').click(function(){
+    event.preventDefault();
+
+    if ($('#searchCondition').val() === "default") {
+        alert("검색할 카테고리를 선택해주세요");
+        $('#searchCondition').focus();
+        return false;
+    } else if ($('#searchKeyword').val().length < 1) {
+        alert('검색어를 입력해주세요');
+        $('#searchKeyword').focus();
+        return false;
+    }else{
+    	$('form[name=serchFrm]').submit();
+    }
+
+});
+</script>
+
     <!-- Recent Sales Start -->
     <div class="container-fluid pt-4 px-4" id="board_style">
         <div class="bg-secondary text-center rounded">
@@ -11,26 +30,47 @@
                     <div class="tab-pane fade show active">
 						<div id="teamWorkBoardList">
 							<br>
-							<div id="teamNotice_serch">
-								<div class="serch_input">
-									<div class="select_box">
-										<select class="form-select" aria-label="Default select example" name="searchCondition">
-										  <option selected>선택</option>
-										  <option value="name">이름</option>
-										  <option value="subject">제목</option>
-										  <option value="content">내용</option>
-										</select>				
-									</div>
-									<div class="text_box">
-										<input type="text" class="form-control" name="searchKeyword"
-											 placeholder="검색어를 입력해주세요">
-									</div>
-									
-									<div class="serch_btn">
-										<button>검색</button>
-									</div><!-- serch_btn -->
-								</div><!-- serch_input -->
-							</div><!-- teamNotice_serch -->
+							
+							<form action="<c:url value='/myBoard/teamNotice?mBoardNo=${mBoardNo}'/>" method="post" name="teamNoticeFrom">
+								<input type="hidden" name="currentPage">
+								<input type="hidden" name="searchKeyword" value="${param.searchKeyword}">
+								<input type="hidden" name="searchCondition" value="${param.searchCondition}">
+							</form>
+							
+							<form name="serchFrm" method="post" action="<c:url value='/myBoard/teamWorkBoard?mBoardNo=${mBoardNo}'/>">
+								<div id="teamNotice_serch">
+									<div class="serch_input">
+										<div class="select_box">
+											<select class="form-select" aria-label="Default select example" name="searchCondition">
+											  <option value="default" selected>선택</option>
+											  <option value="mem_name"
+											  	<c:if test="${param.searchCondition=='mem_name'}">
+								            		selected="selected"
+								            	</c:if>            	
+											  >이름</option>
+											  <option value="team_notice_title"
+											  	<c:if test="${param.searchCondition=='team_notice_title'}">
+								            		selected="selected"
+								            	</c:if>										  
+											  >제목</option>
+											  <option value="team_notice_content"
+											  	<c:if test="${param.searchCondition=='team_notice_content'}">
+								            		selected="selected"
+								            	</c:if>											  
+											  >내용</option>
+											</select>							
+										</div>
+										<div class="text_box">
+											<input type="text" class="form-control" name="searchKeyword"
+												 placeholder="검색어를 입력해주세요" value="${param.searchKeyword }">
+										</div>
+										
+										<div class="serch_btn">
+											<button id="searchBtn">검색</button>
+										</div><!-- serch_btn -->
+									</div><!-- serch_input -->
+								</div><!-- teamNotice_serch -->
+							</form>
 							
 							<br>
 					      <div class="table-responsive">
@@ -46,6 +86,26 @@
 					                  </tr>
 					              </thead>
 					              <tbody>
+					                  				              							
+							<c:if test="${empty list}">
+								<tr class="table_info">	
+									<td scope="col" colspan="5">등록된 글이 없습니다.</td>
+								</tr>
+							</c:if>
+							
+							<c:if test="${!empty list}">
+								<c:if test="${!empty param.searchKeyword}">
+									<div style="text-align:center">
+										${pagingInfo.totalRecord}건이 검색되었습니다.
+									</div>
+									<br><br>
+								</c:if>
+								<!-- 반복시작 -->
+								
+								<!-- 반복 끝 -->
+								</c:if>							
+
+
 					                  <tr class="table_info">
 					                      <!-- <td><input class="form-check-input" type="checkbox"></td> -->
 					                      <td>10</td>

@@ -1,13 +1,18 @@
 package com.ez.ezBears.teamWorkBoard.model;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
+import com.ez.ezBears.common.MyBoardSearchVo;
+
 import lombok.RequiredArgsConstructor;
 
+
+//팀별 업무 게시판 등록
 @Service
 @RequiredArgsConstructor
 public class TeamWorkBoardServiceImpl implements TeamWorkBoardService{
@@ -22,29 +27,22 @@ public class TeamWorkBoardServiceImpl implements TeamWorkBoardService{
 		int cnt=0;
 
 		try {
+			//팀별 업무 게시판 등록
 			cnt = teamWorkBoardDao.insertTeamWorkBoard(teamVo);
-			System.out.println("1.teamVo:"+teamVo);
-			int teamBoardNo = teamVo.getTeamBoardNo();
-			System.out.println("1.teamBoardNo:"+teamBoardNo);
-			
-			
-			todoList.setTeamBoardNo(teamBoardNo);
-			
+			int teamBoardNo = teamVo.getTeamBoardNo();//업무게시판 번호 
+			todoList.setTeamBoardNo(teamBoardNo);//투두리스트에 업무 게시판 번호
+
+			//투두리스트 등록
 			cnt = todoListDao.insertTodoList(todoList);
-			System.out.println("2.todoList:"+todoList+",cnt="+cnt);
 			
-			int toDoListNo = todoList.getTodolistNo();
-			System.out.println("2.toDoListNo:"+toDoListNo);
+			int toDoListNo = todoList.getTodolistNo();//투두리스트 번호
 			
 			List<ToDoListDetailVO> list = listVo.getItems();
 			
 			for(int i=0;i<list.size();i++) {
 				ToDoListDetailVO vo = list.get(i);
-				System.out.println("2:"+todoList);
 				vo.setTodolistNo(toDoListNo);
-				
 				cnt = todoListDetailDao.insertTodoListDetail(vo);
-				System.out.println("listVo:"+listVo);
 			}
 		}catch(RuntimeException e) {
 			//선언적 트랜젝션(@Transactional)에서는
@@ -53,9 +51,25 @@ public class TeamWorkBoardServiceImpl implements TeamWorkBoardService{
 			cnt=-1;//예외처리를 했다는 의미
 			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 		}
-		
 		return cnt;
 	}
+
+	//팀별 업무 게시판 리스트
+	@Override
+	public List<Map<String, Object>> selectTeamWorkBoard(MyBoardSearchVo myBoardSearchVo){
+		return teamWorkBoardDao.selectTeamWorkBoard(myBoardSearchVo);
+	}
+
+	//팀별 업무 게시판 리스트 전체 레코드
+	@Override
+	public int selectTotalCount(MyBoardSearchVo myBoardSearchVo) {
+		return teamWorkBoardDao.selectTotalCount(myBoardSearchVo);
+	}
+	
+	
+	
+
+	
 	
 
 }
