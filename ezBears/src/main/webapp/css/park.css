@@ -1,13 +1,32 @@
 @charset "UTF-8";
 
-#Approvalbtn{
-   text-align: right;
-   margin-left: 955px;
-   margin-top: 20px;
-   
+
+
+#approval{
+	
+  .insertapp{
+	   text-align: right;
+	   margin-left: 1070px;
+	   margin-top: 20px;
+	}	
 }
-
-
+#approvalModal{
+	.close{
+		background-color:#191C24;
+		color: white;
+	}
+	
+	.modal-content{
+		background-color:#191C24;
+	}
+	.form-group{
+		font-size: 1.2em;
+		color: white;
+	}
+	.form-control{
+		color: black;
+	}
+}
 /* Approval_write */
 #Approval_wr {	
 	

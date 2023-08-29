@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	        headerToolbar : {
 	        start : 'prev next today',
 	        center : 'title',
-	        end : 'dayGridMonth,dayGridWeek,dayGridDay'
+	        end : '' // 주 , 일 표시 지움
          },
 		    selectable : true, //일자 드래그 가능
 		    droppable : true,
@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // 삭제 로직 추가
                  var eventId = event.id;
 
-                if (confirm('정말로 ' + eventId +' 이 일정을 삭제하시겠습니까?')) {
+                if (confirm('정말로 이 일정을 삭제하시겠습니까?')) {
                     $.ajax({
                         url: "<c:url value='/myBoard/deleteEvent'/>", 
                         type: 'POST',
