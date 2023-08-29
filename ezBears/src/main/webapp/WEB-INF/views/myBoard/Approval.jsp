@@ -4,6 +4,42 @@
 
 <%@include file="../inc/top.jsp"%>
 
+<!-- Popper.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+	  
+    // 휴가신청서 클릭 시 휴가신청서 페이지로 이동
+    document.getElementById("vacationForm").addEventListener("click", function() {
+    	window.location.href = "<c:url value='/myBoard/Approval_write'/>"; 
+    });
+
+    // 기안서 클릭 시 기안서 페이지로 이동
+    document.getElementById("draftForm").addEventListener("click", function() {
+        window.location.href = "기안서"; 
+    });
+    // 품의서 클릭 시 휴가신청서 페이지로 이동
+    document.getElementById("requisitionForm").addEventListener("click", function() {
+        window.location.href = "품의사"; 
+    });
+
+    // 지출결의서 클릭 시 기안서 페이지로 이동
+    document.getElementById("expenseForm").addEventListener("click", function() {
+        window.location.href = "지출결의서"; 
+    });
+});	
+    // 폼 출력
+    function submitForm() {
+        var selectedCategory = document.getElementById("approvalCategory").value;
+     
+        alert("선택한 결재 분류: " + selectedCategory);
+        // 모달 닫기
+        $('#approvalModal').modal('hide');
+    }
+</script>
+
 <!-- Recent Sales Start -->
 <div class="container-fluid pt-4 px-4" id="board_style">
 	<div class="bg-secondary text-center rounded">
@@ -33,9 +69,6 @@
 									</tr>
 								</thead>
 								<tbody>
-
-
-
 									<tr>
 										<td><input class="form-check-input" type="checkbox"></td>
 										<td>2023-01-21</td>
@@ -83,19 +116,60 @@
 									</tr>
 								</tbody>
 							</table>
+							<button type="button" class="btn btn-sm btn-primary insertapp"
+								data-toggle="modal" data-target="#approvalModal">결재작성</button>
+						</div>
+					</div><!-- Approval -->
 
-							<a href='<c:url value='/myBoard/Approval_write'/>' role="button"
-								class="btn btn-sm btn-primary" id="Approvalbtn">결재작성</a>
-
+				</div>	<!-- Recent Sales End -->
+			
+				<!-- 모달 -->
+				<div class="modal fade" id="approvalModal" tabindex="-1"
+					role="dialog" aria-labelledby="approvalModalLabel"
+					aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="approvalModalLabel">결재 작성</h5>
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<!-- 결재분류 선택 -->
+								<div class="form-group">
+									<label for="approvalCategory">결재분류</label> 
+									<select class="form-control" id="approvalCategory"
+										name="approvalCategory">
+										<option value="" disabled selected>선택하세요</option>
+										<option value="휴가" id="vacationForm" >휴가신청서</option>
+										<option value="기안서" id="draftForm">기안서</option>
+										<option value="품의서" id="requisitionForm">품의서</option>
+										<option value="지출결의서" id="expenseForm" >지출결의서</option>
+									</select>
+								</div>
+																
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-primary"
+									onclick="submitForm()">작성</button>
+								<button type="button" class="btn btn-secondary"
+									data-dismiss="modal">취소</button>
+							</div>
 						</div>
 					</div>
-					<!-- Approval -->
-					<!-- Recent Sales End -->
+				</div>
+				<!-- approvalModal -->
+
+				<div>
+					<input type="text" name="mBoardNo" value="${mBoardNo}"> <input
+						type="text" name="userid" value="${userid}"> <input
+						type="text" name="memNo" value="${memNo}">
 				</div>
 			</div>
 		</div>
 	</div>
-
 </div>
 <!-- Recent Sales End -->
 

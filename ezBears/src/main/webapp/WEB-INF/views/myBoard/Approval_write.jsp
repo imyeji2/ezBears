@@ -10,11 +10,13 @@
 		<div class="bg-secondary rounded h-100 p-4 Appfrm">
 		 <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
               <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="<c:url value ='/myBoard/teamNotice'/>">마이보드</a></li>
-                <li class="breadcrumb-item active" aria-current="page"><a href="#">개발1팀</a></li>
+                <li class="breadcrumb-item"><a href="<c:url value ='/myBoard/teamNotice?mBoardNo=16'/>">마이보드</a></li>
                 <li class="breadcrumb-item active" aria-current="page">결재 게시판</li>
               </ol>
             </nav>
+            <!-- 여기서 부터 div로 감싸서 휴가/기안서 디자인 하기 -->
+			
+			
 			<h6 class="mb-4">결재 입력</h6>
 			<div class="appbox">
 				<div class="form-floating mb-3">
@@ -28,8 +30,8 @@
 						aria-label="Floating label select example">
 						<option selected></option>
 						<option value="1">휴가</option>
-						<option value="2">반차</option>
-						<option value="3">월차</option>
+						<option value="2">지출제의서</option>
+						<option value="3">기안서</option>
 					</select> <label for="floatingSelect">결재 분류</label>
 				</div>
 				<div class="form-floating">
