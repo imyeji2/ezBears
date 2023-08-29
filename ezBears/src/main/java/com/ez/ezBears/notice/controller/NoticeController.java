@@ -2,6 +2,7 @@ package com.ez.ezBears.notice.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,9 +15,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.ez.ezBears.common.ConstUtil;
 import com.ez.ezBears.common.FileUploadUtil2;
+import com.ez.ezBears.common.PaginationInfo;
+import com.ez.ezBears.common.SearchVO;
 import com.ez.ezBears.member.model.MemberService;
 import com.ez.ezBears.member.model.MemberVO;
 import com.ez.ezBears.myBoard.model.MyBoardListVO;
@@ -42,16 +46,34 @@ public class NoticeController {
 	private List<Map<String, Object>> files;
 
 	@RequestMapping("/noticeList")
-	public String noticeList(@RequestParam(defaultValue = "0") int noticeNo,Model model ) {
+	public String noticeList(@RequestParam(defaultValue = "0") int noticeNo,@ModelAttribute SearchVO searchVo ,Model model ) {
 		//1
 		logger.info("공지사항 리스트 페이지 파라미터 noticeNo={}",noticeNo);
+		logger.info("공지사항 검색 파라미터 searchVo={}", searchVo);
 
+		PaginationInfo pagingInfo = new PaginationInfo();
+		pagingInfo.setBlockSize(ConstUtil.BLOCK_SIZE);
+		pagingInfo.setCurrentPage(searchVo.getCurrentPage());
+		pagingInfo.setRecordCountPerPage(ConstUtil.RECORD_COUNT_FIVE);
+		
+		
+		//2)searchVo에 값 세팅 -> xml에 전달할 값 
+		searchVo.setRecordCountPerPage(ConstUtil.RECORD_COUNT_FIVE);
+		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
+		
 		//2
-		List<Map<String, Object>> list=noticeService.selectNoticeList(noticeNo);
-		logger.info("공지사항 리스트 페이지 결과 list.size={}",list);
+		//List<Map<String, Object>> list=noticeService.selectNoticeList(noticeNo);
+		List<Map<String, Object>> list=noticeService.selectAllNotice(searchVo);
+		logger.info("공지사항 리스트 페이지 결과 list.size={}",list.size());
+		
+		int totalCount = noticeService.selectTotalCount(searchVo);
+		pagingInfo.setTotalRecord(totalCount);
+		logger.info("totalCount={}",totalCount);
+		
 
 		//3
 		model.addAttribute("list",list);
+		model.addAttribute("pagingInfo",pagingInfo);
 
 		//4
 		return "notice/noticeList";
@@ -79,6 +101,7 @@ public class NoticeController {
 			if(cnt>0) {
 				int cnt2=noticeService.insertFileNotice(files, noticeVo.getNoticeNo());
 				msg="글 작성 성공";
+				url="/notice/noticeList";
 			}
 		} catch (IllegalStateException e) {
 			e.printStackTrace();
@@ -226,27 +249,27 @@ public class NoticeController {
 
 		//NoticeVO noticeVo=noticeService.selectnoticeByNo(noticeNo);
 		List<Map<String, Object>> fileList=noticeService.selectnoticeFileByNo(noticeNo);
-		
+
 		int cnt=noticeService.deleteNotice(noticeNo);
 		logger.info("공지사항 삭제 결과 cnt={}",cnt);
 		noticeService.deleteNoticeFile(noticeNo);
 
 		String msg="삭제 성공";
 		String url="/notice/noticeList";
-		
-		for (Map<String, Object> fileMap : fileList) {
-	        String oldFileName = (String) fileMap.get("FILE_NAME"); // 맵에서 파일 이름 가져오기
 
-	        if (oldFileName != null && !oldFileName.isEmpty()) {
-	            String upPath = fileUploadUtil.getUploadPath(request, ConstUtil.UPLOAD_NOTICE_FLAG);
-	            File file = new File(upPath, oldFileName);
-	            if (file.exists()) {
-	                boolean bool = file.delete();
-	                logger.info("파일 삭제 여부 : {}", bool);
-	            }
-	        }
-	    }
-		
+		for (Map<String, Object> fileMap : fileList) {
+			String oldFileName = (String) fileMap.get("FILE_NAME"); // 맵에서 파일 이름 가져오기
+
+			if (oldFileName != null && !oldFileName.isEmpty()) {
+				String upPath = fileUploadUtil.getUploadPath(request, ConstUtil.UPLOAD_NOTICE_FLAG);
+				File file = new File(upPath, oldFileName);
+				if (file.exists()) {
+					boolean bool = file.delete();
+					logger.info("파일 삭제 여부 : {}", bool);
+				}
+			}
+		}
+
 
 		model.addAttribute("msg", msg);
 		model.addAttribute("url", url);
@@ -255,6 +278,25 @@ public class NoticeController {
 	}
 
 
+	@RequestMapping("/Filedownload")
+	public ModelAndView downloadFile(@RequestParam(defaultValue = "0") int noticeNo,@RequestParam(defaultValue = "0") int noticeFileNo,
+			@RequestParam String fileName,HttpServletRequest request) {
+
+		logger.info("공지사항 파일 다운로드 파라미터 noticeNo={}, fileName={},noticeFileNo={}",noticeNo, fileName,noticeFileNo);
+		
+		int cnt=noticeService.updateDowncount(noticeFileNo);
+		logger.info("다운로드 수 증가, 결과 cnt={}", cnt);
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		String upPath = fileUploadUtil.getUploadPath(request, ConstUtil.UPLOAD_NOTICE_FLAG);
+		File file = new File(upPath, fileName);
+		map.put("file", file);
+
+		//ModelAndView(String viewName, Map<String, ?> model)
+		ModelAndView mav = new ModelAndView("DownloadView", map);
+		return mav;
+	}
 
 
 }
