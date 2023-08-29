@@ -1,6 +1,7 @@
 package com.ez.ezBears.record.inning.model;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -12,5 +13,5 @@ public interface InningDAO {
 	int updateInning(InningVO inningVo);
 	int deleteInning(int inningNo);
 	
-	List<InningVO> selectByrecodeDetailNo(SearchVO searchVo, int recodeDetailNo);
+	List<Map <String, Object>> selectByrecodeDetailNo(int recodeDetailNo);
 }
