@@ -41,9 +41,9 @@
 										<td>2023-01-21</td>
 										<td><a href="Approval_detail">TEST</a></td>
 										<td>Jhon Doe</td>
-										<td>결재</td>
+										<td>휴가</td>
 
-										<td><a class="btn btn-sm btn-primary" href="">승인</a></td>
+										<td><a class="btn btn-sm btn-primary" href="">대기</a></td>
 									</tr>
 									<tr>
 										<td><input class="form-check-input" type="checkbox"></td>
@@ -59,9 +59,9 @@
 										<td>2023-01-21</td>
 										<td><a href="Approval_detail">TEST</a></td>
 										<td>Jhon Doe</td>
-										<td>결재</td>
+										<td>휴가</td>
 
-										<td><a class="btn btn-sm btn-primary" href="">승인</a></td>
+										<td><a class="btn btn-sm btn-primary" href="">대기</a></td>
 									</tr>
 									<tr>
 										<td><input class="form-check-input" type="checkbox"></td>
@@ -70,7 +70,7 @@
 										<td>Jhon Doe</td>
 										<td>결재</td>
 
-										<td><a class="btn btn-sm btn-primary" href="">승인</a></td>
+										<td><a class="btn btn-sm btn-primary" href="">대기</a></td>
 									</tr>
 									<tr>
 										<td><input class="form-check-input" type="checkbox"></td>
@@ -79,7 +79,7 @@
 										<td>Jhon Doe</td>
 										<td>결재</td>
 
-										<td><a class="btn btn-sm btn-primary" href="">승인</a></td>
+										<td><a class="btn btn-sm btn-primary" href="">대기</a></td>
 									</tr>
 								</tbody>
 							</table>

@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	        headerToolbar : {
 	        start : 'prev next today',
 	        center : 'title',
-	        end : 'dayGridMonth,dayGridWeek,dayGridDay'
+	        end : '' // 주 , 일 표시 지움
          },
 		    selectable : true, //일자 드래그 가능
 		    droppable : true,

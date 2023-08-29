@@ -25,7 +25,7 @@
 
 <div class="container-fluid pt-4 px-4" id="board_style">
 	<div class="bg-secondary text-center rounded p-4">
-		<div class="bg-secondary rounded h-100 p-4">
+		<div class="bg-secondary rounded h-100 p-4">		
 			<form method="post" action="<c:url value='/myBoard/Calender_write'/>">
 			 	<input type ="hidden" name ="userid" id="userid" value="${userid }">
 				<input type="hidden" name="myBoardNo" id="myBoardNo"value="${myBoardInfoVo.myBoardNo}"> 
