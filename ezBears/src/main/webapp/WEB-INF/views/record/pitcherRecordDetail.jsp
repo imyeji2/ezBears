@@ -140,15 +140,15 @@
 											</form>
 										</div>
 										<div class="divBtn">
-											<a href="<c:url value='/record/hitterRecordWrite'/>">기록정보
+											<a href="<c:url value='/record/pitcherRecordWrite?playerNo=${param.playerNo}'/>">기록정보
 												등록</a>
 										</div>
 										<div class="divBtn">
-											<a href="<c:url value='/record/hitterRecordEdit'/>">기록정보
+											<a href="<c:url value='/record/pitcherRecordEdit'/>">기록정보
 												수정</a>
 										</div>
 										<div class="divBtn">
-											<a href="<c:url value='/record/hitterRecordDelete'/>">기록정보
+											<a href="<c:url value='/record/pitcherRecordDelete'/>">기록정보
 												삭제</a>
 										</div>
 									</div>

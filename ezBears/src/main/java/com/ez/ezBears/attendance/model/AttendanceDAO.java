@@ -10,5 +10,7 @@ public interface AttendanceDAO {
 	AttendanceVO selectRecentAttendance(int memNo);
 	int insertAttendance(int memNo);
 	int selectAttendanceNo(int memNo);
-	int goHome(int memNo);
+	int comeCompanyLate(int attendanceNo);
+	int comeCompanyGood(int attendanceNo);
+	int goHome(AttendanceVO attendanceVo);
 }

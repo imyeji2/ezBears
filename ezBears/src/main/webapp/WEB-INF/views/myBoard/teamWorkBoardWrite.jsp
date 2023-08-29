@@ -38,6 +38,7 @@ $(function(){
 		location.href="<c:url value='/myBoard/teamWorkBoard?mBoardNo=${myBoardListVo.MBoardNo}'/>";
 	});
 	
+	var index=0;
 	//투두리스트 추가
 	$('#addWorkBtn').click(function(){
 		var inputTxt = $('#writeWorkInput').val();
@@ -51,7 +52,7 @@ $(function(){
 		var add ="<div class='d-flex align-items-center border-bottom py-2 todoList'>";
 		add+="<div class='w-100 ms-3' id='addWrokBox'>"
 		add+="<div class='d-flex w-100 align-items-center justify-content-between toDoContentInputBox'>";
-		add+="<input class='form-control border-0 todoInput' type='text' name='items["+inputTxt.length+"].toDoContent' value='"+inputTxt+"'>";
+		add+="<input class='form-control border-0 todoInput' type='text'name='items["+index+"].todoContent' value='"+inputTxt+"'>";
 		add+="<button class='btn btn-sm' id='delWorkBtn'><i class='fa fa-times'></i></button>";
 		add+="</div>";
 		add+="</div>";
@@ -62,6 +63,7 @@ $(function(){
 		
 		todoCount = $('.todoList').length;
 		$('#todoCountTxt').text(todoCount);
+		index++;
 		
 	});
 	
@@ -72,6 +74,7 @@ $(function(){
 		$delContent.remove();
 		todoCount = $('.todoList').length;
 		$('#todoCountTxt').text(todoCount);
+		index--;
 	});
 	
 	
@@ -120,7 +123,7 @@ $(function(){
 		var editorContent = editor.getData().trim();
 		
 		//제목 유효성 검사
-		if($('#title').val().length<1){
+		if($('#teamBoardTitle').val().length<1){
 			alert('제목을 입력해주세요');
 			$('#title').focus();
 			return false;
@@ -152,7 +155,7 @@ $(function(){
 		//두투 유효성 검사1
 		if($('.todoList').length<1){
 			alert('업무를 추가해주세요');
-			$(this).focus();
+			$('#writeWorkInput').focus();
 			return false;
 		}
 		
@@ -200,12 +203,13 @@ $(function(){
 			</nav>   			
 			<div id="teamWorkBoardWrite">
 				<form name="workBoardWriteFrom" method="post" action="<c:url value='${url}'/>" enctype="multipart/form-data">
+		        	<input type="hidden" name="mBoardNo" value="${myBoardListVo.MBoardNo}">
 		        	<input type="hidden" name="myBoardNo" value="${myBoardListVo.myBoardNo}">
 		        	<input type="hidden" name="memNo" value="${myBoardListVo.memNo}">
 		        	<div class="writeWrap">
 			        	<div class="write_title">
-			        		<input type="text" class="form-control" id="title"
-							 placeholder="제목을 입력해주세요">
+			        		<input type="text" class="form-control" name="teamBoardTitle"
+			        		id="teamBoardTitle" placeholder="제목을 입력해주세요">
 			        	</div><!-- write_title -->
 			        
 			       		<div class="border-line"></div>		 
@@ -250,7 +254,7 @@ $(function(){
 			       			
 			       			
 			       			<div class="write_file">
-								<input class="form-control" type="file" id="formFile">
+								<input class="form-control" type="file" id="formFile" name="upfile">
 			       			</div>
 			       			<div class="write_option_btn">
 			       				<button class="btn btn-sm btn-primary" id="writeBtn">등록</button>&nbsp;

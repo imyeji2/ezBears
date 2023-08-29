@@ -8,14 +8,30 @@
 	</select>
  
  	<insert id="insertAttendance" parameterType="int">
- 		insert into attendance(attendance_no, mem_no, in_time, status)
- 		values(attendance_seq.nextval, #{memNo}, sysdate, '근무 중')
+ 		insert into attendance(attendance_no, mem_no, in_time)
+ 		values(attendance_seq.nextval, #{memNo}, sysdate)
  	</insert>
 	
-	<update id="goHome" parameterType="int">
+	<update id="comeCompanyLate" parameterType="int">
+		update attendance 
+		set 
+		<!-- in_time = sysdate, -->
+		status = '지각'
+		where attendance_no = #{attendanceNo}
+	</update>
+	
+	<update id="comCompanyGood" parameterType="int">
+		update attendance 
+		set 
+		<!-- in_time = sysdate, -->
+		status = '출근'
+		where attendance_no = #{attendanceNo}
+	</update>
+	
+	<update id="goHome" parameterType="attendanceVo">
 		update attendance 
 		set out_time = sysdate,
-		status = '퇴근'
+		status = #{status}
 		where attendance_no = #{attendanceNo}
 	</update>
 	
@@ -25,6 +41,10 @@
 	
 	<select id="selectRecentAttendance" parameterType="int" resultType="attendanceVo">
 		select * from attendance where mem_no = #{memNo} and rownum = 1 order by attendance_no desc
+	</select>
+	
+	<select id="selectAllAttendance" resultType="attendanceVo">
+		select * from attendance order by attendance_no desc	
 	</select>
  
  

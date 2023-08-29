@@ -10,7 +10,16 @@
 		$('.fileupload').click(function() {
 			$('.fileupload_right').toggle();
 		});
+		
+		$('#del').click(function(){
+			event.preventDefault();
+			 if (confirm("정말 삭제하시겠습니까?")){
+			 	location.href="<c:url value='/notice/noticeDelte?noticeNo=${map["NOTICE_NO"]}'/>"
+			 }
+		});
 	});
+	
+	
 </script>
 <div class="container-fluid pt-4 px-4" id="board_style">
 	<div class="bg-secondary text-center rounded p-4">
@@ -42,9 +51,17 @@
 
 					<div class="user_info">
 						<div class="detail_left">
-							<div class="user_img">
-								<img src="<c:url value='/img/user.jpg'/>" alt="사원프로필">
-							</div>
+						<c:if test="${!empty list}">
+							<c:forEach var="map" items="${list}">
+								<div class="user_img">
+									<c:set var="userimg" value="default_user.png"/>
+				        			<c:if test="${!empty map['MEM_IMAGE']}">
+				        				<c:set var="userimg" value="${map['MEM_IMAGE']}"/>
+				        			</c:if>
+				        			<img src="<c:url value='/img/mem_images/${userimg}'/>" alt="사원프로필">
+								</div>
+							</c:forEach>
+						</c:if>	
 							<!-- user_img -->
 							<div class="detail_left">
 								<span class="user_name"><a href="#">${sessionScope.name }</a></span>
@@ -60,8 +77,9 @@
 								</div>
 								<div class="fileupload_right">
 									<c:forEach var="map" items="${filemap }">
-										<a href="#">${map['ORIGIN_FILENAME']}&nbsp; (<fmt:formatNumber
-												value="${map['FSIZE'] /1024.0}" type="number" pattern="#.##" />
+										<a href="<c:url value='/notice/Filedownload?noticeNo=${map["NOTICE_NO"]}&fileName=${map["FILE_NAME"]}&noticeFileNo=${map["NOTICE_FILE_NO"] }'/>">
+										${map['ORIGIN_FILENAME']}&nbsp; (<fmt:formatNumber
+												value="${map['FILE_SIZE'] /1024.0}" type="number" pattern="#.##" />
 											KB)
 										</a>
 										<br>
@@ -107,7 +125,7 @@
 								<div class="detail_left">
 									<%-- <c:forEach var="map" items="${list }" begin="0" end="5"> --%>
 									<c:set var="currentNo" value="${map.NOTICE_NO}" />
-									<span class="user_name">
+									<span class="user_name1">
 									    <c:if test="${!empty nextPage}">
 									        <c:forEach var="map1" items="${nextPage}">
 									            <c:if test="${currentNo == map1.NOTICE_NO}">

@@ -80,25 +80,8 @@
 </head>
 
 <script type="text/javascript">
-	$(function () {
-		  	var status = "<%=(String)session.getAttribute("status")%>";
-			
-			var topStatus = "";
-			var confirmText = "";
-			if(status =="퇴근" || status == ""){
-				  topStatus = "출근";
-				  confirmText = "출근 처리";
-			}else if(status=="근무 중"){
-				  topStatus = "근무 중";
-				  confirmText = "퇴근 처리";
-			}
-			
-			 $('#btnInOut').text(topStatus);
-		
-	})
-	
-	function attendanceInOut() {
-		  	var status = "<%=(String)session.getAttribute("status")%>";
+	function attendanceIn() {
+		  	<%-- var status = "<%=(String)session.getAttribute("status")%>";
 			alert(status);
 			
 			var topStatus = "";
@@ -113,8 +96,8 @@
 			alert(topStatus);
 			
 			 $('#btnInOut').text(topStatus);
-			alert(confirmText);
-		if(confirm(confirmText + '하시겠습니까?')){
+			alert(confirmText); --%>
+		if(confirm('출근처리 하시겠습니까?')){
 			
 			var today = new Date();
 	        var today_year = today.getFullYear();
@@ -128,9 +111,30 @@
 	        var day = today_year + '-' + formattedMonth + '-' + formattedDate; // 날짜 형식 조정
 			
 	        
-			location.href="<c:url value='/mypage/attendanceInOut?date='/>"+day;
+			location.href="<c:url value='/mypage/attendanceIn?date='/>"+day;
 		}
 	}
+	
+	function attendanceOut() {
+		if(confirm('퇴근처리 하시겠습니까?')){
+			
+			var today = new Date();
+	        var today_year = today.getFullYear();
+	        var today_month = today.getMonth() + 1; // 월은 0부터 시작하므로 1을 더해줌
+	        var today_date = today.getDate(); // 날짜를 가져와야 함
+
+	        // 날짜 값이 한 자리일 경우 앞에 0 추가하여 두 자리로 만듦
+	        var formattedMonth = today_month < 10 ? '0' + today_month : today_month;
+	        var formattedDate = today_date < 10 ? '0' + today_date : today_date;
+
+	        var day = today_year + '-' + formattedMonth + '-' + formattedDate; // 날짜 형식 조정
+			
+	        
+			location.href="<c:url value='/mypage/attendanceOut?date='/>"+day;
+		}
+	}
+	
+	
 
 </script>
 
@@ -164,9 +168,9 @@
 	                    </div>
 	                </div>
 	                <div class="btnBox">
-		               	<button class="inoutBtn" onclick="attendanceInOut()" id="btnInOut"></button>
-		               	<button class="inoutBtn" onclick="attendanceInOut()" id="btnInOut">퇴근</button>
-              	 </div>
+		               	<button class="inoutBtn" onclick="attendanceIn()" id="btnInOut">출근</button>
+		               	<button class="inoutBtn" onclick="attendanceOut()" id="btnInOut">퇴근</button>
+              	 	</div>
                 </div>
                 <!-- 사원정보 끝-->
 

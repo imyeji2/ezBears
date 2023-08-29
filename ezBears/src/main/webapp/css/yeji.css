@@ -439,6 +439,14 @@
 		
 	}
 			
+	.list_box_file2{
+		width:fit-content;
+		border: 1px solid #6C7293;
+		border-radius:5px 5px 5px 5px;
+		padding:5px 5px 5px 5px;
+		margin:10px 0px 10px 0px;
+	}
+					
 	
 }
 
@@ -452,7 +460,7 @@
 	}
 	
 	.table tbody tr:hover{
-		color:#7000D8;
+		color:#fff;
 		cursor: pointer;
 	}
 	
@@ -461,19 +469,10 @@
 	}
 	
 	.table a:hover{
-		color:#7000D8;
+		color:#fff;
 		cursor: pointer;
 	}
 	
-	.btnBox{
-		margin:20px 0px 20px 0px;
-		overflow:hidden;
-	}
-	
-	.btnBox a{
-		float:right;
-		margin-right:10px;
-	}
 	
 	.teamNotice_serch{
 		width: 80%;
@@ -496,13 +495,13 @@
 	}
 	
 	.text_box{
-		width: 80%;
+		width: 68%;
 		margin-right: 1%;
 		float: left;
 	}
 	
 	.serch_btn{
-		width: 8%;
+		width: 10%;
 		float: left;
 	}
 	
@@ -515,7 +514,17 @@
 	    background: #000;
 	    color: #fff;
 	    border-radius: 5px;
-	}	
+	}
+
+	.btnBox{
+		width: 10%;
+		float: left;
+	}
+	
+	.btnBox a{
+		line-height: 28px;
+		width: 80%;
+	}
 	
 }/*팀별 업무 게시판 리스트*/
 

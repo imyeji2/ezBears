@@ -11,4 +11,37 @@
 		values(#{teamBoardNo},#{memNo},#{myBoardNo},#{teamBoardTitle},#{teamBoardContent},
 		#{fsize},#{fileName},#{originFileName},#{teamBoardNo})
 	</insert>
+
+   <sql id="searchWhere">
+      <where>
+     	 m_board_no=#{mBoardNo} 
+     	 and status='Y'
+     	<![CDATA[and step < 1]]>
+         <if test="searchKeyword!=null and searchKeyword!=''">
+             and  ${searchCondition} like '%' || #{searchKeyword} || '%'
+         </if>   
+      </where>
+   </sql>
+   
+	
+	<select id="selectTeamWorkBoard" parameterType="myBoardSearchVo" resultType="map">
+      select *
+      from
+      (
+	      select rownum as RNUM, A.* from
+	      (		
+			select * from teamWorkBoardlistView
+			<include refid="searchWhere"></include>
+			order by regdate desc
+	      )A
+      )
+      <![CDATA[
+      where RNUM> #{firstRecordIndex} 
+      and RNUM<=#{firstRecordIndex} + #{recordCountPerPage}]]>				
+	</select>
+	
+	<select id="selectTotalCount" parameterType="myBoardSearchVo" resultType="int">
+		select count(*) from teamWorkBoardlistView
+		<include refid="searchWhere"></include>
+	</select>	
 </mapper>
