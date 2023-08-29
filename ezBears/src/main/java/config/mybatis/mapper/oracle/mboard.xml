@@ -38,7 +38,7 @@
     
     <!-- 총 리스트 수 -->
     <select id="totalBoardList" parameterType="searchVo" resultType="int">
-    	SELECT COUNT(*) FROM M_BOARD 
+    	SELECT COUNT(*) FROM MBOARDLISTINFOVIEW 
     	<include refid="searchWhere"></include>
     </select>
     
@@ -46,7 +46,10 @@
     <sql id="searchWhere">
 		<where>
 			<if test="searchKeyword!=null and searchKeyword!=''">
-			    TO_CHAR(M_BOARD.M_BOARD_NAME) LIKE '%'|| #{searchKeyword} ||'%'
+			    TO_CHAR(MBOARDLISTINFOVIEW.M_BOARD_NAME) LIKE '%'|| #{searchKeyword} ||'%'
+			    OR TO_CHAR(MBOARDLISTINFOVIEW.MEM_NAME) LIKE '%'|| #{searchKeyword} ||'%'
+			    OR TO_CHAR(MBOARDLISTINFOVIEW.DEPT_NAME) LIKE '%'|| #{searchKeyword} ||'%'
+			    OR TO_CHAR(MBOARDLISTINFOVIEW.DEPT_TEL) LIKE '%'|| #{searchKeyword} ||'%'
 			    AND STATUS ='y'
 			</if>
 		</where>

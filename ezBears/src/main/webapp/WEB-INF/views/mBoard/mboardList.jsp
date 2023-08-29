@@ -54,7 +54,7 @@
 			                <c:if test="${!empty list}">
 			                	<c:forEach var="MBoardVo" items="${list}"> 
 			                		<tr class="mboardList">
-			                			<td id="mboardno">${MBoardVo.MBoardNo}</td>
+			                			<td id="mboardno">-</td>
 			                			<td>
 			                				<a href ="<c:url value = '/myBoard/teamNotice?mBoardNo=${MBoardVo.MBoardNo}'/>" id="mboardNameA">
 			                					${MBoardVo.MBoardName}
