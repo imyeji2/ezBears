@@ -4,9 +4,9 @@ import lombok.Data;
 
 @Data
 public class ToDoListDetailVO {
-	private int toDoDetailNo;
-	private int toDoListNo;
-	private String toDoContent;
+	private int todoDetailNo;
+	private int todolistNo;
+	private String todoContent;
 	private String regdate;
 	private String status;
 

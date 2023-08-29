@@ -107,6 +107,12 @@ public class TeamNoticeServiceImpl implements TeamNoticeService {
 		cnt = teamNoticeDao.insertReReply(teamNoticeVo);
 		return cnt;
 	}
+	
+	////공지사항 파일 삭제
+	@Override
+	public int deleteFile(int teamNoticeNo) {
+		return teamNoticeDao.deleteFile(teamNoticeNo);
+	}
 
 
 

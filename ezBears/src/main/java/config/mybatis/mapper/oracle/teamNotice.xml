@@ -183,6 +183,12 @@
    		values(#{teamNoticeNo},#{memNo},#{comments},#{groupno},#{step}+1,#{sortno}+1,#{myBoardNo},#{contentno})
    </insert>
    
+   <update id="deleteFile" parameterType="int">
+   		update team_notice
+   		set fsize=0, fileName=null, originname=null
+   		where team_notice_no=#{teamNoticeNo}
+   </update>
+   
    
    
       

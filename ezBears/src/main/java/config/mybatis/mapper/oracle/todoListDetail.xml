@@ -4,10 +4,10 @@
 
 <mapper namespace="com.ez.ezBears.teamWorkBoard.model.ToDoListDetailDAO">
 	<insert id="insertTodoListDetail" parameterType="toDoListDetailVo">
-		<selectKey keyColumn="toDoDetailNo" order="BEFORE" resultType="int">
+		<selectKey keyProperty="todoDetailNo" order="BEFORE" resultType="int">
 			select TODOLIST_DETAIL_SEQ.nextval from dual
 		</selectKey>
-		insert into TODOLIST(TODO_DETAIL_NO,TODOLIST_NO,TODO_CONTENT)
-		values(#{toDoDetailNo},#{toDoListNo},#{toDoContent}); 
+		insert into TODOLIST_DETAIL(TODO_DETAIL_NO,TODOLIST_NO,TODO_CONTENT)
+		values(#{todoDetailNo},#{todolistNo},#{todoContent}) 
 	</insert>
 </mapper>

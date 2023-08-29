@@ -1,6 +1,7 @@
 package com.ez.ezBears.temNotice.controller;
 import java.io.File;
 import java.io.IOException;
+import java.lang.ProcessHandle.Info;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -337,11 +338,11 @@ public class TeamNoticeController {
 		int cnt = teamNoticeService.updateTeamNotice(teamNoticeVo);
 		logger.info("팀별 공지사항 수정 결과 cnt={}",cnt);
 		
-		String msg="공지사항 글 수정 실패";
+		String msg="글 수정에 실패하였습니다.";
 		String url="/myBoard/teamNoticeEdit?mBoardNo="+mBoardNo+"&teamNoticeNo="+teamNoticeVo.getTeamNoticeNo();
 		
 		if(cnt>0) {
-			msg="공지사항 글 수정 성공";
+			msg="글 수정이 완료되었습니다.";
 			url="/myBoard/teamNoticeDetail?mBoardNo="+mBoardNo+"&teamNoticeNo="+teamNoticeVo.getTeamNoticeNo();
 			
 			if(fileName!=null && !fileName.isEmpty()) { //
@@ -362,6 +363,34 @@ public class TeamNoticeController {
 		model.addAttribute("url",url);
 		//4
 		return "common/message";
+	}
+	
+	//파일 삭제
+	@ResponseBody
+	@RequestMapping("deleteFile")
+	public int teamNoticeFileDel(@ModelAttribute TeamNoticeVO teamNoticeVo,
+			@RequestParam String oldFileName,HttpServletRequest request, Model model) {
+		//1
+		logger.info("파일 삭제 처리 ajax 파라미터 teamNoticeVo={},oldFileName={}");
+		
+		//2
+		int cnt = teamNoticeService.deleteFile(teamNoticeVo.getTeamNoticeNo());
+		logger.info("파일 삭제 처리 결과 cnt={}",cnt);
+		
+		if(cnt>0) {
+			if(oldFileName!=null && !oldFileName.isEmpty()) { //
+				String upPath=fileUploadUtil.getUploadPath(request, ConstUtil.UPLOAD_TEAMNOTICE_FLAG);
+				File file = new File(upPath,oldFileName);
+	
+				if(file.exists()) {
+					boolean bool=file.delete();
+					logger.info("파일 삭제 여부 : {}", bool);
+				}
+			}
+		}
+		
+		return cnt;
+						
 	}
 	
 	

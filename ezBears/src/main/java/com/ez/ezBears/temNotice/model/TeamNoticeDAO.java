@@ -57,6 +57,8 @@ public interface TeamNoticeDAO {
 	
 	//팀별 공지사항 그룹 시퀀스 
 	int selectGroupNo();
-
+	
+	//공지사항 파일 삭제
+	int deleteFile(int teamNoticeNo);
 
 }
