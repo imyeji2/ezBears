@@ -91,12 +91,15 @@ public class TeamWorkBoardController {
 			@ModelAttribute TeamWorkBoardVO teamVo,
 			@ModelAttribute ToDoListVO todolistVO, 
 			@ModelAttribute ToDoListDetailListVO items,
-			Model model,HttpServletRequest request) {
+			Model model,HttpServletRequest request,
+			@RequestParam (defaultValue = "0") int mBoardNo) {
 		
 		//1
 		logger.info("팀별 업무 게시판 글 등록 파라미터 teamVo={}",teamVo);
 		logger.info("팀별 업무 게시판 글 등록 파라미터 todolistVO={}",todolistVO);
 		logger.info("팀별 업무 게시판 글 등록 파라미터 items={}",items);
+
+		
 		
 		//2.
 		try {
@@ -120,18 +123,23 @@ public class TeamWorkBoardController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 		
+		int cnt = teamWorkBoardService.teamWorkBoardInsert(teamVo, todolistVO, items);
+		logger.info("업무 게시판 등록 결과 cnt={},cnt");
+		
+		String msg="등록 실패", url = "/myBoard/teamWorkBoardList?mBoardNo="+mBoardNo;
+		if(cnt>0) {
+			msg="업무 계획이 등록되었습니다.";
+			url="/myBoard/teamWorkBoardDetail?mBoardNo="+mBoardNo+
+					"&teamNoticeNo="+teamVo.getMyBoardNo();
+		}
 		
 		//3
-		
-		//3-1
-		/*
-		 * int cnt = teamWorkBoardService List<ToDoListDetailVO> list =
-		 * items.getItems(); logger.info("list.size={}",list.size());
-		 */
+		model.addAttribute("msg",msg);
+		model.addAttribute("url",url);
+
 		//4
-		return "";
+		return "common/message";
 	}
 	
 	
