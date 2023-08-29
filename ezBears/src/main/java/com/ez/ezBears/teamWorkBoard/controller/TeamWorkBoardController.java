@@ -132,7 +132,7 @@ public class TeamWorkBoardController {
 		//2.
 		try {
 			List<Map<String, Object>> fileList
-			=fileUploadUtil.fileupload(request, ConstUtil.UPLOAD_TEAMNOTICE_FLAG);
+			=fileUploadUtil.fileupload(request, ConstUtil.UPLOAD_TEAMWORKBOARD_FLAG);
 
 			String fileName="", originalFileName="";
 			long fileSize = 0;

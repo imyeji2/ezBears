@@ -254,7 +254,7 @@ $(function(){
 			       			
 			       			
 			       			<div class="write_file">
-								<input class="form-control" type="file" id="formFile">
+								<input class="form-control" type="file" id="formFile" name="upfile">
 			       			</div>
 			       			<div class="write_option_btn">
 			       				<button class="btn btn-sm btn-primary" id="writeBtn">등록</button>&nbsp;

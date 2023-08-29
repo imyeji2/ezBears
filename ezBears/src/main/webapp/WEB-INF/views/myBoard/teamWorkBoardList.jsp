@@ -3,22 +3,25 @@
 <%@include file="../inc/top.jsp"%>
 
 <script>
-$('#searchBtn').click(function(){
-    event.preventDefault();
+$(function(){
+	$('#searchBtn').click(function(){
+	    event.preventDefault();
 
-    if ($('#searchCondition').val() === "default") {
-        alert("검색할 카테고리를 선택해주세요");
-        $('#searchCondition').focus();
-        return false;
-    } else if ($('#searchKeyword').val().length < 1) {
-        alert('검색어를 입력해주세요');
-        $('#searchKeyword').focus();
-        return false;
-    }else{
-    	$('form[name=serchFrm]').submit();
-    }
+	    if ($('#searchCondition').val() === "default") {
+	        alert("검색할 카테고리를 선택해주세요");
+	        $('#searchCondition').focus();
+	        return false;
+	    } else if ($('#searchKeyword').val().length < 1) {
+	        alert('검색어를 입력해주세요');
+	        $('#searchKeyword').focus();
+	        return false;
+	    }else{
+	    	$('form[name=serchFrm]').submit();
+	    }
 
-});
+	});
+})
+
 </script>
 
     <!-- Recent Sales Start -->
@@ -31,7 +34,7 @@ $('#searchBtn').click(function(){
 						<div id="teamWorkBoardList">
 							<br>
 							
-							<form action="<c:url value='/myBoard/teamNotice?mBoardNo=${mBoardNo}'/>" method="post" name="teamNoticeFrom">
+							<form action="<c:url value='/myBoard/teamWorkBoardmBoardNo=${mBoardNo}'/>" method="post" name="teamNoticeFrom">
 								<input type="hidden" name="currentPage">
 								<input type="hidden" name="searchKeyword" value="${param.searchKeyword}">
 								<input type="hidden" name="searchCondition" value="${param.searchCondition}">
@@ -41,7 +44,8 @@ $('#searchBtn').click(function(){
 								<div id="teamNotice_serch">
 									<div class="serch_input">
 										<div class="select_box">
-											<select class="form-select" aria-label="Default select example" name="searchCondition">
+											<select class="form-select" aria-label="Default select example" 
+												name="searchCondition" id="searchCondition">
 											  <option value="default" selected>선택</option>
 											  <option value="mem_name"
 											  	<c:if test="${param.searchCondition=='mem_name'}">
@@ -61,13 +65,19 @@ $('#searchBtn').click(function(){
 											</select>							
 										</div>
 										<div class="text_box">
-											<input type="text" class="form-control" name="searchKeyword"
+											<input type="text" class="form-control" name="searchKeyword" id="searchKeyword"
 												 placeholder="검색어를 입력해주세요" value="${param.searchKeyword }">
 										</div>
 										
 										<div class="serch_btn">
 											<button id="searchBtn">검색</button>
 										</div><!-- serch_btn -->
+										
+							        <div class="btnBox">
+										<a class="btn btn-sm btn-primary" 
+											href="<c:url value='/myBoard/teamNoticeWrite?mBoardNo=${mBoardNo}'/>">등록</a>
+									</div><!-- btnBox --> 
+																			
 									</div><!-- serch_input -->
 								</div><!-- teamNotice_serch -->
 							</form>
@@ -104,99 +114,26 @@ $('#searchBtn').click(function(){
 								
 								<!-- 반복 끝 -->
 								</c:if>							
-
-
-					                  <tr class="table_info">
-					                      <!-- <td><input class="form-check-input" type="checkbox"></td> -->
-					                      <td>10</td>
-					                      <td><a href="<c:url value='/myBoard/teamWorkBoardDetail'/>">개발1팀 8월 업무 리스트</a></td>
-					                      <td>제이든</td>
-					                      <td>2023-08-01</td>
-					                      <td>5</td>
-									   <!-- <td><a class="btn btn-sm btn-primary" href="">Detail</a></td> -->
-					                  </tr>              
-					                  <tr class="table_info">
-					                      <!-- <td><input class="form-check-input" type="checkbox"></td> -->
-					                      <td>9</td>
-					                      <td>개발1팀 7월 업무 리스트</td>
-					                      <td>제이든</td>
-					                      <td>2023-07-01</td>
-					                      <td>20</td>
-									   <!-- <td><a class="btn btn-sm btn-primary" href="">Detail</a></td> -->
-					                  </tr>
-					                  <tr class="table_info">
-					                      <td>4</td>
-					                      <td>개발1팀 6월 업무 리스트</td>
-					                      <td>제이든</td>
-					                      <td>2023-06-01</td>
-					                      <td>60</td>
-					                  </tr>
-					                  <tr class="table_info">
-					                      <td>8</td>
-					                      <td>개발1팀 5월 업무 리스트</td>
-					                      <td>제이든</td>
-					                      <td>2023-05-01</td>
-					                      <td>50</td>
-					                  </tr>
-					                  <tr class="table_info">
-					                      <td>7</td>
-					                      <td>개발1팀 4월 업무 리스트</td>
-					                      <td>제이든</td>
-					                      <td>2023-04-01</td>
-					                      <td>28</td>
-					                  </tr>
-					                  <tr class="table_info">
-					                      <td>6</td>
-					                      <td>개발1팀 4월 업무 리스트</td>
-					                      <td>제이든</td>
-					                      <td>2023-04-01</td>
-					                      <td>30</td>
-					                  </tr>
-					                  <tr class="table_info">
-					                      <!-- <td><input class="form-check-input" type="checkbox"></td> -->
-					                      <td>5</td>
-					                      <td>개발1팀 3월 업무 리스트</td>
-					                      <td>제이든</td>
-					                      <td>2023-03-01</td>
-					                      <td>48</td>
-									   <!-- <td><a class="btn btn-sm btn-primary" href="">Detail</a></td> -->
-					                  </tr>
-					                  <tr class="table_info">
-					                      <!-- <td><input class="form-check-input" type="checkbox"></td> -->
-					                      <td>4</td>
-					                      <td>개발1팀 2월 업무 리스트</td>
-					                      <td>제이든</td>
-					                      <td>2023-02-01</td>
-					                      <td>70</td>
-									   <!-- <td><a class="btn btn-sm btn-primary" href="">Detail</a></td> -->
-					                  </tr>
-					                  <tr class="table_info">
-					                      <!-- <td><input class="form-check-input" type="checkbox"></td> -->
-					                      <td>3</td>
-					                      <td>개발1팀 1월 업무 리스트</td>
-					                      <td>제이든</td>
-					                      <td>2023-01-01</td>
-					                      <td>60</td>
-									   <!-- <td><a class="btn btn-sm btn-primary" href="">Detail</a></td> -->
-					                  </tr>
-					                  <tr class="table_info">
-					                      <!-- <td><input class="form-check-input" type="checkbox"></td> -->
-					                      <td>2</td>
-					                      <td>개발1팀 12월 업무 리스트</td>
-					                      <td>제이든</td>
-					                      <td>2022-12-01</td>
-					                      <td>58</td>
-									   <!-- <td><a class="btn btn-sm btn-primary" href="">Detail</a></td> -->
-					                  </tr>
-					                   <tr class="table_info">
-					                      <!-- <td><input class="form-check-input" type="checkbox"></td> -->
-					                      <td>1</td>
-					                      <td>개발1팀 11월 업무 리스트</td>
-					                      <td>제이든</td>
-					                      <td>2022-11-01</td>
-					                      <td>98</td>
-									   <!-- <td><a class="btn btn-sm btn-primary" href="">Detail</a></td> -->
-					                  </tr>                                                                                         
+								<c:set var="idx" value="${pagingInfo.totalRecord}"/>
+									<c:forEach var="map" items="${list}">
+						                  <tr class="table_info">
+						                      <!-- <td><input class="form-check-input" type="checkbox"></td> -->
+						                      <td>${idx}</td>
+						                      <td>
+						                      	<a href="
+						                      	<c:url value='/myBoard/teamWorkBoardCountUpdate?mBoardNo=${map["MBoardNo"]}teamWorkBoardNo=${map["TEAM_BOARD_NO"]}'/>">
+						                      		${map['TEAM_BOARD_TITLE']}
+						                      	</a>
+						                      </td>
+						                      <td>${map['MEM_NAME']}</td>
+						                      <td>
+						                      	<fmt:formatDate value="${map['REGDATE']}" pattern="yyyy-MM-dd"/>						                      
+						                      </td>
+						                      <td>${map['VIEWS']}</td>
+										   <!-- <td><a class="btn btn-sm btn-primary" href="">Detail</a></td> -->
+						                  </tr>
+						                 <c:set var="idx" value="${idx-1}"/>     
+									</c:forEach>        
 					              </tbody>
 					          </table>
 					      </div>
@@ -205,21 +142,36 @@ $('#searchBtn').click(function(){
 								<a class="btn btn-sm btn-primary" href="">수정</a> -->
 								<a class="btn btn-sm btn-primary" href="<c:url value='/myBoard/teamWorkBoardWrite?mBoardNo=${mBoardNo}'/>">등록</a>
 						</div><!-- btnBox -->
-					      <div class="page_box">
-						      <nav aria-label="Page navigation example">
-								  <ul class="pagination justify-content-center">
-								    <li class="page-item">
-								      <a class="page-link">Previous</a>
-								    </li>
-								    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-								    <li class="page-item"><a class="page-link" href="#">2</a></li>
-								    <li class="page-item"><a class="page-link" href="#">3</a></li>
-								    <li class="page-item">
-								      <a class="page-link" href="#">Next</a>
-								    </li>
-								  </ul>
-								</nav>
-							</div>
+						      <div class="page_box">
+							      <nav aria-label="Page navigation example">
+									  <ul class="pagination justify-content-center">
+									  <c:if test="${pagingInfo.firstPage>1}">
+										    <li class="page-item">
+										      <a class="page-link" onclick="pageFunc(${pagingInfo.firstPage-1})">
+										      	<
+										      </a>
+										    </li>
+									    </c:if>
+									    <c:forEach var="i" begin="${pagingInfo.firstPage}" end="${pagingInfo.lastPage}">		
+											<c:if test="${i == pagingInfo.currentPage}">		
+											    <li class="page-item active" >
+											    	<a class="page-link" href="#">${i}</a>
+											    </li>
+											   </c:if>
+												<c:if test="${i != pagingInfo.currentPage }">
+												    <li class="page-item">
+												    	<a class="page-link" href="#" onclick="pageFunc(${i})">${i}</a>
+												    </li>
+											    </c:if>   		
+											</c:forEach>
+										<c:if test="${pagingInfo.lastPage < pagingInfo.totalPage}">													    
+										    <li class="page-item">
+										      <a class="page-link"  href="#" onclick="pageFunc(${pagingInfo.lastPage+1})">Next</a>
+										    </li>
+									    </c:if>
+									  </ul>
+									</nav>
+							</div><!-- page_box -->
 						</div><!-- teamWorkBoardList -->
 					</div>
 				</div>
