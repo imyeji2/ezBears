@@ -72,10 +72,9 @@
 	           </ol>
          	</nav>
         <div class="col-md-8 text-center">
-        	<h3>월별 근태조회</h3>
-        	<br>
-       
+        	<h3>월별 근태조회</h3><br>
        		<div id='calendar'></div>
+       
         </div>
     </div>
 </div>
