@@ -1,5 +1,6 @@
 package com.ez.ezBears.schedule.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,8 +11,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ez.ezBears.myBoard.model.MyBoardInfoVO;
 import com.ez.ezBears.myBoard.model.MyBoardListService;
@@ -83,7 +86,7 @@ public class ScheduleController {
 
 	@PostMapping("/Calender_write")
 	public String Calender_post(@ModelAttribute ScheduleVO scheduleVo,
-			@RequestParam (defaultValue = "0")int myBoardNo) {
+			@RequestParam (defaultValue = "0")int myBoardNo ,@RequestParam (defaultValue = "0")int MBoardNo) {
 
 		//
 
@@ -96,28 +99,65 @@ public class ScheduleController {
 		//
 
 		//
-		return "redirect:/myBoard/Calender";
+		return "redirect:/myBoard/Calender?mBoardNo="+MBoardNo;
 	}
 	
 	
-	@GetMapping("/Calender_edit")
-	public String Calender_ed(@RequestParam (defaultValue = "0")int id, ScheduleVO scheduleVo
-			,Model model) {
-		String type="edit";
-		scheduleVo.setScheduleNo(id);
-		
-		
-		model.addAttribute("type",type);
-		model.addAttribute("sc",scheduleVo);
-		return "/myBoard/Calender_write";
+	@ResponseBody
+	@PostMapping("/eventUpdate")
+	public Map<String, Object> updateEvent(@RequestParam("eventId") int eventId,
+	                                      @RequestParam("newTitle") String newTitle,
+	                                      @RequestParam("newStartDate") String newStartDate,
+	                                      @RequestParam("newEndDate") String newEndDate) {
+	    Map<String, Object> response = new HashMap<>();
+	    	logger.info("response={}",response);
+	    try {
+	        Map<String, Object> parameters = new HashMap<>();
+	        parameters.put("scheduleNo", eventId);
+	        parameters.put("schedulTitle", newTitle);
+	        parameters.put("schedulStart", newStartDate);
+	        parameters.put("schedulEnd", newEndDate);
+	        
+	        int updatedRows = scheduleService.updateEvent(parameters);
+	        
+	    	logger.info("으음 updatedRows={}",updatedRows);
+	        if (updatedRows > 0) {
+	            response.put("success", true);
+	            response.put("message", "일정이 성공적으로 수정되었습니다.");
+	        } else {
+	            response.put("success", false);
+	            response.put("message", "일정 수정에 실패했습니다.");
+	        }
+	    } catch (Exception e) {
+	        response.put("success", false);
+	        response.put("message", "일정 수정 중 오류가 발생했습니다.");
+	    }
+	    return response;
 	}
 	
-	
-	@PostMapping("/Calender_edit")
-	public String Calender_po() {
-		
-		return "redirect:/myBoard/Calender";
-	}
-	
+	@PostMapping("/deleteEvent")
+	@ResponseBody
+	public Map<String, Object> deleteEvent(@RequestBody Map<String, Object> request) {
+	    Map<String, Object> response = new HashMap<>();
+	    
+	    try {
+	        String eventIdStr = (String) request.get("eventId");
+	        int eventId = Integer.parseInt(eventIdStr); // 문자열을 정수로 변환
 
+	        boolean success = scheduleService.deleteEvent(eventId);
+
+	        if (success) {
+	            response.put("success", true);
+	        } else {
+	            response.put("success", false);
+	            response.put("message", "일정 삭제에 실패했습니다.");
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        response.put("success", false);
+	        response.put("message", "일정 삭제 중 오류가 발생했습니다.");
+	    }
+
+	    return response;
+	}
 }

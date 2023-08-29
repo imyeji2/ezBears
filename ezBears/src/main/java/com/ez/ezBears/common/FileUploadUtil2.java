@@ -36,9 +36,11 @@ public class FileUploadUtil2 {
 		List<Map<String, Object>> resultList = new ArrayList<>();
 		//Iterator<String> iter = fileMap.keySet().iterator();
 		int i=0;
-		
+		System.out.println("2222222");
+		System.out.println(files.size());
 		while(i<files.size()) {
 			//String key=iter.next();
+			System.out.println("123");
 			MultipartFile tempFile = files.get(i);//fileMap.get(key);//업로드된 파일을 임시파일 형태로 제공
 			if(!tempFile.isEmpty()) { //파일이 업로드된 경우
 				long fileSize=tempFile.getSize(); //파일 크기
