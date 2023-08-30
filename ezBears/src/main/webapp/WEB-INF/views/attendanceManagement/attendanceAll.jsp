@@ -19,6 +19,29 @@
 		         	<div class="col-md-12 text-center">
         				<h3>출/퇴근 현황</h3>
         			</div><br>
+        			
+        			<form action="">
+			        	<table>
+			        		<tr>
+			        			<th style="width: 10%">기간</th>
+			        			<td> <input type="text" class="dateInput">년 <input type="text" class="dateInput">월 <input type="text" class="dateInput">일 
+			        				~ <input type="text" class="dateInput">년 <input type="text" class="dateInput">월 <input type="text" class="dateInput">일</td>
+			        		</tr>
+			        		<tr>
+			        			<th>부서명</th>
+			        			<td><input type="text" style="width: 80%"></td>
+			        		</tr>
+			        		<tr>
+			        			<th>사원명</th>
+			        			<td><input type="text" style="width: 80%"></td>
+			        		</tr>
+			        	</table>
+			        	<br>
+			        	<input type="submit" value="검색"/>
+		        	
+		        	</form>
+        			
+        			
 			        <table class="table table-hover">
 			            <thead>
 			                <tr>

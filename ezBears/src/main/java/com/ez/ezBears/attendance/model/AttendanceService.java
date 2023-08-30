@@ -1,6 +1,9 @@
 package com.ez.ezBears.attendance.model;
 
 import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.annotations.Param;
 
 public interface AttendanceService {
 	List<AttendanceVO> selectByMemNo(int memNo);
@@ -10,4 +13,8 @@ public interface AttendanceService {
 	int comeCompanyLate(int attendanceNo);
 	int comeCompanyGood(int attendanceNo);
 	int goHome(AttendanceVO attendanceVo);
+	List<Map<String, Object>> selectAllThisMonth(@Param ("memNo") int memNo, @Param("date") String date );
+	int countComeLate(@Param ("memNo") int memNo, @Param("date") String date );
+	int countComeGood(@Param ("memNo") int memNo, @Param("date") String date );
+	int countGoEarly(@Param ("memNo") int memNo, @Param("date") String date );
 }

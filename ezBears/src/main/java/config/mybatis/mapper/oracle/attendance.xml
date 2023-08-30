@@ -46,6 +46,38 @@
 	<select id="selectAllAttendance" resultType="attendanceVo">
 		select * from attendance order by attendance_no desc	
 	</select>
+	
+	<select id="selectAllThisMonth" parameterType="map" resultType="map">
+		SELECT *
+		FROM attendance
+		WHERE TO_CHAR(in_time, 'YYYY-MM') = #{date}
+		AND mem_no = #{memNo}
+		ORDER BY attendance_no DESC
+	</select>
+	
+	<select id="countComeLate" parameterType="map" resultType="int">
+		SELECT count(*)
+		FROM attendance
+		WHERE TO_CHAR(in_time, 'YYYY-MM') = #{date}
+		AND mem_no = #{memNo}
+		and status like '%지각%'
+	</select>
+	
+	<select id="countComeGood" parameterType="map" resultType="int">
+		SELECT count(*)
+		FROM attendance
+		WHERE TO_CHAR(in_time, 'YYYY-MM') = #{date}
+		AND mem_no = #{memNo}
+		and status like '%출근%'
+	</select>
+	
+	<select id="countGoEarly" parameterType="map" resultType="int">
+		SELECT count(*)
+		FROM attendance
+		WHERE TO_CHAR(in_time, 'YYYY-MM') = #{date}
+		AND mem_no = #{memNo}
+		and status like '%조퇴%'
+	</select>
  
  
  

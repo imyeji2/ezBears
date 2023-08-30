@@ -1,8 +1,13 @@
 package com.ez.ezBears.myPage.controller;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalTime;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -215,14 +220,87 @@ public class MyPageController {
 		return "/common/message";
 	}
 	
-	@GetMapping("/attendanceList")
-	public String attendanceList() {
+	@RequestMapping("/attendanceList")
+	public String attendanceList(HttpSession session, @RequestParam(required = false) String date, Model model) throws ParseException {
+		BigDecimal bigDecimalMemNo = (BigDecimal) session.getAttribute("memNo");
 		
+		// BigDecimal 값을 int로 변환
+		int memNo = bigDecimalMemNo.intValue();
+		logger.info("근태 상세보기 조회, 파라미터 memNo={}", memNo);
+		
+		//날짜 검색창에 디폴트로넘기기 위한 date 세팅
+		if(date == null || date.isEmpty()) {
+			Date date1 = new Date();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
+
+			date = (String)sdf.format(date1);
+		}
+		logger.info("date={}", date);
+		
+		//vo에 근무시간 컬럼이 없으므로 대신 map 사용
+		List<Map<String, Object>> attendanceList = attendanceService.selectAllThisMonth(memNo, date);
+		
+		double totalTime = 0;
+		
+		//for문 안에서 각각 map 요소들 세팅
+		for(Map<String, Object> map : attendanceList) {
+			Timestamp timestamp1 = (Timestamp) map.get("IN_TIME");
+			logger.info("timestamp1={}", timestamp1);
+			Timestamp timestamp2 = (Timestamp) map.get("OUT_TIME");
+			logger.info("timestamp2={}", timestamp2);
+			
+			double hourGap = 0;  // 기본적으로 시간 차이를 0으로 설정
+
+		    if(timestamp2 != null) {  // date2가 비어있지 않은 경우에만 계산
+		    	String date1 = timestamp1.toString(); // Timestamp를 String으로 변환
+		    	String date2 = timestamp2.toString(); // Timestamp를 String으로 변환
+		    	
+		        Date format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(date1);
+		        Date format2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(date2);
+
+		        // 시간의 차이 구하기
+		        hourGap = Math.ceil(((format2.getTime() - format1.getTime()) / 3600000d)*10)/10;
+		    }
+		    totalTime += hourGap;
+		    
+		    logger.info("hourGap={}", hourGap);
+		    
+		    map.put("hourGap", Double.toString(hourGap));
+		    logger.info("map={}", map);
+		}
+		
+		totalTime = Math.ceil((totalTime)*10)/10;
+		logger.info("총 근무시간={}", totalTime);
+		logger.info("attendanceList={}", attendanceList);
+		logger.info("list.size={}", attendanceList.size());
+		
+		model.addAttribute("attendanceList", attendanceList);
+		model.addAttribute("date", date);
+		model.addAttribute("totalTime", totalTime);
+		//------------------------------------------------------ 여기까지가 list 띄우는 곳
+		
+		//지각 횟수 조회
+		int cntL = attendanceService.countComeLate(memNo, date);
+		logger.info("지각 횟수, cntL={}", cntL);
+		
+		//조퇴 횟수 조회
+		int cntE = attendanceService.countGoEarly(memNo, date);
+		logger.info("조퇴 횟수, cntE={}", cntE);
+		
+		//출근 횟수 조회
+		int cntG = attendanceService.countComeGood(memNo, date);
+		logger.info("출근 횟수, cntG={}", cntG);
+		
+		model.addAttribute("cntL", cntL);
+		model.addAttribute("cntE", cntE);
+		model.addAttribute("cntG", cntG);
 		
 		return "/mypage/attendanceList";
 		
 		//http://localhost:9091/ezBears/mypage/attendanceList
 	}
+	
+	
 	
 	
 	

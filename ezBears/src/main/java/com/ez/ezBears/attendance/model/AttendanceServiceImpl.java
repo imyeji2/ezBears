@@ -1,6 +1,7 @@
 package com.ez.ezBears.attendance.model;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
@@ -52,6 +53,31 @@ public class AttendanceServiceImpl implements AttendanceService{
 	public int goHome(AttendanceVO attendanceVo) {
 		return attendanceDao.goHome(attendanceVo);
 	}
+
+
+	@Override
+	public List<Map<String, Object>> selectAllThisMonth(int memNo, String date) {
+		return attendanceDao.selectAllThisMonth(memNo, date);
+	}
+
+
+	@Override
+	public int countComeLate(int memNo, String date) {
+		return attendanceDao.countComeLate(memNo, date);
+	}
+
+
+	@Override
+	public int countComeGood(int memNo, String date) {
+		return attendanceDao.countComeGood(memNo, date);
+	}
+
+
+	@Override
+	public int countGoEarly(int memNo, String date) {
+		return attendanceDao.countGoEarly(memNo, date);
+	}
+
 
 
 
