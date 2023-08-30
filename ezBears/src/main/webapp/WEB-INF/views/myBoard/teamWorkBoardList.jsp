@@ -121,8 +121,11 @@ $(function(){
 						                      <td>${idx}</td>
 						                      <td>
 						                      	<a href="
-						                      	<c:url value='/myBoard/teamWorkBoardCountUpdate?mBoardNo=${mBoardNo}&teamBoardNo=${map["TEAM_BOARD_NO"]}'/>">
+						                      	<c:url value='/myBoard/teamWorkBoardCountUpdate?mBoardNo=${mBoardNo}&teamBoardNo=${map["TEAM_BOARD_NO"]}'/>" style="color:#fff;">
 						                      		${map['TEAM_BOARD_TITLE']}
+						                      		<c:if test="${map['FILENAME'] != null}">
+						                      			💾
+													</c:if>
 						                      	</a>
 						                      </td>
 						                      <td>${map['MEM_NAME']}</td>

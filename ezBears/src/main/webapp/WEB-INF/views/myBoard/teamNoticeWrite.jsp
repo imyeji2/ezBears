@@ -6,9 +6,10 @@
 
 	<script>
 		$(function(){
-			
+
 			var editor = CKEDITOR.replace('teamNoticeContent', {
 				filebrowserUploadUrl : "<c:url value='/adm/fileupload'/>",
+				clipboard_image_handling: true,
 				height : '300px',
 				resize_enabled: false
 			});
@@ -29,7 +30,7 @@
 		        }
 			    
 			    
-			    if($('.list_box_file2').length<1){
+			    if($('.list_box_file2').length<0){
 					var sendDate = $('form[name=teamNotiFrm]').serialize();
 					$.ajax({
 					        url: "<c:url value='/myBoard/deleteFile'/>",

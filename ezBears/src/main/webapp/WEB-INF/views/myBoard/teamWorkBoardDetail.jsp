@@ -531,7 +531,7 @@
 		        		
 		        		<c:if test="${!empty map['ORIGIN_FILENAME']}">		       		        		       				        	
 			        		<div class="detail_right">
-			        			첨부파일 : <a href="<c:url value='/myBoard/teamWordBoardDownloadFile?teamBoardNo=${map["TEAM_BOARD_NO"]}&fileName=${map["FILENAME"]}'/>">
+			        			💾 <a style="color:#fff;" href="<c:url value='/myBoard/teamWordBoardDownloadFile?teamBoardNo=${map["TEAM_BOARD_NO"]}&fileName=${map["FILENAME"]}'/>">
 			        				${map['ORIGIN_FILENAME']}(<fmt:formatNumber value="${map['FSIZE'] /1024.0}" type="number" pattern="#.##"/> KB)
 			        				</a>
 			        		</div><!-- detail_right -->
@@ -547,7 +547,13 @@
 		       			
 		       			<div class="detailTodoList">
 		       				<div class="todoTitle">
-		       					<h6 class="mb-0">To Do List(1/${totalCount})</h6>
+		       					<div>
+									<h6 class="mb-0">⌛진행사항(1/${totalCount})</h6>
+									<div class="progress" role="progressbar" aria-label="Warning example" 
+										aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width:60%;">
+									 	<div class="progress-bar text-bg-Danger" style="width: 75%">75%</div>
+									</div>
+								</div>
 								<fmt:parseDate var="startRegdateFmt" value="${toDoList.startRegdate}" pattern="yyyy-MM-dd HH:mm:ss" />
 								<fmt:parseDate var="doneRegdateFmt" value="${toDoList.doneRegdate}" pattern="yyyy-MM-dd HH:mm:ss" />
 								
@@ -561,12 +567,12 @@
 		       				</div>
 		       				
                          <div class="d-flex mb-2">
-                                <input class="form-control border-0 todoInput" type="text" placeholder="업무를 입력하세요">
-                                <button type="button" class="btn btn-primary ms-2">Add</button>
+<!--                                 <input class="form-control border-0 todoInput" type="text" placeholder="업무를 입력하세요">
+                                <button type="button" class="btn btn-primary ms-2">Add</button> -->
                             </div>
                             <br>
                             <div class="uncheckList">
-                            	<h8>[진행중]</h8>
+                            	<h8>📍진행중</h8>
                             	<c:forEach var="list" items="${toDoListDetailList}">
 	                            	<c:if test="${list.status=='Y'}">
 	                            		<c:set var="uncheckedCount" value="${uncheckedCount + 1}"/>
@@ -583,7 +589,7 @@
                        		</div>
 	                        <br>
 	                        <div class="checkedList">
-	                        	<h8>[완료]</h8>
+	                        	<h8>📍완료</h8>
 	                        	<c:forEach var="list" items="${toDoListDetailList}" >
 	                        		<c:set var="checkedCount" value="${checkedCount }"/>	
 		                        	<c:if test="${list.status!='Y'}">

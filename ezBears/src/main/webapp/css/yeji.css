@@ -226,9 +226,11 @@
 
 /*팀별 공지사항 디테일 css*/
 #teamNoticeDetail{
+	
+	
 	min-height:50vh;
 	color:#fff;
-	
+
 	.detail_title{
 		width:100%;
 		border-bottom:1px solid #6C7293;
@@ -324,7 +326,7 @@
 		line-height: 100px;;
 		border:0px;
 		background: #191C24;
-		color: #6C7293;
+		color: #fff;
 		border-radius: 5px;
 	}
 
@@ -334,7 +336,7 @@
 		line-height:46px;
 		border:0px;
 		background: #191C24;
-		color: #6C7293;
+		color: #fff;
 		border-radius: 5px;
 	}	
 	.form-control{
@@ -741,7 +743,7 @@
 		line-height: 100px;;
 		border:0px;
 		background: #191C24;
-		color: #6C7293;
+		color: #fff;
 		border-radius: 5px;
 	}
 
@@ -751,7 +753,7 @@
 		line-height:46px;
 		border:0px;
 		background: #191C24;
-		color: #6C7293;
+		color: #fff;
 		border-radius: 5px;
 	}
 	
@@ -796,7 +798,13 @@
 	
 	
 	.detailTodoList{
-		margin:50px 0px 50px 0px;
+		width:100%;
+		margin:0 auto;
+		margin-top:30px;
+		padding: 30px 50px 50px 50px;
+		border-radius: 10px 10px 10px 10px;
+		background-color: #000;
+	
 	}
 	
 	.todoTitle{

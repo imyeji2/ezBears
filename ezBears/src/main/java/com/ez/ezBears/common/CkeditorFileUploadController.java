@@ -21,7 +21,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
-@RequestMapping("/adm/")
+@RequestMapping("/adm")
 public class CkeditorFileUploadController {
 
 	@PostMapping("/fileupload")
