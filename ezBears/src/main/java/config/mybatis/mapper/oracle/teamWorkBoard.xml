@@ -54,11 +54,51 @@
         where team_Board_No=#{teamBoardNo}
 	</update>
 	
+	
 	<select id="selectDetail" parameterType="int" resultType="map">
 		select * from teamWorkBoardlistView
 		where team_Board_No=#{teamBoardNo}
 	</select>
 	
+
+
+	<update id="updateTeamWorkBoard" parameterType="teamWorkBoardVo">
+		update team_Work_Board
+		set team_board_title = #{teamBoardTitle},
+		team_board_content=#{teamBoardContent}
+		<if test="fileName != null and fileName !=''">
+			,fsize=#{fsize},fileName=#{fileName},
+			origin_fileName=#{originFileName}
+		</if>
+		where team_Board_No =#{teamBoardNo}
+	</update>
+
+
+
+
+	<select id="selectTeamWorkBoardByNo" parameterType="int" resultType="teamWorkBoardVo">
+		select * from team_Work_Board
+		where team_Board_No=#{teamBoardNo}
+	</select>
+	
+
+	
+	<parameterMap type="map" id="deleteTeamWorkBoardProc">
+		<!-- 아래 ?의 순서에 맞춰서 만들어야함 -->
+		<parameter property="teamBoardNo" javaType="string" jdbcType="VARCHAR" mode="IN"/>
+		<parameter property="step" javaType="string" jdbcType="VARCHAR" mode="IN"/>
+		<parameter property="contentno" javaType="string" jdbcType="VARCHAR" mode="IN"/>
+		<parameter property="groupNo" javaType="string" jdbcType="VARCHAR" mode="IN"/>
+	</parameterMap>
+	
+
+   <delete id="deleteTeamWorkBoard" parameterMap="deleteTeamWorkBoardProc">
+   		call DELETETEAMWORKBOARD(?,?,?,?)
+   </delete>
+   
+   
+   
+
 
 
    <select id="selectReply" parameterType="myBoardSearchVo" resultType="map">
@@ -86,7 +126,7 @@
  	</select>
  	
  
-	<update id="updateSortNo" parameterType="teamNoticeVo">
+	<update id="updateSortNo" parameterType="teamWorkBoardVo">
 		update team_Work_Board
 		set sortNo = sortNo+1
 		where CONTENTNO=#{contentno} and sortNo>#{sortno}
@@ -105,6 +145,22 @@
    		insert into team_Work_Board(TEAM_BOARD_NO,MEM_NO,COMMENTS,GROUP_NO,STEP,SORTNO,MY_BOARD_NO,CONTENTNO)
    		values(#{teamBoardNo},#{memNo},#{comments},#{groupNo},#{step}+1,#{sortno}+1,#{myBoardNo},#{contentno})
    </insert> 	
+   
+   
+   <update id="updeteReply" parameterType="teamWorkBoardVo">
+	   	update team_Work_Board
+	   	set COMMENTS = #{comments}
+	   	where team_Board_No=#{teamBoardNo}
+   </update>   
+   
+   <insert id="insertReReply" parameterType="teamWorkBoardVo">
+		<selectKey keyProperty="teamBoardNo" resultType="int" order="BEFORE">
+			select TEAM_WORK_BOARD_SEQ.nextval from dual
+		</selectKey>
+		
+   		insert into team_Work_Board(TEAM_BOARD_NO,MEM_NO,COMMENTS,GROUP_NO,STEP,SORTNO,MY_BOARD_NO,CONTENTNO)
+   		values(#{teamBoardNo},#{memNo},#{comments},#{groupNo},#{step}+1,#{sortno}+1,#{myBoardNo},#{contentno})
+   </insert>   
    
    
 </mapper>

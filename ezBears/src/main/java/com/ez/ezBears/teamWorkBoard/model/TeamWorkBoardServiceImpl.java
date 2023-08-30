@@ -73,6 +73,18 @@ public class TeamWorkBoardServiceImpl implements TeamWorkBoardService{
 	public int updateViewCount(int teamBoardNo) {
 		return teamWorkBoardDao.updateViewCount(teamBoardNo);
 	}
+	
+	//팀별 공지사항 삭제
+	@Override
+	public int deleteTeamWorkBoard(Map<String, String> map) {
+		return teamWorkBoardDao.deleteTeamWorkBoard(map);
+	}	
+	
+	//팀별 공지사항 번호로 조회
+	@Override
+	public TeamWorkBoardVO selectTeamWorkBoardByNo(int teamBoardNo) {
+		return teamWorkBoardDao.selectTeamWorkBoardByNo(teamBoardNo);
+	}	
 
 	//업무 게시판 디테일
 	@Override
@@ -102,6 +114,18 @@ public class TeamWorkBoardServiceImpl implements TeamWorkBoardService{
 		return cnt;
 	}
 
+	///팀 업무 게시판 댓글 업데이트
+	@Override
+	public int updeteReply(TeamWorkBoardVO teamWorkBoardVo) {
+		return teamWorkBoardDao.updeteReply(teamWorkBoardVo);
+	}
 
+	//대댓글 등록
+	@Override
+	public int addReReply(TeamWorkBoardVO teamWorkBoardVo) {
+		int cnt=teamWorkBoardDao.updateSortNo(teamWorkBoardVo);
+		cnt = teamWorkBoardDao.insertReReply(teamWorkBoardVo);
+		return cnt;
+	}
 	
 }

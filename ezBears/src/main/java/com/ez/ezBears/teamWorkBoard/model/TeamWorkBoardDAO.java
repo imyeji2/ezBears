@@ -21,6 +21,12 @@ public interface TeamWorkBoardDAO {
 	//팀 업무 게시판 조회수
 	int updateViewCount(int teamBoardNo);
 	
+	//팀 업무 게시판 삭제
+	int deleteTeamWorkBoard(Map<String, String> map);
+	
+	//팀 업무 게시판 번호로 조회
+	TeamWorkBoardVO selectTeamWorkBoardByNo(int teamBoardNo);
+	
 	//업무 게시판 디테일
 	Map<String, Object> selectDetail(int teamBoardNo);
 
@@ -33,7 +39,15 @@ public interface TeamWorkBoardDAO {
 	//댓글 등록
 	int insertReply(TeamWorkBoardVO teamWorkBoardVo);
 	int updateSortNo(TeamWorkBoardVO teamWorkBoardVo);
-	
-	//팀별 공지사항 그룹 시퀀스 
+
+	//팀 업무 게시판 그룹 시퀀스 
 	int selectGroupNo();
+	
+	//팀 업무 게시판 댓글 업데이트
+	int updeteReply(TeamWorkBoardVO teamWorkBoardVo);
+	
+	//팀 업무 게시판 대댓글 등록
+	int insertReReply(TeamWorkBoardVO teamWorkBoardVo);
+	
+	
 }

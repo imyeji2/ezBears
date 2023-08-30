@@ -21,6 +21,12 @@ public interface TeamWorkBoardService {
 	//팀 업무 게시판 조회수
 	int updateViewCount(int teamBoardNo);
 	
+	//팀 업무 게시판 삭제
+	int deleteTeamWorkBoard(Map<String, String> map);
+	
+	//팀 업무 게시판 번호로 조회
+	TeamWorkBoardVO selectTeamWorkBoardByNo(int teamBoardNo);
+	
 	//업무 게시판 디테일
 	Map<String, Object> selectDetail(int teamBoardNo);
 	
@@ -35,5 +41,10 @@ public interface TeamWorkBoardService {
 	//댓글 등록
 	int addreply(TeamWorkBoardVO teamWorkVo);
 	
+	//팀 업무 게시판 댓글 업데이트
+	int updeteReply(TeamWorkBoardVO teamWorkBoardVo);
+	
+	//팀 업무 게시판 대댓글 등록
+	int addReReply(TeamWorkBoardVO teamWorkBoardVo);
 	
 }

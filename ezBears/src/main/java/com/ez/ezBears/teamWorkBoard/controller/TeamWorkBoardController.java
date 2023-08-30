@@ -273,7 +273,52 @@ public class TeamWorkBoardController {
 		
 		
 	}
-	
+
+	//공지사항 삭제
+	@RequestMapping("/teamWorkBoardDel")
+	public String teamWorkBoardDel(@RequestParam (defaultValue = "0") int mBoardNo,
+			@RequestParam (defaultValue = "0") int teamBoardNo, 
+			@RequestParam String oldFileName,HttpServletRequest request,  Model model) {
+		//1
+		logger.info("삭제처리 파라미터 mBoardNo={}",mBoardNo);
+
+		//2
+		TeamWorkBoardVO teamWorkBoardVo = teamWorkBoardService.selectTeamWorkBoardByNo(teamBoardNo);
+		logger.info("teamWorkBoardVo={}",teamWorkBoardVo);
+		
+		Map<String, String> map = new HashMap<>();
+		//key 이름은 xml의 key 이름과 동일해야함, 순서는 상관 없음
+		map.put("teamBoardNo", teamBoardNo+"");
+		map.put("step", teamWorkBoardVo.getStep()+"");
+		map.put("contentno", teamWorkBoardVo.getContentno()+"");
+		map.put("groupNo", teamWorkBoardVo.getGroupNo()+"");
+		
+		logger.info("삭제 처리 파라미터, map={}",map);
+		int cnt = teamWorkBoardService.deleteTeamWorkBoard(map);
+		logger.info("삭제 처리 결과 cnt={}",cnt);
+		
+
+		String msg="삭제가 완료되었습니다.";
+		String url="/myBoard/teamNotice?mBoardNo="+mBoardNo;
+
+
+		if(oldFileName!=null && !oldFileName.isEmpty()) { //
+			String upPath=fileUploadUtil.getUploadPath(request, ConstUtil.UPLOAD_TEAMWORKBOARD_FLAG);
+			File file = new File(upPath,oldFileName);
+
+			if(file.exists()) {
+				boolean bool=file.delete();
+				logger.info("파일 삭제 여부 : {}", bool);
+			}
+		}
+		
+		//3
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+
+		//4
+		return "common/message";
+	}
 	
 	//댓글 조회
 	@ResponseBody
@@ -343,4 +388,77 @@ public class TeamWorkBoardController {
 	}	
 	
 	
+	//댓글 수정
+	@ResponseBody
+	@RequestMapping("/workBoard_reply_update")
+	public Map<String,Integer> reply_update(@ModelAttribute TeamWorkBoardVO teamWorkBoardVo, int curPage) {
+		//1.
+		logger.info("팀 공지사항 수정하기 파라미터 teamWorkBoardVo={},curPage",teamWorkBoardVo,curPage);
+		
+		//2.
+		int cnt = teamWorkBoardService.updeteReply(teamWorkBoardVo);
+		logger.info("댓글 수정 결과 cnt={}",cnt);
+		
+		//3.
+		Map<String, Integer> result = new HashMap<>();
+		result.put("cnt", cnt);
+		result.put("curPage", curPage);
+		
+		//4.
+		return result;
+	}	
+	
+	
+	//댓글 삭제
+	@ResponseBody
+	@RequestMapping("/workBoard_reply_delete")
+	public int teaeWorkBoardDelReply(@RequestParam (defaultValue = "0") int teamBoardNo) {
+		//1
+		logger.info("댓글 삭제처리 파라미터 teamBoardNo={}",teamBoardNo);
+
+		//2
+		TeamWorkBoardVO teamWorkBoardVo = teamWorkBoardService.selectTeamWorkBoardByNo(teamBoardNo);
+		logger.info("teamWorkBoardVo={}",teamWorkBoardVo);
+		
+		Map<String, String> map = new HashMap<>();
+		//key 이름은 xml의 key 이름과 동일해야함, 순서는 상관 없음
+		map.put("teamBoardNo", teamBoardNo+"");
+		map.put("step", teamWorkBoardVo.getStep()+"");
+		map.put("contentno", teamWorkBoardVo.getContentno()+"");
+		map.put("groupNo", teamWorkBoardVo.getGroupNo()+"");
+		
+		logger.info("댓글 삭제 처리 파라미터, map={}",map);
+		int cnt = teamWorkBoardService.deleteTeamWorkBoard(map);
+		logger.info("댓글 삭제 처리 결과 cnt={}",cnt);
+
+		//4
+		return cnt;
+	}	
+	
+	
+	//대댓글 등록
+	@ResponseBody
+	@RequestMapping("workBoard_reReply_insert")
+	public int reReply_insert(@ModelAttribute TeamWorkBoardVO teamWorkBoardVo,
+			@RequestParam (defaultValue = "0") int mBoardNo) {
+		
+		//1
+		logger.info("리_리플 등록 파라미터 teamWorkBoardVo={}",teamWorkBoardVo);
+		
+		//2
+		MyBoardListVO boardListVo = new MyBoardListVO();
+		boardListVo.setMemNo(teamWorkBoardVo.getMemNo());
+		boardListVo.setMBoardNo(mBoardNo);
+		logger.info("리_리플 등록 마이 보드 검색 파라미터 boardListVo={}",boardListVo);
+		
+		
+		int myBoardNo = myBoardListService.seleectMyBoardNo(boardListVo);
+		teamWorkBoardVo.setMyBoardNo(myBoardNo);
+		logger.info("리_리플 등록 파라미터 수정 teamWorkBoardVo={}",teamWorkBoardVo);
+				
+		int cnt= teamWorkBoardService.addReReply(teamWorkBoardVo);
+		logger.info("등록 리_댓글 결과 cnt={}",cnt);
+		
+		return cnt;		
+	}
 }

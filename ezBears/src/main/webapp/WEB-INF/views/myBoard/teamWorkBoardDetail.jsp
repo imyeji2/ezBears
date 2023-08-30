@@ -7,7 +7,14 @@
 	$(function(){		
 		var totalCount=0;
 		send(1);
-
+		
+		//글 삭제
+		$('#del').click(function(){
+			event.preventDefault();
+			 if (confirm("정말 삭제하시겠습니까?")){
+			 	location.href="<c:url value='/myBoard/teamWorkBoardDel?mBoardNo=${map["M_BOARD_NO"]}&teamBoardNo=${map["TEAM_BOARD_NO"]}&oldFileName=${map["FILENAME"]}'/>"
+			 }
+		});
 		
 		
 		//ajax
@@ -34,9 +41,211 @@
 		        }
 		    });
 		});//댓글 등록 끝.
+
+		
+		 //댓글 수정     
+		$(document).on('click', '.editReply', function(e) {       
+		    event.preventDefault();
+		    var $replyContainer = $(this).closest('.reply_content');
+		    $replyContainer.find('.replyWriteForm').hide();
+		    $replyContainer.find('.replyEditForm').show();
+		    $replyContainer.find('textarea').focus();
+		});
+				 
+		 
+		 
+		 //댓글 수정 취소
+		  $(document).on('click', '.reply_add_cencle',function(e) {       
+			  	event.preventDefault();
+			    var $replyContainer = $(this).closest('.reply_content');
+			    $replyContainer.find('.replyEditForm').hide();
+			    $replyContainer.find('.replyWriteForm').show();
+		  });
+			
+		 
+		
+		//댓글 수정 ajax
+		$(document).on('click', '#r_replyAddBtn', function(e) {       
+		    event.preventDefault(); // 이벤트의 기본 동작 방지
+		    var $replyContainer = $(this).closest('form[name=replyEditForm]');
+		    var replyData = $replyContainer.serialize(); // 데이터 직렬화
+		    
+		    $.ajax({
+		        type: 'post',
+		        url: "<c:url value='/myBoard/workBoard_reply_update'/>",
+		        data: replyData,
+		        dataType: 'json',
+		        error: function(xhr, status, error){
+		            alert(error);
+		        },
+		        success: function(res){
+		            console.log(res); // 서버 응답 확인  
+		            var curPage = res.curPage;
+		            if(res.cnt>0){
+			            $('#addComment').val('');
+			            send(curPage);
+			            alert("댓글이 수정되었습니다.");
+		            }else{
+		            	alert("댓글 수정 실패");
+		            }
+		        }
+		    });			
+		});	
 		
 		
+		//댓글 삭제 ajax
+		$(document).on('click', '#delReply', function(e) {       
+		    event.preventDefault(); // 이벤트의 기본 동작 방지
+		    var $replyContainer = $(this).closest('.reply_content');
+		    var $replyDelForm = $replyContainer.find('form[name=replyDelForm]');// replyDelForm 선택
+		    var replyData = $replyDelForm.serialize(); // 데이터 직렬화
+		    if(confirm('정말 삭제하시겠습니까?')){
+			    $.ajax({
+			        type: 'post',
+			        url: "<c:url value='/myBoard/workBoard_reply_delete'/>",
+			        data: replyData,
+			        dataType: 'json',
+			        error: function(xhr, status, error){
+			            alert(error);
+			        },
+			        success: function(res){
+			            console.log(res); // 서버 응답 확인  
+			           		if(res=-1){
+					            alert("삭제되었습니다.");
+					            send(1);
+			           		}else{
+			           			alert("댓글 삭제 실패");
+			           		}
+			             
+			        }
+			    });			
+		    }
+		});	
 		
+		//대댓글 등록
+		$(document).on('click', '.add_r_reply',function(e) {       
+		 	event.preventDefault();
+		   var $replyContainer = $(this).closest('.reply_content');
+		   $replyContainer.find('.replyaddForm').show();
+		   $replyContainer.find('#comments').focus();
+		   
+		});	
+		
+		
+		//대댓글 등록 취소
+		$(document).on('click', '.add_R_replyCencleBtn',function(e) {       
+		 	event.preventDefault();
+		   var $replyContainer = $(this).closest('.reply_content');
+		   $replyContainer.find('.replyaddForm').hide();
+		});
+		  
+		
+		//대댓글 등록 ajax
+		$(document).on('click', '#add_R_replyBtn', function(e) {       	
+		    e.preventDefault(); // 이벤트의 기본 동작 방지
+		    var $replyContainer = $(this).closest('form[name=rAddForm]');
+		    var replyData = $replyContainer.serialize(); // 데이터 직렬화      
+            var curPage = $replyContainer.find('input[name=curPage]').val();		   
+
+		    $.ajax({
+		        type: 'post',
+		        url: "<c:url value='/myBoard/workBoard_reReply_insert'/>",
+		        data: replyData,
+		        dataType: 'json',
+		        error: function(xhr, status, error){
+		            alert(error);
+		        },
+		        success: function(res){
+		            console.log(res); // 서버 응답 확인  
+		            $('#addComment').val('');
+		            send(curPage);
+		            alert("대댓글이 등록되었습니다.");
+		            
+		        
+		        }
+		    });
+		    
+		});//댓글 등록 끝
+
+		 //대댓글 수정     
+		$(document).on('click', '.editReplyBtn1', function(e) {       
+		    event.preventDefault();
+		    var $replyContainer = $(this).closest('.r_reply_content');
+		    $replyContainer.find('.r_replyWrite').hide();
+		    $replyContainer.find('.r_replyEditForm').show();
+		    $replyContainer.find('textarea').focus();
+		    
+		});
+				 
+		 
+		 
+		 //대댓글 수정 취소
+		  $(document).on('click', '#cenceleditreReplyBtn',function(e) {       
+			  	event.preventDefault();
+			    var $replyContainer = $(this).closest('.r_reply_content');
+			    $replyContainer.find('.r_replyEditForm').hide();
+			    $replyContainer.find('.r_replyWrite').show();
+		  });
+					
+
+			//대댓글 수정 ajax
+			$(document).on('click', '#editReplyBtn2', function(e) {       
+			    event.preventDefault(); // 이벤트의 기본 동작 방지
+			    var $replyContainer = $(this).closest('form[name=rEditForm]');
+			    var replyData = $replyContainer.serialize(); // 데이터 직렬화
+			    
+			    $.ajax({
+			        type: 'post',
+			        url: "<c:url value='/myBoard/workBoard_reply_update'/>",
+			        data: replyData,
+			        dataType: 'json',
+			        error: function(xhr, status, error){
+			            alert(error);
+			        },
+			        success: function(res){
+			            console.log(res); // 서버 응답 확인  
+			            var curPage = res.curPage;
+			            if(res.cnt>0){
+				            $('#addComment').val('');
+				            send(curPage);
+				            alert("댓글이 수정되었습니다.");
+			            }else{
+			            	alert("댓글 수정 실패");
+			            }
+			        }
+			    });			
+			});
+					
+		
+			//대댓글 삭제 ajax
+			$(document).on('click', '.delteReplyBtn', function(e) {       
+			    event.preventDefault(); // 이벤트의 기본 동작 방지
+		        var $replyContainer = $(this).closest('.r_reply_write_form');
+		        var $replyDelForm = $replyContainer.find('form[name=reReplyDelFrom]'); // replyDelForm 선택
+		        var replyData = $replyDelForm.serialize(); // 데이터 직렬화
+			    console.log(replyData);
+			    if(confirm('정말 삭제하시겠습니까?')){
+				    $.ajax({
+				        type: 'post',
+				        url: "<c:url value='/myBoard/workBoard_reply_delete'/>",
+				        data: replyData,
+				        dataType: 'json',
+				        error: function(xhr, status, error){
+				            alert(error);
+				        },
+				        success: function(res){
+				            console.log(res); // 서버 응답 확인  
+				           		if(res=-1){
+						            alert("삭제되었습니다.");
+						            send(1);
+				           		}else{
+				           			alert("댓글 삭제 실패");
+				           		}
+				             
+				        }
+				    });			
+			    }
+			});			
 	});
 	
 	//전체 댓글 불러오기 ajax처리
@@ -104,14 +313,14 @@
 				            			replyData+=" <span><a href='#' class='editReply'>수정</a></span>";
 				            			replyData+=" <span><a href='#' id='delReply'>삭제</a></span>";
 					            		replyData+="<form name='replyDelForm' method='post' action='#'>";
-					            		replyData +="<input type='hidden' name='teamNoticeNo' value='" +item.TEAM_NOTICE_NO+ "'>";
+					            		replyData +="<input type='hidden' name='teamBoardNo' value='" +item.TEAM_BOARD_NO+ "'>";
 					            		replyData +="</form>";
 					            		replyData+="</div><!-- reply_txt -->";
 					            		replyData+="</div><!-- replyWriteForm -->";
 					            		replyData+="<!-- 댓글 수정 -->";
 					            		replyData+="<div class='replyEditForm' style='display:none;'>";
 					            		replyData+="<form name='replyEditForm' method='post' action='#'>";
-					            		replyData += "<input type='hidden' name='teamNoticeNo' value='" +item.TEAM_NOTICE_NO+ "'>";
+					            		replyData += "<input type='hidden' name='teamBoardNo' value='" +item.TEAM_BOARD_NO+ "'>";
 					            		replyData += "<input type='hidden' name='curPage' value='" +curPage+ "'>";
 					            		replyData+="<div class='reply_write'>";
 					            		replyData+="<div class='form-floating'>";
@@ -132,7 +341,7 @@
 					            		replyData+="<div class='replyaddForm' style='display:none;'>";
 					            		replyData+="<form name='rAddForm' method='post' action='#'>";
 					            		
-					            		replyData+="<input type='hidden' name='groupno' value='" +item.GROUPNO+ "'>";
+					            		replyData+="<input type='hidden' name='groupNo' value='" +item.GROUP_NO+ "'>";
 					            		replyData+="<input type='hidden' name='step' value='"+item.STEP+"'>";
 					            		replyData+="<input type='hidden' name='mBoardNo' value='"+item.M_BOARD_NO+"'>";
 					            		replyData+="<input type='hidden' name='contentno' value='"+item.CONTENTNO+"'>";
@@ -165,7 +374,7 @@
 			            		replyData+="<!-- 대댓글 보기 -->";			       
 			            		replyData+="<div class='r_reply_write_form'>";
 			            		replyData+="<form name='reReplyDelFrom' method='post' action='#'>";
-			            		replyData += "<input type='hidden' name='teamNoticeNo' value='" +item.TEAM_NOTICE_NO+ "'>";
+			            		replyData += "<input type='hidden' name='teamBoardNo' value='" +item.TEAM_BOARD_NO+ "'>";
 			            		replyData +="</form>"
 			            		replyData+="<div class='reply_user'>";
 			            		replyData+="<div class='detail_left'>";
@@ -195,7 +404,7 @@
 				            		replyData+="<!--대댓글 수정-->"
 				            		replyData+="<div class='r_replyEditForm' style='display:none;'>";
 				            		replyData+="<form name='rEditForm' method='post' action='#'>";
-				            		replyData += "<input type='hidden' name='teamNoticeNo' value='" +item.TEAM_NOTICE_NO+ "'>";
+				            		replyData += "<input type='hidden' name='teamBoardNo' value='" +item.TEAM_BOARD_NO+ "'>";
 				            		replyData += "<input type='hidden' name='curPage' value='" +curPage+ "'>";
 				            		replyData+="<div class='reply_write'>";
 				            		replyData+="<div class='form-floating'>";
@@ -322,7 +531,7 @@
 		        		
 		        		<c:if test="${!empty map['ORIGIN_FILENAME']}">		       		        		       				        	
 			        		<div class="detail_right">
-			        			첨부파일 : <a href="<c:url value='/myBoard/teamWordBoardDownloadFile?teamBoardNo=${map["TEAM_NOTICE_NO"]}&fileName=${map["FILENAME"]}'/>">
+			        			첨부파일 : <a href="<c:url value='/myBoard/teamWordBoardDownloadFile?teamBoardNo=${map["TEAM_BOARD_NO"]}&fileName=${map["FILENAME"]}'/>">
 			        				${map['ORIGIN_FILENAME']}(<fmt:formatNumber value="${map['FSIZE'] /1024.0}" type="number" pattern="#.##"/> KB)
 			        				</a>
 			        		</div><!-- detail_right -->
@@ -398,7 +607,7 @@
 		       				</span>
 		       				<c:if test="${userid==map['MEM_ID']}">
 		       					<span class="user_dept">
-		       						<a href="<c:url value='/myBoard/teamWorkBoardEdit?mBoardNo=${map["M_BOARD_NO"]}&teamNoticeNo=${map["TEAM_NOTICE_NO"]}'/>">
+		       						<a href="<c:url value='/myBoard/teamWorkBoardEdit?mBoardNo=${map["M_BOARD_NO"]}&teamBoardNo=${map["TEAM_Board_NO"]}'/>">
 		       						수정
 		       						</a>
 		       					</span>
