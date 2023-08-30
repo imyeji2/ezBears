@@ -52,15 +52,13 @@
 					<div class="user_info">
 						<div class="detail_left">
 						<c:if test="${!empty list}">
-							<c:forEach var="map" items="${list}">
 								<div class="user_img">
-									<c:set var="userimg" value="default_user.png"/>
-				        			<c:if test="${!empty map['MEM_IMAGE']}">
-				        				<c:set var="userimg" value="${map['MEM_IMAGE']}"/>
-				        			</c:if>
-				        			<img src="<c:url value='/img/mem_images/${userimg}'/>" alt="사원프로필">
-								</div>
-							</c:forEach>
+			        			<c:set var="userimg" value="default_user.png"/>
+			        			<c:if test="${!empty map['MEM_IMAGE']}">
+			        				<c:set var="userimg" value="${map['MEM_IMAGE']}"/>
+			        			</c:if>								
+			        			<img src="<c:url value='/img/mem_images/${userimg}'/>" alt="사원프로필">
+			        		</div><!-- user_img -->
 						</c:if>	
 							<!-- user_img -->
 							<div class="detail_left">
