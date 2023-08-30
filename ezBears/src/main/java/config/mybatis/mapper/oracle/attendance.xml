@@ -78,6 +78,10 @@
 		AND mem_no = #{memNo}
 		and status like '%조퇴%'
 	</select>
+	
+	<select id="selectAllView" resultType="map">
+		select * from attendanceView
+	</select>
  
  
  
