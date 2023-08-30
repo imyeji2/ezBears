@@ -250,7 +250,6 @@ public class MyPageController {
 			logger.info("timestamp2={}", timestamp2);
 			
 			double hourGap = 0;  // 기본적으로 시간 차이를 0으로 설정
-			
 
 		    if(timestamp2 != null) {  // date2가 비어있지 않은 경우에만 계산
 		    	String date1 = timestamp1.toString(); // Timestamp를 String으로 변환
@@ -300,6 +299,8 @@ public class MyPageController {
 		
 		//http://localhost:9091/ezBears/mypage/attendanceList
 	}
+	
+	
 	
 	
 	

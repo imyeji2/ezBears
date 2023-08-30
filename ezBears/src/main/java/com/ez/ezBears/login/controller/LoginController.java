@@ -74,16 +74,6 @@ public class LoginController {
 					session.setAttribute("memNo", map.get("MEM_NO"));
 					logger.info("dept_no 로그 확인 dept_no={}",session.getAttribute("dept_no"));
 					
-					//출퇴근 처리 위한 session 설정
-					BigDecimal bigDecimalMemNo = (BigDecimal)map.get("MEM_NO");
-					logger.info("bigDecimalMemNo={}", bigDecimalMemNo);
-					// BigDecimal 값을 int로 변환
-					int memNo = bigDecimalMemNo.intValue();
-					AttendanceVO attendanceVo = attendanceService.selectRecentAttendance(memNo);
-					String status = attendanceVo.getStatus();
-					logger.info("status = {}", status);
-					session.setAttribute("status", status);
-					
 					//cookie
 					Cookie ck = new Cookie("ck_userid", userid);
 					ck.setPath("/");
@@ -148,7 +138,6 @@ public class LoginController {
 		//4
 		return "common/message";
 	}
-	
 	
 	@RequestMapping("/logout")
 	public String logout(HttpSession session) {

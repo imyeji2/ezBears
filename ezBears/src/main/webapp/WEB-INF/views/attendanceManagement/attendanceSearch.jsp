@@ -22,12 +22,23 @@
         			
         			<form action="">
 			        	<table>
-			        		<tr>
+			        		<!-- <tr>
 			        			<th style="width: 10%">기간</th>
 			        			<td> <input type="text" class="dateInput">년 <input type="text" class="dateInput">월 <input type="text" class="dateInput">일 
 			        				~ <input type="text" class="dateInput">년 <input type="text" class="dateInput">월 <input type="text" class="dateInput">일
+					        		<input type="submit" value="검색"/>
 			        			</td>
-			        		</tr>
+			        		</tr> -->
+			        		<tr>
+					    		<td class="t-search-title">
+					    			기간
+					    		</td>
+					    		<td>
+						      		<input type="date" name="date1">
+						      		<input type="date" name="date2">
+						      		<input type="submit" value="검색" style="">
+						      	</td>
+						     </tr>
 			        		<tr>
 			        			<th>부서명</th>
 			        			<td><input type="text" style="width: 80%"></td>
@@ -36,7 +47,6 @@
 			        			<th>사원명</th>
 			        			<td><input type="text" style="width: 80%"></td>
 			        		</tr>
-			        		<input type="submit" value="검색"/>
 			        	</table>
 			        	<br>
 		        	

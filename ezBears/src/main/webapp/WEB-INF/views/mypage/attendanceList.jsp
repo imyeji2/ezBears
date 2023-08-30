@@ -211,7 +211,7 @@ function startDate() {
 			    		</td>
 			    		<td>
 				      		<input type="month" id="nowMonth" name="date">
-				      		<input type="submit" value="검색">
+				      		<input type="submit" value="검색" id="btnSearch">
 				      	</td>
 				     </tr>
 			    	</table>
