@@ -42,7 +42,7 @@
 	      
 			<form class="btn-form" name="frm1" method="post" action="<c:url value ='/Member/list'/>">
 				<div class="btns">
-					<input type="text" class ="txtboxSearch" id="txtboxSearch" name="searchKeyword" value="${param.searchKeyword}"placeholder="검색어를 입력해주세요">
+					<input type="text" class ="txtboxSearch" id="txtboxSearch" name="searchKeyword" value="${param.searchKeyword}" placeholder="검색어를 입력해주세요" style="text-align: center;">
 					<button type="submit" class="btnSearch" id="btnSearch" >검색</button>
 					<a href = "<c:url value='/Member/write'/>" class="btnAdd" id ="btnAdd">등록</a>
 					<button class="btnDelete" type="button" id="btnDelete" >퇴사</button>

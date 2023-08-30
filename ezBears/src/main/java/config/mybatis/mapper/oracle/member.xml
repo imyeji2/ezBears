@@ -23,7 +23,7 @@
     </select>
     
     <select id="selectMemberView" parameterType="String" resultType="map">
-    	select * from memberView1 where MEM_ID = #{memId}
+    	select * from memberView1 where MEM_ID = #{memId} 
     </select>
 	
 	

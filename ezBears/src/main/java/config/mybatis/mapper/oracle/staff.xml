@@ -102,6 +102,10 @@
 	</select>
 	
 	
+	<!-- 부서에서 스태프 수 불러오기 -->
+	<select id="selectCntStaff" resultType="int">
+		SELECT COUNT(*) FROM STAFF
+	</select>
 	
 	
 </mapper>

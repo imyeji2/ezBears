@@ -6,7 +6,12 @@
 <script type="text/javascript" src="<c:url value ='/js/member.js"'/>"></script>
 <script type="text/javascript" src="<c:url value ='/js/jquery-ui.min.js"'/>"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<style>
+.imgdiv {
+    width: 200px;
+}
 
+</style>
 <script>
     var jb = jQuery.noConflict();
     jb(function(){
