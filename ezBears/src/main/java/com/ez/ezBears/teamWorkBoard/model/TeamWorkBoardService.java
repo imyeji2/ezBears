@@ -25,5 +25,15 @@ public interface TeamWorkBoardService {
 	Map<String, Object> selectDetail(int teamBoardNo);
 	
 	
+	//댓글 검색
+	List<Map<String, Object>> selectReply(MyBoardSearchVo searchVo);
+	
+	
+	//댓글 전체 카운트
+	int selectReplyTotalCount(int groupNo);
+	
+	//댓글 등록
+	int addreply(TeamWorkBoardVO teamWorkVo);
+	
 	
 }

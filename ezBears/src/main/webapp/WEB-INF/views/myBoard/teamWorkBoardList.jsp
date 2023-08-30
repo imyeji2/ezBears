@@ -121,7 +121,7 @@ $(function(){
 						                      <td>${idx}</td>
 						                      <td>
 						                      	<a href="
-						                      	<c:url value='/myBoard/teamWorkBoardCountUpdate?mBoardNo=${mBoardNo}&teamWorkBoardNo=${map["TEAM_BOARD_NO"]}'/>">
+						                      	<c:url value='/myBoard/teamWorkBoardCountUpdate?mBoardNo=${mBoardNo}&teamBoardNo=${map["TEAM_BOARD_NO"]}'/>">
 						                      		${map['TEAM_BOARD_TITLE']}
 						                      	</a>
 						                      </td>

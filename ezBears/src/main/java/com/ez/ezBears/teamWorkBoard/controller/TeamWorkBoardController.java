@@ -188,7 +188,7 @@ public class TeamWorkBoardController {
 		@RequestParam(defaultValue = "0") int teamBoardNo, Model model) {
 	
 			//1
-			logger.info("공지사항 조회수 업로드 파라미터 mBoardNo={},teamBoardNo={} ",mBoardNo,teamBoardNo);
+			logger.info("업무게시판 조회수 업로드 파라미터 mBoardNo={},teamBoardNo={} ",mBoardNo,teamBoardNo);
 			
 			if(teamBoardNo==0) {
 				model.addAttribute("msg","잘못된 접근입니다.");
@@ -215,7 +215,7 @@ public class TeamWorkBoardController {
 		logger.info("팀 업무 게시판 디테일 화면, 파라미터 mBoardNo={},teamBoardNo={}",mBoardNo,teamBoardNo);
 		
 		String userid=(String)session.getAttribute("userid");
-		logger.info("팀 공지사항 디테일 접속 사용자 아이디 userid={}",userid);
+		logger.info("팀 업무 게시판 디테일 접속 사용자 아이디 userid={}",userid);
 		
 		
 		//사원의 시퀀스 번호
@@ -229,8 +229,8 @@ public class TeamWorkBoardController {
 		ToDoListVO toDoList = toDoListService.selectTodoList(teamBoardNo);
 		List<ToDoListDetailVO> toDoListDetailList 
 							= toDoListDetailService.selectToDoListDetail(toDoList.getTodolistNo());
-		logger.info("팀 공지사항 디테일 결과 toDoListDetailList={}",toDoListDetailList);
-		logger.info("팀 공지사항 디테일 결과 toDoListDetailList.size={}",toDoListDetailList.size());
+		logger.info("팀 업무 게시판 디테일 결과 toDoListDetailList={}",toDoListDetailList);
+		logger.info("팀 업무 게시판 디테일 결과 toDoListDetailList.size={}",toDoListDetailList.size());
 		
 		
 		String myBoardName = myBoardListService.selectByBoardName(mBoardNo);
@@ -251,13 +251,13 @@ public class TeamWorkBoardController {
 	}
 	
 	
-	
+	//업무게시판 파일 다운로드
 	@RequestMapping("/teamWordBoardDownloadFile")
 	public ModelAndView downloadFile(@RequestParam(defaultValue = "0") int teamBoardNo,
 			@RequestParam String fileName,HttpServletRequest request) {
 		
 		//1
-		logger.info("공지사항 파일 다운로드 처리 파라미터 teamBoardNo={}, fileName={}",teamBoardNo, fileName);
+		logger.info("업무게시판 파일 다운로드 처리 파라미터 teamBoardNo={}, fileName={}",teamBoardNo, fileName);
 		
 		//강제 다운로드 처리를 위한 뷰페이지로 보내준다
 
@@ -273,6 +273,74 @@ public class TeamWorkBoardController {
 		
 		
 	}
+	
+	
+	//댓글 조회
+	@ResponseBody
+	@RequestMapping("/workBoard_reply_select")
+	public Map<String, Object> reply_select(@ModelAttribute MyBoardSearchVo searchVo) {
+		
+		//1
+		logger.info("댓글 검색 파라미터 groupno()={}",searchVo);
+		
+		//2
+		//페이징 처리
+		//[1]PaginationInfo 객체 생성
+		PaginationInfo pagingInfo = new PaginationInfo();
+		pagingInfo.setBlockSize(ConstUtil.BLOCK_SIZE);
+		pagingInfo.setCurrentPage(searchVo.getCurrentPage());
+		pagingInfo.setRecordCountPerPage(ConstUtil.RECORD_COUNT_FIVE);
+		
+		
+		//2)searchVo에 값 세팅 -> xml에 전달할 값 
+		searchVo.setRecordCountPerPage(ConstUtil.RECORD_COUNT_FIVE);
+		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
+		//전체 댓글 검색
+		List<Map<String, Object>> replyList = teamWorkBoardService.selectReply(searchVo);
+		logger.info("댓글 검색 결과 replyList.size()={}",replyList.size());
+		logger.info("댓글 검색 결과 replyList={}",replyList);
+		
+		//전체 댓글 카운트
+		int totalCount = teamWorkBoardService.selectReplyTotalCount(searchVo.getContentno());
+		logger.info("totalCount={}",totalCount);
+		pagingInfo.setTotalRecord(totalCount);
+		
+		
+		Map<String,Object> resultMap = new HashMap<>();
+		resultMap.put("replyList", replyList);
+		resultMap.put("pagingInfo", pagingInfo);
+		
+		return resultMap;
+	}
+	
+	
+	
+	
+	//댓글 등록
+	@ResponseBody
+	@RequestMapping("/workBoard_reply_insert")
+	public int reply_insert(@ModelAttribute TeamWorkBoardVO teamWorkBoardVo,
+			@RequestParam (defaultValue = "0") int mBoardNo) {
+		//1
+		logger.info("리플 등록 파라미터 teamWorkBoardVo={}",teamWorkBoardVo);
+		
+		//2
+		MyBoardListVO boardListVo = new MyBoardListVO();
+		boardListVo.setMemNo(teamWorkBoardVo.getMemNo());
+		boardListVo.setMBoardNo(mBoardNo);
+		logger.info("리플 등록 마이 보드 검색 파라미터 boardListVo={}",boardListVo);
+		
+		
+		int myBoardNo = myBoardListService.seleectMyBoardNo(boardListVo);
+		teamWorkBoardVo.setMyBoardNo(myBoardNo);
+		logger.info("리플 등록 파라미터 수정 teamWorkBoardVo={}",teamWorkBoardVo);
+				
+		int cnt= teamWorkBoardService.addreply(teamWorkBoardVo);
+		logger.info("등록 댓글 결과 cnt={}",cnt);
+		
+		return cnt;
+	
+	}	
 	
 	
 }

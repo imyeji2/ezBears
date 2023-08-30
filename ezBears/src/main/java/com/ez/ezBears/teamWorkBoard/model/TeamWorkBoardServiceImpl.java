@@ -80,4 +80,28 @@ public class TeamWorkBoardServiceImpl implements TeamWorkBoardService{
 		return teamWorkBoardDao.selectDetail(teamBoardNo);
 	}
 	
+	//댓글 조회
+	@Override
+	public List<Map<String, Object>> selectReply(MyBoardSearchVo searchVo) {
+		return teamWorkBoardDao.selectReply(searchVo);
+	}
+	
+	//댓글 전체 카운트
+	@Override
+	public int selectReplyTotalCount(int groupNo) {
+		return teamWorkBoardDao.selectReplyTotalCount(groupNo);
+	}
+	
+	//댓글 등록
+	@Override
+	@Transactional
+	public int addreply(TeamWorkBoardVO teamWorkBoardVo) {
+		int cnt=teamWorkBoardDao.updateSortNo(teamWorkBoardVo);
+		teamWorkBoardVo.setGroupNo(teamWorkBoardDao.selectGroupNo());
+		cnt = teamWorkBoardDao.insertReply(teamWorkBoardVo);
+		return cnt;
+	}
+
+
+	
 }

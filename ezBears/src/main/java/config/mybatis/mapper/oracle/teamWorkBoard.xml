@@ -60,4 +60,51 @@
 	</select>
 	
 
+
+   <select id="selectReply" parameterType="myBoardSearchVo" resultType="map">
+       select *
+	      from
+	      (
+	      select rownum as RNUM, A.* from
+		      (	
+		   		select * from teamWorkBoardListView
+		   		where CONTENTNO = #{contentno} and step>0
+		   		order by group_no desc, step, sortno desc
+ 				)A
+     		 )
+      <![CDATA[
+      where RNUM> #{firstRecordIndex} 
+      and RNUM<=#{firstRecordIndex} + #{recordCountPerPage}]]>				   		
+   </select>
+   
+   
+   
+   
+   	<select id="selectReplyTotalCount" parameterType="myBoardSearchVo" resultType="int">
+  	   	select count(*) from team_Work_Board
+   		where CONTENTNO = #{contentno} and step>0
+ 	</select>
+ 	
+ 
+	<update id="updateSortNo" parameterType="teamNoticeVo">
+		update team_Work_Board
+		set sortNo = sortNo+1
+		where CONTENTNO=#{contentno} and sortNo>#{sortno}
+	</update> 
+	
+	<select id="selectGroupNo" resultType="int">
+		select TEAM_WORK_BOARDGROUPNO_SEQ.nextval from dual
+	</select> 	
+ 	
+   <insert id="insertReply" parameterType="teamWorkBoardVo">
+   
+		<selectKey keyProperty="teamBoardNo" resultType="int" order="BEFORE">
+			select TEAM_WORK_BOARD_SEQ.nextval from dual
+		</selectKey>
+		
+   		insert into team_Work_Board(TEAM_BOARD_NO,MEM_NO,COMMENTS,GROUP_NO,STEP,SORTNO,MY_BOARD_NO,CONTENTNO)
+   		values(#{teamBoardNo},#{memNo},#{comments},#{groupNo},#{step}+1,#{sortno}+1,#{myBoardNo},#{contentno})
+   </insert> 	
+   
+   
 </mapper>
