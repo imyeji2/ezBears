@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.ez.ezBears.common.ConstUtil;
 import com.ez.ezBears.common.FileUploadUtil;
@@ -300,6 +301,7 @@ public class MemberController {
 		
 		List<MemberVO> list = memberService.selectAllMem(searchVo);
 		logger.info("멤버 조회 결과, list.size={}", list.size());
+	
 		
 		int totalRecord = memberService.totalList(searchVo);
 		pagingInfo.setTotalRecord(totalRecord);
@@ -312,4 +314,16 @@ public class MemberController {
 		return "/Member/list";
 		
 	}
+	
+    @GetMapping("/Member/memberDetail")
+    public ModelAndView getMemberDetail(@RequestParam("memNo") int memNo) {
+        // memNo를 이용하여 데이터베이스에서 멤버 정보 조회
+        MemberVO memberVo = memberService.memberDetail(memNo); // memberService는 서비스 계층을 의미합니다.
+
+        ModelAndView modelAndView = new ModelAndView("memberDetail"); // memberDetail.jsp 뷰 이름
+        modelAndView.addObject("memberVo", memberVo); // 조회된 멤버 정보를 뷰로 전달
+
+        return modelAndView;
+    }
+
 }

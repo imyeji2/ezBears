@@ -8,6 +8,28 @@
 		$('form[name=frmPage]').submit();
 	}
 	
+	function openPopup(memberNo){
+		$('.popup-inner').show();
+	}
+	
+	$(function(){
+		$('.popup-inner').hide();
+		
+		$('.infodiv #btInfo').click(function() {
+			$('.popup-inner').show();
+			$('.popup.members-popup').addClass('open');
+		});
+		
+		$('.popup-background').click(function() {
+			$('.popup').removeClass('open');
+		});
+		
+		$('.close-btn').click(function() {
+			$('.popup').removeClass('open');
+		});
+		
+	})
+
 </script>
 <style>
 
@@ -72,31 +94,34 @@ tr.memList {
 		                </c:if>
 		                <c:if test="${!empty list}">
 		                	<c:forEach var="memberVo" items="${list}">
-			                		<tr class="memList">
-			                			<td>
-			                			<div class="perPerson">
-											<div class ="imgdiv">
-												<c:choose>
-													<c:when test ="${empty memberVo.memImage}">
-														<img alt="" src="<c:url value = '/img/defaultUSER.png'/>" style="width:120px; height:120px;" class="memberImageInfo" id="previewImage" name="memImage">
-													</c:when>
-													<c:otherwise>
-														<img alt="" src="<c:url value = '/img/mem_images/${memberVo.memImage}'/>" style="width:110px; height:120px;" class="memberImageInfo" id="previewImage" name="memImage">
-													</c:otherwise>
-												</c:choose>	
-											</div>
-											<div class = "infodiv">
-				                				<a id="AdeptName">${memberVo.deptName}</a>
-				                				<br>
-				                				<a id="AmemName" href="<c:url value='/Member/detail?memNo=${memberVo.memNo}'/>">${memberVo.memName} ${memberVo.positionName}</a>
-				                				<br>
-				                				<br>
-					                			<a id="AmemTel">${memberVo.memTel}</a>
-				                				<br>
-				                				<a href="<c:url value='/Member/detail?memNo=${memberVo.memNo}'/>">${memberVo.memId}</a>
-			                				</div>
+		                		<tr class="memList">
+		                			<td>
+		                			<div class="perPerson">
+										<div class ="imgdiv">
+											<c:choose>
+												<c:when test ="${empty memberVo.memImage}">
+													<img alt="" src="<c:url value = '/img/defaultUSER.png'/>" style="width:120px; height:120px;" class="memberImageInfo" id="previewImage" name="memImage">
+												</c:when>
+												<c:otherwise>
+													<img alt="" src="<c:url value = '/img/mem_images/${memberVo.memImage}'/>" style="width:110px; height:120px;" class="memberImageInfo" id="previewImage" name="memImage">
+												</c:otherwise>
+											</c:choose>	
+										</div>
+										<div class = "infodiv">
+			                				<a id="AdeptName">${memberVo.deptName}</a>
+			                				<br>
+			                				<a id="AmemPosition" href="<c:url value='/Member/detail?memNo=${memberVo.memNo}'/>">${memberVo.positionName}</a>
+			                				<br>
+			                				<a id="AmemName" href="<c:url value='/Member/detail?memNo=${memberVo.memNo}'/>">${memberVo.memName}</a>
+		                					<br>
+		                					<br>
+		                					<div class ="twoBt">
+		                						<a id="btChat">채팅</a>
+		                						<a id="btInfo" onclick="openPopup(${memberVo.memNo})">정보</a>
+		                					</div>
 		                				</div>
-			                		</tr>
+	                				</div>
+		                		</tr>
 		                	</c:forEach>
 		                </c:if>
 		                </tbody>
@@ -105,5 +130,5 @@ tr.memList {
 	        </form>
 	    </div>
 	</div>
-
+<%@ include file="../Member/memberPopup.jsp" %>
 <%@include file="../inc/bottom.jsp"%>    
