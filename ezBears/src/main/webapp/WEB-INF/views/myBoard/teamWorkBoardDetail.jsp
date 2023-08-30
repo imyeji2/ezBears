@@ -7,6 +7,7 @@
 	$(function(){		
 		var totalCount=0;
 		send(1);
+		todoList();
 		
 		//글 삭제
 		$('#del').click(function(){
@@ -243,10 +244,38 @@
 				           		}
 				             
 				        }
-				    });			
+				    });	//ajax		
 			    }
-			});			
-	});
+			});	//이벤트 끝
+			
+			
+			//체크 상태 변경 ajax
+			$(document).on('change', 'input[name=todoDetailNo]', function(e) { 
+			    var todoDetailNo = $(this).val();
+			    var status = $(this).prop('checked') ? 'N' : 'Y';
+			    
+			    $.ajax({
+			        type: 'post',
+			        url: "<c:url value='/myBoard/updateTodoListDetail'/>",
+			        data: {todoDetailNo: todoDetailNo, status: status},
+			        dataType: 'json',
+			        error: function(xhr, status, error) {
+			            alert(error);
+			        },
+			        success: function(res) {
+			            console.log(res); // 서버 응답 확인 
+			            
+			            if (res > 0) {
+			                todoList(); // todoList 함수 호출
+			            } else {
+			                alert('다시 시도해주세요');
+			            }
+			        }
+			    }) // ajax
+			});
+			
+			
+	});//$(function(){});
 	
 	//전체 댓글 불러오기 ajax처리
 	function send(curPage){		
@@ -478,7 +507,86 @@
 	       			}//not null if
 			}//success
 		});//ajax
+		
+   
 	}//function	
+	
+	function todoList(){
+		var todolistNo = $('input[name=todolistNo]').val();
+		 $.ajax({
+		        type: 'post',
+		        url: "<c:url value='/myBoard/selectTodoList'/>",
+		        data:{todolistNo: todolistNo},
+		        dataType: 'json',
+		        error: function(xhr, status, error){
+		            alert(error);
+		        },
+		        success: function(res){
+		            console.log(res); // 서버 응답 확인
+		            var toDoList="";
+		            var totalCount=0;
+		            var checkedCount=0;
+		            var uncheckCount=0;
+		            
+		            $('.checkedList').html('');
+		            $('.uncheckList').html('');
+	            	
+		            
+		            $.each(res, function(idx, item){
+		            	totalCount++;
+	            		if(item.status==='Y'){
+	            			toDoList="<div class='d-flex align-items-center border-bottom py-2 todoList'>";
+		            		toDoList+="<input class='form-check-input m-0' type='checkbox' name='todoDetailNo' value='"+item.todoDetailNo+"'>";
+		            		toDoList+="<div class='w-100 ms-3'>";
+		            		toDoList+="<div class='d-flex w-100 align-items-center justify-content-between'>";
+		            		toDoList+="<span>"+item.todoContent+"</span>";
+		            		toDoList+="<span style='text-align:left;'><a href='#'>담당자 등록</a></span>";
+		            		toDoList+="</div>";
+		            		toDoList+="</div>";
+		            		toDoList+="</div>";
+		            		$('.uncheckList').append(toDoList);	            			
+		            		uncheckCount++;
+
+	            		}else{
+		            		toDoList="<div class='d-flex align-items-center border-bottom py-2 todoList'>";
+		            		toDoList+="<input class='form-check-input m-0' type='checkbox' name='todoDetailNo' value='"+item.todoDetailNo+"' checked>";
+		            		toDoList+="<div class='w-100 ms-3'>";
+		            		toDoList+="<div class='d-flex w-100 align-items-center justify-content-between'>";
+		            		toDoList+="<span>"+item.todoContent+"</span>";
+		            		toDoList+="<img src='/ezBears/img/mem_images/Kim-Min-seok0101.jpg' alt='담당자 이미지' class='mem_img'>";
+		            		toDoList+="</div>";
+		            		toDoList+="</div>";
+		            		toDoList+="</div>";
+		            		$('.checkedList').append(toDoList);	
+		            		checkedCount++;
+	            		}
+	            		
+	            		
+	            	});//each
+	            	
+		            if(uncheckCount===0){
+	            		toDoList="<div class='d-flex align-items-center border-bottom py-2 todoList'>";
+	            		toDoList+="모든 계획을 달성하셨습니다🎉";
+	            		toDoList+="</div>";		 
+	            		$('.uncheckList').append(toDoList);
+            		}else{
+	            		toDoList="<div class='d-flex align-items-center border-bottom py-2 todoList'>";
+	            		toDoList+="아직 실행된 계획이 없습니다! 조금만 더 힘내요👍";
+	            		toDoList+="</div>";		 
+	            		$('.checkedList').append(toDoList);
+            		}
+            			
+            	
+	           		$('#checkResult').text(checkedCount+"/"+totalCount);
+	           		$('#checkedCount').text(checkedCount);
+	           		$('#uncheckCount').text(uncheckCount);
+	            	
+	           		var result = (checkedCount / totalCount) * 100;
+	           		$('.progress-bar').css('width', result + "%");
+	           		$('.progress-bar').text(result + "%");
+	       	 }
+		});
+	}
 </script>
 
 <form method="post" name="sendFrom">
@@ -544,66 +652,40 @@
 		       				${map['TEAM_BOARD_CONTENT']}
 		       			</div>
 		       			
-		       			
+						<fmt:parseDate var="startRegdateFmt" value="${toDoList.startRegdate}" pattern="yyyy-MM-dd HH:mm:ss" />
+						<fmt:parseDate var="doneRegdateFmt" value="${toDoList.doneRegdate}" pattern="yyyy-MM-dd HH:mm:ss" />
+						
 		       			<div class="detailTodoList">
-		       				<div class="todoTitle">
-		       					<div>
-									<h6 class="mb-0">⌛진행사항(1/${totalCount})</h6>
-									<div class="progress" role="progressbar" aria-label="Warning example" 
-										aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width:60%;">
-									 	<div class="progress-bar text-bg-Danger" style="width: 75%">75%</div>
-									</div>
-								</div>
-								<fmt:parseDate var="startRegdateFmt" value="${toDoList.startRegdate}" pattern="yyyy-MM-dd HH:mm:ss" />
-								<fmt:parseDate var="doneRegdateFmt" value="${toDoList.doneRegdate}" pattern="yyyy-MM-dd HH:mm:ss" />
-								
-								<div class="todoDate">
-								    <span>프로젝트 진행일 : </span>
-								    <span>
-								        <fmt:formatDate value="${startRegdateFmt}" pattern="yyyy-MM-dd"/> ~ 
-								        <fmt:formatDate value="${doneRegdateFmt}" pattern="yyyy-MM-dd"/>
+		       			<input type="hidden" name="todolistNo" value="${toDoList.todolistNo}">
+	       					<div class="result_Box">
+	       						<div class="result_txt">
+	       							<h6 class="mb-0">⌛진행사항(<span id="checkResult"></span>)</h6>
+	       						</div>
+				       			<div class="todoDate">
+								    <span>🗓️프로젝트 진행일정:
+								     <fmt:formatDate value="${startRegdateFmt}" pattern="yyyy-MM-dd"/> ~ 
+								     <fmt:formatDate value="${doneRegdateFmt}" pattern="yyyy-MM-dd"/>🗓️
 								    </span>
+								</div>		       						
+								<div class="progress result_progress" role="progressbar" aria-label="Warning example" 
+									aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+								 	<div class="progress-bar text-bg-Danger" style="width: 75%">75%</div>
 								</div>
-		       				</div>
-		       				
-                         <div class="d-flex mb-2">
-<!--                                 <input class="form-control border-0 todoInput" type="text" placeholder="업무를 입력하세요">
-                                <button type="button" class="btn btn-primary ms-2">Add</button> -->
-                            </div>
-                            <br>
+							</div>
+		   
+                            <h8>📍진행중(<span id="uncheckCount"></span>)</h8>
                             <div class="uncheckList">
-                            	<h8>📍진행중</h8>
-                            	<c:forEach var="list" items="${toDoListDetailList}">
-	                            	<c:if test="${list.status=='Y'}">
-	                            		<c:set var="uncheckedCount" value="${uncheckedCount + 1}"/>
-			                            <div class="d-flex align-items-center border-bottom py-2 todoList">
-			                               <input class="form-check-input m-0" type="checkbox">
-			                                <div class="w-100 ms-3">
-			                                    <div class="d-flex w-100 align-items-center justify-content-between">
-			                                        <span>${list.todoContent}</span>
-			                                    </div>
-			                                </div>
-			                            </div>		
-		                            </c:if> 
-	                            </c:forEach>   					      
+                            	
+	                            		
                        		</div>
+                       		
 	                        <br>
+	                        
+	                        <h8>📍완료(<span id="checkedCount"></span>)</h8>
 	                        <div class="checkedList">
-	                        	<h8>📍완료</h8>
-	                        	<c:forEach var="list" items="${toDoListDetailList}" >
-	                        		<c:set var="checkedCount" value="${checkedCount }"/>	
-		                        	<c:if test="${list.status!='Y'}">
-			                            <div class="d-flex align-items-center border-bottom py-2 todoList">
-			                                <input class="form-check-input m-0" type="checkbox" checked="checked">
-			                                <div class="w-100 ms-3">
-			                                    <div class="d-flex w-100 align-items-center justify-content-between">
-			                                        <span>EXERD 수정 및 ERD 확정</span>
-			                                    </div>
-			                                </div>
-			                            </div>
-		                            </c:if>
-		                    	</c:forEach>
-		                    	<c:set var="totalCount" value="${checkedCount+uncheckedCount}"/>                         	
+	                        	
+	                        	
+                  	
 	                        </div>                 
 		       			</div> <!--writeTodoList -->
 		       					     			
@@ -630,13 +712,7 @@
 	       		<div class="detail_reply_wrap">
 	       			<div class="reply_tit"></div>
 	       			<div class="reply_list">
-	       				<!-- 댓글 영역 -->
 
-	    				<!-- 댓글 영역 -->		
-	    				
-	    				<!-- 대댓글 영영 -->
-		    				
-	    				<!-- 대댓글 영영 -->
 
 	       			</div><!-- reply_list -->
 	       		 

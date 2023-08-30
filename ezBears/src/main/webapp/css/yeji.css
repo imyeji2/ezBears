@@ -576,10 +576,6 @@
 		padding: 30px 30px 30px 30px;
 	}
 	
-	.todoTitle{
-		text-align: left;
-		margin-bottom: 10px;
-	}
 	.todoList{
 		background: #191C24;
 		padding: 0px 10px 0px 10px;
@@ -800,7 +796,7 @@
 	.detailTodoList{
 		width:100%;
 		margin:0 auto;
-		margin-top:30px;
+		margin-top:10px;
 		padding: 30px 50px 50px 50px;
 		border-radius: 10px 10px 10px 10px;
 		background-color: #000;
@@ -812,10 +808,28 @@
 		margin-bottom: 10px;
 	}
 	.todoList{
+		width: 100%;
 		background: #191C24;
 		padding: 0px 10px 0px 10px;
 		border-radius: 5px;
 		margin:0px 0px 5px 0px;
+		height: 50px;
+	}
+	
+	.todoList span{
+		width: fit-content;
+
+	}
+	
+	.mem_img{
+		width:30px;
+		height: 30px;
+		border-radius: 10px 10px 10px 10px;
+		float: left;
+	}
+	
+	.todoList a{
+		color:#fff;
 	}
 	
 	.form-check-input{
@@ -827,9 +841,9 @@
 	}
 	
 	.todoDate{
-		overflow: hidden;
-		margin:10px 0px 20px 0px;
-		text-align: left;
+		width: fit-content;
+		margin:10px 0px 10px 0px;
+		font-weight: bolder;
 	}
 	
 	.checkListBox{
@@ -846,5 +860,19 @@
 		margin:0px 0px 10px 10px;
 	}
 	
+	.result_Box{
+		margin-bottom: 20px;
+	}
+	
+	.result_txt{
+		width:fit-content;
+		margin:10px 0px 10px 0px;
+		font-size: medium;
+		font-weight: bolder;
+	}
+
+	.result_progress{
+		width:fit-content;
+	}	
 
 }/*팀별 공지사항 디테일 css*/

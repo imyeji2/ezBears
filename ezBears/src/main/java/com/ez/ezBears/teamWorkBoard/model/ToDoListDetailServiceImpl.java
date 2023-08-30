@@ -15,5 +15,10 @@ public class ToDoListDetailServiceImpl implements ToDoListDetailService{
 	public List<ToDoListDetailVO> selectToDoListDetail(int toDoListNo) {
 		return toDoListDetail.selectToDoListDetail(toDoListNo);
 	}
+	//투두 리스트 상태 변경
+	@Override
+	public int updateTodoStatus(ToDoListDetailVO todoListVo) {
+		return toDoListDetail.updateTodoStatus(todoListVo);
+	}
 
 }

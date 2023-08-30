@@ -28,7 +28,7 @@ $(function(){
 	
 	//ck에디터
 	var editor = CKEDITOR.replace('teamBoardContent', {
-		filebrowserUploadUrl : "<c:url value='/adm/fileupload'/>",
+		filebrowserUploadUrl : "<c:url value='/ck/fileupload'/>",
 		height : '300px',
 		resize_enabled: false
 	});

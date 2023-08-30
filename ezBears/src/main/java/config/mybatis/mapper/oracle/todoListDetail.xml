@@ -15,4 +15,10 @@
 		SELECT * FROM TODOLIST_DETAIL
 		WHERE TODOLIST_NO = #{todolistNo}
 	</select>
+	
+	<update id="updateTodoStatus" parameterType="todoListDetailVo">
+		update TODOLIST_DETAIL
+		set status=#{status}
+		where TODO_DETAIL_NO=#{todoDetailNo}
+	</update>
 </mapper>

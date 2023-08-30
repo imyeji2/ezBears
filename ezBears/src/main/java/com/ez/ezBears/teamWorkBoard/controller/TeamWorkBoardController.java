@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -28,6 +29,7 @@ import com.ez.ezBears.myBoard.model.MyBoardListService;
 import com.ez.ezBears.myBoard.model.MyBoardListVO;
 import com.ez.ezBears.teamWorkBoard.model.TeamWorkBoardService;
 import com.ez.ezBears.teamWorkBoard.model.TeamWorkBoardVO;
+import com.ez.ezBears.teamWorkBoard.model.ToDoListDetailDAO;
 import com.ez.ezBears.teamWorkBoard.model.ToDoListDetailListVO;
 import com.ez.ezBears.teamWorkBoard.model.ToDoListDetailService;
 import com.ez.ezBears.teamWorkBoard.model.ToDoListDetailVO;
@@ -227,24 +229,17 @@ public class TeamWorkBoardController {
 		logger.info("투두 리스트 기본 값 map={}",map);
 		
 		ToDoListVO toDoList = toDoListService.selectTodoList(teamBoardNo);
-		List<ToDoListDetailVO> toDoListDetailList 
-							= toDoListDetailService.selectToDoListDetail(toDoList.getTodolistNo());
-		logger.info("팀 업무 게시판 디테일 결과 toDoListDetailList={}",toDoListDetailList);
-		logger.info("팀 업무 게시판 디테일 결과 toDoListDetailList.size={}",toDoListDetailList.size());
-		
+		logger.info("투두 리스트 toDoLis={}",toDoList);
 		
 		String myBoardName = myBoardListService.selectByBoardName(mBoardNo);
 		logger.info("마이보드 이름 myBoardName={}",myBoardName);	
 		
-		
-
 		//3.
 		model.addAttribute("map",map);
 		model.addAttribute("myBoardName",myBoardName);
 		model.addAttribute("userid",userid);
 		model.addAttribute("userNo",userNo);
 		model.addAttribute("toDoList",toDoList);
-		model.addAttribute("toDoListDetailList",toDoListDetailList);
 		
 		//4
 		return "myBoard/teamWorkBoardDetail";
@@ -274,7 +269,7 @@ public class TeamWorkBoardController {
 		
 	}
 
-	//공지사항 삭제
+	//팀별 업무 게시판 삭제
 	@RequestMapping("/teamWorkBoardDel")
 	public String teamWorkBoardDel(@RequestParam (defaultValue = "0") int mBoardNo,
 			@RequestParam (defaultValue = "0") int teamBoardNo, 
@@ -460,5 +455,39 @@ public class TeamWorkBoardController {
 		logger.info("등록 리_댓글 결과 cnt={}",cnt);
 		
 		return cnt;		
+	}
+	
+	
+	
+	//투두리스트 목록 검색
+	@ResponseBody
+	@RequestMapping("/selectTodoList")
+	public List<ToDoListDetailVO> selectToDoList(@RequestParam (defaultValue = "0") int todolistNo){
+		//1
+		logger.info("투두 리스트 목록 검색 파라미터 todolistNo={}",todolistNo);
+		
+		//2
+		List<ToDoListDetailVO> toDoListDetailList 
+							= toDoListDetailService.selectToDoListDetail(todolistNo);
+		logger.info("팀 업무 게시판 디테일 결과 toDoListDetailList={}",toDoListDetailList);
+		logger.info("팀 업무 게시판 디테일 결과 toDoListDetailList.size={}",toDoListDetailList.size());
+		
+		//4
+		return toDoListDetailList;
+	}
+	
+	@ResponseBody
+	@RequestMapping("/updateTodoListDetail")
+	//투두 리스트 디테일 상태 업데이트
+	public int updateTodoStatus(@ModelAttribute ToDoListDetailVO todoListDetailVo){
+		//1
+		logger.info("투두 디테일 상태 파라미터 todoListDetailVo={}",todoListDetailVo);
+	
+		//2
+		int cnt = toDoListDetailService.updateTodoStatus(todoListDetailVo);
+		logger.info("투두 디테일 변경 결과 cnt={}",cnt);
+	
+		//4
+		return cnt;
 	}
 }
