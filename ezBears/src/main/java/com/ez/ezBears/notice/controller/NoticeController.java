@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ez.ezBears.common.ConstUtil;
 import com.ez.ezBears.common.FileUploadUtil2;
+import com.ez.ezBears.common.MyBoardSearchVo;
 import com.ez.ezBears.common.PaginationInfo;
 import com.ez.ezBears.common.SearchVO;
 import com.ez.ezBears.member.model.MemberService;
@@ -46,7 +48,8 @@ public class NoticeController {
 	private List<Map<String, Object>> files;
 
 	@RequestMapping("/noticeList")
-	public String noticeList(@RequestParam(defaultValue = "0") int noticeNo,@ModelAttribute SearchVO searchVo ,Model model ) {
+	public String noticeList(@RequestParam(defaultValue = "0") int noticeNo,
+			@ModelAttribute SearchVO searchVo ,Model model ) {
 		//1
 		logger.info("공지사항 리스트 페이지 파라미터 noticeNo={}",noticeNo);
 		logger.info("공지사항 검색 파라미터 searchVo={}", searchVo);
@@ -78,6 +81,46 @@ public class NoticeController {
 		//4
 		return "notice/noticeList";
 	}
+	
+	@ResponseBody
+	@RequestMapping("/notice_ajax")
+	public Map<String, Object> teamNotice_ajax(SearchVO searchVo) {
+		//1.
+		logger.info("팀 공지사항 리스트 페이지, 파라미터 searchVo={}",searchVo);
+
+		//2
+		//페이징 처리
+		//[1]PaginationInfo 객체 생성
+		PaginationInfo pagingInfo = new PaginationInfo();
+		pagingInfo.setBlockSize(ConstUtil.BLOCK_SIZE);
+		pagingInfo.setCurrentPage(searchVo.getCurrentPage());
+		pagingInfo.setRecordCountPerPage(ConstUtil.RECORD_COUNT_FIVE);
+		
+		
+		//2)searchVo에 값 세팅 -> xml에 전달할 값 
+		searchVo.setRecordCountPerPage(ConstUtil.RECORD_COUNT_FIVE);
+		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
+		
+		//2
+		//List<Map<String, Object>> list=noticeService.selectNoticeList(noticeNo);
+		List<Map<String, Object>> list=noticeService.selectAllNotice(searchVo);
+		logger.info("공지사항 리스트 페이지 결과 list.size={}",list.size());
+		
+		int totalCount = noticeService.selectTotalCount(searchVo);
+		pagingInfo.setTotalRecord(totalCount);
+		logger.info("totalCount={}",totalCount);
+		
+		//3
+		Map<String, Object> resultMap = new HashMap<>();
+		resultMap.put("list", list);
+		resultMap.put("pagingInfo", pagingInfo);
+
+		
+		//4
+		return resultMap;
+	}
+	
+	
 
 	@GetMapping("/noticeWrite")
 	public String noticeWrite() {
@@ -118,7 +161,8 @@ public class NoticeController {
 
 
 	@RequestMapping("/noticeDetail")
-	public String noticeDetail(@ModelAttribute NoticeVO noticeVo,@RequestParam(defaultValue = "0") int noticeNo,  Model model, HttpSession session) {
+	public String noticeDetail(@ModelAttribute NoticeVO noticeVo,@RequestParam(defaultValue = "0") int noticeNo, 
+			Model model, HttpSession session) {
 		//1
 		logger.info("공지사항 디테일 화면 파라미터 noticeNo={}",noticeNo);
 

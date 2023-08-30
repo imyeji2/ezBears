@@ -1,70 +1,140 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <%@include file="../inc/top.jsp"%>
-
 <script type="text/javascript">
 $(function(){
-	$('#searchBtn').click(function(){
-	    event.preventDefault();
+    send(1);
+    $('#searchBtn').click(function(){
+        event.preventDefault();
 
-	    if ($('#searchCondition').val() === "default") {
-	        alert("검색할 카테고리를 선택해주세요");
-	        $('#searchCondition').focus();
-	        return false;
-	    } else if ($('#searchKeyword').val().length < 1) {
-	        alert('검색어를 입력해주세요');
-	        $('#searchKeyword').focus();
-	        return false;
-	    }else{
-	    	$('form[name=serchFrm]').submit();
-	    }
+        if ($('#searchCondition').val() === "default") {
+            alert("검색할 카테고리를 선택해주세요");
+            $('#searchCondition').focus();
+            return false;
+        } else if ($('#searchKeyword').val().length < 1) {
+            alert('검색어를 입력해주세요');
+            $('#searchKeyword').focus();
+            return false;
+        }else{
+            $('form[name=serchFrm]').submit();
+        }
 
-	});
+    });
+    
+    
+    $(window).scroll(function() {            
+        if (!isLoading && $(window).scrollTop() + $(window).height() >= $(document).height()-200) {
+            var curPage = $('input[name="currentPage"]').val();
+            var totalPage=$('input[name="totalPage"]').val();
+            
+            if(curPage<=totalPage){
+                isLoading = true; // 스크롤 동작 처리 시작
+                curPage++;
+                send(curPage);
+            }else{
+                isLoading = true;
+                alert('더 이상 불러 올 게시글이 없습니다.');
+            }
+        }
+    });
+
 });
-</script>
 
+
+
+function send(currentPage) {
+    $('input[name="currentPage"]').val(currentPage);
+    var sendDate = $('form[name=noticeFrom]').serialize();
+
+    $.ajax({
+        url: "<c:url value='/notice/notice_ajax'/>",
+        method: "POST",
+        data: sendDate,
+        dataType: 'json',
+        error: function(xhr, status, error) {
+            alert(error);
+        },
+        success: function(res) {
+            console.log(res); // 서버 응답 확인
+  
+            var replyData = "";
+            
+            $.each(res.list, function(idx, item) {
+                var imagePath = "default_user.png";
+                if (item.MEM_IMAGE !== null) {
+                    imagePath = item.MEM_IMAGE;
+                }
+                
+                var content = item.NOTICE_CONTENT;
+                var date = new Date(item.REGDATE);
+                var fsizeKB = item.FSIZE / 1024.0;
+                var formattedFsize = Math.round(fsizeKB * 100) / 100;
+                var fileSizeText = formattedFsize + " KB";
+                const regdate = new Date(date.getTime()).toISOString().split('T')[0] + " " + date.toTimeString().split(' ')[0];
+                
+                var noticeDetailURL = "<a href='<c:url value='/notice/noticeDetail?noticeNo=" + item.NOTICE_NO+"'/>'>";
+                
+                replyData += "<div class='notice_list_box'>";
+                replyData += "<div>";
+                replyData += "<div class='list_box_title'>";
+                replyData += "<div class='user_img'>";
+                replyData += "<img src='<c:url value='/img/mem_images/" + imagePath + "'/>' alt='사원프로필'>";
+                replyData += "</div>";
+                replyData += "<div class='user_txt'>";
+                replyData += "<span class='user_txt_name'>" + item.MEM_NAME + "</span>";
+                replyData += "<span class='user_txt_time'>" + regdate + "</span>";
+                replyData += "</div>";
+                replyData += "<div class='user_dept'>" + item.DEPT_NAME + "</div>";
+                replyData += "</div>";
+                replyData += "<div class='list_box_content'>";
+                replyData += "<div class='content_title'>"+ noticeDetailURL + item.NOTICE_TITLE + "</a></div>";
+                replyData += "<div class='content_txt'>" + noticeDetailURL +item.NOTICE_CONTENT + "</a></div>";
+                replyData += "</div>";
+                replyData += "</div>";
+                replyData += "</div>";
+            });
+            
+            $("#list_content").append(replyData);
+            $('input[name="totalPage"]').val(res.pagingInfo.totalPage);
+            isLoading = false;
+        }
+    });
+
+}
+</script>
+<input type="hidden" name="totalPage">
+<form action="<c:url value='/notice/noticeList'/>" method="post" name="noticeFrom">
+	<input type="hidden" name="currentPage">
+	<input type="hidden" name="searchKeyword" value="${param.searchKeyword}">
+	<input type="hidden" name="searchCondition" value="${param.searchCondition}">
+</form>
     <!-- Recent Sales Start -->
     <div class="container-fluid pt-4 px-4" id="board_style">
         <div class="bg-secondary text-center rounded">
             <div class="bg-secondary rounded h-100 p-4">
-            	<nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
-				  <ol class="breadcrumb">
-				    <li class="breadcrumb-item"><a href="#">공용</a></li>
-				    <li class="breadcrumb-item active" aria-current="page">공지사항</li>
-				  </ol>
-				</nav>
-                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link tap_txt active" href="<c:url value='/notice/noticeList'/>">공지사항</a>
-                    </li>
-                </ul>
                 <div class="tab-content" id="pills-tabContent">
                     <div class="tab-pane fade show active">
 						<div id="teamNoticeList">
-							<br><br>
+						<br><br>
+						<form name="serchFrm" method="post" action="<c:url value='/notice/noticeList'/>">
 							<div class="teamNotice_serch">
 								<div class="serch_input">
 									<div class="select_box">
 										<select class="form-select" aria-label="Default select example" 
 										id="searchCondition" name="searchCondition">
 										  <option value="default" selected>선택</option>
-										  <option value="mem_name"
-										  	<c:if test="${param.searchCondition=='MEM_NAME'}">
+											<option value="mem_name"
+												<c:if test="${param.searchCondition=='MEM_NAME'}">
 							            		selected="selected"
-							            	</c:if>            	
-										  >이름</option>
-										  <option value="notice_title"
-										  	<c:if test="${param.searchCondition=='NOTICE_TITLE'}">
+							            	</c:if>>이름</option>
+											<option value="notice_title"
+												<c:if test="${param.searchCondition=='NOTICE_TITLE'}">
 							            		selected="selected"
-							            	</c:if>										  
-										  >제목</option>
-										  <option value="notice_content"
-										  	<c:if test="${param.searchCondition=='NOTICE_CONTENT'}">
+							            	</c:if>>제목</option>
+											<option value="notice_content"
+												<c:if test="${param.searchCondition=='NOTICE_CONTENT'}">
 							            		selected="selected"
-							            	</c:if>											  
-										  >내용</option>
+							            	</c:if>>내용</option>
 										</select>				
 									</div>
 									<div class="text_box">
@@ -75,101 +145,42 @@ $(function(){
 									<div class="serch_btn">
 										<button id="searchBtn">검색</button>
 									</div><!-- serch_btn -->
-											
-									<div class="btnBox">
-						        	<%-- <c:if test="${yesNo == 'Y'}"> --%>
-						        	<c:if test="${sessionScope.dept_no==1}">
-										<!-- <a class="btn btn-sm btn-primary" href="">삭제</a>
-										<a class="btn btn-sm btn-primary" href="">수정</a> -->
-										<a class="btn btn-sm btn-primary" href="<c:url value='/notice/noticeWrite'/>">글쓰기</a>
-									</c:if>
-								</div><!-- btnBox -->  
-									
+														        
+							        <div class="btnBox">
+										<%-- <c:if test="${sessionScope.dept_no==1}"> --%>
+										<c:if test="${map['DEPT_NO']==1}">
+											<a class="btn btn-sm btn-primary"
+												href="<c:url value='/notice/noticeWrite'/>">글쓰기</a>
+										</c:if>
+									</div><!-- btnBox --> 
 								</div><!-- serch_input -->
+								
 							</div><!-- teamNotice_serch -->
-							
-							<br><br>
-							
-					        <c:if test="${empty list}">
+						</form>
+						<br><br>
+						
+							<c:if test="${empty list}">
 								<div class="notice_list_box">
 						        	<div style="text-align:center">등록된 글이 없습니다.</div>
 						        </div>
 							</c:if>
 							
-							<%-- <c:set var="yesNo" value="N"/> <!-- 경영지원팀만 댓글가능하게  --> --%>
-							
 							<c:if test="${!empty list}">
-								<!-- 반복시작 -->
-								<c:forEach var="map" items="${list}">
-									<div class="notice_list_box">
-							        	<div>
-								        	<div class="list_box_title">
-								        		<div class="user_img">
-								        			<c:set var="userimg" value="default_user.png"/>
-								        			<c:if test="${!empty map['MEM_IMAGE']}">
-								        				<c:set var="userimg" value="${map['MEM_IMAGE']}"/>
-								        			</c:if>
-								        			<img src="<c:url value='/img/mem_images/${userimg}'/>" alt="사원프로필">
-								        		</div>
-								        		<div class="user_txt">
-								        			<span class="user_txt_name">${map['MEM_NAME']}</span>
-								        			<span class="user_txt_time"> 
-								        				&#183 <fmt:formatDate value="${map['REGDATE']}" pattern="yyyy-MM-dd a hh:mm"/>
-								        			</span>
-								        		</div>
-								        		<div class="user_dept">${map['DEPT_NAME']}</div>
-								        	</div>
-								       		<div class="list_box_content">
-								       			<div class="content_title">
-								       				<a href="<c:url value='/notice/noticeDetail?noticeNo=${map["NOTICE_NO"]}'/>">${map['NOTICE_TITLE']}</a>
-								       			</div>
-								       			
-								       			<div class="content_txt">
-								       				<a href="<c:url value='/notice/noticeDetail?noticeNo=${map["NOTICE_NO"]}'/>">${map['NOTICE_CONTENT']}</a>
-								       			</div>
-								       		</div>
-								       		<c:if test="${!empty map['FILENAME']}">
-								       			<div class="list_box_file">
-								       				<a href="#"> ${map['ORIGIN_FILENAME']}&nbsp;
-								       				(<fmt:formatNumber value="${map['FSIZE'] /1024.0}" type="number" pattern="#.##"/> KB)
-								       				</a>
-								       			</div>
-								       		</c:if>
-								       		
-							       		</div>
-							     
-							        </div><!-- notice_list_box -->		
-									
-									<!-- 경영지원팀만 댓글가능하게  -->
-									<%-- <c:if test="${map['DEPT_NO']==1}">
-										<c:set var="yesNo" value="Y"/>
-									</c:if>	 --%>
-													
-								</c:forEach>
-						        <!-- 반복 끝 -->
+								<c:if test="${!empty param.searchKeyword}">
+									<div style="text-align:center">
+										${pagingInfo.totalRecord}건이 검색되었습니다.
+									</div>
+									<br><br>
+								</c:if>	
+								<!-- 반복시작 --> 
+								<div id="list_content"><!-- 여기에 값들어감  -->
+								
+								
+								</div>
 					        </c:if>
 					                    
 					        <div class="list_line"></div>     
-						                
-						      <div class="page_box">
-							      <nav aria-label="Page navigation example">
-									  <ul class="pagination justify-content-center">
-									    <li class="page-item">
-									      <a class="page-link">Previous</a>
-									    </li>
-									    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-									    <li class="page-item">
-									    	<a class="page-link" href="#">2</a>
-									    </li>
-									    <li class="page-item">
-									    	<a class="page-link" href="#">3</a>
-									    </li>
-									    <li class="page-item">
-									      <a class="page-link" href="#">Next</a>
-									    </li>
-									  </ul>
-									</nav>
-							</div>
+       
 						</div><!-- teamNoticeList -->
 					</div>
 				</div>
@@ -177,4 +188,5 @@ $(function(){
         </div>
     </div>
     <!-- Recent Sales End -->
+
  <%@include file="../inc/bottom.jsp"%>    					
