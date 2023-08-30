@@ -133,11 +133,12 @@ public class RecordController {
 	}
 	
 	@GetMapping("/summary")
-	public String inningDetail_get(Model model, int recodeDetailNo) {
-		logger.info("이닝 파라미터, recodeDetailNo={}", recodeDetailNo);
+	public String inningDetail_get(Model model, int recodeNo) {
+		logger.info("이닝 파라미터, recodeDetailNo={}", recodeNo);
 		
-		List<Map<String, Object>> list = inningService.selectByrecodeDetailNo(recodeDetailNo);
+		List<Map<String, Object>> list = inningService.selectInningView(recodeNo);
 		model.addAttribute("list", list);
+		logger.info("이닝 처리 결과, list.size={}", list.size());
 		return "/record/summary";
 	}
 	
