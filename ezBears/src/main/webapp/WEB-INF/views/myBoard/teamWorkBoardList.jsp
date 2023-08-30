@@ -52,13 +52,13 @@ $(function(){
 								            		selected="selected"
 								            	</c:if>            	
 											  >이름</option>
-											  <option value="team_notice_title"
-											  	<c:if test="${param.searchCondition=='team_notice_title'}">
+											  <option value="team_board_title"
+											  	<c:if test="${param.searchCondition=='team_board_title'}">
 								            		selected="selected"
 								            	</c:if>										  
 											  >제목</option>
-											  <option value="team_notice_content"
-											  	<c:if test="${param.searchCondition=='team_notice_content'}">
+											  <option value="team_board_content"
+											  	<c:if test="${param.searchCondition=='team_board_content'}">
 								            		selected="selected"
 								            	</c:if>											  
 											  >내용</option>
@@ -75,7 +75,7 @@ $(function(){
 										
 							        <div class="btnBox">
 										<a class="btn btn-sm btn-primary" 
-											href="<c:url value='/myBoard/teamNoticeWrite?mBoardNo=${mBoardNo}'/>">등록</a>
+											href="<c:url value='/myBoard/teamWorkBoardWrite?mBoardNo=${mBoardNo}'/>">등록</a>
 									</div><!-- btnBox --> 
 																			
 									</div><!-- serch_input -->
@@ -121,8 +121,11 @@ $(function(){
 						                      <td>${idx}</td>
 						                      <td>
 						                      	<a href="
-						                      	<c:url value='/myBoard/teamWorkBoardCountUpdate?mBoardNo=${map["MBoardNo"]}teamWorkBoardNo=${map["TEAM_BOARD_NO"]}'/>">
+						                      	<c:url value='/myBoard/teamWorkBoardCountUpdate?mBoardNo=${mBoardNo}&teamBoardNo=${map["TEAM_BOARD_NO"]}'/>" style="color:#fff;">
 						                      		${map['TEAM_BOARD_TITLE']}
+						                      		<c:if test="${map['FILENAME'] != null}">
+						                      			💾
+													</c:if>
 						                      	</a>
 						                      </td>
 						                      <td>${map['MEM_NAME']}</td>
@@ -137,47 +140,42 @@ $(function(){
 					              </tbody>
 					          </table>
 					      </div>
-					      <div class="btnBox">
-<!-- 								<a class="btn btn-sm btn-primary" href="">삭제</a>
-								<a class="btn btn-sm btn-primary" href="">수정</a> -->
-								<a class="btn btn-sm btn-primary" href="<c:url value='/myBoard/teamWorkBoardWrite?mBoardNo=${mBoardNo}'/>">등록</a>
-						</div><!-- btnBox -->
-						      <div class="page_box">
-							      <nav aria-label="Page navigation example">
-									  <ul class="pagination justify-content-center">
-									  <c:if test="${pagingInfo.firstPage>1}">
-										    <li class="page-item">
-										      <a class="page-link" onclick="pageFunc(${pagingInfo.firstPage-1})">
-										      	<
-										      </a>
+					      <div class="page_box">
+						      <nav aria-label="Page navigation example">
+								  <ul class="pagination justify-content-center">
+								  <c:if test="${pagingInfo.firstPage>1}">
+									    <li class="page-item">
+									      <a class="page-link" onclick="pageFunc(${pagingInfo.firstPage-1})">
+									      	<
+									      </a>
+									    </li>
+								    </c:if>
+								    <c:forEach var="i" begin="${pagingInfo.firstPage}" end="${pagingInfo.lastPage}">		
+										<c:if test="${i == pagingInfo.currentPage}">		
+										    <li class="page-item active" >
+										    	<a class="page-link" href="#">${i}</a>
 										    </li>
-									    </c:if>
-									    <c:forEach var="i" begin="${pagingInfo.firstPage}" end="${pagingInfo.lastPage}">		
-											<c:if test="${i == pagingInfo.currentPage}">		
-											    <li class="page-item active" >
-											    	<a class="page-link" href="#">${i}</a>
+										   </c:if>
+											<c:if test="${i != pagingInfo.currentPage }">
+											    <li class="page-item">
+											    	<a class="page-link" href="#" onclick="pageFunc(${i})">${i}</a>
 											    </li>
-											   </c:if>
-												<c:if test="${i != pagingInfo.currentPage }">
-												    <li class="page-item">
-												    	<a class="page-link" href="#" onclick="pageFunc(${i})">${i}</a>
-												    </li>
-											    </c:if>   		
-											</c:forEach>
-										<c:if test="${pagingInfo.lastPage < pagingInfo.totalPage}">													    
-										    <li class="page-item">
-										      <a class="page-link"  href="#" onclick="pageFunc(${pagingInfo.lastPage+1})">Next</a>
-										    </li>
-									    </c:if>
-									  </ul>
-									</nav>
-							</div><!-- page_box -->
-						</div><!-- teamWorkBoardList -->
-					</div>
+										    </c:if>   		
+										</c:forEach>
+									<c:if test="${pagingInfo.lastPage < pagingInfo.totalPage}">													    
+									    <li class="page-item">
+									      <a class="page-link"  href="#" onclick="pageFunc(${pagingInfo.lastPage+1})">Next</a>
+									    </li>
+								    </c:if>
+								  </ul>
+								</nav>
+						</div><!-- page_box -->
+					</div><!-- teamWorkBoardList -->
 				</div>
-            </div>
-        </div>
-    </div>
+			</div>
+           </div>
+       </div>
+</div>
     <!-- Recent Sales End -->
 
  <%@include file="../inc/bottom.jsp"%>   						

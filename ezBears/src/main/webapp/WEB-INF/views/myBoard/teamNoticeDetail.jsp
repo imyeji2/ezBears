@@ -492,6 +492,8 @@
 
 </script>
 
+<style>
+</style>
 <form method="post" name="sendFrom">
 	<input type="hidden" name="currentPage">
 	<input type="hidden" name="contentno" value="${map['TEAM_NOTICE_NO']}">
@@ -541,8 +543,8 @@
 		        				       		      
 		        		<c:if test="${!empty map['ORIGINNAME']}">
 			        		<div class="detail_right">
-			        			첨부파일 :
-			        			<a href="<c:url value='/myBoard/downloadFile?teamNoticeNo=${map["TEAM_NOTICE_NO"]}&fileName=${map["FILENAME"]}'/>">
+			        			💾
+			        			<a href="<c:url value='/myBoard/downloadFile?teamNoticeNo=${map["TEAM_NOTICE_NO"]}&fileName=${map["FILENAME"]}'/>" style="color:#fff;">
 			        				${map['ORIGINNAME']}
 			        			</a>
 			        		</div><!-- detail_right -->
