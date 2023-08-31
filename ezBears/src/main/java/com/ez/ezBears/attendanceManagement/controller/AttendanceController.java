@@ -91,6 +91,7 @@ public class AttendanceController {
 		pagination.setBlockSize(ConstUtil.BLOCK_SIZE);
 		pagination.setCurrentPage(searchVo.getCurrentPage());
 		pagination.setRecordCountPerPage(ConstUtil.RECORD_COUNT);
+		logger.info("pagination={}", pagination);
 		
 		//pagination 객체 이용해서 searchVo에 필요한 변수 마저 선언해주기
 		searchVo.setFirstRecordIndex(pagination.getFirstRecordIndex());
