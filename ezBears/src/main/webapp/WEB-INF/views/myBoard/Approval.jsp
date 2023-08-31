@@ -40,6 +40,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 </script>
 
+
 <!-- Recent Sales Start -->
 <div class="container-fluid pt-4 px-4" id="board_style">
 	<div class="bg-secondary text-center rounded">
