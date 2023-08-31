@@ -88,7 +88,6 @@
 	}	
 }
 
-#
 /*Appdelete*/
 #Appdelete{
 	.pwd{
@@ -152,5 +151,9 @@
 	width: 85%;
 	height: 90%;
 	margin-left: 105px;
+	
+	}
+	.calendar a {
+		color: #fff;
 	}
 }

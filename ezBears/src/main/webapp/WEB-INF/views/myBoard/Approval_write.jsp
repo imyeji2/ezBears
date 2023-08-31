@@ -16,12 +16,18 @@
             </nav>
 	<div class="appbox">
 				<div class="form-floating mb-3">
+			
 		<form id="appform" action="" method="post" enctype="multipart/form-data" >
-
+				<input type ="text" name ="userid" id="userid" value="${userid }">
+				<input type="text" name="myBoardNo" id="myBoardNo"value="${myBoardInfoVo.myBoardNo}"> 
+				<input type="text" name="memNo" id="memNo" value="${myBoardInfoVo.memNo}"> 
+				<input type="text" name="MBoardNo" id="MBoardNo" value="${myBoardInfoVo.MBoardNo}"> 
+				<input type="text" name="deptNo" id="deptNo" value="${myBoardInfoVo.deptNo}">
+				 
 			<table class="table" id="table" border="1">
 				<tr class="tr-s">
-					<td class="td-1" rowspan="2">문서번호</td>
-					<td class="td-2" rowspan="2" colspan="3"></td> <!-- 문서 번호 불러오기 -->
+					<td class="td-1" rowspan="2" >문서번호</td>
+					<td class="td-2" rowspan="2" colspan="3"> <input type ="text"  name="docNo"></td> <!-- 문서 번호 불러오기 -->
 					<td class="td-3">담당</td><!-- 결재 담당자 -->
 					<td class="td-4">담당자 목록 추가버튼</td><!-- 결재 담당자 -->
 
@@ -40,8 +46,8 @@
 			
 				<tr id="tr-title" class="tr-m">
 					<td class="td-1">제목</td>
-					<td colspan="7"><input type="email" class="form-control" id="floatingInput"
-						placeholder="으아ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ">
+					<td colspan="7"><input type="text" class="form-control" id="floatingInput" name="docTitle"
+						placeholder="제목">
 						 <label for="floatingInput">  </label></td>
 				</tr>
 
