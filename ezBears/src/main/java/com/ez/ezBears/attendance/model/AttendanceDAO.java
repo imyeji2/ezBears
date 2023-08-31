@@ -6,6 +6,8 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.ez.ezBears.common.SearchVO;
+
 @Mapper
 public interface AttendanceDAO {
 	List<AttendanceVO> selectByMemNo(int memNo);
@@ -19,6 +21,6 @@ public interface AttendanceDAO {
 	int countComeLate(@Param ("memNo") int memNo, @Param("date") String date );
 	int countComeGood(@Param ("memNo") int memNo, @Param("date") String date );
 	int countGoEarly(@Param ("memNo") int memNo, @Param("date") String date );
-	List<Map<String, Object>> selectAllView();
 	int countAllView();
+	List<Map<String, Object>> selectAllView(@Param("searchVo") SearchVO searchVo);
 }
