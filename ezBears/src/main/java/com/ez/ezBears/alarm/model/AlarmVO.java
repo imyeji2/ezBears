@@ -1,5 +1,8 @@
 package com.ez.ezBears.alarm.model;
 
+import lombok.Data;
+
+@Data
 public class AlarmVO {
 	private int alarmNo;
 	private String memNum;
