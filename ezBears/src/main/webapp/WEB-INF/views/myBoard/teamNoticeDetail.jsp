@@ -579,13 +579,7 @@
 	       		<div class="detail_reply_wrap">
 	       			<div class="reply_tit"></div>
 	       			<div class="reply_list">
-	       				<!-- 댓글 영역 -->
 
-	    				<!-- 댓글 영역 -->		
-	    				
-	    				<!-- 대댓글 영영 -->
-		    				
-	    				<!-- 대댓글 영영 -->
 
 	       			</div><!-- reply_list -->
 	       		 

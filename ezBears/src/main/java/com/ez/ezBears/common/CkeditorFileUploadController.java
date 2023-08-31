@@ -21,7 +21,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
-@RequestMapping("/adm")
+@RequestMapping("/ck")
 public class CkeditorFileUploadController {
 
 	@PostMapping("/fileupload")
@@ -43,6 +43,9 @@ public class CkeditorFileUploadController {
 				if (file.getContentType().toLowerCase().startsWith("image/")) {
 
 					try {
+		                String originalFileName = file.getOriginalFilename(); // 원본 파일 이름 가져오기
+		                String fileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));//확장자 추출
+		                
 						//파일 이름 설정
 						String fileName = file.getName();
 						//바이트 타입설정
@@ -57,7 +60,7 @@ public class CkeditorFileUploadController {
 							uploadFile.mkdirs();
 						}
 						//파일이름을 랜덤하게 생성
-						fileName = UUID.randomUUID().toString();
+						fileName = UUID.randomUUID().toString()+fileExtension;
 						//업로드 경로 + 파일이름을 줘서  데이터를 서버에 전송
 						uploadPath = uploadPath + "/" + fileName;
 						out = new FileOutputStream(new File(uploadPath));

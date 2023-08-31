@@ -7,6 +7,7 @@
 	$(function(){		
 		var totalCount=0;
 		send(1);
+		todoList();
 		
 		//글 삭제
 		$('#del').click(function(){
@@ -15,8 +16,7 @@
 			 	location.href="<c:url value='/myBoard/teamWorkBoardDel?mBoardNo=${map["M_BOARD_NO"]}&teamBoardNo=${map["TEAM_BOARD_NO"]}&oldFileName=${map["FILENAME"]}'/>"
 			 }
 		});
-		
-		
+
 		//ajax
 		//댓글 등록 ajax
 		$('#add_reply').click(function(event){
@@ -122,50 +122,45 @@
 		    }
 		});	
 		
-		//대댓글 등록
-		$(document).on('click', '.add_r_reply',function(e) {       
-		 	event.preventDefault();
-		   var $replyContainer = $(this).closest('.reply_content');
-		   $replyContainer.find('.replyaddForm').show();
-		   $replyContainer.find('#comments').focus();
-		   
-		});	
-		
-		
-		//대댓글 등록 취소
-		$(document).on('click', '.add_R_replyCencleBtn',function(e) {       
-		 	event.preventDefault();
-		   var $replyContainer = $(this).closest('.reply_content');
-		   $replyContainer.find('.replyaddForm').hide();
-		});
-		  
-		
-		//대댓글 등록 ajax
-		$(document).on('click', '#add_R_replyBtn', function(e) {       	
-		    e.preventDefault(); // 이벤트의 기본 동작 방지
-		    var $replyContainer = $(this).closest('form[name=rAddForm]');
-		    var replyData = $replyContainer.serialize(); // 데이터 직렬화      
-            var curPage = $replyContainer.find('input[name=curPage]').val();		   
+	    // 대댓글 등록
+	    $('.add_r_reply').click(function(e) {
+	        event.preventDefault();
+	        var $replyContainer = $(this).closest('.reply_content');
+	        $replyContainer.find('.replyaddForm').show();
+	        $replyContainer.find('#comments').focus();
+	    });
 
-		    $.ajax({
-		        type: 'post',
-		        url: "<c:url value='/myBoard/workBoard_reReply_insert'/>",
-		        data: replyData,
-		        dataType: 'json',
-		        error: function(xhr, status, error){
-		            alert(error);
-		        },
-		        success: function(res){
-		            console.log(res); // 서버 응답 확인  
-		            $('#addComment').val('');
-		            send(curPage);
-		            alert("대댓글이 등록되었습니다.");
-		            
-		        
-		        }
-		    });
-		    
-		});//댓글 등록 끝
+	    // 대댓글 등록 취소
+	    $('.add_R_replyCencleBtn').click(function(e) {
+	        event.preventDefault();
+	        var $replyContainer = $(this).closest('.reply_content');
+	        $replyContainer.find('.replyaddForm').hide();
+	    });
+
+	    // 대댓글 등록 ajax
+	    $('#add_R_replyBtn').click(function(e) {
+	        e.preventDefault(); // 이벤트의 기본 동작 방지
+	        var $replyContainer = $(this).closest('form[name=rAddForm]');
+	        var replyData = $replyContainer.serialize(); // 데이터 직렬화
+	        var curPage = $replyContainer.find('input[name=curPage]').val();
+
+	        $.ajax({
+	            type: 'post',
+	            url: "<c:url value='/myBoard/workBoard_reReply_insert'/>",
+	            data: replyData,
+	            dataType: 'json',
+	            error: function(xhr, status, error) {
+	                alert(error);
+	            },
+	            success: function(res) {
+	                console.log(res); // 서버 응답 확인
+	                $('#addComment').val('');
+	                send(curPage);
+	                alert("대댓글이 등록되었습니다.");
+	            }
+	        });
+	    }); // 대댓글 등록 끝
+	    
 
 		 //대댓글 수정     
 		$(document).on('click', '.editReplyBtn1', function(e) {       
@@ -243,10 +238,100 @@
 				           		}
 				             
 				        }
-				    });			
+				    });	//ajax		
 			    }
-			});			
-	});
+			});	//이벤트 끝
+			
+			
+			//체크 상태 변경 ajax
+			$(document).on('change', 'input[name=todoDetailNo]', function(e) { 
+			    var todoDetailNo = $(this).val();
+			    var status = $(this).prop('checked') ? 'N' : 'Y';
+			    
+			    $.ajax({
+			        type: 'post',
+			        url: "<c:url value='/myBoard/updateTodoListDetail'/>",
+			        data: {todoDetailNo: todoDetailNo, status: status},
+			        dataType: 'json',
+			        error: function(xhr, status, error) {
+			            alert(error);
+			        },
+			        success: function(res) {
+			            console.log(res); // 서버 응답 확인 
+			            if (res > 0) {
+			                todoList(); // todoList 함수 호출
+			                
+			            } else {
+			                alert('다시 시도해주세요');
+			            }
+			        }
+			    }) // ajax
+			});
+		
+		//담당자 변경 및 삭제	
+		$(document).on('click','#addMem_img',function(){
+			if(confirm('담당자를 변경하시겠습니까?')){
+				$('#staticBackdrop').modal('show');
+			}else if(confirm('담당자를 삭제하시겠습니까?')){
+				var todoDetailNo = $(this).closest('.todoList').find('input[name="todoDetailNo"]').val();
+				var memNo = $(this).find('input[name=memNo]').val();
+			    $.ajax({
+			        type: 'post',
+			        url: "<c:url value='/myBoard/toDoDetailMemDel'/>",
+			        data: { todoDetailNo: todoDetailNo, memNo: memNo },
+			        dataType: 'json',
+			        error: function(xhr, status, error) {
+			            alert(error);
+			        },
+			        success: function(res) {
+			            console.log(res); // 서버 응답 확인 
+			            if (res > 0) {
+			                todoList(); // todoList 함수 호출
+			                alert("담당자가 삭제되었습니다.");
+			                $('#staticBackdrop').modal('hide');
+			            } else {
+			                alert('다시 시도해주세요');
+			            }
+			        }
+			    }); // ajax				
+			}
+			
+		});
+		
+		//버튼 클릭하면 두투 디테일 값 넘겨주기	
+		$(document).on('show.bs.modal', '#staticBackdrop', function(event) {
+		    var date = $(this).parent().find('input[name=todoDetailNo]').val();
+		    $('.memListBox input[name=todoDetailNo]').val(date);
+		});
+			
+				
+		
+		// 업무 담당자 지정
+		$('.mem_list_content').click(function() {
+		    var todoDetailNo = $('input[name=todoDetailNo]').val();
+		    var memNo = $(this).find('input[name=memNo]').val();
+		    $.ajax({
+		        type: 'post',
+		        url: "<c:url value='/myBoard/addTodoDetailMem'/>",
+		        data: { todoDetailNo: todoDetailNo, memNo: memNo },
+		        dataType: 'json',
+		        error: function(xhr, status, error) {
+		            alert(error);
+		        },
+		        success: function(res) {
+		            console.log(res); // 서버 응답 확인 
+		            if (res > 0) {
+		                todoList(); // todoList 함수 호출
+		                alert("담당자가 설정되었습니다.");
+		                $('#staticBackdrop').modal('hide');
+		            } else {
+		                alert('다시 시도해주세요');
+		            }
+		        }
+		    }); // ajax
+		}); //담당자 지정
+		
+	});//$(function(){});
 	
 	//전체 댓글 불러오기 ajax처리
 	function send(curPage){		
@@ -478,15 +563,103 @@
 	       			}//not null if
 			}//success
 		});//ajax
+		
+   
 	}//function	
+	
+	function todoList(){
+		var todolistNo = $('input[name=todolistNo]').val();
+		 $.ajax({
+		        type: 'post',
+		        url: "<c:url value='/myBoard/selectTodoList'/>",
+		        data:{todolistNo: todolistNo},
+		        dataType: 'json',
+		        error: function(xhr, status, error){
+		            alert(error);
+		        },
+		        success: function(res){
+		            console.log(res); // 서버 응답 확인
+		            var toDoList="";
+		            var totalCount=0;
+		            var checkedCount=0;
+		            var uncheckCount=0;
+		            
+		            $('.checkedList').html('');
+		            $('.uncheckList').html('');
+	            	
+		            
+		            $.each(res, function(idx, item){
+		            	totalCount++;
+	            		if(item.STATUS==='Y'){
+	            			toDoList="<div class='d-flex align-items-center border-bottom py-2 todoList'>";
+		            		toDoList+="<input class='form-check-input m-0' type='checkbox' name='todoDetailNo' value='"+item.TODO_DETAIL_NO+"'>";
+		            		toDoList+="<div class='w-100 ms-3'>";
+		            		toDoList+="<div class='d-flex w-100 align-items-center justify-content-between'>";
+		            		toDoList+="<span>"+item.TODO_CONTENT+"</span>";
+		            		if(item.MEM_NO){
+		            			toDoList+="<img src='<c:url value='/img/mem_images/"+item.MEM_IMAGE+"'/>' alt='담당자 이미지' class='mem_img' id='addMem_img'>";
+		            		}else{
+		                 		toDoList+="<span style='text-align:left;'><a href='#' data-bs-toggle='modal' data-bs-target='#staticBackdrop' id='addMem'>담당자 등록</a></span>";
+		            		}		            		
+		            		toDoList+="</div>";
+		            		toDoList+="</div>";
+		            		toDoList+="</div>";
+		            		$('.uncheckList').append(toDoList);	 
+		            	
+		            		uncheckCount++;
+
+	            		}else{
+		            		toDoList="<div class='d-flex align-items-center border-bottom py-2 todoList'>";
+		            		toDoList+="<input class='form-check-input m-0' type='checkbox' name='todoDetailNo' value='"+item.TODO_DETAIL_NO+"' checked>";
+		            		toDoList+="<div class='w-100 ms-3'>";
+		            		toDoList+="<div class='d-flex w-100 align-items-center justify-content-between'>";
+		            		toDoList+="<span>"+item.TODO_CONTENT+"</span>";
+		            		if(item.MEM_NO){
+		            			toDoList+="<img src='<c:url value='/img/mem_images/"+item.MEM_IMAGE+"'/>' alt='담당자 이미지' class='mem_img'>";
+		            		}
+		            		toDoList+="</div>";
+		            		toDoList+="</div>";
+		            		toDoList+="</div>";
+		            		$('.checkedList').append(toDoList);	
+		            		checkedCount++;
+	            		}
+	            		
+	            		
+	            	});//each
+	            	
+		            if(uncheckCount===0){
+	            		toDoList="<div class='d-flex align-items-center border-bottom py-2 todoList'>";
+	            		toDoList+="모든 계획을 달성하셨습니다🎉";
+	            		toDoList+="</div>";		 
+	            		$('.uncheckList').append(toDoList);
+            		}else if(checkedCount===0){
+	            		toDoList="<div class='d-flex align-items-center border-bottom py-2 todoList'>";
+	            		toDoList+="아직 실행된 계획이 없습니다! 조금만 더 힘내요👍";
+	            		toDoList+="</div>";		 
+	            		$('.checkedList').append(toDoList);
+            		}
+            			
+            	
+	           		$('#checkResult').text(checkedCount+"/"+totalCount);
+	           		$('#checkedCount').text(checkedCount);
+	           		$('#uncheckCount').text(uncheckCount);
+	            	
+	           		var result = (checkedCount / totalCount) * 100;
+	           		$('.progress-bar').css('width', result + "%");
+	           		$('.progress-bar').text(result + "%");
+	       	 }
+		});
+	}
+
+	
+
+	
 </script>
 
 <form method="post" name="sendFrom">
 	<input type="hidden" name="currentPage">
 	<input type="hidden" name="contentno" value="${map['TEAM_BOARD_NO']}">
 </form>
-
-
 <c:set var="checkedCount" value="0"/>
 <c:set var="uncheckedCount" value="0"/>
 <c:set var="totalCount" value="0"/>  
@@ -544,66 +717,40 @@
 		       				${map['TEAM_BOARD_CONTENT']}
 		       			</div>
 		       			
-		       			
+						<fmt:parseDate var="startRegdateFmt" value="${toDoList.startRegdate}" pattern="yyyy-MM-dd HH:mm:ss" />
+						<fmt:parseDate var="doneRegdateFmt" value="${toDoList.doneRegdate}" pattern="yyyy-MM-dd HH:mm:ss" />
+						
 		       			<div class="detailTodoList">
-		       				<div class="todoTitle">
-		       					<div>
-									<h6 class="mb-0">⌛진행사항(1/${totalCount})</h6>
-									<div class="progress" role="progressbar" aria-label="Warning example" 
-										aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width:60%;">
-									 	<div class="progress-bar text-bg-Danger" style="width: 75%">75%</div>
-									</div>
-								</div>
-								<fmt:parseDate var="startRegdateFmt" value="${toDoList.startRegdate}" pattern="yyyy-MM-dd HH:mm:ss" />
-								<fmt:parseDate var="doneRegdateFmt" value="${toDoList.doneRegdate}" pattern="yyyy-MM-dd HH:mm:ss" />
-								
-								<div class="todoDate">
-								    <span>프로젝트 진행일 : </span>
-								    <span>
-								        <fmt:formatDate value="${startRegdateFmt}" pattern="yyyy-MM-dd"/> ~ 
-								        <fmt:formatDate value="${doneRegdateFmt}" pattern="yyyy-MM-dd"/>
+		       			<input type="hidden" name="todolistNo" value="${toDoList.todolistNo}">
+	       					<div class="result_Box">
+	       						<div class="result_txt">
+	       							<h6 class="mb-0">⌛진행사항(<span id="checkResult"></span>)</h6>
+	       						</div>
+				       			<div class="todoDate">
+								    <span>🗓️프로젝트 진행일정:
+								     <fmt:formatDate value="${startRegdateFmt}" pattern="yyyy-MM-dd"/> ~ 
+								     <fmt:formatDate value="${doneRegdateFmt}" pattern="yyyy-MM-dd"/>🗓️
 								    </span>
+								</div>		       						
+								<div class="progress result_progress" role="progressbar" aria-label="Warning example" 
+									aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+								 	<div class="progress-bar text-bg-Danger" style="width: 75%">75%</div>
 								</div>
-		       				</div>
-		       				
-                         <div class="d-flex mb-2">
-<!--                                 <input class="form-control border-0 todoInput" type="text" placeholder="업무를 입력하세요">
-                                <button type="button" class="btn btn-primary ms-2">Add</button> -->
-                            </div>
-                            <br>
+							</div>
+		   
+                            <h8>📍진행중(<span id="uncheckCount"></span>)</h8>
                             <div class="uncheckList">
-                            	<h8>📍진행중</h8>
-                            	<c:forEach var="list" items="${toDoListDetailList}">
-	                            	<c:if test="${list.status=='Y'}">
-	                            		<c:set var="uncheckedCount" value="${uncheckedCount + 1}"/>
-			                            <div class="d-flex align-items-center border-bottom py-2 todoList">
-			                               <input class="form-check-input m-0" type="checkbox">
-			                                <div class="w-100 ms-3">
-			                                    <div class="d-flex w-100 align-items-center justify-content-between">
-			                                        <span>${list.todoContent}</span>
-			                                    </div>
-			                                </div>
-			                            </div>		
-		                            </c:if> 
-	                            </c:forEach>   					      
+                            	
+	                            		
                        		</div>
+                       		
 	                        <br>
+	                        
+	                        <h8>📍완료(<span id="checkedCount"></span>)</h8>
 	                        <div class="checkedList">
-	                        	<h8>📍완료</h8>
-	                        	<c:forEach var="list" items="${toDoListDetailList}" >
-	                        		<c:set var="checkedCount" value="${checkedCount }"/>	
-		                        	<c:if test="${list.status!='Y'}">
-			                            <div class="d-flex align-items-center border-bottom py-2 todoList">
-			                                <input class="form-check-input m-0" type="checkbox" checked="checked">
-			                                <div class="w-100 ms-3">
-			                                    <div class="d-flex w-100 align-items-center justify-content-between">
-			                                        <span>EXERD 수정 및 ERD 확정</span>
-			                                    </div>
-			                                </div>
-			                            </div>
-		                            </c:if>
-		                    	</c:forEach>
-		                    	<c:set var="totalCount" value="${checkedCount+uncheckedCount}"/>                         	
+	                        	
+	                        	
+                  	
 	                        </div>                 
 		       			</div> <!--writeTodoList -->
 		       					     			
@@ -613,7 +760,7 @@
 		       				</span>
 		       				<c:if test="${userid==map['MEM_ID']}">
 		       					<span class="user_dept">
-		       						<a href="<c:url value='/myBoard/teamWorkBoardEdit?mBoardNo=${map["M_BOARD_NO"]}&teamBoardNo=${map["TEAM_Board_NO"]}'/>">
+		       						<a href="<c:url value='/myBoard/teamWorkBoardEdit?mBoardNo=${map["M_BOARD_NO"]}&teamBoardNo=${map["TEAM_BOARD_NO"]}'/>">
 		       						수정
 		       						</a>
 		       					</span>
@@ -630,13 +777,7 @@
 	       		<div class="detail_reply_wrap">
 	       			<div class="reply_tit"></div>
 	       			<div class="reply_list">
-	       				<!-- 댓글 영역 -->
 
-	    				<!-- 댓글 영역 -->		
-	    				
-	    				<!-- 대댓글 영영 -->
-		    				
-	    				<!-- 대댓글 영영 -->
 
 	       			</div><!-- reply_list -->
 	       		 
@@ -669,9 +810,41 @@
 						  </ul>
 					</nav>
 				</div><!-- page_box --> 	
-						
-	       	</div><!-- detail_reply_wrap -->   		
+				<!-- Modal -->
+				<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+				  <div class="modal-dialog">
+				    <div class="modal-content">
+				      <div class="modal-header">
+       					 <h1 class="modal-title fs-5" id="staticBackdropLabel" style="color:#191C24">팀 멤버</h1>
+       				  </div>				    
+				      <div class="modal-body">
+				        <div class="memListBox">
+				        <input type="hidden" name="todoDetailNo" value="">   
+					        <c:forEach var="memMap" items="${mem_list}">
+					        	<div class="mem_list_content">
+									<div class="mem_img_box">
+										<img src="<c:url value='/img/mem_images/${memMap["MEM_IMAGE"]}'/>" alt="사원이미지">
+									</div>
+									<div class="mem_info_box">
+										<div>${memMap["MEM_NAME"]}/${memMap["POSITION_NAME"]}</div>
+										<div>${memMap["DEPT_NAME"]}</div>
+										<input type="hidden" name="memNo" value=${memMap["MEM_NO"]}>   
+										
+									</div> 
+								</div><!-- mem_list_content --> 
+							</c:forEach>	
+				        </div><!-- memListBox -->
+				      </div>
+				      <div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+				      </div><!-- Modal-footer -->
+				    </div><!-- modal-content -->
+				  </div>
+				</div>
+				<!--Modal-->	
+			</div><!-- detail_reply_wrap -->  			       		
 		</div><!-- teamNoticeDetail -->
 	</div>
 </div>
+
 <%@include file="../inc/bottom.jsp"%>  

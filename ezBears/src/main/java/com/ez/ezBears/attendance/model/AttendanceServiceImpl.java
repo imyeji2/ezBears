@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.ez.ezBears.common.SearchVO;
+
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -78,10 +80,9 @@ public class AttendanceServiceImpl implements AttendanceService{
 		return attendanceDao.countGoEarly(memNo, date);
 	}
 
-
 	@Override
-	public List<Map<String, Object>> selectAllView() {
-		return attendanceDao.selectAllView();
+	public List<Map<String, Object>> selectAllView(SearchVO searchVo) {
+		return attendanceDao.selectAllView(searchVo);
 	}
 
 

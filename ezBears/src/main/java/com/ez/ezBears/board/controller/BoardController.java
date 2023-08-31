@@ -98,8 +98,8 @@ public class BoardController {
 	    
 	    //3
 	    // 랜덤 값을 저장하는 로직
-	    //saveRandomNumber(randomNumber);
-
+		/* saveRandomNumber(randomNumber); */
+    
 	    Map<String, Object> resultMap = new HashMap<>();
 	    resultMap.put("list", list);
 	    resultMap.put("pagingInfo", pagingInfo);

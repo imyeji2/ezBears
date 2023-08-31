@@ -11,8 +11,26 @@
 		values(#{todoDetailNo},#{todolistNo},#{todoContent}) 
 	</insert>
 	
-	<select id="selectToDoListDetail" parameterType="int" resultType="toDoListDetailVo">
-		SELECT * FROM TODOLIST_DETAIL
+	<select id="selectToDoListDetail" parameterType="int" resultType="map">
+		SELECT * FROM todoListDetailMemberView
 		WHERE TODOLIST_NO = #{todolistNo}
 	</select>
+	
+	<update id="updateTodoStatus" parameterType="todoListDetailVo">
+		update TODOLIST_DETAIL
+		set status=#{status}
+		where TODO_DETAIL_NO=#{todoDetailNo}
+	</update>
+	
+	<update id="updateTodoMember" parameterType="todoListDetailVo">
+		update TODOLIST_DETAIL
+		set mem_no = #{memNo}
+		where todo_detail_no=#{todoDetailNo}
+	</update>
+	
+	<update id="delTodoMember" parameterType="todoListDetailVo">
+		update TODOLIST_DETAIL
+		set mem_no = null
+		where todo_detail_no=#{todoDetailNo}	
+	</update>
 </mapper>

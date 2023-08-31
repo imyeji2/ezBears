@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ez.ezBears.sign.model.SignDAO">
+
+
+	<sql id="searchWhere">
+			<where>
+				<if test="searchKeyword!=null and searchKeyword!=''">
+					${searchCondition} like '%' || #{searchKeyword} || '%'
+				</if>
+			</where>
+	</sql>
+	
+	<insert id="insertApproval" parameterType="signVo">
+		<selectKey keyProperty="docNo" order="BEFORE" resultType="int">
+			select sign_seq.nextval from dual
+		</selectKey>
+		insert into sign(doc_no,dept_no,mem_no,doc_title,doc_content,my_board_no)
+		values(#{docNo},#{deptNo},#{memNo},#{docTitle},#{docContent},#{myBoardNo})
+	</insert>
+	
+	
+	<select id="selectApprovalList" resultType="map" parameterType="searchVo">
+		 select *
+      from
+      (
+	      select rownum as RNUM, A.* from
+	      (		
+			select * from signListView
+			<include refid="searchWhere"></include>
+			order by doc_no desc
+	      )A
+      )
+      <![CDATA[
+      where RNUM> #{firstRecordIndex} 
+      and RNUM<=#{firstRecordIndex} + #{recordCountPerPage}]]>		
+	</select>
+	
+	<select id="selectAppCount" resultType="int" parameterType="searchVo">
+		select count(*) from signListView
+		<include refid="searchWhere"></include>
+	</select>
+	
+</mapper>

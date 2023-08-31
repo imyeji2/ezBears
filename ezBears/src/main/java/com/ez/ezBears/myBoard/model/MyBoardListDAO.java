@@ -24,6 +24,8 @@ public interface MyBoardListDAO {
 	//댓글 동록 마이보드 번호 찾기
 	int seleectMyBoardNo(MyBoardListVO myBoardListVo);
 	
+	//마이보드 멤버 검색
+	List<Map<String, Object>>selectMyBoardMember(int mBoardNo);
 	
 	//다희
 	//부서 이름으로 동적 게시판 번호 찾기

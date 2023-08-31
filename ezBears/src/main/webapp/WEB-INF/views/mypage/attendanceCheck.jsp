@@ -73,6 +73,7 @@
          	</nav>
         <div class="col-md-8 text-center">
         	<h3>월별 근태조회</h3><br>
+        	<a href="<c:url value='/mypage/attendanceList'/>">출근기록 상세보기</a>
        		<div id='calendar'></div>
        
         </div>
