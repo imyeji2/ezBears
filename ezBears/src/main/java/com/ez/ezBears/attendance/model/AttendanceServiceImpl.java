@@ -85,6 +85,12 @@ public class AttendanceServiceImpl implements AttendanceService{
 	}
 
 
+	@Override
+	public int countAllView() {
+		return attendanceDao.countAllView();
+	}
+
+
 
 
 }

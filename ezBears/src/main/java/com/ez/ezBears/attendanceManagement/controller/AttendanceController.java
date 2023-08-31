@@ -11,9 +11,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ez.ezBears.attendance.model.AttendanceService;
+import com.ez.ezBears.common.ConstUtil;
+import com.ez.ezBears.common.PaginationInfo;
+import com.ez.ezBears.common.SearchVO;
 import com.ez.ezBears.dept.model.DeptService;
 import com.ez.ezBears.dept.model.DeptVO;
 
@@ -38,7 +42,7 @@ public class AttendanceController {
 	*/
 	
 	@RequestMapping("/attendanceSearch")
-	public String attendanceSearch(
+	public String attendanceSearch(@ModelAttribute SearchVO searchVo,
 			Model model) throws ParseException {
 		logger.info("출/퇴근 검색 화면 이동");
 		
@@ -82,10 +86,20 @@ public class AttendanceController {
 		model.addAttribute("attendanceList", attendanceList);
 		
 		//-----------------------------여기부터는 페이징처리와 검색 처리를 위한 코드들--------------------------------------------
+		//pagination 객체 생성해서 없는 변수들 선언해준다
+		PaginationInfo pagination = new PaginationInfo();
+		pagination.setBlockSize(ConstUtil.BLOCK_SIZE);
+		pagination.setCurrentPage(searchVo.getCurrentPage());
+		pagination.setRecordCountPerPage(ConstUtil.RECORD_COUNT);
 		
+		//pagination 객체 이용해서 searchVo에 필요한 변수 마저 선언해주기
+		searchVo.setFirstRecordIndex(pagination.getFirstRecordIndex());
+		searchVo.setRecordCountPerPage(ConstUtil.RECORD_COUNT);
+		logger.info("설정 후 searchVo={}", searchVo);
 		
+		int totalRecord = attendanceService.countAllView();
 		
-		
+		model.addAttribute("pagination", pagination);
 		
 		return "/attendanceManagement/attendanceSearch";
 		
