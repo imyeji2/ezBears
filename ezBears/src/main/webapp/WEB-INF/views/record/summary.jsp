@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+
 <body class="baseball flat _fs pid_34 detailbody responsive" style="">
 	<div class="container__detail">
 		<div id="detail" class="container__detailInner">
@@ -13,22 +15,26 @@
 					<c:set var="totalScoreHome" value="0" />
 					<c:forEach var="map" items="${list }">
 						<c:if
-							test="${map.inning == '1회초' || map.inning == '2회초' || map.inning == '3회초' || map.inning == '4회초' || map.inning == '5회초' || map.inning == '6회초' || map.inning == '7회초' || map.inning == '8회초' || map.inning == '9회초'}">
+							test="${map['INNING'] == '1회초' || map['INNING'] == '2회초' || map['INNING'] == '3회초' || map['INNING'] == '4회초' || map['INNING'] == '5회초' || map['INNING'] == '6회초' || map['INNING'] == '7회초' || map['INNING'] == '8회초' || map['INNING'] == '9회초'}">
+							<div
+								class="smh__part smh__home smh__part--${map.INNING.charAt(1)}">${map.R}</div>
 							<c:set var="totalScoreHome" value="${totalScoreHome + map.R}" />
 						</c:if>
 					</c:forEach>
-					${totalScoreHome}
+					<div class="smh__part smh__score smh__home smh__part--current">${totalScoreHome}</div>
 				</div>
 
 				<div class="smh__part smh__score smh__away smh__part--current">
 					<c:set var="totalScoreAway" value="0" />
 					<c:forEach var="map" items="${list }">
 						<c:if
-							test="${map.inning == '1회말' || map.inning == '2회말' || map.inning == '3회말' || map.inning == '4회말' || map.inning == '5회말' || map.inning == '6회말' || map.inning == '7회말' || map.inning == '8회말' || map.inning == '9회말'}">
+							test="${map['INNING'] == '1회말' || map['INNING'] == '2회말' || map['INNING'] == '3회말' || map['INNING'] == '4회말' || map['INNING'] == '5회말' || map['INNING'] == '6회말' || map['INNING'] == '7회말' || map['INNING'] == '8회말' || map['INNING'] == '9회말'}">
+							<div
+								class="smh__part smh__away smh__part--${map.INNING.charAt(1)}">${map.R}</div>
 							<c:set var="totalScoreAway" value="${totalScoreAway + map.R}" />
 						</c:if>
 					</c:forEach>
-					${totalScoreAway}
+					<div class="smh__part smh__score smh__home smh__part--current">${totalScoreAway}</div>
 				</div>
 
 				<div class="fixedHeaderDuel__score">
@@ -153,34 +159,34 @@
 							</c:if>
 						</div>
 
-						<div class="smh__part smh__score smh__home smh__part--current">${totalScoreHome}</div>
+						<div class="smh__part smh__score smh__home smh__part--current">${totalScoreHome} </div>
 						<c:forEach var="map" items="${list }">
  							<c:if test="${map['INNING'] == '1회초'}">
-								<div class="smh__part  smh__home smh__part--1" id="inning1Home">${map['R'] }</div>
+								<div class="smh__part  smh__home smh__part--1" id="inning1Home">${map.R }</div>
 							</c:if>
 							<c:if test="${map['INNING'] == '2회초'}">
-								<div class="smh__part  smh__home smh__part--2" id="inning2Home">${list.R }</div>
+								<div class="smh__part  smh__home smh__part--2" id="inning2Home">${map.R }</div>
 							</c:if>
 							<c:if test="${map['INNING'] == '3회초'}">
-								<div class="smh__part  smh__home smh__part--3" id="inning3Home">${list.R }</div>
+								<div class="smh__part  smh__home smh__part--3" id="inning3Home">${map.R }</div>
 							</c:if>
 							<c:if test="${map['INNING'] == '4회초'}">
-								<div class="smh__part  smh__home smh__part--4" id="inning4Home">${list.R }</div>
+								<div class="smh__part  smh__home smh__part--4" id="inning4Home">${map.R }</div>
 							</c:if>
 							<c:if test="${map.inning == '5회초'}">
-								<div class="smh__part  smh__home smh__part--5" id="inning5Home">${list.R }</div>
+								<div class="smh__part  smh__home smh__part--5" id="inning5Home">${map.R }</div>
 							</c:if>
 							<c:if test="${map.inning == '6회초'}">
-								<div class="smh__part  smh__home smh__part--6" id="inning6Home">${list.R }</div>
+								<div class="smh__part  smh__home smh__part--6" id="inning6Home">${map.R }</div>
 							</c:if>
 							<c:if test="${map.inning == '7회초'}">
-								<div class="smh__part  smh__home smh__part--7" id="inning7Home">${list.R }</div>
+								<div class="smh__part  smh__home smh__part--7" id="inning7Home">${map.R }</div>
 							</c:if>
 							<c:if test="${map.inning == '8회초'}">
-								<div class="smh__part  smh__home smh__part--8" id="inning8Home">${list.R }</div>
+								<div class="smh__part  smh__home smh__part--8" id="inning8Home">${map.R }</div>
 							</c:if>
 							<c:if test="${map.inning == '9회초'}">
-								<div class="smh__part  smh__home smh__part--9" id="inning9Home">${list.R }</div>
+								<div class="smh__part  smh__home smh__part--9" id="inning9Home">${map.R }</div>
 							</c:if>
 						</c:forEach>
 						<%-- 						<c:if test="${list.inning == '1회초'}">
