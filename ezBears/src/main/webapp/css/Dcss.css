@@ -539,3 +539,7 @@ img.gotoChatPng {
     width: 20px;
     transform: rotate(90deg);
 }
+.chatDiv {
+    margin-left: 170px;
+    margin-top: 10px;
+}
