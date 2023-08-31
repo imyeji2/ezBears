@@ -112,6 +112,7 @@ public class MyPageController {
 				logger.info("출근 처리 결과, cnt={}", cnt);
 				//최근 출근날짜의 attendanceNo 가져오기
 				int attendanceNo = attendanceService.selectAttendanceNo(memNo);
+				logger.info("가장 최근 출근 번호, attendanceNo={}", attendanceNo);
 				
 				if (currentTime.isAfter(nineAM)) {
 			    // 현재 시간이 9시 이후인 경우 (지각)

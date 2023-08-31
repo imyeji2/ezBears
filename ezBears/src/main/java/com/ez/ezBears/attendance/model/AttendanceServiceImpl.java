@@ -79,6 +79,18 @@ public class AttendanceServiceImpl implements AttendanceService{
 	}
 
 
+	@Override
+	public List<Map<String, Object>> selectAllView() {
+		return attendanceDao.selectAllView();
+	}
+
+
+	@Override
+	public int countAllView() {
+		return attendanceDao.countAllView();
+	}
+
+
 
 
 }
