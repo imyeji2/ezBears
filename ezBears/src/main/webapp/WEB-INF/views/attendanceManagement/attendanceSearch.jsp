@@ -1,6 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<link href="${pageContext.request.contextPath}/css/choong/chi.css" rel="stylesheet">
+
+<script type="text/javascript">
+	function pageFunc(page) {
+		$('input[name="currentPage"]').val(page);
+		$('form[name="frmPage"]').submit();
+	}
+</script>
+
+<!-- 페이징 처리 관련 form -->
+<form action="<c:url value='/attendanceManagement/attendanceSearch'/>" 
+	name="frmPage" method="post">
+	<input type="text" name="currentPage">
+	<input type="text" name="date1" value="">
+	<input type="text" name="date2" value="">
+	<input type="text" name="searchDeptNo" value="">
+	<input type="text" name="searchName" value="">
+</form>
 
 <%@include file="../inc/top.jsp"%>
 <div id="attendanceAll">
@@ -17,76 +36,135 @@
 			           </ol>
 		         	</nav>
 		         	<div class="col-md-12 text-center">
-        				<h3>출/퇴근 현황</h3>
+        				<h3>출/퇴근 현황 조회</h3>
         			</div><br>
         			
-        			<form action="">
+        			<form method="post" action="<c:url value='/attendanceManagement/attendanceSearch'/>" name="frmSearch">
 			        	<table>
-			        		<!-- <tr>
-			        			<th style="width: 10%">기간</th>
-			        			<td> <input type="text" class="dateInput">년 <input type="text" class="dateInput">월 <input type="text" class="dateInput">일 
-			        				~ <input type="text" class="dateInput">년 <input type="text" class="dateInput">월 <input type="text" class="dateInput">일
-					        		<input type="submit" value="검색"/>
-			        			</td>
-			        		</tr> -->
 			        		<tr>
-					    		<td class="t-search-title">
+					    		<td class="t-search-title" style="width: 25%">
 					    			기간
 					    		</td>
 					    		<td>
 						      		<input type="date" name="date1">
 						      		<input type="date" name="date2">
-						      		<input type="submit" value="검색" style="">
+						      		<input type="submit" value="검색" id="btnSearch">
 						      	</td>
-						     </tr>
+						    </tr>
 			        		<tr>
 			        			<th>부서명</th>
-			        			<td><input type="text" style="width: 80%"></td>
+			        			<td>
+				        			<select name="searchDeptNo" style="width: 99%">
+										<!-- 반복문 -->
+										<option value="" selected="selected">부서</option>
+										<c:forEach var="deptVo" items="${deptList}">
+											<option value ="${deptVo.deptNo}">${deptVo.deptName}</option>
+										</c:forEach>
+										<!-- 반복문 -->
+		                            </select>
+			        			</td>
 			        		</tr>
 			        		<tr>
 			        			<th>사원명</th>
-			        			<td><input type="text" style="width: 80%"></td>
+			        			<td><input type="text" name="searchName" style="width: 99%"></td>
 			        		</tr>
+			        		<!-- <tr>
+			        			<th>근무 상태</th>
+			        			<td><input type="text" name="searchACondition" style="width: 99%"></td>
+			        		</tr> -->
 			        	</table>
 			        	<br>
-		        	
 		        	</form>
-        			
         			
         			
         			
 			        <table class="table table-hover">
 			            <thead>
-			                <tr>
+			                <tr style="border-top: 1px solid white;">
 			                    <th scope="col">일자</th>
 			                    <th scope="col">사원명</th>
 			                    <th scope="col">출근시간</th>
 			                    <th scope="col">퇴근시간</th>
 			                    <th scope="col">근무시간</th>
+			                    <th scope="col">근무상태</th>
 			                </tr>
 			            </thead>
 			            <tbody>
-			                <tr>
-			                    <th scope="row">2023-08-03</th>
-			                    <td>충치</td>
-			                    <td>2023-08-03 9:00:24</td>
-			                    <td>2023-08-03 18:03:57</td>
-			                    <td>8시간 3분</td>
-			                </tr>
-			                <tr>
-			                    <th scope="row">2</th>
-			                    <td>Mark</td>
-			                    <td>Otto</td>
-			                    <td>mark@email.com</td>
-			                </tr>
-			                <tr>
-			                    <th scope="row">3</th>
-			                    <td>Jacob</td>
-			                    <td>Thornton</td>
-			                    <td>jacob@email.com</td>
-			                </tr>
+			            	<c:if test="${empty attendanceList }">
+			            		<tr>
+			            			<td colspan="6">검색 결과가 없습니다.</td>
+			            		</tr>
+			            	</c:if>
+			            	<c:if test="${!empty attendanceList }">
+				            	<c:forEach var="map" items="${attendanceList }">
+					                <tr>
+					                    <th scope="row"><fmt:formatDate value="${map['IN_TIME'] }" pattern="yyyy-MM-dd EEE"/></th>
+					                    <td>${map['MEM_NAME'] }</td>
+					                    <td><fmt:formatDate value="${map['IN_TIME'] }" pattern="HH:mm:ss"/></td>
+					                    <td><fmt:formatDate value="${map['OUT_TIME'] }" pattern="HH:mm:ss"/></td>
+					                    <td>${map['hourGap'] } 시간</td>
+					                    <td>${map['STATUS'] }</td>
+					                </tr>
+				            	</c:forEach>
+			            	</c:if>
 			            </tbody>
 			        </table>
+			        
+       		        <div class="divPage">
+						<!-- 페이지 번호 추가 -->		
+						<!-- 이전 블럭으로 이동 -->
+						<c:if test="${pagination.firstPage>1 }">
+							<a href="#" onclick="pageFunc(${pagination.firstPage-1})">
+								<img src="<c:url value='/img/first.JPG'/>">
+							</a>
+						</c:if>	
+										
+						<!-- [1][2][3][4][5][6][7][8][9][10] -->
+						<c:forEach var="i" begin="${pagination.firstPage }" end="${pagination.lastPage }">		
+							<c:if test="${i == pagination.currentPage }">		
+								<span style="color: yellow;font-weight: bold;font-size: 1em">${i}</span>
+				        	</c:if>
+							<c:if test="${i != pagination.currentPage }">		
+						         <a href="#" onclick="pageFunc(${i})">[${i }]</a>
+						    </c:if>   		
+						</c:forEach>
+						
+						<!-- 다음 블럭으로 이동 -->
+						<c:if test="${pagination.lastPage < pagination.totalPage }">
+					         <a href="#" onclick="pageFunc(${pagination.lastPage+1})">
+								<img src="<c:url value='/img/last.JPG'/>">
+							</a>
+						</c:if>
+						<!--  페이지 번호 끝 -->
+					</div>
+					
+					<%-- <div class="divSearch">
+					   	<form name="frmSearch" method="POST" action="<c:url value='/staff/staffList'/>">
+					        <select name="searchCondition">
+					            <option value="STAFF_NAME" 
+					            	<c:if test="${param.searchCondition=='STAFF_NAME'}">
+					            		selected="selected"
+					            	</c:if>            	
+					            >이름</option>
+					            <option value="STAFF_POSITION"
+					            	<c:if test="${param.searchCondition=='STAFF_POSITION'}">
+					            		selected="selected"
+					            	</c:if> 
+					            >포지션</option>
+					            <option value="STAFF_ID" 
+					            	<c:if test="${param.searchCondition=='STAFF_ID'}">
+					            		selected="selected"
+					            	</c:if> 
+					            >아이디</option>
+					        </select>   
+					        <input type="text" name="searchKeyword" title="검색어 입력" 
+					        	value="${param.searchKeyword }">   
+							<input type="submit" value="검색" id="btnSearch">
+					    </form>
+					</div> --%>
+			        
+			        
+			        
 			        
 			        
 			        

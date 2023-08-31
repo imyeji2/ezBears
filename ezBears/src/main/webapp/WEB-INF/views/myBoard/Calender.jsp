@@ -122,7 +122,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 
            
             }else if (action === '삭제') {
-                // 삭제 로직 추가
+                // 삭제 로직
                  var eventId = event.id;
 
                 if (confirm('정말로 이 일정을 삭제하시겠습니까?')) {

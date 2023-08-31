@@ -36,11 +36,17 @@
 	</update>
 	
 	<select id="selectAttendanceNo" parameterType="attendanceVo" resultType="int">
-		select attendance_no from attendance where mem_no = #{memNo} and rownum = 1 order by attendance_no desc
+		select * 
+		from(
+			select attendance_no from attendance where mem_no = #{memNo} order by attendance_no desc
+		) where rownum = 1
 	</select>
 	
 	<select id="selectRecentAttendance" parameterType="int" resultType="attendanceVo">
-		select * from attendance where mem_no = #{memNo} and rownum = 1 order by attendance_no desc
+		select * 
+		from(
+			select * from attendance where mem_no = #{memNo} order by attendance_no desc
+		) where rownum = 1
 	</select>
 	
 	<select id="selectAllAttendance" resultType="attendanceVo">
@@ -78,8 +84,25 @@
 		AND mem_no = #{memNo}
 		and status like '%조퇴%'
 	</select>
+	
+	<select id="selectAllView" parameterType="map" resultType="map">
+		select *
+		from
+		(
+			select rownum as RNUM, A.* from
+			(
+				select * from attendanceView
+			)A
+		)
+		<![CDATA[
+		where RNUM> #{searchVo.firstRecordIndex} 
+		and RNUM<=#{searchVo.firstRecordIndex} + #{searchVo.recordCountPerPage}]]>
+	</select>
  
- 
+ 	<select id="countAllView" resultType="int">
+ 		select count(*) from attendanceView
+ 	</select>
+ 	
  
  
 </mapper>

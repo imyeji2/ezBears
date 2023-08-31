@@ -7,19 +7,10 @@
 		$('input[name=currentPage]').val(curPage);
 		$('form[name=frmPage]').submit();
 	}
-	
-	function openPopup(memberNo){
-		$('.popup-inner').show();
-	}
-	
+
 	$(function(){
 		$('.popup-inner').hide();
-		
-		$('.infodiv #btInfo').click(function() {
-			$('.popup-inner').show();
-			$('.popup.members-popup').addClass('open');
-		});
-		
+
 		$('.popup-background').click(function() {
 			$('.popup').removeClass('open');
 		});
@@ -27,6 +18,45 @@
 		$('.close-btn').click(function() {
 			$('.popup').removeClass('open');
 		});
+		
+		$(document).keyup(function(e) {
+		    if (e.key === "Escape") { 
+		        $('.popup-inner').hide(); 
+		        $('.popup.members-popup').removeClass('open');
+		    }
+		});
+		
+		$('.infodiv #btInfo').click(function(){
+		    var memNo = $(this).closest('.memList').find('.memNo').val(); // 수정된 부분
+		    
+		    $.ajax({
+		        url: "<c:url value='/Member/memberDetail'/>",
+		        type: 'get',
+		        data: { memNo: memNo },
+		        dataType: 'json',
+		        success: function(res){
+		            console.log(res);
+
+		            $('.popup-inner #previewImage').attr("src","../img/mem_images/" + res.memImage);
+		            $('.popup-inner #deptName').val(res.deptName);
+		            $('.popup-inner #positionName').val(res.positionName); 
+		            $('.popup-inner #memName').val(res.memName);
+		            $('.popup-inner #memId').val(res.memId); 
+		            $('.popup-inner #memTel').val(res.memTel); 
+		            
+		            if (res.memBirth) {
+		                $('.popup-inner #memBirth').val(res.memBirth.substring(0, 10));
+		            }
+		            
+				    $('.popup-inner').show();
+				    $('.popup.members-popup').addClass('open');
+		        },
+		        error: function(xhr, status, error){
+		            alert(status + " : " + error);
+		        }
+		    });
+		});
+		
 		
 	})
 
@@ -71,19 +101,41 @@ tr.memList {
 				</div>
 			
 				<br>
-				<div>
-					<c:if test="${empty param.searchKeyword}">
-					   <p>전체 ${pagingInfo.totalRecord}명의 사원이 검색되었습니다.</p>
-					</c:if>   
-					<c:if test="${!empty param.searchKeyword}">
-					   <p>'${param.searchKeyword}' 검색한 결과, ${pagingInfo.totalRecord}명의 사원이 검색되었습니다.</p>
-					</c:if>   
-				</div>
 		        <div class="table-responsive">
 		            <table class="table">
 		                <thead>
 		                    <tr>
-		                        <th scope="col" style="text-align: center">-</th>
+		                        <th scope="col" style="text-align: center">
+									<div>
+										<c:if test="${empty param.searchKeyword}">
+										   <p class="Allcnt">총 ${pagingInfo.totalRecord}명의 사원이 검색되었습니다.</p>
+										</c:if>   
+										<c:if test="${!empty param.searchKeyword}">
+										   <p class="Allcnt">'${param.searchKeyword}' 검색한 결과, ${pagingInfo.totalRecord}명의 사원이 검색되었습니다.</p>
+										</c:if>   
+									</div>
+				                    <div class="searchbtn">
+				                    	<button class="searchAll">전체</button>
+				                    
+				                    	<select name="MemDeptNo" id="MemDeptNo">
+								        	<option value="" >부서별</option>
+										
+											<c:forEach var="deptVo" items="${deptList}">
+												<option class="memClass" value ="${deptVo.deptNo}">${deptVo.deptName}</option>
+											</c:forEach>
+											
+								       	</select>
+								       								
+								        <select name="MemPositionNo" id="MemPositionNo">
+								        	<option value="" >직급</option>
+								        	<!-- 반복문 -->
+											<c:forEach var="positionVo" items="${positionList}">
+												<option class="memClass" value ="${positionVo.positionNo}">${positionVo.positionName}</option>
+											</c:forEach>
+								        	<!-- 반복문 -->
+								       	</select>
+				                    </div>
+		                       	</th>
 		                    </tr>
 		                </thead>
 		                <tbody>
@@ -107,18 +159,20 @@ tr.memList {
 												</c:otherwise>
 											</c:choose>	
 										</div>
+										<div class = "hiddenNo"><input type="hidden" name="memNo" class="memNo" id="memNo" value="${memberVo.memNo }"></div>
 										<div class = "infodiv">
 			                				<a id="AdeptName">${memberVo.deptName}</a>
 			                				<br>
-			                				<a id="AmemPosition" href="<c:url value='/Member/detail?memNo=${memberVo.memNo}'/>">${memberVo.positionName}</a>
+			                				<a id="AmemPosition">${memberVo.positionName}</a>
 			                				<br>
-			                				<a id="AmemName" href="<c:url value='/Member/detail?memNo=${memberVo.memNo}'/>">${memberVo.memName}</a>
+			                				<a id="AmemName">${memberVo.memName}</a>
 		                					<br>
 		                					<br>
 		                					<div class ="twoBt">
 		                						<a id="btChat">채팅</a>
-		                						<a id="btInfo" onclick="openPopup(${memberVo.memNo})">정보</a>
+		                						<a id="btInfo">정보</a>
 		                					</div>
+											<%@include file="../Member/memberPopup.jsp"%>    
 		                				</div>
 	                				</div>
 		                		</tr>
@@ -130,5 +184,4 @@ tr.memList {
 	        </form>
 	    </div>
 	</div>
-<%@ include file="../Member/memberPopup.jsp" %>
 <%@include file="../inc/bottom.jsp"%>    
