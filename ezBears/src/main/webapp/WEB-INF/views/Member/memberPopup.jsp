@@ -19,29 +19,28 @@
 		        	<div class="infobox">
 						<div class="first">
 							<input type="text" class="firstCol" value="부서">
-							<input type="text" class="secCol" name ="deptName" value="${memberVo.deptName }">
+							<input type="text" class="secCol" name ="deptName"  id ="deptName">
 						</div>
 						<div class="second">
 							<input type="text" class="firstCol" value="직급">
-							<input type="text" class="secCol" name ="positionName" value="팀장">
+							<input type="text" class="secCol" name ="positionName"  id ="positionName" >
 						</div>
 						<div class="third">
 							<input type="text" class="firstCol" value="이름">
-							<input type="text" class="secCol" name ="memName" value="정보석">
+							<input type="text" class="secCol" name ="memName" id ="memName">
 						</div>
 						<div class="fourth">
 							<input type="text" class="firstCol" value="id">
-							<input type="text" class="secCol" name ="memId" value="ㄴㅇㄹㄴ">
+							<input type="text" class="secCol" name ="memId" id ="memId">
 						</div>
 						<div class="fifth">
 							<input type="text" class="firstCol" value="전화번호">
-							<input type="text" class="secCol" name ="memTel" value="123-1231-1233">
+							<input type="text" class="secCol" name ="memTel" id ="memTel">
 						</div>
 						<div class="sixth">
 							<input type="text" class="firstCol" value="생년월일">
-							<input type="text" class="secCol" name ="memBirth" value="1981-01-01">
+							<input type="text" class="secCol" name ="memBirth" id ="memBirth">
 						</div>
-						<br>
 						<div class="chatDiv">
 							<button type="submit" id="gotoChat">
 								<label for="gotoChat">채팅하러 가기</label>
