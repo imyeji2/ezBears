@@ -117,4 +117,12 @@ on n.mem_no = m.mem_no;
 select * from noticeView;
 
 
+create or replace view board1
+as
+select m.mem_name,b.*
+from  board b left join member m
+on m.mem_no = b.mem_no;
+
+
+
 [건우]---------------------------------------------------------------------
