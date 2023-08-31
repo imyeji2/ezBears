@@ -9,5 +9,6 @@ public class ToDoListDetailVO {
 	private String todoContent;
 	private String regdate;
 	private String status;
+	private int memNo;
 
 }

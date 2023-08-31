@@ -8,7 +8,7 @@
 		$(function(){
 
 			var editor = CKEDITOR.replace('teamNoticeContent', {
-				filebrowserUploadUrl : "<c:url value='/adm/fileupload'/>",
+				filebrowserUploadUrl : "<c:url value='/ck/fileupload'/>",
 				clipboard_image_handling: true,
 				height : '300px',
 				resize_enabled: false
