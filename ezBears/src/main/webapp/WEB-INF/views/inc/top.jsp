@@ -159,7 +159,14 @@
                <div id="top_membox">
 	                <div class="d-flex user_info">
 	                    <div class="position-relative">
-	                        <img class="member_img" src="<c:url value='/img/user.jpg'/>" alt="프로필 이미지">
+	                    	<c:choose>
+	                    		<c:when test="${sessionScope.type=='정규직' }">
+	                    		 	<img class="member_img" src="<c:url value='/img/mem_images/${sessionScope.myimg }'/>" alt="프로필 이미지">
+	                    		</c:when>
+	                    		<c:otherwise>
+	                    			<img class="member_img" src="<c:url value='/img/staffImages/${sessionScope.myimg }'/>" alt="프로필 이미지">
+	                    		</c:otherwise>
+	                    	</c:choose>
 	                        <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
 	                    </div>
 	                    <div class="ms-3 lign-items-center">
@@ -192,7 +199,7 @@
                             <a href="<c:url value='/notice/noticeList'/>" class="dropdown-item">
                            		<i class="far fa-bell me-2"></i>공지사항
                            	</a>
-                            <a href="#" class="dropdown-item">
+                            <a href="<c:url value='/board/boardList'/>" class="dropdown-item">
                             	<i class="bi bi-chat-square-dots-fill me-2"></i>자유게시판
                             </a>
                         </div>
