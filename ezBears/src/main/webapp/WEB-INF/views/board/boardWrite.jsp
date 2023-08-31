@@ -13,36 +13,52 @@
 	
 	</style>
 
-	<script>
-		$(function () {
-			CKEDITOR.replace('content', {
-				filebrowserUploadUrl : "<c:url value='/adm/fileupload'/>"
-			});
-			
-			
-			 $('#title').focus();
-				
-			 	$('#button').click(function(){
-					event.preventDefault();
-					location.href="<c:url value='/board/boardList'/>";
-					
-				});
-				
-				$('input[type=submit]').click(function(){
-				   $('.infobox').each(function(idx, item){
-				      if($(this).val().length <1){
-				         alert($(this).prev().text() + '를 입력하세요');
-				         $(this).focus();
-				         event.preventDefault();
-				         return false;
-				      }
-				   });
-				   
-				});
+<script>
+$(function () {
+	CKEDITOR.replace('content', {
+		filebrowserUploadUrl : "<c:url value='/adm/fileupload'/>"
+	});
+	
+	
+	 $('#title').focus();
+		
+	 	$('#button').click(function(){
+			event.preventDefault();
+			location.href="<c:url value='/board/boardList'/>";
 			
 		});
-	</script>
+		
+		$('input[type=submit]').click(function(){
+		   $('.infobox').each(function(idx, item){
+		      if($(this).val().length <1){
+		         alert($(this).prev().text() + '를 입력하세요');
+		         $(this).focus();
+		         event.preventDefault();
+		         return false;
+		      }
+		   });
+		   
+		});
+		
+ 		/* // 고유한 랜덤 숫자 생성 함수
+	    function generateUniqueRandomNumber(min, max, usedNumbers) {
+	        let randomNumber;
+	        do {
+	            randomNumber = min + Math.floor(Math.random() * (max - min + 1));
+	        } while (usedNumbers.has(randomNumber));
+	        usedNumbers.add(randomNumber);
+	        return randomNumber;
+	    }
+
+	    // 사용된 랜덤 숫자를 저장할 Set 생성
+	    let usedRandomNumbers = new Set();
+
+	    // 랜덤 숫자 생성 후 "randomNo" 입력 필드에 할당
+	    let uniqueRandomNumber = generateUniqueRandomNumber(1, 5, usedRandomNumbers);
+	    $('input[name=randomNo]').val(uniqueRandomNumber);  */
 	
+});//function
+</script>
 <c:if test="${!empty param.boardNo }">
 	<c:set var="pageTitle" value="수정" />
 	<c:set var="btLabel" value="수정" />
@@ -56,7 +72,9 @@
 	<c:set var="boardNo" value="0" />	
 </c:if>	
 	
-	
+<form action="<c:url value='/board/boardWrite'/>" method="post" name="boardFrom">
+	<input type="hidden" name="random"> 
+</form>	
 <div class="container-fluid pt-4 px-4" id="board_style">
 	<div class="bg-secondary text-center rounded p-4">
     	<div class="bg-secondary rounded h-100 p-4">
@@ -73,6 +91,7 @@
 		        	<div class="writeWrap">
 		        	<%-- <c:if test="${!empty param.noticeNo}"> --%>
 		        		<input type="text" name="boardNo" value="${boardNo}">
+		        		<input type="text" name="randomNo" value="${randNo}">
 		        	<%-- </c:if> --%>
 		        		<input type="hidden" name="memNo" value="${sessionScope.memNo}">
 		        		<%-- <input type="text" name="memNo" value="${map['NOTICE_NO']}"> --%>

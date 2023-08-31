@@ -45,7 +45,7 @@ $(function(){
 
 
 function send(currentPage) {
-	var randomNumber = Math.floor(Math.random() * (20000 - 10000 + 1)) + 10000;
+	//var randomNumber = Math.floor(Math.random() * (20000 - 10000 + 1)) + 10000;
 
     $('input[name="currentPage"]').val(currentPage);
     var sendDate = $('form[name=boardFrom]').serialize();
@@ -53,10 +53,10 @@ function send(currentPage) {
     $.ajax({
         url: "<c:url value='/board/board_ajax'/>",
         method: "POST",
-        data: {
+        data: sendDate,/* {
         	sendDate: sendDate,
             randomNumber: randomNumber
-        }
+        } */
         dataType: 'json',
         error: function(xhr, status, error) {
             alert(error);
@@ -68,7 +68,7 @@ function send(currentPage) {
 
             $.each(res.list, function(idx, item) {
                 // 랜덤 숫자 생성
-                //var randomNumber = Math.floor(Math.random() * (20000 - 10000 + 1)) + 10000;
+                var randomNumber = Math.floor(Math.random() * (20000 - 10000 + 1)) + 10000;
                 
                 var content = item.NOTICE_CONTENT;
                 var date = new Date(item.REGDATE);

@@ -12,4 +12,6 @@ public interface BoardDAO {
 	List<Map<String, Object>> selectAllBoard(SearchVO searchVo);
 	int selectTotalCount(SearchVO serarchVo);
 	int insertBoard(BoardVO boardVo);
+	int randomNum(int randomNo);
+	List<Map<String, Object>> boardAll();
 }
