@@ -10,19 +10,20 @@
 
 	$(function(){
 		$('.popup-inner').hide();
-		
-/* 		$('.infodiv #btInfo').click(function() {
-			$('.popup-inner').show();
-			$('.popup.members-popup').addClass('open');
 
-		}); */
-		
 		$('.popup-background').click(function() {
 			$('.popup').removeClass('open');
 		});
 		
 		$('.close-btn').click(function() {
 			$('.popup').removeClass('open');
+		});
+		
+		$(document).keyup(function(e) {
+		    if (e.key === "Escape") { 
+		        $('.popup-inner').hide(); 
+		        $('.popup.members-popup').removeClass('open');
+		    }
 		});
 		
 		$('.infodiv #btInfo').click(function(){
@@ -42,7 +43,10 @@
 		            $('.popup-inner #memName').val(res.memName);
 		            $('.popup-inner #memId').val(res.memId); 
 		            $('.popup-inner #memTel').val(res.memTel); 
-		            $('.popup-inner #memBirth').val(res.memBirth);
+		            
+		            if (res.memBirth) {
+		                $('.popup-inner #memBirth').val(res.memBirth.substring(0, 10));
+		            }
 		            
 				    $('.popup-inner').show();
 				    $('.popup.members-popup').addClass('open');
@@ -97,19 +101,41 @@ tr.memList {
 				</div>
 			
 				<br>
-				<div>
-					<c:if test="${empty param.searchKeyword}">
-					   <p>전체 ${pagingInfo.totalRecord}명의 사원이 검색되었습니다.</p>
-					</c:if>   
-					<c:if test="${!empty param.searchKeyword}">
-					   <p>'${param.searchKeyword}' 검색한 결과, ${pagingInfo.totalRecord}명의 사원이 검색되었습니다.</p>
-					</c:if>   
-				</div>
 		        <div class="table-responsive">
 		            <table class="table">
 		                <thead>
 		                    <tr>
-		                        <th scope="col" style="text-align: center">-</th>
+		                        <th scope="col" style="text-align: center">
+									<div>
+										<c:if test="${empty param.searchKeyword}">
+										   <p class="Allcnt">총 ${pagingInfo.totalRecord}명의 사원이 검색되었습니다.</p>
+										</c:if>   
+										<c:if test="${!empty param.searchKeyword}">
+										   <p class="Allcnt">'${param.searchKeyword}' 검색한 결과, ${pagingInfo.totalRecord}명의 사원이 검색되었습니다.</p>
+										</c:if>   
+									</div>
+				                    <div class="searchbtn">
+				                    	<button class="searchAll">전체</button>
+				                    
+				                    	<select name="MemDeptNo" id="MemDeptNo">
+								        	<option value="" >부서별</option>
+										
+											<c:forEach var="deptVo" items="${deptList}">
+												<option class="memClass" value ="${deptVo.deptNo}">${deptVo.deptName}</option>
+											</c:forEach>
+											
+								       	</select>
+								       								
+								        <select name="MemPositionNo" id="MemPositionNo">
+								        	<option value="" >직급</option>
+								        	<!-- 반복문 -->
+											<c:forEach var="positionVo" items="${positionList}">
+												<option class="memClass" value ="${positionVo.positionNo}">${positionVo.positionName}</option>
+											</c:forEach>
+								        	<!-- 반복문 -->
+								       	</select>
+				                    </div>
+		                       	</th>
 		                    </tr>
 		                </thead>
 		                <tbody>

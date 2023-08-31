@@ -54,6 +54,7 @@
 						<ul class="select-box">
 							<li>
 						        <select name="deptNo" id="dept">
+						        	<option value="" >부서</option>
 									<!-- 반복문 -->
 									<c:forEach var="deptVo" items="${deptList}">
 										<option value ="${deptVo.deptNo}">${deptVo.deptName}</option>
