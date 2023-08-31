@@ -51,13 +51,20 @@ $(function(){
 
 		$('#deptNo').prop('disabled', false);
 		
-		if (confirm("삭제하시겠습니까?")) {
-	        var deptNo = $('.deptChk:checked').closest('tr').find('.selectdeptNo').val();
-	        var url = "<c:url value='/dept/delete?deptNo=" + deptNo + "'/>";
-	        $('.btn-form').attr('action', url);
-	        $('.btn-form').submit();
-		}else {
-	    	event.preventDefault();
+		var chkbox = $('.deptChk:checked');
+		
+		if(chkbox.length > 0){
+			if (confirm("삭제하시겠습니까?")) {
+		        var deptNo = $('.deptChk:checked').closest('tr').find('.selectdeptNo').val();
+		        var url = "<c:url value='/dept/delete?deptNo=" + deptNo + "'/>";
+		        $('.btn-form').attr('action', url);
+		        $('.btn-form').submit();
+			}else {
+		    	event.preventDefault();
+			}
+		}else{
+			alert("삭제할 부서를 선택해주세요.");
+			event.preventDefault();
 		}
     }
     
@@ -106,7 +113,21 @@ $(function(){
 			                			<td class ="deptNoTd"><input type="text" class = "selectdeptNo" value="${deptVo.deptNo}"></td>
 			                			<td onclick="editDeptInfo('${deptVo.deptName}','${deptVo.deptNo}','${deptVo.deptTel}')">${deptVo.deptName}</td>
 			                			<td onclick="editDeptInfo('${deptVo.deptName}','${deptVo.deptNo}','${deptVo.deptTel}')">${deptVo.deptTel}</td>
-			                			<td onclick="editDeptInfo('${deptVo.deptName}','${deptVo.deptNo}','${deptVo.deptTel}')">${deptVo.memberCount}</td>
+			                			<td>
+			                				<c:choose>
+				                				<c:when test="${deptVo.deptNo eq '2'}">
+				                					<a href="<c:url value='/staff/staffList'/>">${staffCnt}</a>
+				                				</c:when>
+				                				<c:when test="${deptVo.deptNo eq '3'}">
+				                					<a href="<c:url value='/team/teamList'/>">${teamCnt}</a>
+				                				</c:when>
+				                				<c:otherwise>
+					                				<a href="<c:url value='/Member/list?searchKeyword=${deptVo.deptName}'/>">
+							                			${deptVo.memberCount}
+					                				</a>
+				                				</c:otherwise>
+			                				</c:choose>
+			                			</td>
 			                		</tr>
 			                	</c:forEach>
 			                </c:if>

@@ -9,4 +9,9 @@
 		insert into TODOLIST(TODOLIST_NO,TEAM_BOARD_NO,START_REGDATE,DONE_REGDATE)
 		values(#{todolistNo},#{teamBoardNo},#{startRegdate},#{doneRegdate})
 	</insert>
+	
+	<select id="selectTodoList" parameterType="int" resultType="toDoListVo">
+		SELECT * FROM TODOLIST
+		WHERE TEAM_BOARD_NO = #{teamBoardNo}
+	</select>
 </mapper>

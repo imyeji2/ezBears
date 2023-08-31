@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@page import="java.util.List"%>
 <%@page import="org.springframework.ui.Model"%>
 <%@page import="com.ez.ezBears.attendance.model.AttendanceVO"%>
@@ -20,8 +21,9 @@
 		font-size: 14px;
 		text-align: center;
 		border-collapse: collapse;
-		border-top: 2px solid rgb(200, 200, 200);
-		border-bottom: 2px solid rgb(200, 200, 200);
+		/* border-top: 2px solid rgb(200, 200, 200); */
+		/* border-bottom: 2px solid rgb(200, 200, 200); */
+		border: 1px solid white;
 	}
 	.stats-List tr {
 		border-top: 1px solid rgb(200, 200, 200);
@@ -92,7 +94,7 @@
 	}
 	.t-search {
 		margin: 20px 0 10px;
-		width: 50%;
+		width: 200px;
 		margin-right: auto;
 		text-align: center;
 		border-collapse: collapse;
@@ -133,7 +135,7 @@ $(document).ready(function () {
     if("${date}" != "") {
     	$("#nowMonth").val("${date}");
     }else {
-		$("#nowMonth").val(new Date().toSIOString().slice(0, 7));
+		$("#nowMonth").val(new Date().toISOString().slice(0, 7));
     }
 });
 
@@ -156,7 +158,7 @@ function startDate() {
 <div class="container-fluid pt-4 px-4">
     <div class="row vh-110 bg-secondary rounded align-items-center justify-content-center mx-0">
             <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
-	           <ol class="breadcrumb" style="margin-left: 0.5%;">
+	           <ol class="breadcrumb" style="margin-left: 0.5%; margin-top: 1%">
 	             <li class="breadcrumb-item active" aria-current="page">
 	                <a href="<c:url value='/attendanceManagement/attendanceSearch'/>">근태 관리</a>
 	             </li>
@@ -184,24 +186,24 @@ function startDate() {
 					</div> --%>
 				   	<div class="div-stats">
 						<table class="stats-List">
-							<tr><th colspan="3">통계</th></tr>
+							<tr><th colspan="4">통계</th></tr>
 							<tr>
 								<th class="th-1">지각</th>
 								<th class="th-1">조퇴</th>
 								<th class="th-1">출근</th>
+								<th class="th-1">총 근무시간</th>
 							</tr>
-							<c:if test="<%-- ${sessionScope.memNum eq member.memNum } --%>">
 							<tr>
-								<%-- <c:forEach items="${sList }" var="attStats">
-											<td>${attStats.attCount}</td>
-								</c:forEach> --%>
+								<td>${cntL }</td>
+								<td>${cntE }</td>
+								<td>${cntG }</td>
+								<td>${totalTime }</td>
 							</tr>	
-							</c:if>
 						</table>
 					</div>
-				</div>
+				</div><br>
 				<!-- 검색일<input type="text" id="searchDate">  -->
-				<form action="/attendance/searchDate.sw" method="post">
+				<form action="<c:url value='/mypage/attendanceList'/>" method="post">
 			    	<table class="t-search">
 			    	<tr>
 			    		<td class="t-search-title">
@@ -209,13 +211,13 @@ function startDate() {
 			    		</td>
 			    		<td>
 				      		<input type="month" id="nowMonth" name="date">
-				      		<input type="submit" value="검색">
+				      		<input type="submit" value="검색" id="btnSearch">
 				      	</td>
 				     </tr>
 			    	</table>
-			    </form>
+			    </form><br>
 					<div class="div-stats">
-						<table class="stats-List">
+						<table class="stats-List" style="margin-bottom: 1%">
 							<tr>
 								<th class="th-1">날짜</th>
 								<th class="th-1">출근시간</th>
@@ -223,17 +225,27 @@ function startDate() {
 								<th class="th-1">근무시간</th>
 								<th class="th-1">근무상태</th>
 							</tr>
-							<%-- <c:forEach items="${aList }" var="attendance">
-							<c:if test="${sessionScope.memNum eq member.memNum }">
-							<tr>
-								<td>${attendance.attDate }</td>
-								<td>${attendance.attStrTime }</td>
-								<td>${attendance.attFinTime }</td>
-								<td>${attendance.attTotalTime }</td>
-								<td>${attendance.attStatus }</td>
-							</tr>
+							<c:if test="${empty attendanceList }">
+								<tr>
+									<td colspan="5">등록된 출근기록이 없습니다.</td>
+								</tr>
 							</c:if>
-							</c:forEach> --%>
+							<c:if test="${!empty attendanceList }">
+								<c:forEach var="map" items="${attendanceList }">
+									<tr>
+										<td><fmt:formatDate value="${map['IN_TIME'] }" pattern="yyyy-MM-dd EEE"/></td>
+										<td><fmt:formatDate value="${map['IN_TIME'] }" pattern="HH:mm:ss"/></td>
+										<c:if test="${!empty map['OUT_TIME'] }">
+											<td><fmt:formatDate value="${map['OUT_TIME'] }" pattern="HH:mm:ss"/></td>
+										</c:if>
+										<c:if test="${empty map['OUT_TIME'] }">
+											<td></td>
+										</c:if>
+										<td>${map['hourGap'] } 시간</td>
+										<td>${map['STATUS'] }</td>
+									</tr>
+								</c:forEach>
+							</c:if>
 						</table>
 						<br>
 					</div>

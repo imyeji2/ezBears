@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class AttendanceController {
 	private static final Logger logger = LoggerFactory.getLogger(AttendanceController.class);
 	
+	/*
 	@GetMapping("/attendanceAll")
 	public String attendanceAll() {
 		
@@ -18,6 +19,7 @@ public class AttendanceController {
 		
 		//http://localhost:9091/ezBears/attendanceManagement/attendanceAll
 	}
+	*/
 	
 	@GetMapping("/attendanceSearch")
 	public String attendanceSearch() {

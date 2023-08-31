@@ -47,62 +47,6 @@ FROM
 ) B
 ON A.MEM_NO = B.MEM_NO;
 
-
-
-create or replace procedure DELETETEAMNOTICE
-(
---매개변수
-   m_team_notice_no number,
-   m_step number,
-   m_contentno number,
-   m_groupno number
-)
-is
---변수선언부
-     cnt number;
-
-begin
---처리할 내용
-    /*
-    답변이 있는 원본글인 경우에는 레코드를 삭제하지 말고 status="N"로 update
-    */
-    if m_step = 0 then
-      --답변글이 존재하는지 체크
-      select count(*) into cnt from team_notice
-      where contentno = m_contentno;
-
-         --답변글이 존재하는 경우
-         if cnt>1 then
-            update team_notice set status='N'
-            where contentno = m_contentno;
-        else --답변글이 없는 경우
-            delete team_notice where team_notice_no = m_team_notice_no;
-        end if;
-    else --답변글인경우
-        if m_step = 1 then 
-            --대댓글이 존재하는지 체크
-            select count(*) into cnt from team_notice
-            where groupno = m_groupno
-            and team_notice_no != m_team_notice_no;
-            --대댓글이 존재하면
-            if cnt >0 then
-                update team_notice set status='N'
-                where team_notice_no = m_team_notice_no;
-            else --대댓글이 없으면 삭제
-                delete team_notice where team_notice_no = m_team_notice_no;
-            end if;
-        else --대댓글이면 삭제
-            delete team_notice where team_notice_no = m_team_notice_no;
-        end if;
-    end if;
-    commit;
-
-EXCEPTION
-    WHEN OTHERS THEN
-	raise_application_error(-20001, ' 실패!');
-        ROLLBACK;
-end;
-
 [다희]---------------------------------------------------------------------
 
 
@@ -151,9 +95,11 @@ select * from memberView1;
 
 create or replace view notice1
 as
-select n.*,m.dept_no,m.mem_name,m.mem_id,m.mem_image
+select n.*,m.dept_no,m.mem_name,m.mem_id,m.mem_image,d.dept_name
 from notice n left join member m
-on m.mem_no = n.mem_no;
+on m.mem_no = n.mem_no
+right join dept d
+on m.dept_no=d.dept_no;
 
 create or replace view noticeView
 as

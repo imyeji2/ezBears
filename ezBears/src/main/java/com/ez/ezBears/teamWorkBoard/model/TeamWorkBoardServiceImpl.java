@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import com.ez.ezBears.common.MyBoardSearchVo;
+import com.ez.ezBears.temNotice.model.TeamNoticeVO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -67,9 +68,64 @@ public class TeamWorkBoardServiceImpl implements TeamWorkBoardService{
 	}
 	
 	
+	//팀 업무 게시판 조회수
+	@Override
+	public int updateViewCount(int teamBoardNo) {
+		return teamWorkBoardDao.updateViewCount(teamBoardNo);
+	}
 	
+	//팀별 공지사항 삭제
+	@Override
+	public int deleteTeamWorkBoard(Map<String, String> map) {
+		return teamWorkBoardDao.deleteTeamWorkBoard(map);
+	}	
+	
+	//팀별 공지사항 번호로 조회
+	@Override
+	public TeamWorkBoardVO selectTeamWorkBoardByNo(int teamBoardNo) {
+		return teamWorkBoardDao.selectTeamWorkBoardByNo(teamBoardNo);
+	}	
 
+	//업무 게시판 디테일
+	@Override
+	public Map<String, Object> selectDetail(int teamBoardNo) {
+		return teamWorkBoardDao.selectDetail(teamBoardNo);
+	}
 	
+	//댓글 조회
+	@Override
+	public List<Map<String, Object>> selectReply(MyBoardSearchVo searchVo) {
+		return teamWorkBoardDao.selectReply(searchVo);
+	}
 	
+	//댓글 전체 카운트
+	@Override
+	public int selectReplyTotalCount(int groupNo) {
+		return teamWorkBoardDao.selectReplyTotalCount(groupNo);
+	}
+	
+	//댓글 등록
+	@Override
+	@Transactional
+	public int addreply(TeamWorkBoardVO teamWorkBoardVo) {
+		int cnt=teamWorkBoardDao.updateSortNo(teamWorkBoardVo);
+		teamWorkBoardVo.setGroupNo(teamWorkBoardDao.selectGroupNo());
+		cnt = teamWorkBoardDao.insertReply(teamWorkBoardVo);
+		return cnt;
+	}
 
+	///팀 업무 게시판 댓글 업데이트
+	@Override
+	public int updeteReply(TeamWorkBoardVO teamWorkBoardVo) {
+		return teamWorkBoardDao.updeteReply(teamWorkBoardVo);
+	}
+
+	//대댓글 등록
+	@Override
+	public int addReReply(TeamWorkBoardVO teamWorkBoardVo) {
+		int cnt=teamWorkBoardDao.updateSortNo(teamWorkBoardVo);
+		cnt = teamWorkBoardDao.insertReReply(teamWorkBoardVo);
+		return cnt;
+	}
+	
 }

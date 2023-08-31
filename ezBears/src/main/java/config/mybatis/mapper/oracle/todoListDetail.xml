@@ -10,4 +10,9 @@
 		insert into TODOLIST_DETAIL(TODO_DETAIL_NO,TODOLIST_NO,TODO_CONTENT)
 		values(#{todoDetailNo},#{todolistNo},#{todoContent}) 
 	</insert>
+	
+	<select id="selectToDoListDetail" parameterType="int" resultType="toDoListDetailVo">
+		SELECT * FROM TODOLIST_DETAIL
+		WHERE TODOLIST_NO = #{todolistNo}
+	</select>
 </mapper>

@@ -33,9 +33,9 @@ public class InningServiceImpl implements InningService {
 	}
 
 	@Override
-	public List<Map<String, Object>> selectByrecodeDetailNo(int recodeDetailNo) {
+	public List<Map<String, Object>> selectInningView(int recodeNo) {
 		// TODO Auto-generated method stub
-		return inningDao.selectByrecodeDetailNo(recodeDetailNo);
+		return inningDao.selectInningView(recodeNo);
 	}
 
 	

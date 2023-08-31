@@ -7,5 +7,5 @@ public interface InningService {
 	int insertInning(InningVO inningVo);
 	int updateInning(InningVO inningVo);
 	int deleteInning(int inningNo);
-	List<Map <String, Object>> selectByrecodeDetailNo(int recodeDetailNo);
+	List<Map <String, Object>> selectInningView(int recodeNo);
 }

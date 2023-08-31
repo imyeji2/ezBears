@@ -22,6 +22,8 @@ import com.ez.ezBears.dept.model.DeptService;
 import com.ez.ezBears.dept.model.DeptVO;
 import com.ez.ezBears.member.controller.MemberController;
 import com.ez.ezBears.member.model.MemberService;
+import com.ez.ezBears.staff.model.StaffService;
+import com.ez.ezBears.team.model.TeamService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -34,6 +36,8 @@ public class DeptController {
 	private final DeptService deptService;
 	private final MBoardService mBoardService;
 	private final MemberService memberService;
+	private final TeamService teamService;
+	private final StaffService staffService;
 	
 	@GetMapping("/list")
 	public String list(@ModelAttribute SearchVO searchVo, Model model) {
@@ -49,8 +53,18 @@ public class DeptController {
 		searchVo.setRecordCountPerPage(ConstUtil.RECORD_COUNT);
 		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
 		
+		//deptVo
 		List<DeptVO> list = deptService.selectDeptList();
 		logger.info("부서 조회 결과, list.size={}", list.size());
+		
+		//팀원 수 
+		int teamCnt = teamService.selectCntTeam();
+		logger.info("팀원 조회 결과, teamCnt={}", teamCnt);
+		
+		//스태프 수 
+		int staffCnt = staffService.selectCntStaff();
+		logger.info("스태프 조회 결과, staffCnt={}", staffCnt);
+		
 
 		
 		int totalRecord = deptService.totalList(searchVo);
@@ -58,6 +72,8 @@ public class DeptController {
 		
 		//3
 		model.addAttribute("list", list);
+		model.addAttribute("teamCnt", teamCnt);
+		model.addAttribute("staffCnt", staffCnt);
 		model.addAttribute("pagingInfo", pagingInfo);
 		
 		return "dept/deptList";

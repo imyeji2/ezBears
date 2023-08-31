@@ -11,13 +11,13 @@ public class TeamWorkBoardVO {
 	private String teamBoardContent;
 	private String regdate;
 	private int views;
-	private String comment;
+	private String comments;
 	private long fsize;
 	private String fileName;
 	private String originFileName;
 	private int groupNo;
-	private int sortNo;
+	private int sortno;
 	private int step;
 	private String status;
-	private int contentNo;
+	private int contentno;
 }
