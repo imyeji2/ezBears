@@ -49,7 +49,7 @@
 
 	<select id="selectHitterRecordView" parameterType="int"
 		resultType="map">
-		select * from hitter_record_view where player_no = #{playerNo}
+		select * from hitter_record_view where recode_no = #{recodeNo}
 	</select>
     
     

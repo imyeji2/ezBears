@@ -30,20 +30,18 @@
 		<div class="section__title lf__header  section__title--center">타자</div>
 		<div class="lf__sidesBox">
 			<div class="lf__sides">
-			<c:if test="${teamVo.positionNo != 1 }">
-				<c:forEach var="map" items="${list }">
+		<c:forEach var="map" items="${list }">
+			<c:if test="${map['B_POSITION_NO'] != 1 }">
 				<div class="lf__side">
-					<div class="lf__participant ">
-						<div class="lf__participantNumber">${teamVo.backNo }</div>
-						<div class="lf__participantFlag" title="대한민국">
-							<span class="flag fl_106" title=""></span>
-						</div>
-						<div class="lf__participantName">${teamVo.playerName }</div>
+					<div class="lf__participant">
+						<div class="lf__participantNumber">${map['BACK_NO'] }</div>
+						<div class="lf__participantFlag" title="대한민국"></div>
+						<div class="lf__participantName">${map['PLAYER_NAME'] }</div>
 						<div class="lf__incidents"></div>
 					</div>
-					</div>
-				</c:forEach>
+				</div>
 				</c:if>
+			</c:forEach>
 			</div>
 		</div>
 	</div>

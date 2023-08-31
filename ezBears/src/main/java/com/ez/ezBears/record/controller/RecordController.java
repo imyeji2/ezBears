@@ -135,13 +135,12 @@ public class RecordController {
 	}
 	
 	@RequestMapping("/lineup")
-	public String lineup(Model model, int recodeNo) {
-		logger.info("라인업 파라미터, recodeDetailNo={}", recodeNo);
+	public String lineup_get(Model model, int recodeNo) {
+		logger.info("라인업 파라미터, recodeNo={}", recodeNo);
 		
-		List<Map<String, Object>> list = inningService.selectInningView(recodeNo);
+		List<Map<String, Object>> list = hitterService.selectHitterRecordView(recodeNo);
 		model.addAttribute("list", list);
-		logger.info("이닝 처리 결과, list.size={}", list.size());
-		
+		logger.info("라인업 처리 결과, list.size={}", list.size());
 		
 		return "/record/lineup";
 	}

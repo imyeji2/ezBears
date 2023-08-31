@@ -3,13 +3,14 @@ package com.ez.ezBears.alarm.model;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+
 @Service
 public interface AlarmService {
-	public List<Alarm> printAllAlarm(String memNum); // 알림 목록 조회
+	public List<AlarmVO> printAllAlarm(String memNum); // 알림 목록 조회
 	public int modifyAlarm(int alarmNo); // 알림 읽음 처리
 	public int modifyAllAlarm(String memNum); // 알림 모두 읽음 처리
 	public int getListCount(String memNum); // 알림 카운트
-	public int registerAlarm(Alarm alarm); // 알림 등록
+	public int registerAlarm(AlarmVO alarm); // 알림 등록
 	// 전자결재
 	public int printDocNo(String memNum); // 문서 번호
 	public String printName(int docNo); // 기안자 이름 조회
