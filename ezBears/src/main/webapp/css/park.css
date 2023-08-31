@@ -11,17 +11,20 @@
 	}	
 }
 #approvalModal{
+	#approvalModalLabel{
+		color: #191C24;
+	}
 	.close{
-		background-color:#191C24;
-		color: white;
+		background-color: #fff;
+		color: #191C24;
 	}
 	
 	.modal-content{
-		background-color:#191C24;
+		background-color: #fff;
 	}
 	.form-group{
 		font-size: 1.2em;
-		color: white;
+		color: #191C24;
 	}
 	.form-control{
 		color: black;
@@ -33,24 +36,36 @@
 	.appbox{
 		width: 70%;
 		margin: 0 auto;
+		
 	}
 	.Appfrm{
 	  width: 1250px;
 	}
-	.btn{
-	 	width: 70px;
-	    margin-left: 1135px;
-	    margin-top: 14px;	
+	.form-select{
+		width: 50%;
+		background-color: #191C24;
+		color: #fff;
 	}
-	
 	.textarea{
 		resize: none;
 	}
 	.appfile{
-	background: black;
+		width: 95%;
+		background: #191C24;
+		color: #fff;
 	}
-
+	.btn{
+		width: 90px;	
+		margin-top: 14px;
+		background-color: #7000D8;
+		margin-left: 750px;
+	}	
+	.table td{
+		color: #fff;
+	}
 }
+
+
 /*Appdetail*/
 #Appdetail{
 	.appbox{
@@ -72,7 +87,6 @@
 		resize: none;
 	}	
 }
-
 
 /*Appdelete*/
 #Appdelete{
@@ -114,7 +128,7 @@
 }
 /* harddelete*/
 #harddelete{
-	.center{
+	.center{   
 	margin-top: 15px;
 	margin-left: 60px;
 	}	
@@ -137,5 +151,9 @@
 	width: 85%;
 	height: 90%;
 	margin-left: 105px;
+	
+	}
+	.calendar a {
+		color: #fff;
 	}
 }
