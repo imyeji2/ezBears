@@ -11,7 +11,7 @@
 		</where>
 	</sql>
 
-	<select id="selectAllNotice" resultType="map" parameterType="searchVo">
+	<select id="selectAllNotice" parameterType="searchVo" resultType="map">
 		select *
 		from
 		(

@@ -84,7 +84,7 @@ public class NoticeController {
 	
 	@ResponseBody
 	@RequestMapping("/notice_ajax")
-	public Map<String, Object> teamNotice_ajax(SearchVO searchVo) {
+	public Map<String, Object> notice_ajax(SearchVO searchVo) {
 		//1.
 		logger.info("팀 공지사항 리스트 페이지, 파라미터 searchVo={}",searchVo);
 
