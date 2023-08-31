@@ -19,4 +19,6 @@ public interface AttendanceDAO {
 	int countComeLate(@Param ("memNo") int memNo, @Param("date") String date );
 	int countComeGood(@Param ("memNo") int memNo, @Param("date") String date );
 	int countGoEarly(@Param ("memNo") int memNo, @Param("date") String date );
+	List<Map<String, Object>> selectAllView();
+	int countAllView();
 }
