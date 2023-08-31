@@ -16,8 +16,7 @@
 			 	location.href="<c:url value='/myBoard/teamWorkBoardDel?mBoardNo=${map["M_BOARD_NO"]}&teamBoardNo=${map["TEAM_BOARD_NO"]}&oldFileName=${map["FILENAME"]}'/>"
 			 }
 		});
-		
-		
+
 		//ajax
 		//댓글 등록 ajax
 		$('#add_reply').click(function(event){
@@ -123,50 +122,45 @@
 		    }
 		});	
 		
-		//대댓글 등록
-		$(document).on('click', '.add_r_reply',function(e) {       
-		 	event.preventDefault();
-		   var $replyContainer = $(this).closest('.reply_content');
-		   $replyContainer.find('.replyaddForm').show();
-		   $replyContainer.find('#comments').focus();
-		   
-		});	
-		
-		
-		//대댓글 등록 취소
-		$(document).on('click', '.add_R_replyCencleBtn',function(e) {       
-		 	event.preventDefault();
-		   var $replyContainer = $(this).closest('.reply_content');
-		   $replyContainer.find('.replyaddForm').hide();
-		});
-		  
-		
-		//대댓글 등록 ajax
-		$(document).on('click', '#add_R_replyBtn', function(e) {       	
-		    e.preventDefault(); // 이벤트의 기본 동작 방지
-		    var $replyContainer = $(this).closest('form[name=rAddForm]');
-		    var replyData = $replyContainer.serialize(); // 데이터 직렬화      
-            var curPage = $replyContainer.find('input[name=curPage]').val();		   
+	    // 대댓글 등록
+	    $('.add_r_reply').click(function(e) {
+	        event.preventDefault();
+	        var $replyContainer = $(this).closest('.reply_content');
+	        $replyContainer.find('.replyaddForm').show();
+	        $replyContainer.find('#comments').focus();
+	    });
 
-		    $.ajax({
-		        type: 'post',
-		        url: "<c:url value='/myBoard/workBoard_reReply_insert'/>",
-		        data: replyData,
-		        dataType: 'json',
-		        error: function(xhr, status, error){
-		            alert(error);
-		        },
-		        success: function(res){
-		            console.log(res); // 서버 응답 확인  
-		            $('#addComment').val('');
-		            send(curPage);
-		            alert("대댓글이 등록되었습니다.");
-		            
-		        
-		        }
-		    });
-		    
-		});//댓글 등록 끝
+	    // 대댓글 등록 취소
+	    $('.add_R_replyCencleBtn').click(function(e) {
+	        event.preventDefault();
+	        var $replyContainer = $(this).closest('.reply_content');
+	        $replyContainer.find('.replyaddForm').hide();
+	    });
+
+	    // 대댓글 등록 ajax
+	    $('#add_R_replyBtn').click(function(e) {
+	        e.preventDefault(); // 이벤트의 기본 동작 방지
+	        var $replyContainer = $(this).closest('form[name=rAddForm]');
+	        var replyData = $replyContainer.serialize(); // 데이터 직렬화
+	        var curPage = $replyContainer.find('input[name=curPage]').val();
+
+	        $.ajax({
+	            type: 'post',
+	            url: "<c:url value='/myBoard/workBoard_reReply_insert'/>",
+	            data: replyData,
+	            dataType: 'json',
+	            error: function(xhr, status, error) {
+	                alert(error);
+	            },
+	            success: function(res) {
+	                console.log(res); // 서버 응답 확인
+	                $('#addComment').val('');
+	                send(curPage);
+	                alert("대댓글이 등록되었습니다.");
+	            }
+	        });
+	    }); // 대댓글 등록 끝
+	    
 
 		 //대댓글 수정     
 		$(document).on('click', '.editReplyBtn1', function(e) {       
@@ -264,17 +258,79 @@
 			        },
 			        success: function(res) {
 			            console.log(res); // 서버 응답 확인 
-			            
 			            if (res > 0) {
 			                todoList(); // todoList 함수 호출
+			                
 			            } else {
 			                alert('다시 시도해주세요');
 			            }
 			        }
 			    }) // ajax
 			});
+		
+		//담당자 변경 및 삭제	
+		$(document).on('click','#addMem_img',function(){
+			if(confirm('담당자를 변경하시겠습니까?')){
+				$('#staticBackdrop').modal('show');
+			}else if(confirm('담당자를 삭제하시겠습니까?')){
+				var todoDetailNo = $(this).closest('.todoList').find('input[name="todoDetailNo"]').val();
+				var memNo = $(this).find('input[name=memNo]').val();
+			    $.ajax({
+			        type: 'post',
+			        url: "<c:url value='/myBoard/toDoDetailMemDel'/>",
+			        data: { todoDetailNo: todoDetailNo, memNo: memNo },
+			        dataType: 'json',
+			        error: function(xhr, status, error) {
+			            alert(error);
+			        },
+			        success: function(res) {
+			            console.log(res); // 서버 응답 확인 
+			            if (res > 0) {
+			                todoList(); // todoList 함수 호출
+			                alert("담당자가 삭제되었습니다.");
+			                $('#staticBackdrop').modal('hide');
+			            } else {
+			                alert('다시 시도해주세요');
+			            }
+			        }
+			    }); // ajax				
+			}
 			
+		});
+		
+		//버튼 클릭하면 두투 디테일 값 넘겨주기	
+		$(document).on('show.bs.modal', '#staticBackdrop', function(event) {
+		    var date = $(this).parent().find('input[name=todoDetailNo]').val();
+		    $('.memListBox input[name=todoDetailNo]').val(date);
+		});
 			
+				
+		
+		// 업무 담당자 지정
+		$('.mem_list_content').click(function() {
+		    var todoDetailNo = $('input[name=todoDetailNo]').val();
+		    var memNo = $(this).find('input[name=memNo]').val();
+		    $.ajax({
+		        type: 'post',
+		        url: "<c:url value='/myBoard/addTodoDetailMem'/>",
+		        data: { todoDetailNo: todoDetailNo, memNo: memNo },
+		        dataType: 'json',
+		        error: function(xhr, status, error) {
+		            alert(error);
+		        },
+		        success: function(res) {
+		            console.log(res); // 서버 응답 확인 
+		            if (res > 0) {
+		                todoList(); // todoList 함수 호출
+		                alert("담당자가 설정되었습니다.");
+		                $('#staticBackdrop').modal('hide');
+		            } else {
+		                alert('다시 시도해주세요');
+		            }
+		        }
+		    }); // ajax
+		}); //담당자 지정
+		
 	});//$(function(){});
 	
 	//전체 댓글 불러오기 ajax처리
@@ -534,26 +590,33 @@
 		            
 		            $.each(res, function(idx, item){
 		            	totalCount++;
-	            		if(item.status==='Y'){
+	            		if(item.STATUS==='Y'){
 	            			toDoList="<div class='d-flex align-items-center border-bottom py-2 todoList'>";
-		            		toDoList+="<input class='form-check-input m-0' type='checkbox' name='todoDetailNo' value='"+item.todoDetailNo+"'>";
+		            		toDoList+="<input class='form-check-input m-0' type='checkbox' name='todoDetailNo' value='"+item.TODO_DETAIL_NO+"'>";
 		            		toDoList+="<div class='w-100 ms-3'>";
 		            		toDoList+="<div class='d-flex w-100 align-items-center justify-content-between'>";
-		            		toDoList+="<span>"+item.todoContent+"</span>";
-		            		toDoList+="<span style='text-align:left;'><a href='#'>담당자 등록</a></span>";
+		            		toDoList+="<span>"+item.TODO_CONTENT+"</span>";
+		            		if(item.MEM_NO){
+		            			toDoList+="<img src='<c:url value='/img/mem_images/"+item.MEM_IMAGE+"'/>' alt='담당자 이미지' class='mem_img' id='addMem_img'>";
+		            		}else{
+		                 		toDoList+="<span style='text-align:left;'><a href='#' data-bs-toggle='modal' data-bs-target='#staticBackdrop' id='addMem'>담당자 등록</a></span>";
+		            		}		            		
 		            		toDoList+="</div>";
 		            		toDoList+="</div>";
 		            		toDoList+="</div>";
-		            		$('.uncheckList').append(toDoList);	            			
+		            		$('.uncheckList').append(toDoList);	 
+		            	
 		            		uncheckCount++;
 
 	            		}else{
 		            		toDoList="<div class='d-flex align-items-center border-bottom py-2 todoList'>";
-		            		toDoList+="<input class='form-check-input m-0' type='checkbox' name='todoDetailNo' value='"+item.todoDetailNo+"' checked>";
+		            		toDoList+="<input class='form-check-input m-0' type='checkbox' name='todoDetailNo' value='"+item.TODO_DETAIL_NO+"' checked>";
 		            		toDoList+="<div class='w-100 ms-3'>";
 		            		toDoList+="<div class='d-flex w-100 align-items-center justify-content-between'>";
-		            		toDoList+="<span>"+item.todoContent+"</span>";
-		            		toDoList+="<img src='/ezBears/img/mem_images/Kim-Min-seok0101.jpg' alt='담당자 이미지' class='mem_img'>";
+		            		toDoList+="<span>"+item.TODO_CONTENT+"</span>";
+		            		if(item.MEM_NO){
+		            			toDoList+="<img src='<c:url value='/img/mem_images/"+item.MEM_IMAGE+"'/>' alt='담당자 이미지' class='mem_img'>";
+		            		}
 		            		toDoList+="</div>";
 		            		toDoList+="</div>";
 		            		toDoList+="</div>";
@@ -569,7 +632,7 @@
 	            		toDoList+="모든 계획을 달성하셨습니다🎉";
 	            		toDoList+="</div>";		 
 	            		$('.uncheckList').append(toDoList);
-            		}else{
+            		}else if(checkedCount===0){
 	            		toDoList="<div class='d-flex align-items-center border-bottom py-2 todoList'>";
 	            		toDoList+="아직 실행된 계획이 없습니다! 조금만 더 힘내요👍";
 	            		toDoList+="</div>";		 
@@ -587,14 +650,16 @@
 	       	 }
 		});
 	}
+
+	
+
+	
 </script>
 
 <form method="post" name="sendFrom">
 	<input type="hidden" name="currentPage">
 	<input type="hidden" name="contentno" value="${map['TEAM_BOARD_NO']}">
 </form>
-
-
 <c:set var="checkedCount" value="0"/>
 <c:set var="uncheckedCount" value="0"/>
 <c:set var="totalCount" value="0"/>  
@@ -745,9 +810,49 @@
 						  </ul>
 					</nav>
 				</div><!-- page_box --> 	
-						
-	       	</div><!-- detail_reply_wrap -->   		
+	       	
+				<!-- Modal -->
+				<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+				  <div class="modal-dialog">
+				    <div class="modal-content">
+				      <div class="modal-header">
+       					 <h1 class="modal-title fs-5" id="staticBackdropLabel" style="color:#191C24">팀 멤버</h1>
+       				  </div>				    
+				      <div class="modal-body">
+				        <div class="memListBox">
+				        <input type="hidden" name="todoDetailNo" value="">   
+					        <c:forEach var="memMap" items="${mem_list}">
+					        	<div class="mem_list_content">
+									<div class="mem_img_box">
+										<img src="<c:url value='/img/mem_images/${memMap["MEM_IMAGE"]}'/>" alt="사원이미지">
+									</div>
+									<div class="mem_info_box">
+										<div>${memMap["MEM_NAME"]}/${memMap["POSITION_NAME"]}</div>
+										<div>${memMap["DEPT_NAME"]}</div>
+										<input type="hidden" name="memNo" value=${memMap["MEM_NO"]}>   
+										
+									</div> 
+								</div><!-- mem_list_content --> 
+							</c:forEach>	
+				        </div><!-- memListBox -->
+				      </div>
+				      <div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+				      </div><!-- Modal-footer -->
+				    </div><!-- modal-content -->
+				  </div>
+				</div>
+				<!--Modal-->	
+			</div><!-- detail_reply_wrap -->  			       		
 		</div><!-- teamNoticeDetail -->
 	</div>
 </div>
+
+
+<script>
+	$(function(){
+	
+				
+	})
+</script>
 <%@include file="../inc/bottom.jsp"%>  

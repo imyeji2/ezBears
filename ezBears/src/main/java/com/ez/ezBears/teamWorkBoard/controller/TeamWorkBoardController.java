@@ -234,12 +234,16 @@ public class TeamWorkBoardController {
 		String myBoardName = myBoardListService.selectByBoardName(mBoardNo);
 		logger.info("마이보드 이름 myBoardName={}",myBoardName);	
 		
+		List<Map<String, Object>> mem_list = myBoardListService.selectMyBoardMember(mBoardNo);
+		logger.info("마이보드 멤버 정보 mem_list.size={}",mem_list.size());
+		
 		//3.
 		model.addAttribute("map",map);
 		model.addAttribute("myBoardName",myBoardName);
 		model.addAttribute("userid",userid);
 		model.addAttribute("userNo",userNo);
 		model.addAttribute("toDoList",toDoList);
+		model.addAttribute("mem_list",mem_list);
 		
 		//4
 		return "myBoard/teamWorkBoardDetail";
@@ -462,12 +466,12 @@ public class TeamWorkBoardController {
 	//투두리스트 목록 검색
 	@ResponseBody
 	@RequestMapping("/selectTodoList")
-	public List<ToDoListDetailVO> selectToDoList(@RequestParam (defaultValue = "0") int todolistNo){
+	public List<Map<String, Object>> selectToDoList(@RequestParam (defaultValue = "0") int todolistNo){
 		//1
 		logger.info("투두 리스트 목록 검색 파라미터 todolistNo={}",todolistNo);
 		
 		//2
-		List<ToDoListDetailVO> toDoListDetailList 
+		List<Map<String, Object>> toDoListDetailList 
 							= toDoListDetailService.selectToDoListDetail(todolistNo);
 		logger.info("팀 업무 게시판 디테일 결과 toDoListDetailList={}",toDoListDetailList);
 		logger.info("팀 업무 게시판 디테일 결과 toDoListDetailList.size={}",toDoListDetailList.size());
@@ -487,6 +491,31 @@ public class TeamWorkBoardController {
 		int cnt = toDoListDetailService.updateTodoStatus(todoListDetailVo);
 		logger.info("투두 디테일 변경 결과 cnt={}",cnt);
 	
+		//4
+		return cnt;
+	}
+	
+	@ResponseBody
+	@RequestMapping("/addTodoDetailMem")
+	public int addTodoDetailMem(@ModelAttribute ToDoListDetailVO todoVo) {
+		//1
+		logger.info("업무 담당자 등록 파라미터 todoVo={}",todoVo);
+		
+		//2
+		int cnt = toDoListDetailService.updateTodoMember(todoVo);
+		//4
+		return cnt;
+	}
+	
+	@ResponseBody
+	@RequestMapping("/toDoDetailMemDel")
+	public int toDoDetailMemDel(@RequestParam(defaultValue = "0") int todoDetailNo) {
+		//1
+		logger.info("업무 담당자 삭제 파라미터 todoDetailNo={}",todoDetailNo);
+		
+		//2
+		int cnt = toDoListDetailService.delTodoMember(todoDetailNo);
+		logger.info("업무 담당자 삭제 결과 cnt={}",cnt);
 		//4
 		return cnt;
 	}
