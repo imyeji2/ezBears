@@ -123,7 +123,9 @@
 		});	
 		
 	    // 대댓글 등록
-	    $('.add_r_reply').click(function(e) {
+	    
+	 	$(document).on('click', '.add_r_reply', function(e) { 
+	  //  $('.add_r_reply').click(function(e) {
 	        event.preventDefault();
 	        var $replyContainer = $(this).closest('.reply_content');
 	        $replyContainer.find('.replyaddForm').show();
@@ -131,14 +133,16 @@
 	    });
 
 	    // 대댓글 등록 취소
-	    $('.add_R_replyCencleBtn').click(function(e) {
+	    $(document).on('click', '.add_R_replyCencleBtn', function(e) { 
+	    //$('.add_R_replyCencleBtn').click(function(e) {
 	        event.preventDefault();
 	        var $replyContainer = $(this).closest('.reply_content');
 	        $replyContainer.find('.replyaddForm').hide();
 	    });
 
 	    // 대댓글 등록 ajax
-	    $('#add_R_replyBtn').click(function(e) {
+	    $(document).on('click', '#add_R_replyBtn', function(e) { 
+	    //$('#add_R_replyBtn').click(function(e) {
 	        e.preventDefault(); // 이벤트의 기본 동작 방지
 	        var $replyContainer = $(this).closest('form[name=rAddForm]');
 	        var replyData = $replyContainer.serialize(); // 데이터 직렬화
