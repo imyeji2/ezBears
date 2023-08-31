@@ -7,18 +7,15 @@
 		$('input[name=currentPage]').val(curPage);
 		$('form[name=frmPage]').submit();
 	}
-	
-	function openPopup(memberNo){
-		$('.popup-inner').show();
-	}
-	
+
 	$(function(){
 		$('.popup-inner').hide();
 		
-		$('.infodiv #btInfo').click(function() {
+/* 		$('.infodiv #btInfo').click(function() {
 			$('.popup-inner').show();
 			$('.popup.members-popup').addClass('open');
-		});
+
+		}); */
 		
 		$('.popup-background').click(function() {
 			$('.popup').removeClass('open');
@@ -27,6 +24,35 @@
 		$('.close-btn').click(function() {
 			$('.popup').removeClass('open');
 		});
+		
+		$('.infodiv #btInfo').click(function(){
+		    var memNo = $(this).closest('.memList').find('.memNo').val(); // 수정된 부분
+		    
+		    $.ajax({
+		        url: "<c:url value='/Member/memberDetail'/>",
+		        type: 'get',
+		        data: { memNo: memNo },
+		        dataType: 'json',
+		        success: function(res){
+		            console.log(res);
+
+		            $('.popup-inner #previewImage').attr("src","../img/mem_images/" + res.memImage);
+		            $('.popup-inner #deptName').val(res.deptName);
+		            $('.popup-inner #positionName').val(res.positionName); 
+		            $('.popup-inner #memName').val(res.memName);
+		            $('.popup-inner #memId').val(res.memId); 
+		            $('.popup-inner #memTel').val(res.memTel); 
+		            $('.popup-inner #memBirth').val(res.memBirth);
+		            
+				    $('.popup-inner').show();
+				    $('.popup.members-popup').addClass('open');
+		        },
+		        error: function(xhr, status, error){
+		            alert(status + " : " + error);
+		        }
+		    });
+		});
+		
 		
 	})
 
@@ -107,18 +133,20 @@ tr.memList {
 												</c:otherwise>
 											</c:choose>	
 										</div>
+										<div class = "hiddenNo"><input type="hidden" name="memNo" class="memNo" id="memNo" value="${memberVo.memNo }"></div>
 										<div class = "infodiv">
 			                				<a id="AdeptName">${memberVo.deptName}</a>
 			                				<br>
-			                				<a id="AmemPosition" href="<c:url value='/Member/detail?memNo=${memberVo.memNo}'/>">${memberVo.positionName}</a>
+			                				<a id="AmemPosition">${memberVo.positionName}</a>
 			                				<br>
-			                				<a id="AmemName" href="<c:url value='/Member/detail?memNo=${memberVo.memNo}'/>">${memberVo.memName}</a>
+			                				<a id="AmemName">${memberVo.memName}</a>
 		                					<br>
 		                					<br>
 		                					<div class ="twoBt">
 		                						<a id="btChat">채팅</a>
-		                						<a id="btInfo" onclick="openPopup(${memberVo.memNo})">정보</a>
+		                						<a id="btInfo">정보</a>
 		                					</div>
+											<%@include file="../Member/memberPopup.jsp"%>    
 		                				</div>
 	                				</div>
 		                		</tr>
@@ -130,5 +158,4 @@ tr.memList {
 	        </form>
 	    </div>
 	</div>
-<%@ include file="../Member/memberPopup.jsp" %>
 <%@include file="../inc/bottom.jsp"%>    

@@ -63,16 +63,6 @@ public class NoticeServiceImpl implements NoticeService{
 		return cnt;
 	}
 
-	/*
-	 * @Override public List<Map<String, Object>> nextPage(int noticeNo) { return
-	 * noticeDao.nextPage(noticeNo); }
-	 */
-
-	/*
-	 * @Override public List<Map<String, Object>> backPage(int noticeNo) { return
-	 * noticeDao.backPage(noticeNo); }
-	 */
-
 	@Override
 	public List<Map<String, Object>> nextPage(int noticeNo) {
 		return noticeDao.nextPage(noticeNo);
