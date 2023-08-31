@@ -4,6 +4,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <link href="${pageContext.request.contextPath}/css/choong/chi.css" rel="stylesheet">
 
+<%@include file="../inc/top.jsp"%>
+
 <script type="text/javascript">
 	function pageFunc(page) {
 		$('input[name="currentPage"]').val(page);
@@ -11,17 +13,57 @@
 	}
 </script>
 
+<script type="text/javascript">
+	$(function () {
+		$('#date11').on('input', function() {
+		    var inputTel = $(this).val();
+		    
+		    // Remove existing "-" characters
+		    var cleanedTel = inputTel.replace(/-/g, '');
+
+		    if (cleanedTel.length >= 5) {
+		        cleanedTel = cleanedTel.substring(0, 4) + '-' + cleanedTel.substring(4);
+		    }
+		    if (cleanedTel.length >= 8) {
+		        cleanedTel = cleanedTel.substring(0, 7) + '-' + cleanedTel.substring(7);
+		    }
+		    
+		    // Update the value of the input field
+		    $(this).val(cleanedTel);
+		});
+		
+		$('#date22').on('input', function() {
+		    var inputTel = $(this).val();
+		    
+		    // Remove existing "-" characters
+		    var cleanedTel = inputTel.replace(/-/g, '');
+
+		    if (cleanedTel.length >= 5) {
+		        cleanedTel = cleanedTel.substring(0, 4) + '-' + cleanedTel.substring(4);
+		    }
+		    if (cleanedTel.length >= 8) {
+		        cleanedTel = cleanedTel.substring(0, 7) + '-' + cleanedTel.substring(7);
+		    }
+		    
+		    // Update the value of the input field
+		    $(this).val(cleanedTel);
+		});
+		
+		
+	})
+</script>
+
 <!-- 페이징 처리 관련 form -->
 <form action="<c:url value='/attendanceManagement/attendanceSearch'/>" 
 	name="frmPage" method="post">
 	<input type="text" name="currentPage">
-	<input type="text" name="date1" value="">
-	<input type="text" name="date2" value="">
-	<input type="text" name="searchDeptNo" value="">
-	<input type="text" name="searchName" value="">
+	<input type="text" name="date11" value="${param.date11 }">
+	<input type="text" name="date22" value="${param.date22 }">
+	<input type="text" name="searchDeptNo" value="${param.searchDeptNo }">
+	<input type="text" name="searchName" value="${param.searchName }">
 </form>
 
-<%@include file="../inc/top.jsp"%>
+
 <div id="attendanceAll">
 	<div class="container-fluid pt-4 px-4">
 	    <div class="row g-4">
@@ -46,8 +88,8 @@
 					    			기간
 					    		</td>
 					    		<td>
-						      		<input type="date" name="date1">
-						      		<input type="date" name="date2">
+						      		<input type="text" name="date11" id="date11" style="width: 120px" maxlength="10" max="9999-12-31" value="${param.date11 }"> ~ 
+						      		<input type="text" name="date22" id="date22" style="width: 120px" maxlength="10" max="9999-12-31" value="${param.date22 }">
 						      		<input type="submit" value="검색" id="btnSearch">
 						      	</td>
 						    </tr>
@@ -66,7 +108,7 @@
 			        		</tr>
 			        		<tr>
 			        			<th>사원명</th>
-			        			<td><input type="text" name="searchName" style="width: 99%"></td>
+			        			<td><input type="text" name="searchName" style="width: 99%" value="${param.searchName }"></td>
 			        		</tr>
 			        		<!-- <tr>
 			        			<th>근무 상태</th>
@@ -82,6 +124,7 @@
 			            <thead>
 			                <tr style="border-top: 1px solid white;">
 			                    <th scope="col">일자</th>
+			                    <th scope="col">부서명</th>
 			                    <th scope="col">사원명</th>
 			                    <th scope="col">출근시간</th>
 			                    <th scope="col">퇴근시간</th>
@@ -99,6 +142,7 @@
 				            	<c:forEach var="map" items="${attendanceList }">
 					                <tr>
 					                    <th scope="row"><fmt:formatDate value="${map['IN_TIME'] }" pattern="yyyy-MM-dd EEE"/></th>
+					                    <td>${map['DEPT_NAME'] }</td>
 					                    <td>${map['MEM_NAME'] }</td>
 					                    <td><fmt:formatDate value="${map['IN_TIME'] }" pattern="HH:mm:ss"/></td>
 					                    <td><fmt:formatDate value="${map['OUT_TIME'] }" pattern="HH:mm:ss"/></td>

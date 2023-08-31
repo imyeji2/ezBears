@@ -92,6 +92,8 @@
 			select rownum as RNUM, A.* from
 			(
 				select * from attendanceView
+				<include refid="searchWhere"></include>
+				order by attendance_no desc
 			)A
 		)
 		<![CDATA[
@@ -99,9 +101,26 @@
 		and RNUM<=#{searchVo.firstRecordIndex} + #{searchVo.recordCountPerPage}]]>
 	</select>
  
- 	<select id="countAllView" resultType="int">
+ 	<select id="countAllView" parameterType="map" resultType="int">
  		select count(*) from attendanceView
+ 		<include refid="searchWhere"></include>
+		order by attendance_no desc
  	</select>
+ 	
+ 	<sql id="searchWhere">
+ 		<where>
+ 			<if test="date11!=null and date11!='' and date22!=null and date22!=''">
+ 				and in_time between to_date(#{date11}, 'YYYY-MM-DD') and to_date(#{date22}, 'YYYY-MM-DD') + 1
+ 			</if>
+ 			<if test="searchDeptNo!=null and searchDeptNo!=''">
+ 				and dept_no = #{searchDeptNo}
+ 			</if>
+ 			<if test="searchName!=null and searchName!=''">
+ 				and mem_name = #{searchName}
+ 			</if>
+ 		</where>
+ 	</sql>
+ 	
  	
  
  

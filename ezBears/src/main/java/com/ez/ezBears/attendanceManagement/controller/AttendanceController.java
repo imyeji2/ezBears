@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ez.ezBears.attendance.model.AttendanceService;
 import com.ez.ezBears.common.ConstUtil;
@@ -43,8 +44,16 @@ public class AttendanceController {
 	
 	@RequestMapping("/attendanceSearch")
 	public String attendanceSearch(@ModelAttribute SearchVO searchVo,
+			@RequestParam(required = false) String date11,
+			@RequestParam(required = false) String date22,
+			@RequestParam(defaultValue = "0") int searchDeptNo,
+			@RequestParam(required = false) String searchName,
 			Model model) throws ParseException {
 		logger.info("출/퇴근 검색 화면 이동");
+		
+		logger.info("searchDeptNo={}", searchDeptNo);
+		logger.info("searchName={}", searchName);
+		logger.info("date11={}, date22={}", date11, date22);
 		
 		List<DeptVO> deptList = deptService.selectDeptList();
 		model.addAttribute("deptList", deptList);
@@ -68,20 +77,13 @@ public class AttendanceController {
 		searchVo.setRecordCountPerPage(ConstUtil.RECORD_COUNT);
 		logger.info("설정 후 searchVo={}", searchVo);
 		
-		int totalRecord = attendanceService.countAllView();
+		int totalRecord = attendanceService.countAllView(date11, date22, searchDeptNo, searchName);
 		pagination.setTotalRecord(totalRecord);
 		
 		model.addAttribute("pagination", pagination);
 		
-		List<Map<String, Object>> attendanceList = attendanceService.selectAllView(searchVo);
+		List<Map<String, Object>> attendanceList = attendanceService.selectAllView(searchVo, date11, date22, searchDeptNo, searchName);
 		logger.info("출/퇴근 검색 화면에 view 띄우기, attendanceList.size={}", attendanceList.size());
-		
-		
-		
-		
-		
-		
-		
 		
 		//------------------------------이제부터 근무시간을 계산하기 위한 코드들---------------------------------------
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
