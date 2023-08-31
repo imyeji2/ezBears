@@ -9,35 +9,50 @@
 <!-- Bootstrap JS -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script>
+//폼 출력
+
+function submitForm() {
+    var selectedCategory = document.getElementById("approvalCategory").value;
+    
+    if (selectedCategory === "휴가") {
+        window.location.href = "<c:url value='/myBoard/Approval_write?mBoardNo=${mBoardNo }'/>";
+    } else if (selectedCategory === "기안서") {
+        window.location.href = "기안서";
+    } else if (selectedCategory === "품의서") {
+        window.location.href = "품의사";
+    } else if (selectedCategory === "지출결의서") {
+        window.location.href = "지출결의서";
+    }
+
+    // 모달 닫기
+    $('#approvalModal').modal('hide');
+}
 document.addEventListener("DOMContentLoaded", function() {
-	  
     // 휴가신청서 클릭 시 휴가신청서 페이지로 이동
     document.getElementById("vacationForm").addEventListener("click", function() {
-    	window.location.href = "<c:url value='/myBoard/Approval_write'/>"; 
+        document.getElementById("approvalCategory").value = "휴가신청서";
+        submitForm();
     });
 
     // 기안서 클릭 시 기안서 페이지로 이동
     document.getElementById("draftForm").addEventListener("click", function() {
-        window.location.href = "기안서"; 
+        document.getElementById("approvalCategory").value = "기안서";
+        submitForm();
     });
+
     // 품의서 클릭 시 휴가신청서 페이지로 이동
     document.getElementById("requisitionForm").addEventListener("click", function() {
-        window.location.href = "품의사"; 
+        document.getElementById("approvalCategory").value = "품의서";
+        submitForm();
     });
 
     // 지출결의서 클릭 시 기안서 페이지로 이동
     document.getElementById("expenseForm").addEventListener("click", function() {
-        window.location.href = "지출결의서"; 
+        document.getElementById("approvalCategory").value = "지출결의서";
+        submitForm();
     });
-});	
-    // 폼 출력
-    function submitForm() {
-        var selectedCategory = document.getElementById("approvalCategory").value;
-     
-        alert("선택한 결재 분류: " + selectedCategory);
-        // 모달 닫기
-        $('#approvalModal').modal('hide');
-    }
+});
+    
 </script>
 
 

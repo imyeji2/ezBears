@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -28,9 +29,10 @@ public class SignController {
 	      return "myBoard/Approval";
 	   }
 	   
-	   @RequestMapping("/Approval_write")
-	   public String Approval_wr() {
-	      logger.info("결재 작성");
+	   @GetMapping("/Approval_write")
+	   public String Approval_wr(@RequestParam(defaultValue = "0") int mBoardNo) {
+		   
+	      logger.info("결재 작성 mBoardNo={}",mBoardNo);
 	      return "myBoard/Approval_write";
 	   }
 	   @RequestMapping("/Approval_edit")
