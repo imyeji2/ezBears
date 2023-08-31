@@ -519,4 +519,51 @@ public class TeamWorkBoardController {
 		//4
 		return cnt;
 	}
+	
+	/*팀별 업무 게시판 수정*/
+	@RequestMapping("/teamWorkBoardEdit")
+	public String teamWorkBoardEdit( @ModelAttribute MyBoardListVO myBoardListVo, 
+			@RequestParam(defaultValue = "0") int teamBoardNo, Model model, HttpSession session) {
+		//1
+		logger.info("팀 업무 게시판 수정 화면, 파라미터 myBoardListVo={},teamBoardNo={}",myBoardListVo,teamBoardNo);
+		
+		String userid=(String)session.getAttribute("userid");
+		logger.info("팀 업무 게시판 디테일 접속 사용자 아이디 userid={}",userid);
+		String type="Edit";
+		
+		//2
+		//사원의 시퀀스 번호
+		int userNo = memberService.selectMemberNo(userid);
+		logger.info(userid);
+
+		
+		myBoardListVo.setMemId(userid);
+		myBoardListVo=myBoardListService.selectMyBoardInfo(myBoardListVo);
+		logger.info("업무 게시판 정보 찾기 결과 myBoardListVo={}",myBoardListVo);
+		
+		//3
+		model.addAttribute("myBoardListVo",myBoardListVo);
+		//2
+		Map<String, Object> map = teamWorkBoardService.selectDetail(teamBoardNo);
+		logger.info("투두 리스트 기본 값 map={}",map);
+		
+		ToDoListVO toDoList = toDoListService.selectTodoList(teamBoardNo);
+		logger.info("투두 리스트 toDoLis={}",toDoList);
+		
+		List<Map<String, Object>> toDoListDetailList 
+		= toDoListDetailService.selectToDoListDetail(toDoList.getTodolistNo());
+		logger.info("팀 업무 게시판 디테일 결과 toDoListDetailList.size={}",toDoListDetailList.size());
+
+		//3.
+		model.addAttribute("map",map);
+		model.addAttribute("myBoardListVo",myBoardListVo);
+		model.addAttribute("userid",userid);
+		model.addAttribute("userNo",userNo);
+		model.addAttribute("toDoList",toDoList);
+		model.addAttribute("toDoListDetailList",toDoListDetailList);
+		model.addAttribute("type",type);
+		
+		//4
+		return "myBoard/teamWorkBoardWrite";
+	}	
 }

@@ -760,7 +760,7 @@
 		       				</span>
 		       				<c:if test="${userid==map['MEM_ID']}">
 		       					<span class="user_dept">
-		       						<a href="<c:url value='/myBoard/teamWorkBoardEdit?mBoardNo=${map["M_BOARD_NO"]}&teamBoardNo=${map["TEAM_Board_NO"]}'/>">
+		       						<a href="<c:url value='/myBoard/teamWorkBoardEdit?mBoardNo=${map["M_BOARD_NO"]}&teamBoardNo=${map["TEAM_BOARD_NO"]}'/>">
 		       						수정
 		       						</a>
 		       					</span>
@@ -810,7 +810,6 @@
 						  </ul>
 					</nav>
 				</div><!-- page_box --> 	
-	       	
 				<!-- Modal -->
 				<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 				  <div class="modal-dialog">
@@ -848,11 +847,4 @@
 	</div>
 </div>
 
-
-<script>
-	$(function(){
-	
-				
-	})
-</script>
 <%@include file="../inc/bottom.jsp"%>  

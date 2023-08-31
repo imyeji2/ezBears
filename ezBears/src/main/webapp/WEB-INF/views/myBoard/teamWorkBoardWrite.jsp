@@ -183,12 +183,17 @@ $(function(){
 <!-- Recent Sales Start -->
 
 <c:if test="${type=='write'}">
-	<c:set var="url" value="/myBoard/teamWorkBoardWrite"/>
+	<c:set var="btnTxt" value="등록"/>
+	<c:set var="url" value="/myBoard/teamWorkBoardWrite?mBoardNo=${myBoardListVo.MBoardNo}"/>
 </c:if>
 
-<c:if test="${type=='edit'}">
-	<c:set var="url" value="/myBoard/teamWorkBoardEdit"/>
+<c:if test="${type=='Edit'}">
+	<c:set var="btnTxt" value="수정"/>
+	<c:set var="url" value="/myBoard/teamWorkBoardEdit?mBoardNo=${myBoardListVo.MBoardNo}"/>
+	<fmt:parseDate var="startRegdateFmt" value="${toDoList.startRegdate}" pattern="yyyy-MM-dd" />
+	<fmt:parseDate var="doneRegdateFmt" value="${toDoList.doneRegdate}" pattern="yyyy-MM-dd" />	
 </c:if>
+
 
 <div class="container-fluid pt-4 px-4" id="board_style">
 	<div class="bg-secondary text-center rounded p-4">
@@ -209,7 +214,7 @@ $(function(){
 		        	<div class="writeWrap">
 			        	<div class="write_title">
 			        		<input type="text" class="form-control" name="teamBoardTitle"
-			        		id="teamBoardTitle" placeholder="제목을 입력해주세요">
+			        		id="teamBoardTitle" placeholder="제목을 입력해주세요" value="${map['TEAM_BOARD_TITLE']}"}>
 			        	</div><!-- write_title -->
 			        
 			       		<div class="border-line"></div>		 
@@ -217,7 +222,7 @@ $(function(){
 			       			<div class="write_view">
 				       			 <div class="form-floating">
 								  <textarea class="form-control write_form" id="content"
-								  	name="teamBoardContent" placeholder="내용을 입력해주세요" id="#"></textarea>
+								  	name="teamBoardContent" placeholder="내용을 입력해주세요" id="#">${map['TEAM_BOARD_CONTENT']}</textarea>
 								</div>	
 			       			</div>
 			       			<br>
@@ -229,14 +234,15 @@ $(function(){
 			       					<div class="todoDate">
 			       						<div class="dateBox" style="margin-bottom:10px;">
 			       							<span>프로젝트 시작일</span>
-			       							<input class="dateinput" id="startDate" type="date" name="startRegdate" 
-			       							  data-placeholder="날짜 선택">
+			       							<input class="dateinput" id="startDate" type="date" name="startRegdate" data-placeholder="날짜 선택" 
+			       							  value="<fmt:formatDate value="${startRegdateFmt}" pattern="yyyy-MM-dd"/>">
 						
 			       						</div>
+
 			       						<div class="dateBox">
 			       							<span>프로젝트 종료일</span>
-			       							<input class="dateinput" id="endDate" type="date" name="doneRegdate" 
-			       								data-placeholder="날짜 선택">
+			       							<input class="dateinput" id="endDate" type="date" name="doneRegdate" data-placeholder="날짜 선택" 
+			       								value="<fmt:formatDate value="${doneRegdateFmt}" pattern="yyyy-MM-dd"/>">
 			       						</div>
 			       					</div>
 			       				</div>
@@ -247,6 +253,20 @@ $(function(){
 	                            </div>
 	                            <div class="todoListWrap">
 	                            <!-- todoList 입력 영역 -->
+	                            <c:if test="${!empty toDoListDetailList}">
+	                            <c:set var="index" value="0"/>
+	                            	<c:forEach var="list" items="${toDoListDetailList}">
+	                            		 <div class="d-flex align-items-center border-bottom py-2 todoList">
+			                                <div class="w-100 ms-3">
+			                                    <div class="d-flex w-100 align-items-center justify-content-between">
+			                                        <input class="form-control border-0 todoInput" type="text" name="items[${index}].todoContent" value="${list['TODO_CONTENT']}">
+			                                        <button class="btn btn-sm"><i class="fa fa-times"></i></button>
+			                                    </div>
+			                                </div>
+			                            </div>
+			                            <c:set var="index" value="${index+1}"/>
+	                            	</c:forEach>
+	                            </c:if>
 	                            
 								<!-- todoList 입력 영역 -->
 		                    	</div><!-- todoListWrap -->                  
@@ -255,6 +275,13 @@ $(function(){
 			       			
 			       			<div class="write_file">
 								<input class="form-control" type="file" id="formFile" name="upfile">
+									<c:if test="${!empty map['ORIGIN_FILENAME']}">
+						       			<div class="list_box_file2" id="isFile">
+							       			${map['ORIGIN_FILENAME']}&nbsp;
+							       			(<fmt:formatNumber value="${map['FSIZE'] /1024.0}" type="number" pattern="#.##"/> KB)
+							       			<button class='btn btn-sm' id='delBtn'><i class='fa fa-times'></i></button>
+						       			</div>
+									</c:if>
 			       			</div>
 			       			<div class="write_option_btn">
 			       				<button class="btn btn-sm btn-primary" id="writeBtn">등록</button>&nbsp;
