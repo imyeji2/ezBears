@@ -173,7 +173,7 @@ public class TeamWorkBoardController {
 		if(cnt>0) {
 			msg="업무 계획이 등록되었습니다.";
 			url="/myBoard/teamWorkBoardDetail?mBoardNo="+mBoardNo+
-					"&teamNoticeNo="+teamVo.getMyBoardNo();
+					"&teamBoardNo="+teamVo.getMyBoardNo();
 		}
 		
 		//3
