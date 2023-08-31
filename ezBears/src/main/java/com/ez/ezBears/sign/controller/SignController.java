@@ -1,5 +1,8 @@
 package com.ez.ezBears.sign.controller;
 
+import java.util.List;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -35,23 +38,30 @@ public class SignController {
 	
 	
 	@RequestMapping("/Approval")
-	public String Approval(@RequestParam (defaultValue = "0") int mBoardNo, SearchVO searchVo ,Model model) {
+	public String Approval(@RequestParam (defaultValue = "0") int mBoardNo, @ModelAttribute SearchVO searchVo ,Model model) {
 		logger.info("결재 리스트 출력 mBoardNo={}",mBoardNo);
 
 		model.addAttribute("mBoardNo",mBoardNo);
 		
-		
-		//[1]PaginationInfo 객체 생성
 		PaginationInfo pagingInfo = new PaginationInfo();
 		pagingInfo.setBlockSize(ConstUtil.BLOCK_SIZE);
 		pagingInfo.setCurrentPage(searchVo.getCurrentPage());
 		pagingInfo.setRecordCountPerPage(ConstUtil.RECORD_COUNT_FIVE);
 				
-				
-		//2)searchVo에 값 세팅 -> xml에 전달할 값 
 		searchVo.setRecordCountPerPage(ConstUtil.RECORD_COUNT_FIVE);
 		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
 				
+		List<Map<String, Object>> list = signService.selectApprovalList(searchVo);
+		
+		logger.info("list 사이즈 list={}", list.size());
+		int totalCount = signService.selectAppCount(searchVo);
+		pagingInfo.setTotalRecord(totalCount);
+		logger.info("totalCount={}",totalCount);
+		
+		//3
+		model.addAttribute("list",list);
+		model.addAttribute("mBoardNo",mBoardNo);
+		model.addAttribute("pagingInfo",pagingInfo);
 		
 		
 		return "myBoard/Approval";

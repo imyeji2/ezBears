@@ -64,6 +64,13 @@ select s.mem_no,info.mem_id,info.my_board_no,info.m_board_no,s.schedule_start,s.
 myBoardInfo info join schedule s
 on info.my_board_no = s.my_board_no;
 
+
+create or replace view signListView
+as
+select s.* from
+member m join sign s
+on m.mem_no = s.mem_no;
+
 [충혁]---------------------------------------------------------------------
 
 [판주]---------------------------------------------------------------------
