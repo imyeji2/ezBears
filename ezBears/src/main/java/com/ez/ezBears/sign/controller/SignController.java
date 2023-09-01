@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.ez.ezBears.common.ConstUtil;
 import com.ez.ezBears.common.PaginationInfo;
 import com.ez.ezBears.common.SearchVO;
+import com.ez.ezBears.member.model.MemberService;
+import com.ez.ezBears.member.model.MemberVO;
 import com.ez.ezBears.myBoard.model.MyBoardInfoVO;
 import com.ez.ezBears.myBoard.model.MyBoardListService;
 import com.ez.ezBears.sign.model.SignService;
@@ -35,12 +37,20 @@ public class SignController {
 	private static final Logger logger = LoggerFactory.getLogger(SignController.class);
 	private final MyBoardListService myBoardListService;
 	private final SignService signService;
-	
+	private final MemberService memberService;
 	
 	@RequestMapping("/Approval")
-	public String Approval(@RequestParam (defaultValue = "0") int mBoardNo, @ModelAttribute SearchVO searchVo ,Model model) {
+	public String Approval(@RequestParam (defaultValue = "0") int mBoardNo, @ModelAttribute SearchVO searchVo ,
+			@ModelAttribute MyBoardInfoVO myBoardInfoVo, HttpSession session,Model model) {
 		logger.info("결재 리스트 출력 mBoardNo={}",mBoardNo);
-
+		String userid = (String)session.getAttribute("userid");
+		myBoardInfoVo.setMemId(userid);	
+		myBoardInfoVo.setMBoardNo(mBoardNo);
+	
+		myBoardInfoVo = myBoardListService.selectBoardInfo(myBoardInfoVo);
+		
+		
+		model.addAttribute("myBoardInfoVo",myBoardInfoVo);
 		model.addAttribute("mBoardNo",mBoardNo);
 		
 		PaginationInfo pagingInfo = new PaginationInfo();
@@ -68,19 +78,23 @@ public class SignController {
 	}
 
 	@GetMapping("/Approval_write")
-	public String Approval_wr(@RequestParam(defaultValue = "0") int mBoardNo, @ModelAttribute MyBoardInfoVO myBoardInfoVo, 
+	public String Approval_wr(@RequestParam(defaultValue = "0") int mBoardNo,
+			@ModelAttribute MyBoardInfoVO myBoardInfoVo, @ModelAttribute MemberVO memberVo , 
 			HttpSession session ,Model model) {
 
 		String userid = (String)session.getAttribute("userid");
 		logger.info("결재 작성 mBoardNo={},userid={}",mBoardNo,userid);
+
 		myBoardInfoVo.setMemId(userid);	
 		myBoardInfoVo.setMBoardNo(mBoardNo);
 		logger.info("myBoardInfo 정보={}",myBoardInfoVo);
 
 		myBoardInfoVo = myBoardListService.selectBoardInfo(myBoardInfoVo);
-
+		memberVo = memberService.selectpositioninfo(myBoardInfoVo.getDeptNo());
+		
 		model.addAttribute("myBoardInfoVo",myBoardInfoVo);
-
+		model.addAttribute("memberVo",memberVo);
+		
 		logger.info("myBoardInfo={}",myBoardInfoVo);
 
 

@@ -45,4 +45,7 @@ public interface MemberDAO {
     
     Map<String, Object> selectMemberView(String memId);
     
+    
+    MemberVO selectpositioninfo(int deptNo);
+    
 }

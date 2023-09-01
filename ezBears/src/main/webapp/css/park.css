@@ -63,7 +63,22 @@
 	.table td{
 		color: #fff;
 	}
+	.form-control{
+		color: white;
+		width: 80%; 
+	    margin-left: 40px;
+	    border: none;
+	    background: transparent;
+	}
+	.docNo{
+		border: none;
+	    background: transparent;
+	    color: white;
+	    width: 80%; 
+	}
 }
+
+
 
 
 /*Appdetail*/

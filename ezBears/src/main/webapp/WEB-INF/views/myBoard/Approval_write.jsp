@@ -1,8 +1,9 @@
+<%@page import="java.util.Date"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@include file="../inc/top.jsp"%>
-
 
 
 <div class="container-fluid pt-4 px-4" id ="Approval_wr">
@@ -15,8 +16,13 @@
               </ol>
             </nav>
 	<div class="appbox">
-				<div class="form-floating mb-3">
-			
+		<div class="form-floating mb-3">
+<%
+	Date date = new Date();
+	SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd");
+	String strDate = simpleDate.format(date);
+
+%>
 		<form id="appform" action="" method="post" enctype="multipart/form-data" >
 				<input type ="text" name ="userid" id="userid" value="${userid }">
 				<input type="text" name="myBoardNo" id="myBoardNo"value="${myBoardInfoVo.myBoardNo}"> 
@@ -27,27 +33,29 @@
 			<table class="table" id="table" border="1">
 				<tr class="tr-s">
 					<td class="td-1" rowspan="2" >문서번호</td>
-					<td class="td-2" rowspan="2" colspan="3"> <input type ="text"  name="docNo"></td> <!-- 문서 번호 불러오기 -->
+					<td class="td-2" rowspan="2" colspan="3"> <input type ="text"  name="docNo" class="docNo"></td> <!-- 문서 번호 불러오기 -->
 					<td class="td-3">담당</td><!-- 결재 담당자 -->
-					<td class="td-4">담당자 목록 추가버튼</td><!-- 결재 담당자 -->
+					<td class="td-4" colspan="2">${memberVo.memName }</td><!-- 결재 담당자 -->
 
 				</tr>
-
+				
 				<tr class="tr-m">
 					<td class="td-1">기안일</td>
-					<td class="td-2">날짜 출력하기</td>
+					<td class="td-2" colspan="2"><%=strDate %></td>
 				</tr>
+
 				<tr class="tr-s">
 					<td class="td-1" rowspan="2" colspan="3">기안자</td>
-					<td class="td-5" rowspan="2">로그인한 아이디 예 : ${userid }</td>
+					<td class="td-5" rowspan="2" colspan="4"> ${myBoardInfoVo.memName }</td>
 				</tr>
+				
 				<tr class="tr-s">		
 				</tr>
 			
 				<tr id="tr-title" class="tr-m">
-					<td class="td-1">제목</td>
-					<td colspan="7"><input type="text" class="form-control" id="floatingInput" name="docTitle"
-						placeholder="제목">
+					<td class="td-1 ">제목</td>
+					<td colspan="7">
+					<input type="text" class="form-control" id="floatingInput" name="docTitle" placeholder="제목">
 						 <label for="floatingInput">  </label></td>
 				</tr>
 
@@ -71,9 +79,9 @@
 	                <tr class="tr-m">
 	                    <td class="td-1" colspan="1">휴가기간</td>
 	                    <td colspan="2" id="td-leave-date">휴가시작일</td>
-	                    <td  id="td-leave-date"></td>
+	                    <td  id="td-leave-date"> yy-mm-dd </td>
 	                    <td colspan="2" id="td-leave-date">휴가종료일</td>
-	                    <td  id="td-leave-date">일</td>
+	                    <td  id="td-leave-date"> yy-mm-dd </td>
 	                </tr>
 
 	                <tr>

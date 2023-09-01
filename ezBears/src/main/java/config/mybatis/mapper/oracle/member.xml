@@ -122,4 +122,12 @@
 		</where>
 	</sql>
 
+
+	<!-- 희진  -->
+	<select id="selectpositioninfo" parameterType="int" resultType="memberVo">
+		select * from member 
+		where dept_no = #{deptNo} 
+		and position_no =6
+	</select>
+	
 </mapper>
