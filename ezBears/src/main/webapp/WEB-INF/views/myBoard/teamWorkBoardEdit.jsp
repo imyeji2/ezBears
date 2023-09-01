@@ -234,7 +234,6 @@ $(function(){
 		
 		var delDate = $('form[name=delFrm]').serialize();
 		var delCount = $('form[name="delFrm"]').find('input').length;
-
 		if(delCount>0){
 			$.ajax({
 		        type: 'post',
@@ -251,9 +250,10 @@ $(function(){
 		            }else{
 		            	$('form[name=workBoardWriteFrom]').submit();
 		            }
-		        
 		        }
 		    });
+		}else{
+			$('form[name=workBoardWriteFrom]').submit();
 		}
 			
 	});
