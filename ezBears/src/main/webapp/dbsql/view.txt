@@ -71,6 +71,13 @@ select s.* from
 member m join sign s
 on m.mem_no = s.mem_no;
 
+
+create or replace view approvalDetailView
+as
+select s.*,m.mem_name from
+member m join sign s
+on m.mem_no = s.mem_no;
+
 [충혁]---------------------------------------------------------------------
 
 [판주]---------------------------------------------------------------------

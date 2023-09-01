@@ -19,4 +19,6 @@ public interface SignDAO {
 	// total레코드
 	int selectAppCount(SearchVO searchVo);
 	
+	// 디테일
+	Map<String, Object> detailSign(int docNo);
 }

@@ -99,7 +99,7 @@ document.addEventListener("DOMContentLoaded", function() {
 										</tr>
 									</c:if>
 									<c:if test="${!empty list }">
-										<c:forEach var="list" items="${list }">
+										<c:forEach var="list" items="${list}">
 											<tr>
 												<td>${list.DOC_NO }</td>
 												<td><fmt:formatDate value="${list['REGDATE'] }"

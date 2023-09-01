@@ -114,17 +114,54 @@ public class SignController {
 	}
 	
 	
-	@RequestMapping("/Approval_edit")
-	public String Approval_edit() {
-		logger.info("결재 수정");
+
+	@GetMapping("/Approval_edit")
+	public String Approval_edit(@RequestParam (defaultValue = "0")int docNo) {
+		logger.info("결재 수정 페이지");
+		
+		
+		
+		
 		return "myBoard/Approval_edit";
 	}
 
 
 	@RequestMapping("/Approval_detail")
-	public String Approval_detail() {
+	public String Approval_detail(@RequestParam (defaultValue = "0")int docNo, @RequestParam(defaultValue = "0")int deptNo,
+			@RequestParam(defaultValue = "0")int mBoardNo, @ModelAttribute SignVO signVo,
+			@ModelAttribute MyBoardInfoVO myBoardInfoVo,@ModelAttribute MemberVO memberVo , HttpSession session,
+			Model model) {
+		
+		String userid = (String)session.getAttribute("userid");
 		logger.info("결재 디테일");
+		
+		myBoardInfoVo.setMemId(userid);			
+		myBoardInfoVo = myBoardListService.selectMyBoardDept(userid);
+		logger.info("myBoardInfoVo={}",myBoardInfoVo);
+		
+		memberVo = memberService.selectpositioninfo(myBoardInfoVo.getDeptNo());
+		logger.info("결재 디테일 memberVo={}",memberVo);
+		
+		Map<String, Object> list = signService.detailSign(docNo);
+		logger.info("결재 리스트 list={}",list);
+		
+		logger.info("결재 디테일 list={}",list.size());
+		
+		
+		model.addAttribute("myBoardInfoVo",myBoardInfoVo);
+		model.addAttribute("list",list);
+		model.addAttribute("memberVo",memberVo);
 		return "myBoard/Approval_detail";
+	}
+	
+	@PostMapping("/statusUpdate")
+	public String statusUpdate(@RequestParam (defaultValue = "0")int docNo) {
+		
+		
+		
+		
+		return "";
+
 	}
 
 	@RequestMapping("/Approval_delete")

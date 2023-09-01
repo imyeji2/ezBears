@@ -68,6 +68,11 @@ public class MyBoardListServiceImpl implements MyBoardListService {
 	public MyBoardInfoVO selectBoardInfo(MyBoardInfoVO myBoardInfoVo) {
 		return myBoardListDao.selectBoardInfo(myBoardInfoVo);
 	}
+	// 결재디테일 부서별 멤버조회
+	@Override
+	public MyBoardInfoVO selectMyBoardDept(String userid) {
+		return myBoardListDao.selectMyBoardDept(userid);
+	}
 
 }
 

@@ -34,6 +34,7 @@ public interface MyBoardListService {
 	
 	//희진
 	MyBoardInfoVO selectBoardInfo(MyBoardInfoVO myBoardInfoVo);
-
+	
+	MyBoardInfoVO selectMyBoardDept(String userid);
 }
 
