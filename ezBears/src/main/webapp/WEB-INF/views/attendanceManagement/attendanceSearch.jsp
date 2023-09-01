@@ -98,7 +98,7 @@
 			        			<td>
 				        			<select name="searchDeptNo" style="width: 99%">
 										<!-- 반복문 -->
-										<option value="" selected="selected">부서</option>
+										<option value="" selected="selected">전체 부서</option>
 										<c:forEach var="deptVo" items="${deptList}">
 											<option value ="${deptVo.deptNo}"
 												<c:if test="${param.searchDeptNo == deptVo.deptNo }">selected</c:if>
