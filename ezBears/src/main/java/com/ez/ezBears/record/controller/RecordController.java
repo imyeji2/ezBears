@@ -95,14 +95,6 @@ public class RecordController {
 	}
 	
 	
-	
-	@RequestMapping("/lineup")
-	public String lineup() {
-		//1,4
-		logger.info("라인업");
-		return "/record/lineup";
-	}
-	
 	@RequestMapping("/playerDetail2")
 	public String playerDetail2() {
 		//1,4
@@ -132,7 +124,7 @@ public class RecordController {
 		return "/record/inningDelete";
 	}
 	
-	@GetMapping("/summary")
+	@RequestMapping("/summary")
 	public String inningDetail_get(Model model, int recodeNo) {
 		logger.info("이닝 파라미터, recodeDetailNo={}", recodeNo);
 		
@@ -141,6 +133,18 @@ public class RecordController {
 		logger.info("이닝 처리 결과, list.size={}", list.size());
 		return "/record/summary";
 	}
+	
+	@RequestMapping("/lineup")
+	public String lineup_get(Model model, int recodeNo) {
+		logger.info("라인업 파라미터, recodeNo={}", recodeNo);
+		
+		List<Map<String, Object>> list = hitterService.selectHitterRecordView(recodeNo);
+		model.addAttribute("list", list);
+		logger.info("라인업 처리 결과, list.size={}", list.size());
+		
+		return "/record/lineup";
+	}
+	
 	
 //	@GetMapping("/summary")
 //	public String summary_get(@RequestParam(defaultValue = "0") int recodeDetailNo, SearchVO searchVo, Model model) {

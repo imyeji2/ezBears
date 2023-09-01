@@ -42,6 +42,13 @@ public class MyBoardListServiceImpl implements MyBoardListService {
 	public int seleectMyBoardNo(MyBoardListVO myBoardListVo) {
 		return myBoardListDao.seleectMyBoardNo(myBoardListVo);
 	}
+	
+	
+	////마이보드 멤버 검색
+	@Override
+	public List<Map<String, Object>> selectMyBoardMember(int mBoardNo) {
+		return myBoardListDao.selectMyBoardMember(mBoardNo);
+	}
 
 	
 	

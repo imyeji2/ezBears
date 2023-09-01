@@ -15,4 +15,5 @@ public class BoardVO {
 	private int sortNo; /* 댓글순서 */
 	private int step; /* 댓글여부 */
 	private int views; /* 자유조회수 */
+	private int randomnum;
 }

@@ -33,4 +33,14 @@ public class BoardServiceImpl implements BoardService{
 		return boardDao.insertBoard(boardVo);
 	}
 
+	@Override
+	public int randomNum(int randomNo) {
+		return boardDao.randomNum(randomNo);
+	}
+
+	@Override
+	public List<Map<String, Object>> boardAll() {
+		return boardDao.boardAll();
+	}
+
 }

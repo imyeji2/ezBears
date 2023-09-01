@@ -85,13 +85,24 @@
 		and status like '%조퇴%'
 	</select>
 	
-	<select id="selectAllView" resultType="map">
-		select * from attendanceView
+	<select id="selectAllView" parameterType="map" resultType="map">
+		select *
+		from
+		(
+			select rownum as RNUM, A.* from
+			(
+				select * from attendanceView
+			)A
+		)
+		<![CDATA[
+		where RNUM> #{searchVo.firstRecordIndex} 
+		and RNUM<=#{searchVo.firstRecordIndex} + #{searchVo.recordCountPerPage}]]>
 	</select>
  
  	<select id="countAllView" resultType="int">
  		select count(*) from attendanceView
  	</select>
+ 	
  
  
 </mapper>
