@@ -50,4 +50,6 @@ public interface MemberService {
     
     
     Map<String, Object> selectMemberView(String memId);
+    
+    MemberVO selectpositioninfo(int deptNo);
 }
