@@ -43,4 +43,12 @@
 		<include refid="searchWhere"></include>
 	</select>
 	
+	
+	<select id="detailSign" resultType="map" parameterType="int">
+		select * from approvalDetailView
+		where doc_no = #{docNo}
+	</select>
+	
+	
+	
 </mapper>

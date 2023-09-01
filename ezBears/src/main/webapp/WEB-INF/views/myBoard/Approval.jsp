@@ -99,7 +99,7 @@ document.addEventListener("DOMContentLoaded", function() {
 										</tr>
 									</c:if>
 									<c:if test="${!empty list }">
-										<c:forEach var="list" items="${list }">
+										<c:forEach var="list" items="${list}">
 											<tr>
 												<td>${list.DOC_NO }</td>
 												<td><fmt:formatDate value="${list['REGDATE'] }"
@@ -194,7 +194,7 @@ document.addEventListener("DOMContentLoaded", function() {
 					<input type="text" name="mBoardNo" value="${mBoardNo}"> <input
 						type="text" name="userid" value="${userid}"> <input
 						type="text" name="memNo" value="${memNo}"> <input
-						type="text" name="myBoardNo" value="${myBoardNo}">
+						type="text" name="deptNo" value="${myBoardInfoVo.deptNo}">
 				</div>
 			</div>
 		</div>

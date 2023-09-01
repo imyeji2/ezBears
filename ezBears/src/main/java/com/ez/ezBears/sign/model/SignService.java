@@ -15,4 +15,6 @@ public interface SignService {
 	
 	//total레코드
 	int selectAppCount(SearchVO searchVo);
+	
+	Map<String, Object> detailSign(int docNo);
 }
