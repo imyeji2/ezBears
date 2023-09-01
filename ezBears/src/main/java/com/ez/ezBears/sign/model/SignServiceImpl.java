@@ -33,6 +33,23 @@ public class SignServiceImpl implements SignService{
 	public List<Map<String, Object>> selectApprovalList(SearchVO searchVo) {
 		return signDao.selectApprovalList(searchVo);
 	}
+
+
+	@Override
+	public Map<String, Object> detailSign(int docNo) {
+		return signDao.detailSign(docNo);
+	}
+
+
+
+
+
+
+
+	
+
+
+
 	
 	
 }

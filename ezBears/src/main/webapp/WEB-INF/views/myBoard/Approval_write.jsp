@@ -1,9 +1,29 @@
+<%@page import="java.util.Date"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@include file="../inc/top.jsp"%>
-
-
+<link rel="stylesheet" href="<c:url value='/css/jquery-ui.min.css'/>"type="text/css">
+<script type="text/javascript" src="<c:url value='/js/jquery-ui.min.js'/>"></script>
+<script>
+	var jb = jQuery.noConflict();
+	jb(function() {
+		jb("#startVacation").datepicker({
+			dateFormat: 'yy-mm-dd',
+			changeYear: true,
+			dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+			monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']
+		});
+		
+		jb("#endVacation").datepicker({
+			dateFormat: 'yy-mm-dd',
+			changeYear: true,
+			dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+			monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']
+		});
+	});
+</script>
 
 <div class="container-fluid pt-4 px-4" id ="Approval_wr">
 	<div class="col-sm-12 col-xl-6">
@@ -15,43 +35,52 @@
               </ol>
             </nav>
 	<div class="appbox">
-				<div class="form-floating mb-3">
-			
+		<div class="form-floating mb-3">
+<%
+	Date date = new Date();
+	SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd");
+	String strDate = simpleDate.format(date);
+
+%>
 		<form id="appform" action="" method="post" enctype="multipart/form-data" >
-				<input type ="text" name ="userid" id="userid" value="${userid }">
-				<input type="text" name="myBoardNo" id="myBoardNo"value="${myBoardInfoVo.myBoardNo}"> 
-				<input type="text" name="memNo" id="memNo" value="${myBoardInfoVo.memNo}"> 
-				<input type="text" name="MBoardNo" id="MBoardNo" value="${myBoardInfoVo.MBoardNo}"> 
-				<input type="text" name="deptNo" id="deptNo" value="${myBoardInfoVo.deptNo}">
+				<input type ="hidden" name ="userid" id="userid" value="${userid }">
+				<input type="hidden" name="myBoardNo" id="myBoardNo"value="${myBoardInfoVo.myBoardNo}"> 
+				<input type="hidden" name="memNo" id="memNo" value="${myBoardInfoVo.memNo}"> 
+				<input type="hidden" name="MBoardNo" id="MBoardNo" value="${myBoardInfoVo.MBoardNo}"> 
+				<input type="hidden" name="deptNo" id="deptNo" value="${myBoardInfoVo.deptNo}">
 				 
 			<table class="table" id="table" border="1">
 				<tr class="tr-s">
-					<td class="td-1" rowspan="2" >문서번호</td>
-					<td class="td-2" rowspan="2" colspan="3"> <input type ="text"  name="docNo"></td> <!-- 문서 번호 불러오기 -->
-					<td class="td-3">담당</td><!-- 결재 담당자 -->
-					<td class="td-4">담당자 목록 추가버튼</td><!-- 결재 담당자 -->
+					<td class="td-1" rowspan="2" colspan="2" >문서번호
+					 <input type ="hidden"  name="docNo" class="docNo" value="0"><!-- 문서 번호 불러오기 -->
+					 </td>
+					
+					<td class="td-2" >담당</td><!-- 결재 담당자 -->
+					<td class="td-3" >${memberVo.memName }</td><!-- 결재 담당자 -->
 
 				</tr>
-
+				
 				<tr class="tr-m">
-					<td class="td-1">기안일</td>
-					<td class="td-2">날짜 출력하기</td>
+					<td class="td-2">기안일</td>
+					<td class="td-3" colspan="1"><%=strDate %></td>
 				</tr>
+
 				<tr class="tr-s">
-					<td class="td-1" rowspan="2" colspan="3">기안자</td>
-					<td class="td-5" rowspan="2">로그인한 아이디 예 : ${userid }</td>
+					<td class="td-1" rowspan="2" colspan="2">기안자</td>
+					<td class="td-2" rowspan="2" colspan="3"> ${myBoardInfoVo.memName }</td>
 				</tr>
+				
 				<tr class="tr-s">		
 				</tr>
 			
 				<tr id="tr-title" class="tr-m">
-					<td class="td-1">제목</td>
-					<td colspan="7"><input type="text" class="form-control" id="floatingInput" name="docTitle"
-						placeholder="제목">
+					<td class="td-1 ">제목</td>
+					<td colspan="3">
+					<input type="text" class="form-control" id="floatingInput" name="docTitle" placeholder="제목">
 						 <label for="floatingInput">  </label></td>
 				</tr>
 
-	                <tr class="tr-m">
+	            <!--     <tr class="tr-m">
 	                    <td class="td-1">휴가종류</td>
 	                    <td colspan="3">
 	                        <select class="form-select" id="floatingSelect"
@@ -63,21 +92,21 @@
 	                            <option value="공가">공가</option>
 	                            <option value="병가">병가</option>
 	                        </select>
-	                    </td>
+	                    </td> -->
 	            	<td colspan="4">
 	            	<input class="form-control appfile" type="file" id="app_file">
 				    </td>
 				    </tr>
-	                <tr class="tr-m">
+	              <!--   <tr class="tr-m">
 	                    <td class="td-1" colspan="1">휴가기간</td>
-	                    <td colspan="2" id="td-leave-date">휴가시작일</td>
-	                    <td  id="td-leave-date"></td>
-	                    <td colspan="2" id="td-leave-date">휴가종료일</td>
-	                    <td  id="td-leave-date">일</td>
-	                </tr>
+	                    <td colspan="2" >휴가시작일</td>
+	                    <td  id="td-leave-date"><input type="text"id="startVacation" class="startVacation"></td>
+	                    <td colspan="2" >휴가종료일</td>
+	                    <td  id="td-leave-date"><input type="text"id="endVacation" class ="endVacation"></td>
+	                </tr> -->
 
 	                <tr>
-	                    <td class="td-1">휴가사유</td>
+	                    <td class="td-1">결재 내용</td>
 	                    </tr>
 	                    <tr>
 	                    <td colspan="7" id="td-leave-reason">

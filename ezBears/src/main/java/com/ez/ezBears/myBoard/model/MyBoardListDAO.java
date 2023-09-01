@@ -37,4 +37,7 @@ public interface MyBoardListDAO {
 	//희진
 	/* List<Map<String, Object>> selectBoardInfo(String userid); */
 	MyBoardInfoVO selectBoardInfo(MyBoardInfoVO myBoardInfoVo);
+	
+	
+	MyBoardInfoVO selectMyBoardDept(String userid);
 }

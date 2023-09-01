@@ -53,7 +53,7 @@ ON A.MEM_NO = B.MEM_NO;
 [희진]---------------------------------------------------------------------
 create or replace view myBoardInfo
 as
-select b.*,m.mem_id,m.dept_No
+select b.*,m.mem_id,m.dept_No,m.mem_name
 from member m join my_board b
 on m.mem_no = b.mem_no;
 
@@ -68,6 +68,13 @@ on info.my_board_no = s.my_board_no;
 create or replace view signListView
 as
 select s.* from
+member m join sign s
+on m.mem_no = s.mem_no;
+
+
+create or replace view approvalDetailView
+as
+select s.*,m.mem_name from
 member m join sign s
 on m.mem_no = s.mem_no;
 

@@ -64,6 +64,11 @@
 		select * from myBoardInfo
 		where m_board_no = #{mBoardNo} and mem_id = #{memId}
 	</select>
+	
+	<select id="selectMyBoardDept" parameterType="String" resultSets="myBoardInfoVo">
+		select * from myboardInfo
+		where mem_id = #{memId}
+	</select>
 </mapper>
 
 
