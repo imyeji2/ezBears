@@ -106,7 +106,7 @@ $(function(){
 		var todoDetailNo = $delContent.find('#todoDetailNo').val();
 		
 		if(todoDetailNo>0){
-			var delDate="<input type='hidden' name='items["+delIndex+"]' value='"+todoDetailNo+"'>";
+			var delDate="<input type='hidden' name='items["+delIndex+"].todoDetailNo' value='"+todoDetailNo+"'>";
 			delIndex++;
 		}
 		
@@ -226,15 +226,11 @@ $(function(){
 			if($(this).val().length<1){
 				alert('항목을 입력해주세요');
 				$(this).focus();
-				bool = false;
 				return false;
 			}
 		});
 		
-		if(!bool){
-			return false;
-		}
-		
+
 		
 		var delDate = $('form[name=delFrm]').serialize();
 		var delCount = $('form[name="delFrm"]').find('input').length;
@@ -247,24 +243,19 @@ $(function(){
 		        dataType: 'json',
 		        error: function(xhr, status, error){
 		            alert(error);
-		            return;
 		        },
 		        success: function(res){
 		            console.log(res); // 서버 응답 확인  
-		            
-		            if(res=-1){
+		            if(res<0){
 		            	alert('수정중 오류가 발생했습니다.');
-		            	bool = false;
-		            	return;
+		            }else{
+		            	$('form[name=workBoardWriteFrom]').submit();
 		            }
 		        
 		        }
 		    });
 		}
 			
-
-		$('form[name=workBoardWriteFrom]').submit();
-		
 	});
 	
 });//function

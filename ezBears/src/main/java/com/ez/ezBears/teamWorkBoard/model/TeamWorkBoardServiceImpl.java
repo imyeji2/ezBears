@@ -142,11 +142,15 @@ public class TeamWorkBoardServiceImpl implements TeamWorkBoardService{
 			List<ToDoListDetailVO> list = listVo.getItems();
 			for(int i=0;i<list.size();i++) {
 				ToDoListDetailVO vo = list.get(i);
-				if(vo.getTodolistNo()==0) {
+				if(vo.getTodoDetailNo()==0) {
 					vo.setTodolistNo(todolistNo);
+					System.out.println("vo="+vo);
+					System.out.println("집중!"+vo.getTodoDetailNo());
 					cnt=todoListDetailDao.insertTodoListDetail(vo);
+					System.out.println("추가 등록 결과 cnt={}"+cnt);
 				}else{
 					cnt = todoListDetailDao.updateTodoDetail(vo);
+					System.out.println("업데이트 결과 cnt={}"+cnt);
 				}
 			}
 				

@@ -279,8 +279,6 @@
 				$('#staticBackdrop').data('todoDetailNo', todoDetailNo);
 				$('#staticBackdrop').modal('show');
 				
-				
-				
 			}else if(confirm('담당자를 삭제하시겠습니까?')){
 				var todoDetailNo = $(this).closest('.todoList').find('input[name="todoDetailNo"]').val();
 				var memNo = $(this).find('input[name=memNo]').val();

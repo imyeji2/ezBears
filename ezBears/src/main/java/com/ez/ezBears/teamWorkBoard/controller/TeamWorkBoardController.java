@@ -626,6 +626,7 @@ public class TeamWorkBoardController {
 		logger.info("업무 목록 삭제 파라미터 listVo={}",listVo);
 		//2.
 		int cnt = toDoListDetailService.delTodoDetailService(listVo);
+		logger.info("삭제 결과 cnt={}",cnt);
 		//4
 		return cnt;
 	}
