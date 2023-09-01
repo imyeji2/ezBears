@@ -27,7 +27,6 @@ import com.ez.ezBears.common.FileUploadUtil2;
 import com.ez.ezBears.common.PaginationInfo;
 import com.ez.ezBears.common.SearchVO;
 import com.ez.ezBears.member.model.MemberVO;
-import com.ez.ezBears.notice.model.NoticeVO;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -109,6 +108,9 @@ public class BoardController {
 	    
 	    //3
 
+	    // 랜덤 값을 저장하는 로직
+		/* saveRandomNumber(randomNumber); */
+    
 	    Map<String, Object> resultMap = new HashMap<>();
 	    resultMap.put("list", list);
 	    resultMap.put("pagingInfo", pagingInfo);

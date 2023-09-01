@@ -1,9 +1,29 @@
+<%@page import="java.util.Date"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
 <%@include file="../inc/top.jsp"%>
-
+<link rel="stylesheet" href="<c:url value='/css/jquery-ui.min.css'/>"type="text/css">
+<script type="text/javascript" src="<c:url value='/js/jquery-ui.min.js'/>"></script>
+<script>
+	var jb = jQuery.noConflict();
+	jb(function() {
+		jb("#startVacation").datepicker({
+			dateFormat: 'yy-mm-dd',
+			changeYear: true,
+			dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+			monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']
+		});
+		
+		jb("#endVacation").datepicker({
+			dateFormat: 'yy-mm-dd',
+			changeYear: true,
+			dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+			monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']
+		});
+	});
+</script>
 
 <div class="container-fluid pt-4 px-4" id ="Approval_wr">
 	<div class="col-sm-12 col-xl-6">
@@ -14,40 +34,117 @@
                 <li class="breadcrumb-item active" aria-current="page">결재 게시판</li>
               </ol>
             </nav>
-            <!-- 여기서 부터 div로 감싸서 휴가/기안서 디자인 하기 -->
+	<div class="appbox">
+		<div class="form-floating mb-3">
+<%
+	Date date = new Date();
+	SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd");
+	String strDate = simpleDate.format(date);
+
+%>
+		<form id="appform" action="" method="post" enctype="multipart/form-data" >
+				<input type ="hidden" name ="userid" id="userid" value="${userid }">
+				<input type="hidden" name="myBoardNo" id="myBoardNo"value="${myBoardInfoVo.myBoardNo}"> 
+				<input type="hidden" name="memNo" id="memNo" value="${myBoardInfoVo.memNo}"> 
+				<input type="hidden" name="MBoardNo" id="MBoardNo" value="${myBoardInfoVo.MBoardNo}"> 
+				<input type="hidden" name="deptNo" id="deptNo" value="${myBoardInfoVo.deptNo}">
+				 
+			<table class="table" id="table" border="1">
+				<tr class="tr-s">
+					<td class="td-1" rowspan="2" colspan="2" >문서번호
+					 <input type ="hidden"  name="docNo" class="docNo" value="0"><!-- 문서 번호 불러오기 -->
+					 </td>
+					
+					<td class="td-2" >담당</td><!-- 결재 담당자 -->
+					<td class="td-3" >${memberVo.memName }</td><!-- 결재 담당자 -->
+
+				</tr>
+				
+				<tr class="tr-m">
+					<td class="td-2">기안일</td>
+					<td class="td-3" colspan="1"><%=strDate %></td>
+				</tr>
+
+				<tr class="tr-s">
+					<td class="td-1" rowspan="2" colspan="2">기안자</td>
+					<td class="td-2" rowspan="2" colspan="3"> ${myBoardInfoVo.memName }</td>
+				</tr>
+				
+				<tr class="tr-s">		
+				</tr>
 			
-			
-			<h6 class="mb-4">결재 입력</h6>
-			<div class="appbox">
-				<div class="form-floating mb-3">
-					<input type="email" class="form-control" id="floatingInput"
-						placeholder="name@example.com">
-						 <label for="floatingInput"> 제목 </label>
-						
-				</div>
-				<div class="form-floating mb-3">
-					<select class="form-select" id="floatingSelect"
+				<tr id="tr-title" class="tr-m">
+					<td class="td-1 ">제목</td>
+					<td colspan="3">
+					<input type="text" class="form-control" id="floatingInput" name="docTitle" placeholder="제목">
+						 <label for="floatingInput">  </label></td>
+				</tr>
+
+	            <!--     <tr class="tr-m">
+	                    <td class="td-1">휴가종류</td>
+	                    <td colspan="3">
+	                        <select class="form-select" id="floatingSelect"
 						aria-label="Floating label select example">
-						<option selected></option>
-						<option value="1">휴가</option>
-						<option value="2">지출제의서</option>
-						<option value="3">기안서</option>
-					</select> <label for="floatingSelect">결재 분류</label>
-				</div>
-				<div class="form-floating">
-					<textarea class="form-control textarea" placeholder="Leave a comment here"
-						id="floatingTextarea" style="height: 150px;" ></textarea>
-					<label for="floatingTextarea">내용</label>
-				</div>
-				<br>
-				<div class="app_file">
-					<input class="form-control appfile" type="file" id="app_file">
-		       	</div>
-			</div>
-		<div>
-		<input type="button" value="입력" class="btn btn-sm btn-primary btn"/>
+	                            <option value="">선택</option>
+	                            <option value="연차">연차</option>
+	                            <option value="반차">반차</option>
+	                            <option value="특별휴가">특별휴가</option>
+	                            <option value="공가">공가</option>
+	                            <option value="병가">병가</option>
+	                        </select>
+	                    </td> -->
+	            	<td colspan="4">
+	            	<input class="form-control appfile" type="file" id="app_file">
+				    </td>
+				    </tr>
+	              <!--   <tr class="tr-m">
+	                    <td class="td-1" colspan="1">휴가기간</td>
+	                    <td colspan="2" >휴가시작일</td>
+	                    <td  id="td-leave-date"><input type="text"id="startVacation" class="startVacation"></td>
+	                    <td colspan="2" >휴가종료일</td>
+	                    <td  id="td-leave-date"><input type="text"id="endVacation" class ="endVacation"></td>
+	                </tr> -->
+
+	                <tr>
+	                    <td class="td-1">결재 내용</td>
+	                    </tr>
+	                    <tr>
+	                    <td colspan="7" id="td-leave-reason">
+	                    	<textarea name="docContent" style="white-space: pre;"></textarea>
+                    	</td>
+	                </tr>
+			</table>
+			<div>
+				<input type="button" class="btn btn-sm btn-primary btn" value="결재"  onclick="docSave()"/>
+		    </div>
+			
+		
+			</form>
 		</div>
+		</div><!--appbox  -->
 		</div>
 	</div>
 </div>
+	<script>
+		// 결재 요청 확인창
+		function docSave() {
+			var result = confirm("결재 요청하시겠습니까?");
+			if(result == true) {
+				$("#appform").submit();
+			}
+		}
+	/* 	// CK에디터
+		if("${form.formName}" !== "휴가신청서"){
+			CKEDITOR.replace( 'docContent', {
+				height: 500,
+				
+			} );
+		} */
+		
+		var ckEditor = CKEDITOR.replace('docContent', {
+			filebrowserUploadUrl : "<c:url value='/ck/fileupload'/>", /*ck에디터파일 업로드 컨트롤러  */
+			height : '500px',
+			removePlugins: "exportpdf"
+		});
+	</script>
 <%@include file="../inc/bottom.jsp"%>

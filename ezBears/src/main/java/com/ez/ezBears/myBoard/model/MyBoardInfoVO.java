@@ -8,5 +8,7 @@ public class MyBoardInfoVO {
 	private int memNo;
 	private int mBoardNo;
 	private String memId;
+	private int deptNo;
+	private String memName;
 
 }
