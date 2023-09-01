@@ -127,5 +127,41 @@ public class TeamWorkBoardServiceImpl implements TeamWorkBoardService{
 		cnt = teamWorkBoardDao.insertReReply(teamWorkBoardVo);
 		return cnt;
 	}
+
+
+	//업무 게시판 수정
+	@Transactional
+	@Override
+	public int updateBoard(TeamWorkBoardVO teamVo, ToDoListVO todoList, ToDoListDetailListVO listVo) {
+		int teamBoardNo = teamVo.getTeamBoardNo();
+		int todolistNo=todoList.getTodolistNo();
+		int cnt=0;
+		
+		try {
+			
+			List<ToDoListDetailVO> list = listVo.getItems();
+			for(int i=0;i<list.size();i++) {
+				ToDoListDetailVO vo = list.get(i);
+				if(vo.getTodolistNo()==0) {
+					vo.setTodolistNo(todolistNo);
+					cnt=todoListDetailDao.insertTodoListDetail(vo);
+				}else{
+					cnt = todoListDetailDao.updateTodoDetail(vo);
+				}
+			}
+				
+			cnt = todoListDao.updateTodoList(todoList);
+			cnt = teamWorkBoardDao.updateTeamWorkBoard(teamVo);
+			
+		}catch(RuntimeException e) {
+			//선언적 트랜젝션(@Transactional)에서는
+			//런타임 예외가 발생하면 롤백한다.
+			e.printStackTrace();
+			cnt=-1;//예외처리를 했다는 의미
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+		}
+	
+		return cnt;
+	}
 	
 }

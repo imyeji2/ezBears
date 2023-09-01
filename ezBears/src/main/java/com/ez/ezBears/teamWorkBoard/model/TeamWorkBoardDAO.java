@@ -49,5 +49,10 @@ public interface TeamWorkBoardDAO {
 	//팀 업무 게시판 대댓글 등록
 	int insertReReply(TeamWorkBoardVO teamWorkBoardVo);
 	
+	//팀 업무 게시판 수정
+	int updateTeamWorkBoard(TeamWorkBoardVO teamWorkBoardVo);
+	
+	
+	
 	
 }

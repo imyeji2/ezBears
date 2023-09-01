@@ -47,4 +47,8 @@ public interface TeamWorkBoardService {
 	//팀 업무 게시판 대댓글 등록
 	int addReReply(TeamWorkBoardVO teamWorkBoardVo);
 	
+	//팀 업무 게시판 수정
+	int updateBoard(TeamWorkBoardVO teamVo, ToDoListVO todoList, 
+			ToDoListDetailListVO listVo);
+	
 }
