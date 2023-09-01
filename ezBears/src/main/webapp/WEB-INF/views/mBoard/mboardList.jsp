@@ -60,7 +60,11 @@
 			                					${MBoardVo.MBoardName}
 			                				</a>
 			                			</td>
-			                			<td >${MBoardVo.memName}</td>
+			                			<td >
+			                				<a href ="<c:url value = '/Member/detail?memNo=${MBoardVo.memNo}'/>" id="mboardNameA">
+			                					${MBoardVo.memName}
+			                				</a>
+			                			</td>
 			                			<td >${MBoardVo.deptName}</td>
 			                			<td >${MBoardVo.deptTel}</td>
 			                		</tr>
