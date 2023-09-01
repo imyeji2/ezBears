@@ -45,5 +45,11 @@ public class HitterServiceImpl implements HitterService {
 		return hitterDao.selectHitterStatView(playerNo);
 	}
 
+	@Override
+	public List<Map<String, Object>> selectHitterRecordView(int recodeNo) {
+		// TODO Auto-generated method stub
+		return hitterDao.selectHitterRecordView(recodeNo);
+	}
+
 
 }

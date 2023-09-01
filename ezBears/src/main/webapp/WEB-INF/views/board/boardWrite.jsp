@@ -55,7 +55,7 @@ $(function () {
 
 	    // 랜덤 숫자 생성 후 "randomNo" 입력 필드에 할당
 	    let uniqueRandomNumber = generateUniqueRandomNumber(1, 5, usedRandomNumbers);
-	    $('input[name=randomNo]').val(uniqueRandomNumber);  */
+	    $('input[name=randomNo]').val(uniqueRandomNumber);   */
 	
 });//function
 </script>
@@ -63,7 +63,7 @@ $(function () {
 	<c:set var="pageTitle" value="수정" />
 	<c:set var="btLabel" value="수정" />
 	<c:set var="url" value="/board/boardEdit" />
-	<c:set var="boardNo" value="${param.noticeNo }" />	
+	<c:set var="boardNo" value="${param.boardNo }" />	
 </c:if>
 <c:if test="${empty param.boardNo }">
 	<c:set var="pageTitle" value="등록" />
@@ -72,17 +72,17 @@ $(function () {
 	<c:set var="boardNo" value="0" />	
 </c:if>	
 	
-<form action="<c:url value='/board/boardWrite'/>" method="post" name="boardFrom">
+<%-- <form action="<c:url value='/board/boardWrite'/>" method="post" name="boardFrom">
 	<input type="hidden" name="random"> 
-</form>	
+</form>	 --%>
 <div class="container-fluid pt-4 px-4" id="board_style">
 	<div class="bg-secondary text-center rounded p-4">
     	<div class="bg-secondary rounded h-100 p-4">
           	<nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
 			  <ol class="breadcrumb">
 			    <li class="breadcrumb-item"><a href="#">공용</a></li>
-			    <li class="breadcrumb-item active" aria-current="page"><a href="#">공지사항</a></li>
-			    <li class="breadcrumb-item active" aria-current="page">공지사항 ${pageTitle }</li>
+			    <li class="breadcrumb-item active" aria-current="page"><a href="<c:url value='/board/boardList'/>">자유게시판</a></li>
+			    <li class="breadcrumb-item active" aria-current="page">자유게시판 ${pageTitle }</li>
 			  </ol>
 			</nav>   			
 			<div id="teamNoticeWrite">
@@ -91,7 +91,7 @@ $(function () {
 		        	<div class="writeWrap">
 		        	<%-- <c:if test="${!empty param.noticeNo}"> --%>
 		        		<input type="text" name="boardNo" value="${boardNo}">
-		        		<input type="text" name="randomNo" value="${randNo}">
+		        		<%-- <input type="text" name="randomNo" value="${randNo}"> --%>
 		        	<%-- </c:if> --%>
 		        		<input type="hidden" name="memNo" value="${sessionScope.memNo}">
 		        		<%-- <input type="text" name="memNo" value="${map['NOTICE_NO']}"> --%>
@@ -127,6 +127,9 @@ $(function () {
 				        		</c:forEach>
 								
 			       			</div>
+			       			<!-- <div class="mb-3">
+                                    <input type="password" class="form-control" placeholder="Password" name="pwd" id="pwd">
+                            </div> -->
 			       			<div class="write_option_btn">
 							    <button type="submit" class="btn btn-sm btn-primary">${btLabel }</button>
 			       				<!-- <button class="btn btn-sm btn-primary">등록</button>&nbsp; -->

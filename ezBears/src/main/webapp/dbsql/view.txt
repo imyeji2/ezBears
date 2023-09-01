@@ -109,6 +109,12 @@ on n.mem_no = m.mem_no;
 
 select * from noticeView;
 
+create or replace view board1
+as
+select b.*,m.mem_name,m.mem_id
+from board b left join member m
+on b.mem_no = m.mem_no;
+
 
 create or replace view board1
 as

@@ -7,7 +7,6 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.ez.ezBears.common.ConstUtil;
 import com.ez.ezBears.common.FileUploadUtil;
@@ -303,11 +301,17 @@ public class MemberController {
 		List<MemberVO> list = memberService.selectAllMem(searchVo);
 		logger.info("멤버 조회 결과, list.size={}", list.size());
 	
-		
+		//카테고리 가지고오기
+		List<DeptVO> deptList = deptService.selectDeptList();
+		List<PositionVO> positionList = positionService.selectPositionList();
+	
 		int totalRecord = memberService.totalList(searchVo);
 		pagingInfo.setTotalRecord(totalRecord);
 		
+		
 		//3
+		model.addAttribute("deptList", deptList);
+		model.addAttribute("positionList", positionList);
 		model.addAttribute("list", list);
 		model.addAttribute("pagingInfo", pagingInfo);
 		//4
@@ -324,6 +328,7 @@ public class MemberController {
     	logger.info("회원들이 보는 디테일 페이지 memNo={}",memNo);
     	
     	//2
+
     	MemberVO memberVo = memberService.memberDetail(memNo);
     	logger.info("멤버 조회 결과, memberVo={}", memberVo);
     	    	

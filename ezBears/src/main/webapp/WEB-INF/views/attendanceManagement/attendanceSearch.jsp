@@ -12,7 +12,6 @@
 </script>
 
 <!-- 페이징 처리 관련 form -->
-<!-- /staff/staffList?currentPage=2&searchKeyword=gil&searchCondition=name -->
 <form action="<c:url value='/attendanceManagement/attendanceSearch'/>" 
 	name="frmPage" method="post">
 	<input type="text" name="currentPage">

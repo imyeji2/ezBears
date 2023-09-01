@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.ez.ezBears.alarm.model.Alarm;
+import com.ez.ezBears.alarm.model.AlarmVO;
 import com.ez.ezBears.alarm.model.AlarmService;
 import com.google.gson.Gson;
 
@@ -24,7 +24,7 @@ public class AlarmController{
 	@ResponseBody
 	@RequestMapping(value = "/alarm/listView.sw", method = RequestMethod.GET, produces="application/json;charset=utf-8")
 	public String alarmListView(@RequestParam("memNum") String memNum) {
-		List<Alarm> aList = alService.printAllAlarm(memNum);
+		List<AlarmVO> aList = alService.printAllAlarm(memNum);
 		if(!aList.isEmpty()) {
 			return new Gson().toJson(aList);
 		}

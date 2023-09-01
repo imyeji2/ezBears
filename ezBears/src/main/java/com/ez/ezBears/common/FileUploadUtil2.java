@@ -90,12 +90,13 @@ public class FileUploadUtil2 {
 			}else if(pathFlag == ConstUtil.UPLOAD_TEAMIMAGE_FLAG) {	//선수 이미지 업로드
 				path=ConstUtil.TEAMIMAGE_FILE_UPLOAD_PATH;
 			}else if(pathFlag == ConstUtil.UPLOAD_NOTICE_FLAG) { //공지사항
-				//path=ConstUtil.NOTICE_FILE_UPLOAD_PATH;
 				path=ConstUtil.NOTICE_FILE_PATH;
 			}else if(pathFlag == ConstUtil.UPLOAD_WEBHARD_FLAG) {	//웹하드 업로드
 				path=ConstUtil.WEB_HARD_FILE_PATH;
 			}else if(pathFlag == ConstUtil.UPLOAD_APPROVAL_FLAG) {	//결재 업로드
 				path=ConstUtil.APPROVAL_FILE_UPLOAD_PATH;
+			}else if(pathFlag == ConstUtil.UPLOAD_BOARD_FLAG) { //자유게시판
+				path=ConstUtil.BOARD_FILE_PATH;
 			}
 			
 			

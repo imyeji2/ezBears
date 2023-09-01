@@ -46,6 +46,12 @@
 	<select id="selectHitterView" parameterType="int" resultType="map">
     	select * from hitter_view where player_no = #{playerNo}
     </select>
+
+	<select id="selectHitterRecordView" parameterType="int"
+		resultType="map">
+		select * from hitter_record_view where recode_no = #{recodeNo}
+	</select>
+    
     
     <select id="selectHitterStatView" parameterType="int" resultType="map">
     	select * from hitter_stat_view
