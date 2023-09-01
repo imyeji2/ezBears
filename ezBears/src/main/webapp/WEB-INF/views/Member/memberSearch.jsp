@@ -11,19 +11,27 @@
 <style>
 div#sec {
     display: flex;
-    position: absolute;
-    margin-top: 2%;
+    position: relative;
 }
 
 form.d-none.d-md-flex.ms-4 {
     flex-direction: column;
 }
+
+ul.pop_rel_keywords {
+    position: absolute;
+    background: #000;
+    width: 100%;
+    left: 0;
+    border-radius: 5px;
+    padding-bottom: 15px;
+}
 </style>
-<!-- <input class="form-control bg-dark border-0" id="sec"type="text" placeholder="123"> -->
+
 <div class="form-control bg-dark border-0" id="sec">
-	<ul class="pop_rel_keywords">
-		<li>하나</li>
-		<li>둘</li>
-		<li>셋</li>
-	</ul>
+	<div class="pop_rel_keywords">
+		<a>하나</a>
+		<a>둘</a>
+		<a>셋</a>
+	</div>
 </div>
