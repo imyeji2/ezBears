@@ -56,11 +56,11 @@
 <!-- 페이징 처리 관련 form -->
 <form action="<c:url value='/attendanceManagement/attendanceSearch'/>" 
 	name="frmPage" method="post">
-	<input type="text" name="currentPage">
-	<input type="text" name="date11" value="${param.date11 }">
-	<input type="text" name="date22" value="${param.date22 }">
-	<input type="text" name="searchDeptNo" value="${param.searchDeptNo }">
-	<input type="text" name="searchName" value="${param.searchName }">
+	<input type="hidden" name="currentPage">
+	<input type="hidden" name="date11" value="${param.date11 }">
+	<input type="hidden" name="date22" value="${param.date22 }">
+	<input type="hidden" name="searchDeptNo" value="${param.searchDeptNo }">
+	<input type="hidden" name="searchName" value="${param.searchName }">
 </form>
 
 
@@ -100,12 +100,14 @@
 										<!-- 반복문 -->
 										<option value="" selected="selected">부서</option>
 										<c:forEach var="deptVo" items="${deptList}">
-											<option value ="${deptVo.deptNo}">${deptVo.deptName}</option>
+											<option value ="${deptVo.deptNo}"
+												<c:if test="${param.searchDeptNo == deptVo.deptNo }">selected</c:if>
+											>${deptVo.deptName}</option>
 										</c:forEach>
 										<!-- 반복문 -->
 		                            </select>
 			        			</td>
-			        		</tr>
+			        		</tr><c:if test=""></c:if>
 			        		<tr>
 			        			<th>사원명</th>
 			        			<td><input type="text" name="searchName" style="width: 99%" value="${param.searchName }"></td>
