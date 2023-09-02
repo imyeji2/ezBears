@@ -33,8 +33,8 @@
 		<selectKey keyProperty="pitcherNo" order="BEFORE" resultType="int">
 			select pitcher_seq.nextval from dual
 		</selectKey>
-		insert into pitcher(pitcher_no, recode_no, player_no, staffNo, regdate ,bb, so, ip, ha, rc, er, hr, era)
-		values(#{hitterNo}, #{recodeNo}, #{playerNo}, #{staffNo}, #{regdate} #{BB}, #{SO}, #{IP}, #{HA}, #{RC}, #{ER}, #{HR}, #{ERA})
+		insert into pitcher(pitcher_no, recode_no, player_no, bb, so, ip, ha, rc, er, hr, era, staff_no, regdate)
+		values(#{hitterNo}, #{recodeNo}, #{playerNo}, #{BB}, #{SO}, #{IP}, #{HA}, #{RC}, #{ER}, #{HR}, #{ERA} , #{staffNo}, #{regdate})
 	</insert>
 	
 	<select id="selectByPlayerNo" resultType="map" parameterType="map">

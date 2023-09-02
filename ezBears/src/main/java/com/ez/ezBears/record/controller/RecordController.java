@@ -20,6 +20,9 @@ import com.ez.ezBears.common.PaginationInfo;
 import com.ez.ezBears.common.SearchVO;
 import com.ez.ezBears.record.game.model.GameService;
 import com.ez.ezBears.record.game.model.GameVO;
+import com.ez.ezBears.record.hitter.model.HitterService;
+import com.ez.ezBears.record.pitcher.model.PitcherService;
+import com.ez.ezBears.record.pitcher.model.PitcherVO;
 import com.ez.ezBears.team.model.TeamService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -34,14 +37,9 @@ public class RecordController {
 
 	private final GameService gameService;
 	private final TeamService teamService;
+	private final PitcherService pitcherService;
+	private final HitterService hitterService;
 	
-	
-	@RequestMapping("/playerList")
-	public String playerList() {
-		//기록 검색
-		logger.info("선수 리스트 보여주기");
-		return "/record/playerList";
-	}
 	
 	@RequestMapping("/gameRecord")
 	public String gameRecord() {
@@ -151,12 +149,29 @@ public class RecordController {
 		return "/record/hitterRecordDetail";
 	}
 	
-	@RequestMapping("/pitcherRecordWrite")
-	public String pitcherRecordWrite() {
-		//1,4
-		logger.info("투수기록입력");
+	@GetMapping("/pitcherRecordWrite")
+	public String pitcherRecordWrite_get(Model model, int playerNo) {
+		logger.info("투수정보, 파라미터 searchVo={}", playerNo);
+		
+		List<PitcherVO> pitcher = pitcherService.selectPitcherByPlayerNo(playerNo);
+		
+        logger.info("투수 조회결과, list.size={}", pitcher.size());
+        
+        model.addAttribute("list", pitcher);
+		
 		return "/record/pitcherRecordWrite";
 	}
+	
+	@PostMapping("/pitcherRecordWrite")
+    public String pitcherRecordWrite_post(@ModelAttribute PitcherVO pitcherVo) {
+        logger.info("경기 등록 처리 파라미터, pitcherVo={}", pitcherVo);
+
+       int cnt = pitcherService.insertPitcher(pitcherVo);
+       logger.info("게임 등록 처리 결과, cnt={}", cnt);
+        
+        return "redirect:/record/pitcherRecordWrite/playerNo="+pitcherVo.getPlayerNo();
+	}
+	
 	
 	@RequestMapping("/pitcherRecordEdit")
 	public String pitcherRecordEdit() {
@@ -172,10 +187,15 @@ public class RecordController {
 		return "/record/pitcherRecordDelete";
 	}
 	
-	@RequestMapping("/pitcherRecordDetail")
-	public String pitcherRecordDetail() {
-		//1,4
-		logger.info("투수기록정보");
+	@GetMapping("/pitcherRecordDetail")
+	public String pitcherRecordDetail(@RequestParam(defaultValue = "0") int playerNo, Model model) {
+		logger.info("투수기록정보보기 화면이동, 파라미터 playerNo = {}", playerNo);
+		
+		List<PitcherVO> pitcher = pitcherService.selectPitcherByPlayerNo(playerNo);
+		logger.info("map", pitcher);
+		
+		model.addAllAttributes(pitcher);
+		
 		return "/record/pitcherRecordDetail";
 	}
 	

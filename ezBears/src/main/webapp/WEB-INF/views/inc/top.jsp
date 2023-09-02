@@ -188,7 +188,7 @@
                              <a href="<c:url value='/record/gameList'/>" class="dropdown-item">
                             	<i class="bi bi-trophy-fill me-2"></i>경기기록
                             </a>
-                            <a href="#" class="dropdown-item">
+                            <a href="<c:url value='/record/teamList'/>" class="dropdown-item">
                             	<i class="bi bi-person-square me-2"></i>선수기록
                             </a>
                             <a href="#" class="dropdown-item">

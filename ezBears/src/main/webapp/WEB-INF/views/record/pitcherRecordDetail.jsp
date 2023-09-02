@@ -9,23 +9,17 @@
 <title>이젠 베어스 - 그룹웨어 시스템</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 </head>
-
-
 <div class="container-fluid pt-4 px-4">
 	<div class="row g-4">
 		<div class="col-sm-12 col-xl-12">
 			<div class="bg-secondary rounded h-100 p-4">
 				<div class="col-12">
 					<div class="bg-secondary rounded h-100 p-4">
-
-
 						<div id="contents" class="content01">
 							<!--sub title & location -->
 							<div class="location">
 								<h3 class="tit-page">선수 기록 정보</h3>
 								<br>
-								<!-- // sub title & location -->
-
 								<div class="inquiry">
 									<div class="table-responsive">
 										<table class="table">
@@ -38,19 +32,24 @@
 													<th scope="col">키</th>
 													<th scope="col">몸무게</th>
 													<th scope="col">연봉</th>
-													<th scope="col">상태</th>
 												</tr>
 											</thead>
 											<tbody>
+											<c:if test="${empty list }">
 												<tr>
-													<td>10</td>
-													<td>알칸타라</td>
-													<td>투수</td>
-													<td>1999 9 9</td>
-													<td>199 cm</td>
-													<td>99 kg</td>
-													<td>9999 만원</td>
-													<td>1군</td>
+													<th colspan="6">선수기록 정보가 존재하지 않습니다.</th>
+												</tr>
+											</c:if>	
+												<tr>
+												<c:if test="${!empty list }">
+													<td>$${map['BACK_NO'] }</td>
+													<td>${map['PLAYER_NAME'] }</td>
+													<td>${map['B_POSITION_NAME']}</td>
+													<td>${map['PLAYER_BIRTH'] }</td>
+													<td>${map['HEIGHT'] } cm</td>
+													<td>${map['WEIGHT'] } kg</td>
+													<td>${map['PLAYER_SAL'] } 원</td>
+												</c:if>
 												</tr>
 											</tbody>
 										</table>
