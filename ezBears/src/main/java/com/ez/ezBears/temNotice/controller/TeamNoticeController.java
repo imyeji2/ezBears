@@ -371,7 +371,7 @@ public class TeamNoticeController {
 	public int teamNoticeFileDel(@ModelAttribute TeamNoticeVO teamNoticeVo,
 			@RequestParam String oldFileName,HttpServletRequest request, Model model) {
 		//1
-		logger.info("파일 삭제 처리 ajax 파라미터 teamNoticeVo={},oldFileName={}");
+		logger.info("파일 삭제 처리 ajax 파라미터 teamNoticeVo={},oldFileName={}",teamNoticeVo,oldFileName);
 		
 		//2
 		int cnt = teamNoticeService.deleteFile(teamNoticeVo.getTeamNoticeNo());

@@ -635,6 +635,14 @@
 		margin-left:10px;
 		text-align: right;
 	}
+	
+	.list_box_file2{
+		width:fit-content;
+		border: 1px solid #6C7293;
+		border-radius:5px 5px 5px 5px;
+		padding:5px 5px 5px 5px;
+		margin:10px 0px 10px 0px;
+	}	
 
 }/*teamWorkBoardWrite*/
 

@@ -162,5 +162,10 @@
    		values(#{teamBoardNo},#{memNo},#{comments},#{groupNo},#{step}+1,#{sortno}+1,#{myBoardNo},#{contentno})
    </insert>   
 
+   <update id="deleteFile" parameterType="int">
+   		update team_Work_Board
+   		set FSIZE=0, FILENAME=null, ORIGIN_FILENAME=null
+   		where team_Board_No=#{teamBoardNo}
+   </update>
    
 </mapper>

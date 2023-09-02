@@ -52,7 +52,8 @@ public interface TeamWorkBoardDAO {
 	//팀 업무 게시판 수정
 	int updateTeamWorkBoard(TeamWorkBoardVO teamWorkBoardVo);
 	
-	
+	//파일 삭제
+	int deleteFile(int teamBoardNo);
 	
 	
 }

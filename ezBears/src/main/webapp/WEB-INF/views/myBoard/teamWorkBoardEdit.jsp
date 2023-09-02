@@ -230,7 +230,26 @@ $(function(){
 			}
 		});
 		
-
+		if($('.list_box_file2').length<1){
+			var sendDate = $('form[name=workBoardWriteFrom]').serialize();
+			$.ajax({
+			        url: "<c:url value='/myBoard/teamWorkBoardDeleteFile'/>",
+			        method: "POST",
+			        data: sendDate,
+			        dataType: 'json',
+			        error: function(xhr, status, error) {
+			            alert(error);
+			        },
+			        success: function(res) {
+			            console.log(res); 
+			            alert(res);
+			            if(res<0){
+			            	alert('파일 삭제 실패');
+			            	return false;
+			            }
+			        }
+				});	
+		}		
 		
 		var delDate = $('form[name=delFrm]').serialize();
 		var delCount = $('form[name="delFrm"]').find('input').length;
@@ -257,6 +276,32 @@ $(function(){
 		}
 			
 	});
+	
+	$('#upfile').click(function(){
+	    if ($('#isFile').length > 0) { 
+	        if (!confirm('새로운 파일을 첨부하면 기존 파일은 삭제 됩니다.')) {
+	        	event.preventDefault(); 
+	        }
+	    }
+	});
+	
+	
+	$('#upfile').on('change',function(e){
+		 var selectedFile = e.target.files[0]; 
+		    if (selectedFile) {
+		    	var fileSize = (selectedFile.size / 1024).toFixed(2);
+		    	var text = selectedFile.name+"("+fileSize+" KB)";
+		        $('.list_box_file2').text(text);
+		    }		
+	});
+	
+	$(document).on('click', '#delBtn',function(e) {  
+		event.preventDefault(); 
+    	if(confirm('정말 삭제하시겠습니까?')){
+    		$('#oldFileName').val('');
+    		$('.list_box_file2').remove();
+		}
+	});	
 	
 });//function
 </script>
@@ -285,6 +330,7 @@ $(function(){
 		        	<input type="hidden" name="memNo" value="${myBoardListVo.memNo}">
 		        	<input type="hidden" name="teamBoardNo" value="${map['TEAM_BOARD_NO']}">
 		        	<input type="hidden" name="todolistNo" value="${toDoList.todolistNo}">
+		        	<input type="hidden" name="oldFileName" id="oldFileName" value="${map['FILENAME']}">
 		        	<div class="writeWrap">
 			        	<div class="write_title">
 			        		<input type="text" class="form-control" name="teamBoardTitle"
@@ -350,10 +396,9 @@ $(function(){
 			       			
 			       			
 			       			<div class="write_file">
-								<input class="form-control" type="file" id="formFile" name="upfile">
+								<input class="form-control" type="file" id="upfile" name="upfile">
 									<c:if test="${!empty map['ORIGIN_FILENAME']}">
 						       			<div class="list_box_file2" id="isFile">
-						       				<input type="hidden" name="oldFileName" value="${map['ORIGIN_FILENAME']}">
 							       			${map['ORIGIN_FILENAME']}&nbsp;
 							       			(<fmt:formatNumber value="${map['FSIZE'] /1024.0}" type="number" pattern="#.##"/> KB)
 							       			<button class='btn btn-sm' id='delBtn'><i class='fa fa-times'></i></button>

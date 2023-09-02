@@ -191,5 +191,10 @@ public class TeamWorkBoardServiceImpl implements TeamWorkBoardService{
 		}
 		return cnt;
 	}
+
+	@Override
+	public int deleteFile(int teamBoardNo) {
+		return teamWorkBoardDao.deleteFile(teamBoardNo);
+	}
 	
 }

@@ -55,4 +55,7 @@ public interface TeamWorkBoardService {
 	int updateBoard(TeamWorkBoardVO teamVo, ToDoListVO todoList, 
 			ToDoListDetailListVO listVo);
 	
+	//파일 삭제
+	int deleteFile(int teamBoardNo);
+	
 }
