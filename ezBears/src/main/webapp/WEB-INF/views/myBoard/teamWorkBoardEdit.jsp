@@ -283,7 +283,6 @@ $(function(){
 		        	<input type="hidden" name="mBoardNo" value="${myBoardListVo.MBoardNo}">
 		        	<input type="hidden" name="myBoardNo" value="${myBoardListVo.myBoardNo}">
 		        	<input type="hidden" name="memNo" value="${myBoardListVo.memNo}">
-		        	<input type="hidden" name="memNo" value="${myBoardListVo.memNo}">
 		        	<input type="hidden" name="teamBoardNo" value="${map['TEAM_BOARD_NO']}">
 		        	<input type="hidden" name="todolistNo" value="${toDoList.todolistNo}">
 		        	<div class="writeWrap">

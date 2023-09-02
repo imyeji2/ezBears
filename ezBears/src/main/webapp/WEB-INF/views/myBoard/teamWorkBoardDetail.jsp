@@ -13,7 +13,7 @@
 		$('#del').click(function(){
 			event.preventDefault();
 			 if (confirm("정말 삭제하시겠습니까?")){
-			 	location.href="<c:url value='/myBoard/teamWorkBoardDel?mBoardNo=${map["M_BOARD_NO"]}&teamBoardNo=${map["TEAM_BOARD_NO"]}&oldFileName=${map["FILENAME"]}'/>"
+			 	$('form[name=delForm]').submit();f
 			 }
 		});
 
@@ -671,6 +671,14 @@
 	<input type="hidden" name="currentPage">
 	<input type="hidden" name="contentno" value="${map['TEAM_BOARD_NO']}">
 </form>
+
+<form name="delForm" method="post" action="<c:url value='/myBoard/deleteTeamWorkBoard'/>">
+	<input type="hidden" name="mBoardNo" value="${map['M_BOARD_NO']}">
+	<input type="hidden" name="teamBoardNo" value="${map['TEAM_BOARD_NO']}">
+	<input type="hidden" name="oldFileName" value="${map['FILENAME']}">
+	<input type="hidden" name="todolistNo" value="${toDoList.todolistNo}">
+</form>
+
 <c:set var="checkedCount" value="0"/>
 <c:set var="uncheckedCount" value="0"/>
 <c:set var="totalCount" value="0"/>  

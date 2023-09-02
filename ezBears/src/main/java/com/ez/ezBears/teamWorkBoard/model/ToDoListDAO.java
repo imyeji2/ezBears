@@ -15,4 +15,6 @@ public interface ToDoListDAO {
 	
 	//투두 리스트 삭제
 	int delTodoList(int todolistNo);
+	
+
 }

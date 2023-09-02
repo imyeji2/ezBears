@@ -608,7 +608,7 @@ public class TeamWorkBoardController {
 		
 		if(cnt>0) {
 			msg="업무 게시글 수정이 완료되었습니다.";
-			url="/myBoard/teamWorkBoard?mBoardNo="+mBoardNo+"&teamBoardNo="+teamVo.getTeamBoardNo();
+			url="/myBoard/teamWorkBoardDetail?mBoardNo="+mBoardNo+"&teamBoardNo="+teamVo.getTeamBoardNo();
 		}
 		
 		//3
@@ -619,6 +619,8 @@ public class TeamWorkBoardController {
 		
 	}
 	
+	
+	//두투 디테일 삭제
 	@ResponseBody
 	@RequestMapping("/deleteDotoDetail")
 	public int deleteDotoDetail(@ModelAttribute ToDoListDetailListVO listVo) {
@@ -629,6 +631,56 @@ public class TeamWorkBoardController {
 		logger.info("삭제 결과 cnt={}",cnt);
 		//4
 		return cnt;
+	}
+	
+	
+	
+	//업무 게시판 삭제
+	@RequestMapping("/deleteTeamWorkBoard")
+	public String deleteTeamWorkBoard(@RequestParam (defaultValue = "0") int teamBoardNo, 
+			@RequestParam (defaultValue = "0") int todolistNo, @RequestParam (defaultValue = "0") int mBoardNo,
+			@RequestParam String oldFileName, Model model,HttpServletRequest request) {
+		
+		//1
+		logger.info("업무 게시판 삭제 파라미터 teamBoardNo={},todolistNo={},mBoardNo={},oldFileName={}"
+													,teamBoardNo,teamBoardNo,mBoardNo,oldFileName);
+		
+		//2
+		TeamWorkBoardVO teamWorkBoardVo = teamWorkBoardService.selectTeamWorkBoardByNo(teamBoardNo);
+		Map<String, String> map = new HashMap<>();
+		map.put("teamBoardNo", teamBoardNo+"");
+		map.put("step", teamWorkBoardVo.getStep()+"");
+		map.put("contentno", teamWorkBoardVo.getContentno()+"");
+		map.put("groupNo", teamWorkBoardVo.getGroupNo()+"");
+		
+		logger.info("삭제 map={}",map);
+		
+		teamWorkBoardService.deleteBoard(map, todolistNo);
+		
+		String msg="삭제 실패, 다시 시도해주세요";
+		String url="/myBoard/teamWorkBoardDetail?mBoardNo="+mBoardNo+"&teamBoardNo="+teamBoardNo;
+		
+		
+		msg="삭제가 완료되었습니다.";
+		url="/myBoard/teamWorkBoard?mBoardNo="+mBoardNo;
+
+		if(oldFileName!=null && !oldFileName.isEmpty()) { //
+			String upPath=fileUploadUtil.getUploadPath(request, ConstUtil.UPLOAD_TEAMWORKBOARD_FLAG);
+			File file = new File(upPath,oldFileName);
+
+			if(file.exists()) {
+				boolean bool=file.delete();
+				logger.info("파일 삭제 여부 : {}", bool);
+			}
+			
+		}
+			
+		//3
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+
+		//4
+		return "common/message";
 	}
 	
 }

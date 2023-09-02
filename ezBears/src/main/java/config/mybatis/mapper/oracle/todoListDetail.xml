@@ -51,4 +51,8 @@
 		where TODO_DETAIL_NO=#{todoDetailNo}
 	</delete>
 	
+	<delete id="delTodoDetailByToDoListNo">
+		delete from TODOLIST_DETAIL
+		where TODOLIST_NO=#{todolistNo}	
+	</delete>
 </mapper>

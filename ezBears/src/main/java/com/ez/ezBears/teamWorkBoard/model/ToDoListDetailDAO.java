@@ -29,4 +29,7 @@ public interface ToDoListDetailDAO {
 	
 	//투두 리스트 디테일 삭제
 	int delTodoDetail(int todoDetailNo);
+	
+	//투두 리스트 디테일 삭제
+	int delTodoDetailByToDoListNo(int todolistNo);
 }

@@ -60,5 +60,14 @@ public class ToDoListDetailServiceImpl implements ToDoListDetailService{
 		}
 		return cnt;
 	}
+	
+	
+	//업무 게시판 삭제 시 전체 디테일 리스트 삭제
+	@Override
+	public int delTodoDetailByToDoListNo(int todolistNo) {
+		return toDoListDetail.delTodoDetailByToDoListNo(todolistNo);
+	}
+	
+	
 
 }
