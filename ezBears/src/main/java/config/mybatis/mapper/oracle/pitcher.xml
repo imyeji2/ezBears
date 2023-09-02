@@ -54,4 +54,10 @@
 		select * from pitcher_view where player_no = #{playerNo}
 	</select>
 
+	<select id="selectPitcherRecordView" parameterType="int"
+		resultType="map">
+		select * from pitcher_record_view where recode_no = #{recodeNo}
+	</select>
+    
+
 </mapper>

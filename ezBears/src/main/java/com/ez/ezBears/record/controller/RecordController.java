@@ -142,6 +142,11 @@ public class RecordController {
 		model.addAttribute("list", list);
 		logger.info("라인업 처리 결과, list.size={}", list.size());
 		
+		List<Map<String, Object>> list2 = pitcherService.selectPitcherRecordView(recodeNo);
+		model.addAttribute("list2", list2);
+		logger.info("라인업 처리 결과2, list.size={}", list2.size());
+		
+		
 		return "/record/lineup";
 	}
 	
