@@ -229,6 +229,9 @@
 	                            <a href="<c:url value='/team/teamList'/>" class="dropdown-item">
 	                           		<i class="bi bi-person-square me-2"></i>선수단관리
 	                            </a>                         
+	                            <a href="<c:url value='#'/>" class="dropdown-item">
+	                           		<i class="bi bi-clipboard-check me-2"></i>결재관리
+	                            </a>                         
 	                        </div>
 	                    </div>           
                     </c:if>         

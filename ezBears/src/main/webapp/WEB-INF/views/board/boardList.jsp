@@ -68,7 +68,7 @@ function send(currentPage) {
 
             $.each(res.list, function(idx, item) {
                 // 랜덤 숫자 생성
-                var randomNumber = Math.floor(Math.random() * (20000 - 10000 + 1)) + 10000;
+               // var randomNumber = Math.floor(Math.random() * (20000 - 10000 + 1)) + 10000;
                 
                 var content = item.NOTICE_CONTENT;
                 var date = new Date(item.REGDATE);
@@ -77,7 +77,7 @@ function send(currentPage) {
                 var fileSizeText = formattedFsize + " KB";
                 const regdate = new Date(date.getTime()).toISOString().split('T')[0] + " " + date.toTimeString().split(' ')[0];
                 
-                var noticeDetailURL = "<a href='<c:url value='/board/boardDetail?boardNo=" + item.BOARD_NO+"'/>'>";
+                var boardDetailURL = "<a href='<c:url value='/board/boardDetail?boardNo=" + item.BOARD_NO+"'/>'>";
                 
                 replyData += "<div class='notice_list_box'>";
                 replyData += "<div>";
@@ -86,13 +86,13 @@ function send(currentPage) {
                 replyData += "<img src='<c:url value='/img/defaultUSER.png'/>' alt='사원프로필'>";
                 replyData += "</div>";
                 replyData += "<div class='user_txt'>";
-                replyData += "<span class='user_txt_name'>익명 : " + randomNumber + "</span>"; // 랜덤 숫자 사용
+                replyData += "<span class='user_txt_name'> " + item.RANDOM_ID + "</span>"; 
                 replyData += "<span class='user_txt_time'>" + regdate + "</span>";
                 replyData += "</div>";
                 replyData += "</div>";
                 replyData += "<div class='list_box_content'>";
-                replyData += "<div class='content_title'>"+ noticeDetailURL + item.BOARD_TITLE + "</a></div>";
-                replyData += "<div class='content_txt'>" + noticeDetailURL +item.BOARD_CONTENT + "</a></div>";
+                replyData += "<div class='content_title'>"+ boardDetailURL + item.BOARD_TITLE + "</a></div>";
+                replyData += "<div class='content_txt'>" + boardDetailURL +item.BOARD_CONTENT + "</a></div>";
                 replyData += "</div>";
                 replyData += "</div>";
                 replyData += "</div>";
@@ -134,12 +134,12 @@ function send(currentPage) {
 												<c:if test="${param.searchCondition=='MEM_NAME'}">
 							            		selected="selected"
 							            	</c:if>>이름</option> --%>
-											<option value="notice_title"
-												<c:if test="${param.searchCondition=='NOTICE_TITLE'}">
+											<option value="board_title"
+												<c:if test="${param.searchCondition=='BOARD_TITLE'}">
 							            		selected="selected"
 							            	</c:if>>제목</option>
-											<option value="notice_content"
-												<c:if test="${param.searchCondition=='NOTICE_CONTENT'}">
+											<option value="board_content"
+												<c:if test="${param.searchCondition=='BOARD_CONTENT'}">
 							            		selected="selected"
 							            	</c:if>>내용</option>
 										</select>

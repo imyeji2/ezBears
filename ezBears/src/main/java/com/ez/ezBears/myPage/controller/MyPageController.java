@@ -40,7 +40,12 @@ public class MyPageController {
 	}
 	
 	@GetMapping("/attendanceCheck")
-	public String attendanceCheck(@RequestParam(defaultValue = "0") int memNo, Model model) {
+	public String attendanceCheck(HttpSession session, Model model) {
+		logger.info("session 확인 , session={}", session);
+		BigDecimal bigDecimalMemNo = (BigDecimal) session.getAttribute("memNo");
+		
+		// BigDecimal 값을 int로 변환
+		int memNo = bigDecimalMemNo.intValue();
 		logger.info("개인근태조회 페이지 이동, 파라미터 memNo={}", memNo);
 		
 		List<AttendanceVO> list = attendanceService.selectByMemNo(memNo);
