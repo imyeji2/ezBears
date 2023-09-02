@@ -40,6 +40,12 @@ public interface MemberDAO {
     //부서 삭제시 남아있는 멤버 조회
     int countMem(int deptNo);
     
+    //사원 탈퇴 처리
+    int deleteMem(int memNo);
+    
     Map<String, Object> selectMemberView(String memId);
+    
+    //각 부서별 결재 담당자출력
+    MemberVO selectpositioninfo(int deptNo);
     
 }

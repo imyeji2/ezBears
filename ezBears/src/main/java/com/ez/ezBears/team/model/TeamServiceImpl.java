@@ -43,5 +43,10 @@ public class TeamServiceImpl implements TeamService{
 	public int deleteTeam(int playerNo) {
 		return teamDao.deleteTeam(playerNo);
 	}
+
+	@Override
+	public int selectCntTeam() {
+		return teamDao.selectCntTeam();
+	}
 	
 }

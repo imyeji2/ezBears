@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@page import="com.ez.ezBears.attendance.model.AttendanceVO"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -79,11 +80,61 @@
 </head>
 
 <script type="text/javascript">
-	function attendanceInOut() {
-		if(confirm('하시겠습니까?')){
-			location.href='';
+	function attendanceIn() {
+		  	<%-- var status = "<%=(String)session.getAttribute("status")%>";
+			alert(status);
+			
+			var topStatus = "";
+			var confirmText = "";
+			if(status =="퇴근" || status == ""){
+				  topStatus = "출근";
+				  confirmText = "출근 처리";
+			}else if(status=="근무 중"){
+				  topStatus = "근무 중";
+				  confirmText = "퇴근 처리";
+			}
+			alert(topStatus);
+			
+			 $('#btnInOut').text(topStatus);
+			alert(confirmText); --%>
+		if(confirm('출근처리 하시겠습니까?')){
+			
+			var today = new Date();
+	        var today_year = today.getFullYear();
+	        var today_month = today.getMonth() + 1; // 월은 0부터 시작하므로 1을 더해줌
+	        var today_date = today.getDate(); // 날짜를 가져와야 함
+
+	        // 날짜 값이 한 자리일 경우 앞에 0 추가하여 두 자리로 만듦
+	        var formattedMonth = today_month < 10 ? '0' + today_month : today_month;
+	        var formattedDate = today_date < 10 ? '0' + today_date : today_date;
+
+	        var day = today_year + '-' + formattedMonth + '-' + formattedDate; // 날짜 형식 조정
+			
+	        
+			location.href="<c:url value='/mypage/attendanceIn?date='/>"+day;
 		}
 	}
+	
+	function attendanceOut() {
+		if(confirm('퇴근처리 하시겠습니까?')){
+			
+			var today = new Date();
+	        var today_year = today.getFullYear();
+	        var today_month = today.getMonth() + 1; // 월은 0부터 시작하므로 1을 더해줌
+	        var today_date = today.getDate(); // 날짜를 가져와야 함
+
+	        // 날짜 값이 한 자리일 경우 앞에 0 추가하여 두 자리로 만듦
+	        var formattedMonth = today_month < 10 ? '0' + today_month : today_month;
+	        var formattedDate = today_date < 10 ? '0' + today_date : today_date;
+
+	        var day = today_year + '-' + formattedMonth + '-' + formattedDate; // 날짜 형식 조정
+			
+	        
+			location.href="<c:url value='/mypage/attendanceOut?date='/>"+day;
+		}
+	}
+	
+	
 
 </script>
 
@@ -108,7 +159,14 @@
                <div id="top_membox">
 	                <div class="d-flex user_info">
 	                    <div class="position-relative">
-	                        <img class="member_img" src="<c:url value='/img/user.jpg'/>" alt="프로필 이미지">
+	                    	<c:choose>
+	                    		<c:when test="${sessionScope.type=='정규직' }">
+	                    		 	<img class="member_img" src="<c:url value='/img/mem_images/${sessionScope.myimg }'/>" alt="프로필 이미지">
+	                    		</c:when>
+	                    		<c:otherwise>
+	                    			<img class="member_img" src="<c:url value='/img/staffImages/${sessionScope.myimg }'/>" alt="프로필 이미지">
+	                    		</c:otherwise>
+	                    	</c:choose>
 	                        <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
 	                    </div>
 	                    <div class="ms-3 lign-items-center">
@@ -116,7 +174,10 @@
 		                       <span>💼${sessionScope.dept_name }</span>
 	                    </div>
 	                </div>
-	               	<button class="inoutBtn" onclick="attendanceInOut()">출근</button>
+	                <div class="btnBox">
+		               	<button class="inoutBtn" onclick="attendanceIn()" id="btnInOut">출근</button>
+		               	<button class="inoutBtn" onclick="attendanceOut()" id="btnInOut">퇴근</button>
+              	 	</div>
                 </div>
                 <!-- 사원정보 끝-->
 
@@ -138,38 +199,42 @@
                             <a href="<c:url value='/notice/noticeList'/>" class="dropdown-item">
                            		<i class="far fa-bell me-2"></i>공지사항
                            	</a>
-                            <a href="#" class="dropdown-item">
+                            <a href="<c:url value='/board/boardList'/>" class="dropdown-item">
                             	<i class="bi bi-chat-square-dots-fill me-2"></i>자유게시판
                             </a>
                         </div>
-                    </div>                
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                        	<i class="bi bi-folder-fill me-2"></i>경영지원팀
-                        </a>
-                        <div class="dropdown-menu bg-transparent border-0">
-                            <a href="<c:url value='/Member/list'/>" class="dropdown-item">
-                            	<i class="bi bi-person-badge me-2"></i>사원관리
-                            </a>
-                            <a href="<c:url value='/attendanceManagement/attendanceSearch'/>" 
-                            class="dropdown-item">
-                            	<i class="bi bi-calendar3 me-2"></i>근태관리
-                            </a>
-                            <a href="#" class="dropdown-item">
-                            	<i class="bi bi-list-task me-2"></i>게시글관리
-                            </a>
-                            <a href="<c:url value='/dept/list'/>" class="dropdown-item">
-                            	<i class="bi bi-briefcase-fill me-2"></i>부서관리
-                            </a>
-                            <a href="<c:url value='/staff/staffList'/>" class="dropdown-item">
-                            <i class="bi bi-person me-2"></i>스태프관리
-                            </a>
-                            <a href="<c:url value='/team/teamList'/>" class="dropdown-item">
-                           		<i class="bi bi-person-square me-2"></i>선수단관리
-                            </a>                         
-                        </div>
-                    </div>           
-                             
+                    </div>
+                    <c:if test="${sessionScope.dept_name eq '경영지원팀' }">                
+	                    <div class="nav-item dropdown">
+	                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+	                        	<i class="bi bi-folder-fill me-2"></i>경영지원팀
+	                        </a>
+	                        <div class="dropdown-menu bg-transparent border-0">
+	                            <a href="<c:url value='/Member/list'/>" class="dropdown-item">
+	                            	<i class="bi bi-person-badge me-2"></i>사원관리
+	                            </a>
+	                            <a href="<c:url value='/attendanceManagement/attendanceSearch'/>" 
+	                            class="dropdown-item">
+	                            	<i class="bi bi-calendar3 me-2"></i>근태관리
+	                            </a>
+	                            <a href="#" class="dropdown-item">
+	                            	<i class="bi bi-list-task me-2"></i>게시글관리
+	                            </a>
+	                            <a href="<c:url value='/dept/list'/>" class="dropdown-item">
+	                            	<i class="bi bi-briefcase-fill me-2"></i>부서관리
+	                            </a>
+	                            <a href="<c:url value='/staff/staffList'/>" class="dropdown-item">
+	                            <i class="bi bi-person me-2"></i>스태프관리
+	                            </a>
+	                            <a href="<c:url value='/team/teamList'/>" class="dropdown-item">
+	                           		<i class="bi bi-person-square me-2"></i>선수단관리
+	                            </a>                         
+	                            <a href="<c:url value='#'/>" class="dropdown-item">
+	                           		<i class="bi bi-clipboard-check me-2"></i>결재관리
+	                            </a>                         
+	                        </div>
+	                    </div>           
+                    </c:if>         
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                         	<i class="bi bi-text-center me-2"></i>나의보드
@@ -199,9 +264,16 @@
                             </a>
                         </div>
                     </div>
-                    <a href="#" class="nav-item nav-link">
-                    	<i class="bi bi-people-fill me-2"></i>임직원정보
-                    	</a>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                        	<i class="bi bi-people-fill me-2"></i>임직원정보
+                        </a>
+                        <div class="dropdown-menu bg-transparent border-0">
+                            <a href="<c:url value='/Member/memberInfo'/>" class="dropdown-item">
+                            	<i class="bi bi-person-badge me-2"></i>주소록
+                            </a>
+                        </div>
+                    </div>       
                 </div>
                 <!-- 사이드 메뉴 종료 -->
             </nav>
@@ -214,9 +286,10 @@
         	<!-- top 메뉴 시작 -->
             <!-- Navbar Start -->
             <nav class="navbar navbar-expand bg-secondary navbar-dark sticky-top py-0">
-            	<div style="width:900px; ">
+            	<div class="topSearch" style="width:900px; ">
 	                <form class="d-none d-md-flex ms-4">
-	                    <input class="form-control bg-dark border-0" type="search" placeholder="사원을 검색하세요">
+	                    <input class="form-control bg-dark border-0" id="searchbox" type="search" placeholder="사원을 검색하세요">
+	                    <%@include file="../Member/memberSearch.jsp"%>
 	                </form>
                 </div>
                 

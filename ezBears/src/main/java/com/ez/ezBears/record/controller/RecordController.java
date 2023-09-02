@@ -21,6 +21,9 @@ import com.ez.ezBears.common.SearchVO;
 import com.ez.ezBears.record.game.model.GameService;
 import com.ez.ezBears.record.game.model.GameVO;
 import com.ez.ezBears.record.hitter.model.HitterService;
+import com.ez.ezBears.record.hitter.model.HitterVO;
+import com.ez.ezBears.record.inning.model.InningService;
+import com.ez.ezBears.record.inning.model.InningVO;
 import com.ez.ezBears.record.pitcher.model.PitcherService;
 import com.ez.ezBears.record.pitcher.model.PitcherVO;
 import com.ez.ezBears.team.model.TeamService;
@@ -37,9 +40,17 @@ public class RecordController {
 
 	private final GameService gameService;
 	private final TeamService teamService;
-	private final PitcherService pitcherService;
 	private final HitterService hitterService;
+	private final PitcherService pitcherService;
+	private final InningService inningService;
 	
+	
+	@RequestMapping("/playerList")
+	public String playerList() {
+		//기록 검색
+		logger.info("선수 리스트 보여주기");
+		return "/record/playerList";
+	}
 	
 	@RequestMapping("/gameRecord")
 	public String gameRecord() {
@@ -84,35 +95,6 @@ public class RecordController {
 	}
 	
 	
-	@RequestMapping("/summary")
-	public String summary() {
-		//1,4
-		logger.info("경기 개요");
-		return "/record/summary";
-	}
-	
-	@RequestMapping("/lineup")
-	public String lineup() {
-		//1,4
-		logger.info("라인업");
-		return "/record/lineup";
-	}
-	
-
-	@RequestMapping("/calander2")
-	public String calander2() {
-		//1,4
-		logger.info("캘린더");
-		return "/record/gameRecordCal";
-	}
-	
-	@RequestMapping("/firstInning")
-	public String firstInning() {
-		//1,4
-		logger.info("라인업");
-		return "/record/firstInning";
-	}
-	
 	@RequestMapping("/playerDetail2")
 	public String playerDetail2() {
 		//1,4
@@ -120,13 +102,81 @@ public class RecordController {
 		return "/record/playerDetail2";
 	}
 	
-	
-	@RequestMapping("/hitterRecordWrite")
-	public String hitterRecordWrite() {
+	@RequestMapping("/inningWrite")
+	public String inningWrite() {
 		//1,4
+		logger.info("이닝정보등록");
+		return "/record/inningWrite";
+	}
+	
+	
+	@RequestMapping("/inningEdit")
+	public String inningUpdate() {
+		//1,4
+		logger.info("이닝정보수정");
+		return "/record/inningEdit";
+	}
+	
+	@RequestMapping("/inningDelete")
+	public String inningDelete() {
+		//1,4
+		logger.info("이닝정보수정");
+		return "/record/inningDelete";
+	}
+	
+	@RequestMapping("/summary")
+	public String inningDetail_get(Model model, int recodeNo) {
+		logger.info("이닝 파라미터, recodeDetailNo={}", recodeNo);
+		
+		List<Map<String, Object>> list = inningService.selectInningView(recodeNo);
+		model.addAttribute("list", list);
+		logger.info("이닝 처리 결과, list.size={}", list.size());
+		return "/record/summary";
+	}
+	
+	@RequestMapping("/lineup")
+	public String lineup_get(Model model, int recodeNo) {
+		logger.info("라인업 파라미터, recodeNo={}", recodeNo);
+		
+		List<Map<String, Object>> list = hitterService.selectHitterRecordView(recodeNo);
+		model.addAttribute("list", list);
+		logger.info("라인업 처리 결과, list.size={}", list.size());
+		
+		return "/record/lineup";
+	}
+	
+	
+//	@GetMapping("/summary")
+//	public String summary_get(@RequestParam(defaultValue = "0") int recodeDetailNo, SearchVO searchVo, Model model) {
+//		logger.info("경기 개요 파라미터 recodeDetailNo = {}", recodeDetailNo);
+//		
+//		List<InningVO> list = inningService.selectByrecodeDetailNo(searchVo, recodeDetailNo);
+//		model.addAttribute("list", list);
+//		return "/record/summary";
+//	}
+	
+	@GetMapping("/hitterRecordWrite")
+	public String hitterRecordWrite_get(Model model, int playerNo) {
 		logger.info("타자기록입력");
+		
+		List<Map<String, Object>> map = hitterService.selectHitterView(playerNo);
+		
+		model.addAttribute("map", map);
+		
 		return "/record/hitterRecordWrite";
 	}
+	
+	@PostMapping("/hitterRecordWrite")
+	public String hitterRecordWrite_post(@ModelAttribute HitterVO hitterVo, HttpServletRequest request,
+			Model model) {
+		//1,4
+		logger.info("타자기록입력");
+		
+		int cnt = hitterService.insertHitter(hitterVo);
+		
+		return "redirect:/record/hitterRecordDetail?playerNo="+hitterVo.getPlayerNo();
+	}
+	
 	
 	@RequestMapping("/hitterRecordEdit")
 	public String hitterRecordEdit() {
@@ -142,39 +192,57 @@ public class RecordController {
 		return "/record/hitterRecordDelete";
 	}
 	
-	@RequestMapping("/hitterRecordDetail")
-	public String hitterRecordDetail() {
-		//1,4
-		logger.info("타자기록정보");
+	@GetMapping("/hitterRecordDetail")
+	public String hitterRecordDetail_get(@RequestParam(defaultValue = "0") int playerNo, Model model) {
+		
+		logger.info("타자기록정보 화면 이동, 파라미터 playerNo = {}", playerNo);
+		List<Map<String, Object>> list = hitterService.selectHitterView(playerNo);
+		
+		model.addAttribute("list", list);
+		
 		return "/record/hitterRecordDetail";
+	}
+	
+	@GetMapping("/hitterStat")
+	public String hitterStat_get(@RequestParam(defaultValue = "0") int playerNo, Model model) {
+		
+		Map<String, Object> map = hitterService.selectHitterStatView(playerNo);
+		model.addAttribute("map", map);
+		
+		return "/record/hitterStat";
 	}
 	
 	@GetMapping("/pitcherRecordWrite")
 	public String pitcherRecordWrite_get(Model model, int playerNo) {
-		logger.info("투수정보, 파라미터 searchVo={}", playerNo);
+		logger.info("투수 기록 등록 화면 이동");
 		
-		List<PitcherVO> pitcher = pitcherService.selectPitcherByPlayerNo(playerNo);
-		
-        logger.info("투수 조회결과, list.size={}", pitcher.size());
-        
-        model.addAttribute("list", pitcher);
+		List<Map<String, Object>> list = pitcherService.selectPitcherView(playerNo);
+		model.addAttribute("list", list);
 		
 		return "/record/pitcherRecordWrite";
 	}
 	
+	
 	@PostMapping("/pitcherRecordWrite")
-    public String pitcherRecordWrite_post(@ModelAttribute PitcherVO pitcherVo) {
-        logger.info("경기 등록 처리 파라미터, pitcherVo={}", pitcherVo);
-
-       int cnt = pitcherService.insertPitcher(pitcherVo);
-       logger.info("게임 등록 처리 결과, cnt={}", cnt);
-        
-        return "redirect:/record/pitcherRecordWrite/playerNo="+pitcherVo.getPlayerNo();
+	public String pitcherRecordWrite_post(@ModelAttribute PitcherVO pitcherVo, int playerNo) {
+		//1,4
+		logger.info("투수 기록 등록 처리 파라미터 PitcherVo={}", pitcherVo);
+		
+		int cnt = pitcherService.insertPitcher(pitcherVo);
+		logger.info("투수 기록 등록 처리 결과, cnt={}", cnt);
+		
+		return "redirect:/record/pitcherRecordDetail?playerNo="+pitcherVo.getPlayerNo();
 	}
 	
+	@GetMapping("/pitcherRecordEdit")
+	public String pitcherRecordEdit_get() {
+		//1,4
+		logger.info("투수기록수정");
+		return "/record/pitcherRecordEdit";
+	}
 	
-	@RequestMapping("/pitcherRecordEdit")
-	public String pitcherRecordEdit() {
+	@PostMapping("/pitcherRecordEdit")
+	public String pitcherRecordEdit_post() {
 		//1,4
 		logger.info("투수기록수정");
 		return "/record/pitcherRecordEdit";
@@ -188,13 +256,30 @@ public class RecordController {
 	}
 	
 	@GetMapping("/pitcherRecordDetail")
-	public String pitcherRecordDetail(@RequestParam(defaultValue = "0") int playerNo, Model model) {
-		logger.info("투수기록정보보기 화면이동, 파라미터 playerNo = {}", playerNo);
+	public String pitcherRecordDetail_get(@RequestParam(defaultValue = "0") int playerNo, SearchVO searchVo, Model model) {
+		logger.info("투수 기록 정보 화면 이동, 파라미터 playerNo = {}", playerNo);
 		
-		List<PitcherVO> pitcher = pitcherService.selectPitcherByPlayerNo(playerNo);
-		logger.info("map", pitcher);
+		//pagination 객체 생성하고 변수 없는 애들 선언해주기
+		PaginationInfo pagination = new PaginationInfo();
+		pagination.setBlockSize(ConstUtil.BLOCK_SIZE);
+		pagination.setCurrentPage(searchVo.getCurrentPage());
+		pagination.setRecordCountPerPage(ConstUtil.RECORD_COUNT);
 		
-		model.addAllAttributes(pitcher);
+		//searchVo 에 비어있는 변수 선언하기
+		searchVo.setFirstRecordIndex(pagination.getFirstRecordIndex());
+		searchVo.setRecordCountPerPage(pagination.getRecordCountPerPage());
+		logger.info("설정 후 searchVo={}", searchVo);
+		
+		int totalRecord = teamService.getTotalRecord(searchVo);
+		pagination.setTotalRecord(totalRecord);
+		logger.info("pagination 설정 완");
+		
+		
+		List<Map<String, Object>> list = pitcherService.selectPitcherView(playerNo);
+		logger.info("list.size={}", list.size());
+		
+		model.addAttribute("pagination",pagination);
+		model.addAttribute("list", list);
 		
 		return "/record/pitcherRecordDetail";
 	}
@@ -263,7 +348,7 @@ public class RecordController {
 		int cnt = gameService.updateGame(gameVo);
 		logger.info("경기 수정 처리 결과, cnt={}", cnt);
 		
-		return "redirect:/record/gameEdit?recodeNo="+gameVo.getRecodeNo();
+		return "redirect:/record/gameRecordDetail?recodeNo="+gameVo.getRecodeNo();
 	}
 	
 	
@@ -288,22 +373,6 @@ public class RecordController {
 		
 		return "redirect:/record/gameList";
 	}
-	
-	@RequestMapping("/inningWrite")
-	public String inningWrite() {
-		//1,4
-		logger.info("이닝정보등록");
-		return "/record/inningWrite";
-	}
-	
-	
-	@RequestMapping("/inningEdit")
-	public String inningUpdate() {
-		//1,4
-		logger.info("이닝정보수정");
-		return "/record/inningEdit";
-	}
-
 	
 	@RequestMapping("/teamList")
 	public String List_get(@ModelAttribute SearchVO searchVo, Model model) {
@@ -332,4 +401,34 @@ public class RecordController {
 		
 		return "/record/teamList";
 	}
+	
+	
+	@RequestMapping("/teamList2")
+	public String List_get2(@ModelAttribute SearchVO searchVo, Model model) {
+		logger.info("선수 목록 화면 이동, 파라미터 searchVo={}", searchVo);
+		
+		//pagination 객체 생성하고 변수 없는 애들 선언해주기
+		PaginationInfo pagination = new PaginationInfo();
+		pagination.setBlockSize(ConstUtil.BLOCK_SIZE);
+		pagination.setCurrentPage(searchVo.getCurrentPage());
+		pagination.setRecordCountPerPage(ConstUtil.RECORD_COUNT);
+		
+		//searchVo 에 비어있는 변수 선언하기
+		searchVo.setFirstRecordIndex(pagination.getFirstRecordIndex());
+		searchVo.setRecordCountPerPage(pagination.getRecordCountPerPage());
+		logger.info("설정 후 searchVo={}", searchVo);
+		
+		int totalRecord = teamService.getTotalRecord(searchVo);
+		pagination.setTotalRecord(totalRecord);
+		logger.info("pagination 설정 완");
+		
+		List<Map<String, Object>> list = teamService.selectAllTeam(searchVo);
+		logger.info("선수 목록 화면 처리 결과, list.size()={}", list.size());
+		
+		model.addAttribute("list", list);
+		model.addAttribute("pagination", pagination);
+		
+		return "/record/teamList2";
+	}
+
 }

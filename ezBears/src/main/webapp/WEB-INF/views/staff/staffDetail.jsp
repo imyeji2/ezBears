@@ -26,7 +26,14 @@
       <div class="row vh-100 bg-secondary rounded align-items-center justify-content-center mx-0">
           <div class="col-md-6 text-center">
           
-				<h2>스태프 상세보기</h2>
+	                 <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+			           <ol class="breadcrumb">
+			             <li class="breadcrumb-item active" aria-current="page">
+			                <a href="<c:url value='/staff/staffList'/>" style="color: #7000D8">스태프 관리</a>
+			             </li>
+			             <li class="breadcrumb-item active" aria-current="page">스태프 상세보기</li>
+			           </ol>
+			         </nav>
 					<div class="divForm">
 						<div class="firstDiv">
 							<c:if test="${!empty staffVo.staffImage }">
@@ -59,6 +66,9 @@
 						</div>
 						<div>
 							<span class="sp1">계약시작일</span> <span>${staffVo.contractStart.substring(0, 10) }</span>
+						</div>
+						<div>
+							<span class="sp1">계약종료일</span> <span>${staffVo.contractDone.substring(0, 10) }</span>
 						</div>
 						<div>
 							<span class="sp1">연락처</span> <span>${staffVo.staffTel }</span>

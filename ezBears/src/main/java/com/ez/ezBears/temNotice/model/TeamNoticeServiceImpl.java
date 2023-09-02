@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ez.ezBears.common.MyBoardSearchVo;
+import com.ez.ezBears.team.model.TeamDAO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -66,6 +67,8 @@ public class TeamNoticeServiceImpl implements TeamNoticeService {
 		return teamNoticeDao.selectTeamNoticeByNo(teamNoticeNo);
 	}
 
+	
+	//댓글 검색
 	@Override
 	public List<Map<String, Object>> selectReply(MyBoardSearchVo searchVo) {
 		return teamNoticeDao.selectReply(searchVo);
@@ -76,8 +79,9 @@ public class TeamNoticeServiceImpl implements TeamNoticeService {
 	@Override
 	@Transactional
 	public int addreply(TeamNoticeVO teamNoticeVo) {
-		teamNoticeDao.updateSortNo(teamNoticeVo);
-		int cnt = teamNoticeDao.insertReply(teamNoticeVo);
+		int cnt=teamNoticeDao.updateSortNo(teamNoticeVo);
+		teamNoticeVo.setGroupno(teamNoticeDao.selectGroupNo());
+		cnt = teamNoticeDao.insertReply(teamNoticeVo);
 		return cnt;
 	}
 
@@ -88,10 +92,30 @@ public class TeamNoticeServiceImpl implements TeamNoticeService {
 		return teamNoticeDao.selectReplyTotalCount(groupNo);
 	}
 
+	//댓글수정
 	@Override
 	public int updeteReply(TeamNoticeVO teamNoticeVo) {
 		return teamNoticeDao.updeteReply(teamNoticeVo);
 	}
+
+
+	
+	//대댓글 등록
+	@Override
+	public int addReReply(TeamNoticeVO teamNoticeVo) {
+		int cnt=teamNoticeDao.updateSortNo(teamNoticeVo);
+		cnt = teamNoticeDao.insertReReply(teamNoticeVo);
+		return cnt;
+	}
+	
+	////공지사항 파일 삭제
+	@Override
+	public int deleteFile(int teamNoticeNo) {
+		return teamNoticeDao.deleteFile(teamNoticeNo);
+	}
+
+
+
 	
 	
 

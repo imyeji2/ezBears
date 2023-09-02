@@ -36,6 +36,11 @@
 		select  my_board_no from myBoardListView
 		where m_board_no=#{MBoardNo} and mem_no=${memNo}
 	</select>
+	
+	<select id="selectMyBoardMember" parameterType="int" resultType="map">
+		select * from myBoardMemberView
+		where m_board_no=#{mBoardNo}
+	</select>
 <!-- 예지 -->
 
 <!-- 다희 -->	
@@ -58,6 +63,11 @@
 	<select id="selectBoardInfo" parameterType="myBoardInfoVo" resultType="myBoardInfoVo">
 		select * from myBoardInfo
 		where m_board_no = #{mBoardNo} and mem_id = #{memId}
+	</select>
+	
+	<select id="selectMyBoardDept" parameterType="String" resultSets="myBoardInfoVo">
+		select * from myboardInfo
+		where mem_id = #{memId}
 	</select>
 </mapper>
 

@@ -6,9 +6,10 @@
 
 	<script>
 		$(function(){
-			
+
 			var editor = CKEDITOR.replace('teamNoticeContent', {
-				filebrowserUploadUrl : "<c:url value='/adm/fileupload'/>",
+				filebrowserUploadUrl : "<c:url value='/ck/fileupload'/>",
+				clipboard_image_handling: true,
 				height : '300px',
 				resize_enabled: false
 			});
@@ -28,7 +29,30 @@
 		            return false;
 		        }
 			    
-				$('form[name=teamNotiFrm]').submit();
+			    
+			    if($('.list_box_file2').length<0){
+					var sendDate = $('form[name=teamNotiFrm]').serialize();
+					$.ajax({
+					        url: "<c:url value='/myBoard/deleteFile'/>",
+					        method: "POST",
+					        data: sendDate,
+					        dataType: 'json',
+					        error: function(xhr, status, error) {
+					            alert(error);
+					        },
+					        success: function(res) {
+					            console.log(res); 
+					            if(res>0){
+					            	$('form[name=teamNotiFrm]').submit();
+					            }else{
+					            	alert('삭제 실패');
+					            }
+					        }
+						});	
+			    }else{
+			    	$('form[name=teamNotiFrm]').submit();
+			    }
+				
 				
 			});
 			
@@ -37,7 +61,24 @@
 				location.href="<c:url value='/myBoard/teamNotice?mBoardNo=${myBoardListVo.MBoardNo}'/>";
 				
 			});
-		});
+			
+			
+			$('#upfile').click(function(){
+			    if ($('#isFile').length > 0) { 
+			        if (!confirm('새로운 파일을 첨부하면 기존 파일은 삭제 됩니다.')) {
+			        	event.preventDefault(); 
+			        }
+			    }
+			});
+			
+			$(document).on('click', '#delBtn',function(e) {  
+				event.preventDefault(); 
+            	if(confirm('정말 삭제하시겠습니까?')){
+            		$('#oldFileName').val('');
+            		$('.list_box_file2').remove();
+				}
+			});
+	});
 	</script>
 	
 <c:if test="${type=='write'}">
@@ -88,13 +129,11 @@
 			       			<div class="write_file">
 								<input class="form-control" type="file" name="upfile" id="upfile" value="${map['ORIGINNAME']}">
 								<c:if test="${!empty map['ORIGINNAME']}">
-					       			<div class="list_box_file">
+					       			<div class="list_box_file2" id="isFile">
 						       			${map['ORIGINNAME']}&nbsp;
 						       			(<fmt:formatNumber value="${map['FSIZE'] /1024.0}" type="number" pattern="#.##"/> KB)
+						       			<button class='btn btn-sm' id='delBtn'><i class='fa fa-times'></i></button>
 					       			</div>
-								 	<p class="fileText" >첨부파일을 새로 지정할 경우 기존 파일
-								 		<span style="font-weight: bold">"${map['ORIGINNAME']}"</span> 은 삭제됩니다.
-								 	</p>
 								</c:if>
 								
 			       			</div>

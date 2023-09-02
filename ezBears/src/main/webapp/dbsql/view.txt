@@ -27,44 +27,25 @@ FROM
 ) B
 ON A.MEM_NO = B.MEM_NO;
 
-create or replace procedure DELETETEAMNOTICE
+
+
+create or replace view teamWorkBoardListView
+as
+SELECT A.*, B.MEM_ID,B.MEM_NAME, B.MEM_IMAGE, B.DEPT_NAME
+FROM
 (
---매개변수
-   m_team_notice_no number,
-   m_step number,
-   m_groupno number
-)
-is
---변수선언부
-     cnt number;
-
-begin
---처리할 내용
-    /*
-    답변이 있는 원본글인 경우에는 레코드를 삭제하지 말고 DelFlag="Y"로 update
-    */
-    if m_step = 0 then
-      --답변글이 존재하는지 체크
-      select count(*) into cnt from team_notice
-      where groupNo = m_groupno;
-
-         --답변글이 존재하는 경우
-         if cnt>1 then
-            update team_notice set status='Y'
-            where team_notice_no = m_team_notice_no;
-        else --답변글이 없는 경우
-            delete team_notice where team_notice_no = m_team_notice_no;
-        end if;
-    else --답변글 자체인 경우
-        delete team_notice where team_notice_no = m_team_notice_no;
-    end if;
-    commit;
-
-EXCEPTION
-    WHEN OTHERS THEN
-	raise_application_error(-20001, ' 실패!');
-        ROLLBACK;
-end;
+    SELECT T.*, MY.M_BOARD_NO
+    FROM TEAM_WORK_BOARD T
+    JOIN MY_BOARD MY
+    ON T.MY_BOARD_NO = my.my_board_no
+)A JOIN
+(
+    SELECT M.MEM_NO,M.MEM_ID, MEM_NAME, MEM_IMAGE, D.DEPT_NAME
+    FROM MEMBER M
+    JOIN DEPT D
+    ON M.DEPT_NO = D.DEPT_NO
+) B
+ON A.MEM_NO = B.MEM_NO;
 
 [다희]---------------------------------------------------------------------
 
@@ -72,16 +53,30 @@ end;
 [희진]---------------------------------------------------------------------
 create or replace view myBoardInfo
 as
-select b.*,m.mem_id
+select b.*,m.mem_id,m.dept_No,m.mem_name
 from member m join my_board b
 on m.mem_no = b.mem_no;
 
 
 create or replace view calenderInfo
 as
-select s.mem_no,info.mem_id,info.my_board_no,info.m_board_no,s.schedule_start,s.schedule_end,s.schedule_title  from
+select s.mem_no,info.mem_id,info.my_board_no,info.m_board_no,s.schedule_start,s.schedule_end,s.schedule_title, s.schedule_no  from
 myBoardInfo info join schedule s
 on info.my_board_no = s.my_board_no;
+
+
+create or replace view signListView
+as
+select s.* from
+member m join sign s
+on m.mem_no = s.mem_no;
+
+
+create or replace view approvalDetailView
+as
+select s.*,m.mem_name from
+member m join sign s
+on m.mem_no = s.mem_no;
 
 [충혁]---------------------------------------------------------------------
 
@@ -112,6 +107,14 @@ on m.dept_no = d.dept_no;
 select * from memberView1;
 
 
+create or replace view notice1
+as
+select n.*,m.dept_no,m.mem_name,m.mem_id,m.mem_image,d.dept_name
+from notice n left join member m
+on m.mem_no = n.mem_no
+right join dept d
+on m.dept_no=d.dept_no;
+
 create or replace view noticeView
 as
 select n.*,m.mem_name,m.dept_no
@@ -119,6 +122,20 @@ from notice n join member m
 on n.mem_no = m.mem_no;
 
 select * from noticeView;
+
+create or replace view board1
+as
+select b.*,m.mem_name,m.mem_id
+from board b left join member m
+on b.mem_no = m.mem_no;
+
+
+create or replace view board1
+as
+select m.mem_name,b.*
+from  board b left join member m
+on m.mem_no = b.mem_no;
+
 
 
 [건우]---------------------------------------------------------------------

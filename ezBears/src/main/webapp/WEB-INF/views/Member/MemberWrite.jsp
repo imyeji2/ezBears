@@ -6,32 +6,29 @@
 <script type="text/javascript" src="<c:url value ='/js/member.js"'/>"></script>
 <script type="text/javascript" src="<c:url value ='/js/jquery-ui.min.js"'/>"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<style>
+.imgdiv {
+    width: 200px;
+}
 
+</style>
 <script>
+    var jb = jQuery.noConflict();
+    jb(function(){
+        jb('#birth').datepicker({
+            dateFormat:'yy-mm-dd',
+            changeYear:true,
+            dayNamesMin:['일','월','화','수','목','금','토'],
+            monthNames:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월']
+        });
 
-	var jb = jQuery.noConflict();
-	jb(function(){
-		jb('#birth').datepicker({
-			dateFormat:'yy-mm-dd',
-			changeYear:true,
-			dayNamesMin:['일','월','화','수','목','금','토'],
-			monthNames:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월']
-
-		jb('#contract').datepicker({
-			dateFormat:'yy-mm-dd',
-			changeYear:true,
-			dayNamesMin:['일','월','화','수','목','금','토'],
-			monthNames:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월']
-
-		jb('#contract').datepicker({
-			dateFormat:'yy-mm-dd',
-			changeYear:true,
-			dayNamesMin:['일','월','화','수','목','금','토'],
-			monthNames:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월']
-		});
-		
-	});
-
+        jb('#contract').datepicker({
+            dateFormat:'yy-mm-dd',
+            changeYear:true,
+            dayNamesMin:['일','월','화','수','목','금','토'],
+            monthNames:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월']
+        });
+    });
 </script>
 
 
@@ -46,7 +43,7 @@
          </ol>
        </nav>
 		<div class="register">
-			<form class="register-form" name="frmRegist" method="post" action="<%=request.getContextPath() %>/Member/write" enctype="multipart/form-data">
+			<form class="register-form" name="frmRegist" method="post" action="<%=request.getContextPath() %>/Member/write" enctype="multipart/form-data" autocomplete="off">
 				<div class = "side">
 					<div class ="imgdiv">
 						<img alt="" src="<c:url value = '/img/defaultUSER.png'/>" style="width:180px; height:200px;" id="previewImage" name="memImage">
@@ -57,6 +54,7 @@
 						<ul class="select-box">
 							<li>
 						        <select name="deptNo" id="dept">
+						        	<option value="" >부서</option>
 									<!-- 반복문 -->
 									<c:forEach var="deptVo" items="${deptList}">
 										<option value ="${deptVo.deptNo}">${deptVo.deptName}</option>

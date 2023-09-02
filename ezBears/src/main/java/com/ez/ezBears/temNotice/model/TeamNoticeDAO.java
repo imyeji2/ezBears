@@ -38,6 +38,7 @@ public interface TeamNoticeDAO {
 	int updateSortNo(TeamNoticeVO teamNoticeVo);
 	
 	
+	
 	//게시물 번호로 공지사항 댓글 검색
 	Map<String, Object> selectReplyTeamNoticeNo(int teamNoticeNo);
 	
@@ -50,6 +51,14 @@ public interface TeamNoticeDAO {
 	//팀별 공지사항 댓글 업데이트
 	int updeteReply(TeamNoticeVO teamNoticeVo);
 	
-
+	
+	//팀별 공지사항 대댓글 등록
+	int insertReReply(TeamNoticeVO teamNoticeVo);
+	
+	//팀별 공지사항 그룹 시퀀스 
+	int selectGroupNo();
+	
+	//공지사항 파일 삭제
+	int deleteFile(int teamNoticeNo);
 
 }

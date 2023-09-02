@@ -15,4 +15,6 @@ public interface TeamDAO {
 	Map<String, Object> selectByPlayerNo(int playerNo);
 	int updateTeam(TeamVO teamVo);
 	int deleteTeam(int playerNo);
+	
+	int selectCntTeam();
 }

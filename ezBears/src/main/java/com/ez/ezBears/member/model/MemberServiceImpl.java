@@ -137,5 +137,15 @@ public class MemberServiceImpl implements MemberService{
 		return memberDao.countMem(deptNo);
 	}
 
+	@Override
+	public int deleteMem(int memNo) {
+		return memberDao.deleteMem(memNo);
+	}
+
+	@Override
+	public MemberVO selectpositioninfo(int deptNo) {
+		return memberDao.selectpositioninfo(deptNo);
+	}
+
 	
 }

@@ -5,16 +5,30 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.ez.ezBears.common.SearchVO;
+
 @Mapper
 public interface NoticeDAO {
 	int insertNotice(NoticeVO noticeVo);
 	int insertFileNotice(NoticeFileVO noticeFileVo);
+	NoticeVO selectnoticeByNo(int noticeNo);
+	List<Map<String, Object>> selectnoticeFileByNo(int noticeNo);
+	
 	List<Map<String, Object>> selectNoticeList(int noticeNo);
+	
 	Map<String, Object> selectDetail(int noticeNo);
 	List<Map<String, Object>> selectNoticeFile(int noticeNo);
 	int updateViewsCount(int noticeNo);
 	
 	List<Map<String, Object>> nextPage(int noticeNo);
 	//List<Map<String, Object>> backPage(int noticeNo);
+	
+	int updateNotice(NoticeVO noticeVo);
+	void deleteNoticeFile(int noticeNo);
+	int deleteNotice(int noticeNo);
+	
+	int updateDowncount(int noticeFileNo);
+	List<Map<String, Object>> selectAllNotice(SearchVO searchVo);
+	int selectTotalCount(SearchVO searchVo);
 	
 }

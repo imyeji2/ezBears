@@ -31,9 +31,9 @@
 		where inning_no=#{inningNo}
 	</delete>
 	
-	<select id="selectByrecodeDetailNo" parameterType="int" resultType="inningVo">
-		select * from inning
-		where recode_detail_no=#{recodeDetailNo}
+	<select id="selectInningView" parameterType="int" resultType="map">
+		select * from inning_view
+		where recode_no=#{recodeNo}
 	</select>
 	
 </mapper>

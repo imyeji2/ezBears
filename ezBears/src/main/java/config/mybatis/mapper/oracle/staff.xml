@@ -93,4 +93,19 @@
 		where staff_no=#{staffNo}
 	</update>
 	
+	<select id="getTodayStaff" parameterType="string" resultType="int">
+		select count(*) from staff where contract_start = #{contractStart}
+	</select>
+	
+	<select id="isStaffId" parameterType="string" resultType="int">
+		select count(*) from staff where staff_id = #{staffId}
+	</select>
+	
+	
+	<!-- 부서에서 스태프 수 불러오기 -->
+	<select id="selectCntStaff" resultType="int">
+		SELECT COUNT(*) FROM STAFF
+	</select>
+	
+	
 </mapper>

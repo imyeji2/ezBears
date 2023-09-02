@@ -59,7 +59,8 @@
 				$('#sal').focus();
 				return false;
 			}
-
+			
+	
 
 		});
 		
@@ -182,7 +183,7 @@
 		$('.errMsg').hide();
 		
 		
-        $('.editIcon').click(function() {
+        $('.btnEdit').click(function() {
 			$('.errMsg').show();
 			$('#editLable').show();
 			//부서

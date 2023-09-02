@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ez.ezBears.common.ConstUtil;
 import com.ez.ezBears.common.FileUploadUtil;
@@ -252,5 +253,87 @@ public class MemberController {
 		//4
 		return "common/message";
 	}
+
+	@RequestMapping("/delete")
+	public String delete(@RequestParam int memNo, Model model) {
+		
+		//1
+		logger.info("회원 삭제, 파라미터 memNo ={}", memNo);
+		
+		//2
+		
+		String msg="퇴사 처리에 실패하였습니다.",url ="/Member/list";
+		int result = memberService.deleteMem(memNo);
+		
+		logger.info("회원 삭제 결과, result={}", result);
+		
+		if(result > 0 ) {
+			msg = "퇴사 처리 되었습니다.";
+	
+		}
+
+		//3
+		model.addAttribute("msg",msg);
+		model.addAttribute("url",url);
+		
+		//4
+		
+		return "common/message";
+	}
+	
+	@RequestMapping("/memberInfo")
+	public String memberInfo(@ModelAttribute SearchVO searchVo, Model model){
+		
+		
+		//1
+		logger.info("회원 리스트 페이지, 파라미터 searchVo={}",searchVo);
+		
+		//2
+		PaginationInfo pagingInfo = new PaginationInfo();
+		pagingInfo.setBlockSize(ConstUtil.BLOCK_SIZE);
+		pagingInfo.setCurrentPage(searchVo.getCurrentPage());
+		pagingInfo.setRecordCountPerPage(ConstUtil.MEMRECORD_COUNT);
+		
+		searchVo.setRecordCountPerPage(ConstUtil.MEMRECORD_COUNT);
+		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
+		
+		
+		List<MemberVO> list = memberService.selectAllMem(searchVo);
+		logger.info("멤버 조회 결과, list.size={}", list.size());
+	
+		//카테고리 가지고오기
+		List<DeptVO> deptList = deptService.selectDeptList();
+		List<PositionVO> positionList = positionService.selectPositionList();
+	
+		int totalRecord = memberService.totalList(searchVo);
+		pagingInfo.setTotalRecord(totalRecord);
+		
+		
+		//3
+		model.addAttribute("deptList", deptList);
+		model.addAttribute("positionList", positionList);
+		model.addAttribute("list", list);
+		model.addAttribute("pagingInfo", pagingInfo);
+		//4
+		
+		return "/Member/list";
+		
+	}
+	
+	@ResponseBody
+    @RequestMapping("/memberDetail")
+    public MemberVO memberInfoDetail(@RequestParam int memNo) {
+    	
+    	//1
+    	logger.info("회원들이 보는 디테일 페이지 memNo={}",memNo);
+    	
+    	//2
+
+    	MemberVO memberVo = memberService.memberDetail(memNo);
+    	logger.info("멤버 조회 결과, memberVo={}", memberVo);
+    	    	
+    	//4
+    	return memberVo;
+    }
 
 }

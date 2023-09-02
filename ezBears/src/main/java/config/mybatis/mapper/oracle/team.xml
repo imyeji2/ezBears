@@ -69,5 +69,9 @@
 		where player_no = #{playerNo}
 	</update>
 	
+	<!-- 부서에서 팀원 수 구하기 -->
 	
+	<select id="selectCntTeam" resultType="int">
+		SELECT COUNT(*) FROM TEAM
+	</select>
 </mapper>

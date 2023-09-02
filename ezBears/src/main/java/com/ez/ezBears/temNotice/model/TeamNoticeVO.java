@@ -15,9 +15,10 @@ public class TeamNoticeVO {
 	private long fsize;
 	private String fileName;
 	private String originname;
-	private int groupno;
-	private int sortno;
-	private int step;
+	private int contentno;//게시글번호
+	private int groupno;//그룹번호
+	private int sortno;//정렬순서
+	private int step;//댓글여부
 	private String status;
 	
 }

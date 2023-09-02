@@ -152,6 +152,58 @@
                 $('#previewImage').attr('src', imageUrl);
             }
         });
+        
+        $('#btnSubmit').click(function () {
+        	if ($('#floatingSelectDept option:selected').val().length < 1) {
+				alert("부서를 선택하세요");
+				$('#floatingSelectDept').focus();				
+				return false;
+			}
+        	
+        	if ($('#floatingSelectPosition option:selected').val().length < 1) {
+				alert("포지션을 선택하세요");
+				$('#floatingSelectPosition').focus();				
+				return false;
+			}
+        	
+        	if ($('#playerName').val().length < 1) {
+				alert("이름을 입력하세요");
+				$('#playerName').focus();				
+				return false;
+			}
+        	
+        	if ($('#backNo').val().length < 1) {
+				alert("등번호를 입력하세요");
+				$('#backNo').focus();				
+				return false;
+			}
+        	
+        	if ($('#playerSal').val().length < 1) {
+				alert("연봉을 입력하세요");
+				$('#playerSal').focus();				
+				return false;
+			}
+        	
+        	if ($('#contractStart').val().length < 1) {
+				alert("계약 시작일을 입력하세요");
+				$('#contractStart').focus();				
+				return false;
+			}
+        	
+        	if ($('#contractDone').val().length < 1) {
+				alert("계약 종료일을 입력하세요");
+				$('#contractDone').focus();				
+				return false;
+			}
+        	
+        	if ($('#teamTel').val().length < 1) {
+				alert("전화번호를 입력하세요");
+				$('#teamTel').focus();				
+				return false;
+			}
+        	
+        	
+		})
 	})
 </script>
 	<form name="frmWrite" method="post" action="<c:url value='/team/teamWrite'/>" enctype="multipart/form-data">
@@ -160,9 +212,14 @@
             <div class="row h-100 align-items-center justify-content-center" style="min-height: 100vh;">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                     <div class="bg-secondary rounded p-4 p-sm-5 my-4 mx-3">
-                        <div class="d-flex align-items-center justify-content-between mb-3">
-                            <h3>team Write</h3>
-                        </div>
+			            <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+				           <ol class="breadcrumb">
+				             <li class="breadcrumb-item active" aria-current="page">
+				                <a href="<c:url value='/team/teamList'/>">선수단 관리</a>
+				             </li>
+				             <li class="breadcrumb-item active" aria-current="page">선수단 등록</li>
+				           </ol>
+			         	</nav>
                         <div style="width: 60%; margin: 0 auto;" >
 	                   		<div class ="imgdiv">
 								<img alt="" src="<c:url value = '/img/defaultUSER.png'/>" style="width:180px; height:200px;" id="previewImage">
@@ -170,8 +227,9 @@
 								<input type ="file" name="playerImageFile" id="imageUpload"  class="infobox" style="display:none">
 							</div>
 	       	                <div class="form-floating mb-3">
-	                            <select class="form-select" id="floatingSelect"
+	                            <select class="form-select" id="floatingSelectDept"
 	                                aria-label="Floating label select example" name="deptNo">
+	                                <option value="" selected="selected">부서</option>
 									<!-- 반복문 -->
 									<c:forEach var="deptVo" items="${deptList}">
 										<option value ="${deptVo.deptNo}">${deptVo.deptName}</option>
@@ -181,8 +239,9 @@
 	                            <label for="floatingSelect">부서를 선택하세요</label>
 	                        </div>
 	       	                <div class="form-floating mb-3">
-	                            <select class="form-select" id="floatingSelect"
+	                            <select class="form-select" id="floatingSelectPosition"
 	                                aria-label="Floating label select example" name="positionNo">
+	                                <option value="" selected="selected">포지션</option>
 	                                <option value="1">투수</option>
 	                                <option value="2">포수</option>
 	                                <option value="3">외야수</option>
@@ -191,11 +250,11 @@
 	                            <label for="floatingSelect">포지션을 선택하세요</label>
 	                        </div>
 	                        <div class="form-floating mb-3">
-	                            <input type="text" class="form-control" id="floatingInput" placeholder="team_name" name="playerName">
+	                            <input type="text" class="form-control" id="playerName" placeholder="team_name" name="playerName">
 	                            <label for="floatingInput">선수_이름</label>
 	                        </div>
 	                        <div class="form-floating mb-3">
-	                            <input type="text" class="form-control" id="floatingInput" placeholder="team_back_no" name="backNo">
+	                            <input type="text" class="form-control" id="backNo" placeholder="team_back_no" name="backNo">
 	                            <label for="floatingInput">선수_등번호</label>
 	                        </div>
 	                        <div class="form-floating mb-3">
@@ -211,7 +270,7 @@
 	                            <label for="floatingInput">선수_몸무게</label>
 	                        </div>
 	                        <div class="form-floating mb-3">
-	                            <input type="text" class="form-control" id="floatingInput" placeholder="team_sal" name="playerSal">
+	                            <input type="text" class="form-control" id="playerSal" placeholder="team_sal" name="playerSal">
 	                            <label for="floatingInput">선수_연봉</label>
 	                        </div>
 	                        <div class="form-floating mb-3">
@@ -268,7 +327,7 @@
 	                            </div>
 	                            <a href="">Forgot Password</a>
 	                        </div> -->
-	                        <button type="submit" class="btn btn-primary py-3 w-100 mb-4">선수 등록</button>
+	                        <button type="submit" class="btn btn-primary py-3 w-100 mb-4" id="btnSubmit">선수 등록</button>
 	                        <!-- <p class="text-center mb-0">Don't have an Account? <a href="">Sign Up</a></p> -->
                         </div>
                     </div>

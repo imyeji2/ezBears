@@ -9,7 +9,7 @@
 			select TEAM_NOTICE_SEQ.nextval from dual
 		</selectKey>
 		insert into team_Notice(TEAM_NOTICE_NO, MEM_NO, MY_BOARD_NO, TEAM_NOTICE_TITLE, 
-				TEAM_NOTICE_CONTENT,FSIZE,FILENAME,ORIGINNAME,GROUPNO)
+				TEAM_NOTICE_CONTENT,FSIZE,FILENAME,ORIGINNAME,CONTENTNO)
 		values(#{teamNoticeNo},#{memNo}, #{myBoardNo}, #{teamNoticeTitle},
 				#{teamNoticeContent},#{fsize},#{fileName},#{originname},#{teamNoticeNo})
 	</insert> 
@@ -97,14 +97,15 @@
 	
 	<parameterMap type="map" id="deleteTeamNoticeProc">
 		<!-- 아래 ?의 순서에 맞춰서 만들어야함 -->
-		<parameter property="teamNoticeN" javaType="string" jdbcType="VARCHAR" mode="IN"/>
+		<parameter property="teamNoticeNo" javaType="string" jdbcType="VARCHAR" mode="IN"/>
 		<parameter property="step" javaType="string" jdbcType="VARCHAR" mode="IN"/>
-		<parameter property="groupNo" javaType="string" jdbcType="VARCHAR" mode="IN"/>
+		<parameter property="contentno" javaType="string" jdbcType="VARCHAR" mode="IN"/>
+		<parameter property="groupno" javaType="string" jdbcType="VARCHAR" mode="IN"/>
 	</parameterMap>
 	
 
    <delete id="deleteTeamNotice" parameterMap="deleteTeamNoticeProc">
-   		call DELETETEAMNOTICE(?,?,?)
+   		call DELETETEAMNOTICE(?,?,?,?)
    </delete>
    
  
@@ -113,20 +114,25 @@
 	<update id="updateSortNo" parameterType="teamNoticeVo">
 		update team_Notice
 		set sortNo = sortNo+1
-		where groupNo=#{groupno} and sortNo>#{sortno}
+		where CONTENTNO=#{contentno} and sortNo>#{sortno}
 	</update>
 	
 	
+	<select id="selectGroupNo" resultType="int">
+		select GROUPNO_SEQ.nextval from dual
+	</select>
 	
    <insert id="insertReply" parameterType="teamNoticeVo">
+   
 		<selectKey keyProperty="teamNoticeNo" resultType="int" order="BEFORE">
 			select TEAM_NOTICE_SEQ.nextval from dual
 		</selectKey>
-   		insert into team_Notice(TEAM_NOTICE_NO,MEM_NO,COMMENTS,GROUPNO,STEP,SORTNO,MY_BOARD_NO)
-   		values(#{teamNoticeNo},#{memNo},#{comments},#{groupno},#{step}+1,#{sortno}+1,#{myBoardNo})
+		
+   		insert into team_Notice(TEAM_NOTICE_NO,MEM_NO,COMMENTS,GROUPNO,STEP,SORTNO,MY_BOARD_NO,CONTENTNO)
+   		values(#{teamNoticeNo},#{memNo},#{comments},#{groupno},#{step}+1,#{sortno}+1,#{myBoardNo},#{contentno})
    </insert>
    
-   
+ 
    
    <select id="selectReply" parameterType="myBoardSearchVo" resultType="map">
        select *
@@ -135,8 +141,8 @@
 	      select rownum as RNUM, A.* from
 		      (	
 		   		select * from teamNoticeListView
-		   		where groupNo = #{groupno} and step>0
-		   		order by regdate desc
+		   		where CONTENTNO = #{contentno} and step>0
+		   		order by groupNo desc, step, sortno desc
  				)A
      		 )
       <![CDATA[
@@ -148,10 +154,11 @@
    
    <select id="selectReplyTotalCount" parameterType="myBoardSearchVo" resultType="int">
   	   	select count(*) from teamNoticeListView
-   		where groupNo = #{groupno} and step>0
+   		where CONTENTNO = #{contentno} and step>0
  	</select>
 
 
+	
 
    <select id="selectReplyTeamNoticeNo" parameterType="int" resultType="map">
    		select * from teamNoticeListView
@@ -159,9 +166,30 @@
    </select>   	
    
    
+   
    <update id="updeteReply" parameterType="teamNoticeVo">
 	   	update team_Notice
 	   	set COMMENTS = #{comments}
 	   	where team_notice_no=#{teamNoticeNo}
    </update>
+   
+   
+   <insert id="insertReReply" parameterType="teamNoticeVo">
+		<selectKey keyProperty="teamNoticeNo" resultType="int" order="BEFORE">
+			select TEAM_NOTICE_SEQ.nextval from dual
+		</selectKey>
+		
+   		insert into team_Notice(TEAM_NOTICE_NO,MEM_NO,COMMENTS,GROUPNO,STEP,SORTNO,MY_BOARD_NO,CONTENTNO)
+   		values(#{teamNoticeNo},#{memNo},#{comments},#{groupno},#{step}+1,#{sortno}+1,#{myBoardNo},#{contentno})
+   </insert>
+   
+   <update id="deleteFile" parameterType="int">
+   		update team_notice
+   		set fsize=0, fileName=null, originname=null
+   		where team_notice_no=#{teamNoticeNo}
+   </update>
+   
+   
+   
+      
 </mapper>

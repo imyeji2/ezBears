@@ -7,6 +7,20 @@
 		$('input[name=currentPage]').val(curPage);
 		$('form[name=frmPage]').submit();
 	}
+	
+	$(function(){
+	    $('.btnDelete').click(function(){
+			if (confirm("삭제하시겠습니까?")) {
+		        var memNo = $('.MemChk:checked').closest('tr').find('#hiddenMemNo').val();
+		        var url = "<c:url value='/Member/delete?memNo=" + memNo + "'/>";
+		        $('.btn-form').attr('action', url);
+		        $('.btn-form').submit();
+			}else {
+		    	event.preventDefault();
+			}
+	    });
+	});
+	
 </script>
 <!-- 페이징 처리를 위한 form 시작-->
 <form name="frmPage" method="post" action="<c:url value='/Member/list'/>">
@@ -28,10 +42,10 @@
 	      
 			<form class="btn-form" name="frm1" method="post" action="<c:url value ='/Member/list'/>">
 				<div class="btns">
-					<input type="text" class ="txtboxSearch" id="txtboxSearch" name="searchKeyword" value="${param.searchKeyword}"placeholder="검색어를 입력해주세요">
+					<input type="text" class ="txtboxSearch" id="txtboxSearch" name="searchKeyword" value="${param.searchKeyword}" placeholder="검색어를 입력해주세요" style="text-align: center;">
 					<button type="submit" class="btnSearch" id="btnSearch" >검색</button>
 					<a href = "<c:url value='/Member/write'/>" class="btnAdd" id ="btnAdd">등록</a>
-					<button class="btnDelete" type="button" id="btnDelete">삭제</button>
+					<button class="btnDelete" type="button" id="btnDelete" >퇴사</button>
 				</div>
 			
 				<br>
@@ -67,7 +81,7 @@
 		                <c:if test="${!empty list}">
 		                	<c:forEach var="memberVo" items="${list}"> 
 		                		<tr class="memList">
-		                			<td><input type="checkbox"></td>
+		                			<td><input type="checkbox" class="MemChk"></td>
 		                			<td>${memberVo.deptName}</td>
 		                			<td>${memberVo.positionName}</td>
 		                			<td>
@@ -80,6 +94,7 @@
 		                			<td>${memberVo.type}</td>
 		                			<td>${memberVo.contractStart.substring(0, 10)}</td>
 		                			<td>${memberVo.contractDone.substring(0, 10)}</td>
+		                			<td><input type="hidden" id="hiddenMemNo" value = "${memberVo.memNo}"></td>
 		                		</tr>
 		                	</c:forEach>
 		                </c:if>

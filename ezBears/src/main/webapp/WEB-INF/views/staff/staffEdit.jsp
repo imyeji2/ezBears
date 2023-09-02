@@ -152,6 +152,46 @@
                 $('#previewImage').attr('src', imageUrl);
             }
         });
+        
+        $('#btnSubmit').click(function () {
+        	if ($('#staffName').val().length < 1) {
+				alert("이름을 입력하세요");
+				$('#staffName').focus();				
+				return false;
+			}
+        	
+        	if ($('#staffPosition').val().length < 1) {
+				alert("포지션을 입력하세요");
+				$('#staffPosition').focus();				
+				return false;
+			}
+        	
+        	if ($('#staffSal').val().length < 1) {
+				alert("연봉을 입력하세요");
+				$('#staffSal').focus();				
+				return false;
+			}
+        	
+        	if ($('#contractDone').val().length < 1) {
+				alert("계약 종료일을 입력하세요");
+				$('#contractDone').focus();				
+				return false;
+			}
+        	
+        	if ($('#staffPwd').val().length < 1) {
+				alert("비밀번호를 입력하세요");
+				$('#staffPwd').focus();				
+				return false;
+			}
+        	
+        	if ($('#floatingSelect option:selected').val().length < 1) {
+				alert("부서를 입력하세요");
+				$('#floatingSelect').focus();				
+				return false;
+			}
+        	
+        	
+		})
 	})
 </script>
 	<form name="frmEdit" method="post" action="<c:url value='/staff/staffEdit'/>" enctype="multipart/form-data">
@@ -160,9 +200,14 @@
             <div class="row h-100 align-items-center justify-content-center" style="min-height: 100vh;">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                     <div class="bg-secondary rounded p-4 p-sm-5 my-4 mx-3">
-                        <div class="d-flex align-items-center justify-content-between mb-3">
-                            <h3>Staff Edit</h3>
-                        </div>
+                         <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+				           <ol class="breadcrumb">
+				             <li class="breadcrumb-item active" aria-current="page">
+				                <a href="<c:url value='/staff/staffList'/>">스태프 관리</a>
+				             </li>
+				             <li class="breadcrumb-item active" aria-current="page">스태프 수정</li>
+				           </ol>
+				         </nav>
                         <div style="width: 60%; margin: 0 auto;" >
 	                   		<div class ="imgdiv">
 	                   			<c:if test="${!empty staffVo.staffImage }">
@@ -193,40 +238,40 @@
 	                        <input type="hidden" name="staffNo" value="${staffVo.staffNo }">
 	                        <input type="hidden" name="oldFileName" value="${staffVo.staffImage }">
 	                        <div class="form-floating mb-3">
-	                            <input type="text" class="form-control" id="floatingInput" placeholder="staff_name" name="staffName" value="${staffVo.staffName }">
+	                            <input type="text" class="form-control staffInput" id="staffName" placeholder="staff_name" name="staffName" value="${staffVo.staffName }">
 	                            <label for="floatingInput">staff_이름</label>
 	                        </div>
 	                        <div class="form-floating mb-3">
-	                            <input type="text" class="form-control" id="floatingInput" placeholder="staff_position" name="staffPosition" value="${staffVo.staffPosition }">
+	                            <input type="text" class="form-control staffInput" id="staffPosition" placeholder="staff_position" name="staffPosition" value="${staffVo.staffPosition }">
 	                            <label for="floatingInput">staff_포지션</label>
 	                        </div>
 	                        <div class="form-floating mb-3">
-	                            <input type="text" class="form-control" id="floatingInput" placeholder="staff_back_no" name="staffBackNo" value="${staffVo.staffBackNo }">
+	                            <input type="text" class="form-control staffInput" id="floatingInput" placeholder="staff_back_no" name="staffBackNo" value="${staffVo.staffBackNo }">
 	                            <label for="floatingInput">staff_등번호</label>
 	                        </div>
 	                        <div class="form-floating mb-3">
-	                            <input type="text" class="form-control" id="staffBirth" placeholder="staff_birth" max="9999-12-31" name="staffBirth" maxlength="10" value="${staffVo.staffBirth.substring(0, 10) }">
+	                            <input type="text" class="form-control staffInput" id="staffBirth" placeholder="staff_birth" max="9999-12-31" name="staffBirth" maxlength="10" value="${staffVo.staffBirth.substring(0, 10) }">
 	                            <label for="floatingInput">staff_생일</label>
 	                        </div>
 	                        <div class="form-floating mb-3">
-	                            <input type="text" class="form-control" id="floatingInput" placeholder="staff_sal" name="staffSal" value="${staffVo.staffSal }">
+	                            <input type="text" class="form-control staffInput" id="staffSal" placeholder="staff_sal" name="staffSal" value="${staffVo.staffSal }">
 	                            <label for="floatingInput">staff_연봉</label>
 	                        </div>
 <%-- 	                        <div class="form-floating mb-3">
-	                            <input type="text" class="form-control" id="contractStart" placeholder="contract_start" max="9999-12-31" name="contractStart" maxlength="10" value="${staffVo.contractStart }">
+	                            <input type="text" class="form-control staffInput" id="contractStart" placeholder="contract_start" max="9999-12-31" name="contractStart" maxlength="10" value="${staffVo.contractStart }">
 	                            <label for="floatingInput">계약 시작일</label>
 	                        </div> --%>
 	                        <div class="form-floating mb-3">
-	                            <input type="text" class="form-control" id="contractDone" placeholder="contract_done" max="9999-12-31" name="contractDone" maxlength="10" value="${staffVo.contractDone.substring(0, 10) }">
+	                            <input type="text" class="form-control staffInput" id="contractDone" placeholder="contract_done" max="9999-12-31" name="contractDone" maxlength="10" value="${staffVo.contractDone.substring(0, 10) }">
 	                            <label for="floatingInput">계약 종료일</label>
 	                        </div>
 	                        <div class="form-floating mb-3">
-	                            <input type="text" class="form-control" id="floatingInput" placeholder="staff_info" name="staffInfo" value="${staffVo.staffInfo }">
+	                            <input type="text" class="form-control staffInput" id="floatingInput" placeholder="staff_info" name="staffInfo" value="${staffVo.staffInfo }">
 	                            <label for="floatingInput">staff_정보</label>
 	                        </div>
 		                    <div class="firstdiv">
 						    	<div class="form-floating address">
-						    		<input type="text" class="form-control" id="contract" placeholder="staff_zipcode" name="staffZipcode" value="${staffVo.staffZipcode }">
+						    		<input type="text" class="form-control staffInput" id="contract" placeholder="staff_zipcode" name="staffZipcode" value="${staffVo.staffZipcode }">
 							        <label for="zipcode">우편번호</label>
 						    	</div>
 						    	<div class="dup">
@@ -236,23 +281,23 @@
 					    	</div>	
 					    	<br>
 	                        <div class="form-floating mb-3">
-	                            <input type="text" class="form-control" id="staff_addr" placeholder="staff_addr" name="staffAddr" value="${staffVo.staffAddr }">
+	                            <input type="text" class="form-control staffInput" id="staff_addr" placeholder="staff_addr" name="staffAddr" value="${staffVo.staffAddr }">
 	                            <label for="floatingInput">staff_주소</label>
 	                        </div>
 	                        <div class="form-floating mb-3">
-	                            <input type="text" class="form-control" id="staff_addr_detail" placeholder="staff_addr_detail" name="staffAddrDetail" value="${staffVo.staffAddrDetail }">
+	                            <input type="text" class="form-control staffInput" id="staff_addr_detail" placeholder="staff_addr_detail" name="staffAddrDetail" value="${staffVo.staffAddrDetail }">
 	                            <label for="floatingInput">staff_주소상세</label>
 	                        </div>
 	                        <div class="form-floating mb-3">
-	                            <input type="text" class="form-control" id="staffTel" placeholder="staff_tel" maxlength="13" name="staffTel" value="${staffVo.staffTel }">
+	                            <input type="text" class="form-control staffInput" id="staffTel" placeholder="staff_tel" maxlength="13" name="staffTel" value="${staffVo.staffTel }">
 	                            <label for="floatingInput">staff_전화번호</label>
 	                        </div>
 	                        <div class="form-floating mb-3">
-	                            <input type="text" class="form-control" id="floatingInput" placeholder="staff_id" name="staffId" value="${staffVo.staffId }">
+	                            <input type="text" class="form-control staffInput" id="staffId" placeholder="staff_id" name="staffId" value="${staffVo.staffId }" readonly>
 	                            <label for="floatingInput">staff_id</label>
 	                        </div>
 	                        <div class="form-floating mb-4">
-	                            <input type="password" class="form-control" id="floatingPassword" placeholder="staff_pwd" name="staffPwd" value="${staffVo.staffPwd }">
+	                            <input type="password" class="form-control staffInput" id="staffPwd" placeholder="staff_pwd" name="staffPwd" value="${staffVo.staffPwd }">
 	                            <label for="floatingPassword">staff_pwd</label>
 	                        </div>
 	                        <!-- <div class="d-flex align-items-center justify-content-between mb-4">

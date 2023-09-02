@@ -42,4 +42,13 @@ public interface TeamNoticeService {
 	//팀별 공지사항 댓글 업데이트
 	int updeteReply(TeamNoticeVO teamNoticeVo);
 	
+
+	
+	//팀별 공지사항 대댓글 등록
+	int addReReply(TeamNoticeVO teamNoticeVo);
+	
+	//공지사항 파일 삭제
+	int deleteFile(int teamNoticeNo);
+	
+	
 }

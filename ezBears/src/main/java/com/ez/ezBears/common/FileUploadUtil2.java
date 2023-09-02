@@ -31,12 +31,13 @@ public class FileUploadUtil2 {
 		//Map<String, MultipartFile> fileMap=multiRequest.getFileMap();
 		List<MultipartFile> files =multiRequest.getFiles("upfile");
 		//multiful로 설정해서 여러개 파일을 업로드 하고 싶을때 이렇게 활용
-
+		
+		System.out.println(files.size());
+		
 		//여러개 업로드된 파일의 정보를 저장할 리스트
 		List<Map<String, Object>> resultList = new ArrayList<>();
 		//Iterator<String> iter = fileMap.keySet().iterator();
 		int i=0;
-		
 		while(i<files.size()) {
 			//String key=iter.next();
 			MultipartFile tempFile = files.get(i);//fileMap.get(key);//업로드된 파일을 임시파일 형태로 제공
@@ -60,8 +61,8 @@ public class FileUploadUtil2 {
 
 				resultList.add(resultMap);
 				
-				i++;
 			}//if			
+			i++;
 		}//while
 
 		return resultList;
@@ -88,12 +89,14 @@ public class FileUploadUtil2 {
 				path=ConstUtil.STAFFIMAGE_FILE_UPLOAD_PATH;
 			}else if(pathFlag == ConstUtil.UPLOAD_TEAMIMAGE_FLAG) {	//선수 이미지 업로드
 				path=ConstUtil.TEAMIMAGE_FILE_UPLOAD_PATH;
-			}else if(pathFlag == ConstUtil.UPLOAD_NOTICE_FLAG) {
-				path=ConstUtil.NOTICE_FILE_UPLOAD_PATH;
+			}else if(pathFlag == ConstUtil.UPLOAD_NOTICE_FLAG) { //공지사항
+				path=ConstUtil.NOTICE_FILE_PATH;
 			}else if(pathFlag == ConstUtil.UPLOAD_WEBHARD_FLAG) {	//웹하드 업로드
 				path=ConstUtil.WEB_HARD_FILE_PATH;
 			}else if(pathFlag == ConstUtil.UPLOAD_APPROVAL_FLAG) {	//결재 업로드
 				path=ConstUtil.APPROVAL_FILE_UPLOAD_PATH;
+			}else if(pathFlag == ConstUtil.UPLOAD_BOARD_FLAG) { //자유게시판
+				path=ConstUtil.BOARD_FILE_PATH;
 			}
 			
 			

@@ -6,6 +6,17 @@
 <script type="text/javascript" src="<c:url value ='/js/member.js"'/>"></script>
 <script type="text/javascript" src="<c:url value ='/js/jquery-ui.min.js"'/>"></script>
 <script>
+$(function(){
+	$('.btnAdd').hide();
+	
+	$('.btnDelete').click
+});
+
+function editOk(){
+	$('.btnAdd').show();
+	$('.btnEdit').hide();
+	
+}
 function confirmAndSubmit() {
     if (confirm("수정하시겠습니까?")) {
         $('.btn-form').submit();
@@ -14,16 +25,27 @@ function confirmAndSubmit() {
     }
 }
 
-	var jb = jQuery.noConflict();
-	jb(function(){
-		jb('#contractDone').datepicker({
-			dateFormat:'yy-mm-dd',
-			changeYear:true,
-			dayNamesMin:['일','월','화','수','목','금','토'],
-			monthNames:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월']
-		});
-		
+function deleteMem(){
+    if (confirm("삭제하시겠습니까?")) {
+		var memNo = $('#memNo').val();
+	    var url = "<c:url value='/Member/delete?memNo=" + memNo + "'/>";
+	    $('.btn-form').attr('action', url);
+	    $('.btn-form').submit();
+    }else {
+    	event.preventDefault();
+    }
+}
+
+var jb = jQuery.noConflict();
+jb(function(){
+	jb('#contractDone').datepicker({
+		dateFormat:'yy-mm-dd',
+		changeYear:true,
+		dayNamesMin:['일','월','화','수','목','금','토'],
+		monthNames:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월']
 	});
+	
+});
 
 </script>
 	<div class="col-12">
@@ -38,19 +60,19 @@ function confirmAndSubmit() {
 	         </nav>
 			<form class="btn-form" name="frm1" method="post" action="<c:url value ='/Member/edit'/>" enctype="multipart/form-data">
 				<div class = "btns">
-					<button type="submit" class="btnAdd" id="btnAdd" value="수정" onclick="confirmAndSubmit()">수정</button>
-					<button class="btnDelete" type="button" id="btnDelete">삭제</button>
+					<button type="button" class="btnEdit" id="btnEdit" value="수정" onclick="editOk()">수정</button>
+					<button type="submit" class="btnAdd" id="btnAdd" value="완료" onclick="confirmAndSubmit()">완료</button>
+					<button class="btnDelete" type="button" id="btnDelete" onclick ="deleteMem()">삭제</button>
 				</div>
 	        	<p class = "errMsg" style="color: red;">상단 수정 버튼을 눌려야 수정이 완료됩니다.</p>
 		        <div class="inner">
-		        <input type="hidden" name="memNo" value="${memberVo.memNo}">
+		        <input type="hidden" id="memNo" name="memNo" value="${memberVo.memNo}">
 		        	<div class="memImg">
 		        		<img alt="" src="<c:url value ='/img/mem_images/${memberVo.memImage }'/> " style="width:180px; height:200px;" id="previewImage" name="memImage">
 		        		<label id = "editLable" for="imageUpload">사진 수정</label>
 						<input type ="file" name="imageUpload" id="imageUpload"  class="infobox" style="display:none">
 		        	</div>
 		        	<div class = "memInfo" style="width:70%;">
-		             <img class="editIcon" id="editDept" src="<c:url value='/img/editIcon.png'/>" >
 		        	 <table class="table" style="width:800px;">
 		                    <tr>
 		                        <th scope="col">부서</th>

@@ -89,8 +89,9 @@ public class FileUploadUtil {
 				path=ConstUtil.WEB_HARD_FILE_PATH;
 			}else if(pathFlag == ConstUtil.UPLOAD_APPROVAL_FLAG) {	//결재 업로드
 				path=ConstUtil.APPROVAL_FILE_UPLOAD_PATH;
+			}else if(pathFlag == ConstUtil.UPLOAD_TEAMWORKBOARD_FLAG) {	//결재 업로드
+				path=ConstUtil.TEAM_WORK_BOARD_FILE_PACH;
 			}
-			
 			
 			//실제 물리적인 경로 구하기
 			path=request.getSession().getServletContext().getRealPath(path);

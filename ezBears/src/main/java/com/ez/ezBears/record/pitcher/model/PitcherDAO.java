@@ -11,6 +11,7 @@ public interface PitcherDAO {
 	int insertPitcher(PitcherVO pitcherVo);
 	int updatePitcher(PitcherVO pitcherVo);
 	int deletePitcher(PitcherVO pitcherVo);
-	List<PitcherVO> selectPitcherByPlayerNo(int playerNo);
-	public Map<String, Object> selectByPlayerNo(@Param("playerNo")int playerNo,@Param("playDate")String playDate);
+	PitcherVO selectPitcherByPlayerNo(int playerNo);
+	
+	List<Map<String, Object>> selectPitcherView(int playerNo);
 }

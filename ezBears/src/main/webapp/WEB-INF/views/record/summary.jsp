@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+
 <body class="baseball flat _fs pid_34 detailbody responsive" style="">
 	<div class="container__detail">
 		<div id="detail" class="container__detailInner">
@@ -8,66 +11,85 @@
 
 					<div class="fixedHeaderParticipant__participantServe"></div>
 				</div>
+				<div class="smh__score smh__home smh__part--current">
+					<c:set var="totalScoreHome" value="0" />
+					<c:forEach var="map" items="${list }">
+						<c:if
+							test="${map['INNING'] == '1회초' || map['INNING'] == '2회초' || map['INNING'] == '3회초' || map['INNING'] == '4회초' || map['INNING'] == '5회초' || map['INNING'] == '6회초' || map['INNING'] == '7회초' || map['INNING'] == '8회초' || map['INNING'] == '9회초'}">
+							<div
+								class="smh__part smh__home smh__part--${map.INNING.charAt(1)}">${map.R}</div>
+							<c:set var="totalScoreHome" value="${totalScoreHome + map.R}" />
+						</c:if>
+					</c:forEach>
+					<div class="smh__part smh__score smh__home smh__part--current">${totalScoreHome}</div>
+				</div>
+
+				<div class="smh__part smh__score smh__away smh__part--current">
+					<c:set var="totalScoreAway" value="0" />
+					<c:forEach var="map" items="${list }">
+						<c:if
+							test="${map['INNING'] == '1회말' || map['INNING'] == '2회말' || map['INNING'] == '3회말' || map['INNING'] == '4회말' || map['INNING'] == '5회말' || map['INNING'] == '6회말' || map['INNING'] == '7회말' || map['INNING'] == '8회말' || map['INNING'] == '9회말'}">
+							<div
+								class="smh__part smh__away smh__part--${map.INNING.charAt(1)}">${map.R}</div>
+							<c:set var="totalScoreAway" value="${totalScoreAway + map.R}" />
+						</c:if>
+					</c:forEach>
+					<div class="smh__part smh__score smh__home smh__part--current">${totalScoreAway}</div>
+				</div>
+
 				<div class="fixedHeaderDuel__score">
 					<div class="detailScore__matchInfo">
 						<div class="fixedScore">
-							<span>5</span><span class="fixedScore__divider">-</span><span>3</span>
+							<span></span><span class="fixedScore__divider">-</span><span></span>
 						</div>
 					</div>
 				</div>
 				<div class="fixedHeaderDuel__awayLogo ">
-					<a class="fixedHeaderParticipant__participantLink"
-						 title="프로필 보기"><img
+					<a class="fixedHeaderParticipant__participantLink" title="프로필 보기"><img
 						class="participant__image" loading="lazy" alt="삼성"
 						src="https://static.flashscore.com/res/image/data/AgKvnmEa-lpOlJAuM.png"></a>
 					<div class="fixedHeaderParticipant__participantServe"></div>
 				</div>
 			</div>
-			
-				
-					<div>
-						<div>
-							<div style="height: 100px; --adsHeight: 100px;">
-								<div class="adscontent" id="lsadvert-detail_leaderboard">
-									<iframe id="lsadvert-zid-4961-iframe"
-										name="banx-detail_leaderboard" frameborder="0" scrolling="no"
-										style="width: 640px; height: 100px;" banner-id="151407"></iframe>
-								</div>
-							</div>
-						</div>
-						<div class="adsclear"></div>
-						<div class="adsenvelope adstextpad banx-detail_leaderboard_mobile"
-							id="lsadvert-zid-4959"
-							style="width: 320px; --adsWidth: 320px; display: none;">
-							<div style="height: 50px; --adsHeight: 50px;">
-								<div class="ads__text ads__text--h"></div>
-							</div>
-						</div>
-						<div
-							class="adsenvelope adstextvpad banx-detail_leaderboard_tablet"
-							id="lsadvert-zid-4960"
-							style="width: 640px; --adsWidth: 640px; display: none;">
-							<div style="height: 100px; --adsHeight: 100px;">
-								<div class="adscontent" id="lsadvert-detail_leaderboard_tablet">
-									<iframe data-body-class="tablet_ad"
-										id="lsadvert-zid-4960-iframe"
-										name="banx-detail_leaderboard_tablet" frameborder="0"
-										scrolling="no"
-										style="allowTransparency: true; visibility: hidden; width: 640px; height: 100px"></iframe>
-								</div>
-								
-							</div>
+
+			<div>
+				<div>
+					<div style="height: 100px; --adsHeight: 100px;">
+						<div class="adscontent" id="lsadvert-detail_leaderboard">
+							<iframe id="lsadvert-zid-4961-iframe"
+								name="banx-detail_leaderboard" frameborder="0" scrolling="no"
+								style="width: 640px; height: 100px;" banner-id="151407"></iframe>
 						</div>
 					</div>
-				
-			<div>
-			</div>
-			<div class="tournamentHeader tournamentHeaderDescription">
+				</div>
+				<div class="adsclear"></div>
+				<div class="adsenvelope adstextpad banx-detail_leaderboard_mobile"
+					id="lsadvert-zid-4959"
+					style="width: 320px; --adsWidth: 320px; display: none;">
+					<div style="height: 50px; --adsHeight: 50px;">
+						<div class="ads__text ads__text--h"></div>
+					</div>
+				</div>
+				<div class="adsenvelope adstextvpad banx-detail_leaderboard_tablet"
+					id="lsadvert-zid-4960"
+					style="width: 640px; --adsWidth: 640px; display: none;">
+					<div style="height: 100px; --adsHeight: 100px;">
+						<div class="adscontent" id="lsadvert-detail_leaderboard_tablet">
+							<iframe data-body-class="tablet_ad" id="lsadvert-zid-4960-iframe"
+								name="banx-detail_leaderboard_tablet" frameborder="0"
+								scrolling="no"
+								style="allowTransparency: true; visibility: hidden; width: 640px; height: 100px"></iframe>
+						</div>
 
+					</div>
+				</div>
 			</div>
+
+			<div></div>
+			<div class="tournamentHeader tournamentHeaderDescription"></div>
 			<div class="duelParticipant">
 				<div class="duelParticipant__startTime">
-					<div class="">08.08.2023 18:30</div>
+					<div class="playDate">${gameVo.playDate }</div>
 				</div>
 				<div class="duelParticipant__home duelParticipant--winner">
 					<a
@@ -79,44 +101,35 @@
 					<div class="participant__participantNameWrapper">
 						<div class="participant__participantIcon"></div>
 						<div class="participant__participantName participant__overflow">
-							<a href="/team/doosan-bears/pGmPNh11/"
-								class="participant__participantName participant__overflow ">두산</a>
-						</div>
+							이젠</div>
 					</div>
 				</div>
 				<div class="duelParticipant__score">
 					<div class="detailScore__matchInfo">
 						<div class="detailScore__wrapper">
-							<span>5</span><span class="detailScore__divider">-</span><span>3</span>
+							<span>${totalScoreHome}</span><span class="detailScore__divider">-</span><span>${totalScoreAway}</span>
 						</div>
 
 					</div>
 				</div>
 				<div class="duelParticipant__away ">
-					<div>
-						<svg class="star-ico myTeamsIcon__myTeams">
-							<title></title><use
-								xlink:href="/res/_fs/build/action.30f034d.svg#star"></use></svg>
-					</div>
+					<div></div>
 					<a
 						class="participant__participantLink participant__participantLink--team"
-						 title="프로필 보기"><img
-						class="participant__image" loading="lazy" alt="삼성"
+						title="프로필 보기"><img class="participant__image" loading="lazy"
+						alt="삼성"
 						src="https://static.flashscore.com/res/image/data/AgKvnmEa-lpOlJAuM.png"></a>
 					<div class="participant__participantServe"></div>
 					<div class="participant__participantNameWrapper">
 						<div class="participant__participantName participant__overflow">
-							<a href="/team/samsung-lions/O6nTMCG7/"
-								class="participant__participantName participant__overflow ">삼성</a>
+							${gameVo.otherTeam }</a>
 						</div>
 						<div class="participant__participantIcon"></div>
 					</div>
 				</div>
 			</div>
-			<div class="tab detail__tab">
-			</div>
-			<div class="filter detail__filter">
-			</div>
+			<div class="tab detail__tab"></div>
+			<div class="filter detail__filter"></div>
 			<div class="matchReportBoxes"></div>
 			<div elementtiming="SpeedCurveFRP">
 				<div class="section">
@@ -138,101 +151,149 @@
 						<div class="smh__border"></div>
 						<div class="smh__service smh__home"></div>
 						<div class="smh__participantName smh__home">
-							<a href="/team/samsung-lions/O6nTMCG7/"
-								class="participant__participantName participant__overflow ">삼성</a>
+							<c:if test="${gameVo.ground != '잠실'}">
+								이젠
+							</c:if>
+							<c:if test="${gameVo.ground == '잠실'}">
+								${gameVo.otherTeam }
+							</c:if>
 						</div>
-						<div class="smh__part smh__score smh__home smh__part--current" id="totalRSum"></div>
-						<div class="smh__part  smh__home smh__part--1">
-							0<sup></sup>
-						</div>
-						<div class="smh__part  smh__home smh__part--2">
-							0<sup></sup>
-						</div>
-						<div class="smh__part  smh__home smh__part--3">
-							0<sup></sup>
-						</div>
-						<div class="smh__part  smh__home smh__part--4">
-							0<sup></sup>
-						</div>
-						<div class="smh__part  smh__home smh__part--5">
-							0<sup></sup>
-						</div>
+
+						<div class="smh__part smh__score smh__home smh__part--current">${totalScoreHome} </div>
+						<c:forEach var="map" items="${list }">
+ 							<c:if test="${map['INNING'] == '1회초'}">
+								<div class="smh__part  smh__home smh__part--1" id="inning1Home">${map.R }</div>
+							</c:if>
+							<c:if test="${map['INNING'] == '2회초'}">
+								<div class="smh__part  smh__home smh__part--2" id="inning2Home">${map.R }</div>
+							</c:if>
+							<c:if test="${map['INNING'] == '3회초'}">
+								<div class="smh__part  smh__home smh__part--3" id="inning3Home">${map.R }</div>
+							</c:if>
+							<c:if test="${map['INNING'] == '4회초'}">
+								<div class="smh__part  smh__home smh__part--4" id="inning4Home">${map.R }</div>
+							</c:if>
+							<c:if test="${map.inning == '5회초'}">
+								<div class="smh__part  smh__home smh__part--5" id="inning5Home">${map.R }</div>
+							</c:if>
+							<c:if test="${map.inning == '6회초'}">
+								<div class="smh__part  smh__home smh__part--6" id="inning6Home">${map.R }</div>
+							</c:if>
+							<c:if test="${map.inning == '7회초'}">
+								<div class="smh__part  smh__home smh__part--7" id="inning7Home">${map.R }</div>
+							</c:if>
+							<c:if test="${map.inning == '8회초'}">
+								<div class="smh__part  smh__home smh__part--8" id="inning8Home">${map.R }</div>
+							</c:if>
+							<c:if test="${map.inning == '9회초'}">
+								<div class="smh__part  smh__home smh__part--9" id="inning9Home">${map.R }</div>
+							</c:if>
+						</c:forEach>
+						<%-- 						<c:if test="${list.inning == '1회초'}">
+						<div class="smh__part  smh__home smh__part--1" id="inning1Away">${list.'R' }</div>
+					</c:if>
+						<div class="smh__part  smh__home smh__part--2">0</div>
+						<div class="smh__part  smh__home smh__part--3">0</div>
+						<div class="smh__part  smh__home smh__part--4">0</div>
+						<div class="smh__part  smh__home smh__part--5">0</div>
 						<div class="smh__part  smh__home smh__part--6">1</div>
 						<div class="smh__part  smh__home smh__part--7">0</div>
 						<div class="smh__part  smh__home smh__part--8">0</div>
 						<div class="smh__part  smh__home smh__part--9">2</div>
 						<div class="smh__part  smh__home smh__part--x"></div>
 						<div class="smh__part  smh__home smh__part--hits">6</div>
-						<div class="smh__part  smh__home smh__part--errors">3</div>
+						<div class="smh__part  smh__home smh__part--errors">3</div> --%>
 						<div class="smh__service smh__away"></div>
 						<div class="smh__participantName smh__away">
-							<a href="/team/doosan-bears/pGmPNh11/"
-								class="participant__participantName participant__overflow fontExtraBold ">두산</a>
+							<c:if test="${gameVo.ground == '잠실'}">
+						이젠
+					</c:if>
+							<c:if test="${gameVo.ground != '잠실'}">
+						${gameVo.otherTeam }
+					</c:if>
 						</div>
-						<div class="smh__part smh__score smh__away smh__part--current">5</div>
-						<div class="smh__part  smh__away smh__part--1">
-							2<sup></sup>
-						</div>
-						<div class="smh__part  smh__away smh__part--2">
-							0<sup></sup>
-						</div>
-						<div class="smh__part  smh__away smh__part--3">
-							0<sup></sup>
-						</div>
-						<div class="smh__part  smh__away smh__part--4">
-							3<sup></sup>
-						</div>
-						<div class="smh__part  smh__away smh__part--5">
-							0<sup></sup>
-						</div>
-						<div class="smh__part  smh__away smh__part--6">0</div>
-						<div class="smh__part  smh__away smh__part--7">0</div>
-						<div class="smh__part  smh__away smh__part--8">0</div>
-						<div class="smh__part  smh__away smh__part--9">X</div>
-						<div class="smh__part  smh__away smh__part--x"></div>
-						<div class="smh__part  smh__away smh__part--hits">9</div>
-						<div class="smh__part  smh__away smh__part--errors">4</div>
+						<div class="smh__part smh__score smh__away smh__part--current">${totalScoreAway}</div>
+						<c:forEach var="map" items="${list }">
+							<c:if test="${map.inning == '1회말'}">
+								<div class="smh__part  smh__away smh__part--1" id="inning1Away">${list.R }</div>
+							</c:if>
+							<c:if test="${map.inning == '2회말'}">
+								<div class="smh__part  smh__away smh__part--2" id="inning2Away">${list.R }</div>
+							</c:if>
+							<c:if test="${map.inning == '3회말'}">
+								<div class="smh__part  smh__away smh__part--3" id="inning3Away">${list.R }</div>
+							</c:if>
+							<c:if test="${map.inning == '4회말'}">
+								<div class="smh__part  smh__away smh__part--4" id="inning4Away">${list.R }</div>
+							</c:if>
+							<c:if test="${map.inning == '5회말'}">
+								<div class="smh__part  smh__away smh__part--5" id="inning5Away">${list.R }</div>
+							</c:if>
+							<c:if test="${map.inning == '6회말'}">
+								<div class="smh__part  smh__away smh__part--6" id="inning6Away">${list.R }</div>
+							</c:if>
+							<c:if test="${map.inning == '7회말'}">
+								<div class="smh__part  smh__away smh__part--7" id="inning7Away">${list.R }</div>
+							</c:if>
+							<c:if test="${map.inning == '8회말'}">
+								<div class="smh__part  smh__away smh__part--8" id="inning8Away">${list.R }</div>
+							</c:if>
+							<c:if test="${map.inning == '9회말'}">
+								<div class="smh__part  smh__away smh__part--9" id="inning9Away">${list.R }</div>
+							</c:if>
+						</c:forEach>
 						<div class="smh__pitchers">
-							투수: <span class="smh__nbsp">알칸타라 [EZN] (승, 3-7)</span>
+							투수: <span class="smh__nbsp">${gameVo.firstPitcher} [EZN]
+								(승)</span>
 						</div>
 					</div>
 				</div>
 			</div>
+
 			<div class="section">
 				<div class="mi__header section__title">경기 정보</div>
 				<div class="mi__data">
 					<div class="mi__item">
 						<span class="mi__item__name"><svg class="spectators-ico ">
-								<title></title><use
-									xlink:href="/res/_fs/build/action.30f034d.svg#spectators"></use></svg>경기장:</span><span
-							class="mi__item__val">잠실야구장</span>
+							</svg>경기장:</span><span class="mi__item__val">${gameVo.ground }</span>
 					</div>
 				</div>
 			</div>
-			</div>
 		</div>
-<!-- 해당 요소에 합계를 표시할 영역 추가 -->
+	</div>
 
+	<script>
+	// JavaScript를 사용하여 vo.R 값들을 가져와 합계 계산
+	// 아래 주석은 실제 코드에 맞게 수정해야 합니다.
+	/*     var voValues = []; // vo.R 값들을 저장할 배열
 
-<!-- JavaScript 코드 추가 -->
-<script>
-    // JavaScript를 사용하여 vo.R 값들을 가져와 합계 계산
-    // 아래 주석은 실제 코드에 맞게 수정해야 합니다.
-    var voValues = []; // vo.R 값들을 저장할 배열
+	 // vo.R 값들을 가져와 배열에 저장
+	 var voElements = document.querySelectorAll('.smh__part--current');
+	 voElements.forEach(function(element) {
+	 var voValue = parseInt(element.textContent);
+	 voValues.push(voValue);
+	 });
 
-    // vo.R 값들을 가져와 배열에 저장
-    var voElements = document.querySelectorAll('.smh__part--current');
-    voElements.forEach(function(element) {
-        var voValue = parseInt(element.textContent);
-        voValues.push(voValue);
-    });
+	 // 배열의 합계 계산
+	 var totalRSum = voValues.reduce(function(sum, value) {
+	
+	 return sum + value;
+	 }, 0);
 
-    // 배열의 합계 계산
-    var totalRSum = voValues.reduce(function(sum, value) {
-        return sum + value;
-    }, 0);
+	 // 합계를 화면에 표시
+	 var totalRSumElement = document.getElementById('totalRSum');
+	 totalRSumElement.textContent = totalRSum; */
 
-    // 합계를 화면에 표시
-    var totalRSumElement = document.getElementById('totalRSum');
-    totalRSumElement.textContent = totalRSum;
+	//회차별 득점 정보 구하기
+	/* 	var listFromController = ${list};
+	 var inningElements = document.querySelectorAll('[id*="inning"]');
+	 var inning = 
+	 var score = 
+	
+	 inningElements.forEach(function(element) {
+	 if (element.id === 'inning1Away') {
+	 // 'inning1Away' 요소에 대한 작업 수행
+	
+	 }
+	 }); */
 </script>

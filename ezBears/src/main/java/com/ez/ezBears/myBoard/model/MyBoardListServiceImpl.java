@@ -42,6 +42,13 @@ public class MyBoardListServiceImpl implements MyBoardListService {
 	public int seleectMyBoardNo(MyBoardListVO myBoardListVo) {
 		return myBoardListDao.seleectMyBoardNo(myBoardListVo);
 	}
+	
+	
+	////마이보드 멤버 검색
+	@Override
+	public List<Map<String, Object>> selectMyBoardMember(int mBoardNo) {
+		return myBoardListDao.selectMyBoardMember(mBoardNo);
+	}
 
 	
 	
@@ -67,6 +74,11 @@ public class MyBoardListServiceImpl implements MyBoardListService {
 	@Override
 	public MyBoardInfoVO selectBoardInfo(MyBoardInfoVO myBoardInfoVo) {
 		return myBoardListDao.selectBoardInfo(myBoardInfoVo);
+	}
+	// 결재디테일 부서별 멤버조회
+	@Override
+	public MyBoardInfoVO selectMyBoardDept(String userid) {
+		return myBoardListDao.selectMyBoardDept(userid);
 	}
 
 }

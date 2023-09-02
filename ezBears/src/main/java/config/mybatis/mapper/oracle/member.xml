@@ -23,7 +23,7 @@
     </select>
     
     <select id="selectMemberView" parameterType="String" resultType="map">
-    	select * from memberView1 where MEM_ID = #{memId}
+    	select * from memberView1 where MEM_ID = #{memId} 
     </select>
 	
 	
@@ -98,9 +98,16 @@
     
     <!-- 부서 삭제시 그 부서에 들어있는 인원체크 -->
     <select id="countMem" parameterType="int" resultType="int">
-    	SELECT COUNT(*) FROM MEMBER WHERE DEPT_NO = #{deptNo}
+    	SELECT COUNT(*) FROM MEMBER WHERE DEPT_NO = #{deptNo} AND CONTRACT_DONE IS NULL
     </select>
-    
+	
+	<!-- 멤버 퇴사 처리 -->
+	<update id="deleteMem" parameterType="int" >
+		UPDATE MEMBER
+		SET CONTRACT_DONE = SYSDATE
+		WHERE MEM_NO = #{memNo} AND CONTRACT_DONE IS NULL
+	</update>
+	
     <!-- 검색where조건 -->
     <sql id="searchWhere">
 		<where>
@@ -115,4 +122,12 @@
 		</where>
 	</sql>
 
+
+	<!-- 희진  -->
+	<select id="selectpositioninfo" parameterType="int" resultType="memberVo">
+		select * from member 
+		where dept_no = #{deptNo} 
+		and position_no =6
+	</select>
+	
 </mapper>
