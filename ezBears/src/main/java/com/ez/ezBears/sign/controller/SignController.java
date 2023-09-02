@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ez.ezBears.common.ConstUtil;
 import com.ez.ezBears.common.PaginationInfo;
@@ -128,7 +129,7 @@ public class SignController {
 
 	@RequestMapping("/Approval_detail")
 	public String Approval_detail(@RequestParam (defaultValue = "0")int docNo, @RequestParam(defaultValue = "0")int deptNo,
-			@RequestParam(defaultValue = "0")int mBoardNo, @ModelAttribute SignVO signVo,
+			@RequestParam(defaultValue = "0")int mBoardNo,@RequestParam (defaultValue = "0")int positionNo, @ModelAttribute SignVO signVo,
 			@ModelAttribute MyBoardInfoVO myBoardInfoVo,@ModelAttribute MemberVO memberVo , HttpSession session,
 			Model model) {
 		
@@ -154,13 +155,17 @@ public class SignController {
 		return "myBoard/Approval_detail";
 	}
 	
+	@ResponseBody
 	@PostMapping("/statusUpdate")
-	public String statusUpdate(@RequestParam (defaultValue = "0")int docNo) {
+	public String statusUpdate(@RequestParam ("docNo") int docNo , @RequestParam("positionNo") int positionNo, @ModelAttribute SignVO signVo) {
+		
+		logger.info("결재 문서 번호 docNo={}",docNo);
 		
 		
+		signVo = signService.updateStatus(docNo);
 		
 		
-		return "";
+		return "myBoard/Approval";
 
 	}
 

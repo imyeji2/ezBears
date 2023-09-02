@@ -17,4 +17,6 @@ public interface SignService {
 	int selectAppCount(SearchVO searchVo);
 	
 	Map<String, Object> detailSign(int docNo);
+	
+	SignVO updateStatus(int docNo);
 }

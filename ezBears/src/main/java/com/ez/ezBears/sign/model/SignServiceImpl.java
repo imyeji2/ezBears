@@ -41,6 +41,12 @@ public class SignServiceImpl implements SignService{
 	}
 
 
+	@Override
+	public SignVO updateStatus(int docNo) {
+		return signDao.updateStatus(docNo);
+	}
+
+
 
 
 

@@ -53,7 +53,7 @@ ON A.MEM_NO = B.MEM_NO;
 [희진]---------------------------------------------------------------------
 create or replace view myBoardInfo
 as
-select b.*,m.mem_id,m.dept_No,m.mem_name
+select b.*,m.mem_id,m.dept_No,m.mem_name,m.position_no
 from member m join my_board b
 on m.mem_no = b.mem_no;
 
@@ -65,11 +65,24 @@ myBoardInfo info join schedule s
 on info.my_board_no = s.my_board_no;
 
 
-create or replace view signListView
-as
-select s.* from
-member m join sign s
-on m.mem_no = s.mem_no;
+CREATE OR REPLACE VIEW signListView
+AS
+SELECT A.*, B.MEM_ID, B.MEM_NAME, B.DEPT_NAME, B.POSITION_NO
+FROM
+(
+    SELECT S.*, MY.M_BOARD_NO
+    FROM SIGN S
+    JOIN MY_BOARD MY
+    ON S.MY_BOARD_NO = my.my_board_no
+)A JOIN
+(
+    SELECT M.MEM_NO,M.MEM_ID, MEM_NAME, MEM_IMAGE, D.DEPT_NAME, M.DEPT_NO, M.POSITION_NO
+    FROM MEMBER M
+    JOIN DEPT D
+    ON M.DEPT_NO = D.DEPT_NO
+) B
+ON A.MEM_NO = B.MEM_NO;
+
 
 
 create or replace view approvalDetailView

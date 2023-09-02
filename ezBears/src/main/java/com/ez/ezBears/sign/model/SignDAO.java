@@ -21,4 +21,7 @@ public interface SignDAO {
 	
 	// 디테일
 	Map<String, Object> detailSign(int docNo);
+	
+	//승인처리
+	SignVO updateStatus(int docNo);
 }

@@ -191,10 +191,11 @@ document.addEventListener("DOMContentLoaded", function() {
 				<!-- approvalModal -->
 
 				<div>
-					<input type="text" name="mBoardNo" value="${mBoardNo}"> <input
-						type="text" name="userid" value="${userid}"> <input
-						type="text" name="memNo" value="${memNo}"> <input
-						type="text" name="deptNo" value="${myBoardInfoVo.deptNo}">
+					<input type="text" name="mBoardNo" value="${mBoardNo}">
+					 <input type="text" name="userid" value="${userid}"> 
+						<input type="text" name="memNo" value="${memNo}"> 
+						<input type="text" name="deptNo" value="${myBoardInfoVo.deptNo}">
+						<input type="text" name="positionNo" value="${myBoardInfoVo.positionNo}">
 				</div>
 			</div>
 		</div>
