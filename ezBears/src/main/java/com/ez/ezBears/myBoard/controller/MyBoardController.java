@@ -63,7 +63,28 @@ public class MyBoardController {
 		
 		return cnt;
 	}
+	
+	@RequestMapping("/myBoardMember")
+	public String myBoardMember(@RequestParam(defaultValue = "0") int mBoardNo, Model model) {
+		
+		model.addAttribute("mBoardNo",mBoardNo);
+		return "/myBoard/myBoardMember";
+	}
 
+	
+	@RequestMapping("/editMyBoard")
+	public String editMyBoard(@RequestParam(defaultValue = "0") int mBoardNo, Model model) {
+		//1
+		logger.info("마이보드 수정");
+		
+		//2
+		
+		//3
+		model.addAttribute("mBoardNo",mBoardNo);
+		
+		//4
+		return "/myBoard/editMyBoard";
+	}
 	
 	   //희진
 	   /*팀별 결재 게시판 */

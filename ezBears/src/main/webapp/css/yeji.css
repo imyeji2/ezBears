@@ -938,4 +938,20 @@
 		background-color: #191C24;
 		color: #fff;
 	}
+	
+	.modal-footer button{
+		background-color: #7000D8 !important;
+	}
+}
+
+
+#editMyBoard{
+	.form-control{
+		background-color: #191C24;
+		color: #fff;
+	}
+	
+	.modal-footer button{
+		background-color: #7000D8 !important;
+	}
 }

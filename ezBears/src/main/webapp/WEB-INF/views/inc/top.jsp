@@ -138,12 +138,18 @@
 	
 	$(function(){
 		$('#addMyBoard').on('shown.bs.modal', function () {
-			  $('#AddBoardName').focus();
-			});
-		
+			$('#AddBoardName').val('');
+			$('#AddBoardName').focus();
+		});
+
+        $('#addMyBoard').on('hide.bs.modal', function () {
+            $('#AddBoardName').val('');
+            $('#addBoardError').text('');
+        });
+        
+        
 		$('#AddBoardName').on('input', function(e) {
 		    var mBoardName = $(this).val();
-            
 		    if (mBoardName.length < 1) {
 		        $('#addBoardError').text('추가할 보드 이름을 입력하세요');
 		    } else {
@@ -205,7 +211,8 @@
 			        }
 			    }); // ajax
 		    }
-		}); 		
+		});
+		
 		
 	});
 
@@ -263,9 +270,8 @@
                 			<img src="<c:url value='/img/plus.svg'/>" alt="보드 추가 버튼" 
                 				style="margin-right:10px;" id="addBoard"
                 				data-bs-toggle="modal" data-bs-target="#addMyBoard">
-                				
-                				
-                			<img src="<c:url value='/img/gear-wide.svg'/>" alt="보드 관리 버튼"/>
+                			<img src="<c:url value='/img/gear-wide.svg'/>" alt="보드 관리 버튼" id="editBoard"
+                			data-bs-toggle="modal" data-bs-target="#editMyBoard"/>
                 		</div>
                 	</div>
                     <div class="nav-item dropdown">
@@ -357,6 +363,7 @@
         </div>
         <!-- Sidebar End -->
   		<c:import url="/myBoard/addMyBoard"></c:import>
+  		<c:import url="/myBoard/editMyBoard"></c:import>
 
         <!-- Content Start -->
         <div class="content">
