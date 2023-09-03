@@ -17,7 +17,7 @@
 		(
 			select rownum as RNUM, A.* from
 			(
-				select * from board
+				select * from board1
 				<include refid="searchWhere"></include>
 				order by BOARD_NO desc
 			)A
@@ -27,8 +27,8 @@
       and RNUM<=#{firstRecordIndex} + #{recordCountPerPage}]]>		
 	</select>
 	
-	<select id="boardAll" resultType="int">
-		select boardnum from board
+	<select id="boardAll" resultType="map">
+		select random_id from board
 	</select>
 	
 	<select id="selectTotalCount" parameterType="SearchVo" resultType="int">
@@ -37,16 +37,86 @@
 	</select>
 	
 	<insert id="insertBoard" parameterType="boardVo">
-		<selectKey keyProperty="boardNo" resultType="int" order="BEFORE">
-			select BOARD_SEQ.nextval from dual
-		</selectKey>
-		insert into board(board_no,mem_no,board_title,board_content,boardnum)
-		values(#{boardNo}, #{memNo}, #{boardTitle}, #{boardContent},#{randomnum})
-	</insert> 
+	    <selectKey keyProperty="boardNo" resultType="int" order="BEFORE">
+	        select BOARD_SEQ.nextval from dual
+	    </selectKey>
+	    insert into board(board_no, mem_no, board_title, board_content,contentNo, RANDOM_ID, RANDOM_PWD)
+	    values(#{boardNo}, #{memNo}, #{boardTitle}, #{boardContent},#{contentNo} , #{randomId,jdbcType=VARCHAR}, #{randomPwd})
+	</insert>
 	
-	<select id="randomNum" parameterType="int" resultType="int">
-		select count(*) from board
-		where boardnum=#{boardnum}
+	<select id="checkExistingRandomId" parameterType="String" resultType="int">
+	    select count(*) from board
+	    where RANDOM_ID=#{randomId}
 	</select>
+	
+	
+	<insert id="insertFileBoard" parameterType="boardfileVo">
+		<selectKey keyProperty="boardFileNo" resultType="int" order="BEFORE">
+			select boardFile_seq.nextval from dual
+		</selectKey>
+		insert into boardFile(board_file_no, board_no, file_name, file_size, origin_fileName)
+		values(#{boardFileNo},#{boardNo},#{fileName},#{fileSize},#{originFileName})
+	</insert>
+	
+	<update id="updateDowncount" parameterType="int">
+		update boardfile
+		set	DOWN_COUNT=DOWN_COUNT+1
+		where BOARD_FILE_NO=#{boardFileNo}
+	</update>
+	
+	
+	<select id="nextPage" resultType="map" parameterType="int">
+		SELECT BOARD_NO, MEM_NO, BOARD_TITLE, BOARD_CONTENT, REGDATE, STATUS, VIEWS,
+		LAG(BOARD_NO, 1,0) OVER(ORDER BY BOARD_NO ) PREV_NUM,
+	    LAG(BOARD_TITLE) OVER(ORDER BY BOARD_NO ) PREV_TITLE,
+	    
+	    LEAD(BOARD_NO,1,0) OVER (ORDER BY BOARD_NO) AS NEXT_NUM,
+        LEAD(BOARD_TITLE) OVER(ORDER BY BOARD_NO ) NEXT_TITLE
+		FROM BOARD
+	</select>
+	
+	<select id="selectDetail" parameterType="int" resultType="map">
+		select * from board1
+		where BOARD_NO=#{boardNo}
+	</select>
+	
+	<update id="updateViewsCount" parameterType="int">
+		update board
+        set views = views+1
+        where BOARD_NO=#{boardNo}
+	</update>
+	
+	<select id="selectBoardList" parameterType="int" resultType="map">
+		select * from board1
+		order by BOARD_NO desc
+	</select>
+	
+	<select id="selectBoardFile" parameterType="int" resultType="map">
+		select * from boardfile
+		where BOARD_NO=#{boardNo}
+	</select>
+	
+	
+	<delete id="deleteBoardFile">
+		delete from boardfile
+		where BOARD_NO =#{boardNo}
+	</delete>
+	
+	<delete id="deleteBoard">
+		delete from board
+		where BOARD_NO =#{boardNo}
+	</delete>
+	
+	<select id="selectboardFileByNo" parameterType="int" resultType="map">
+		select * from boardfile
+		where BOARD_NO =#{boardNo}
+	</select>
+	
+	<update id="updateboard" parameterType="boardVo">
+		update board
+		set BOARD_TITLE=#{boardTitle}, BOARD_CONTENT=#{boardContent}
+		where BOARD_NO=#{boardNo}
+	</update>
+	
 	
 </mapper>

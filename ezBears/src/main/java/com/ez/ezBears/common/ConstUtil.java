@@ -41,6 +41,8 @@ public interface ConstUtil {
 	//다중파일 업로드
 	String NOTICE_FILE_UPLOAD_PATH="img/notice";
 	String NOTICE_FILE_PATH="file/notice";
+	String BOARD_FILE_UPLOAD_PATH="img/board";
+	String BOARD_FILE_PATH="file/board";
 	
 	//자료실 업로드인지, 멤버 등록시 업로드인지 구분값
 	int UPLOAD_FILE_FLAG=1;//자료실 업로드
@@ -52,6 +54,7 @@ public interface ConstUtil {
 	int UPLOAD_NOTICE_FLAG=7;	//공지사항 등록 플래그
 	int UPLOAD_APPROVAL_FLAG=8;	//결재파일 플래그
 	int UPLOAD_TEAMWORKBOARD_FLAG =9; //팀별 업무 게시판 플래그
+	int UPLOAD_BOARD_FLAG=10; //자유게시판 플래그
 	
 }
 

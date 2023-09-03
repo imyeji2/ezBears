@@ -246,15 +246,14 @@ public class NoticeController {
 			files = fileUploadUtil.fileupload(request, ConstUtil.UPLOAD_NOTICE_FLAG);
 			logger.info("업로드파일 정보 files={}", files);
 
-			int cnt2=noticeService.insertFileNotice(files, noticeVo.getNoticeNo());
-			logger.info("다중파일 업로드 결과 cnt2={}",cnt2);
-
 			//2
 			String msg="공지사항 글 수정 실패";
 			String url="/notice/noticeEdit?noticeNo="+noticeNo;
 
 			if(cnt>0) {
-
+				int cnt2=noticeService.insertFileNotice(files, noticeVo.getNoticeNo());
+				logger.info("다중파일 업로드 결과 cnt2={}",cnt2);
+				
 				msg="공지사항 글 수정 성공";
 				url="/notice/noticeDetail?noticeNo="+noticeNo;
 
@@ -271,6 +270,8 @@ public class NoticeController {
 				}
 			}//if
 
+			
+			
 			//3
 			model.addAttribute("msg",msg);
 			model.addAttribute("url",url);

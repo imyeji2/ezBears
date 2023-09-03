@@ -18,28 +18,28 @@
 		        	</div>
 		        	<div class="infobox">
 						<div class="first">
-							<input type="text" class="firstCol" value="부서">
-							<input type="text" class="secCol" name ="deptName"  id ="deptName">
+							<input type="text" class="firstCol" value="부서" readonly="readonly">
+							<input type="text" class="secCol" name ="deptName"  id ="deptName" readonly="readonly">
 						</div>
 						<div class="second">
-							<input type="text" class="firstCol" value="직급">
-							<input type="text" class="secCol" name ="positionName"  id ="positionName" >
+							<input type="text" class="firstCol" value="직급" readonly="readonly">
+							<input type="text" class="secCol" name ="positionName"  id ="positionName" readonly="readonly" >
 						</div>
 						<div class="third">
-							<input type="text" class="firstCol" value="이름">
-							<input type="text" class="secCol" name ="memName" id ="memName">
+							<input type="text" class="firstCol" value="이름" readonly="readonly">
+							<input type="text" class="secCol" name ="memName" id ="memName" readonly="readonly">
 						</div>
 						<div class="fourth">
-							<input type="text" class="firstCol" value="id">
-							<input type="text" class="secCol" name ="memId" id ="memId">
+							<input type="text" class="firstCol" value="id" readonly="readonly">
+							<input type="text" class="secCol" name ="memId" id ="memId" readonly="readonly">
 						</div>
 						<div class="fifth">
-							<input type="text" class="firstCol" value="전화번호">
-							<input type="text" class="secCol" name ="memTel" id ="memTel">
+							<input type="text" class="firstCol" value="전화번호" readonly="readonly">
+							<input type="text" class="secCol" name ="memTel" id ="memTel" readonly="readonly">
 						</div>
 						<div class="sixth">
-							<input type="text" class="firstCol" value="생년월일">
-							<input type="text" class="secCol" name ="memBirth" id ="memBirth">
+							<input type="text" class="firstCol" value="생년월일" readonly="readonly">
+							<input type="text" class="secCol" name ="memBirth" id ="memBirth" readonly="readonly">
 						</div>
 						<div class="chatDiv">
 							<button type="submit" id="gotoChat">
