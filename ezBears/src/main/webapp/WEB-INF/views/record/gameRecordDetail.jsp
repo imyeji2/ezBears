@@ -86,14 +86,7 @@
 					</c:import>
 				</div>
 			</div>
-			<div class="center">
-				<a
-					href="<c:url value='/record/gameEdit?recodeNo=${gameVo.recodeNo }'/>"
-					style="color: white;">수정</a> | <a
-					href="<c:url value='/record/gameDelete?recodeNo=${gameVo.recodeNo }'/>"
-					style="color: white;">삭제</a> | <a
-					href="<c:url value='/record/gameList'/>" style="color: white;">목록</a>
-			</div>
+
 
 		</div>
 	</div>

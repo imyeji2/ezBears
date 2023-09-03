@@ -43,15 +43,7 @@ public class RecordController {
 	private final HitterService hitterService;
 	private final PitcherService pitcherService;
 	private final InningService inningService;
-	
-	
-	@RequestMapping("/playerList")
-	public String playerList() {
-		//기록 검색
-		logger.info("선수 리스트 보여주기");
-		return "/record/playerList";
-	}
-	
+
 	@RequestMapping("/gameRecord")
 	public String gameRecord() {
 		//1,4
@@ -72,13 +64,6 @@ public class RecordController {
 	}
 	
 	
-	@RequestMapping("/gameRecordCal")
-	public String gameRecordCal() {
-		//1,4
-		logger.info("경기 상세 기록 보여주기");
-		return "/record/gameRecordCal";
-	}
-	
 	
 	@RequestMapping("/team")
 	public String team() {
@@ -89,7 +74,7 @@ public class RecordController {
 	
 	@RequestMapping("/gameRecordDetail2")
 	public String gameRecordDetail2() {
-		//1,4
+		
 		logger.info("날짜 별 경기 기록 상세 보여주기");
 		return "/record/gameRecordDetail2";
 	}
@@ -102,8 +87,15 @@ public class RecordController {
 		return "/record/playerDetail2";
 	}
 	
-	@RequestMapping("/inningWrite")
-	public String inningWrite() {
+	@GetMapping("/inningWrite")
+	public String inningWrite_get() {
+		//1,4
+		logger.info("이닝정보등록");
+		return "/record/inningWrite";
+	}
+	
+	@PostMapping("/inningWrite")
+	public String inningWrite_post() {
 		//1,4
 		logger.info("이닝정보등록");
 		return "/record/inningWrite";
@@ -253,8 +245,21 @@ public class RecordController {
 		return "/record/pitcherRecordEdit";
 	}
 	
-	@RequestMapping("/pitcherRecordDelete")
-	public String pitcherRecordDelete() {
+	@GetMapping("/pitcherRecordDelete")
+	public String pitcherRecordDelete_get(@RequestParam(defaultValue = "0") int recodeNo, Model model) {
+		logger.info("투수기록삭제, 파라미터 recodeNo = {}", recodeNo);
+		
+		PitcherVO pitcherVo = pitcherService.selectPitcherByPlayerNo(recodeNo);
+		logger.info("경기 삭제 화면 이동, 파라미터 gameVo={}", pitcherVo);
+		
+		model.addAttribute("pitcherVo", pitcherVo);
+		
+		
+		return "/record/pitcherRecordDelete";
+	}
+	
+	@PostMapping("/pitcherRecordDelete")
+	public String pitcherRecordDelete_post() {
 		//1,4
 		logger.info("투수기록삭제");
 		return "/record/pitcherRecordDelete";

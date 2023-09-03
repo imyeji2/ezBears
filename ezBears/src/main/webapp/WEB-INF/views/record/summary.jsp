@@ -159,9 +159,10 @@
 							</c:if>
 						</div>
 
-						<div class="smh__part smh__score smh__home smh__part--current">${totalScoreHome} </div>
+						<div class="smh__part smh__score smh__home smh__part--current">${totalScoreHome}
+						</div>
 						<c:forEach var="map" items="${list }">
- 							<c:if test="${map['INNING'] == '1회초'}">
+							<c:if test="${map['INNING'] == '1회초'}">
 								<div class="smh__part  smh__home smh__part--1" id="inning1Home">${map.R }</div>
 							</c:if>
 							<c:if test="${map['INNING'] == '2회초'}">
@@ -262,38 +263,47 @@
 		</div>
 	</div>
 
+	<div class="center">
+		<a
+			href="<c:url value='/record/gameEdit?recodeNo=${gameVo.recodeNo }'/>"
+			style="color: white;">수정</a> | <a
+			href="<c:url value='/record/gameDelete?recodeNo=${gameVo.recodeNo }'/>"
+			style="color: white;">삭제</a> | <a
+			href="<c:url value='/record/gameList'/>" style="color: white;">목록</a>
+	</div>
+
 	<script>
-	// JavaScript를 사용하여 vo.R 값들을 가져와 합계 계산
-	// 아래 주석은 실제 코드에 맞게 수정해야 합니다.
-	/*     var voValues = []; // vo.R 값들을 저장할 배열
+		// JavaScript를 사용하여 vo.R 값들을 가져와 합계 계산
+		// 아래 주석은 실제 코드에 맞게 수정해야 합니다.
+		/*     var voValues = []; // vo.R 값들을 저장할 배열
 
-	 // vo.R 값들을 가져와 배열에 저장
-	 var voElements = document.querySelectorAll('.smh__part--current');
-	 voElements.forEach(function(element) {
-	 var voValue = parseInt(element.textContent);
-	 voValues.push(voValue);
-	 });
+		 // vo.R 값들을 가져와 배열에 저장
+		 var voElements = document.querySelectorAll('.smh__part--current');
+		 voElements.forEach(function(element) {
+		 var voValue = parseInt(element.textContent);
+		 voValues.push(voValue);
+		 });
 
-	 // 배열의 합계 계산
-	 var totalRSum = voValues.reduce(function(sum, value) {
-	
-	 return sum + value;
-	 }, 0);
+		 // 배열의 합계 계산
+		 var totalRSum = voValues.reduce(function(sum, value) {
+		
+		 return sum + value;
+		 }, 0);
 
-	 // 합계를 화면에 표시
-	 var totalRSumElement = document.getElementById('totalRSum');
-	 totalRSumElement.textContent = totalRSum; */
+		 // 합계를 화면에 표시
+		 var totalRSumElement = document.getElementById('totalRSum');
+		 totalRSumElement.textContent = totalRSum; */
 
-	//회차별 득점 정보 구하기
-	/* 	var listFromController = ${list};
-	 var inningElements = document.querySelectorAll('[id*="inning"]');
-	 var inning = 
-	 var score = 
-	
-	 inningElements.forEach(function(element) {
-	 if (element.id === 'inning1Away') {
-	 // 'inning1Away' 요소에 대한 작업 수행
-	
-	 }
-	 }); */
-</script>
+		//회차별 득점 정보 구하기
+		/* 	var listFromController = ${list};
+		 var inningElements = document.querySelectorAll('[id*="inning"]');
+		 var inning = 
+		 var score = 
+		
+		 inningElements.forEach(function(element) {
+		 if (element.id === 'inning1Away') {
+		 // 'inning1Away' 요소에 대한 작업 수행
+		
+		 }
+		 }); */
+	</script>
