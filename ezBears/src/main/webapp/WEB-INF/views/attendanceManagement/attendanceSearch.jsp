@@ -107,7 +107,7 @@
 										<!-- 반복문 -->
 		                            </select>
 			        			</td>
-			        		</tr><c:if test=""></c:if>
+			        		</tr>
 			        		<tr>
 			        			<th>사원명</th>
 			        			<td><input type="text" name="searchName" style="width: 99%" value="${param.searchName }"></td>
@@ -117,9 +117,9 @@
 			        			<td><input type="text" name="searchACondition" style="width: 99%"></td>
 			        		</tr> -->
 			        	</table>
-			        	<br>
 		        	</form>
-        			
+	        		<a href="<c:url value='/attendanceManagement/excel'/>" style="float: right;">다운로드</a>
+        			<br><br>
         			
         			
 			        <table class="table table-hover">
