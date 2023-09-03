@@ -931,3 +931,11 @@
 	
 
 }/*팀별 공지사항 디테일 css*/
+
+/*마이보드 추가*/
+#addMyBoard{
+	.form-control{
+		background-color: #191C24;
+		color: #fff;
+	}
+}
