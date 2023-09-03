@@ -24,4 +24,6 @@ public interface AttendanceService {
 	List<Map<String, Object>> selectAllView(@Param("searchVo") SearchVO searchVo,
 			@Param("date11") String date11, @Param("date22") String date22,
 			@Param("searchDeptNo") int searchDeptNo, @Param("searchName") String searchName);
+	List<Map<String, Object>> findAllToExcel(@Param("date11") String date11, @Param("date22") String date22,
+			@Param("searchDeptNo") int searchDeptNo, @Param("searchName") String searchName);
 }

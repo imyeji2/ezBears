@@ -95,6 +95,12 @@ public class AttendanceServiceImpl implements AttendanceService{
 	}
 
 
+	@Override
+	public List<Map<String, Object>> findAllToExcel(String date11, String date22, int searchDeptNo, String searchName) {
+		return attendanceDao.findAllToExcel(date11, date22, searchDeptNo, searchName);
+	}
+
+
 
 
 }
