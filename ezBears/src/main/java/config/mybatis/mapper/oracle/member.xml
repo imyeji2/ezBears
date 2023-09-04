@@ -122,6 +122,43 @@
 		</where>
 	</sql>
 
+	
+	<!-- 사원 스태프 전체 검색 -->
+	<select id="selectMemStaff" parameterType="searchVo" resultType="map">
+		SELECT * FROM 
+    	(
+    		SELECT ROWNUM AS RNUM, A.* FROM 
+    		(
+        		SELECT * FROM ALLMEMSTAFFVIEW 
+        		<include refid="searchWhere2"></include>
+        		ORDER BY DEPT_NAME, POSITION_NO DESC, MEM_NAME, STAFF_NAME
+    		)A
+		)	
+			
+		<![CDATA[
+		WHERE RNUM > #{firstRecordIndex} 
+		AND RNUM <= #{firstRecordIndex} + #{recordCountPerPage}
+		]]>
+		
+	</select>
+	
+	<sql id="searchWhere2">
+		<where>
+			<if test="searchKeyword!=null and searchKeyword!=''">
+			    TO_CHAR(ALLMEMSTAFFVIEW.MEM_NAME) LIKE '%'|| #{searchKeyword} ||'%'
+			    OR TO_CHAR(ALLMEMSTAFFVIEW.DEPT_NAME) LIKE '%'|| #{searchKeyword} ||'%'
+			    OR TO_CHAR(ALLMEMSTAFFVIEW.POSITION_NAME) LIKE '%'|| #{searchKeyword} ||'%'
+			    OR TO_CHAR(ALLMEMSTAFFVIEW.STAFF_NAME) LIKE '%'|| #{searchKeyword} ||'%'
+			    OR TO_CHAR(ALLMEMSTAFFVIEW.STAFF_POSITION) LIKE '%'|| #{searchKeyword} ||'%'
+			</if>
+		</where>
+	</sql>
+	
+	<select id="allMemCnt" parameterType="searchVo" resultType="int">
+    	SELECT COUNT(*) FROM ALLMEMSTAFFVIEW
+    	<include refid="searchWhere2"></include>
+    </select>
+	
 
 	<!-- 희진  -->
 	<select id="selectpositioninfo" parameterType="int" resultType="memberVo">

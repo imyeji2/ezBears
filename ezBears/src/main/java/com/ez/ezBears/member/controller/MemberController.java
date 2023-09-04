@@ -1,5 +1,6 @@
 package com.ez.ezBears.member.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -21,12 +22,15 @@ import com.ez.ezBears.common.PaginationInfo;
 import com.ez.ezBears.common.SearchVO;
 import com.ez.ezBears.dept.model.DeptService;
 import com.ez.ezBears.dept.model.DeptVO;
+import com.ez.ezBears.member.model.MemberListVO;
 import com.ez.ezBears.member.model.MemberService;
 import com.ez.ezBears.member.model.MemberVO;
 import com.ez.ezBears.myBoard.model.MyBoardListService;
 import com.ez.ezBears.myBoard.model.MyBoardListVO;
 import com.ez.ezBears.position.model.PositionService;
 import com.ez.ezBears.position.model.PositionVO;
+import com.ez.ezBears.staff.model.StaffService;
+import com.ez.ezBears.staff.model.StaffVO;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -41,6 +45,7 @@ public class MemberController {
 	private final PositionService positionService;
 	private final MemberService memberService;
 	private final MyBoardListService myBoardService;
+	private final StaffService staffService;
 	
 	//파일 업로드
 	private final FileUploadUtil fileUploadUtil;
@@ -199,28 +204,31 @@ public class MemberController {
 	}
 	
 	@RequestMapping("/edit")
-	public String detail_post(@ModelAttribute MemberVO memberVo, HttpServletRequest request, String sal, Model model) {
+	public String detail_post(@ModelAttribute MemberVO memberVo, @RequestParam String oldFileName, HttpServletRequest request, String sal, Model model) {
 		//1
-		logger.info("회원 수정, 파라미터 memberVo ={}", memberVo);
+		logger.info("회원 수정, 파라미터 memberVo ={}, oldFileName={}", memberVo,oldFileName);
 		
 		//2
 		//사진 수정
 		String fileName = "", originalFileName = "";
-		long fileSize = 0;
 		
 		try {
 			List<Map<String, Object>> list = fileUploadUtil.fileupload(request, ConstUtil.UPLOAD_MEMIMAGE_FLAG);
 			
+			long fileSize = 0;
 			for(Map<String, Object> map : list) {
 				fileName = (String) map.get("fileName");
 				originalFileName = (String) map.get("originalFileName");
 				fileSize = (long) map.get("fileSize");
 			}
+			
+			memberVo.setFileName(fileName);
+			memberVo.setOriginalFileName(originalFileName);
+			memberVo.setFileSize(fileSize);
 		} catch (IllegalStateException | IOException e) {
 			e.printStackTrace();
 		}
 		
-		memberVo.setMemImage(fileName);
 		
 		//연봉 int로 변환
 		String strSal = sal.replace(",", "");
@@ -244,6 +252,19 @@ public class MemberController {
 		if(result > 0) {
 			msg = "수정 되었습니다.";
 			url = "/Member/detail?memNo="+memNo;
+			
+			if(fileName!=null && !fileName.isEmpty()) { //
+				if(oldFileName!=null && !oldFileName.isEmpty()) {//
+					String upPath
+					=fileUploadUtil.getUploadPath(request, ConstUtil.UPLOAD_FILE_FLAG);
+					File file= new File(upPath,oldFileName);
+					if(file.exists()) {
+						boolean bool=file.delete();
+						logger.info("글 수정- 파일삭제 여부:{}", bool);
+					}
+				}
+			}//if
+		
 		}
 		
 		//3
@@ -297,15 +318,14 @@ public class MemberController {
 		searchVo.setRecordCountPerPage(ConstUtil.MEMRECORD_COUNT);
 		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
 		
-		
-		List<MemberVO> list = memberService.selectAllMem(searchVo);
+		List<Map<String, Object>> list = memberService.selectMemStaff(searchVo);
 		logger.info("멤버 조회 결과, list.size={}", list.size());
 	
 		//카테고리 가지고오기
 		List<DeptVO> deptList = deptService.selectDeptList();
 		List<PositionVO> positionList = positionService.selectPositionList();
 	
-		int totalRecord = memberService.totalList(searchVo);
+		int totalRecord = memberService.allMemCnt(searchVo);
 		pagingInfo.setTotalRecord(totalRecord);
 		
 		
@@ -322,18 +342,26 @@ public class MemberController {
 	
 	@ResponseBody
     @RequestMapping("/memberDetail")
-    public MemberVO memberInfoDetail(@RequestParam int memNo) {
+    public MemberListVO memberInfoDetail(@RequestParam int empNo) {
     	
     	//1
-    	logger.info("회원들이 보는 디테일 페이지 memNo={}",memNo);
+    	logger.info("회원들이 보는 디테일 페이지 사원 memNo={}",empNo);
     	
     	//2
+    	MemberVO memberVo = memberService.memberDetail(empNo);
+    	StaffVO staffVo = staffService.selectByStaffNo(empNo);
+    	
+    	MemberListVO memListVo = new MemberListVO();    	
+    	
+    	memListVo.setMemberVo(memberVo);
+    	memListVo.setStaffVo(staffVo);
+    	
+    	logger.info("멤버 조회 결과, memListVo={}", memListVo);
+    	
+    	return memListVo;
 
-    	MemberVO memberVo = memberService.memberDetail(memNo);
-    	logger.info("멤버 조회 결과, memberVo={}", memberVo);
-    	    	
-    	//4
-    	return memberVo;
+    	
     }
+
 
 }
