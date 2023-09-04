@@ -5,6 +5,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
+
+import com.ez.ezBears.MBoard.model.MBoardDAO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -12,6 +16,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MyBoardListServiceImpl implements MyBoardListService {
 	private final MyBoardListDAO myBoardListDao;
+	private final MBoardDAO mBoardDao;
+	
 	//예지
 	//마이보드 메뉴 출력
 	@Override
@@ -83,6 +89,33 @@ public class MyBoardListServiceImpl implements MyBoardListService {
 	@Override
 	public MyBoardInfoVO selectMyBoardDept(String userid) {
 		return myBoardListDao.selectMyBoardDept(userid);
+	}
+
+	//마이보드 단순 삭제
+	@Override
+	public int deleteMyboard(int mBoardNo) {
+		return myBoardListDao.deleteMyboard(mBoardNo);
+	}
+
+	//보드 삭제 (마이보드, 보드 리스트 같이 삭제)
+	@Override
+	@Transactional
+	public int deleteAdminBoard(int mBoardNo) {
+		int cnt=0;
+		try {
+			 cnt = myBoardListDao.deleteMyboard(mBoardNo);
+			System.out.println("마이보드 삭제 결과 cnt="+cnt);
+			cnt = mBoardDao.deleteMboard(mBoardNo);
+			System.out.println("보드 리스트 삭제 결과 cnt="+cnt);
+		}catch(RuntimeException e) {
+			//선언적 트랜젝션(@Transactional)에서는
+			//런타임 예외가 발생하면 롤백한다.
+			e.printStackTrace();
+			cnt=-1;//예외처리를 했다는 의미->예외 발생
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+		}
+		
+		return cnt;
 	}
 
 

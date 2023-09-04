@@ -69,4 +69,9 @@
 		M_BOARD_NAME = #{MBoardName}
 		where M_BOARD_NO=#{MBoardNo}
 	</update>
+	
+	<delete id="deleteMboard" parameterType="int">
+		delete table M_BOARD
+		where M_BOARD_NO=#{MBoardNo}
+	</delete>
 </mapper>

@@ -120,7 +120,18 @@ public class MyBoardController {
 		return cnt;
 	}
 	
+	@ResponseBody
+	@RequestMapping("/ajax_delMBoard")
+	public int delteMBoard(int mBoardNo) {
+		logger.info("마이보드 삭제 파라미터");
+		
+		int cnt = myBoardListService.deleteAdminBoard(mBoardNo);
+		logger.info("마이보드 삭제 최종 cnt={}",cnt);
+		
+		return cnt;
+	}
 	
+
 
 	
 	   //희진
