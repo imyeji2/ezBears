@@ -49,6 +49,12 @@
 		    $(this).val(cleanedTel);
 		});
 		
+		$('#excelDownload').click(function () {
+			if(confirm('파일로 다운로드 받으시겠습니까?')){
+				$('#frmExcel').submit();
+			}
+		})
+		
 		
 	})
 </script>
@@ -57,6 +63,16 @@
 <form action="<c:url value='/attendanceManagement/attendanceSearch'/>" 
 	name="frmPage" method="post">
 	<input type="hidden" name="currentPage">
+	<input type="hidden" name="date11" value="${param.date11 }">
+	<input type="hidden" name="date22" value="${param.date22 }">
+	<input type="hidden" name="searchDeptNo" value="${param.searchDeptNo }">
+	<input type="hidden" name="searchName" value="${param.searchName }">
+</form>
+
+<!-- 엑셀 다운로드 처리 관련 form -->
+<form action="<c:url value='/attendanceManagement/excel'/>" 
+	id="frmExcel" method="post">
+	<!-- <input type="hidden" name="currentPage"> -->
 	<input type="hidden" name="date11" value="${param.date11 }">
 	<input type="hidden" name="date22" value="${param.date22 }">
 	<input type="hidden" name="searchDeptNo" value="${param.searchDeptNo }">
@@ -118,7 +134,7 @@
 			        		</tr> -->
 			        	</table>
 		        	</form>
-	        		<a href="<c:url value='/attendanceManagement/excel'/>" style="float: right;">다운로드</a>
+	        		<a href="#" style="float: right;" id="excelDownload">다운로드</a>
         			<br><br>
         			
         			

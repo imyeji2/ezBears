@@ -3,6 +3,7 @@ package com.ez.ezBears.chat.controller;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import com.ez.ezBears.chat.model.ChatContentVO;
 import com.ez.ezBears.chat.model.ChatMemberVO;
@@ -44,12 +45,13 @@ public class ChatController {
 	private final ChatService cService;
 	private final MemberService memberService;
 	
-	@RequestMapping(value = "/chatListView.sw")
-	public String chatListView(Model model, HttpServletRequest request) {
+	@RequestMapping(value = "/chatListView")
+	public String chatListView(Model model, HttpSession session) {
 		model.addAttribute("myCondition", "chat");
-		HttpSession session = request.getSession();
-		MemberVO memberVo = (MemberVO) session.getAttribute("loginUser");
-		List<ChatRoomVO> rList = cService.printAllChatRoom(memberVo.getMemNo());
+		 Map<String, Object> map= (Map<String, Object>) session.getAttribute("memVo"); 
+		logger.info("map = {}", map);
+		List<ChatRoomVO> rList = cService.printAllChatRoom(Integer.parseInt(String.valueOf(map.get("MEM_NO"))));
+		logger.info("rList = {}", rList);
 		if(!rList.isEmpty()) {
 			for(int i = 0; i < rList.size(); i++) {
 				ChatContentVO chatContent = cService.printChatContent(rList.get(i).getChatRoomNo());
@@ -58,11 +60,11 @@ public class ChatController {
 				rList.get(i).setChatDate(sf.format(chatContent.getChatDate()));
 			}
 		}
-		return "/chat/chatListView.sw";
+		return "/chat/chatRoom";
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/chat/registerChatRoom.sw", method = RequestMethod.GET, produces="application/json;charset=utf-8")
+	@RequestMapping(value = "/chat/registerChatRoom", method = RequestMethod.GET, produces="application/json;charset=utf-8")
 	public String registerChatRoom(HttpServletRequest request
 			, @RequestParam("chatMember") String[] chatMember
 			, @RequestParam("chatRoomTitle") String chatRoomTitle) {
@@ -118,7 +120,7 @@ public class ChatController {
 		return null;
 	}
 
-	@RequestMapping(value = "/chat/detail.sw")
+	@RequestMapping(value = "/chat/detail")
 	public ModelAndView chatView(ModelAndView mv, @RequestParam("chatRoomNo") int chatRoomNo) {
 		mv.addObject("chatRoomNo", chatRoomNo);
 		mv.setViewName("chat/chatDetail");
@@ -126,7 +128,7 @@ public class ChatController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/chat/out.sw", method = RequestMethod.GET, produces="application/json;charset=utf-8")
+	@RequestMapping(value = "/chat/out", method = RequestMethod.GET, produces="application/json;charset=utf-8")
 	public String chatOut(@RequestParam("chatRoomNo") int chatRoomNo, @RequestParam("memNum") String memNum) {
 		ChatMemberVO chatMember = new ChatMemberVO();
 		chatMember.setChatRoomNo(chatRoomNo);
@@ -162,7 +164,7 @@ public class ChatController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/chat/titleChange.sw", method = RequestMethod.GET, produces="application/json;charset=utf-8")
+	@RequestMapping(value = "/chat/titleChange", method = RequestMethod.GET, produces="application/json;charset=utf-8")
 	public String chatTitleModify(@ModelAttribute ChatRoomVO chatRoom) {
 		int result = cService.modifyChatTitle(chatRoom);
 		if(result > 0) {
@@ -172,7 +174,7 @@ public class ChatController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/chat/registerChatMember.sw", method = RequestMethod.GET, produces="application/json;charset=utf-8")
+	@RequestMapping(value = "/chat/registerChatMember", method = RequestMethod.GET, produces="application/json;charset=utf-8")
 	public String chatInviteAdd(HttpServletRequest request
 			, @RequestParam("chatRoomNo") int chatRoomNo
 			, @RequestParam("chatMember") String[] chatMember) {
@@ -238,7 +240,7 @@ public class ChatController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/chat/send.sw", method = RequestMethod.GET, produces="application/json;charset=utf-8")
+	@RequestMapping(value = "/chat/send", method = RequestMethod.GET, produces="application/json;charset=utf-8")
 	public String chatSend(@ModelAttribute ChatContentVO chatContent) {
 		ChatContentVO chatNotice = new ChatContentVO();
 		Date nowTime = new Date();
@@ -259,7 +261,7 @@ public class ChatController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/chat/content.sw", method = RequestMethod.GET, produces="application/json;charset=utf-8")
+	@RequestMapping(value = "/chat/content", method = RequestMethod.GET, produces="application/json;charset=utf-8")
 	public String chatContentAjax(@RequestParam("chatRoomNo") int chatRoomNo) {
 		List<ChatContentVO> cList = cService.printAllChat(chatRoomNo);
 		for(int i = 0; i < cList.size(); i++) {
@@ -270,14 +272,14 @@ public class ChatController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/chat/chatRoom.sw", method = RequestMethod.GET, produces="application/json;charset=utf-8")
+	@RequestMapping(value = "/chat/chatRoom", method = RequestMethod.GET, produces="application/json;charset=utf-8")
 	public String chatRoomAjax(@RequestParam("chatRoomNo") int chatRoomNo) {
 		ChatRoomVO chatRoom = cService.printChatRoom(chatRoomNo);
 		return new Gson().toJson(chatRoom);
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/chat/headCount.sw", method = RequestMethod.GET, produces="application/json;charset=utf-8")
+	@RequestMapping(value = "/chat/headCount", method = RequestMethod.GET, produces="application/json;charset=utf-8")
 	public String headCountAjax(@RequestParam("chatRoomNo") int chatRoomNo) {
 		int chatHeadCount = cService.printChatMemberCount(chatRoomNo);
 		return new Gson().toJson(chatHeadCount);

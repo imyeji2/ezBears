@@ -8,7 +8,7 @@ public class ChatContentVO {
 	private int chatContentNo;
 	private int chatRoomNo;
 	private String chatContent;
-	private String memNum;
+	private int memNo;
 	private String divName;
 	private String memName;
 	private String rankName;

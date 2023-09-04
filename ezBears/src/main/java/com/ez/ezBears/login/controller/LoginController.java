@@ -75,6 +75,12 @@ public class LoginController {
 					session.setAttribute("myimg", map.get("MEM_IMAGE"));
 					session.setAttribute("type", map.get("TYPE"));
 					
+					
+					
+					logger.info("세션 로그 확인 type={},name={},position={},dept_name={},dept_no={},memNo={},myimg={},type={}",type,session.getAttribute("name"),
+							type,session.getAttribute("position"),type,session.getAttribute("dept_name"),type,session.getAttribute("dept_no"),
+							type,session.getAttribute("memNo"),type,session.getAttribute("myimg"),type,session.getAttribute("type"));
+					session.setAttribute("memVo", map);
 					logger.info("myimg 로그 확인 myimg={}",session.getAttribute("myimg"));
 					
 					//cookie
@@ -114,6 +120,12 @@ public class LoginController {
 					session.setAttribute("dept_name", map.get("DEPT_NAME"));
 					session.setAttribute("dept_no", map.get("DEPT_NO"));
 					session.setAttribute("myimg", map.get("STAFF_IMAGE"));
+					session.setAttribute("staff_no", map.get("STAFF_NO"));
+					
+					logger.info("세션 로그 확인 type={},name={},position={},dept_name={},dept_no={},myimg={},staff_no={}",type,session.getAttribute("name"),
+							type,session.getAttribute("position"),type,session.getAttribute("dept_name"),type,session.getAttribute("dept_no"),
+							type,session.getAttribute("myimg"),type,session.getAttribute("staff_no"));
+					
 					
 					//cookie
 					Cookie ck = new Cookie("ck_userid", userid);

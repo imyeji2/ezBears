@@ -14,7 +14,7 @@
 			<div class="Info">
 				<form class="frmchat" name="frmchat" method="post" action ="">
 					<div class="memImg">
-		        		<img alt="" src="<c:url value ='/img/mem_images/${memberVo.memImage }'/> " style="width:180px; height:200px;" id="previewImage" name="memImage">
+		        		<img alt="" src="<c:url value ='/img/mem_images/defaultUSER.png'/> " style="width:180px; height:200px;" id="previewImage" name="memImage">
 		        	</div>
 		        	<div class="infobox">
 						<div class="first">
@@ -41,6 +41,12 @@
 							<input type="text" class="firstCol" value="생년월일" readonly="readonly">
 							<input type="text" class="secCol" name ="memBirth" id ="memBirth" readonly="readonly">
 						</div>
+						
+							<div class="seventh">
+								<input type="text" class="firstCol" value="특이사항" readonly="readonly">
+								<input type="text" class="secCol" name ="staffInfo" id =""staffInfo"" readonly="readonly">
+							</div>
+						
 						<div class="chatDiv">
 							<button type="submit" id="gotoChat">
 								<label for="gotoChat">채팅하러 가기</label>
