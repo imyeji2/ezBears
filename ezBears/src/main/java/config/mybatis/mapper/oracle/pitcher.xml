@@ -40,6 +40,7 @@
 		values(#{pitcherNo}, #{recodeNo},
 		#{playerNo}, #{staffNo}, #{regdate}, #{BB}, #{SO}, #{IP}, #{HA}, #{RC},
 		#{ER}, #{HR}, #{ERA})
+
 	</insert>
 
 	<select id="selectPitcherByPlayerNo" resultType="pitcherVo"
@@ -52,5 +53,11 @@
 		resultType="map">
 		select * from pitcher_view where player_no = #{playerNo}
 	</select>
+
+	<select id="selectPitcherRecordView" parameterType="int"
+		resultType="map">
+		select * from pitcher_record_view where recode_no = #{recodeNo}
+	</select>
+    
 
 </mapper>
