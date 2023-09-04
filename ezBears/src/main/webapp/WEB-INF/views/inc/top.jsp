@@ -39,7 +39,7 @@
     
 
     
-    <style>
+<style>
     	a{
     	color:#7000D8;
     	}
@@ -70,7 +70,7 @@
     	.boardTop_btn img:hover{
     		cursor: pointer;
     	}
-    </style>
+</style>
 
     <!-- 개인 css -->
     <link href="${pageContext.request.contextPath}/css/park.css" rel="stylesheet">
@@ -135,6 +135,87 @@
 	}
 	
 	
+	
+	$(function(){
+		$('#addMyBoard').on('shown.bs.modal', function () {
+			$('#AddBoardName').val('');
+			$('#AddBoardName').focus();
+		});
+
+        $('#addMyBoard').on('hide.bs.modal', function () {
+            $('#AddBoardName').val('');
+            $('#addBoardError').text('');
+        });
+        
+        
+		$('#AddBoardName').on('input', function(e) {
+		    var mBoardName = $(this).val();
+		    if (mBoardName.length < 1) {
+		        $('#addBoardError').text('추가할 보드 이름을 입력하세요');
+		    } else {
+		        $.ajax({
+		            type: 'post',
+		            url: "<c:url value='/myBoard/checkMBoardTitle'/>",
+		            data: { mBoardName: mBoardName },
+		            dataType: 'json',
+		            error: function(xhr, status, error) {
+		                alert(error);
+		            },
+		            success: function(res) {
+		                console.log(res);
+		                if (res > 0) {
+		                    $('#addBoardError').text('이미 사용중인 이름입니다.');
+		                } else {
+		                    $('#addBoardError').text('사용 가능한 이름입니다.');
+		                }
+		            }
+		        });
+		    }
+		});
+		
+		$('#AddBoardBtn').click(function(){
+		    event.preventDefault(); // 이벤트의 기본 동작 방지
+		    var $sendDateForm = $(this).closest('form[name=addMyBoardFrm]');
+		    var sendDate = $sendDateForm.serialize(); // 데이터 직렬화
+		    
+		    var mBoardName = $('#AddBoardName').val();
+		    if(mBoardName.length<1){
+		    	alert('추가할 보드 이름을 입력하세요');
+		    	$('#AddBoardName').focus();
+		    	return false;
+		    	
+		    }else if($('#addBoardError').text()==='이미 사용중인 이름입니다.'){
+				alert('등록할 수 없는 이름입니다.');
+				$('#AddBoardName').focus();
+				return false;
+		    }else{
+		    
+			    $.ajax({
+			        type: 'post',
+			        url: "<c:url value='/myBoard/addMyBoard'/>",
+			        data: sendDate,
+			        dataType: 'json',
+			        error: function(xhr, status, error) {
+			            alert(error);
+			        },
+			        success: function(res) {
+			            console.log(res); // 서버 응답 확인 
+			            if (res > 0) {
+			                alert("보드가 추가 되었습니다.");
+			                $('#addMyBoard').modal('hide');
+			                location.reload();
+			            } else {
+			                alert('다시 시도해주세요');
+			                return false;
+			            }
+			        }
+			    }); // ajax
+		    }
+		});
+		
+		
+	});
+
 
 </script>
 
@@ -186,9 +267,11 @@
                 	<div class="boardTop">
                 		<div class="boardTop_txt">워크보드</div>
                 		<div class="boardTop_btn">
-                			<img src="<c:url value='/img/plus.svg'/>" alt="보드 추가 버튼" style="margin-right:10px;">
-                			<img src="<c:url value='/img/gear-wide.svg'/>" alt="보드 관리 버튼"/>
-                			
+                			<img src="<c:url value='/img/plus.svg'/>" alt="보드 추가 버튼" 
+                				style="margin-right:10px;" id="addBoard"
+                				data-bs-toggle="modal" data-bs-target="#addMyBoard">
+                			<img src="<c:url value='/img/gear-wide.svg'/>" alt="보드 관리 버튼" id="editBoard"
+                			data-bs-toggle="modal" data-bs-target="#editMyBoard"/>
                 		</div>
                 	</div>
                     <div class="nav-item dropdown">
@@ -254,7 +337,7 @@
                             	<i class="bi bi-trophy-fill me-2"></i>경기기록
                             </a>
                             <a href="<c:url value='/record/teamList'/>" class="dropdown-item">
-                               <i class="bi bi-person-square me-2"></i>선수기록
+                            	<i class="bi bi-person-square me-2"></i>선수기록
                             </a>
                             <a href="#" class="dropdown-item">
                             	<i class="bi bi-pie-chart-fill me-2"></i>팀통계
@@ -279,7 +362,8 @@
             </nav>
         </div>
         <!-- Sidebar End -->
-
+  		<c:import url="/myBoard/addMyBoard"></c:import>
+  		<c:import url="/myBoard/editMyBoard"></c:import>
 
         <!-- Content Start -->
         <div class="content">

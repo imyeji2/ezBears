@@ -22,4 +22,14 @@ public interface ToDoListDetailDAO {
 	
 	//투두 리스트 담당자 삭제
 	int delTodoMember(int todoDetailNo);
+	
+	
+	//투두 리스트 디테일 수정
+	int updateTodoDetail(ToDoListDetailVO todoListDetailVo);
+	
+	//투두 리스트 디테일 삭제
+	int delTodoDetail(int todoDetailNo);
+	
+	//투두 리스트 디테일 삭제
+	int delTodoDetailByToDoListNo(int todolistNo);
 }

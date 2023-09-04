@@ -39,7 +39,7 @@
 	
 	<select id="selectMyBoardMember" parameterType="int" resultType="map">
 		select * from myBoardMemberView
-		where m_board_no=#{mBoardNo}
+		where m_board_no=#{mBoardNo} and CONTRACT_DONE is null
 	</select>
 <!-- 예지 -->
 

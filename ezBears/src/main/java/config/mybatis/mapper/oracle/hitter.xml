@@ -52,7 +52,6 @@
 		select * from hitter_record_view where recode_no = #{recodeNo}
 	</select>
     
-    
     <select id="selectHitterStatView" parameterType="int" resultType="map">
     	select * from hitter_stat_view
     </select>

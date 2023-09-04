@@ -109,7 +109,6 @@ public class TeamWorkBoardController {
 		logger.info("업무 게시판 등록하기 페이지 파라미터 myBoardListVo={}",myBoardListVo);
 		
 		String userid=(String)session.getAttribute("userid");
-		String type="write";
 		
 		
 		//2
@@ -119,7 +118,6 @@ public class TeamWorkBoardController {
 		
 		//3
 		model.addAttribute("myBoardListVo",myBoardListVo);
-		model.addAttribute("type",type);
 		
 		//4
 		return "myBoard/teamWorkBoardWrite";
@@ -169,11 +167,11 @@ public class TeamWorkBoardController {
 		int cnt = teamWorkBoardService.teamWorkBoardInsert(teamVo, todolistVO, items);
 		logger.info("업무 게시판 등록 결과 cnt={},cnt");
 		
-		String msg="등록 실패", url = "/myBoard/teamWorkBoardList?mBoardNo="+mBoardNo;
+		String msg="등록 실패", url = "/myBoard/teamWorkBoardWrite?mBoardNo="+mBoardNo+
+				"&teamBoardNo="+teamVo.getMyBoardNo();
 		if(cnt>0) {
 			msg="업무 계획이 등록되었습니다.";
-			url="/myBoard/teamWorkBoardDetail?mBoardNo="+mBoardNo+
-					"&teamNoticeNo="+teamVo.getMyBoardNo();
+			url="/myBoard/teamWorkBoard?mBoardNo="+mBoardNo;
 		}
 		
 		//3
@@ -529,7 +527,6 @@ public class TeamWorkBoardController {
 		
 		String userid=(String)session.getAttribute("userid");
 		logger.info("팀 업무 게시판 디테일 접속 사용자 아이디 userid={}",userid);
-		String type="Edit";
 		
 		//2
 		//사원의 시퀀스 번호
@@ -554,6 +551,7 @@ public class TeamWorkBoardController {
 		= toDoListDetailService.selectToDoListDetail(toDoList.getTodolistNo());
 		logger.info("팀 업무 게시판 디테일 결과 toDoListDetailList.size={}",toDoListDetailList.size());
 
+
 		//3.
 		model.addAttribute("map",map);
 		model.addAttribute("myBoardListVo",myBoardListVo);
@@ -561,9 +559,170 @@ public class TeamWorkBoardController {
 		model.addAttribute("userNo",userNo);
 		model.addAttribute("toDoList",toDoList);
 		model.addAttribute("toDoListDetailList",toDoListDetailList);
-		model.addAttribute("type",type);
 		
 		//4
-		return "myBoard/teamWorkBoardWrite";
+		return "myBoard/teamWorkBoardEdit";
 	}	
+	
+	//팀별 업무 게시판 수정
+	@PostMapping("/teamWorkBoardEdit")
+	public String teamWorkBoardEdit(			
+			@ModelAttribute TeamWorkBoardVO teamVo,
+			@ModelAttribute ToDoListVO todolistVO, 
+			@ModelAttribute ToDoListDetailListVO items,
+			Model model,HttpServletRequest request,
+			@RequestParam (defaultValue = "0") int mBoardNo,
+			@RequestParam (required = false) String oldFileName) {
+		//1
+		logger.info("파라미터 teamVo={}",teamVo);
+		logger.info("파라미터 todolistVO={}",todolistVO);
+		logger.info("파라미터 items={}",items);
+		logger.info("파라미터 mBoardNo={}",mBoardNo);
+		logger.info("파라미터 oldFileName={}",oldFileName);
+		
+		String fileName="", originalFileName="";
+		try {
+			List<Map<String, Object>> fileList
+			=fileUploadUtil.fileupload(request, ConstUtil.UPLOAD_TEAMWORKBOARD_FLAG);
+
+			long fileSize = 0;
+			for(Map<String, Object> map : fileList) {
+				fileName=(String) map.get("fileName");
+				originalFileName=(String) map.get("originalFileName");
+				fileSize= (long) map.get("fileSize");				
+			}//for
+
+			teamVo.setFileName(fileName);
+			teamVo.setOriginFileName(originalFileName);
+			teamVo.setFsize(fileSize);	
+			
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		//2
+		int cnt = teamWorkBoardService.updateBoard(teamVo,todolistVO,items);
+		
+		String msg="수정에 실패했습니다.", url="/myBoard/teamWorkBoardEdit?mBoardNo="+mBoardNo+"&teamBoardNo="+teamVo.getTeamBoardNo();
+		
+		if(cnt>0) {
+			msg="업무 게시글 수정이 완료되었습니다.";
+			url="/myBoard/teamWorkBoardDetail?mBoardNo="+mBoardNo+"&teamBoardNo="+teamVo.getTeamBoardNo();
+			
+			if(fileName!=null && !fileName.isEmpty()) { //
+				if(oldFileName!=null && !oldFileName.isEmpty()) {//
+					String upPath
+					=fileUploadUtil.getUploadPath(request, ConstUtil.UPLOAD_TEAMWORKBOARD_FLAG);
+					File file= new File(upPath,oldFileName);
+					if(file.exists()) {
+						boolean bool=file.delete();
+						logger.info("글 수정- 파일삭제 여부:{}", bool);
+					}
+				}
+			}		
+		}
+		
+		//3
+		model.addAttribute("msg",msg);
+		model.addAttribute("url",url);
+		
+		return "common/message";
+		
+	}
+	
+	
+	//두투 디테일 삭제
+	@ResponseBody
+	@RequestMapping("/deleteDotoDetail")
+	public int deleteDotoDetail(@ModelAttribute ToDoListDetailListVO listVo) {
+		//1
+		logger.info("업무 목록 삭제 파라미터 listVo={}",listVo);
+		//2.
+		int cnt = toDoListDetailService.delTodoDetailService(listVo);
+		logger.info("삭제 결과 cnt={}",cnt);
+		//4
+		return cnt;
+	}
+	
+	
+	
+	//업무 게시판 삭제
+	@RequestMapping("/deleteTeamWorkBoard")
+	public String deleteTeamWorkBoard(@RequestParam (defaultValue = "0") int teamBoardNo, 
+			@RequestParam (defaultValue = "0") int todolistNo, @RequestParam (defaultValue = "0") int mBoardNo,
+			@RequestParam String oldFileName, Model model,HttpServletRequest request) {
+		
+		//1
+		logger.info("업무 게시판 삭제 파라미터 teamBoardNo={},todolistNo={},mBoardNo={},oldFileName={}"
+													,teamBoardNo,teamBoardNo,mBoardNo,oldFileName);
+		
+		//2
+		TeamWorkBoardVO teamWorkBoardVo = teamWorkBoardService.selectTeamWorkBoardByNo(teamBoardNo);
+		Map<String, String> map = new HashMap<>();
+		map.put("teamBoardNo", teamBoardNo+"");
+		map.put("step", teamWorkBoardVo.getStep()+"");
+		map.put("contentno", teamWorkBoardVo.getContentno()+"");
+		map.put("groupNo", teamWorkBoardVo.getGroupNo()+"");
+		
+		logger.info("삭제 map={}",map);
+		
+		teamWorkBoardService.deleteBoard(map, todolistNo);
+		
+		String msg="삭제 실패, 다시 시도해주세요";
+		String url="/myBoard/teamWorkBoardDetail?mBoardNo="+mBoardNo+"&teamBoardNo="+teamBoardNo;
+		
+		
+		msg="삭제가 완료되었습니다.";
+		url="/myBoard/teamWorkBoard?mBoardNo="+mBoardNo;
+
+		if(oldFileName!=null && !oldFileName.isEmpty()) { //
+			String upPath=fileUploadUtil.getUploadPath(request, ConstUtil.UPLOAD_TEAMWORKBOARD_FLAG);
+			File file = new File(upPath,oldFileName);
+
+			if(file.exists()) {
+				boolean bool=file.delete();
+				logger.info("파일 삭제 여부 : {}", bool);
+			}
+			
+		}
+			
+		//3
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+
+		//4
+		return "common/message";
+	}
+	
+	
+	//파일 삭제
+	@ResponseBody
+	@RequestMapping("teamWorkBoardDeleteFile")
+	public int teamWorkBoardFileDel(@ModelAttribute TeamWorkBoardVO teamWorkBoardVo,
+			@RequestParam String oldFileName,HttpServletRequest request, Model model) {
+		//1
+		logger.info("파일 삭제 처리 ajax 파라미터 teamWorkBoardVo={},oldFileName={}",teamWorkBoardVo,oldFileName);
+		
+		//2
+		int cnt = teamWorkBoardService.deleteFile(teamWorkBoardVo.getTeamBoardNo());
+		logger.info("파일 삭제 처리 결과 cnt={}",cnt);
+		
+		if(cnt>0) {
+			if(oldFileName!=null && !oldFileName.isEmpty()) { //
+				String upPath=fileUploadUtil.getUploadPath(request, ConstUtil.UPLOAD_TEAMNOTICE_FLAG);
+				File file = new File(upPath,oldFileName);
+	
+				if(file.exists()) {
+					boolean bool=file.delete();
+					logger.info("파일 삭제 여부 : {}", bool);
+				}
+			}
+		}
+		
+		return cnt;
+						
+	}	
+	
 }

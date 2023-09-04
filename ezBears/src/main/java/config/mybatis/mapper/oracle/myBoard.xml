@@ -1,0 +1,13 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ez.ezBears.myBoard.model.MyBoardDAO">
+
+	<insert id="addMyboard" parameterType="MyBoardVo">
+		<selectKey keyProperty="myBoardNo" order="BEFORE" resultType="int">
+			SELECT MY_BOARD_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO MY_BOARD(MY_BOARD_NO,MEM_NO,M_BOARD_NO)
+		VALUES(#{myBoardNo},#{memNo},#{MBoardNo})	
+	</insert>
+</mapper>

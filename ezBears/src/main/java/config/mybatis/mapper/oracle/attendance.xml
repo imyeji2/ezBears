@@ -121,6 +121,12 @@
  		</where>
  	</sql>
  	
+ 	<select id="findAllToExcel" parameterType="map" resultType="map">
+ 		select * from attendanceView
+ 		<include refid="searchWhere"></include>
+		order by attendance_no desc
+ 	</select>
+ 	
  	
  
  

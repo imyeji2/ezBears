@@ -15,4 +15,10 @@ public interface ToDoListDetailService {
 	
 	//투두 리스트 담당자 삭제
 	int delTodoMember(int todoDetailNo);
+	
+	//투두 리스트 디테일 삭제
+	int delTodoDetailByToDoListNo(int todolistNo);
+	
+	//투두 리스트 디테일 삭제
+	int delTodoDetailService(ToDoListDetailListVO listVo);
 }
