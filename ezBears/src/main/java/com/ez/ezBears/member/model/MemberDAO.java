@@ -47,5 +47,6 @@ public interface MemberDAO {
     
     //각 부서별 결재 담당자출력
     MemberVO selectpositioninfo(int deptNo);
+  
     
 }

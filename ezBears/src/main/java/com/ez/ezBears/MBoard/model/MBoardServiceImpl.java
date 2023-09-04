@@ -70,6 +70,11 @@ public class MBoardServiceImpl implements MBoardService{
 		return cnt;
 	}
 
+	@Override
+	public int updateMboard(MBoardVO mBoardVo) {
+		return mBoardDao.updateMboard(mBoardVo);
+	}
+
 
 
 

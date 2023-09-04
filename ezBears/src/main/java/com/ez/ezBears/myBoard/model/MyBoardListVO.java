@@ -9,4 +9,6 @@ public class MyBoardListVO {
 	private int myBoardNo;
 	private int MBoardNo;
 	private String MBoardName;
+	private int adminNo;
+	private int adminName;
 }

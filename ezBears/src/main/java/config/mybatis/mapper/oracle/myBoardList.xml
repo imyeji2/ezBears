@@ -41,6 +41,11 @@
 		select * from myBoardMemberView
 		where m_board_no=#{mBoardNo} and CONTRACT_DONE is null
 	</select>
+	
+	<select id="selectAdminBoardList" parameterType="int" resultType="map">
+		select * from myBoardListView
+		where ADMIN_NO=#{adminNo}
+	</select>	
 <!-- 예지 -->
 
 <!-- 다희 -->	
@@ -69,6 +74,8 @@
 		select * from myboardInfo
 		where mem_id = #{memId}
 	</select>
+	
+	
 </mapper>
 
 

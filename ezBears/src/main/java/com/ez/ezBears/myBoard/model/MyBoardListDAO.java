@@ -34,6 +34,11 @@ public interface MyBoardListDAO {
 	//내 동적 게시판에 부서 번호로 게시판 등록
 	int insertMyBoard(MyBoardListVO myBoardListVo);
 	
+	//내가 관리자인 보드 리스트 찾기
+	List<Map<String, Object>> selectAdminBoardList(int adminMem);
+	
+	
+	
 	//희진
 	/* List<Map<String, Object>> selectBoardInfo(String userid); */
 	MyBoardInfoVO selectBoardInfo(MyBoardInfoVO myBoardInfoVo);

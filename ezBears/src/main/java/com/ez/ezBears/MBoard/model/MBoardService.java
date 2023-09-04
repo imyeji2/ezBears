@@ -18,4 +18,7 @@ public interface MBoardService {
 	
 	//예지
 	int addBoard(MBoardVO mBoardVo);
+	
+	//보드 리스트 정보 업데이트
+	int updateMboard(MBoardVO mBoardVo);
 }

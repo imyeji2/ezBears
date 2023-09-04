@@ -50,7 +50,11 @@ public class MyBoardListServiceImpl implements MyBoardListService {
 		return myBoardListDao.selectMyBoardMember(mBoardNo);
 	}
 
-	
+	//내가 관리자인 보드 리스트 찾기
+	@Override
+	public List<Map<String, Object>> selectAdminBoardList(int adminMem) {
+		return myBoardListDao.selectAdminBoardList(adminMem);
+	}
 	
 	//다희
 	//부서 이름으로 동적 게시판 번호 찾기
@@ -80,6 +84,8 @@ public class MyBoardListServiceImpl implements MyBoardListService {
 	public MyBoardInfoVO selectMyBoardDept(String userid) {
 		return myBoardListDao.selectMyBoardDept(userid);
 	}
+
+
 
 }
 
