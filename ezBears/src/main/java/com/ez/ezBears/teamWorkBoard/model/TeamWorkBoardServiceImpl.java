@@ -49,7 +49,7 @@ public class TeamWorkBoardServiceImpl implements TeamWorkBoardService{
 			//선언적 트랜젝션(@Transactional)에서는
 			//런타임 예외가 발생하면 롤백한다.
 			e.printStackTrace();
-			cnt=-1;//예외처리를 했다는 의미
+			cnt=-1;//예외처리를 했다는 의미->예외 발생
 			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 		}
 		return cnt;
@@ -74,13 +74,13 @@ public class TeamWorkBoardServiceImpl implements TeamWorkBoardService{
 		return teamWorkBoardDao.updateViewCount(teamBoardNo);
 	}
 	
-	//팀별 공지사항 삭제
+	//팀별 업무게시판 삭제
 	@Override
 	public int deleteTeamWorkBoard(Map<String, String> map) {
 		return teamWorkBoardDao.deleteTeamWorkBoard(map);
 	}	
 	
-	//팀별 공지사항 번호로 조회
+	//팀별 업무게시판 번호로 조회
 	@Override
 	public TeamWorkBoardVO selectTeamWorkBoardByNo(int teamBoardNo) {
 		return teamWorkBoardDao.selectTeamWorkBoardByNo(teamBoardNo);
@@ -126,6 +126,75 @@ public class TeamWorkBoardServiceImpl implements TeamWorkBoardService{
 		int cnt=teamWorkBoardDao.updateSortNo(teamWorkBoardVo);
 		cnt = teamWorkBoardDao.insertReReply(teamWorkBoardVo);
 		return cnt;
+	}
+
+
+	//업무 게시판 수정
+	@Transactional
+	@Override
+	public int updateBoard(TeamWorkBoardVO teamVo, ToDoListVO todoList, ToDoListDetailListVO listVo) {
+		int teamBoardNo = teamVo.getTeamBoardNo();
+		int todolistNo=todoList.getTodolistNo();
+		int cnt=0;
+		
+		try {
+			
+			List<ToDoListDetailVO> list = listVo.getItems();
+			for(int i=0;i<list.size();i++) {
+				ToDoListDetailVO vo = list.get(i);
+				if(vo.getTodoDetailNo()==0) {
+					vo.setTodolistNo(todolistNo);
+					System.out.println("vo="+vo);
+					System.out.println("집중!"+vo.getTodoDetailNo());
+					cnt=todoListDetailDao.insertTodoListDetail(vo);
+					System.out.println("추가 등록 결과 cnt={}"+cnt);
+				}else{
+					cnt = todoListDetailDao.updateTodoDetail(vo);
+					System.out.println("업데이트 결과 cnt={}"+cnt);
+				}
+			}
+				
+			cnt = todoListDao.updateTodoList(todoList);
+			cnt = teamWorkBoardDao.updateTeamWorkBoard(teamVo);
+			
+		}catch(RuntimeException e) {
+			//선언적 트랜젝션(@Transactional)에서는
+			//런타임 예외가 발생하면 롤백한다.
+			e.printStackTrace();
+			cnt=-1;//예외처리를 했다는 의미
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+		}
+	
+		return cnt;
+	}
+
+	@Override
+	@Transactional
+	public int deleteBoard(Map<String, String> map, int todolistNo) {
+		int cnt=0;
+		
+		try {
+			cnt = todoListDetailDao.delTodoDetailByToDoListNo(todolistNo);
+			System.out.println("업무 디테일 삭제 결과 cnt="+cnt);
+			
+			cnt = todoListDao.delTodoList(todolistNo);
+			System.out.println("투두리스트 삭제 결과 cnt="+cnt);
+
+			cnt = teamWorkBoardDao.deleteTeamWorkBoard(map);
+			System.out.println("업무 게시판 삭제 결과 cnt="+cnt);
+			
+		}catch (RuntimeException e) {
+			e.printStackTrace();
+			cnt=-1;
+			System.out.println("예외발생");
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+		}
+		return cnt;
+	}
+
+	@Override
+	public int deleteFile(int teamBoardNo) {
+		return teamWorkBoardDao.deleteFile(teamBoardNo);
 	}
 	
 }

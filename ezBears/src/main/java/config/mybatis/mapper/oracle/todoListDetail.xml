@@ -15,7 +15,13 @@
 		SELECT * FROM todoListDetailMemberView
 		WHERE TODOLIST_NO = #{todolistNo}
 	</select>
-	
+
+	<select id="selectToDoListDetailY" parameterType="int" resultType="map">
+		SELECT * FROM todoListDetailMemberView
+		WHERE TODOLIST_NO = #{todolistNo}
+		AND STATUS ='Y';
+	</select>
+		
 	<update id="updateTodoStatus" parameterType="todoListDetailVo">
 		update TODOLIST_DETAIL
 		set status=#{status}
@@ -25,12 +31,28 @@
 	<update id="updateTodoMember" parameterType="todoListDetailVo">
 		update TODOLIST_DETAIL
 		set mem_no = #{memNo}
-		where todo_detail_no=#{todoDetailNo}
+		where TODO_DETAIL_NO=#{todoDetailNo}
 	</update>
 	
 	<update id="delTodoMember" parameterType="todoListDetailVo">
 		update TODOLIST_DETAIL
 		set mem_no = null
-		where todo_detail_no=#{todoDetailNo}	
+		where TODO_DETAIL_NO=#{todoDetailNo}	
 	</update>
+	
+	<update id="updateTodoDetail" parameterType="todoListDetailVo">
+		update TODOLIST_DETAIL
+		set TODO_CONTENT= #{todoContent}
+		where TODO_DETAIL_NO=#{todoDetailNo}
+	</update>
+	
+	<delete id="delTodoDetail" parameterType="int">
+		delete from TODOLIST_DETAIL
+		where TODO_DETAIL_NO=#{todoDetailNo}
+	</delete>
+	
+	<delete id="delTodoDetailByToDoListNo">
+		delete from TODOLIST_DETAIL
+		where TODOLIST_NO=#{todolistNo}	
+	</delete>
 </mapper>

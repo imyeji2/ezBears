@@ -55,5 +55,11 @@
 		</where>
 	</sql>
     
-
+	<insert id="addMboard" parameterType="MBoardVo">
+		<selectKey keyProperty="MBoardNo" order="BEFORE" resultType="int">
+			SELECT M_BOARD_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO M_BOARD(M_BOARD_NO, M_BOARD_NAME, MEM_NO)
+		VALUES(#{MBoardNo}, #{MBoardName},#{memNo})	
+	</insert>
 </mapper>

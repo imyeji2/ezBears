@@ -30,7 +30,7 @@
 		        }
 			    
 			    
-			    if($('.list_box_file2').length<0){
+			    if($('.list_box_file2').length<1){
 					var sendDate = $('form[name=teamNotiFrm]').serialize();
 					$.ajax({
 					        url: "<c:url value='/myBoard/deleteFile'/>",
@@ -42,10 +42,9 @@
 					        },
 					        success: function(res) {
 					            console.log(res); 
-					            if(res>0){
-					            	$('form[name=teamNotiFrm]').submit();
-					            }else{
-					            	alert('삭제 실패');
+					            if(res<0){
+					            	alert('파일 삭제 실패');
+					            	return false;
 					            }
 					        }
 						});	
@@ -107,7 +106,7 @@
 		        	<div class="writeWrap">
 		        		<input type="hidden" name="myBoardNo" value="${myBoardListVo.myBoardNo}">
 		        		<input type="hidden" name="memNo" value="${myBoardListVo.memNo}">
-		        		<input type="hidden" name="oldFileName" value="${map['FILENAME']}">
+		        		<input type="hidden" name="oldFileName" id="oldFileName" value="${map['FILENAME']}">
 		        		<c:if test="${type=='edite'}">
 		        			<input type="hidden" name="teamNoticeNo" value="${teamNoticeNo}">
 		        		</c:if>

@@ -5,15 +5,86 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ez.ezBears.MBoard.model.MBoardService;
+import com.ez.ezBears.MBoard.model.MBoardVO;
+import com.ez.ezBears.member.model.MemberService;
+
+import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
+@RequiredArgsConstructor
 @Controller
 @RequestMapping("/myBoard")
 public class MyBoardController {
 	private static final Logger logger = LoggerFactory.getLogger(MyBoardController.class);
+	private final MemberService memberService;
+	private final MBoardService mBoardService;
+		
+	//예지
+	@RequestMapping("/addMyBoard")
+	public String addMyBoard() {
+		//1
+		logger.info("마이보드 추가");
+		
+		//4
+		return "/myBoard/addMyBoard";
+	}
+	
+	@ResponseBody
+	@PostMapping("/addMyBoard")
+	public int addMyBoard_post(@ModelAttribute MBoardVO mBoardVo, HttpSession session) {
+		//1
+		logger.info("마이보드 추가 등록 파라미터 mBoardVo={}",mBoardVo);
+		
+		//2
+		String userid=(String)session.getAttribute("userid");
+		int memNo = memberService.selectMemberNo(userid);
+		logger.info("멤버 번호 검색 결과 memNo={}",memNo);
+		
+		mBoardVo.setMBoardNo(memNo);
+		int cnt = mBoardService.addBoard(mBoardVo);
+		
+		return cnt;
+	}
+	
+	@ResponseBody
+	@RequestMapping("/checkMBoardTitle")
+	public int checkMBoardTitle(@RequestParam String mBoardName){
+		//1
+		logger.info("같은 이름의 보드 검색 파라미터 mBoardName="+mBoardName);
+		//2
+		int cnt = mBoardService.checkSameName(mBoardName);
+		logger.info("같은 이름의 보드 검색 결과 cnt="+cnt);
+		
+		return cnt;
+	}
+	
+	@RequestMapping("/myBoardMember")
+	public String myBoardMember(@RequestParam(defaultValue = "0") int mBoardNo, Model model) {
+		
+		model.addAttribute("mBoardNo",mBoardNo);
+		return "/myBoard/myBoardMember";
+	}
 
-
+	
+	@RequestMapping("/editMyBoard")
+	public String editMyBoard(@RequestParam(defaultValue = "0") int mBoardNo, Model model) {
+		//1
+		logger.info("마이보드 수정");
+		
+		//2
+		
+		//3
+		model.addAttribute("mBoardNo",mBoardNo);
+		
+		//4
+		return "/myBoard/editMyBoard";
+	}
 	
 	   //희진
 	   /*팀별 결재 게시판 */

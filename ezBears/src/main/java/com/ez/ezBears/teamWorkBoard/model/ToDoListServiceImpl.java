@@ -14,4 +14,9 @@ public class ToDoListServiceImpl implements ToDoListService{
 		return toDoListDao.selectTodoList(teamBoardNo);
 	}
 
+	@Override
+	public int delTodoList(int todolistNo) {
+		return toDoListDao.delTodoList(todolistNo);
+	}
+
 }
