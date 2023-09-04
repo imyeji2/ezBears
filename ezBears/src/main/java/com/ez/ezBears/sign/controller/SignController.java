@@ -173,10 +173,10 @@ public class SignController {
 		myBoardInfoVo = myBoardListService.selectMyBoardDept(userid);
 		logger.info("myBoardInfoVo={}",myBoardInfoVo);
 		
-		/*
-		 * memberVo = memberService.selectpositioninfo(myBoardInfoVo.getDeptNo());
-		 * logger.info("결재 디테일 memberVo={}",memberVo);
-		 */
+		
+		  memberVo = memberService.selectpositioninfo(myBoardInfoVo.getDeptNo());
+		  logger.info("결재 디테일 memberVo={}",memberVo);
+		 
 		Map<String, Object> list = signService.detailSign(docNo);
 		logger.info("결재 리스트 list={}",list);
 		
