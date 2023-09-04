@@ -10,5 +10,5 @@ public class MyBoardInfoVO {
 	private String memId;
 	private int deptNo;
 	private String memName;
-
+	private int positionNo;
 }

@@ -55,5 +55,23 @@
 		</where>
 	</sql>
     
-
+	<insert id="addMboard" parameterType="MBoardVo">
+		<selectKey keyProperty="MBoardNo" order="BEFORE" resultType="int">
+			SELECT M_BOARD_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO M_BOARD(M_BOARD_NO, M_BOARD_NAME, MEM_NO)
+		VALUES(#{MBoardNo}, #{MBoardName},#{memNo})	
+	</insert>
+	
+	<update id="updateMboard" parameterType="MBoardVo">
+		update M_BOARD
+		SET MEM_NO = #{memNo}, 
+		M_BOARD_NAME = #{MBoardName}
+		where M_BOARD_NO=#{MBoardNo}
+	</update>
+	
+	<delete id="deleteMboard" parameterType="int">
+		delete table M_BOARD
+		where M_BOARD_NO=#{MBoardNo}
+	</delete>
 </mapper>

@@ -11,4 +11,5 @@ public interface PitcherService {
 	int deletePitcher(PitcherVO pitcherVo);
 	PitcherVO selectPitcherByPlayerNo(int playerNo);
 	List<Map<String, Object>> selectPitcherView(int playerNo);
+	List<Map<String, Object>> selectPitcherRecordView(int recordNo);
 }

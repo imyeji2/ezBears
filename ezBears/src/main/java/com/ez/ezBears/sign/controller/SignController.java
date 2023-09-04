@@ -1,5 +1,7 @@
 package com.ez.ezBears.sign.controller;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,10 +14,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ez.ezBears.common.ConstUtil;
+import com.ez.ezBears.common.FileUploadUtil;
 import com.ez.ezBears.common.PaginationInfo;
-import com.ez.ezBears.common.SearchVO;
+import com.ez.ezBears.common.SignListSearchVO;
 import com.ez.ezBears.member.model.MemberService;
 import com.ez.ezBears.member.model.MemberVO;
 import com.ez.ezBears.myBoard.model.MyBoardInfoVO;
@@ -23,6 +27,7 @@ import com.ez.ezBears.myBoard.model.MyBoardListService;
 import com.ez.ezBears.sign.model.SignService;
 import com.ez.ezBears.sign.model.SignVO;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
@@ -38,11 +43,14 @@ public class SignController {
 	private final MyBoardListService myBoardListService;
 	private final SignService signService;
 	private final MemberService memberService;
+	private final FileUploadUtil fileUploadUtil;
 	
 	@RequestMapping("/Approval")
-	public String Approval(@RequestParam (defaultValue = "0") int mBoardNo, @ModelAttribute SearchVO searchVo ,
+	public String Approval(@RequestParam (defaultValue = "0") int mBoardNo,  @ModelAttribute SignListSearchVO  signListSearchVo,
 			@ModelAttribute MyBoardInfoVO myBoardInfoVo, HttpSession session,Model model) {
-		logger.info("결재 리스트 출력 mBoardNo={}",mBoardNo);
+		
+		
+		logger.info("결재 리스트 출력 mBoardNo={} ",mBoardNo);
 		String userid = (String)session.getAttribute("userid");
 		myBoardInfoVo.setMemId(userid);	
 		myBoardInfoVo.setMBoardNo(mBoardNo);
@@ -55,16 +63,19 @@ public class SignController {
 		
 		PaginationInfo pagingInfo = new PaginationInfo();
 		pagingInfo.setBlockSize(ConstUtil.BLOCK_SIZE);
-		pagingInfo.setCurrentPage(searchVo.getCurrentPage());
+		pagingInfo.setCurrentPage(signListSearchVo.getCurrentPage());
 		pagingInfo.setRecordCountPerPage(ConstUtil.RECORD_COUNT_FIVE);
 				
-		searchVo.setRecordCountPerPage(ConstUtil.RECORD_COUNT_FIVE);
-		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
-				
-		List<Map<String, Object>> list = signService.selectApprovalList(searchVo);
+		signListSearchVo.setRecordCountPerPage(ConstUtil.RECORD_COUNT_FIVE);
+		signListSearchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
+		signListSearchVo.setDeptNo(myBoardInfoVo.getDeptNo());		
+		
+		logger.info("결재 부서번호 출력 deptNo={} ",signListSearchVo.getDeptNo());
+		
+		List<Map<String, Object>> list = signService.selectApprovalList(signListSearchVo);
 		
 		logger.info("list 사이즈 list={}", list.size());
-		int totalCount = signService.selectAppCount(searchVo);
+		int totalCount = signService.selectAppCount(signListSearchVo);
 		pagingInfo.setTotalRecord(totalCount);
 		logger.info("totalCount={}",totalCount);
 		
@@ -102,15 +113,36 @@ public class SignController {
 	}
 	
 	@PostMapping("/Approval_write")
-	public String Approval_post(@RequestParam(defaultValue = "0") int mBoardNo,@ModelAttribute SignVO signVo) {
+	public String Approval_post(@RequestParam(defaultValue = "0") int mBoardNo,@ModelAttribute SignVO signVo,
+			HttpServletRequest request,HttpSession session,
+			Model model) {
 		
-		logger.info("결재 등록 파라미터 ");
+		logger.info("결재 등록 파라미터 mBoardNo={}, signVo={}",mBoardNo,signVo);
+		
+		String msg = "결재 등록 실패", url = "/myBoard/Approval_write";
+		try {
+			List<Map<String, Object>> files = fileUploadUtil.fileupload(request, ConstUtil.UPLOAD_APPROVAL_FLAG);
+			logger.info("업로드파일  files={}", files);
+
+			int cnt = signService.insertApproval(signVo);
+			logger.info("결재 등록 결과 cnt = {}", cnt);
+
+			if(cnt > 0) {
+				int filecnt = signService.insertSignFile(files, signVo.getDocNo());
+				msg = "결재 작성 성공";
+				url = "/myBoard/Approval?mBoardNo="+mBoardNo;
+			}
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
 		
 		
-		int cnt = signService.insertApproval(signVo);
-		logger.info("결재 게시글 등록 결과 cnt={}",cnt);
-		
-		return "redirect:/myBoard/Approval?mBoardNo="+mBoardNo;
+		return "common/message";
 	}
 	
 	
@@ -124,11 +156,13 @@ public class SignController {
 		
 		return "myBoard/Approval_edit";
 	}
+	
 
-
+	
+	
 	@RequestMapping("/Approval_detail")
 	public String Approval_detail(@RequestParam (defaultValue = "0")int docNo, @RequestParam(defaultValue = "0")int deptNo,
-			@RequestParam(defaultValue = "0")int mBoardNo, @ModelAttribute SignVO signVo,
+			@RequestParam(defaultValue = "0")int mBoardNo,@RequestParam (defaultValue = "0")int positionNo, @ModelAttribute SignVO signVo,
 			@ModelAttribute MyBoardInfoVO myBoardInfoVo,@ModelAttribute MemberVO memberVo , HttpSession session,
 			Model model) {
 		
@@ -139,9 +173,10 @@ public class SignController {
 		myBoardInfoVo = myBoardListService.selectMyBoardDept(userid);
 		logger.info("myBoardInfoVo={}",myBoardInfoVo);
 		
-		memberVo = memberService.selectpositioninfo(myBoardInfoVo.getDeptNo());
-		logger.info("결재 디테일 memberVo={}",memberVo);
-		
+		/*
+		 * memberVo = memberService.selectpositioninfo(myBoardInfoVo.getDeptNo());
+		 * logger.info("결재 디테일 memberVo={}",memberVo);
+		 */
 		Map<String, Object> list = signService.detailSign(docNo);
 		logger.info("결재 리스트 list={}",list);
 		
@@ -154,16 +189,53 @@ public class SignController {
 		return "myBoard/Approval_detail";
 	}
 	
+	@ResponseBody
 	@PostMapping("/statusUpdate")
-	public String statusUpdate(@RequestParam (defaultValue = "0")int docNo) {
-		
-		
-		
-		
-		return "";
+	public Map<String, Object> statusUpdate(@RequestParam("docNo") int docNo, @RequestParam("positionNo") int positionNo, HttpSession session, Model model) {
+	    Map<String, Object> response = new HashMap<>();
 
+	    String userid = (String) session.getAttribute("userid");
+	    MyBoardInfoVO myBoardInfoVo = new MyBoardInfoVO();
+	    myBoardInfoVo.setMemId(userid);
+
+	    logger.info("결재 문서 번호 docNo={}, positionNo={}", docNo, positionNo);
+
+	    if (positionNo == 6) {
+	        int cnt = signService.updateStatus(docNo);
+	        if (cnt > 0) {
+	            response.put("success", true);
+	        } else {
+	            response.put("success", false);
+	            response.put("message", "문서 업데이트에 실패했습니다."); 
+	        }
+	    } else {
+	        response.put("success", false);
+	        response.put("message", "해당 직책에서는 승인 권한이 없습니다.");
+	    }
+
+	    return response;
 	}
 
+	@GetMapping("/getDocumentStatus")
+    @ResponseBody
+    public Map<String, Object> getDocumentStatus(@RequestParam("docNo") int docNo) {
+        Map<String, Object> response = new HashMap<>();
+
+        String status = signService.selectStatus(docNo);
+        
+        logger.info("status={}",status);
+        
+        if (status != null) {
+            response.put("status", status);
+        } else {
+            response.put("status", "상태를 가져오지 못했습니다."); // 실패 시 메시지
+        }
+
+        return response;
+        
+    }
+	
+	
 	@RequestMapping("/Approval_delete")
 	public String Approval_delete() {
 		logger.info("결재 삭제");

@@ -13,7 +13,7 @@
 		$('#del').click(function(){
 			event.preventDefault();
 			 if (confirm("정말 삭제하시겠습니까?")){
-			 	location.href="<c:url value='/myBoard/teamWorkBoardDel?mBoardNo=${map["M_BOARD_NO"]}&teamBoardNo=${map["TEAM_BOARD_NO"]}&oldFileName=${map["FILENAME"]}'/>"
+			 	$('form[name=delForm]').submit();f
 			 }
 		});
 
@@ -123,7 +123,9 @@
 		});	
 		
 	    // 대댓글 등록
-	    $('.add_r_reply').click(function(e) {
+	    
+	 	$(document).on('click', '.add_r_reply', function(e) { 
+	  //  $('.add_r_reply').click(function(e) {
 	        event.preventDefault();
 	        var $replyContainer = $(this).closest('.reply_content');
 	        $replyContainer.find('.replyaddForm').show();
@@ -131,14 +133,16 @@
 	    });
 
 	    // 대댓글 등록 취소
-	    $('.add_R_replyCencleBtn').click(function(e) {
+	    $(document).on('click', '.add_R_replyCencleBtn', function(e) { 
+	    //$('.add_R_replyCencleBtn').click(function(e) {
 	        event.preventDefault();
 	        var $replyContainer = $(this).closest('.reply_content');
 	        $replyContainer.find('.replyaddForm').hide();
 	    });
 
 	    // 대댓글 등록 ajax
-	    $('#add_R_replyBtn').click(function(e) {
+	    $(document).on('click', '#add_R_replyBtn', function(e) { 
+	    //$('#add_R_replyBtn').click(function(e) {
 	        e.preventDefault(); // 이벤트의 기본 동작 방지
 	        var $replyContainer = $(this).closest('form[name=rAddForm]');
 	        var replyData = $replyContainer.serialize(); // 데이터 직렬화
@@ -269,9 +273,12 @@
 			});
 		
 		//담당자 변경 및 삭제	
-		$(document).on('click','#addMem_img',function(){
+		$(document).on('click','#addMem_img',function(event){
 			if(confirm('담당자를 변경하시겠습니까?')){
+				var todoDetailNo = $(this).closest('.todoList').find('input[name="todoDetailNo"]').val();
+				$('#staticBackdrop').data('todoDetailNo', todoDetailNo);
 				$('#staticBackdrop').modal('show');
+				
 			}else if(confirm('담당자를 삭제하시겠습니까?')){
 				var todoDetailNo = $(this).closest('.todoList').find('input[name="todoDetailNo"]').val();
 				var memNo = $(this).find('input[name=memNo]').val();
@@ -300,7 +307,10 @@
 		
 		//버튼 클릭하면 두투 디테일 값 넘겨주기	
 		$(document).on('show.bs.modal', '#staticBackdrop', function(event) {
-		    var date = $(this).parent().find('input[name=todoDetailNo]').val();
+			var date = $(event.relatedTarget).closest('.todoList').find("input[name='todoDetailNo']").val();
+		    if($(this).data('todoDetailNo')){
+		    	date = $(this).data('todoDetailNo');
+		    }
 		    $('.memListBox input[name=todoDetailNo]').val(date);
 		});
 			
@@ -308,8 +318,9 @@
 		
 		// 업무 담당자 지정
 		$('.mem_list_content').click(function() {
-		    var todoDetailNo = $('input[name=todoDetailNo]').val();
+		    var todoDetailNo = $('.memListBox input[name=todoDetailNo]').val();
 		    var memNo = $(this).find('input[name=memNo]').val();
+		    
 		    $.ajax({
 		        type: 'post',
 		        url: "<c:url value='/myBoard/addTodoDetailMem'/>",
@@ -597,7 +608,7 @@
 		            		toDoList+="<div class='d-flex w-100 align-items-center justify-content-between'>";
 		            		toDoList+="<span>"+item.TODO_CONTENT+"</span>";
 		            		if(item.MEM_NO){
-		            			toDoList+="<img src='<c:url value='/img/mem_images/"+item.MEM_IMAGE+"'/>' alt='담당자 이미지' class='mem_img' id='addMem_img'>";
+		            			toDoList+="<img src='<c:url value='/img/mem_images/"+item.MEM_IMAGE+"'/>' alt='담당자 이미지' class='mem_img' id='addMem_img' data-bs-target='#staticBackdrop'>";
 		            		}else{
 		                 		toDoList+="<span style='text-align:left;'><a href='#' data-bs-toggle='modal' data-bs-target='#staticBackdrop' id='addMem'>담당자 등록</a></span>";
 		            		}		            		
@@ -660,6 +671,14 @@
 	<input type="hidden" name="currentPage">
 	<input type="hidden" name="contentno" value="${map['TEAM_BOARD_NO']}">
 </form>
+
+<form name="delForm" method="post" action="<c:url value='/myBoard/deleteTeamWorkBoard'/>">
+	<input type="hidden" name="mBoardNo" value="${map['M_BOARD_NO']}">
+	<input type="hidden" name="teamBoardNo" value="${map['TEAM_BOARD_NO']}">
+	<input type="hidden" name="oldFileName" value="${map['FILENAME']}">
+	<input type="hidden" name="todolistNo" value="${toDoList.todolistNo}">
+</form>
+
 <c:set var="checkedCount" value="0"/>
 <c:set var="uncheckedCount" value="0"/>
 <c:set var="totalCount" value="0"/>  

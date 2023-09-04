@@ -14,66 +14,33 @@ public class AlarmServiceImpl implements AlarmService {
 	
 	private final AlarmDAO alarmDao;
 	private final SqlSession sqlSession;
-	
 	@Override
-	public List<AlarmVO> printAllAlarm(String memNum) { // 알림 목록 조회
-		List<AlarmVO> aList = alarmDao.selectAllAlarm(sqlSession, memNum);
-		return aList;
+	public List<AlarmVO> selectAllAlarm(SqlSession sqlSession, int memNo) {
+		// TODO Auto-generated method stub
+		return alarmDao.selectAllAlarm(sqlSession, memNo);
 	}
-	
 	@Override
-	public int modifyAlarm(int alarmNo) { // 알림 읽음 처리
-		int result = alarmDao.updateAlarm(sqlSession, alarmNo);
-		return result;
+	public int updateAlarm(SqlSession sqlSession, int alarmNo) {
+		// TODO Auto-generated method stub
+		return alarmDao.updateAlarm(sqlSession, alarmNo);
 	}
-	
 	@Override
-	public int modifyAllAlarm(String memNum) { // 알림 모두 읽음 처리
-		int result = alarmDao.updateAllAlarm(sqlSession, memNum);
-		return result;
+	public int updateAllAlarm(SqlSession sqlSession, int memNo) {
+		// TODO Auto-generated method stub
+		return alarmDao.updateAllAlarm(sqlSession, memNo);
 	}
-	
 	@Override
-	public int getListCount(String memNum) { // 알림 카운트
-		int count = alarmDao.selectOneList(sqlSession, memNum);
-		return count;
+	public int selectOneList(SqlSession sqlSession, int memNo) {
+		// TODO Auto-generated method stub
+		return alarmDao.selectOneList(sqlSession, memNo);
 	}
-	
 	@Override
-	public int registerAlarm(AlarmVO alarm) { // 알림 등록
-		int result = alarmDao.insertAlarm(sqlSession, alarm);
-		return result;
-	}
-	
-	// 전자결재
-	@Override
-	public int printDocNo(String memNum) { // 문서 번호
-		int docNo = alarmDao.selectOneDocNo(sqlSession, memNum);
-		return docNo;
-	}
-	
-	@Override
-	public String printName(int docNo) { // 기안자 이름 조회
-		String memName = alarmDao.selectOneName(sqlSession, docNo);
-		return memName;
+	public int insertAlarm(SqlSession sqlSession, AlarmVO alarm) {
+		// TODO Auto-generated method stub
+		return alarmDao.insertAlarm(sqlSession, alarm);
 	}
 
-	@Override
-	public String printForm(int docNo) { // 양식 이름 조회
-		String formName = alarmDao.selectOneForm(sqlSession, docNo);
-		return formName;
-	}
 
-	@Override
-	public String printNum(int docNo) { // 기안자 사원번호 조회
-		String memNum = alarmDao.selectOneNum(sqlSession, docNo);
-		return memNum;
-	}
-
-	@Override
-	public String printAppName(String appMemNum) { // 반려자 이름 조회
-		String appName = alarmDao.selectOneAppName(sqlSession, appMemNum);
-		return appName;
-	}
+	
 
 }

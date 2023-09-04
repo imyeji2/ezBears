@@ -19,4 +19,14 @@ public interface MBoardDAO {
 	
 	//전체 게시판 개수
 	int totalBoardList(SearchVO searchVo);
+	
+	//예지
+	//마이보드 추가 등록
+	int addMboard(MBoardVO mBoardVo);
+	
+	//보드 리스트 정보 업데이트
+	int updateMboard(MBoardVO mBoardVo);
+	
+	//보드 삭제
+	int deleteMboard(int mBoardNo);
 }

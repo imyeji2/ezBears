@@ -15,4 +15,11 @@ public interface MBoardService {
 	
 	//전체 게시판 개수
 	int totalBoardList(SearchVO searchVo);
+	
+	//예지
+	int addBoard(MBoardVO mBoardVo);
+	
+	//보드 리스트 정보 업데이트
+	int updateMboard(MBoardVO mBoardVo);
+	
 }

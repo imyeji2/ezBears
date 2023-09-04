@@ -2,6 +2,7 @@ package com.ez.ezBears.chat.model;
 
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 
 import com.ez.ezBears.member.model.MemberVO;
@@ -9,7 +10,7 @@ import com.ez.ezBears.member.model.MemberVO;
 public interface ChatService {
 
 	int registerChatRoom(ChatRoomVO chatRoom); // 채팅방 생성
-	int registerChatMember(String memberNum); // 채팅방 사용자 등록
+	int registerChatMember(SqlSession sqlsession, String MemName); // 채팅방 사용자 등록
 	List<ChatMemberVO> printAllMember(ChatRoomVO chatRoom); // 채팅방 사용자 목록 조회
 	int registerChatContent(ChatContentVO chatContent); // 채팅 등록
 	int printChatRoomNo(); // 채팅방 번호 불러오기

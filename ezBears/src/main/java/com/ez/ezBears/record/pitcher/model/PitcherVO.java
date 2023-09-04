@@ -7,8 +7,6 @@ public class PitcherVO {
 	private int pitcherNo;
 	private int recodeNo;
 	private int playerNo;
-	private int staffNo;
-	private String regdate;
 	private double BB;
 	private int SO;
 	private double IP;
@@ -17,4 +15,6 @@ public class PitcherVO {
 	private int ER;
 	private int HR;
 	private double ERA;
+	private int staffNo;
+	private String regdate;
 }
