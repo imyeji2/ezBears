@@ -316,7 +316,7 @@
                             <span class="d-none d-lg-inline-flex">${sessionScope.name }</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
-                            <a href="#" class="dropdown-item">마이페이지</a>
+                            <a href="<c:cul value='/mypage/edit'/>" class="dropdown-item">마이페이지</a>
                             <a href="<c:url value='/login/logout'/>" class="dropdown-item">로그아웃</a>
                         </div>
                     </div>                   	
