@@ -25,15 +25,27 @@
 		recode_detail_no=#{recodeDeatilNo}, inning=#{inning}, h=#{H}, errors=#{errors}, so=#{SO}, b2=#{B2}, b3=#{b3}, hr=#{HR}, hri=#{HRI}, fourball=#{fourBall}, left_on_base=#{leftOnBase}, ab=#{AB}, steal=#{steal}, r=#{R}, team_info=#{teamInfo}
 		where inning_no=#{inningNo}
 	</update>
-	
+
 	<delete id="deleteInning">
 		delete inning
 		where inning_no=#{inningNo}
 	</delete>
-	
-	<select id="selectInningView" parameterType="int" resultType="map">
+
+	<select id="selectInningView" parameterType="int"
+		resultType="map">
 		select * from inning_view
 		where recode_no=#{recodeNo}
 	</select>
-	
+
+	<select id="selectInningHomeView" parameterType="map"
+		resultType="map">
+		select * from inning_home_view
+		where recode_no=#{recodeNo}
+	</select>
+
+	<select id="selectInningAwayView" parameterType="map"
+		resultType="map">
+		select * from inning_away_view
+		where recode_no=#{recodeNo}
+	</select>
 </mapper>

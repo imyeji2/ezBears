@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-
 <body class="baseball flat _fs pid_34 detailbody responsive" style="">
 	<div class="container__detail">
 		<div id="detail" class="container__detailInner">
@@ -174,36 +173,23 @@
 							<c:if test="${map['INNING'] == '4회초'}">
 								<div class="smh__part  smh__home smh__part--4" id="inning4Home">${map.R }</div>
 							</c:if>
-							<c:if test="${map.inning == '5회초'}">
+							<c:if test="${map['INNING'] == '5회초'}">
 								<div class="smh__part  smh__home smh__part--5" id="inning5Home">${map.R }</div>
 							</c:if>
-							<c:if test="${map.inning == '6회초'}">
+							<c:if test="${map['INNING'] == '6회초'}">
 								<div class="smh__part  smh__home smh__part--6" id="inning6Home">${map.R }</div>
 							</c:if>
-							<c:if test="${map.inning == '7회초'}">
+							<c:if test="${map['INNING'] == '7회초'}">
 								<div class="smh__part  smh__home smh__part--7" id="inning7Home">${map.R }</div>
 							</c:if>
-							<c:if test="${map.inning == '8회초'}">
+							<c:if test="${map['INNING'] == '8회초'}">
 								<div class="smh__part  smh__home smh__part--8" id="inning8Home">${map.R }</div>
 							</c:if>
-							<c:if test="${map.inning == '9회초'}">
+							<c:if test="${map['INNING'] == '9회초'}">
 								<div class="smh__part  smh__home smh__part--9" id="inning9Home">${map.R }</div>
 							</c:if>
 						</c:forEach>
-						<%-- 						<c:if test="${list.inning == '1회초'}">
-						<div class="smh__part  smh__home smh__part--1" id="inning1Away">${list.'R' }</div>
-					</c:if>
-						<div class="smh__part  smh__home smh__part--2">0</div>
-						<div class="smh__part  smh__home smh__part--3">0</div>
-						<div class="smh__part  smh__home smh__part--4">0</div>
-						<div class="smh__part  smh__home smh__part--5">0</div>
-						<div class="smh__part  smh__home smh__part--6">1</div>
-						<div class="smh__part  smh__home smh__part--7">0</div>
-						<div class="smh__part  smh__home smh__part--8">0</div>
-						<div class="smh__part  smh__home smh__part--9">2</div>
-						<div class="smh__part  smh__home smh__part--x"></div>
-						<div class="smh__part  smh__home smh__part--hits">6</div>
-						<div class="smh__part  smh__home smh__part--errors">3</div> --%>
+						
 						<div class="smh__service smh__away"></div>
 						<div class="smh__participantName smh__away">
 							<c:if test="${gameVo.ground == '잠실'}">
@@ -215,32 +201,32 @@
 						</div>
 						<div class="smh__part smh__score smh__away smh__part--current">${totalScoreAway}</div>
 						<c:forEach var="map" items="${list }">
-							<c:if test="${map.inning == '1회말'}">
-								<div class="smh__part  smh__away smh__part--1" id="inning1Away">${list.R }</div>
+							<c:if test="${map['INNING'] == '1회말'}">
+								<div class="smh__part  smh__away smh__part--1" id="inning1Away">${map.R }</div>
 							</c:if>
-							<c:if test="${map.inning == '2회말'}">
-								<div class="smh__part  smh__away smh__part--2" id="inning2Away">${list.R }</div>
+							<c:if test="${map['INNING'] == '2회말'}">
+								<div class="smh__part  smh__away smh__part--2" id="inning2Away">${map.R }</div>
 							</c:if>
-							<c:if test="${map.inning == '3회말'}">
-								<div class="smh__part  smh__away smh__part--3" id="inning3Away">${list.R }</div>
+							<c:if test="${map['INNING'] == '3회말'}">
+								<div class="smh__part  smh__away smh__part--3" id="inning3Away">${map.R }</div>
 							</c:if>
-							<c:if test="${map.inning == '4회말'}">
-								<div class="smh__part  smh__away smh__part--4" id="inning4Away">${list.R }</div>
+							<c:if test="${map['INNING'] == '4회말'}">
+								<div class="smh__part  smh__away smh__part--4" id="inning4Away">${map.R }</div>
 							</c:if>
-							<c:if test="${map.inning == '5회말'}">
-								<div class="smh__part  smh__away smh__part--5" id="inning5Away">${list.R }</div>
+							<c:if test="${map['INNING'] == '5회말'}">
+								<div class="smh__part  smh__away smh__part--5" id="inning5Away">${map.R }</div>
 							</c:if>
-							<c:if test="${map.inning == '6회말'}">
-								<div class="smh__part  smh__away smh__part--6" id="inning6Away">${list.R }</div>
+							<c:if test="${map['INNING'] == '6회말'}">
+								<div class="smh__part  smh__away smh__part--6" id="inning6Away">${map.R }</div>
 							</c:if>
-							<c:if test="${map.inning == '7회말'}">
-								<div class="smh__part  smh__away smh__part--7" id="inning7Away">${list.R }</div>
+							<c:if test="${map['INNING'] == '7회말'}">
+								<div class="smh__part  smh__away smh__part--7" id="inning7Away">${map.R }</div>
 							</c:if>
-							<c:if test="${map.inning == '8회말'}">
-								<div class="smh__part  smh__away smh__part--8" id="inning8Away">${list.R }</div>
+							<c:if test="${map['INNING'] == '8회말'}">
+								<div class="smh__part  smh__away smh__part--8" id="inning8Away">${map.R }</div>
 							</c:if>
-							<c:if test="${map.inning == '9회말'}">
-								<div class="smh__part  smh__away smh__part--9" id="inning9Away">${list.R }</div>
+							<c:if test="${map['INNING'] == '9회말'}">
+								<div class="smh__part  smh__away smh__part--9" id="inning9Away">${map.R }</div>
 							</c:if>
 						</c:forEach>
 						<div class="smh__pitchers">
