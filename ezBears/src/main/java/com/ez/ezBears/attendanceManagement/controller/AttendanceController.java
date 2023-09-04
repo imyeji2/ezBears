@@ -222,14 +222,14 @@ public class AttendanceController {
 	        	row.createCell(1).setCellValue((String)map2.get("DEPT_NAME"));
 	            row.createCell(2).setCellValue((String)map2.get("MEM_NAME"));
 	            //logger.info("여기까지 되나?");
-	            row.createCell(3).setCellValue(map2.get("IN_TIME").toString());
+	            row.createCell(3).setCellValue(map2.get("IN_TIME").toString().substring(11));
 	            //logger.info("여기부터 안되겠지?");
 	            if (map2.get("OUT_TIME") == null) {
 	            	//logger.info("null인 경우");
 	            	row.createCell(4).setCellValue("");
 				}else {
 					//logger.info("null 아닐 경우");
-					row.createCell(4).setCellValue(map2.get("OUT_TIME").toString());
+					row.createCell(4).setCellValue(map2.get("OUT_TIME").toString().substring(12));
 				}
 	            //logger.info("이제 안되면 말안됨");
 	            row.createCell(5).setCellValue((String)map2.get("hourGap"));
