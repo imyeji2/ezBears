@@ -56,4 +56,9 @@ public interface MemberService {
     Map<String, Object> selectMemberView(String memId);
     
     MemberVO selectpositioninfo(int deptNo);
+    
+    //마이페이지수정
+    MemberVO selectByUserid(String memId);
+    int updateMypage(MemberVO memberVo);
+    int updatePwd(MemberVO memberVo);
 }
