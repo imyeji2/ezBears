@@ -130,4 +130,25 @@
 		and position_no =6
 	</select>
 	
+	
+	<!-- 마이페이지수정  -->
+	<select id="selectByUserid" parameterType="string"
+		resultType="memberVo">
+		select * from member
+		where mem_id=#{memId}
+	</select>
+	
+	<update id="updateMypage" parameterType="memberVo">
+		update member
+		set mem_tel=#{memTel},
+		mem_zipcode=#{memZipcode}, mem_address=#{memAddress}, mem_address_Detail=#{memAddressDetail}
+		where mem_id=#{memId}
+	</update>
+	
+	<update id="updatePwd" parameterType="memberVo">
+		update member
+		set mem_pwd=#{memPwd}
+		where mem_id=#{memId}
+	</update>
+	
 </mapper>

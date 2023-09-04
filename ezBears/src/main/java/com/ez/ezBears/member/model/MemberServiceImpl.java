@@ -5,15 +5,19 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.ez.ezBears.common.SearchVO;
+import com.ez.ezBears.login.controller.LoginController;
 
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService{
+	private static final Logger logger=LoggerFactory.getLogger(MemberServiceImpl.class);
 	private final MemberDAO memberDao;
 	
 	@Override
@@ -33,6 +37,10 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public int loginCheck(String memId, String memPwd) {
 		String dbPwd=memberDao.selectPwd(memId);
+		
+		logger.info("dbPwd값 dbPwd={}",dbPwd);
+		logger.info("memId값 memId={}",memId);
+		logger.info("memPwd값 memPwd={}",memPwd);
 
 		int result=0;
 		if(dbPwd==null || dbPwd.isEmpty()) {
@@ -145,6 +153,22 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public MemberVO selectpositioninfo(int deptNo) {
 		return memberDao.selectpositioninfo(deptNo);
+	}
+
+	@Override
+	public MemberVO selectByUserid(String memId) {
+		return memberDao.selectByUserid(memId);
+	}
+
+	@Override
+	public int updateMypage(MemberVO memberVo) {
+		logger.info("회원정보수정 파라미터 memberVo={}",memberVo);
+		return memberDao.updateMypage(memberVo);
+	}
+
+	@Override
+	public int updatePwd(MemberVO memberVo) {
+		return memberDao.updatePwd(memberVo);
 	}
 
 	
