@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import com.ez.ezBears.common.SearchVO;
+import com.ez.ezBears.common.SignListSearchVO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -29,10 +30,7 @@ public class SignServiceImpl implements SignService{
 	}
 
 
-	@Override
-	public List<Map<String, Object>> selectApprovalList(SearchVO searchVo) {
-		return signDao.selectApprovalList(searchVo);
-	}
+	
 
 
 	@Override
@@ -44,6 +42,13 @@ public class SignServiceImpl implements SignService{
 	@Override
 	public SignVO updateStatus(int docNo) {
 		return signDao.updateStatus(docNo);
+	}
+
+
+	@Override
+	public List<Map<String, Object>> selectApprovalList(SignListSearchVO signListSearchVo) {
+		return signDao.selectApprovalList(signListSearchVo);
+	
 	}
 
 

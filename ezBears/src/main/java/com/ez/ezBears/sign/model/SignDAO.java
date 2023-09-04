@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.ez.ezBears.common.SearchVO;
+import com.ez.ezBears.common.SignListSearchVO;
 
 @Mapper
 public interface SignDAO {
@@ -14,7 +15,7 @@ public interface SignDAO {
 	int insertApproval(SignVO signVo);
 	
 	//전체 리스트
-	List<Map<String, Object>> selectApprovalList(SearchVO searchVo);
+	List<Map<String, Object>> selectApprovalList(SignListSearchVO signListSearchVo);
 	
 	// total레코드
 	int selectAppCount(SearchVO searchVo);

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ez.ezBears.common.ConstUtil;
 import com.ez.ezBears.common.PaginationInfo;
 import com.ez.ezBears.common.SearchVO;
+import com.ez.ezBears.common.SignListSearchVO;
 import com.ez.ezBears.member.model.MemberService;
 import com.ez.ezBears.member.model.MemberVO;
 import com.ez.ezBears.myBoard.model.MyBoardInfoVO;
@@ -41,9 +42,11 @@ public class SignController {
 	private final MemberService memberService;
 	
 	@RequestMapping("/Approval")
-	public String Approval(@RequestParam (defaultValue = "0") int mBoardNo, @ModelAttribute SearchVO searchVo ,
+	public String Approval(@RequestParam (defaultValue = "0") int mBoardNo,  @ModelAttribute SignListSearchVO  signListSearchVo,
 			@ModelAttribute MyBoardInfoVO myBoardInfoVo, HttpSession session,Model model) {
-		logger.info("결재 리스트 출력 mBoardNo={}",mBoardNo);
+		
+		
+		logger.info("결재 리스트 출력 mBoardNo={} ",mBoardNo);
 		String userid = (String)session.getAttribute("userid");
 		myBoardInfoVo.setMemId(userid);	
 		myBoardInfoVo.setMBoardNo(mBoardNo);
@@ -56,16 +59,19 @@ public class SignController {
 		
 		PaginationInfo pagingInfo = new PaginationInfo();
 		pagingInfo.setBlockSize(ConstUtil.BLOCK_SIZE);
-		pagingInfo.setCurrentPage(searchVo.getCurrentPage());
+		pagingInfo.setCurrentPage(signListSearchVo.getCurrentPage());
 		pagingInfo.setRecordCountPerPage(ConstUtil.RECORD_COUNT_FIVE);
 				
-		searchVo.setRecordCountPerPage(ConstUtil.RECORD_COUNT_FIVE);
-		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
-				
-		List<Map<String, Object>> list = signService.selectApprovalList(searchVo);
+		signListSearchVo.setRecordCountPerPage(ConstUtil.RECORD_COUNT_FIVE);
+		signListSearchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
+		signListSearchVo.setDeptNo(myBoardInfoVo.getDeptNo());		
+		
+		logger.info("결재 부서번호 출력 deptNo={} ",signListSearchVo.getDeptNo());
+		
+		List<Map<String, Object>> list = signService.selectApprovalList(signListSearchVo);
 		
 		logger.info("list 사이즈 list={}", list.size());
-		int totalCount = signService.selectAppCount(searchVo);
+		int totalCount = signService.selectAppCount(signListSearchVo);
 		pagingInfo.setTotalRecord(totalCount);
 		logger.info("totalCount={}",totalCount);
 		

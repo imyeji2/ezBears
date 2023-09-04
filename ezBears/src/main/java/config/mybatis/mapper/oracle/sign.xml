@@ -6,12 +6,12 @@
 
 
 	<sql id="searchWhere">
-			<where>
-		
-				<if test="searchKeyword!=null and searchKeyword!=''">
-					${searchCondition} like '%' || #{searchKeyword} || '%'
-				</if>
-			</where>
+		<where>
+				
+			<if test="searchKeyword!=null and searchKeyword!=''">
+				${searchCondition} like '%' || #{searchKeyword} || '%'
+			</if>
+		</where>
 	</sql>
 	
 	<insert id="insertApproval" parameterType="signVo">
@@ -23,7 +23,7 @@
 	</insert>
 	
 	
-	<select id="selectApprovalList" resultType="map" parameterType="searchVo">
+	<select id="selectApprovalList" resultType="map" parameterType="SignListSearchVO">
 		 select *
       from
       (
@@ -31,6 +31,7 @@
 	      (		
 			select * from signListView
 			<include refid="searchWhere"></include>
+			where dept_no = #{deptNo}
 			order by doc_no desc
 	      )A
       )
