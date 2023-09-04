@@ -75,6 +75,13 @@ public class MBoardServiceImpl implements MBoardService{
 		return mBoardDao.updateMboard(mBoardVo);
 	}
 
+	//보드 이름 검색
+	@Override
+	public String selectMboardName(int mBoardNo) {
+		return mBoardDao.selectMboardName(mBoardNo);
+	}
+	
+	
 
 
 

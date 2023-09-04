@@ -196,5 +196,7 @@ public class TeamWorkBoardServiceImpl implements TeamWorkBoardService{
 	public int deleteFile(int teamBoardNo) {
 		return teamWorkBoardDao.deleteFile(teamBoardNo);
 	}
+
+
 	
 }

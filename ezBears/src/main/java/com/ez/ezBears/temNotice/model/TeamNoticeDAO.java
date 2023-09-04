@@ -60,5 +60,8 @@ public interface TeamNoticeDAO {
 	
 	//공지사항 파일 삭제
 	int deleteFile(int teamNoticeNo);
+	
+	//메인 팀 게시판
+	List<Map<String, Object>> selectMainTeamNoticeList(MyBoardSearchVo myBoardSearchVo);
 
 }

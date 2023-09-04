@@ -39,6 +39,6 @@
     </li>
          
     <li class="nav-item"  role="presentation">
-        <a class="nav-link tap_txt" id="myBoardMember" href="<c:url value='/myBoard/myBoardMember?mBoardNo=${mBoardNo}'/>">정보</a>
+        <a class="nav-link tap_txt" id="myBoardMember" href="<c:url value='/myBoard/myBoardMember?mBoardNo=${mBoardNo}'/>">멤버</a>
     </li>                                 
 </ul>

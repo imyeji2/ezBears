@@ -109,4 +109,12 @@ public class NoticeServiceImpl implements NoticeService{
 	}
 
 	
+	//예지
+	//메인 공지사항
+	@Override
+	public List<Map<String, Object>> selectMainNotice(SearchVO searchVo) {
+		return noticeDao.selectMainNotice(searchVo);
+	}
+
+	
 }

@@ -189,7 +189,21 @@
    		where team_notice_no=#{teamNoticeNo}
    </update>
    
-   
+	<select id="selectMainTeamNoticeList" parameterType="myBoardSearchVo" resultType="map">
+      select *
+      from
+      (
+	      select rownum as RNUM, A.* from
+	      (		
+			select * from teamNoticeListView
+			where m_board_no=#{mBoardNo} 
+     	 	and status='Y' and step=0
+			order by regdate desc
+	      )A
+      )
+	  <![CDATA[
+      where RNUM<#{lastRecordIndex}]]>		
+	</select>   
    
       
 </mapper>
