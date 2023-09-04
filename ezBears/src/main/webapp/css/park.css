@@ -75,7 +75,8 @@
 		border: none;
 	    background: transparent;
 	    color: white;
-	    width: 80%; 
+	    width: 50%; 
+	    text-align: center;
 	}
 	.startVacation{
 		border: none;
@@ -88,15 +89,39 @@
 	    color: white;
 	}
 	.table td.td-2 {
-	text-align: center;
+		text-align: center;
 	}
 	.table td.td-3 {
-	text-align: center;
+		text-align: center;
 	}
 	.status{
 		border: none;
 	    background: transparent;
 	    color: white;
+	    width: 30%;
+
+	}
+	.sta{
+		border: none;
+	    background: transparent;
+	    color: white;
+	    width: 30%;
+
+	}
+	.regdate{
+		border: none;
+	    background: transparent;
+	    color: white;
+	}
+	.memName{
+		border: none;
+	    background: transparent;
+	    color: white;
+	}
+	.appoveBtn{
+		background-color: #7000D8;
+	    margin-left: 5px;
+	    width: 18%;
 	}
 }
 

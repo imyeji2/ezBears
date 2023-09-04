@@ -80,6 +80,8 @@ public class LoginController {
 					logger.info("세션 로그 확인 type={},name={},position={},dept_name={},dept_no={},memNo={},myimg={},type={}",type,session.getAttribute("name"),
 							type,session.getAttribute("position"),type,session.getAttribute("dept_name"),type,session.getAttribute("dept_no"),
 							type,session.getAttribute("memNo"),type,session.getAttribute("myimg"),type,session.getAttribute("type"));
+					session.setAttribute("memVo", map);
+					logger.info("myimg 로그 확인 myimg={}",session.getAttribute("myimg"));
 					
 					//cookie
 					Cookie ck = new Cookie("ck_userid", userid);
