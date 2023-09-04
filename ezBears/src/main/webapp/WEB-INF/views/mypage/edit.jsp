@@ -5,7 +5,7 @@
 <%@include file="../inc/top.jsp"%>
 
 <div class="form-container">
-	<form action="" method="post">
+	<form action="mypage_edit" method="post">
 	
 		<div class="container-fluid">
 			<div class="row h-100 align-items-center justify-content-center"
@@ -19,18 +19,6 @@
 									<i class="fa fa-user-edit me-2"></i>회원정보 수정
 								</h3>
 							</a>
-						</div>
-						<div class="form-floating mb-3">
-							<input type="text" id="id" class="form-control" id="floatingText" placeholder="id"> 
-							<label for="floatingText">아이디</label>
-						</div>
-						<div class="form-floating mb-3">
-							<input type="text" id="name" class="form-control" id="floatingText" placeholder="name"> 
-							<label for="floatingText">이름</label>
-						</div>
-						<div class="form-floating mb-3">
-							<input type="text" id="address" class="form-control" id="floatingText" placeholder="address"> 
-							<label for="floatingText">주소</label>
 						</div>
 						<div class="form-floating mb-3">
 							<input type="text" id="address" class="form-control" id="floatingText" placeholder="address"> 
