@@ -24,6 +24,14 @@ public interface MyBoardListService {
 	//마이보드 멤버 검색
 	List<Map<String, Object>>selectMyBoardMember(int mBoardNo);
 	
+	//내가 관리자인 보드 리스트 찾기
+	List<Map<String, Object>> selectAdminBoardList(int adminMem);
+	
+	//마이 보드 삭제
+	int deleteMyboard(int mBoardNo);
+	
+	//보드 삭제 서비스(마이보드,보드리스트 같이 삭제)
+	int deleteAdminBoard(int mBoardNo);
 	
 	
 	

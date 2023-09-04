@@ -25,7 +25,7 @@
     <select id="selectMemberView" parameterType="String" resultType="map">
     	select * from memberView1 where MEM_ID = #{memId} 
     </select>
-	
+    
 	
 	<!-- 다희 -->
 	<!-- 자동 아이디 생성 관리 및 멤버 등록  -->
@@ -121,13 +121,69 @@
 			</if>
 		</where>
 	</sql>
-
-
+	
+	<!-- 사원 스태프 전체 검색 -->
+	<select id="selectMemStaff" parameterType="searchVo" resultType="map">
+		SELECT * FROM 
+    	(
+    		SELECT ROWNUM AS RNUM, A.* FROM 
+    		(
+        		SELECT * FROM ALLMEMSTAFFVIEW 
+        		<include refid="searchWhere2"></include>
+        		ORDER BY DEPT_NAME, POSITION_NO DESC, MEM_NAME, STAFF_NAME
+    		)A
+		)	
+			
+		<![CDATA[
+		WHERE RNUM > #{firstRecordIndex} 
+		AND RNUM <= #{firstRecordIndex} + #{recordCountPerPage}
+		]]>
+		
+	</select>
+	
+	<sql id="searchWhere2">
+		<where>
+			<if test="searchKeyword!=null and searchKeyword!=''">
+			    TO_CHAR(ALLMEMSTAFFVIEW.MEM_NAME) LIKE '%'|| #{searchKeyword} ||'%'
+			    OR TO_CHAR(ALLMEMSTAFFVIEW.DEPT_NAME) LIKE '%'|| #{searchKeyword} ||'%'
+			    OR TO_CHAR(ALLMEMSTAFFVIEW.POSITION_NAME) LIKE '%'|| #{searchKeyword} ||'%'
+			    OR TO_CHAR(ALLMEMSTAFFVIEW.STAFF_NAME) LIKE '%'|| #{searchKeyword} ||'%'
+			    OR TO_CHAR(ALLMEMSTAFFVIEW.STAFF_POSITION) LIKE '%'|| #{searchKeyword} ||'%'
+			</if>
+		</where>
+	</sql>
+	
+	<select id="allMemCnt" parameterType="searchVo" resultType="int">
+    	SELECT COUNT(*) FROM ALLMEMSTAFFVIEW
+    	<include refid="searchWhere2"></include>
+    </select>
+	
 	<!-- 희진  -->
 	<select id="selectpositioninfo" parameterType="int" resultType="memberVo">
 		select * from member 
 		where dept_no = #{deptNo} 
 		and position_no =6
 	</select>
+	
+	
+	<!-- 마이페이지수정  -->
+	<select id="selectByUserid" parameterType="string"
+		resultType="memberVo">
+		select * from member
+		where mem_id=#{memId}
+	</select>
+	
+	<update id="updateMypage" parameterType="memberVo">
+		update member
+		set mem_tel=#{memTel},
+		mem_zipcode=#{memZipcode}, mem_address=#{memAddress}, mem_address_Detail=#{memAddressDetail}
+		where mem_id=#{memId}
+	</update>
+	
+	<update id="updatePwd" parameterType="memberVo">
+		update member
+		set mem_pwd=#{memPwd}
+		where mem_id=#{memId}
+	</update>
 	
 </mapper>

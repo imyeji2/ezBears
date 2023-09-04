@@ -48,8 +48,17 @@ public interface MemberService {
     //사원 탈퇴 처리
     int deleteMem(int memNo);
     
+    //사원,스태프 전체 검색
+    List<Map<String, Object>> selectMemStaff(SearchVO searVo);
+    int allMemCnt(SearchVO searchVo);
+    
     
     Map<String, Object> selectMemberView(String memId);
     
     MemberVO selectpositioninfo(int deptNo);
+    
+    //마이페이지수정
+    MemberVO selectByUserid(String memId);
+    int updateMypage(MemberVO memberVo);
+    int updatePwd(MemberVO memberVo);
 }

@@ -82,23 +82,179 @@
 </head>
 
 <script type="text/javascript">
-	function attendanceIn() {
-		  	<%-- var status = "<%=(String)session.getAttribute("status")%>";
-			alert(status);
+$(function(){
+	$('#addMyBoard').on('shown.bs.modal', function () {
+		$('#AddBoardName').focus();
+	});
+
+    $('#addMyBoard').on('hide.bs.modal', function () {
+        $('#AddBoardName').val('');
+        $('#addBoardError').text('');
+    });
+    
+    
+    //마이보드 추가, 이름 입력 시 같은 이름 체크
+	$('#AddBoardName').on('input', function(e) {
+	    var mBoardName = $(this).val();
+	    if (mBoardName.length < 1) {
+	        $('#addBoardError').text('추가할 보드 이름을 입력하세요');
+	    } else {
+	        $.ajax({
+	            type: 'post',
+	            url: "<c:url value='/myBoard/checkMBoardTitle'/>",
+	            data: { mBoardName: mBoardName },
+	            dataType: 'json',
+	            error: function(xhr, status, error) {
+	                alert(error);
+	            },
+	            success: function(res) {
+	                console.log(res);
+	                if (res > 0) {
+	                    $('#addBoardError').text('이미 사용중인 이름입니다.');
+	                } else {
+	                    $('#addBoardError').text('사용 가능한 이름입니다.');
+	                }
+	            }
+	        });
+	    }
+	});
+	
+	
+	//마이보드 추가 버튼 클릭 시 
+	$('#AddBoardBtn').click(function(){
+	    event.preventDefault(); // 이벤트의 기본 동작 방지
+	    var $sendDateForm = $(this).closest('form[name=addMyBoardFrm]');
+	    var sendDate = $sendDateForm.serialize(); // 데이터 직렬화
+	    
+	    var mBoardName = $('#AddBoardName').val();
+	    if(mBoardName.length<1){
+	    	alert('추가할 보드 이름을 입력하세요');
+	    	$('#AddBoardName').focus();
+	    	return false;
+	    	
+	    }else if($('#addBoardError').text()==='이미 사용중인 이름입니다.'){
+			alert('등록할 수 없는 이름입니다.');
+			$('#AddBoardName').focus();
+			return false;
+	    }else{
+	    
+		    $.ajax({
+		        type: 'post',
+		        url: "<c:url value='/myBoard/addMyBoard'/>",
+		        data: sendDate,
+		        dataType: 'json',
+		        error: function(xhr, status, error) {
+		            alert(error);
+		        },
+		        success: function(res) {
+		            console.log(res); // 서버 응답 확인 
+		            if (res > 0) {
+		                alert("보드가 추가 되었습니다.");
+		                $('#addMyBoard').modal('hide');
+		                location.reload();
+		            } else {
+		                alert('다시 시도해주세요');
+		                return false;
+		            }
+		        }
+		    }); // ajax
+	    }
+	});
+
+	var orignalMboardName="";
+	//마이보드 수정 버튼 클릭 시 
+	$(document).on('click', '#myBoardEditBtn', function() {
+		var btnText=$(this).text();
+		var memberDate="";
+		var $editFrm = $(this).closest('tr');
+		var mBoardName=$editFrm.find('input[name=mBoardName]');
+		var mBoardNo=$editFrm.find('input[name=mBoardNo]').val();
+		var adminMem = $editFrm.find('#adminMem');
+		
+		if(btnText==='수정'){
+			$(this).text('완료'); 
+			orignalMboardName=mBoardName.val();
+			mBoardName.addClass('mBoardNameTxtEdit');
+			mBoardName.prop('readonly', false);
 			
-			var topStatus = "";
-			var confirmText = "";
-			if(status =="퇴근" || status == ""){
-				  topStatus = "출근";
-				  confirmText = "출근 처리";
-			}else if(status=="근무 중"){
-				  topStatus = "근무 중";
-				  confirmText = "퇴근 처리";
+			 $.ajax({
+			        type: 'post',
+			        url: "<c:url value='/myBoard/ajax_selectMyBoardMemList'/>",
+			        data:{mBoardNo:mBoardNo},
+			        dataType: 'json',
+			        error: function(xhr, status, error){
+			            alert(error);
+			        },
+			        success: function(res){
+			            console.log(res); // 서버 응답 확인
+			            adminMem.html('');
+			            memberDate+="<select name='memNo' id='memNo'>" ;
+			            $.each(res, function(idx, item){
+			    			memberDate+="<option value='"+item.MEM_NO+"'>"+item.MEM_NAME+"</option>";
+			            });
+			            memberDate+="</select>";
+			            adminMem.html(memberDate);
+			        }
+		
+			    });
+			
+		}else{
+			
+			var memNo = $editFrm.find('#memNo').val();
+			mBoardName=mBoardName.val();
+			
+			if(mBoardName.length<1){
+				alert('보드 이름을 입력해주세요');
+				mBoardName.focus();
+				return false;
+			}else{
+				//부서 이름 변경이 있을때만
+				if(orignalMboardName!==mBoardName){
+			        $.ajax({
+			            type: 'post',
+			            url: "<c:url value='/myBoard/checkMBoardTitle'/>",
+			            data: { mBoardName: mBoardName },
+			            dataType: 'json',
+			            error: function(xhr, status, error) {
+			                alert(error);
+			            },
+			            success: function(res) {
+			                console.log(res);
+			                if (res > 0) {
+			                    alert('이미 사용중인 이름입니다.');
+			                    $editFrm.find('input[name=mBoardName]').focus();
+			                    return false;
+			                } else {
+			                	alert('사용 가능한 이름입니다.');
+			                	updateMyBoard(mBoardName,memNo,mBoardNo);
+			                }
+			            }
+			        });
+				}else{
+					updateMyBoard(mBoardName,memNo,mBoardNo);
+				}
+		        
 			}
-			alert(topStatus);
-			
-			 $('#btnInOut').text(topStatus);
-			alert(confirmText); --%>
+		}
+	 	
+	});
+
+	//마이보드 삭제 버튼 클릭시 
+	$(document).on('click', '#myBoardDelBtn', function() {
+		if(confirm('정말 삭제 하시겠습니까?')){
+			var $editFrm = $(this).closest('tr');
+			var mBoardNo=$editFrm.find('input[name=mBoardNo]').val();
+			deleteMyBoard(mBoardNo);
+		}
+	});
+	
+});
+
+	function moveMyBoard(mBoardNo){
+		location.href="<c:url value='/myBoard/teamNotice?mBoardNo="+mBoardNo+"'/>";
+	}
+	
+	function attendanceIn() {
 		if(confirm('출근처리 하시겠습니까?')){
 			
 			var today = new Date();
@@ -137,88 +293,102 @@
 	}
 	
 	
+	//마이보드 리스트(관리자)
+	function loadBoardList(){
+		var index=0;
+		var loadDate = "";
+		 $.ajax({
+		        type: 'post',
+		        url: "<c:url value='/myBoard/editMyBoard'/>",
+		        dataType: 'json',
+		        error: function(xhr, status, error){
+		            alert(error);
+		        },
+		        success: function(res){
+		            console.log(res); // 서버 응답 확인
+		            $('#editMyBoard tbody').html('');
+		            $.each(res, function(idx, item){
+		            	index++;
+		            	
+		            	if(res.length<1){
+		            		loadDate+="<tr>";
+		            		loadDate+="<td colspan='5'>관리할 보드가 없습니다.</td>";
+		            		loadDate+="</tr>";
+		            	}else{
+			            	loadDate+="<tr>";
+			            	loadDate+="<input type='hidden' name='mBoardNo' value='"+item.M_BOARD_NO+"'>";
+			            	loadDate+="<th scope='row'>"+index+"</th>";
+			            	loadDate+="<td>";
+			            	loadDate+="<input type='text' name='mBoardName' id='editMboardName' class='mBoardNameTxt' value='"+item.M_BOARD_NAME+"'readonly>";
+			            	loadDate+="</td>";
+			            	loadDate+="<td id='adminMem'>"+item.ADMIN_NAME+"</a></td>";
+			            	loadDate+="<td>";
+			            	loadDate+="<button class='btn btn-outline-secondary'type='button' id='myBoardEditBtn'>수정</button>";
+			            	loadDate+="</td>";
+			            	loadDate+="<td>";
+			            	loadDate+="<button class='btn btn-outline-secondary' type='button' id='myBoardDelBtn'>삭제</button></td>";
+			            	loadDate+="<td>";
+			            	loadDate+="<button class='btn btn-outline-secondary' type='button' onclick='moveMyBoard("+item.M_BOARD_NO+")'>이동</button></td>";
+			            	loadDate+="</tr>";
+		            	}//else
 	
-	$(function(){
-		$('#addMyBoard').on('shown.bs.modal', function () {
-			$('#AddBoardName').val('');
-			$('#AddBoardName').focus();
-		});
+		            });
+		            $('#editMyBoard tbody').append(loadDate);
+		            $('#editMyBoard').modal('show');
+		            
+		        }
+		 });
+		
+	}
 
-        $('#addMyBoard').on('hide.bs.modal', function () {
-            $('#AddBoardName').val('');
-            $('#addBoardError').text('');
-        });
-        
-        
-		$('#AddBoardName').on('input', function(e) {
-		    var mBoardName = $(this).val();
-		    if (mBoardName.length < 1) {
-		        $('#addBoardError').text('추가할 보드 이름을 입력하세요');
-		    } else {
-		        $.ajax({
-		            type: 'post',
-		            url: "<c:url value='/myBoard/checkMBoardTitle'/>",
-		            data: { mBoardName: mBoardName },
-		            dataType: 'json',
-		            error: function(xhr, status, error) {
-		                alert(error);
-		            },
-		            success: function(res) {
-		                console.log(res);
-		                if (res > 0) {
-		                    $('#addBoardError').text('이미 사용중인 이름입니다.');
-		                } else {
-		                    $('#addBoardError').text('사용 가능한 이름입니다.');
-		                }
+	//마이보드 정보 수정(관리자)
+	function updateMyBoard(mBoardName,memNo,mBoardNo){
+		 $.ajax({
+		        type: 'post',
+		        url: "<c:url value='/myBoard/ajax_updateMBoard'/>",
+		        data:{mBoardNo:mBoardNo,mBoardName:mBoardName,memNo:memNo},
+		        dataType: 'json',
+		        error: function(xhr, status, error){
+		            alert(error);
+		        },
+		        success: function(res){
+		            console.log(res); // 서버 응답 확인
+		           	if(res>0){
+		           		loadBoardList();
+		           		alert('수정이 완료되었습니다.');
+		           	}else{
+		           		alert('수정에 실패했습니다.');
+		           	}
+		           
+		        }
+	
+		    });		
+	}	
+	
+	
+	//마이보드 삭제(관리자)
+	function deleteMyBoard(mBoardNo){
+		 $.ajax({
+		        type: 'post',
+		        url: "<c:url value='/myBoard/ajax_delMBoard'/>",
+		        data:{mBoardNo:mBoardNo},
+		        dataType: 'json',
+		        error: function(xhr, status, error){
+		            alert(error);
+		        },
+		        success: function(res){
+		            console.log(res); // 서버 응답 확인
+		            if(res>0){
+			            loadBoardList();
+			            alert('삭제가 완료되었습니다.');
+		            }else{
+		            	alert('삭제에 실패했습니다.');
 		            }
-		        });
-		    }
-		});
+		        }
+	
+		    });		
+	}	
 		
-		$('#AddBoardBtn').click(function(){
-		    event.preventDefault(); // 이벤트의 기본 동작 방지
-		    var $sendDateForm = $(this).closest('form[name=addMyBoardFrm]');
-		    var sendDate = $sendDateForm.serialize(); // 데이터 직렬화
-		    
-		    var mBoardName = $('#AddBoardName').val();
-		    if(mBoardName.length<1){
-		    	alert('추가할 보드 이름을 입력하세요');
-		    	$('#AddBoardName').focus();
-		    	return false;
-		    	
-		    }else if($('#addBoardError').text()==='이미 사용중인 이름입니다.'){
-				alert('등록할 수 없는 이름입니다.');
-				$('#AddBoardName').focus();
-				return false;
-		    }else{
-		    
-			    $.ajax({
-			        type: 'post',
-			        url: "<c:url value='/myBoard/addMyBoard'/>",
-			        data: sendDate,
-			        dataType: 'json',
-			        error: function(xhr, status, error) {
-			            alert(error);
-			        },
-			        success: function(res) {
-			            console.log(res); // 서버 응답 확인 
-			            if (res > 0) {
-			                alert("보드가 추가 되었습니다.");
-			                $('#addMyBoard').modal('hide');
-			                location.reload();
-			            } else {
-			                alert('다시 시도해주세요');
-			                return false;
-			            }
-			        }
-			    }); // ajax
-		    }
-		});
-		
-		
-	});
-
-
 </script>
 
 <body>
@@ -273,7 +443,7 @@
                 				style="margin-right:10px;" id="addBoard"
                 				data-bs-toggle="modal" data-bs-target="#addMyBoard">
                 			<img src="<c:url value='/img/gear-wide.svg'/>" alt="보드 관리 버튼" id="editBoard"
-                			data-bs-toggle="modal" data-bs-target="#editMyBoard"/>
+                			data-bs-toggle="modal" data-bs-target="#editMyBoard" onclick="loadBoardList()"/>
                 		</div>
                 	</div>
                     <div class="nav-item dropdown">
@@ -339,7 +509,7 @@
                             	<i class="bi bi-trophy-fill me-2"></i>경기기록
                             </a>
                             <a href="<c:url value='/record/teamList'/>" class="dropdown-item">
-                            	<i class="bi bi-person-square me-2"></i>선수기록
+                               <i class="bi bi-person-square me-2"></i>선수기록
                             </a>
                             <a href="#" class="dropdown-item">
                             	<i class="bi bi-pie-chart-fill me-2"></i>팀통계
@@ -365,7 +535,39 @@
         </div>
         <!-- Sidebar End -->
   		<c:import url="/myBoard/addMyBoard"></c:import>
-  		<c:import url="/myBoard/editMyBoard"></c:import>
+ 
+		<!-- Modal -->
+		<div class="modal fade" id="editMyBoard" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		  <div class="modal-dialog modal-lg">
+		    <div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="staticBackdropLabel" style="color:#191C24">나의보드 수정</h1>
+				</div><!-- modal-header -->	    
+				<div class="modal-body">
+					<table class="table">
+					  <thead>
+					    <tr>
+					      <th scope="col">번호</th>
+					      <th scope="col">보드이름</th>
+					      <th scope="col">담당자</th>
+					      <th scope="col">수정</th>
+					      <th scope="col">삭제</th>
+					      <th scope="col">링크</th>
+					    </tr>
+					  </thead>
+					  <tbody class="table-group-divider">
+
+					  </tbody>
+					</table>			
+			      </div><!-- modal-body -->
+			      <div class="footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+		      </div><!-- Modal-footer -->
+		    </div><!-- modal-content -->
+		  </div>
+		</div>
+		<!--Modal-->	  		
+
 
         <!-- Content Start -->
         <div class="content">
@@ -405,7 +607,8 @@
                             <span class="d-none d-lg-inline-flex">${sessionScope.name }</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
-                            <a href="#" class="dropdown-item">마이페이지</a>
+                            <a href="<c:url value='/mypage/pwdchk'/>" class="dropdown-item">마이페이지</a>
+							<a href="<c:url value='/mypage/pwdchk2'/>" class="dropdown-item">비밀번호변경</a>
                             <a href="<c:url value='/login/logout'/>" class="dropdown-item">로그아웃</a>
                         </div>
                     </div>                   	

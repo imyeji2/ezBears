@@ -8,23 +8,18 @@
 </head>
 <body>
 <%
-	String msg=(String)request.getAttribute("msg");
-	String url=(String)request.getAttribute("url");
-	String ctxPath = request.getContextPath();
-	url = ctxPath + url; //=> /mymvc + /pd/pdList.do => /mymvc/pd/pdList.do 
+    String msg = (String) request.getAttribute("msg");
+    String url = (String) request.getAttribute("url");
+    String ctxPath = request.getContextPath();
+    url = ctxPath + url; //=> /mymvc + /pd/pdList.do => /mymvc/pd/pdList.do 
 %>
-	<script type="text/javascript">
-   		alert('<%=msg%>');
-   		location.href="<%=url%>";
-   	</script>
+<script type="text/javascript">
+    <% if (msg == null) { %>
+        location.href = "<%= url %>";
+    <% } else { %>
+        location.href = "<%= url %>";
+        alert('<%= msg %>');
+    <% } %>
+</script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
