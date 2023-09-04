@@ -67,6 +67,7 @@ jb(function(){
 	        	<p class = "errMsg" style="color: red;">상단 수정 버튼을 눌려야 수정이 완료됩니다.</p>
 		        <div class="inner">
 		        <input type="hidden" id="memNo" name="memNo" value="${memberVo.memNo}">
+		        <input type="hidden" id="oldFileName" name="oldFileName" value="${memberVo.memImage}">
 		        	<div class="memImg">
 		        		<img alt="" src="<c:url value ='/img/mem_images/${memberVo.memImage }'/> " style="width:180px; height:200px;" id="previewImage" name="memImage">
 		        		<label id = "editLable" for="imageUpload">사진 수정</label>

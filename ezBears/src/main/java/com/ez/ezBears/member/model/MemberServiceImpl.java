@@ -147,5 +147,15 @@ public class MemberServiceImpl implements MemberService{
 		return memberDao.selectpositioninfo(deptNo);
 	}
 
+	@Override
+	public List<Map<String, Object>> selectMemStaff(SearchVO searVo) {
+		return memberDao.selectMemStaff(searVo);
+	}
+
+	@Override
+	public int allMemCnt(SearchVO searchVo) {
+		return memberDao.allMemCnt(searchVo);
+	}
+
 	
 }
