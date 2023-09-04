@@ -5,6 +5,9 @@
 <%@include file="../inc/top.jsp"%>
 <link href="${pageContext.request.contextPath}/css/Dcss.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/css/choong/chi.css" rel="stylesheet">
+<input type="hidden" name="staffNo" value="${sessionScope.staffno}">
+<input type="hidden" name="sysdate" value="<%= new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date()) %>">
+
 
 	<form name="frmWrite" method="post" action="<c:url value='/record/pitcherRecordWrite?playerNo=${param.playerNo}'/>">
         <!-- Sign In Start -->

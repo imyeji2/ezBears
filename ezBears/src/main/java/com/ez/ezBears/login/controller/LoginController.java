@@ -66,15 +66,7 @@ public class LoginController {
 					//session
 					HttpSession session=request.getSession();
 					session.setAttribute("userid", userid);
-					session.setAttribute("type", type);
-					session.setAttribute("name", map.get("MEM_NAME"));
-					session.setAttribute("position", map.get("POSITION_NAME"));
-					session.setAttribute("dept_name", map.get("DEPT_NAME"));
-					session.setAttribute("dept_no", map.get("DEPT_NO"));
-					session.setAttribute("memNo", map.get("MEM_NO"));
-					session.setAttribute("myimg", map.get("MEM_IMAGE"));
-					session.setAttribute("type", map.get("TYPE"));
-					
+					session.setAttribute("memVo", map);
 					logger.info("myimg 로그 확인 myimg={}",session.getAttribute("myimg"));
 					
 					//cookie
