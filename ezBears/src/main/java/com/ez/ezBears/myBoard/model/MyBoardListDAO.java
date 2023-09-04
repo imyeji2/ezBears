@@ -40,6 +40,9 @@ public interface MyBoardListDAO {
 	//마이 보드 삭제
 	int deleteMyboard(int mBoardNo);
 	
+	//마이보드 멤버 수 
+	int totalCountMboardMember(int mBoardNo);
+	
 	
 	
 	//희진

@@ -33,6 +33,9 @@ public interface MyBoardListService {
 	//보드 삭제 서비스(마이보드,보드리스트 같이 삭제)
 	int deleteAdminBoard(int mBoardNo);
 	
+	//마이보드 멤버 수 
+	int totalCountMboardMember(int mBoardNo);
+	
 	
 	
 	//다희
