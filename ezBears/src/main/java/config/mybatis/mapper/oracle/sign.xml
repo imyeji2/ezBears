@@ -22,6 +22,14 @@
 		values(#{docNo},#{deptNo},#{memNo},#{docTitle},#{docContent},#{myBoardNo})
 	</insert>
 	
+	<insert id="insertSignFile" parameterType="signFileVo">
+		<selectKey keyColumn="fileNo" order="BEFORE" resultType="int">
+			select sign_file_seq.nextval from dual
+		</selectKey>
+		insert into sign_file(file_no,doc_no,filename,origin_filename,fsize)
+		values(#{fileNo},#{docNo},#{filename},#{originFilename},#{fsize})
+	</insert>
+	
 	
 	<select id="selectApprovalList" resultType="map" parameterType="SignListSearchVO">
 		 select *
@@ -57,5 +65,9 @@
 		where doc_no = #{docNo}
 	</update>
 	
+	<select id="selectStatus" parameterType="int">
+		select status from sign
+		where doc_no = #{docNo}
+	</select>
 	
 </mapper>

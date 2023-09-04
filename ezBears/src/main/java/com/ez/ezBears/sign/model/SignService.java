@@ -19,5 +19,11 @@ public interface SignService {
 	
 	Map<String, Object> detailSign(int docNo);
 	
-	SignVO updateStatus(int docNo);
+	int updateStatus(int docNo);
+	
+	String selectStatus(int docNo);
+	
+	
+	
+	int insertSignFile(List<Map<String, Object>> files, int docNo);
 }

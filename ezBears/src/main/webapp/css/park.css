@@ -108,6 +108,21 @@
 	    width: 30%;
 
 	}
+	.regdate{
+		border: none;
+	    background: transparent;
+	    color: white;
+	}
+	.memName{
+		border: none;
+	    background: transparent;
+	    color: white;
+	}
+	.appoveBtn{
+		background-color: #7000D8;
+	    margin-left: 5px;
+	    width: 18%;
+	}
 }
 
 

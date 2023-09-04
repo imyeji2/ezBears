@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.ez.ezBears.common.SearchVO;
 import com.ez.ezBears.common.SignListSearchVO;
+import com.ez.ezBears.notice.model.NoticeFileVO;
 
 @Mapper
 public interface SignDAO {
@@ -24,5 +25,14 @@ public interface SignDAO {
 	Map<String, Object> detailSign(int docNo);
 	
 	//승인처리
-	SignVO updateStatus(int docNo);
+	int updateStatus(int docNo);
+	
+	//처리상태
+	String selectStatus(int docNo);
+
+	//파일 업로드
+	int insertSignFile(SignFileVO signFileVo);
+	
+	
+	
 }
