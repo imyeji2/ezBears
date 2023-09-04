@@ -28,8 +28,8 @@ public class ChatServiceImpl implements ChatService {
 	}
 
 	@Override
-	public int registerChatMember(String memberNum) { // 채팅방 사용자 등록
-		int result = chatStoreDao.registerChatMember();
+	public int registerChatMember(SqlSession sqlSession, String memName) { // 채팅방 사용자 등록
+		int result = chatStoreDao.registerChatMember(sqlSession, memName);
 		return result;
 	}
 

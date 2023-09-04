@@ -19,6 +19,7 @@ public interface SignService {
 	
 	Map<String, Object> detailSign(int docNo);
 	
+
 	int updateStatus(int docNo);
 	
 	String selectStatus(int docNo);
@@ -26,4 +27,12 @@ public interface SignService {
 	
 	
 	int insertSignFile(List<Map<String, Object>> files, int docNo);
+
+	//결제중 상태인 db 전체 조회
+	List<Map<String, Object>> selectAllUnder();
+	
+	//결재완료 상태인 db 전체 조회
+	List<Map<String, Object>> selectAllComplete();
+	
 }
+

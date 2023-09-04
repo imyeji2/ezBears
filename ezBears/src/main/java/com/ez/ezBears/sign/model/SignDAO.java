@@ -24,6 +24,7 @@ public interface SignDAO {
 	// 디테일
 	Map<String, Object> detailSign(int docNo);
 	
+
 	//승인처리
 	int updateStatus(int docNo);
 	
@@ -34,5 +35,11 @@ public interface SignDAO {
 	int insertSignFile(SignFileVO signFileVo);
 	
 	
+
+	//결제중 상태인 db 전체 조회
+	List<Map<String, Object>> selectAllUnder();
+	
+	//결재완료 상태인 db 전체 조회
+	List<Map<String, Object>> selectAllComplete();
 	
 }

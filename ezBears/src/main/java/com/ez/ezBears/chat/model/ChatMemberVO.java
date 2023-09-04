@@ -6,9 +6,9 @@ import lombok.Data;
 public class ChatMemberVO {
 	private int chatRoomNo;
 	private int memNo;
-	private String divName;
+	private String deptName;
 	private String memName;
-	private String rankName;
+	private String positionName;
 	private int memStatus;
 	
 }
