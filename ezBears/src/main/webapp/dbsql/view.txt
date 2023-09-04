@@ -81,7 +81,7 @@ FROM
     JOIN DEPT D
     ON M.DEPT_NO = D.DEPT_NO
 ) B
-ON A.MEM_NO = B.MEM_NO;
+ON A.MEM_NO = B.MEM_NO; 
 
 
 

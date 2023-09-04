@@ -187,7 +187,7 @@ document.addEventListener("DOMContentLoaded", function() {
 							</div>
 						</div>
 					</div>
-				</div>
+				</div> 
 				<!-- approvalModal -->
 
 				<div>
