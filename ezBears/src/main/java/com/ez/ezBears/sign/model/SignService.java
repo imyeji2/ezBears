@@ -17,4 +17,12 @@ public interface SignService {
 	int selectAppCount(SearchVO searchVo);
 	
 	Map<String, Object> detailSign(int docNo);
+	
+	//결제중 상태인 db 전체 조회
+	List<Map<String, Object>> selectAllUnder();
+	
+	//결재완료 상태인 db 전체 조회
+	List<Map<String, Object>> selectAllComplete();
+	
+	
 }

@@ -49,6 +49,13 @@
 		where doc_no = #{docNo}
 	</select>
 	
+	<select id="selectAllUnder" resultType="map">
+		select * from SIGNLISTVIEW where status = '처리중' order by doc_no desc
+	</select>
+	
+	<select id="selectAllComplete" resultType="map">
+		select * from SIGNLISTVIEW where status = '완료' order by doc_no desc
+	</select>
 	
 	
 </mapper>

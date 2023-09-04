@@ -35,13 +35,13 @@
 									</tr>
 								</thead>
 								<tbody>
-									<c:if test="${empty list }">
+									<c:if test="${empty completeList }">
 										<tr>
 											<th colspan="6">완료된 결재가 없습니다.</th>
 										</tr>
 									</c:if>
-									<c:if test="${!empty list }">
-										<c:forEach var="list" items="${list }">
+									<c:if test="${!empty completeList }">
+										<c:forEach var="list" items="${completeList }">
 											<tr>
 												<td>${list.DOC_NO }</td>
 												<td><fmt:formatDate value="${list['REGDATE'] }"
