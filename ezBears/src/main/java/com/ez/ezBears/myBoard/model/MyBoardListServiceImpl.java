@@ -104,9 +104,7 @@ public class MyBoardListServiceImpl implements MyBoardListService {
 		int cnt=0;
 		try {
 			 cnt = myBoardListDao.deleteMyboard(mBoardNo);
-			System.out.println("마이보드 삭제 결과 cnt="+cnt);
-			cnt = mBoardDao.deleteMboard(mBoardNo);
-			System.out.println("보드 리스트 삭제 결과 cnt="+cnt);
+			 cnt = mBoardDao.deleteMboard(mBoardNo);
 		}catch(RuntimeException e) {
 			//선언적 트랜젝션(@Transactional)에서는
 			//런타임 예외가 발생하면 롤백한다.
@@ -117,6 +115,7 @@ public class MyBoardListServiceImpl implements MyBoardListService {
 		
 		return cnt;
 	}
+	
 	//마이보드 멤버 수 
 	@Override
 	public int totalCountMboardMember(int mBoardNo) {

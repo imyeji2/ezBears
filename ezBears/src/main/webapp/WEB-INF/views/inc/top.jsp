@@ -92,6 +92,11 @@ $(function(){
         $('#addBoardError').text('');
     });
     
+    $('#editMyBoard').on('hide.bs.modal', function () {
+    	location.reload();   
+    });    
+    
+    
     
     //마이보드 추가, 이름 입력 시 같은 이름 체크
 	$('#AddBoardName').on('input', function(e) {
@@ -245,27 +250,26 @@ $(function(){
 			var $editFrm = $(this).closest('tr');
 			var mBoardNo=$editFrm.find('input[name=mBoardNo]').val();
 			
-			$.ajax({
-		        type: 'post',
-		        url: "<c:url value='/myBoard/ajax_delMBoard'/>",
-		        data:{mBoardNo:mBoardNo},
-		        dataType: 'json',
-		        error: function(xhr, status, error){
-		            alert(error);
-		        },
-		        success: function(res){
-		            console.log(res); // 서버 응답 확인
-		            if(res>0){
-			            loadBoardList();
-			            alert('삭제가 완료되었습니다.');
-		            }else{
-		            	alert('삭제에 실패했습니다.');
-		            }
-		        }
-	
-		    });					
+			 $.ajax({
+			        type: 'post',
+			        url: "<c:url value='/myBoard/ajax_checkBoardMemberCount'/>",
+			        data:{mBoardNo:mBoardNo},
+			        dataType: 'json',
+			        error: function(xhr, status, error){
+			            alert(error);
+			        },
+			        success: function(res){
+			            console.log(res); // 서버 응답 확인
+			            if(res>1){
+				            alert('보드를 사용중인 사원이 있습니다. 멤버 삭제 후 다시 시도하세요');
+				            return false;
+			            }else{
+			            	deleteMyBoard(mBoardNo);
+			            }
+			        }
+		
+			    });			
 			
-			deleteMyBoard(mBoardNo);
 		}
 	});
 	
@@ -389,6 +393,7 @@ $(function(){
 	
 	//마이보드 삭제(관리자)
 	function deleteMyBoard(mBoardNo){
+		
 		 $.ajax({
 		        type: 'post',
 		        url: "<c:url value='/myBoard/ajax_delMBoard'/>",
@@ -403,12 +408,13 @@ $(function(){
 			            loadBoardList();
 			            alert('삭제가 완료되었습니다.');
 		            }else{
-		            	alert('삭제에 실패했습니다.');
+		            	alert('삭제에 실패했습니다. 다시 시도해 주세요');    	
 		            }
 		        }
 	
 		    });		
 	}	
+	
 		
 </script>
 

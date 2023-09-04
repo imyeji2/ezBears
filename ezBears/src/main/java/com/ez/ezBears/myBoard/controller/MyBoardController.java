@@ -123,7 +123,7 @@ public class MyBoardController {
 	@ResponseBody
 	@RequestMapping("/ajax_delMBoard")
 	public int delteMBoard(int mBoardNo) {
-		logger.info("마이보드 삭제 파라미터");
+		logger.info("마이보드 삭제 파라미터 mBoardNo{}",mBoardNo);
 		
 		int cnt = myBoardListService.deleteAdminBoard(mBoardNo);
 		logger.info("마이보드 삭제 최종 cnt={}",cnt);
@@ -134,7 +134,7 @@ public class MyBoardController {
 	@ResponseBody
 	@RequestMapping("/ajax_checkBoardMemberCount")
 	public int checkBoardMemberCount(int mBoardNo) {
-		logger.info("마이보드 삭제 파라미터");
+		logger.info("마이보드 내부의 인원수 확인 파라미터 mBoardNo={}",mBoardNo);
 		
 		int cnt = myBoardListService.totalCountMboardMember(mBoardNo);
 		logger.info("마이보드 삭제 최종 cnt={}",cnt);
