@@ -118,14 +118,18 @@ public class SignController {
 			Model model) {
 		
 		logger.info("결재 등록 파라미터 mBoardNo={}, signVo={}",mBoardNo,signVo);
+		int cnt = signService.insertApproval(signVo);
+		logger.info("결재 등록 결과 cnt = {}", cnt);
+		
+		
 		
 		String msg = "결재 등록 실패", url = "/myBoard/Approval_write";
 		try {
+
+			// docNo가 없음
+			
 			List<Map<String, Object>> files = fileUploadUtil.fileupload(request, ConstUtil.UPLOAD_APPROVAL_FLAG);
 			logger.info("업로드파일  files={}", files);
-
-			int cnt = signService.insertApproval(signVo);
-			logger.info("결재 등록 결과 cnt = {}", cnt);
 
 			if(cnt > 0) {
 				int filecnt = signService.insertSignFile(files, signVo.getDocNo());
