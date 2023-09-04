@@ -41,9 +41,19 @@
 		select * from myBoardMemberView
 		where m_board_no=#{mBoardNo} and CONTRACT_DONE is null
 	</select>
-<!-- 예지 -->
-
-<!-- 다희 -->	
+	
+	<select id="selectAdminBoardList" parameterType="int" resultType="map">
+		select * from myBoardListView
+		where ADMIN_NO=#{adminNo} and mem_no=#{adminNo}
+	</select>
+	
+	<select id="totalCountMboardMember">
+		select count(mem_no) myBoardListView
+		where m_board_no=#{mBoardNo}
+	</select>	
+	<!-- 예지 -->
+	
+	<!-- 다희 -->	
 	<!-- 부서 이름으로 동적 게시판 번호 찾기 -->
 	<select id="findBoardNoByBoardName" parameterType="String" resultType="int">
 		SELECT M_BOARD_NO FROM M_BOARD WHERE M_BOARD_NAME = #{MBoardName}
@@ -57,9 +67,9 @@
 		INSERT INTO MY_BOARD(MY_BOARD_NO, MEM_NO, M_BOARD_NO) VALUES(#{myBoardNo}, #{memNo}, #{MBoardNo} )
 	</insert>
 	
-<!-- 다희 -->	
-
-<!-- 희진 -->
+	<!-- 다희 -->	
+	
+	<!-- 희진 -->
 	<select id="selectBoardInfo" parameterType="myBoardInfoVo" resultType="myBoardInfoVo">
 		select * from myBoardInfo
 		where m_board_no = #{mBoardNo} and mem_id = #{memId}
@@ -69,6 +79,12 @@
 		select * from myboardInfo
 		where mem_id = #{memId}
 	</select>
+	
+	<delete id="deleteMyboard" parameterType="int">
+		delete table M_BOARD
+		where M_BOARD_NO=#{MBoardNo}
+	</delete>	
+	
 </mapper>
 
 

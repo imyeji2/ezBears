@@ -180,5 +180,4 @@ public class MemberServiceImpl implements MemberService{
 		return memberDao.allMemCnt(searchVo);
 
 	}
-
 }

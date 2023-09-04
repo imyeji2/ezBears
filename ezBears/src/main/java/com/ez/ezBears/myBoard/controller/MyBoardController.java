@@ -1,6 +1,9 @@
 
 package com.ez.ezBears.myBoard.controller;
 
+import java.util.List;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ez.ezBears.MBoard.model.MBoardService;
 import com.ez.ezBears.MBoard.model.MBoardVO;
 import com.ez.ezBears.member.model.MemberService;
+import com.ez.ezBears.myBoard.model.MyBoardListService;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +28,7 @@ public class MyBoardController {
 	private static final Logger logger = LoggerFactory.getLogger(MyBoardController.class);
 	private final MemberService memberService;
 	private final MBoardService mBoardService;
+	private final MyBoardListService myBoardListService;
 		
 	//예지
 	@RequestMapping("/addMyBoard")
@@ -72,64 +77,66 @@ public class MyBoardController {
 	}
 
 	
+	@ResponseBody
 	@RequestMapping("/editMyBoard")
-	public String editMyBoard(@RequestParam(defaultValue = "0") int mBoardNo, Model model) {
+	public List<Map<String, Object>> editMyBoard(Model model, HttpSession session) {
 		//1
 		logger.info("마이보드 수정");
+		String userid = (String)session.getAttribute("userid");
+		logger.info("마이보드 유저 검색 userid={}",userid);
 		
 		//2
+		int adminMem = memberService.selectMemberNo(userid);
+		List<Map<String, Object>> boardList = myBoardListService.selectAdminBoardList(adminMem);
+		logger.info("보드 관리 boardList.size()={}",boardList.size());
 		
 		//3
-		model.addAttribute("mBoardNo",mBoardNo);
-		
+		model.addAttribute("boardList",boardList);
+	
 		//4
-		return "/myBoard/editMyBoard";
+		return boardList;
 	}
+	
+	@ResponseBody
+	@RequestMapping("/ajax_selectMyBoardMemList")
+	public List<Map<String, Object>> selectMyBoardMemList(@RequestParam (defaultValue = "0") int mBoardNo){
+		logger.info("마이보드 관리자 변경 관리자 리스트 조회 파라미터 mBoardNo={}",mBoardNo);
+		
+		List<Map<String, Object>> mem_list = myBoardListService.selectMyBoardMember(mBoardNo);
+		logger.info("마이보드 멤버 정보 mem_list.size={}",mem_list.size());
+		
+		return mem_list;
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping("/ajax_updateMBoard")
+	public int updateMBoard(@ModelAttribute MBoardVO mBoardVo) {
+		logger.info("마이보드 정보 변경 파라미터 mBoardVo={}",mBoardVo);
+		
+		int cnt =mBoardService.updateMboard(mBoardVo);
+		logger.info("마이보드 정보 변경 결과 cnt={}",cnt);
+				
+		return cnt;
+	}
+	
+	@ResponseBody
+	@RequestMapping("/ajax_delMBoard")
+	public int delteMBoard(int mBoardNo) {
+		logger.info("마이보드 삭제 파라미터");
+		
+		int cnt = myBoardListService.deleteAdminBoard(mBoardNo);
+		logger.info("마이보드 삭제 최종 cnt={}",cnt);
+		
+		return cnt;
+	}
+	
+
+
 	
 	   //희진
 	   /*팀별 결재 게시판 */
-/*
-	   @RequestMapping("/Approval")
-	   public String Approval() {
-	      logger.info("결재 리스트");
-	      return "myBoard/Approval";
-	   }
-	   
-	   @RequestMapping("/Approval_write")
-	   public String Approval_wr() {
-	      logger.info("결재 작성");
-	      return "myBoard/Approval_write";
-	   }
-	   @RequestMapping("/Approval_edit")
-	   public String Approval_edit() {
-		   logger.info("결재 수정");
-		   return "myBoard/Approval_edit";
-	   }
-	   
-	   
-	   @RequestMapping("/Approval_detail")
-	   public String Approval_detail() {
-	      logger.info("결재 디테일");
-	      return "myBoard/Approval_detail";
-	   }
-	   
-	   @RequestMapping("/Approval_delete")
-	   public String Approval_delete() {
-	      logger.info("결재 삭제");
-	      return "myBoard/Approval_delete";
-	   }
-	   
-	   /*
-	    
-	   
-	   /*팀별 웹하드 게시판 */
-	 /*   
-	@RequestMapping("/webhard")
-	   public String hard() {
-	      logger.info("웹하드 리스트");
-	      return "myBoard/webhard";
-	   }   
-	*/
+  
 	   @RequestMapping("/webhard_write")
 	   public String hard_write() {
 		   logger.info("웹하드 작성페이지");
@@ -153,11 +160,5 @@ public class MyBoardController {
 	      return "myBoard/webhard_delete";
 	   }
 	   
-	   
-		/* 캘린더 */
-		/*
-		  @RequestMapping("/Calender") public String Calender() { logger.info("캘린더 뷰");
-		  return "myBoard/Calender"; }
-		 */
 }
 

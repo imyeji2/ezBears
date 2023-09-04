@@ -25,7 +25,7 @@
     <select id="selectMemberView" parameterType="String" resultType="map">
     	select * from memberView1 where MEM_ID = #{memId} 
     </select>
-	
+    
 	
 	<!-- 다희 -->
 	<!-- 자동 아이디 생성 관리 및 멤버 등록  -->
@@ -121,7 +121,6 @@
 			</if>
 		</where>
 	</sql>
-
 	
 	<!-- 사원 스태프 전체 검색 -->
 	<select id="selectMemStaff" parameterType="searchVo" resultType="map">
@@ -159,7 +158,6 @@
     	<include refid="searchWhere2"></include>
     </select>
 	
-
 	<!-- 희진  -->
 	<select id="selectpositioninfo" parameterType="int" resultType="memberVo">
 		select * from member 
