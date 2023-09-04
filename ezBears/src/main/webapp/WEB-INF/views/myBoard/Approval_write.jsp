@@ -42,7 +42,7 @@
 	String strDate = simpleDate.format(date);
 
 %>
-		<form id="appform" action="" method="post" enctype="multipart/form-data" >
+		<form id="appform" action="<c:url value='/myBoard/Approval_write?mBoardNo=${myBoardListVo.MBoardNo}'/>" method="post" enctype="multipart/form-data" >
 				<input type ="hidden" name ="userid" id="userid" value="${userid }">
 				<input type="hidden" name="myBoardNo" id="myBoardNo"value="${myBoardInfoVo.myBoardNo}"> 
 				<input type="hidden" name="memNo" id="memNo" value="${myBoardInfoVo.memNo}"> 
@@ -80,31 +80,13 @@
 						 <label for="floatingInput">  </label></td>
 				</tr>
 
-	            <!--     <tr class="tr-m">
-	                    <td class="td-1">휴가종류</td>
-	                    <td colspan="3">
-	                        <select class="form-select" id="floatingSelect"
-						aria-label="Floating label select example">
-	                            <option value="">선택</option>
-	                            <option value="연차">연차</option>
-	                            <option value="반차">반차</option>
-	                            <option value="특별휴가">특별휴가</option>
-	                            <option value="공가">공가</option>
-	                            <option value="병가">병가</option>
-	                        </select>
-	                    </td> -->
+	         		<tr>
 	            	<td colspan="4">
-	            	<input class="form-control appfile" type="file" id="app_file">
+	            	<input class="form-control appfile" type="file" id="app_file" name="file">
+
 				    </td>
 				    </tr>
-	              <!--   <tr class="tr-m">
-	                    <td class="td-1" colspan="1">휴가기간</td>
-	                    <td colspan="2" >휴가시작일</td>
-	                    <td  id="td-leave-date"><input type="text"id="startVacation" class="startVacation"></td>
-	                    <td colspan="2" >휴가종료일</td>
-	                    <td  id="td-leave-date"><input type="text"id="endVacation" class ="endVacation"></td>
-	                </tr> -->
-
+	
 	                <tr>
 	                    <td class="td-1">결재 내용</td>
 	                    </tr>

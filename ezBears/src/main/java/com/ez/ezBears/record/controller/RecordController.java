@@ -64,7 +64,6 @@ public class RecordController {
 	}
 	
 	
-	
 	@RequestMapping("/team")
 	public String team() {
 		//1,4
@@ -72,20 +71,6 @@ public class RecordController {
 		return "/record/team";
 	}
 	
-	@RequestMapping("/gameRecordDetail2")
-	public String gameRecordDetail2() {
-		
-		logger.info("날짜 별 경기 기록 상세 보여주기");
-		return "/record/gameRecordDetail2";
-	}
-	
-	
-	@RequestMapping("/playerDetail2")
-	public String playerDetail2() {
-		//1,4
-		logger.info("라인업");
-		return "/record/playerDetail2";
-	}
 	
 	@GetMapping("/inningWrite")
 	public String inningWrite_get() {
@@ -125,6 +110,24 @@ public class RecordController {
 		logger.info("이닝 처리 결과, list.size={}", list.size());
 		return "/record/summary";
 	}
+	
+	@RequestMapping("/gameRecordDetail2")
+	public String gameRecordDetail2_get(Model model, int recodeNo) {
+		logger.info("경기별 이닝 기록 파라미터, recodeNo={}", recodeNo);
+		
+		List<Map <String, Object>> list = inningService.selectInningView(recodeNo);
+		Map <String, Object> map1 = inningService.selectInningHomeView(recodeNo);
+		Map <String, Object> map2 = inningService.selectInningAwayView(recodeNo);
+		model.addAttribute("list", list);
+		model.addAttribute(map1);
+		model.addAttribute(map2);
+		logger.info("이닝 처리 결과, list.size={}", list.size());
+		logger.info("map1", map1);
+		logger.info("map2", map2);
+		
+		return "/record/gameRecordDetail2";
+	}
+	
 	
 	@RequestMapping("/lineup")
 	public String lineup_get(Model model, int recodeNo) {

@@ -8,7 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 @Mapper
 public interface ChatStoreDAO  {
 	int registerChatRoom(ChatRoomVO chatRoom); // 채팅방 생성
-	int registerChatMember(); // 채팅방 사용자 등록
+	int registerChatMember(SqlSession sqlSession, String memName); // 채팅방 사용자 등록
 	List<ChatMemberVO> printAllMember(SqlSession sqlSession, ChatRoomVO chatRoom); // 채팅방 사용자 목록 조회
 	int registerChatContent(SqlSession sqlSession, ChatContentVO chatContent); // 채팅 등록
 	int printChatRoomNo(SqlSession sqlSession); // 채팅방 번호 불러오기

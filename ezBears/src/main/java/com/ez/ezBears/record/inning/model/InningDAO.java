@@ -14,4 +14,7 @@ public interface InningDAO {
 	int deleteInning(int inningNo);
 	
 	List<Map <String, Object>> selectInningView(int recodeNo);
+	
+	Map<String, Object> selectInningHomeView(int recodeNo);
+	Map<String, Object> selectInningAwayView(int recodeNo);
 }
