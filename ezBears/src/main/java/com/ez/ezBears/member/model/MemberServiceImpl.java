@@ -169,7 +169,16 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public int updatePwd(MemberVO memberVo) {
 		return memberDao.updatePwd(memberVo);
+
+  @Override  
+	public List<Map<String, Object>> selectMemStaff(SearchVO searVo) {
+		return memberDao.selectMemStaff(searVo);
 	}
 
-	
+	@Override
+	public int allMemCnt(SearchVO searchVo) {
+		return memberDao.allMemCnt(searchVo);
+
+	}
+
 }
