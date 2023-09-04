@@ -7,6 +7,8 @@
 <link rel="stylesheet" href="<c:url value='/css/jquery-ui.min.css'/>"type="text/css">
 <script type="text/javascript" src="<c:url value='/js/jquery-ui.min.js'/>"></script>
 <script>
+
+
 	var jb = jQuery.noConflict();
 	jb(function() {
 		jb("#startVacation").datepicker({
@@ -23,31 +25,7 @@
 			monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']
 		});
 	});
-	function approveDocument() {
-	    // 문서 번호 가져오기
-	    var docNo = "${list['DOC_NO']}";
-
-	    // AJAX 요청 보내기
-	    $.ajax({
-	        url: "<c:url value='/myBoard/statusUpdate'/>", 
-	        method: "POST", 
-	        data: {
-	            docNo: docNo 
-	        },
-	        success: function (response) {
-	            
-	            if (response.success) {
-	               
-	                alert("문서가 승인되었습니다.");
-	            } else {
-	                alert("문서 승인에 실패했습니다.");
-	            }
-	        },
-	        error: function () {
-	            alert("오류가 발생했습니다. 다시 시도해주세요.");
-	        }
-	    });
-	}
+	
 </script>
 
 
@@ -74,29 +52,39 @@
 				<input type="hidden" name="memNo" id="memNo" value="${myBoardInfoVo.memNo}"> 
 				<input type="hidden" name="MBoardNo" id="MBoardNo" value="${myBoardInfoVo.MBoardNo}"> 
 				<input type="hidden" name="deptNo" id="deptNo" value="${myBoardInfoVo.deptNo}">
+				<input type="hidden" name="positionNo" id="positionNo" value="${myBoardInfoVo.positionNo}">
+				<input type="hidden" name="memName" id="memName" value="${myBoardInfoVo.memName}">
 				 
 			<table class="table" id="table" border="1">
 				<tr class="tr-s">
-					<td class="td-1" rowspan="2" >문서번호</td>
-					<td class="td-2" rowspan="2" colspan="2">
+					<td class="td-1" rowspan="2" >문서번호
 					 <input type ="text"  name="docNo" class="docNo"  value="${list['DOC_NO'] }" readonly><!-- 문서 번호 불러오기 -->
 					 </td> 
-					<td class="td-3">담당</td><!-- 결재 담당자 -->
-					<td class="td-4" colspan="2">${memberVo.memName }</td><!-- 결재 담당자 -->
-					<td class="td-5"> 
-					<input type ="text" class="status" name="status" value="${list['STATUS'] }">
-					<input type="button" value="승인" onclick="approveDocument()">
+					<td class="td-2" colspan="2">담당</td><!-- 결재 담당자 -->
+					<td class="td-3" colspan="3">${memberVo.memName }</td><!-- 결재 담당자 -->
+					<td class="td-4"> 
+					<input type ="text" class="sta" value="처리 상태">
+					<input type ="text" class="status" name="status" id="status" value="${list['STATUS'] }">		
+					
+					<c:if test="${list['STATUS'] eq '대기'}">
+						<input type="button" class=" btn-sm btn-primary appoveBtn " value="승인" onclick="approveDocument()">
+					</c:if>
+					
 					</td>
 				</tr>
 				
 				<tr class="tr-m">
-					<td class="td-1">기안일</td>
-					<td class="td-2" colspan="2">${list['REGDATE'] }</td>
+					<td class="td-1" colspan="3">기안일</td>
+					<td class="td-2" colspan="5">
+					<input name="regdate" id="regdate" class="regdate" value="${list['REGDATE'] }" readonly>
+					</td>
 				</tr>
 
 				<tr class="tr-s">
 					<td class="td-1" rowspan="2" colspan="3">기안자</td>
-					<td class="td-5" rowspan="2" colspan="4"> ${myBoardInfoVo.memName }</td>
+					<td class="td-5" rowspan="2" colspan="5" > 
+						<input type ="text" name="memName" class="memName" id="memName" value="${list['MEM_NAME'] }" readonly>
+					</td>
 				</tr>
 				
 				<tr class="tr-s">		
@@ -104,8 +92,9 @@
 			
 				<tr id="tr-title" class="tr-m">
 					<td class="td-1 ">제목</td>
-					<td colspan="7">
-					<input type="text" class="form-control" id="floatingInput" name="docTitle" placeholder="제목" value="${list['DOC_TITLE'] }">
+					<td colspan="8">
+					<input type="text" class="form-control" id="floatingInput" name="docTitle"
+					 value="${list['DOC_TITLE'] }" readonly>
 						</td>
 				</tr>
 
@@ -120,18 +109,18 @@
 	                    <td class="td-1">휴가사유</td>
 	                    </tr>
 	                    <tr>
-	                    <td colspan="7" id="td-leave-reason">
-	                    	<textarea name="docContent" style="white-space: pre;">
+	                    <td colspan="8" id="td-leave-reason">
+	                    	<textarea name="docContent" style="white-space: pre;" readonly>
 	                    	${list['DOC_CONTENT'] }
 	                    	</textarea>
                     	</td>
 	                </tr>
 			</table>
 			<div>
-				<input type="button" class="btn btn-sm btn-primary btn" value="수정"  onclick="docSave2()"/>
-		    </div>
-			
-		
+			    <c:if test="${myBoardInfoVo.memName eq list['MEM_NAME']}">
+			        <input type="button" class="btn btn-sm btn-primary btn" value="수정" onclick="docSave2()"/>
+			    </c:if>
+		</div>
 			</form>
 		</div>
 		</div><!--appbox  -->
@@ -150,5 +139,58 @@
 			height : '500px',
 			removePlugins: "exportpdf"
 		});
+		
+		function approveDocument() {
+		    var docNo = "${list['DOC_NO']}";
+		    var positionNo = parseInt("${myBoardInfoVo.positionNo}");
+		    var status = "${list['STATUS'] }";
+		    
+		    console.log("status",status);
+		    console.log("positionNo 값: ", positionNo);
+		    console.log("docNo 값: ", docNo);
+
+		    // position_no가 6인 경우에만 승인 가능
+		    if (positionNo === 6) {
+		        // AJAX
+		        $.ajax({
+		            url: "<c:url value='/myBoard/statusUpdate'/>",
+		            method: "POST",
+		            data: {
+		                docNo: docNo,
+		                positionNo: positionNo
+		            },
+		            success: function (response) {
+		                if (response.success) {
+		                    alert("문서가 승인되었습니다.");
+
+		                    // 승인 성공 후 상태 갱신
+		                    $.ajax({
+		                        url: "<c:url value='/myBoard/getDocumentStatus'/>",
+		                        method: "GET", 
+		                        data: {
+		                            docNo: docNo
+		                        },
+		                        cache: false, // 캐싱 비활성화
+		                        success: function (statusResponse) {
+		                        	location.reload();
+		                        },
+		                        error: function () {
+		                            alert("문서 상태를 가져오는데 실패했습니다.");
+		                        }
+		                    });
+		                } else {
+		                    alert("문서 승인에 실패했습니다.");
+		                }
+		            },
+		            error: function () {
+		                alert("오류가 발생했습니다. 다시 시도해주세요.");
+		            }
+		        });
+		    } else {
+		        alert("해당 직책에서는 승인 권한이 없습니다.");
+		    }
+		}
+
+
 	</script>
 <%@include file="../inc/bottom.jsp"%>
