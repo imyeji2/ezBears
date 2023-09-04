@@ -4,65 +4,25 @@
 <%@page import="java.util.List"%>
 <%@page import="org.springframework.ui.Model"%>
 <%@page import="com.ez.ezBears.attendance.model.AttendanceVO"%>
+<link href="${pageContext.request.contextPath}/css/choong/chi.css" rel="stylesheet">
 
 <%@include file="../inc/top.jsp"%>
 
 <script type="text/javascript">
-	$(function () {
-		// Ajax 요청을 보냅니다.
-	    $.ajax({
-	        type: "GET",
-	        url: "/signManagement/underApprovalAjax", // 서버에서 데이터를 제공하는 URL로 변경해야 합니다.
-	        dataType: "json", // 데이터 유형을 JSON으로 설정합니다. 필요에 따라 변경할 수 있습니다.
-	        success: function(jsonStr) {
-	            // 성공적으로 데이터를 가져왔을 때 실행되는 콜백 함수입니다.
-	            // 데이터를 사용하여 원하는 방식으로 페이지를 업데이트하세요.
-	            // 이 예제에서는 underList 데이터를 사용하여 테이블을 업데이트합니다.
-	            updateTable(jsonStr);
-	        },
-	        error: function(xhr, textStatus, errorThrown) {
-	            // 요청이 실패했을 때 실행되는 콜백 함수입니다.
-	            console.error("Error:", errorThrown);
-	        }
-	    });
-
-	    function updateTable(jsonStr) {
-	    	var htmlStr = "";
-	       	htmlStr += "<table class="table text-start align-middle table-bordered table-hover mb-0">";
-	       	htmlStr += "<thead>";
-	       	htmlStr += "<tr class="text-white">";
-	       	htmlStr += "<th scope="col">문서 번호</th>";
-	       	htmlStr += "<th scope="col">날짜</th>";
-	       	htmlStr += "<th scope="col">제목</th>";
-	       	htmlStr += "<th scope="col">부서명</th>";
-	       	htmlStr += "<th scope="col">이름</th>";
-	       	htmlStr += "<th scope="col">처리상태</th>";
-	       	htmlStr += "</tr>";
-	       	htmlStr += "</thead>";
-	       			
-/* 	        // 데이터를 테이블에 추가합니다.
-	        $.each(jsonStr,function(index,value){
-	        	htmlStr += "<tr>";
-	        	htmlStr += "<td>"+this.DOC_NO+"</td>";
-	            row.append("<td>" + data[i].DOC_NO + "</td>");
-	            row.append("<td>" + data[i].REGDATE + "</td>");
-	            row.append("<td><a href='/myBoard/Approval_detail?docNo=" + data[i].DOC_NO + "'>" + data[i].DOC_TITLE + "</a></td>");
-	            row.append("<td>" + data[i].DEPT_NAME + "</td>");
-	            row.append("<td>" + data[i].MEM_NAME + "</td>");
-	            row.append("<td>" + data[i].STATUS + "</td>");
-	            tableBody.append(row);
-	        } */
-	    }
-	});
-		
-		
-		
-	
-
-
+	function pageFunc(page) {
+		$('input[name="currentPage"]').val(page);
+		$('form[name="frmPage"]').submit();
+	}
 </script>
 
-
+<!-- 페이징 처리 관련 form -->
+<form action="<c:url value='/signManagement/underApproval'/>" 
+	name="frmPage" method="post">
+	<input type="hidden" name="currentPage">
+	<input type="hidden" name="searchTitle" value="${param.searchTitle }">
+	<input type="hidden" name="searchDeptNo" value="${param.searchDeptNo }">
+	<input type="hidden" name="searchName" value="${param.searchName }">
+</form>
 
 <!-- Blank Start -->
 <div class="container-fluid pt-4 px-4">
@@ -79,6 +39,44 @@
 							<h6 class="mb-0">결재 중</h6>
 							<!-- <a href="">Show All</a> -->
 						</div>
+						
+						<form method="post" action="<c:url value='/signManagement/underApproval'/>" name="frmSearch">
+				        	<table>
+				        		<tr>
+						    		<td class="t-search-title" style="width: 25%">
+						    			제목
+						    		</td>
+						    		<td>
+						    			<input type="text" name="searchTitle" id="searchTitle" style="width: 160px" value="${param.searchTitle }">
+							      		<input type="submit" value="검색" id="btnSearch">
+							      	</td>
+							    </tr>
+				        		<tr>
+				        			<th>부서명</th>
+				        			<td>
+					        			<select name="searchDeptNo" style="width: 99%">
+											<!-- 반복문 -->
+											<option value="" selected="selected">전체 부서</option>
+											<c:forEach var="deptVo" items="${deptList}">
+												<option value ="${deptVo.deptNo}"
+													<c:if test="${param.searchDeptNo == deptVo.deptNo }">selected</c:if>
+												>${deptVo.deptName}</option>
+											</c:forEach>
+											<!-- 반복문 -->
+			                            </select>
+				        			</td>
+				        		</tr>
+				        		<tr>
+				        			<th>사원명</th>
+				        			<td><input type="text" name="searchName" style="width: 99%" value="${param.searchName }"></td>
+				        		</tr>
+				        		<!-- <tr>
+				        			<th>근무 상태</th>
+				        			<td><input type="text" name="searchACondition" style="width: 99%"></td>
+				        		</tr> -->
+				        	</table>
+			        	</form>
+						<br>
 						<div class="table-responsive">
 							<table class="table text-start align-middle table-bordered table-hover mb-0">
 								<thead>
@@ -92,7 +90,7 @@
 									</tr>
 								</thead>
 								<tbody id="table-body">
-									<%-- <c:if test="${empty underList }">
+									<c:if test="${empty underList }">
 										<tr>
 											<th colspan="6">결재 요청이 없습니다.</th>
 										</tr>
@@ -100,7 +98,7 @@
 									<c:if test="${!empty underList }">
 										<c:forEach var="list" items="${underList }">
 											<tr>
-												<td>${list.DOC_NO }</td>
+												<td>${list['DOC_NO'] }</td>
 												<td><fmt:formatDate value="${list['REGDATE'] }"
 														pattern="yyyy-MM-dd" /></td>
 												<td><a
@@ -111,7 +109,7 @@
 												<td>${list['STATUS']}</td>
 											</tr>
 										</c:forEach>
-									</c:if> --%>
+									</c:if>
 								</tbody>
 							</table>
 						</div>
@@ -121,26 +119,26 @@
 						
 					    <div class="divPage" style="text-align: center" >		
 							<!-- 페이지 번호 추가 -->		
-							<c:if test="${pagingInfo.firstPage>1 }">
-								<a href="#" onclick="pageFunc(${pagingInfo.firstPage-1})">			
+							<c:if test="${pagination.firstPage>1 }">
+								<a href="#" onclick="pageFunc(${pagination.firstPage-1})">			
 								    <img src='<c:url value="/images/first.JPG" />'  border="0">	</a>
 							</c:if>
 											
 							<!-- [1][2][3][4][5][6][7][8][9][10] -->
-							<c:forEach var="i" begin="${pagingInfo.firstPage }" 
-							end="${pagingInfo.lastPage }">
-								<c:if test="${i==pagingInfo.currentPage }">
+							<c:forEach var="i" begin="${pagination.firstPage }" 
+							end="${pagination.lastPage }">
+								<c:if test="${i==pagination.currentPage }">
 									<span style="color:#7000D8;font-weight:bold" class="curPageNum">${i}</span>
 								</c:if>
-								<c:if test="${i!=pagingInfo.currentPage }">						
-									<a href="#" onclick="pageFunc(${i})" style="color:white" class="etcPageNum">
+								<c:if test="${i!=pagination.currentPage }">						
+									<a href="#" onclick="pageFunc(${i})" style="color:yellow" class="etcPageNum">
 										${i}
 									</a>
 								</c:if>
 							</c:forEach>
 								
-							<c:if test="${pagingInfo.lastPage<pagingInfo.totalPage }">
-								<a href="#" onclick="pageFunc(${pagingInfo.lastPage+1})">			
+							<c:if test="${pagination.lastPage<pagination.totalPage }">
+								<a href="#" onclick="pageFunc(${pagination.lastPage+1})">			
 									<img src="<c:url value="/images/last.JPG" />" border="0">
 								</a>
 							</c:if>

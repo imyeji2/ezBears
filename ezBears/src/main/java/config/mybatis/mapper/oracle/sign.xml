@@ -65,17 +65,83 @@
 		where doc_no = #{docNo}
 	</update>
 
-	<select id="selectAllUnder" resultType="map">
-		select * from SIGNLISTVIEW where status = '처리중' order by doc_no desc
+	<select id="selectAllUnder" parameterType="map" resultType="map">
+		select *
+		from
+		(
+			select rownum as RNUM, A.* from
+			(
+				select * from SIGNLISTVIEW <!-- where status = '처리중' -->
+				<include refid="searchWhere2"></include>
+				order by doc_no desc
+			)A
+		)
+		<![CDATA[
+		where RNUM> #{searchVo.firstRecordIndex} 
+		and RNUM<=#{searchVo.firstRecordIndex} + #{searchVo.recordCountPerPage}]]>
 	</select>
 	
-	<select id="selectAllComplete" resultType="map">
-		select * from SIGNLISTVIEW where status = '완료' order by doc_no desc
+	<select id="selectAllComplete" parameterType="map" resultType="map">
+		select *
+		from
+		(
+			select rownum as RNUM, A.* from
+			(
+				select * from SIGNLISTVIEW <!-- where status = '완료' -->
+				<include refid="searchWhere3"></include>
+				order by doc_no desc
+			)A
+		)
+		<![CDATA[
+		where RNUM> #{searchVo.firstRecordIndex} 
+		and RNUM<=#{searchVo.firstRecordIndex} + #{searchVo.recordCountPerPage}]]>
 	</select>
 	
 	<select id="selectStatus" parameterType="int">
 		select status from sign
 		where doc_no = #{docNo}
 	</select>
+	
+	<select id="countAllUnder" parameterType="map" resultType="int">
+		select count(*) from SIGNLISTVIEW <!-- where status = '처리중' --> 
+		<include refid="searchWhere2"></include>
+		order by doc_no desc
+	</select>
+	
+	<select id="countAllComplete" parameterType="map" resultType="int">
+		select count(*) from SIGNLISTVIEW <!-- where status = '완료' -->
+		<include refid="searchWhere3"></include>
+		order by doc_no desc
+	</select>
+	
+	<sql id="searchWhere2">
+ 		<where>
+ 			status = '처리중'
+ 			<if test="searchTitle!=null and searchTitle!=''">
+ 				and doc_title like '%' || #{searchTitle} || '%'
+ 			</if>
+ 			<if test="searchDeptNo!=null and searchDeptNo!=''">
+ 				and dept_no = #{searchDeptNo}
+ 			</if>
+ 			<if test="searchName!=null and searchName!=''">
+ 				and mem_name = #{searchName}
+ 			</if>
+ 		</where>
+ 	</sql>
+ 	
+	<sql id="searchWhere3">
+ 		<where>
+ 			status = '완료'
+ 			<if test="searchTitle!=null and searchTitle!=''">
+ 				and doc_title like '%' || #{searchTitle} || '%'
+ 			</if>
+ 			<if test="searchDeptNo!=null and searchDeptNo!=''">
+ 				and dept_no = #{searchDeptNo}
+ 			</if>
+ 			<if test="searchName!=null and searchName!=''">
+ 				and mem_name = #{searchName}
+ 			</if>
+ 		</where>
+ 	</sql>
 	
 </mapper>
