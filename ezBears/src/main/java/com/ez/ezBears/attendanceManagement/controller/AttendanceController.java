@@ -126,10 +126,10 @@ public class AttendanceController {
 				hourGap = Math.ceil(((format2.getTime() - format1.getTime()) / 3600000d)*10)/10;
 			}
 			
-			logger.info("hourGap={}", hourGap);
+			//logger.info("hourGap={}", hourGap);
 			
 			map.put("hourGap", Double.toString(hourGap));
-			logger.info("map={}", map);
+			//logger.info("map={}", map);
 		}
 		
 		logger.info("출/퇴근 상세보기 처리 후, attendanceList.size={}", attendanceList.size());
@@ -150,6 +150,7 @@ public class AttendanceController {
 			Model model) throws ParseException, IOException {
 		//다운로드 받을 리스트를 전체 조회
         List<Map<String, Object>> allList = attendanceService.findAllToExcel(date11, date22, searchDeptNo, searchName);
+        logger.info("엑셀로 출력할 리스트의 사이즈 list.size={}", allList.size());
         
 		//------------------------------이제부터 근무시간을 계산하기 위한 코드들---------------------------------------
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
@@ -157,9 +158,9 @@ public class AttendanceController {
 		//for문 안에서 각각 map 요소들 세팅
 		for(Map<String, Object> map : allList) {
 			Timestamp timestamp1 = (Timestamp) map.get("IN_TIME");
-			logger.info("timestamp1={}", timestamp1);
+			//logger.info("timestamp1={}", timestamp1);
 			Timestamp timestamp2 = (Timestamp) map.get("OUT_TIME");
-			logger.info("timestamp2={}", timestamp2);
+			//logger.info("timestamp2={}", timestamp2);
 			
 			double hourGap = 0;  // 기본적으로 시간 차이를 0으로 설정
 			
@@ -174,7 +175,7 @@ public class AttendanceController {
 				hourGap = Math.ceil(((format2.getTime() - format1.getTime()) / 3600000d)*10)/10;
 			}
 			
-			logger.info("hourGap={}", hourGap);
+			//logger.info("hourGap={}", hourGap);
 			
 			map.put("hourGap", Double.toString(hourGap));
 			logger.info("map={}", map);
@@ -207,7 +208,7 @@ public class AttendanceController {
 			headerRow.createCell(4).setCellValue("퇴근시간");
 			headerRow.createCell(5).setCellValue("근무시간");
 			headerRow.createCell(6).setCellValue("근무상태");
-			logger.info("여기까진 다 찍히고 for 문안에서 뭔가 오류가 나나보다");
+			//logger.info("여기까진 다 찍히고 for 문안에서 뭔가 오류가 나나보다");
 			
 			for(int i=0; i<=6; i++){
                 headerRow.getCell(i).setCellStyle(headStyle);
@@ -216,21 +217,21 @@ public class AttendanceController {
 	        for(Map<String, Object> map2 : allList) {
 	        	Row row = sheet.createRow(rowNo++);
 	        	String day = (map2.get("IN_TIME").toString()).substring(0, 10);
-	        	logger.info("IN_TIME 사용하는 부분이 문제가 되나?");
+	        	//logger.info("IN_TIME 사용하는 부분이 문제가 되나?");
 	        	row.createCell(0).setCellValue(day);
 	        	row.createCell(1).setCellValue((String)map2.get("DEPT_NAME"));
 	            row.createCell(2).setCellValue((String)map2.get("MEM_NAME"));
-	            logger.info("여기까지 되나?");
+	            //logger.info("여기까지 되나?");
 	            row.createCell(3).setCellValue(map2.get("IN_TIME").toString());
-	            logger.info("여기부터 안되겠지?");
+	            //logger.info("여기부터 안되겠지?");
 	            if (map2.get("OUT_TIME") == null) {
-	            	logger.info("null인 경우");
+	            	//logger.info("null인 경우");
 	            	row.createCell(4).setCellValue("");
 				}else {
-					logger.info("null 아닐 경우");
+					//logger.info("null 아닐 경우");
 					row.createCell(4).setCellValue(map2.get("OUT_TIME").toString());
 				}
-	            logger.info("이제 안되면 말안됨");
+	            //logger.info("이제 안되면 말안됨");
 	            row.createCell(5).setCellValue((String)map2.get("hourGap"));
 	            row.createCell(6).setCellValue((String)map2.get("STATUS"));
 	        }
