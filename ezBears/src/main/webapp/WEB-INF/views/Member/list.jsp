@@ -57,6 +57,20 @@
 		    });
 		});
 		
+	
+		$('#MemDeptNo').change(function() {
+			
+	        var deptName = $(this).val();
+
+	        $('#txtboxSearch').val(deptName);
+	        $('form[name=frm1]').submit();
+	    });
+		
+	    $('.searchAll').click(function() {
+	    	
+	        $('#txtboxSearch').val('');
+	        $('form[name=frm1]').submit();
+	    });
 		
 	})
 
@@ -77,7 +91,7 @@ tr.memList {
 <!-- 페이징 처리를 위한 form 시작-->
 <form name="frmPage" method="post" action="<c:url value='/Member/list'/>">
 	<input type="hidden" name="currentPage">	
-	<input type="hidden" name="searchKeyword" value="${param.searchKeyword}">
+	<input type="hidden" id="keywordBox" name="searchKeyword" value="${param.searchKeyword}">
 </form>
 <!-- 페이징 처리 form 끝 -->
 
@@ -121,18 +135,11 @@ tr.memList {
 								        	<option value="" >부서별</option>
 										
 											<c:forEach var="deptVo" items="${deptList}">
-												<option class="memClass" value ="${deptVo.deptNo}">${deptVo.deptName}</option>
+												<c:if test="${deptVo.deptName != '선수'}">
+													<option class="memClass" value ="${deptVo.deptName}">${deptVo.deptName}</option>
+												</c:if>
 											</c:forEach>
 											
-								       	</select>
-								       								
-								        <select name="MemPositionNo" id="MemPositionNo">
-								        	<option value="" >직급</option>
-								        	<!-- 반복문 -->
-											<c:forEach var="positionVo" items="${positionList}">
-												<option class="memClass" value ="${positionVo.positionNo}">${positionVo.positionName}</option>
-											</c:forEach>
-								        	<!-- 반복문 -->
 								       	</select>
 				                    </div>
 		                       	</th>

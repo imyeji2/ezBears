@@ -20,8 +20,13 @@ $(function(){
 	    }
 
 	});
-})
+	
 
+})
+	function pageFunc(curPage){
+		$('input[name="currentPage"]').val(curPage);
+		$('form[name="teamWorkBoardFrom"]').submit();
+	}
 </script>
 
     <!-- Recent Sales Start -->
@@ -34,7 +39,7 @@ $(function(){
 						<div id="teamWorkBoardList">
 							<br>
 							
-							<form action="<c:url value='/myBoard/teamWorkBoardmBoardNo=${mBoardNo}'/>" method="post" name="teamNoticeFrom">
+							<form action="<c:url value='/myBoard/teamWorkBoard?mBoardNo=${mBoardNo}'/>" method="post" name="teamWorkBoardFrom">
 								<input type="hidden" name="currentPage">
 								<input type="hidden" name="searchKeyword" value="${param.searchKeyword}">
 								<input type="hidden" name="searchCondition" value="${param.searchCondition}">
@@ -114,7 +119,7 @@ $(function(){
 								
 								<!-- 반복 끝 -->
 								</c:if>							
-								<c:set var="idx" value="${pagingInfo.totalRecord}"/>
+								<c:set var="idx" value="${(pagingInfo.totalRecord - (pagingInfo.currentPage - 1) * pagingInfo.recordCountPerPage)}"/>
 									<c:forEach var="map" items="${list}">
 						                  <tr class="table_info">
 						                      <!-- <td><input class="form-check-input" type="checkbox"></td> -->

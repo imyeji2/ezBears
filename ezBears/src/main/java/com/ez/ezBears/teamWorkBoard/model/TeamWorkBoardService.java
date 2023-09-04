@@ -24,6 +24,10 @@ public interface TeamWorkBoardService {
 	//팀 업무 게시판 삭제
 	int deleteTeamWorkBoard(Map<String, String> map);
 	
+	//팀 업무 게시판 삭제 서비스 - 투두포함 
+	int deleteBoard(Map<String, String> map,int todolistNo);
+	
+	
 	//팀 업무 게시판 번호로 조회
 	TeamWorkBoardVO selectTeamWorkBoardByNo(int teamBoardNo);
 	
@@ -46,5 +50,12 @@ public interface TeamWorkBoardService {
 	
 	//팀 업무 게시판 대댓글 등록
 	int addReReply(TeamWorkBoardVO teamWorkBoardVo);
+	
+	//팀 업무 게시판 수정
+	int updateBoard(TeamWorkBoardVO teamVo, ToDoListVO todoList, 
+			ToDoListDetailListVO listVo);
+	
+	//파일 삭제
+	int deleteFile(int teamBoardNo);
 	
 }

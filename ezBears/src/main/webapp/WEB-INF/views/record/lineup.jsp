@@ -48,50 +48,19 @@
 	<div class="section">
 		<div class="section__title lf__header  section__title--center">투수</div>
 		<div class="lf__sidesBox">
-			<div class="lf__sides">
+						<div class="lf__sides">
+		<c:forEach var="map" items="${list2 }">
+			<c:if test="${map['B_POSITION_NO'] == 1 }">
 				<div class="lf__side">
-					<div class="lf__participant ">
-						<div class="lf__participantNumber">17</div>
-						<div class="lf__participantFlag" title="대한민국">
-							<span class="flag fl_106" title=""></span>
-						</div>
-						<div class="lf__participantName">홍건희</div>
-						<div class="lf__seasonResult" title="(패, 0-5)">(패, 0-5)</div>
-						<div class="lf__incidents"></div>
-					</div>
-					<div class="lf__participant ">
-						<div class="lf__participantNumber">46</div>
-						<div class="lf__participantFlag" title="대한민국">
-							<span class="flag fl_106" title=""></span>
-						</div>
-						<div class="lf__participantName">김명신</div>
-						<div class="lf__incidents"></div>
-					</div>
-					<div class="lf__participant ">
-						<div class="lf__participantNumber">1</div>
-						<div class="lf__participantFlag" title="대한민국">
-							<span class="flag fl_106" title=""></span>
-						</div>
-						<div class="lf__participantName">박치국</div>
-						<div class="lf__incidents"></div>
-					</div>
-					<div class="lf__participant ">
-						<div class="lf__participantNumber">43</div>
-						<div class="lf__participantFlag" title="도미니카공화국">
-							<span class="flag fl_66" title=""></span>
-						</div>
-						<div class="lf__participantName">R. 알칸타라</div>
-						<div class="lf__incidents"></div>
-					</div>
-					<div class="lf__participant ">
-						<div class="lf__participantNumber">29</div>
-						<div class="lf__participantFlag" title="대한민국">
-							<span class="flag fl_106" title=""></span>
-						</div>
-						<div class="lf__participantName">이병헌</div>
+					<div class="lf__participant">
+						<div class="lf__participantNumber">${map['BACK_NO'] }</div>
+						<div class="lf__participantFlag" title="대한민국"></div>
+						<div class="lf__participantName">${map['PLAYER_NAME'] }</div>
 						<div class="lf__incidents"></div>
 					</div>
 				</div>
+				</c:if>
+			</c:forEach>
 			</div>
 		</div>
 	</div>

@@ -14,4 +14,16 @@
 		SELECT * FROM TODOLIST
 		WHERE TEAM_BOARD_NO = #{teamBoardNo}
 	</select>
+	
+	<update id="updateTodoList" parameterType="toDoListVO">
+		update TODOLIST
+		set START_REGDATE=#{startRegdate},
+		DONE_REGDATE=#{doneRegdate}
+		where TODOLIST_NO = #{todolistNo}
+	</update>
+	
+	<delete id="delTodoList" parameterType="int">
+		delete from TODOLIST
+		where TODOLIST_NO=#{todolistNo}
+	</delete>
 </mapper>

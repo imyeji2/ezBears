@@ -19,6 +19,11 @@ public interface AttendanceService {
 	int countComeLate(@Param ("memNo") int memNo, @Param("date") String date );
 	int countComeGood(@Param ("memNo") int memNo, @Param("date") String date );
 	int countGoEarly(@Param ("memNo") int memNo, @Param("date") String date );
-	int countAllView();
-	List<Map<String, Object>> selectAllView(@Param("searchVo") SearchVO searchVo);
+	int countAllView(@Param("date11") String date11, @Param("date22") String date22,
+			@Param("searchDeptNo") int searchDeptNo, @Param("searchName") String searchName);
+	List<Map<String, Object>> selectAllView(@Param("searchVo") SearchVO searchVo,
+			@Param("date11") String date11, @Param("date22") String date22,
+			@Param("searchDeptNo") int searchDeptNo, @Param("searchName") String searchName);
+	List<Map<String, Object>> findAllToExcel(@Param("date11") String date11, @Param("date22") String date22,
+			@Param("searchDeptNo") int searchDeptNo, @Param("searchName") String searchName);
 }

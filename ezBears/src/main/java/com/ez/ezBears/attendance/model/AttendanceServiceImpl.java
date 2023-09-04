@@ -80,15 +80,24 @@ public class AttendanceServiceImpl implements AttendanceService{
 		return attendanceDao.countGoEarly(memNo, date);
 	}
 
+
+
 	@Override
-	public List<Map<String, Object>> selectAllView(SearchVO searchVo) {
-		return attendanceDao.selectAllView(searchVo);
+	public List<Map<String, Object>> selectAllView(SearchVO searchVo, String date11, String date22, int searchDeptNo,
+			String searchName) {
+		return attendanceDao.selectAllView(searchVo, date11, date22, searchDeptNo, searchName);
 	}
 
 
 	@Override
-	public int countAllView() {
-		return attendanceDao.countAllView();
+	public int countAllView(String date11, String date22, int searchDeptNo, String searchName) {
+		return attendanceDao.countAllView(date11, date22, searchDeptNo, searchName);
+	}
+
+
+	@Override
+	public List<Map<String, Object>> findAllToExcel(String date11, String date22, int searchDeptNo, String searchName) {
+		return attendanceDao.findAllToExcel(date11, date22, searchDeptNo, searchName);
 	}
 
 

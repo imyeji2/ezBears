@@ -5,7 +5,6 @@
 		var url =window.location.pathname;
 		var type =url.lastIndexOf("/");
 		var id= url.substr(type+1);
-		
 		$('#'+id).addClass('active');
 		
 		
@@ -35,7 +34,11 @@
     <li class="nav-item" role="presentation">
         <a class="nav-link tap_txt" id="Approval" href="<c:url value='/myBoard/Approval?mBoardNo=${mBoardNo}'/>">결재</a>
     </li>      
-    <li class="nav-item" id="webhard" role="presentation">
-        <a class="nav-link tap_txt"  href="<c:url value='/myBoard/webhard?mBoardNo=${mBoardNo}'/>">웹하드</a>
-    </li>                                  
+    <li class="nav-item"  role="presentation">
+        <a class="nav-link tap_txt" id="webhard" href="<c:url value='/myBoard/webhard?mBoardNo=${mBoardNo}'/>">웹하드</a>
+    </li>
+         
+    <li class="nav-item"  role="presentation">
+        <a class="nav-link tap_txt" id="myBoardMember" href="<c:url value='/myBoard/myBoardMember?mBoardNo=${mBoardNo}'/>">정보</a>
+    </li>                                 
 </ul>
