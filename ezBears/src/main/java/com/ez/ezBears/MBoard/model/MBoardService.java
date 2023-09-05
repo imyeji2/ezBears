@@ -22,4 +22,9 @@ public interface MBoardService {
 	//보드 리스트 정보 업데이트
 	int updateMboard(MBoardVO mBoardVo);
 	
+	//보드 이름 검색
+	String selectMboardName(int mBoardNo);
+	
+
+	
 }

@@ -26,4 +26,12 @@ public interface NoticeService {
 	int updateDowncount(int noticeFileNo);
 	List<Map<String, Object>> selectAllNotice(SearchVO searchVo);
 	int selectTotalCount(SearchVO searchVo);
+	
+	
+	//예지
+	//메인 공지사항
+	List<Map<String, Object>> selectMainNotice(SearchVO searchVo);
 }
+
+
+

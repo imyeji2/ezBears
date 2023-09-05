@@ -55,5 +55,8 @@ public interface TeamWorkBoardDAO {
 	//파일 삭제
 	int deleteFile(int teamBoardNo);
 	
+
+
+	
 	
 }
