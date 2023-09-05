@@ -60,7 +60,7 @@
 					<td class="td-1" rowspan="2" >문서번호
 					 <input type ="text"  name="docNo" class="docNo"  value="${list['DOC_NO'] }" readonly><!-- 문서 번호 불러오기 -->
 					 </td> 
-					<td class="td-2" colspan="2">담당</td><!-- 결재 담당자 -->
+					<td class="td-2" colspan="3">담당</td><!-- 결재 담당자 -->
 					<td class="td-3" colspan="3">${memberVo.memName }</td><!-- 결재 담당자 -->
 					<td class="td-4"> 
 					<input type ="text" class="sta" value="처리 상태">
@@ -77,7 +77,7 @@
 				</tr>
 				
 				<tr class="tr-m">
-					<td class="td-1" colspan="3">기안일</td>
+					<td class="td-1 rdate" colspan="3">기안일</td>
 					<td class="td-2" colspan="5">
 					<input name="regdate" id="regdate" class="regdate" value="${list['REGDATE'] }" readonly>
 					</td>
@@ -105,17 +105,18 @@
 				
 				<c:if test="${!empty filemap }">
 	                <tr class="tr-m">
-	            	<td colspan="4">
+	            	<td colspan="7">
 	            	<!-- <input class="form-control appfile" type="file" id="app_file"> -->	
 							<div class="signfile">
 								<div class="fileupload">
 									<a href="#" class="fileinfo">첨부파일</a>		
 									<c:forEach var="map" items="${filemap }">
+									
 										<a class="fileinfo2" href="<c:url value='/myBoard/Filedownload?docNo=${map["DOC_NO"]}&fileName=${map["FILENAME"]}&fileNo=${map["FILE_NO"] }'/>">
-										${map['ORIGIN_FILENAME']}&nbsp; (<fmt:formatNumber
-												value="${map['FSIZE'] /1024.0}" type="number" pattern="#.##" />
-											KB)
-										</a>										
+										${map['ORIGIN_FILENAME']}&nbsp; 
+										(<fmt:formatNumber value="${map['FSIZE'] /1024.0}" type="number" pattern="#.##" /> KB)
+										</a>		
+																	
 									</c:forEach>
 								</div>
 							</div>
@@ -136,7 +137,9 @@
 			</table>
 			<div>
 			    <c:if test="${myBoardInfoVo.memName eq list['MEM_NAME']}">
+					<c:if test="${list['STATUS'] eq '대기' }">
 			        <input type="button" class="btn btn-sm btn-primary btn" value="수정" onclick="docSave2()"/>
+			    	</c:if>
 			    </c:if>
 			</div>
 			</form>
@@ -147,10 +150,12 @@
 	
 </div>
 	<script>
-		// 결재 요청 확인창
-		function docSave2() {
-		 window.location.href = "<c:url value='/myBoard/Approval_edit?docNo=${docNo}'/>";
-		}
+	
+	 function docSave2() {
+	        var docNo = "${list['DOC_NO']}";
+	        // docNo를 URL에 추가하여 수정 페이지로 이동
+	        window.location.href = "<c:url value='/myBoard/Approval_edit'/>?docNo=" + docNo;
+	    }
 		
 		var ckEditor = CKEDITOR.replace('docContent', {
 			filebrowserUploadUrl : "<c:url value='/ck/fileupload'/>", /*ck에디터파일 업로드 컨트롤러  */

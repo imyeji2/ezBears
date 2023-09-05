@@ -149,70 +149,48 @@ public class SignController {
 
 		// 4.
 		return "common/message"; 
-		
-		/*		
-		String fileName="", originalFileName="", filePath="";
-		long fileSize =0;
-		String msg = "결재 등록 실패", url = "/myBoard/Approval_write";
-		try {
-
-			// docNo가 없음
-			
-			List<Map<String, Object>> files = fileUploadUtil.fileupload(request, ConstUtil.UPLOAD_APPROVAL_FLAG);
-			logger.info("업로드파일  files={}", files);
-			
-			
-			  if(cnt > 0) { int filecnt = signService.insertSignFile(files,
-			  signVo.getDocNo()); msg = "결재 작성 성공"; url =
-			  "/myBoard/Approval?mBoardNo="+mBoardNo; }
-			 
-			
-			for(Map<String, Object> map : files) {
-				fileName=(String) map.get("fileName");	
-				originalFileName = (String)map.get("originalFileName");
-				fileSize = (long)map.get("fileSize");
-				filePath = (String)map.get("uploadPath") + File.separator + fileName;
-				
-				logger.info("파일명:",fileName);
-				
-				
-				signFileVo.setFilename(fileName);
-				signFileVo.setOriginFilename(originalFileName);
-				signFileVo.setFsize(fileSize);
-				
-				
-			}
-			signFileVo.setDocNo(signVo.getDocNo());
-			
-		} catch (IllegalStateException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		model.addAttribute("msg", msg);
-		model.addAttribute("url", url);
-		
-		
-		return "common/message";
-		
-		return "redirect:/myBoard/Approval?mBoardNo="+MBoardNo;
-		*/
 	}
 	
 	
 
 	@GetMapping("/Approval_edit")
-	public String Approval_edit(@RequestParam (defaultValue = "0")int docNo) {
+	public String Approval_edit(@RequestParam (defaultValue = "0")int docNo ,@ModelAttribute MyBoardInfoVO myBoardInfoVo,
+			@ModelAttribute MemberVO memberVo, HttpSession session ,Model model) {
 		logger.info("결재 수정 페이지");
+		String userid = (String)session.getAttribute("userid");
+		logger.info("결재 디테일");
+		
+		myBoardInfoVo.setMemId(userid);			
+		myBoardInfoVo = myBoardListService.selectMyBoardDept(userid);
+		logger.info("myBoardInfoVo={}",myBoardInfoVo);
+		memberVo = memberService.selectpositioninfo(myBoardInfoVo.getDeptNo());
 		
 		
+		Map<String, Object> list = signService.detailSign(docNo);
+		logger.info("결재 디테일 list={}",list);
+		model.addAttribute("list",list);
+		
+		List<Map<String, Object>> filemap = signService.selectSignnFileInfo(docNo);
+		logger.info("결재 파일 정보 filemap={}",filemap);
+		
+		model.addAttribute("list",list);
+		model.addAttribute("memberVo",memberVo);
+		model.addAttribute("filemap",filemap);
 		
 		
 		return "myBoard/Approval_edit";
 	}
 	
-
+	@PostMapping("/Approval_edit")
+	public String Approval_post() {
+		
+		
+		
+		
+		
+		
+		return "";
+	}
 	
 	
 	@RequestMapping("/Approval_detail")
@@ -242,9 +220,9 @@ public class SignController {
 		model.addAttribute("memberVo",memberVo);
 		model.addAttribute("filemap",filemap);
 		
-		
-		
+				
 		return "myBoard/Approval_detail";
+		
 	}
 	
 	@ResponseBody
@@ -325,15 +303,13 @@ public class SignController {
 			@RequestParam String fileName,HttpServletRequest request) {
 
 		logger.info("공지사항 파일 다운로드 파라미터 noticeNo={}, fileName={},noticeFileNo={}",docNo, fileName,fileNo);
-		
-		
+				
 		Map<String, Object> map = new HashMap<>();
 		
 		String upPath = fileUploadUtil.getUploadPath(request, ConstUtil.UPLOAD_APPROVAL_FLAG);
 		File file = new File(upPath, fileName);
 		map.put("file", file);
 
-		//ModelAndView(String viewName, Map<String, ?> model)
 		ModelAndView mav = new ModelAndView("DownloadView", map);
 		return mav;
 	}
