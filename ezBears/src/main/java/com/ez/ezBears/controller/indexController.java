@@ -28,6 +28,7 @@ import com.ez.ezBears.member.model.MemberService;
 import com.ez.ezBears.myBoard.model.MyBoardListService;
 import com.ez.ezBears.myBoard.model.MyBoardService;
 import com.ez.ezBears.notice.model.NoticeService;
+import com.ez.ezBears.teamWorkBoard.model.ToDoListDetailService;
 import com.ez.ezBears.temNotice.model.TeamNoticeService;
 import com.oracle.wls.shaded.org.apache.xml.utils.URI;
 
@@ -43,6 +44,7 @@ public class indexController {
 	private final MemberService memberService;
 	private final MyBoardService myBoardService;
 	private final MBoardService mBoardService;
+	private final ToDoListDetailService todolistDetailService;
 	
 	@RequestMapping("/")
 	public String index(HttpSession session,Model model,
@@ -72,10 +74,18 @@ public class indexController {
 				String mBoardName = mBoardService.selectMboardName(mBoardNo);
 				searchVo.setMBoardNo(mBoardNo);
 				List<Map<String, Object>> myNoticeList = teamNoticeService.selectMainTeamNoticeList(searchVo);
-
+				
+				//달성률
+				int totalCount = todolistDetailService.totalMemberTodolist(memNo);//전체
+				var completedCount = todolistDetailService.completeMemberTodolist(memNo);//완료
+				var incompleteCount = todolistDetailService.incompleteMemberTodolist(memNo);//미완료
 				
 				model.addAttribute("myNoticeList",myNoticeList);
 				model.addAttribute("mBoardName",mBoardName);
+				model.addAttribute("totalCount",totalCount);
+				model.addAttribute("completedCount",completedCount);
+				model.addAttribute("incompleteCount",incompleteCount);
+				
 				
 				
 			}else {

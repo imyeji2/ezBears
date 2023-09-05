@@ -5,14 +5,115 @@
 <%@include file="inc/top.jsp"%>
 <script>
 	$(function(){
+		
+		//네이버 뉴스 api 호출
 		naverNewsLoad();
 		setInterval(naverNewsLoad,10000);
 		//600000
+
 		
-
-	})
+        // 차트 컨테이너의 크기에 맞게 canvas 크기 조절
+        var chartContainer = document.getElementById('todoChart');
+        var canvas = document.getElementById('myChart');
+        
+        canvas.width = chartContainer.clientWidth;
+        canvas.height = chartContainer.clientWidth; // 정사각형으로 유지
+        
+        // 도넛 차트 데이터 설정
+        var ctx = canvas.getContext('2d');
+        var myDoughnutChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                datasets: [{
+                    data: [70, 30],
+                    backgroundColor: ['#31354e', '#7000D8'],
+                    borderColor: ['#31354e', '#7000D8']
+                }]
+            },
+            options: {
+                responsive: false,
+                maintainAspectRatio: false,
+                cutoutPercentage: 60,
+                tooltips: { enabled: false },
+                hover: { mode: null },
+                legend: { display: false }
+            }
+        });	
+        
+        onGeoOk();//현재 위치 찾기
+		
 	
+        
+	});//$(function(){
+	
+	
+	//날씨 api (OpenWeatherMap API)
+	function openWeatherMap(lat, lon){
 
+	}
+	//날씨 위치 찾기 
+    function onGeoOk(position) {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+        console.log("현재 위치는"+lat+","+lon)
+        openWeatherMap(lat,lon);
+        
+		$.ajax({
+			  url: "https://api.openweathermap.org/data/2.5/weather?lat="+lat+"&lon="+lon+"&appid=e27bb9d898f2ce8fcd7c8a56b3219198",
+			  method: 'GET',
+			  dataType: 'json',
+			  success: function (data) {
+			    console.log(data); 
+				//오늘날짜
+			    var currentTime = convertTime()+" 오늘의 날씨";
+		        $('.nowtime').append(currentTime);
+		        
+		        
+		        var nowTeamp = (data.main.temp -273.15).toFixed(1);
+		        var lowTemp = (data.main.temp_min - 273.15).toFixed(1);
+		      	var hightTemp = (data.main.temp_max - 273.15).toFixed(1);
+		        
+		        $('.nowTemp').append(nowTeamp);
+		        $('.lowTemp').append(lowTemp);
+		        $('.hightTemp').append(hightTemp);
+
+		        //날씨아이콘출력
+		        var weathericonUrl =
+		            '<img src= "http://openweathermap.org/img/wn/'
+		            + data.weather[0].icon +
+		            '.png" alt="' + data.weather[0].description + '"/>'
+
+		        $('.weatherIcon').html(weathericonUrl);
+		        
+			  },
+			  error: function (error) {
+			    console.error('API 요청 중 오류 발생:', error);
+			  },
+			});
+	}
+	
+	
+	
+	function onGeoError() {
+	    alert("날씨를 제공할 위치를 찾을 수 없습니다.")
+	}
+
+	navigator.geolocation.getCurrentPosition(onGeoOk, onGeoError);
+	
+	
+	//오늘 날짜출력
+    function convertTime() {
+    	var now = new Date();
+    	var year = now.getFullYear();
+    	var month = (now.getMonth() + 1).toString().padStart(2, '0');
+    	var date = now.getDate().toString().padStart(2, '0');
+    	return year + '년 ' + month + '월 ' + date + '일';
+       
+    }
+
+
+	
+	//네이버 뉴스 api
 	function naverNewsLoad(){
 		var newContent="";
 		
@@ -58,24 +159,64 @@
             }
         });
 	}
+
+	
 </script>
  <!-- Navbar End -->
  <!-- top ë©”ë‰´ ì¢…ë£Œ -->
 <div id="main">
 <c:if test="${type=='사원'}">
+     <!-- 1번째 줄 -->
      <div class="container-fluid pt-4 px-4">
          <div class="row g-4">
-             <div class="col-sm-12 col-xl-6">
-                 <div class="bg-secondary text-center rounded p-4">
-                     <div class="d-flex align-items-center justify-content-between mb-4">
-                         <h6 class="mb-0">업무 진행률</h6>
+             <div class="col-sm-12 col-md-6 col-xl-4">
+                 <div class="h-100 bg-secondary rounded p-4">
+                     <div class="d-flex align-items-center justify-content-between mb-2">
+                         <h6 class="mb-0">이번 달 업무 달성률</h6>
+                        
                      </div>
+                     <div class="d-flex align-items-center py-3">
+	                     <div class="todoChartBox">
+	                     	<div class="todoChart" id="todoChart">
+	                     		<canvas id="myChart" ></canvas>
+						         <div class="chartText">
+						         	<c:set var="result" value="${(completedCount / totalCount) * 100}"></c:set>
+						         	<fmt:formatNumber var="result1" value="${result}" pattern="#,###"/>
+						            <span class="chartText1">${result1}%</span><br>
+						            <span class="chartText2">미완료 : ${incompleteCount}개</span><br>
+						            <span class="chartText2">완료 : ${completedCount}개</span><br>
+						            <span class="chartText2">전체 : ${totalCount}개</span>
+						        </div>
+	                     	</div>                    	
+	                     </div>            
+                     </div>
+                    
+                 </div>
+             </div>
+
+             <div class="col-sm-12 col-md-6 col-xl-4">
+                 <div class="h-100 bg-secondary rounded p-4">
+                     <div class="d-flex align-items-center justify-content-between">
+                         <h6 class="mb-0">Weather</h6>
+                     </div>
+                     <div class="d-flex mb-2 todayWeather">
+                     	<div class="weatherContent">
+                     		<p class="nowtime"></p>
+	                       	<div class="place">서울</div>
+	                       	<div class="weatherIcon"></div>
+	                       	<div class="weatherTemp">
+	                       		<p class="nowTemp">현재기온 :</p>
+	                       		<p class="lowTemp">최저기온 : </p>
+	                       		<p class="hightTemp">최대기온 : </p>
+	                       	</div>
+                       	</div>
+                     </div>
+
                  </div>
              </div>
              
-             
-             <div class="col-sm-12 col-xl-6 naverNews">
-                 <div class="bg-secondary text-center rounded p-4">
+             <div class="col-sm-12 col-md-6 col-xl-4 naverNews">
+                 <div class="h-100 bg-secondary rounded p-4">
                      <div class="d-flex align-items-center justify-content-between mb-4">
                          <h6 class="mb-0">최신 뉴스</h6>
                      </div>
@@ -86,12 +227,13 @@
 						  <tbody>
 						    						    
 						</tbody>
-					</table>                     
+					</table>                       
                  </div>
-             </div>
+             </div>             
          </div>
      </div>
-
+     <!-- <!-- 1번째 줄 --> -->
+     
 
      <!-- 2번째 줄 게시판 모음 -->   
      <div class="container-fluid pt-4 px-4">
@@ -183,18 +325,7 @@
              </div>                
           </div>
      </div>
-             
-<!--              <div class="col-sm-12 col-md-6 col-xl-4">
-                 <div class="h-100 bg-secondary rounded p-4">
-                     <div class="d-flex align-items-center justify-content-between mb-4">
-                         <h6 class="mb-0">Calender</h6>
-                         <a href="">Show All</a>
-                     </div>
-                     <div id="calender"></div>
-                 </div>
-             </div> -->
-
-	     <!-- 2번째 줄 게시판 모음 -->   
+   <!-- 2번째 줄 게시판 끝 -->   
  	</c:if>
  	
  	<!-- 스태프 메인 -->

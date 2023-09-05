@@ -1031,5 +1031,82 @@
    		align-items: center; /* 수직 가운데 정렬 */
 	}
 	
+	.todoChartBox{
+        width: 100%;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+	}
+	
+    .todoChart {
+        width: 80%;
+        position: relative;
+    }
+
+    .chartText {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        color: #fff;
+    }
+
+    .chartText1 {
+        font-size: 1.5em;
+    }
+
+    .chartText2 {
+        font-size: 1.0em;
+    }
+    
+    .weatherContent{
+		width: 100%;
+		color:#fff;
+		margin:20px 0px 20px 0px;
+	}
+
+	.weatherContent p{
+		margin:0 auto;
+	}
+	
+	.nowtime{
+		width:85%;
+		text-align: center;
+		font-size: 1em;
+		background: #6C7293;
+		border-radius: 10px;
+		padding: 0px 20px 0px 20px;
+		line-height: 40px;
+		margin:0 auto;
+		font-weight:bolder;
+	}
+	
+	
+    .place{
+		text-align: center;
+		line-height: 30px;
+		font-size: 1.5em;
+		font-weight:bolder;
+		margin-top:20px;
+		
+	}
+	
+	.weatherIcon{
+		display: flex;
+		justify-content: center; /* 수평 가운데 정렬 */
+	}
+	
+	.weatherIcon img{
+		width:100px;
+		margin: 0 auto;
+	}
+	
+	.weatherTemp{
+		text-align: center;
+	}
+	
+	
 }
 
