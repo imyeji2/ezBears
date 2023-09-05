@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>사용자 초대</title>
-<link href="/resources/css/approval/appModal-style.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/css/approval/appModal-style.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
 <script src="https://kit.fontawesome.com/c7853f4d26.js" crossorigin="anonymous"></script>
 </head>
@@ -46,12 +46,12 @@
 	var Arr = new Array(); // 선택한 사용자 담을 배열 선언
 	var arrText = new Array(); // 화면에 보여줄 텍스트 배열 선언
 	// 사용자 선택 모달
-	function invite(chatRoomNo, memNum) {
+	function invite(chatRoomNo, memNo) {
 		$("#header").html("사용자 초대");
 		$("#s-text").html("사용자");
 		$("#appSelModal").css('display', 'flex').hide().fadeIn();
 		$.ajax({
-			url : "/modal/chat/inviteMember/list.sw",
+			url : "/modal/chat/inviteMember/list",
 			type : "get",
 			data : { "chatRoomNo" : chatRoomNo },
 			success : function(mList) {
@@ -89,7 +89,7 @@
 		var searchCondition = $("#s-condition").val();
 		var searchValue = $("#s-value").val();
 		$.ajax({
-			url : "/modal/chat/inviteMember/search.sw",
+			url : "/modal/chat/inviteMember/search",
 			type : "get",
 			data : { "searchCondition" : searchCondition,  "searchValue" : searchValue, "chatRoomNo" : chatRoomNo },
 			success : function(mList) {
@@ -106,10 +106,10 @@
 		$("#m-list-table").html(""); // 테이블 값 지우기
 		var tr;
 		$.each(mList, function(i) {
-			tr += '<tr class="tr"><td style="display:none;">' + mList[i].memberNum
-			+ '</td><td>' + mList[i].division
-			+ '</td><td>' + mList[i].memberName
-			+ '</td><td>' + mList[i].rank + '</td></tr>';
+			tr += '<tr class="tr"><td style="display:none;">' + mList[i].memNo
+			+ '</td><td>' + mList[i].deptName
+			+ '</td><td>' + mList[i].memName
+			+ '</td><td>' + mList[i].positionName + '</td></tr>';
 		});
 		$("#m-list-table").append(tr);
 		appSelect(); // 사용자 선택

@@ -45,7 +45,7 @@
 	<script>
 		// 채팅 팝업
 		function chatPop(chatRoomNo) {
-			var url = "detail.sw?chatRoomNo=" + chatRoomNo;
+			var url = "detail?chatRoomNo=" + chatRoomNo;
 			var options = "width = 500px, height = 700px";
 		    window.open(url, "", options); // 팝업 이름을 "" 빈값으로 둬야 다른 채팅창을 눌러도 새창으로 열림
 		}
