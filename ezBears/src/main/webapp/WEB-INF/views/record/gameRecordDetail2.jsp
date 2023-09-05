@@ -59,10 +59,10 @@
 				<div class="stat__row">
 					<div class="stat__category">
 					<c:if test="${map['INNING'].includes('초')}">
-						<div class="stat__homeValue">"${map.H }"</div>
+						<div class="stat__homeValue">${map2.H }</div>
 					</c:if>
 						<div class="stat__categoryName">안타</div>
-						<div class="stat__awayValue">9</div>
+						<div class="stat__awayValue">${map1.H }</div>
 					</div>
 					<div class="stat__bar">
 						<div class="stat__barBg stat__home">
@@ -77,9 +77,9 @@
 				</div>
 				<div class="stat__row">
 					<div class="stat__category">
-						<div class="stat__homeValue">1</div>
+						<div class="stat__homeValue">${map2.ERROR }</div>
 						<div class="stat__categoryName">실책</div>
-						<div class="stat__awayValue">0</div>
+						<div class="stat__awayValue">${map1.ERROR }</div>
 					</div>
 					<div class="stat__bar">
 						<div class="stat__barBg stat__home">
