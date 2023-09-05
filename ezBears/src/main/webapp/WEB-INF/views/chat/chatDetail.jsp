@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>${chatRoomTitle }</title>
-<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="http://code.jquery.com/jquery-3.7.0.min.js"></script>
 <link href="/resources/css/chat/chatDetail-style.css" rel="stylesheet">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -42,14 +42,14 @@
 			<div class="more">
 				<button onclick="invite(${chatRoomNo})">초대</button>
 				<button onclick="titleChange(${chatRoomNo})">제목 변경</button>
-				<button onclick="chatOut(${chatRoomNo}, '${loginUser.memberNum}')">나가기</button>
+				<button onclick="chatOut(${chatRoomNo}, '${loginUser.memNo}')">나가기</button>
 			</div>
 		</div>
 		<div class="chat-body">
 		</div>
 		<div class="chat-footer">
 			<div><textarea id="textInput" style="white-space: pre;"></textarea></div>
-			<button onclick="textSend(${chatRoomNo}, '${loginUser.memberNum}')">전송</button>
+			<button onclick="textSend(${chatRoomNo}, '${loginUser.memberNo}')">전송</button>
 		</div>
 	</div>
 	<jsp:include page="chatInviteAddModal.jsp"></jsp:include> <!-- 사용자 추가 초대 모달 -->
@@ -84,7 +84,7 @@
 			var chatRoomTitle = prompt("채팅방 제목을 입력하세요");
 			if(chatRoomTitle != null) {
 				$.ajax({
-					url : "/chat/titleChange.sw",
+					url : "/chat/titleChange",
 					type : "get",
 					data : { "chatRoomNo" : chatRoomNo, "chatRoomTitle" : chatRoomTitle },
 					success : function(result) {
@@ -99,11 +99,11 @@
 		}
 		
 		// 더보기 나가기
-		function chatOut(chatRoomNo, memNum) {
+		function chatOut(chatRoomNo, memNo) {
 			$.ajax({
-				url : "/chat/out.sw",
+				url : "/chat/out",
 				type : "get",
-				data : { "chatRoomNo" : chatRoomNo, "memNum" : memNum },
+				data : { "chatRoomNo" : chatRoomNo, "memNo" : memNo },
 				success : function(result) {
 					opener.parent.location.reload();
 					window.close();
@@ -122,19 +122,19 @@
 				if(e.shiftKey === true) {
 					return false // shift 키가 눌러진 상태에서는 개행해서 입력 가능
 				}else {
-					textSend("${chatRoomNo}", "${loginUser.memberNum}");
+					textSend("${chatRoomNo}", "${loginUser.memberNo}");
 				}
 			}
 		})
 	
 		// 메세지 전송
-		function textSend(chatRoomNo, memNum) {
+		function textSend(chatRoomNo, memNo) {
 			var text = $("#textInput").val();
 			$("#textInput").val(""); // 메세지 입력창 초기화
 			$.ajax({
-				url : "/chat/send.sw",
+				url : "/chat/send",
 				type : "get",
-				data : { "chatRoomNo" : chatRoomNo, "memNum" : memNum, "chatContent" : text },
+				data : { "chatRoomNo" : chatRoomNo, "memNo" : memNo, "chatContent" : text },
 				success : function(result) {
 					chatList(chatRoomNo); // 채팅 상세 조회
 				},
@@ -149,7 +149,7 @@
 			chatMember(); // 채팅방 사용자 목록 조회
 			// 채팅 목록
 			$.ajax({
-				url : "/chat/content.sw",
+				url : "/chat/content",
 				type : "get",
 				data : { "chatRoomNo" : chatRoomNo },
 				success : function(cList) {
@@ -178,7 +178,7 @@
 			
 			// 인원수
 			$.ajax({
-				url : "/chat/headCount.sw",
+				url : "/chat/headCount",
 				type : "get",
 				data : { "chatRoomNo" : chatRoomNo },
 				success : function(chatHeadCount) {
@@ -194,7 +194,7 @@
 		// 채팅 목록 화면에 보여주기
 		function chatContentView(cList) {
 			$(".chat-body").html(""); // 채팅 목록 초기화
-			var memberNum = "${loginUser.memberNum}";
+			var memberNum = "${loginUser.memberNo}";
 			var content = "";
 			$.each(cList, function(i) {
 				if(cList[i].chatType == 1){ // 공지
@@ -218,7 +218,7 @@
 		// 채팅방 사용자 목록 조회
 		function chatMember() {
 			$.ajax({
-				url : "/chat/member.sw",
+				url : "/chat/member",
 				type : "get",
 				data : { "chatRoomNo" : "${chatRoomNo}" },
 				success : function(memberArr) {
