@@ -17,6 +17,7 @@ import com.ez.ezBears.member.model.MemberVO;
 import com.ez.ezBears.team.model.TeamService;
 
 import org.apache.ibatis.javassist.compiler.ast.Member;
+import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,7 +68,7 @@ public class ChatController {
 	@RequestMapping(value = "/chat/registerChatRoom", method = RequestMethod.GET, produces="application/json;charset=utf-8")
 	public String registerChatRoom(HttpServletRequest request
 			, @RequestParam("chatMember") String[] chatMember
-			, @RequestParam("chatRoomTitle") String chatRoomTitle) {
+			, @RequestParam("chatRoomTitle") String chatRoomTitle, SqlSession sqlsession) {
 		HttpSession session = request.getSession();
 		MemberVO memberVo = (MemberVO) session.getAttribute("loginUser");
 		int result = 0;
@@ -80,9 +81,9 @@ public class ChatController {
 		chatRoom.setChatRoomTitle(chatRoomTitle);
 		result = cService.registerChatRoom(chatRoom);
 		if(result > 0) {
-			int mResult = cService.registerChatMember(memberVo.getMemName());
+			int mResult = cService.registerChatMember(sqlsession, memberVo.getMemName());
 			for(int i = 0; i < chatMember.length; i++) {
-				mResult = cService.registerChatMember(chatMember[i]);
+				mResult = cService.registerChatMember(sqlsession, chatMember[i]);
 			}
 			if(mResult > 0) {
 				chatRoom.setChatRoomNo(0);
@@ -90,7 +91,7 @@ public class ChatController {
 				String[] chatMemberArr = new String[mList.size()];
 				if(!mList.isEmpty()) {
 					for(int j = 0; j < mList.size(); j++) {
-						chatMemberArr[j] = mList.get(j).getDivName() + " " + mList.get(j).getMemName() + " " + mList.get(j).getRankName();
+						chatMemberArr[j] = mList.get(j).getDeptName() + " " + mList.get(j).getMemName() + " " + mList.get(j).getPositionName();
 					}
 				}
 				ChatContentVO chatContent = new ChatContentVO();
@@ -129,10 +130,10 @@ public class ChatController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/chat/out", method = RequestMethod.GET, produces="application/json;charset=utf-8")
-	public String chatOut(@RequestParam("chatRoomNo") int chatRoomNo, @RequestParam("memNum") String memNum) {
+	public String chatOut(@RequestParam("chatRoomNo") int chatRoomNo, @RequestParam("memNo") String memName) {
 		ChatMemberVO chatMember = new ChatMemberVO();
 		chatMember.setChatRoomNo(chatRoomNo);
-		chatMember.setMemName(memNum);
+		chatMember.setMemName(memName);
 		chatMember.setMemStatus(1);
 		int result = cService.modifyStatusChatMember(chatMember);
 		if(result > 0) {
@@ -147,7 +148,7 @@ public class ChatController {
 			if(fineCount == 0) {
 				cService.registerChatContent(chatContent);
 			}
-			chatContent.setChatContent("<strong>" + chatMember.getDivName() + " " + chatMember.getMemName() + " " + chatMember.getRankName() + "</strong>님이 나갔습니다.");
+			chatContent.setChatContent("<strong>" + chatMember.getDeptName() + " " + chatMember.getMemName() + " " + chatMember.getPositionName() + "</strong>님이 나갔습니다.");
 			cService.registerChatContent(chatContent);
 			int chatMemberCount = cService.printChatMemberCount(chatRoomNo);
 			if(chatMemberCount <= 2 && chatMemberCount > 0) {
@@ -193,7 +194,7 @@ public class ChatController {
 				member.setMemStatus(0);
 				result = cService.modifyStatusChatMember(member);
 			}
-			chatMemberArr[i] = member.getDivName() + " " + member.getMemName() + " " + member.getRankName();
+			chatMemberArr[i] = member.getDeptName() + " " + member.getMemName() + " " + member.getPositionName();
 		}
 		if(result > 0) {
 			ChatRoomVO chatRoom = new ChatRoomVO();
@@ -230,7 +231,7 @@ public class ChatController {
 			loginMember.setChatRoomNo(chatRoomNo);
 			loginMember.setMemNo(sessionMember.getMemNo());
 			loginMember = cService.printChatMember(loginMember);
-			String inviter = loginMember.getDivName() + " " + loginMember.getMemName() + " " + loginMember.getRankName();
+			String inviter = loginMember.getDeptName() + " " + loginMember.getMemName() + " " + loginMember.getPositionName();
 			chatContent.setChatContent("<strong>" + inviter + "</strong>님이 " + inviteMember);
 			cService.registerChatContent(chatContent);
 			return new Gson().toJson("채팅방 사용자 초대 성공");
@@ -286,7 +287,7 @@ public class ChatController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/chat/member.sw", method = RequestMethod.GET, produces="application/json;charset=utf-8")
+	@RequestMapping(value = "/chat/member", method = RequestMethod.GET, produces="application/json;charset=utf-8")
 	public String chatMember(@RequestParam("chatRoomNo") int chatRoomNo) {
 		ChatRoomVO chatRoom = new ChatRoomVO();
 		chatRoom.setChatRoomNo(chatRoomNo);
@@ -294,7 +295,7 @@ public class ChatController {
 		String[] chatMemberArr = new String[mList.size()];
 		if(!mList.isEmpty()) {
 			for(int j = 0; j < mList.size(); j++) {
-				chatMemberArr[j] = mList.get(j).getDivName() + " " + mList.get(j).getMemName() + " " + mList.get(j).getRankName();
+				chatMemberArr[j] = mList.get(j).getDeptName() + " " + mList.get(j).getMemName() + " " + mList.get(j).getPositionName();
 			}
 		}
 		return new Gson().toJson(chatMemberArr);

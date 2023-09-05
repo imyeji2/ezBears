@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>사용자 초대</title>
-<link href="/resources/css/approval/appModal-style.css" rel="stylesheet">
+<link href="/webapp/css/approval/appModal-style.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
 </head>
 <body>
