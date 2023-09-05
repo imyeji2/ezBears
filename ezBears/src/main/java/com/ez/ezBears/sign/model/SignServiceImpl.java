@@ -49,6 +49,12 @@ public class SignServiceImpl implements SignService{
 	public int updateStatus(int docNo) {
 		return signDao.updateStatus(docNo);
 	}
+	
+	@Override
+	public int updateStatus2(int docNo) {
+		return signDao.updateStatus2(docNo);
+	}
+	
 
 	// 결재 처리상태 검색
 	@Override
@@ -102,6 +108,8 @@ public class SignServiceImpl implements SignService{
 	public int countAllComplete(String searchTitle, int searchDeptNo, String searchName) {
 		return signDao.countAllComplete(searchTitle, searchDeptNo, searchName);
 	}
+
+
 
 
 

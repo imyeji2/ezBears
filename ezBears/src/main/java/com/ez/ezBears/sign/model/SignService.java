@@ -23,6 +23,7 @@ public interface SignService {
 	
 
 	int updateStatus(int docNo);
+	int updateStatus2(int docNo);
 	
 	String selectStatus(int docNo);
 	

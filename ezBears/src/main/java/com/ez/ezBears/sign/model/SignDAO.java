@@ -30,6 +30,7 @@ public interface SignDAO {
 
 	//승인처리
 	int updateStatus(int docNo);
+	int updateStatus2(int docNo);
 	
 	//처리상태
 	String selectStatus(int docNo);

@@ -64,6 +64,12 @@
 		set status ='처리중'
 		where doc_no = #{docNo}
 	</update>
+	
+	<update id="updateStatus2"  parameterType="int" >
+		update sign
+		set status ='완료'
+		where doc_no = #{docNo}
+	</update>
 
 	<select id="selectAllUnder" parameterType="map" resultType="map">
 		select *
