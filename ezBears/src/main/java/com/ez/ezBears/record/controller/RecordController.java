@@ -27,6 +27,7 @@ import com.ez.ezBears.record.inning.model.InningVO;
 import com.ez.ezBears.record.pitcher.model.PitcherService;
 import com.ez.ezBears.record.pitcher.model.PitcherVO;
 import com.ez.ezBears.team.model.TeamService;
+import com.ez.ezBears.team.model.TeamVO;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -64,6 +65,7 @@ public class RecordController {
 		return "/record/team";
 	}
 	
+	//---------------------------이닝 정보----------------------------------
 	
 	@GetMapping("/inningWrite")
 	public String inningWrite_get(Model model, int recodeNo) {
@@ -100,50 +102,6 @@ public class RecordController {
 		return "/record/inningDelete";
 	}
 	
-	@RequestMapping("/summary")
-	public String inningDetail_get(Model model, int recodeNo) {
-		logger.info("이닝 파라미터, recodeDetailNo={}", recodeNo);
-		
-		List<Map<String, Object>> list = inningService.selectInningView(recodeNo);
-		model.addAttribute("list", list);
-		logger.info("이닝 처리 결과, list.size={}", list.size());
-		return "/record/summary";
-	}
-	
-	@RequestMapping("/gameRecordDetail2")
-	public String gameRecordDetail2_get(Model model, int recodeNo) {
-		logger.info("경기별 이닝 기록 파라미터, recodeNo={}", recodeNo);
-		
-		List<Map <String, Object>> list = inningService.selectInningView(recodeNo);
-		Map <String, Object> map1 = inningService.selectInningHomeView(recodeNo);
-		Map <String, Object> map2 = inningService.selectInningAwayView(recodeNo);
-		model.addAttribute("list", list);
-		model.addAttribute(map1);
-		model.addAttribute(map2);
-		logger.info("이닝 처리 결과, list.size={}", list.size());
-		logger.info("map1", map1);
-		logger.info("map2", map2);
-		
-		return "/record/gameRecordDetail2";
-	}
-	
-	
-	@RequestMapping("/lineup")
-	public String lineup_get(Model model, int recodeNo) {
-		logger.info("라인업 파라미터, recodeNo={}", recodeNo);
-		
-		List<Map<String, Object>> list = hitterService.selectHitterRecordView(recodeNo);
-		model.addAttribute("list", list);
-		logger.info("라인업 처리 결과, list.size={}", list.size());
-		
-		List<Map<String, Object>> list2 = pitcherService.selectPitcherRecordView(recodeNo);
-		model.addAttribute("list2", list2);
-		logger.info("라인업 처리 결과2, list.size={}", list2.size());
-		
-		
-		return "/record/lineup";
-	}
-	
 	
 //	@GetMapping("/summary")
 //	public String summary_get(@RequestParam(defaultValue = "0") int recodeDetailNo, SearchVO searchVo, Model model) {
@@ -154,13 +112,16 @@ public class RecordController {
 //		return "/record/summary";
 //	}
 	
+	
+	//-------------------히터, 타자 정보--------------------------------------------
+	
 	@GetMapping("/hitterRecordWrite")
-	public String hitterRecordWrite_get(Model model, int playerNo) {
+	public String hitterRecordWrite_get(Model model/* , int playerNo */) {
 		logger.info("타자기록입력");
 		
-		List<Map<String, Object>> map = hitterService.selectHitterView(playerNo);
+		//List<Map<String, Object>> map = hitterService.selectHitterView(playerNo);
 		
-		model.addAttribute("map", map);
+		//model.addAttribute("map", map);
 		
 		return "/record/hitterRecordWrite";
 	}
@@ -228,19 +189,27 @@ public class RecordController {
 		return "/record/hitterStat";
 	}
 	
+	//----------------------피처, 투수 정보---------------------------------------
+	
 	@GetMapping("/pitcherRecordWrite")
-	public String pitcherRecordWrite_get(Model model, int playerNo) {
-		logger.info("투수 기록 등록 화면 이동");
+	public String pitcherRecordWrite_get(@RequestParam (defaultValue = "0") int recodeNo,
+			Model model) {
+		logger.info("투수 기록 등록 화면 이동, recodeNo={}", recodeNo);
 		
-		List<Map<String, Object>> list = pitcherService.selectPitcherView(playerNo);
-		model.addAttribute("list", list);
+		List<TeamVO> pitcherList = pitcherService.selectAllPitcher();
+		logger.info("투수 전체 pitcherList.size={}",pitcherList.size());
+		
+		model.addAttribute("pitcherList", pitcherList);
+		
+		//List<Map<String, Object>> list = pitcherService.selectPitcherView(playerNo);
+		//model.addAttribute("list", list);
 		
 		return "/record/pitcherRecordWrite";
 	}
 	
 	
 	@PostMapping("/pitcherRecordWrite")
-	public String pitcherRecordWrite_post(@ModelAttribute PitcherVO pitcherVo, int playerNo) {
+	public String pitcherRecordWrite_post(@ModelAttribute PitcherVO pitcherVo/* , int playerNo */) {
 		//1,4
 		logger.info("투수 기록 등록 처리 파라미터 PitcherVo={}", pitcherVo);
 		
@@ -314,6 +283,10 @@ public class RecordController {
 	}
 	
 
+	
+	//-------------------아래부터 경기기록 눌렀을 때 나오는 부분들------------------------
+	
+	
     @RequestMapping("/gameList")
     public String gameList(@ModelAttribute SearchVO searchVo, Model model) {
         logger.info("경기정보, 파라미터 searchVo={}", searchVo);
@@ -403,6 +376,54 @@ public class RecordController {
 		return "redirect:/record/gameList";
 	}
 	
+	//--------------------개요, 통계, 라인업 관련 메서드------------------------
+	
+	@RequestMapping("/summary")
+	public String inningDetail_get(Model model, int recodeNo) {
+		logger.info("이닝 파라미터, recodeDetailNo={}", recodeNo);
+		
+		List<Map<String, Object>> list = inningService.selectInningView(recodeNo);
+		model.addAttribute("list", list);
+		logger.info("이닝 처리 결과, list.size={}", list.size());
+		return "/record/summary";
+	}
+	
+	@RequestMapping("/gameRecordDetail2")
+	public String gameRecordDetail2_get(Model model, int recodeNo) {
+		logger.info("경기별 이닝 기록 파라미터, recodeNo={}", recodeNo);
+		
+		List<Map <String, Object>> list = inningService.selectInningView(recodeNo);
+		Map <String, Object> map1 = inningService.selectInningHomeView(recodeNo);
+		Map <String, Object> map2 = inningService.selectInningAwayView(recodeNo);
+		model.addAttribute("list", list);
+		model.addAttribute(map1);
+		model.addAttribute(map2);
+		logger.info("이닝 처리 결과, list.size={}", list.size());
+		logger.info("map1", map1);
+		logger.info("map2", map2);
+		
+		return "/record/gameRecordDetail2";
+	}
+	
+	
+	@RequestMapping("/lineup")
+	public String lineup_get(Model model, int recodeNo) {
+		logger.info("라인업 파라미터, recodeNo={}", recodeNo);
+		
+		List<Map<String, Object>> list = hitterService.selectHitterRecordView(recodeNo);
+		model.addAttribute("list", list);
+		logger.info("라인업 처리 결과, list.size={}", list.size());
+		
+		List<Map<String, Object>> list2 = pitcherService.selectPitcherRecordView(recodeNo);
+		model.addAttribute("list2", list2);
+		logger.info("라인업 처리 결과2, list.size={}", list2.size());
+		
+		
+		return "/record/lineup";
+	}
+
+	//----------------------------아래는 teamList 메서드임-----------------------------------
+	
 	@RequestMapping("/teamList")
 	public String List_get(@ModelAttribute SearchVO searchVo, Model model) {
 		logger.info("선수 목록 화면 이동, 파라미터 searchVo={}", searchVo);
@@ -459,5 +480,7 @@ public class RecordController {
 		
 		return "/record/teamList2";
 	}
+	
+	
 
 }

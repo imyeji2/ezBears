@@ -5,11 +5,13 @@
 <%@include file="../inc/top.jsp"%>
 <link href="${pageContext.request.contextPath}/css/Dcss.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/css/choong/chi.css" rel="stylesheet">
-<input type="hidden" name="staffNo" value="${sessionScope.staffno}">
-<input type="hidden" name="sysdate" value="<%= new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date()) %>">
 
 
-	<form name="frmWrite" method="post" action="<c:url value='/record/pitcherRecordWrite?playerNo=${param.playerNo}'/>">
+	<form name="frmWrite" method="post" action="<c:url value='/record/pitcherRecordWrite'/>">
+		<input type="text" name="staffNo" value="${sessionScope.staff_no}">
+		<%-- <input type="hidden" name="sysdate" value="<%= new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date()) %>"> --%>
+		<!-- 잘 들어오는거 확인함 recodeNo -->
+		<input type="text" name="recodeNo" value="${param.recodeNo}">
         <!-- Sign In Start -->
         <div class="container-fluid">
             <div class="row h-100 align-items-center justify-content-center">
@@ -18,7 +20,20 @@
 					<div class="d-flex align-items-center justify-content-between mb-3">
 						<h3>투수 기록 입력</h3>
 					</div>
+					
 					<div style="width: 60%; height: 80%; margin: 0 auto;">
+						<div class="form-floating mb-3">
+                            <select class="form-select" id="floatingSelect"
+                                aria-label="Floating label select example" name="playerNo">
+								<!-- 반복문 -->
+								<option value="" selected="selected">선수</option>
+								<c:forEach var="pitcher" items="${pitcherList}">
+									<option value ="${pitcher.playerNo}">${pitcher.playerName}</option>
+								</c:forEach>
+								<!-- 반복문 -->
+                            </select>
+                            <label for="floatingSelect">선수를 선택하세요</label>
+                        </div>
 						<div class="form-floating mb-3">
 							<input type="text" class="form-control" id="floatingInput"
 								placeholder="BB" name="BB"> <label for="floatingInput">사구</label>
@@ -55,6 +70,7 @@
 						<button type="submit" class="btn btn-primary py-3 w-100 mb-4">기록
 							등록</button>
 					</div>
+					
 				</div>
                 </div>
             </div>

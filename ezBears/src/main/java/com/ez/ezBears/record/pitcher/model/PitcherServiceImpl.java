@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.ez.ezBears.team.model.TeamVO;
+
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -43,6 +45,11 @@ public class PitcherServiceImpl implements PitcherService {
 	public List<Map<String, Object>> selectPitcherRecordView(int recordNo) {
 		// TODO Auto-generated method stub
 		return pitcherDao.selectPitcherRecordView(recordNo);
+	}
+
+	@Override
+	public List<TeamVO> selectAllPitcher() {
+		return  pitcherDao.selectAllPitcher();
 	}
 	
 	
