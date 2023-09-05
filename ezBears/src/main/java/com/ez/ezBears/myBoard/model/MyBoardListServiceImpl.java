@@ -117,6 +117,11 @@ public class MyBoardListServiceImpl implements MyBoardListService {
 		
 		return cnt;
 	}
+	//마이보드 멤버 수 
+	@Override
+	public int totalCountMboardMember(int mBoardNo) {
+		return myBoardListDao.totalCountMboardMember(mBoardNo);
+	}
 
 
 

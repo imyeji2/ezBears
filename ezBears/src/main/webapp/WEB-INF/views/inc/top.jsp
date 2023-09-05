@@ -244,6 +244,27 @@ $(function(){
 		if(confirm('정말 삭제 하시겠습니까?')){
 			var $editFrm = $(this).closest('tr');
 			var mBoardNo=$editFrm.find('input[name=mBoardNo]').val();
+			
+			$.ajax({
+		        type: 'post',
+		        url: "<c:url value='/myBoard/ajax_delMBoard'/>",
+		        data:{mBoardNo:mBoardNo},
+		        dataType: 'json',
+		        error: function(xhr, status, error){
+		            alert(error);
+		        },
+		        success: function(res){
+		            console.log(res); // 서버 응답 확인
+		            if(res>0){
+			            loadBoardList();
+			            alert('삭제가 완료되었습니다.');
+		            }else{
+		            	alert('삭제에 실패했습니다.');
+		            }
+		        }
+	
+		    });					
+			
 			deleteMyBoard(mBoardNo);
 		}
 	});
