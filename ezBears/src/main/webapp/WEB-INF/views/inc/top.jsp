@@ -419,6 +419,7 @@ $(function(){
 </script>
 
 <body>
+
     <div class="container-fluid position-relative d-flex p-0">
         <!-- Spinner Start -->
         <div id="spinner" class="show bg-dark position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
@@ -440,7 +441,7 @@ $(function(){
 	                <div class="d-flex user_info">
 	                    <div class="position-relative">
 	                    	<c:choose>
-	                    		<c:when test="${sessionScope.type=='정규직' }">
+	                    		<c:when test="${sessionScope.memberType=='정규직' }">
 	                    		 	<img class="member_img" src="<c:url value='/img/mem_images/${sessionScope.myimg }'/>" alt="프로필 이미지">
 	                    		</c:when>
 	                    		<c:otherwise>
@@ -517,14 +518,16 @@ $(function(){
 	                        </div>
 	                    </div>           
                     </c:if>         
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                        	<i class="bi bi-text-center me-2"></i>나의보드
-                        </a>
-                        <div class="dropdown-menu bg-transparent border-0">
-                            <c:import url="/myBoard/myBoardList"></c:import>
-                        </div>
-                    </div>
+                    <c:if test="${sessionScope.type=='사원'}">
+	                    <div class="nav-item dropdown">
+	                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+	                        	<i class="bi bi-text-center me-2"></i>나의보드
+	                        </a>
+	                        <div class="dropdown-menu bg-transparent border-0">
+	                            <c:import url="/myBoard/myBoardList"></c:import>
+	                        </div>
+	                    </div>
+                    </c:if>
                     
                     
                     <div class="nav-item dropdown">

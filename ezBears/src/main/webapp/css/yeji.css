@@ -1012,4 +1012,24 @@
 	.table a{
 		color:#fff;
 	}
+	
+	.naverNews table{
+		text-align: left;
+		margin: 0 auto;	
+	}
+	
+	.table td{
+		white-space:nowrap;
+		overflow:hidden;
+		text-overflow:ellipsis;
+		max-width:240px
+	}
+	
+	.newImg{
+		width:30px;
+		justify-content: center; /* 수평 가운데 정렬 */
+   		align-items: center; /* 수직 가운데 정렬 */
+	}
+	
 }
+

@@ -193,12 +193,15 @@
       select *
       from
       (
-	      select rownum as RNUM, A.* from
+	      select rownum as RNUM,
+	      (sysdate-regdate)*24 as dateGap,
+	       A.* from
 	      (		
 			select * from teamNoticeListView
 			where m_board_no=#{mBoardNo} 
      	 	and status='Y' and step=0
 			order by regdate desc
+			
 	      )A
       )
 	  <![CDATA[

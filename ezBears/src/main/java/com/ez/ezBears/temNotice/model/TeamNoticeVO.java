@@ -21,4 +21,5 @@ public class TeamNoticeVO {
 	private int step;//댓글여부
 	private String status;
 	
+	
 }

@@ -1,14 +1,24 @@
 package com.ez.ezBears.controller;
 
+import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.catalina.connector.Response;
+import org.apache.taglibs.standard.tag.el.fmt.RequestEncodingTag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.ez.ezBears.MBoard.model.MBoardService;
 import com.ez.ezBears.common.MyBoardSearchVo;
@@ -19,6 +29,7 @@ import com.ez.ezBears.myBoard.model.MyBoardListService;
 import com.ez.ezBears.myBoard.model.MyBoardService;
 import com.ez.ezBears.notice.model.NoticeService;
 import com.ez.ezBears.temNotice.model.TeamNoticeService;
+import com.oracle.wls.shaded.org.apache.xml.utils.URI;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -51,20 +62,27 @@ public class indexController {
 			List<Map<String, Object>> noticeList = noticeService.selectMainNotice(searchVo);
 			logger.info("메인 공지사항 리스트 noticeList.size()",noticeList);
 			
-			int memNo = memberService.selectMemberNo(userid);
-			int mBoardNo = myBoardService.selectMainMboardNo(memNo);
-			String mBoardName = mBoardService.selectMboardName(mBoardNo);
+			String type=(String)session.getAttribute("type");
+			logger.info("멤버 타입 type={}",type);
 			
-			
-			searchVo.setMBoardNo(mBoardNo);
-			
-			List<Map<String, Object>> myNoticeList = teamNoticeService.selectMainTeamNoticeList(searchVo);
-			
-			
+			if(type.equals("사원")) {
+				//부서보드
+				int memNo = memberService.selectMemberNo(userid);
+				int mBoardNo = myBoardService.selectMainMboardNo(memNo);
+				String mBoardName = mBoardService.selectMboardName(mBoardNo);
+				searchVo.setMBoardNo(mBoardNo);
+				List<Map<String, Object>> myNoticeList = teamNoticeService.selectMainTeamNoticeList(searchVo);
+
+				
+				model.addAttribute("myNoticeList",myNoticeList);
+				model.addAttribute("mBoardName",mBoardName);
+				
+				
+			}else {
+				
+			}
 			model.addAttribute("noticeList",noticeList);
-			model.addAttribute("myNoticeList",myNoticeList);
-			model.addAttribute("mBoardName",mBoardName);
-			
+			model.addAttribute("type",type);
 			logger.info("인덱스페이지로 이동 userid={}",userid);
 			result="index";
 		}
