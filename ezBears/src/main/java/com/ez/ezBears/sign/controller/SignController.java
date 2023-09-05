@@ -1,5 +1,6 @@
 package com.ez.ezBears.sign.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +25,7 @@ import com.ez.ezBears.member.model.MemberService;
 import com.ez.ezBears.member.model.MemberVO;
 import com.ez.ezBears.myBoard.model.MyBoardInfoVO;
 import com.ez.ezBears.myBoard.model.MyBoardListService;
+import com.ez.ezBears.sign.model.SignFileVO;
 import com.ez.ezBears.sign.model.SignService;
 import com.ez.ezBears.sign.model.SignVO;
 
@@ -113,7 +115,8 @@ public class SignController {
 	}
 	
 	@PostMapping("/Approval_write")
-	public String Approval_post(@RequestParam(defaultValue = "0") int mBoardNo,@ModelAttribute SignVO signVo,
+	public String Approval_post(@RequestParam(defaultValue = "0") int mBoardNo,
+			@ModelAttribute SignVO signVo,@ModelAttribute SignFileVO signFileVo,
 			HttpServletRequest request,HttpSession session,
 			Model model) {
 		
@@ -122,7 +125,8 @@ public class SignController {
 		logger.info("결재 등록 결과 cnt = {}", cnt);
 		
 		
-		
+		String fileName="", originalFileName="", filePath="";
+		long fileSize =0;
 		String msg = "결재 등록 실패", url = "/myBoard/Approval_write";
 		try {
 
@@ -130,12 +134,30 @@ public class SignController {
 			
 			List<Map<String, Object>> files = fileUploadUtil.fileupload(request, ConstUtil.UPLOAD_APPROVAL_FLAG);
 			logger.info("업로드파일  files={}", files);
-
-			if(cnt > 0) {
-				int filecnt = signService.insertSignFile(files, signVo.getDocNo());
-				msg = "결재 작성 성공";
-				url = "/myBoard/Approval?mBoardNo="+mBoardNo;
+			
+			/*
+			 * if(cnt > 0) { int filecnt = signService.insertSignFile(files,
+			 * signVo.getDocNo()); msg = "결재 작성 성공"; url =
+			 * "/myBoard/Approval?mBoardNo="+mBoardNo; }
+			 */
+			
+			for(Map<String, Object> map : files) {
+				fileName=(String) map.get("fileName");	
+				originalFileName = (String)map.get("originalFileName");
+				fileSize = (long)map.get("fileSize");
+				filePath = (String)map.get("uploadPath") + File.separator + fileName;
+				
+				logger.info("파일명:",fileName);
+				
+				
+				signFileVo.setFilename(fileName);
+				signFileVo.setOriginFilename(originalFileName);
+				signFileVo.setFsize(fileSize);
+				
+				
 			}
+			signFileVo.setDocNo(signVo.getDocNo());
+			
 		} catch (IllegalStateException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
