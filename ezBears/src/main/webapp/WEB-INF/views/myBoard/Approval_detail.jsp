@@ -69,6 +69,9 @@
 					<c:if test="${list['STATUS'] eq '대기'}">
 						<input type="button" class=" btn-sm btn-primary appoveBtn " value="승인" onclick="approveDocument()">
 					</c:if>
+					<c:if test="${list['STATUS'] eq '처리중'}">
+						<input type="button" class=" btn-sm btn-primary appoveBtn " value="승인" onclick="approveDocument2()">
+					</c:if>
 					
 					</td>
 				</tr>
@@ -120,7 +123,7 @@
 			    <c:if test="${myBoardInfoVo.memName eq list['MEM_NAME']}">
 			        <input type="button" class="btn btn-sm btn-primary btn" value="수정" onclick="docSave2()"/>
 			    </c:if>
-		</div>
+			</div>
 			</form>
 		</div>
 		</div><!--appbox  -->
@@ -180,6 +183,58 @@
 		                    });
 		                } else {
 		                    alert("문서 승인에 실패했습니다.");
+		                }
+		            },
+		            error: function () {
+		                alert("오류가 발생했습니다. 다시 시도해주세요.");
+		            }
+		        });
+		    } else {
+		        alert("해당 직책에서는 승인 권한이 없습니다.");
+		    }
+		}
+		
+		//처리중 에서 완료 로 넘어가는 처리
+		function approveDocument2() {
+		    var docNo = "${list['DOC_NO']}";
+		    var positionNo = parseInt("${myBoardInfoVo.positionNo}");
+		    var status = "${list['STATUS'] }";
+		    
+		    console.log("status",status);
+		    console.log("positionNo 값: ", positionNo);
+		    console.log("docNo 값: ", docNo);
+
+		    // position_no가 6인 경우에만 승인 가능
+		    if (positionNo === 6) {
+		        // AJAX
+		        $.ajax({
+		            url: "<c:url value='/myBoard/statusUpdate2'/>",
+		            method: "POST",
+		            data: {
+		                docNo: docNo,
+		                positionNo: positionNo
+		            },
+		            success: function (response) {
+		                if (response.success) {
+		                    alert("결재가 최종 승인되었습니다.");
+
+		                    // 승인 성공 후 상태 갱신
+		                    $.ajax({
+		                        url: "<c:url value='/myBoard/getDocumentStatus'/>",
+		                        method: "GET", 
+		                        data: {
+		                            docNo: docNo
+		                        },
+		                        cache: false, // 캐싱 비활성화
+		                        success: function (statusResponse) {
+		                        	location.href = "<c:url value='/signManagement/completeApproval'/>"
+		                        },
+		                        error: function () {
+		                            alert("문서 상태를 가져오는데 실패했습니다.");
+		                        }
+		                    });
+		                } else {
+		                    alert("결재 최종 승인에 실패했습니다.");
 		                }
 		            },
 		            error: function () {

@@ -3,6 +3,8 @@ package com.ez.ezBears.sign.model;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.ez.ezBears.common.SearchVO;
 import com.ez.ezBears.common.SignListSearchVO;
 
@@ -21,6 +23,7 @@ public interface SignService {
 	
 
 	int updateStatus(int docNo);
+	int updateStatus2(int docNo);
 	
 	String selectStatus(int docNo);
 	
@@ -29,10 +32,17 @@ public interface SignService {
 	int insertSignFile(List<Map<String, Object>> files, int docNo);
 
 	//결제중 상태인 db 전체 조회
-	List<Map<String, Object>> selectAllUnder();
+	List<Map<String, Object>> selectAllUnder(@Param("searchVo") SearchVO searchVo,@Param("searchTitle") String searchTitle,
+			@Param("searchDeptNo") int searchDeptNo, @Param("searchName") String searchName);
 	
 	//결재완료 상태인 db 전체 조회
-	List<Map<String, Object>> selectAllComplete();
+	List<Map<String, Object>> selectAllComplete(@Param("searchVo") SearchVO searchVo,@Param("searchTitle") String searchTitle,
+			@Param("searchDeptNo") int searchDeptNo, @Param("searchName") String searchName);
+	
+	int countAllUnder(@Param("searchTitle") String searchTitle,
+			@Param("searchDeptNo") int searchDeptNo, @Param("searchName") String searchName);
+	int countAllComplete(@Param("searchTitle") String searchTitle,
+			@Param("searchDeptNo") int searchDeptNo, @Param("searchName") String searchName);
 	
 }
 
