@@ -59,7 +59,7 @@
 				<div class="stat__row">
 					<div class="stat__category">
 					<c:if test="${map['INNING'].includes('초')}">
-						<div class="stat__homeValue">"${map.R }"</div>
+						<div class="stat__homeValue">"${map.H }"</div>
 					</c:if>
 						<div class="stat__categoryName">안타</div>
 						<div class="stat__awayValue">9</div>
