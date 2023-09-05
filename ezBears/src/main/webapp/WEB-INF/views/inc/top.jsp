@@ -493,7 +493,7 @@ $(function(){
 	                            class="dropdown-item">
 	                            	<i class="bi bi-calendar3 me-2"></i>근태관리
 	                            </a>
-	                            <a href="#" class="dropdown-item">
+	                            <a href="<c:url value='/mboard/list'/>" class="dropdown-item">
 	                            	<i class="bi bi-list-task me-2"></i>게시글관리
 	                            </a>
 	                            <a href="<c:url value='/dept/list'/>" class="dropdown-item">

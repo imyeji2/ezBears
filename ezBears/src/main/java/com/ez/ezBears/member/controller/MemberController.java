@@ -405,7 +405,29 @@ public class MemberController {
     	logger.info("멤버 조회 결과, memListVo={}", memListVo);
     	
     	return memListVo;
-
-    	
     }
+	
+	@ResponseBody
+	@RequestMapping("/memberSearch")
+	public MemberListVO AllSearchMem (HttpServletRequest request, Model model) { 
+		String searchbox = request.getParameter("searchbox");
+		logger.info("멤버 조회, searchbox={}", searchbox);
+		
+		SearchVO searchVo = new SearchVO();
+		searchVo.setSearchKeyword(searchbox);
+		
+		logger.info("멤버 조회, searchVo={}", searchVo);
+		List<Map<String, Object>> list = memberService.AllselectMem(searchVo);
+		logger.info("멤버 조회, list={}", list);
+		
+		MemberListVO memListVo = new MemberListVO(); 
+		memListVo.setMemberDetailList(list);
+		logger.info("멤버 조회 결과, memListVo={}", memListVo);
+		
+		
+		model.addAttribute("list", list);
+		model.addAttribute("memListVo", memListVo);
+		
+		return memListVo;
+	}
 }
