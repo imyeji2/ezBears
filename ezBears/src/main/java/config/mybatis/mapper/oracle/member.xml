@@ -167,8 +167,7 @@
 	
 	
 	<!-- 마이페이지수정  -->
-	<select id="selectByUserid" parameterType="string"
-		resultType="memberVo">
+	<select id="selectByUserid" parameterType="string" resultType="memberVo">
 		select * from member
 		where mem_id=#{memId}
 	</select>
