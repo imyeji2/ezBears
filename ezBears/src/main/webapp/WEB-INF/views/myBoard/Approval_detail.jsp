@@ -97,12 +97,27 @@
 					 value="${list['DOC_TITLE'] }" readonly>
 						</td>
 				</tr>
-
+				
+				
+				
+				<c:if test="${!empty filemap }">
 	                <tr class="tr-m">
-
 	            	<td colspan="4">
-	            	<input class="form-control appfile" type="file" id="app_file">
-				    </tr>
+	            	<!-- <input class="form-control appfile" type="file" id="app_file"> -->	
+							<div class="signfile">
+								<div class="fileupload">
+									<a href="#" class="fileinfo">첨부파일</a>		
+									<c:forEach var="map" items="${filemap }">
+										<a class="fileinfo2" href="<c:url value='/myBoard/Filedownload?docNo=${map["DOC_NO"]}&fileName=${map["FILENAME"]}&fileNo=${map["FILE_NO"] }'/>">
+										${map['ORIGIN_FILENAME']}&nbsp; (<fmt:formatNumber
+												value="${map['FSIZE'] /1024.0}" type="number" pattern="#.##" />
+											KB)
+										</a>										
+									</c:forEach>
+								</div>
+							</div>
+				    	</tr>
+					</c:if>	
 	      
 
 	                <tr>

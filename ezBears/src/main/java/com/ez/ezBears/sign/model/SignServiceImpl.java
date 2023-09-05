@@ -59,6 +59,7 @@ public class SignServiceImpl implements SignService{
 	//파일 등록
 	@Override
 	public int insertSignFile(List<Map<String, Object>> files, int docNo) {
+		logger.info("docNo={}",docNo);
 		int cnt = 0;
 		logger.info("files={},files.size={}",files,files.size());
 		
@@ -66,9 +67,9 @@ public class SignServiceImpl implements SignService{
 			for(Map<String, Object> map : files) {
 				SignFileVO vo = new SignFileVO();
 				
-				vo.setFileNo(docNo);
-				vo.setFilename((String) map.get("fileName"));
-				vo.setOriginFilename((String) map.get("originalFileName"));
+				vo.setDocNo(docNo);
+				vo.setFileName((String) map.get("fileName"));
+				vo.setOriginFileName((String) map.get("originalFileName"));
 				vo.setFsize((long) map.get("fileSize"));
 				
 				cnt = signDao.insertSignFile(vo);
@@ -80,7 +81,12 @@ public class SignServiceImpl implements SignService{
 	
 	
 	}
-
+	//해당 결재문서의 파일 정보
+	@Override
+	public List<Map<String, Object>> selectSignnFileInfo(int docNo) {
+		return signDao.selectSignnFileInfo(docNo);
+	}
+	
 
 	@Override
 	public List<Map<String, Object>> selectAllUnder() {
@@ -92,6 +98,8 @@ public class SignServiceImpl implements SignService{
 	public List<Map<String, Object>> selectAllComplete() {
 		return signDao.selectAllComplete();
 	}
+
+
 
 
 

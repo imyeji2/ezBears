@@ -34,7 +34,8 @@ public interface SignDAO {
 	//파일 업로드
 	int insertSignFile(SignFileVO signFileVo);
 	
-	
+	//해당 결재작성글 파일 정보 
+	List<Map<String, Object>> selectSignnFileInfo(int docNo);
 
 	//결제중 상태인 db 전체 조회
 	List<Map<String, Object>> selectAllUnder();

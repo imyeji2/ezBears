@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.ez.ezBears.common.ConstUtil;
 import com.ez.ezBears.common.FileUploadUtil;
@@ -115,16 +116,41 @@ public class SignController {
 	}
 	
 	@PostMapping("/Approval_write")
-	public String Approval_post(@RequestParam(defaultValue = "0") int mBoardNo,
+	public String Approval_post(@RequestParam(defaultValue = "0") int MBoardNo,
 			@ModelAttribute SignVO signVo,@ModelAttribute SignFileVO signFileVo,
 			HttpServletRequest request,HttpSession session,
 			Model model) {
 		
-		logger.info("결재 등록 파라미터 mBoardNo={}, signVo={}",mBoardNo,signVo);
+		logger.info("결재 등록 파라미터 MBoardNo={}, signVo={}",MBoardNo,signVo);
 		int cnt = signService.insertApproval(signVo);
+		logger.info("결재 등록 파라미터 MBoardNo={}, signVo={}",MBoardNo,signVo);
 		logger.info("결재 등록 결과 cnt = {}", cnt);
+	
+		String msg = "등록 실패", url="/myBoard/Approval_write";
+		try {
+			List<Map<String, Object>> files = fileUploadUtil.fileupload(request, ConstUtil.UPLOAD_APPROVAL_FLAG);
+			logger.info("업로드파일 정보 files={}", files);
+			logger.info("signVo.getDocNo()={}",signVo.getDocNo());
+
+			if(cnt > 0) {
+				int fileCnt = signService.insertSignFile(files, signVo.getDocNo());
+				
+				msg = "글 작성 성공";
+				url = "/myBoard/Approval?mBoardNo="+MBoardNo;
+			}
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+
+		// 4.
+		return "common/message"; 
 		
-		
+		/*		
 		String fileName="", originalFileName="", filePath="";
 		long fileSize =0;
 		String msg = "결재 등록 실패", url = "/myBoard/Approval_write";
@@ -135,11 +161,11 @@ public class SignController {
 			List<Map<String, Object>> files = fileUploadUtil.fileupload(request, ConstUtil.UPLOAD_APPROVAL_FLAG);
 			logger.info("업로드파일  files={}", files);
 			
-			/*
-			 * if(cnt > 0) { int filecnt = signService.insertSignFile(files,
-			 * signVo.getDocNo()); msg = "결재 작성 성공"; url =
-			 * "/myBoard/Approval?mBoardNo="+mBoardNo; }
-			 */
+			
+			  if(cnt > 0) { int filecnt = signService.insertSignFile(files,
+			  signVo.getDocNo()); msg = "결재 작성 성공"; url =
+			  "/myBoard/Approval?mBoardNo="+mBoardNo; }
+			 
 			
 			for(Map<String, Object> map : files) {
 				fileName=(String) map.get("fileName");	
@@ -169,6 +195,9 @@ public class SignController {
 		
 		
 		return "common/message";
+		
+		return "redirect:/myBoard/Approval?mBoardNo="+MBoardNo;
+		*/
 	}
 	
 	
@@ -200,18 +229,21 @@ public class SignController {
 		logger.info("myBoardInfoVo={}",myBoardInfoVo);
 		
 		
-		  memberVo = memberService.selectpositioninfo(myBoardInfoVo.getDeptNo());
-		  logger.info("결재 디테일 memberVo={}",memberVo);
-		 
+		memberVo = memberService.selectpositioninfo(myBoardInfoVo.getDeptNo());
+		
 		Map<String, Object> list = signService.detailSign(docNo);
-		logger.info("결재 리스트 list={}",list);
+		logger.info("결재 디테일 list={}",list);
 		
-		logger.info("결재 디테일 list={}",list.size());
-		
+		List<Map<String, Object>> filemap = signService.selectSignnFileInfo(docNo);
+		logger.info("결재 파일 정보 filemap={}",filemap);
 		
 		model.addAttribute("myBoardInfoVo",myBoardInfoVo);
 		model.addAttribute("list",list);
 		model.addAttribute("memberVo",memberVo);
+		model.addAttribute("filemap",filemap);
+		
+		
+		
 		return "myBoard/Approval_detail";
 	}
 	
@@ -261,6 +293,23 @@ public class SignController {
         
     }
 	
+	@RequestMapping("/Filedownload")
+	public ModelAndView downloadFile(@RequestParam(defaultValue = "0") int docNo,@RequestParam(defaultValue = "0") int fileNo,
+			@RequestParam String fileName,HttpServletRequest request) {
+
+		logger.info("공지사항 파일 다운로드 파라미터 noticeNo={}, fileName={},noticeFileNo={}",docNo, fileName,fileNo);
+		
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		String upPath = fileUploadUtil.getUploadPath(request, ConstUtil.UPLOAD_APPROVAL_FLAG);
+		File file = new File(upPath, fileName);
+		map.put("file", file);
+
+		//ModelAndView(String viewName, Map<String, ?> model)
+		ModelAndView mav = new ModelAndView("DownloadView", map);
+		return mav;
+	}
 	
 	@RequestMapping("/Approval_delete")
 	public String Approval_delete() {

@@ -123,6 +123,13 @@
 	    margin-left: 5px;
 	    width: 18%;
 	}
+	.fileinfo{
+		color: white;
+	}
+	.fileinfo2{
+		color: white;
+		margin-left: 40px;
+	}
 }
 
 
