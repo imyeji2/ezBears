@@ -23,11 +23,11 @@
 	</insert>
 	
 	<insert id="insertSignFile" parameterType="signFileVo">
-		<selectKey keyColumn="fileNo" order="BEFORE" resultType="int">
+		<!-- <selectKey keyColumn="fileNo" order="BEFORE" resultType="int">
 			select sign_file_seq.nextval from dual
-		</selectKey>
-		insert into sign_file(file_no,doc_no,filename,origin_filename,fsize)
-		values(#{fileNo},#{docNo},#{filename},#{originFilename},#{fsize})
+		</selectKey> -->
+		insert into sign_file(file_no,doc_no,fileName,origin_filename,fsize)
+		values(sign_file_seq.nextval,#{docNo},#{fileName},#{originFileName},#{fsize})
 	</insert>
 	
 	
@@ -108,6 +108,12 @@
 		where doc_no = #{docNo}
 	</select>
 	
+
+	<select id="selectSignnFileInfo" parameterType="int" resultType="map">
+		select * from sign_file
+		where doc_no = #{docNo}
+	</select>
+
 	<select id="countAllUnder" parameterType="map" resultType="int">
 		select count(*) from SIGNLISTVIEW <!-- where status = '처리중' --> 
 		<include refid="searchWhere2"></include>
@@ -149,5 +155,5 @@
  			</if>
  		</where>
  	</sql>
-	
+
 </mapper>

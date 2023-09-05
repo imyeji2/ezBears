@@ -5,12 +5,9 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ez.ezBears.common.SearchVO;
 import com.ez.ezBears.common.SignListSearchVO;
-import com.ez.ezBears.notice.model.NoticeFileVO;
 
 @Mapper
 public interface SignDAO {
@@ -38,6 +35,10 @@ public interface SignDAO {
 	//파일 업로드
 	int insertSignFile(SignFileVO signFileVo);
 	
+
+	//해당 결재작성글 파일 정보 
+	List<Map<String, Object>> selectSignnFileInfo(int docNo);
+
 
 	//결제중 상태인 db 전체 조회
 	List<Map<String, Object>> selectAllUnder(@Param("searchVo") SearchVO searchVo,@Param("searchTitle") String searchTitle,

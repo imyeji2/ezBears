@@ -48,6 +48,7 @@
 				<input type="hidden" name="memNo" id="memNo" value="${myBoardInfoVo.memNo}"> 
 				<input type="hidden" name="MBoardNo" id="MBoardNo" value="${myBoardInfoVo.MBoardNo}"> 
 				<input type="hidden" name="deptNo" id="deptNo" value="${myBoardInfoVo.deptNo}">
+ 
 				 
 			<table class="table" id="table" border="1">
 				<tr class="tr-s">
