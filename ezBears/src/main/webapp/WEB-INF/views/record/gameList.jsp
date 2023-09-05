@@ -24,7 +24,7 @@
 			<h4>경기기록</h4>
 			
 			<!-- Button trigger modal -->
-			<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+			<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#appSelModal">
 			  Launch demo modal
 			</button>
 			
@@ -37,9 +37,7 @@
 			        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			      </div>
 			      <div class="modal-body">
-			        <c:import url="<c:url value='/chat/chatListView'/>">
-						<c:param name="session" value="${sessionScope.memVo}"></c:param>
-					</c:import>
+						<%@ include file="../chat/chatModal.jsp" %>
 			      </div>
 			      <div class="modal-footer">
 			        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

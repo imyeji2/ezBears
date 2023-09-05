@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ez.ezBears.common.SearchVO;
 import com.ez.ezBears.common.SignListSearchVO;
@@ -27,6 +30,7 @@ public interface SignDAO {
 
 	//승인처리
 	int updateStatus(int docNo);
+	int updateStatus2(int docNo);
 	
 	//처리상태
 	String selectStatus(int docNo);
@@ -34,13 +38,22 @@ public interface SignDAO {
 	//파일 업로드
 	int insertSignFile(SignFileVO signFileVo);
 	
+
 	//해당 결재작성글 파일 정보 
 	List<Map<String, Object>> selectSignnFileInfo(int docNo);
 
+
 	//결제중 상태인 db 전체 조회
-	List<Map<String, Object>> selectAllUnder();
+	List<Map<String, Object>> selectAllUnder(@Param("searchVo") SearchVO searchVo,@Param("searchTitle") String searchTitle,
+			@Param("searchDeptNo") int searchDeptNo, @Param("searchName") String searchName);
 	
 	//결재완료 상태인 db 전체 조회
-	List<Map<String, Object>> selectAllComplete();
+	List<Map<String, Object>> selectAllComplete(@Param("searchVo") SearchVO searchVo,@Param("searchTitle") String searchTitle,
+			@Param("searchDeptNo") int searchDeptNo, @Param("searchName") String searchName);
+	
+	int countAllUnder(@Param("searchTitle") String searchTitle,
+			@Param("searchDeptNo") int searchDeptNo, @Param("searchName") String searchName);
+	int countAllComplete(@Param("searchTitle") String searchTitle,
+			@Param("searchDeptNo") int searchDeptNo, @Param("searchName") String searchName);
 	
 }

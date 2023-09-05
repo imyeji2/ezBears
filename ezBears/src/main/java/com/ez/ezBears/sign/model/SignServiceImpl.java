@@ -49,6 +49,12 @@ public class SignServiceImpl implements SignService{
 	public int updateStatus(int docNo) {
 		return signDao.updateStatus(docNo);
 	}
+	
+	@Override
+	public int updateStatus2(int docNo) {
+		return signDao.updateStatus2(docNo);
+	}
+	
 
 	// 결재 처리상태 검색
 	@Override
@@ -81,6 +87,7 @@ public class SignServiceImpl implements SignService{
 	
 	
 	}
+
 	//해당 결재문서의 파일 정보
 	@Override
 	public List<Map<String, Object>> selectSignnFileInfo(int docNo) {
@@ -88,16 +95,32 @@ public class SignServiceImpl implements SignService{
 	}
 	
 
+
 	@Override
-	public List<Map<String, Object>> selectAllUnder() {
-		return signDao.selectAllUnder();
+	public List<Map<String, Object>> selectAllUnder(SearchVO searchVo, String searchTitle, int searchDeptNo,
+			String searchName) {
+		return signDao.selectAllUnder(searchVo, searchTitle, searchDeptNo, searchName);
 	}
 
 
 	@Override
-	public List<Map<String, Object>> selectAllComplete() {
-		return signDao.selectAllComplete();
+	public List<Map<String, Object>> selectAllComplete(SearchVO searchVo, String searchTitle, int searchDeptNo,
+			String searchName) {
+		return signDao.selectAllComplete(searchVo, searchTitle, searchDeptNo, searchName);
 	}
+
+	@Override
+	public int countAllUnder(String searchTitle, int searchDeptNo, String searchName) {
+		return signDao.countAllUnder(searchTitle, searchDeptNo, searchName);
+	}
+
+	@Override
+	public int countAllComplete(String searchTitle, int searchDeptNo, String searchName) {
+		return signDao.countAllComplete(searchTitle, searchDeptNo, searchName);
+	}
+
+
+
 
 
 

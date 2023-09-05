@@ -9,9 +9,9 @@ public class ChatContentVO {
 	private int chatRoomNo;
 	private String chatContent;
 	private int memNo;
-	private String divName;
+	private String deptName;
 	private String memName;
-	private String rankName;
+	private String positionName;
 	private Date chatDate;
 	private String chatDateFormat;
 	private int chatType;

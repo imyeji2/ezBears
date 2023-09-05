@@ -273,6 +273,33 @@ public class SignController {
 
 	    return response;
 	}
+	
+	@ResponseBody
+	@PostMapping("/statusUpdate2")
+	public Map<String, Object> statusUpdate2(@RequestParam("docNo") int docNo, @RequestParam("positionNo") int positionNo, HttpSession session, Model model) {
+		Map<String, Object> response = new HashMap<>();
+		
+		String userid = (String) session.getAttribute("userid");
+		MyBoardInfoVO myBoardInfoVo = new MyBoardInfoVO();
+		myBoardInfoVo.setMemId(userid);
+		
+		logger.info("결재 문서 번호 docNo={}, positionNo={}", docNo, positionNo);
+		
+		if (positionNo == 6) {
+			int cnt = signService.updateStatus2(docNo);
+			if (cnt > 0) {
+				response.put("success", true);
+			} else {
+				response.put("success", false);
+				response.put("message", "문서 업데이트에 실패했습니다."); 
+			}
+		} else {
+			response.put("success", false);
+			response.put("message", "해당 직책에서는 승인 권한이 없습니다.");
+		}
+		
+		return response;
+	}
 
 	@GetMapping("/getDocumentStatus")
     @ResponseBody

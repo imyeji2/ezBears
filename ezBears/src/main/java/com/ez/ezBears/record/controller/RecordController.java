@@ -43,13 +43,6 @@ public class RecordController {
 	private final HitterService hitterService;
 	private final PitcherService pitcherService;
 	private final InningService inningService;
-
-	@RequestMapping("/gameRecord")
-	public String gameRecord() {
-		//1,4
-		logger.info("경기 기록 보여주기");
-		return "/record/gameRecord";
-	}
 	
 	@GetMapping("/gameRecordDetail")
 	public String gameRecordDetail_get(@RequestParam(defaultValue = "0") int recodeNo, Model model) {
@@ -73,17 +66,23 @@ public class RecordController {
 	
 	
 	@GetMapping("/inningWrite")
-	public String inningWrite_get() {
-		//1,4
-		logger.info("이닝정보등록");
+	public String inningWrite_get(Model model, int recodeNo) {
+		logger.info("이닝정보등록 페이지 이동 recodeNo={}", recodeNo);
+		
+		List<Map<String, Object>> list = inningService.selectInningView(recodeNo);
+		model.addAttribute("list", list);
+		logger.info("list.size={}", list.size());
+		
 		return "/record/inningWrite";
 	}
 	
 	@PostMapping("/inningWrite")
-	public String inningWrite_post() {
-		//1,4
+	public String inningWrite_post(@ModelAttribute InningVO inningVo) {
+		
+		int cnt = inningService.insertInning(inningVo);
+		
 		logger.info("이닝정보등록");
-		return "/record/inningWrite";
+		return "/record/gameRecordDetail2";
 	}
 	
 	
@@ -178,12 +177,29 @@ public class RecordController {
 	}
 	
 	
-	@RequestMapping("/hitterRecordEdit")
-	public String hitterRecordEdit() {
-		//1,4
-		logger.info("타자기록수정");
+	@GetMapping("/hitterRecordEdit")
+	public String hitterRecordEdit_get(Model model, int playerNo) {
+		logger.info("타자기록수정 파라미터 playerNo={}");
+		
+		List<Map<String, Object>> list = hitterService.selectHitterView(playerNo);
+		
+		model.addAttribute("list", list);
+		
 		return "/record/hitterRecordEdit";
 	}
+	
+	
+	@PostMapping("/hitterRecordEdit")
+	public String hitterRecordEdit_post(Model model, HitterVO hitterVo) {
+		logger.info("타자기록수정");
+		
+		int cnt = hitterService.updateHitter(hitterVo);
+		
+		
+		
+		return "/record/hitterRecordEdit";
+	}
+	
 	
 	@RequestMapping("/hitterRecordDelete")
 	public String hitterRecordDelete() {
