@@ -29,6 +29,8 @@
     <div class="row g-4">
 		<div class="col-sm-12 col-xl-12">
 		    <div class="bg-secondary rounded h-100 p-4">
+		    
+		    <!-- nav 임포트@@@@@@@@@@@@@@@@@ -->
 			<c:import url="/signManagement/approvalManagementNavTab"></c:import>
 			
 			

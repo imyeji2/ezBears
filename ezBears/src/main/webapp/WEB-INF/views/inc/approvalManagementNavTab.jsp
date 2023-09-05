@@ -8,9 +8,9 @@ $(function (){
 		
 		$('#'+id).addClass('active');
 		
-		if(id==="teamNotice"){
+		/* if(id==="teamNotice"){
 			$('#detail_li').text("공지사항");
-		}
+		} */
 	});
 </script>
 
@@ -23,9 +23,9 @@ $(function (){
 
 <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
     <li class="nav-item" role="presentation">
-        <a class="nav-link tap_txt" id="teamNotice" href="<c:url value='/signManagement/underApproval'/>">결재 처리중</a>
+        <a class="nav-link tap_txt" id="underApproval" href="<c:url value='/signManagement/underApproval'/>" style="color: white">결재 처리중</a>
     </li>
     <li class="nav-item" role="presentation">
-        <a class="nav-link tap_txt" id="teamWorkBoard" href="<c:url value='/signManagement/completeApproval'/>">결재 완료</a>
+        <a class="nav-link tap_txt" id="completeApproval" href="<c:url value='/signManagement/completeApproval'/>" style="color: white">결재 완료</a>
     </li>
 </ul>
