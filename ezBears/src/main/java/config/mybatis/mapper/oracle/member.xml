@@ -210,5 +210,8 @@
             </if>
 		</where>
 	</sql>
-	
+	<select resultType="memberVo" id="memPositionNoInfo">
+		select * from member
+		where mem_id = #{memId}
+	 </select>
 </mapper>
