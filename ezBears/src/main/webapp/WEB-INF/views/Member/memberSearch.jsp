@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%-- <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <script>
 	$(function(){
@@ -127,4 +127,4 @@ form.d-none.d-md-flex.ms-4 {
         	</c:forEach>
         </c:if>
    </div>
-</div>
+</div> --%>
