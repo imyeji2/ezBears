@@ -227,7 +227,7 @@ public class SignController {
 			Model model) {
 		
 		 String userid = (String)session.getAttribute("userid");
-		 memberVo = memberService.memPositionNoInfo(userid);
+		 memberVo = memberService.memPositionNoInfo(userid); 
 		 
 		 /*
 		  logger.info("결재 디테일 mBoardNo={} , userid={}",mBoardNo,userid);
