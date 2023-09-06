@@ -167,7 +167,8 @@
 	
 	
 	<!-- 마이페이지수정  -->
-	<select id="selectByUserid" parameterType="string" resultType="memberVo">
+	<select id="selectByUserid" parameterType="string"
+		resultType="memberVo">
 		select * from member
 		where mem_id=#{memId}
 	</select>
@@ -186,8 +187,19 @@
 	</update>
 	
 	<select id="AllselectMem" parameterType="searchVo" resultType="map">
-		SELECT * FROM ALLMEMSTAFFVIEW 
-		<include refid="searchWhere3"></include>
+		select * from 
+		(
+		    select rownum as rnum, a.* from
+		        (
+		            SELECT * FROM ALLMEMSTAFFVIEW
+					<include refid="searchWhere3"></include>
+					ORDER BY MEM_NAME, STAFF_NAME
+		        )a
+		)
+		<![CDATA[
+		where rnum > 0 and rnum <= 5
+		]]>
+		 
 	</select>
 	
 	<sql id="searchWhere3">
@@ -199,14 +211,4 @@
 		</where>
 	</sql>
 	
-    <select id="selectDeptNo" parameterType="String" resultType="int">
-	   	SELECT dept_no FROM MEMBER
-	   	WHERE MEM_ID=#{memId}
-    </select>
-	
-	<select id="memPositionNoInfo" resultType="memberVo">
-		select * from member
-		where mem_id = #{memId}
-	</select>
-
 </mapper>
