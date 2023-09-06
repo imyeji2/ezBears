@@ -32,4 +32,6 @@ public interface StaffService {
 	String getStaffId();
 	
 	int selectCntStaff();
+	
+	int selectStaffNo(String staffId);
 }

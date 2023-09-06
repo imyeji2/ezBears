@@ -11,11 +11,12 @@ public class BoardVO {
 	private String regdate; /* 자유등록일 */
 	private String status; /* 자유공개상태 */
 	private int likeCount; /* 좋아요 */
-	private int groupNo; /* 그룹번호 */
-	private int sortNo; /* 댓글순서 */
+	private int groupno; /* 그룹번호 */
+	private int sortno; /* 댓글순서 */
 	private int step; /* 댓글여부 */
 	private int views; /* 자유조회수 */
-	private int contentNo;
+	private int contentno;
+	private String comments;
 	private String randomId;
-	private String randomPwd;
+	private String randomWrite;
 }
