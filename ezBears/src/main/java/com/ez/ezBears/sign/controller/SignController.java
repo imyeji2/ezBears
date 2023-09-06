@@ -2,6 +2,7 @@ package com.ez.ezBears.sign.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +28,7 @@ import com.ez.ezBears.member.model.MemberVO;
 import com.ez.ezBears.myBoard.model.MyBoardInfoVO;
 import com.ez.ezBears.myBoard.model.MyBoardListService;
 import com.ez.ezBears.sign.model.SignFileVO;
+import com.ez.ezBears.sign.model.SignMemInfoVO;
 import com.ez.ezBears.sign.model.SignService;
 import com.ez.ezBears.sign.model.SignVO;
 
@@ -50,19 +52,34 @@ public class SignController {
 	
 	@RequestMapping("/Approval")
 	public String Approval(@RequestParam (defaultValue = "0") int mBoardNo,  @ModelAttribute SignListSearchVO  signListSearchVo,
-			@ModelAttribute MyBoardInfoVO myBoardInfoVo, HttpSession session,Model model) {
+			@ModelAttribute MyBoardInfoVO myBoardInfoVo,@ModelAttribute MemberVO memberVo , HttpServletRequest request,HttpSession session,Model model) {
 		
 		
 		logger.info("결재 리스트 출력 mBoardNo={} ",mBoardNo);
-		String userid = (String)session.getAttribute("userid");
-		myBoardInfoVo.setMemId(userid);	
-		myBoardInfoVo.setMBoardNo(mBoardNo);
-	
-		myBoardInfoVo = myBoardListService.selectBoardInfo(myBoardInfoVo);
 		
 		
+		  String userid = (String)session.getAttribute("userid");
+		  myBoardInfoVo.setMemId(userid); 
+		  myBoardInfoVo.setMBoardNo(mBoardNo);
+		 
+		  myBoardInfoVo = myBoardListService.selectBoardInfo(myBoardInfoVo);
+		  
+		  /*
+		  int deptNo = (int)session.getAttribute("dept_no");
+		  
+		  memberVo = memberService.selectpositioninfo(deptNo);
+		 */
+		BigDecimal deptNoBigDecimal = (BigDecimal) request.getSession().getAttribute("dept_no");
+		int deptNo = deptNoBigDecimal.intValue();
+
+		memberVo.setDeptNo(deptNo);
+		memberVo = memberService.selectpositioninfo(deptNo);
+		
+		logger.info("memberVo.deptNo={}",memberVo.getDeptNo());
+
 		model.addAttribute("myBoardInfoVo",myBoardInfoVo);
 		model.addAttribute("mBoardNo",mBoardNo);
+		model.addAttribute("memberVo",memberVo);
 		
 		PaginationInfo pagingInfo = new PaginationInfo();
 		pagingInfo.setBlockSize(ConstUtil.BLOCK_SIZE);
@@ -71,9 +88,10 @@ public class SignController {
 				
 		signListSearchVo.setRecordCountPerPage(ConstUtil.RECORD_COUNT_FIVE);
 		signListSearchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
-		signListSearchVo.setDeptNo(myBoardInfoVo.getDeptNo());		
+		/* signListSearchVo.setDeptNo(myBoardInfoVo.getDeptNo()); */		
+		signListSearchVo.setMBoardNo(myBoardInfoVo.getMBoardNo());
 		
-		logger.info("결재 부서번호 출력 deptNo={} ",signListSearchVo.getDeptNo());
+		logger.info("결재 부서번호 출력 deptNo={} ",signListSearchVo.getMBoardNo());
 		
 		List<Map<String, Object>> list = signService.selectApprovalList(signListSearchVo);
 		
@@ -155,16 +173,24 @@ public class SignController {
 
 	@GetMapping("/Approval_edit")
 	public String Approval_edit(@RequestParam (defaultValue = "0")int docNo ,@ModelAttribute MyBoardInfoVO myBoardInfoVo,
-			@ModelAttribute MemberVO memberVo, HttpSession session ,Model model) {
+			@ModelAttribute MemberVO memberVo, HttpSession session ,HttpServletRequest request,	Model model) {
 		logger.info("결재 수정 페이지");
+		/*
 		String userid = (String)session.getAttribute("userid");
 		logger.info("결재 디테일");
 		
 		myBoardInfoVo.setMemId(userid);			
 		myBoardInfoVo = myBoardListService.selectMyBoardDept(userid);
 		logger.info("myBoardInfoVo={}",myBoardInfoVo);
+		
 		memberVo = memberService.selectpositioninfo(myBoardInfoVo.getDeptNo());
 		
+		*/
+		BigDecimal deptNoBigDecimal = (BigDecimal) request.getSession().getAttribute("dept_no");
+		int deptNo = deptNoBigDecimal.intValue();
+
+		memberVo.setDeptNo(deptNo);
+		memberVo = memberService.selectpositioninfo(deptNo);
 		
 		Map<String, Object> list = signService.detailSign(docNo);
 		logger.info("결재 디테일 list={}",list);
@@ -176,17 +202,17 @@ public class SignController {
 		model.addAttribute("list",list);
 		model.addAttribute("memberVo",memberVo);
 		model.addAttribute("filemap",filemap);
-		
-		
+				
 		return "myBoard/Approval_edit";
 	}
 	
 	@PostMapping("/Approval_edit")
-	public String Approval_post() {
+	public String Approval_post(@RequestParam (defaultValue = "0")int docNo,@ModelAttribute SignFileVO signFileVo
+			,@ModelAttribute SignVO signVo ,Model model) {
 		
 		
 		
-		
+		 
 		
 		
 		return "";
@@ -194,13 +220,15 @@ public class SignController {
 	
 	
 	@RequestMapping("/Approval_detail")
-	public String Approval_detail(@RequestParam (defaultValue = "0")int docNo, @RequestParam(defaultValue = "0")int deptNo,
+	public String Approval_detail(@RequestParam (defaultValue = "0")int docNo,
 			@RequestParam(defaultValue = "0")int mBoardNo,@RequestParam (defaultValue = "0")int positionNo, @ModelAttribute SignVO signVo,
-			@ModelAttribute MyBoardInfoVO myBoardInfoVo,@ModelAttribute MemberVO memberVo , HttpSession session,
+			@ModelAttribute MyBoardInfoVO myBoardInfoVo,@ModelAttribute MemberVO memberVo , 
+			@ModelAttribute SignMemInfoVO signMemInfoVo, HttpServletRequest request,HttpSession session,
 			Model model) {
 		
+
 		String userid = (String)session.getAttribute("userid");
-		logger.info("결재 디테일");
+		logger.info("결재 디테일, userid={}", userid);
 		
 		myBoardInfoVo.setMemId(userid);			
 		myBoardInfoVo = myBoardListService.selectMyBoardDept(userid);
@@ -208,18 +236,54 @@ public class SignController {
 		
 		
 		memberVo = memberService.selectpositioninfo(myBoardInfoVo.getDeptNo());
+		logger.info("memberVo={}", memberVo);
+
+		 String userid = (String)session.getAttribute("userid");
+		 memberVo = memberService.memPositionNoInfo(userid);
+		 /*
+		  logger.info("결재 디테일 mBoardNo={} , userid={}",mBoardNo,userid);
+		  myBoardInfoVo.setMemId(userid); 
+		  myBoardInfoVo.setMBoardNo(mBoardNo);
+		 
+		  myBoardInfoVo = myBoardListService.selectBoardInfo(myBoardInfoVo);
+		  
+		  logger.info("myBoardInfoVo={}",myBoardInfoVo);
+		  		 
+		  BigDecimal deptNoBigDecimal = (BigDecimal) request.getSession().getAttribute("dept_no");
+		  int deptNo = deptNoBigDecimal.intValue();
+
+		  memberVo.setDeptNo(deptNo);
+		  memberVo = memberService.selectpositioninfo(deptNo);
+		*/
+		
 		
 		Map<String, Object> list = signService.detailSign(docNo);
 		logger.info("결재 디테일 list={}",list);
 		
+		signMemInfoVo = signService.selectApprovaMem(docNo);
+		logger.info("결재 디테일 signMemInfoVo={}",signMemInfoVo);
+		
+
 		List<Map<String, Object>> filemap = signService.selectSignnFileInfo(docNo);
 		logger.info("결재 파일 정보 filemap={}",filemap);
+		logger.info("결재 파일 정보 signMemInfoVo.getMBoardNo()={}",signMemInfoVo.getMBoardNo());
 		
-		model.addAttribute("myBoardInfoVo",myBoardInfoVo);
+		
+		myBoardInfoVo = myBoardListService.selectMemAppPositionInfo(signMemInfoVo.getMBoardNo());
+		logger.info("결재 디테일 myBoardInfoVo={}",myBoardInfoVo);
+		
+		model.addAttribute("myBoardInfoVo",myBoardInfoVo); 
+		
+		model.addAttribute("signMemInfoVo",signMemInfoVo); 
+		
 		model.addAttribute("list",list);
 		model.addAttribute("memberVo",memberVo);
 		model.addAttribute("filemap",filemap);
 		
+		Map<String, Object> userMap = memberService.selectMemberView(userid);
+		logger.info("현재 접속한 사람의 정보, userMap={}", userMap);
+		
+		model.addAttribute("userMap", userMap);
 				
 		return "myBoard/Approval_detail";
 		
@@ -233,7 +297,7 @@ public class SignController {
 	    String userid = (String) session.getAttribute("userid");
 	    MyBoardInfoVO myBoardInfoVo = new MyBoardInfoVO();
 	    myBoardInfoVo.setMemId(userid);
-
+ 
 	    logger.info("결재 문서 번호 docNo={}, positionNo={}", docNo, positionNo);
 
 	    if (positionNo == 6) {

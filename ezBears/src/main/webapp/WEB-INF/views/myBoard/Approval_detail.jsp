@@ -47,13 +47,14 @@
 
 %>
 		<form id="appform2" action="" method="post" enctype="multipart/form-data" >
-				<input type ="hidden" name ="userid" id="userid" value="${userid }">
-				<input type="hidden" name="myBoardNo" id="myBoardNo"value="${myBoardInfoVo.myBoardNo}"> 
-				<input type="hidden" name="memNo" id="memNo" value="${myBoardInfoVo.memNo}"> 
-				<input type="hidden" name="MBoardNo" id="MBoardNo" value="${myBoardInfoVo.MBoardNo}"> 
-				<input type="hidden" name="deptNo" id="deptNo" value="${myBoardInfoVo.deptNo}">
-				<input type="hidden" name="positionNo" id="positionNo" value="${myBoardInfoVo.positionNo}">
-				<input type="hidden" name="memName" id="memName" value="${myBoardInfoVo.memName}">
+				<input type ="text" name ="userid" id="userid" value="${userid }">
+				<input type="text" name="myBoardNo" id="myBoardNo"value="${signMemInfoVo.myBoardNo}"> 
+				<input type="hidden" name="memNo" id="memNo" value="${signMemInfoVo.memNo}"> 
+				<input type="text" name="MBoardNo" id="MBoardNo" value="${signMemInfoVo.MBoardNo}"> 
+<%-- 				<input type="hidden" name="deptNo" id="deptNo" value="${myBoardInfoVo.deptNo}"> 
+				<input type="text" name="deptNo" id="deptNo" value="${memberVo.deptNo}">--%>
+				 <input type="text" name="positionNo" id="positionNo" value="${memberVo.positionNo}">
+				<%--<input type="hidden" name="memName" id="memName" value="${signMemInfoVo.memName}"> --%>
 				 
 			<table class="table" id="table" border="1">
 				<tr class="tr-s">
@@ -61,15 +62,15 @@
 					 <input type ="text"  name="docNo" class="docNo"  value="${list['DOC_NO'] }" readonly><!-- 문서 번호 불러오기 -->
 					 </td> 
 					<td class="td-2" colspan="3">담당</td><!-- 결재 담당자 -->
-					<td class="td-3" colspan="3">${memberVo.memName }</td><!-- 결재 담당자 -->
+					<td class="td-3" colspan="3">${myBoardInfoVo.memName }</td><!-- 결재 담당자 -->
 					<td class="td-4"> 
 					<input type ="text" class="sta" value="처리 상태">
 					<input type ="text" class="status" name="status" id="status" value="${list['STATUS'] }">		
 					
-					<c:if test="${list['STATUS'] eq '대기'}">
+					<c:if test="${list['STATUS'] eq '대기' && userMap['POSITION_NO'] eq 6}">
 						<input type="button" class=" btn-sm btn-primary appoveBtn " value="승인" onclick="approveDocument()">
 					</c:if>
-					<c:if test="${list['STATUS'] eq '처리중'}">
+					<c:if test="${list['STATUS'] eq '처리중' && userMap['DEPT_NO'] eq 1}">
 						<input type="button" class=" btn-sm btn-primary appoveBtn " value="승인" onclick="approveDocument2()">
 					</c:if>
 					
@@ -136,7 +137,7 @@
 	                </tr>
 			</table>
 			<div>
-			    <c:if test="${myBoardInfoVo.memName eq list['MEM_NAME']}">
+			    <c:if test="${sessionScope.name eq list['MEM_NAME']}">
 					<c:if test="${list['STATUS'] eq '대기' }">
 			        <input type="button" class="btn btn-sm btn-primary btn" value="수정" onclick="docSave2()"/>
 			    	</c:if>
@@ -165,7 +166,7 @@
 		
 		function approveDocument() {
 		    var docNo = "${list['DOC_NO']}";
-		    var positionNo = parseInt("${myBoardInfoVo.positionNo}");
+		    var positionNo = parseInt("${memberVo.positionNo}");
 		    var status = "${list['STATUS'] }";
 		    
 		    console.log("status",status);
@@ -217,7 +218,7 @@
 		//처리중 에서 완료 로 넘어가는 처리
 		function approveDocument2() {
 		    var docNo = "${list['DOC_NO']}";
-		    var positionNo = parseInt("${myBoardInfoVo.positionNo}");
+		    var positionNo = parseInt("${memberVo.positionNo}");
 		    var status = "${list['STATUS'] }";
 		    
 		    console.log("status",status);
