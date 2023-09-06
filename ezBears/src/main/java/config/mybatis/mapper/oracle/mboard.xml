@@ -80,8 +80,8 @@
 		WHERE M_BOARD_NO =#{mBoardNo}
 	</select>
 	
-	<select id="selectMboardAdminNo">
-		select MEM_NO FROM M_BOARD
+	<select id="selectMboardAdminNo" parameterType="int" resultType="mBoardVo">
+		select * FROM M_BOARD
 		WHERE M_BOARD_NO = #{mBoardNo}
 	</select>
 	

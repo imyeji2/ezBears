@@ -48,14 +48,15 @@
 											</div>
 										</c:forEach>									
 									</c:if>	
-									
-									<div class="memberListBox">
-										<div class="memberBox1">
-											<a href="#" style="color:#fff">
-												<i class="bi bi-person-plus" id="addBtn">&nbsp;추가</i>
-											</a>
-										</div>
-									</div>	
+									<c:if test="${adminNo == memNo}">
+										<div class="memberListBox">
+											<div class="memberBox1">
+												<a href="#" style="color:#fff">
+													<i class="bi bi-person-plus" id="addBtn">&nbsp;추가</i>
+												</a>
+											</div>
+										</div>	
+									</c:if>
 								</div>	 	
 						 	</div>
 						</div>

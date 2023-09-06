@@ -84,7 +84,7 @@ public class MBoardServiceImpl implements MBoardService{
 	
 	//보드 관리자 검색
 	@Override
-	public int selectMboardAdminNo(int mBoardNo) {
+	public MBoardVO selectMboardAdminNo(int mBoardNo) {
 		return mBoardDao.selectMboardAdminNo(mBoardNo);
 	}
 	

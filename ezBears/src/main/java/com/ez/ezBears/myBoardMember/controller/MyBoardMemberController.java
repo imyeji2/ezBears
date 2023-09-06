@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ez.ezBears.MBoard.model.MBoardService;
+import com.ez.ezBears.MBoard.model.MBoardVO;
 import com.ez.ezBears.member.model.MemberService;
 import com.ez.ezBears.myBoard.controller.MyBoardController;
 import com.ez.ezBears.myBoard.model.MyBoardListService;
@@ -30,6 +31,7 @@ public class MyBoardMemberController {
 	private final MyBoardListService myBoardListService;
 	private final MyBoardService myBoardService;
 	private final MBoardService mBoardService;
+	private final MemberService memberService;
 
 	
 	@RequestMapping("/myBoardMember")
@@ -37,19 +39,27 @@ public class MyBoardMemberController {
 			Model model, HttpSession session) {
 		
 		//1
-		//logger.info("마이보드 멤버 파라미터 mBoardNo={}",mBoardNo);
-		//int userid =(int) session.getAttribute("memNo");
+		logger.info("마이보드 멤버 파라미터 mBoardNo={}",mBoardNo);
+		String userid =(String)session.getAttribute("userid");
 		
-		//int memNo = 
-		//logger.info("사원번호 userid={}",userid);
+		int memNo = memberService.selectMemberNo(userid);
+		logger.info("사원번호 memNo={}",memNo);
 		
 		//2
 		List<Map<String, Object>> myBoardMemberList= myBoardListService.selectMyBoardMember(mBoardNo);
-		int adminNo = mBoardService.selectMboardAdminNo(mBoardNo);
+		logger.info("myBoardMemberList={}",myBoardMemberList.size());
+		
+		MBoardVO vo = mBoardService.selectMboardAdminNo(mBoardNo);
+	
+		int adminNo=0;
+		if(vo.getMemNo()!=0) {
+			adminNo=vo.getMemNo();
+		}
+		
 		logger.info("관리자번호 adminNo={}",adminNo);
 		
 		//3
-		//model.addAttribute("memNo",memNo);
+		model.addAttribute("memNo",memNo);
 		model.addAttribute("adminNo",adminNo);
 		model.addAttribute("mBoardNo",mBoardNo);
 		model.addAttribute("myBoardMemberList",myBoardMemberList);
