@@ -22,13 +22,13 @@
         // 도넛 차트 데이터 설정
        
         var resultTodo = $('#resultTodo').val();
-        
+
         var ctx = canvas.getContext('2d');
         var myDoughnutChart = new Chart(ctx, {
             type: 'doughnut',
             data: {
                 datasets: [{
-                    data: [resultTodo, 100],
+                    data: [resultTodo, 100-resultTodo],
                     backgroundColor: ['#7000D8', '#31354e'],
                     borderColor: ['#7000D8', '#31354e']
                 }]
@@ -176,8 +176,6 @@
                 var newsDate="<tr>";
                 newsDate+="<th scope='col'>"+date + ' ' + time.substring(0, 5)+" 기준</th>"; // 시간 문자열에서 앞 5글자만 가져옴 (시:분)
                 newsDate+="</tr>";
-
-
 			    
               	$('#naverNews thead').append(newsDate);
                	$('#naverNews tbody').append(newContent);
@@ -234,7 +232,9 @@
                      </div>
                      <div class="d-flex mb-2 todayWeather">
                      	<div class="weatherContent">
-	                       	<div class="place"></div>
+	                       	<div class="place">
+	                       		<i class="bi bi-geo-alt-fill"></i>
+	                       	</div>
 	                       	<div class="weatherIcon"></div>
 	                       	<div class="weatherTemp">
 	                       		<p class="nowTemp">현재기온 :</p>
