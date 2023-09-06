@@ -52,4 +52,5 @@ public interface MyBoardListDAO {
 	
 	MyBoardInfoVO selectMyBoardDept(String userid);
 	
+	MyBoardInfoVO selectMemAppPositionInfo(int mBoardNo);
 }

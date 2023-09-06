@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%-- <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <link href="${pageContext.request.contextPath}/css/Dcss.css" rel="stylesheet">
 <script>
@@ -198,3 +198,5 @@ form.d-none.d-md-flex.ms-4 {
    </div>
 </div>
   
+</div> --%>
+

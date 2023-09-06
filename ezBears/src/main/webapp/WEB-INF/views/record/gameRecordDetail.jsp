@@ -88,31 +88,7 @@
 			</div>
 			
 			<br>
-			<div class="divBtn">
-				<a href="<c:url value='/record/pitcherRecordWrite?recodeNo=${param.recodeNo }'/>">투수 기록정보
-					등록</a>
-			</div>
-			<%-- <div class="divBtn">
-				<a href="<c:url value='/record/pitcherRecordEdit'/>">투수 기록정보
-					수정</a>
-			</div>
-			<div class="divBtn">
-				<a href="<c:url value='/record/pitcherRecordDelete'/>">투수 기록정보
-					삭제</a>
-			</div> --%>
-			
-			<div class="divBtn">
-				<a href="<c:url value='/record/hitterRecordWrite?recodeNo=${param.recodeNo }'/>">타자 기록정보
-					등록</a>
-			</div>
-			<%-- <div class="divBtn">
-				<a href="<c:url value='/record/hitterRecordEdit'/>">타자 기록정보
-					수정</a>
-			</div>
-			<div class="divBtn">
-				<a href="<c:url value='/record/hitterRecordDelete'/>">타자 기록정보
-					삭제</a>
-			</div> --%>
+
 			
 			
 

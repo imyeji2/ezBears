@@ -119,6 +119,11 @@ public class SignServiceImpl implements SignService{
 		return signDao.countAllComplete(searchTitle, searchDeptNo, searchName);
 	}
 
+	@Override
+	public SignMemInfoVO selectApprovaMem(int docNo) {
+		return signDao.selectApprovaMem(docNo);
+	}
+
 
 
 

@@ -26,6 +26,7 @@ import com.ez.ezBears.common.SearchVO;
 import com.ez.ezBears.member.model.MemberService;
 import com.ez.ezBears.member.model.MemberVO;
 import com.ez.ezBears.myBoard.model.MyBoardListVO;
+import com.ez.ezBears.notice.model.NoticeFileListVO;
 import com.ez.ezBears.notice.model.NoticeFileVO;
 import com.ez.ezBears.notice.model.NoticeService;
 import com.ez.ezBears.notice.model.NoticeVO;
@@ -58,21 +59,21 @@ public class NoticeController {
 		pagingInfo.setBlockSize(ConstUtil.BLOCK_SIZE);
 		pagingInfo.setCurrentPage(searchVo.getCurrentPage());
 		pagingInfo.setRecordCountPerPage(ConstUtil.RECORD_COUNT_FIVE);
-		
-		
+
+
 		//2)searchVo에 값 세팅 -> xml에 전달할 값 
 		searchVo.setRecordCountPerPage(ConstUtil.RECORD_COUNT_FIVE);
 		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
-		
+
 		//2
 		//List<Map<String, Object>> list=noticeService.selectNoticeList(noticeNo);
 		List<Map<String, Object>> list=noticeService.selectAllNotice(searchVo);
 		logger.info("공지사항 리스트 페이지 결과 list.size={}",list.size());
-		
+
 		int totalCount = noticeService.selectTotalCount(searchVo);
 		pagingInfo.setTotalRecord(totalCount);
 		logger.info("totalCount={}",totalCount);
-		
+
 
 		//3
 		model.addAttribute("list",list);
@@ -81,7 +82,7 @@ public class NoticeController {
 		//4
 		return "notice/noticeList";
 	}
-	
+
 	@ResponseBody
 	@RequestMapping("/notice_ajax")
 	public Map<String, Object> notice_ajax(SearchVO searchVo) {
@@ -95,32 +96,32 @@ public class NoticeController {
 		pagingInfo.setBlockSize(ConstUtil.BLOCK_SIZE);
 		pagingInfo.setCurrentPage(searchVo.getCurrentPage());
 		pagingInfo.setRecordCountPerPage(ConstUtil.RECORD_COUNT_FIVE);
-		
-		
+
+
 		//2)searchVo에 값 세팅 -> xml에 전달할 값 
 		searchVo.setRecordCountPerPage(ConstUtil.RECORD_COUNT_FIVE);
 		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
-		
+
 		//2
 		//List<Map<String, Object>> list=noticeService.selectNoticeList(noticeNo);
 		List<Map<String, Object>> list=noticeService.selectAllNotice(searchVo);
 		logger.info("공지사항 리스트 페이지 결과 list.size={}",list.size());
-		
+
 		int totalCount = noticeService.selectTotalCount(searchVo);
 		pagingInfo.setTotalRecord(totalCount);
 		logger.info("totalCount={}",totalCount);
-		
+
 		//3
 		Map<String, Object> resultMap = new HashMap<>();
 		resultMap.put("list", list);
 		resultMap.put("pagingInfo", pagingInfo);
 
-		
+
 		//4
 		return resultMap;
 	}
-	
-	
+
+
 
 	@GetMapping("/noticeWrite")
 	public String noticeWrite() {
@@ -226,50 +227,54 @@ public class NoticeController {
 	@PostMapping("/noticeEdit")
 	public String noticeEdit_post(@ModelAttribute NoticeVO noticeVo,
 			@RequestParam(defaultValue = "0") int noticeNo,
-			@RequestParam(required = false) String oldFileName,
+			@ModelAttribute NoticeFileListVO  fileVo,
 			HttpServletRequest request, Model model) {
 		//1
-		logger.info("공지사항 수정 처리 파라미터 noticeVo={},noticeNo={}",noticeVo,noticeNo);
 
+		logger.info("공지사항 수정 처리 파라미터 noticeVo={},noticeNo={},fileVo={}",noticeVo,noticeNo,fileVo);
+
+		List<NoticeFileVO> vo = fileVo.getFileNames();
 
 		int cnt = noticeService.updateNotice(noticeVo);
 		logger.info("팀별 공지사항 수정 결과 cnt={}",cnt);
 
-		if(oldFileName!=null) {
-			noticeService.deleteNoticeFile(noticeNo);
-		}
+		//		if(oldFileName!=null) {
+		//			noticeService.deleteNoticeFile(noticeNo);
+		//		}
 
 		String fileName="", originalFileName="";
-		List<Map<String, Object>> files;
+		long fileSize=0;
 
 		try {
-			files = fileUploadUtil.fileupload(request, ConstUtil.UPLOAD_NOTICE_FLAG);
-			logger.info("업로드파일 정보 files={}", files);
-
-			//2
 			String msg="공지사항 글 수정 실패";
 			String url="/notice/noticeEdit?noticeNo="+noticeNo;
 
 			if(cnt>0) {
-				int cnt2=noticeService.insertFileNotice(files, noticeVo.getNoticeNo());
-				logger.info("다중파일 업로드 결과 cnt2={}",cnt2);
-				
+					List<Map<String, Object>> list
+					=fileUploadUtil.fileupload(request, ConstUtil.UPLOAD_NOTICE_FLAG);
+					
+					int cnt3 = noticeService.insertFileNotice(list, noticeNo);					
+					
+					if(cnt3 > 0) {
+						if(vo.size() > 0) {
+							noticeService.deleteNoticeFile(noticeNo);
+							for(NoticeFileVO vo1 : vo) {
+								String upPath
+								=fileUploadUtil.getUploadPath(request, ConstUtil.UPLOAD_NOTICE_FLAG); 
+								File file= new File(upPath, vo1.getFileName()); 
+								if(file.exists()) { 
+									boolean
+									bool=file.delete(); logger.info("글 수정- 파일삭제 여부:{}", bool); 
+									} 
+								}
+							}
+							noticeService.insertFileNotice(list, noticeNo);	
+						}
 				msg="공지사항 글 수정 성공";
 				url="/notice/noticeDetail?noticeNo="+noticeNo;
-
-				if(files!=null && !files.isEmpty()) { //
-					if(oldFileName!=null && !oldFileName.isEmpty()) {//
-						String upPath
-						=fileUploadUtil.getUploadPath(request, ConstUtil.UPLOAD_NOTICE_FLAG);
-						File file= new File(upPath,oldFileName);
-						if(file.exists()) {
-							boolean bool=file.delete();
-							logger.info("글 수정- 파일삭제 여부:{}", bool);
-						}
-					}
-				}
 			}//if
-
+			
+			//fileVo.setFileName(fileName);
 			
 			
 			//3
@@ -281,7 +286,6 @@ public class NoticeController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 		//4
 		return "common/message";
 	}
@@ -328,12 +332,12 @@ public class NoticeController {
 			@RequestParam String fileName,HttpServletRequest request) {
 
 		logger.info("공지사항 파일 다운로드 파라미터 noticeNo={}, fileName={},noticeFileNo={}",noticeNo, fileName,noticeFileNo);
-		
+
 		int cnt=noticeService.updateDowncount(noticeFileNo);
 		logger.info("다운로드 수 증가, 결과 cnt={}", cnt);
-		
+
 		Map<String, Object> map = new HashMap<>();
-		
+
 		String upPath = fileUploadUtil.getUploadPath(request, ConstUtil.UPLOAD_NOTICE_FLAG);
 		File file = new File(upPath, fileName);
 		map.put("file", file);

@@ -39,7 +39,7 @@
 	      (		
 			select * from signListView
 			<include refid="searchWhere"></include>
-			where dept_no = #{deptNo}
+			where m_board_no = #{MBoardNo}
 			order by doc_no desc
 	      )A
       )
@@ -155,5 +155,21 @@
  			</if>
  		</where>
  	</sql>
-
+	
+	<update id="updateSignInfo" parameterType="signVo">
+		update sign
+		set doc_title= #{docTitle}, doc_content= #{docContent}
+		where doc_no = #{docNo}		
+	</update>
+	
+	<update id="updateSignFileInfo">
+	
+	
+	</update>
+	
+	<select id="selectApprovaMem" parameterType="signMemInfoVo">
+		select * from approvaMemInfo
+		where doc_no= #{docNo}
+	</select>
+	
 </mapper>
