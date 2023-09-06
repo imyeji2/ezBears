@@ -138,8 +138,8 @@ public class LoginController {
 					loginuser2.put("position", map.get("STAFF_POSITION"));
 					loginuser2.put("dept_name", map.get("DEPT_NAME"));
 					loginuser2.put("dept_no", map.get("DEPT_NO"));
-					loginuser2.put("memNo", map.get("STAFF_IMAGE"));
-					loginuser2.put("myimg", map.get("STAFF_NO"));
+					loginuser2.put("myimg", map.get("STAFF_IMAGE"));
+					loginuser2.put("staff_no", map.get("STAFF_NO"));
 					
 					session = request.getSession();
 					session.setAttribute("sessionAttributes", loginuser2);
@@ -180,7 +180,18 @@ public class LoginController {
 		String userid=(String) session.getAttribute("userid");
 		
 		session.removeAttribute("userid");
-		logger.info("로그아웃 세션 userid={}",userid);
+		session.removeAttribute("type");
+		session.removeAttribute("name");
+		session.removeAttribute("position");
+		session.removeAttribute("dept_name");
+		session.removeAttribute("dept_no");
+		session.removeAttribute("memNo");
+		session.removeAttribute("myimg");
+		session.removeAttribute("memberType");
+		session.removeAttribute("staff_no");
+		session.removeAttribute("sessionAttributes");
+		
+		logger.info("세션 로그아웃");
 		
 		return "redirect:/";
 	}

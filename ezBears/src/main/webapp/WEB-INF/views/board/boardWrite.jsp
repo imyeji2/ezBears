@@ -93,10 +93,19 @@ $(function () {
 		        		<input type="text" name="boardNo" value="${boardNo}">
 		        		<%-- <input type="text" name="randomNo" value="${randNo}"> --%>
 		        	<%-- </c:if> --%>
-		        		<input type="hidden" name="memNo" value="${sessionScope.memNo}">
+		        		<c:if test="${sessionScope.type=='사원' }">사원
+				        		<input type="text" name="memNo" value="${sessionScope.memNo}">사원
+		        		</c:if>
+		        		
+		        		<c:if test="${sessionScope.type=='스태프' }">스태프
+				        		<input type="text" name="staffNo" value="${sessionScope.staff_no}">스태프
+		        		</c:if>
+		        		
 		        		<%-- <input type="text" name="memNo" value="${map['NOTICE_NO']}"> --%>
+		        		<c:set var="i" value="0"/>
 		        		<c:forEach var="vo" items="${list }">
-							<input type="hidden" name="oldFileName" value="${vo['FILE_NAME']}">
+							<input type="hidden" name="fileNames[${i }].fileName" value="${vo['FILE_NAME']}">
+							<c:set var="i" value="${i + 1 }"/>
 		        		</c:forEach>
 						<%-- <c:if test="${type=='edite'}"> --%>
 		        			<input type="hidden" name="boardNo" value="${boardNo}">
