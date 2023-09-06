@@ -226,21 +226,8 @@ public class SignController {
 			@ModelAttribute SignMemInfoVO signMemInfoVo, HttpServletRequest request,HttpSession session,
 			Model model) {
 		
-
-		String userid = (String)session.getAttribute("userid");
-		logger.info("결재 디테일, userid={}", userid);
-		
-		myBoardInfoVo.setMemId(userid);			
-		myBoardInfoVo = myBoardListService.selectMyBoardDept(userid);
-		logger.info("myBoardInfoVo={}",myBoardInfoVo);
-		
-		
-		memberVo = memberService.selectpositioninfo(myBoardInfoVo.getDeptNo());
-		logger.info("memberVo={}", memberVo);
-
-//		 String userid = (String)session.getAttribute("userid");
-//		 memberVo = memberService.memPositionNoInfo(userid);
-		 
+		 String userid = (String)session.getAttribute("userid");
+		 memberVo = memberService.memPositionNoInfo(userid);
 		 
 		 /*
 		  logger.info("결재 디테일 mBoardNo={} , userid={}",mBoardNo,userid);
@@ -378,7 +365,7 @@ public class SignController {
 
 		ModelAndView mav = new ModelAndView("DownloadView", map);
 		return mav;
-	}
+	} 
 	
 	@RequestMapping("/Approval_delete")
 	public String Approval_delete() {
