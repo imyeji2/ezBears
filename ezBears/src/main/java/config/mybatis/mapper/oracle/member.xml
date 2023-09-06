@@ -187,8 +187,19 @@
 	</update>
 	
 	<select id="AllselectMem" parameterType="searchVo" resultType="map">
-		SELECT * FROM ALLMEMSTAFFVIEW 
-		<include refid="searchWhere3"></include>
+		select * from 
+		(
+		    select rownum as rnum, a.* from
+		        (
+		            SELECT * FROM ALLMEMSTAFFVIEW
+					<include refid="searchWhere3"></include>
+					ORDER BY MEM_NAME, STAFF_NAME
+		        )a
+		)
+		<![CDATA[
+		where rnum > 0 and rnum <= 5
+		]]>
+		 
 	</select>
 	
 	<sql id="searchWhere3">
