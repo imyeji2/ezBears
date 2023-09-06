@@ -1,9 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<link href="${pageContext.request.contextPath}/css/Dcss.css" rel="stylesheet">
 <script>
 	$(function(){
 	    $('.pop_rel_keywords').hide();
 	    $('#sec').hide();
+	    $('.popup-inner').hide();
 
 	     $(document).on('click', function(event){
 	         if (!$(event.target).closest('.pop_rel_keywords').length && !$(event.target).is('#searchbox')) {
@@ -11,6 +13,73 @@
 	             $('#sec').hide();
 	         }
 	     });
+	    
+	     $(document).on('click','.totalInfo', function(event){
+	    	 var memNo = $(this).find('.empNo').val();
+	            var staffNo = $(this).find('.empNo2').val();
+
+	            var data = {};
+
+	            if (memNo) {
+	                data.empNo = memNo;
+	            } else if (staffNo) {
+	                data.empNo = staffNo;
+	            }
+
+	            $.ajax({
+	                url: "<c:url value='/Member/memberDetail'/>",
+	                type: 'get',
+	                data: data,
+	                dataType: 'json',
+	                success: function (res) {
+	                    console.log(res);
+	                    if (memNo) {
+	                        // memNo에 따른 처리
+	                        $('.popup-inner #previewImage').attr("src", "../img/mem_images/" + res.memberVo.memImage);
+	                        $('.popup-inner #deptName').val(res.memberVo.deptName);
+	                        $('.popup-inner #positionName').val(res.memberVo.positionName);
+	                        $('.popup-inner #memName').val(res.memberVo.memName);
+	                        $('.popup-inner #memId').val(res.memberVo.memId);
+	                        $('.popup-inner #memTel').val(res.memberVo.memTel);
+
+	                        if(res.memberVo.contractDone != null){
+	                            $('.popup-inner #staffInfo').val('퇴사');
+	                        }
+	                        
+	                        if(res.memberVo.memImage === null){
+		                        $('.popup-inner #previewImage').attr("src", "../img/defaultUSER.png");
+	                        }
+
+	                        if (res.memberVo.memBirth) {
+	                            $('.popup-inner #memBirth').val(res.memberVo.memBirth.substring(0, 10));
+	                        }
+	                    } else if (staffNo) {
+	                        // staffNo에 따른 처리
+	                        $('.popup-inner #previewImage').attr("src", "../img/staffImages/" + res.staffVo.staffImage);
+	                        $('.popup-inner #deptName').val("스태프");
+	                        $('.popup-inner #positionName').val(res.staffVo.staffPosition);
+	                        $('.popup-inner #memName').val(res.staffVo.staffName);
+	                        $('.popup-inner #memId').val(res.staffVo.staffId);
+	                        $('.popup-inner #memTel').val(res.staffVo.staffTel);
+	                        $('.popup-inner #staffInfo').val(res.staffVo.staffInfo);
+
+	                        if(res.staffVo.staffImage === null){
+		                        $('.popup-inner #previewImage').attr("src", "../img/defaultUSER.png");
+	                        }
+	                        
+	                        if (res.staffVo.staffBirth) {
+	                            $('.popup-inner #memBirth').val(res.staffVo.staffBirth.substring(0, 10));
+	                        }
+	                    }
+
+	                    $('.popup-inner').show();
+	                    $('.popup.members-popup').addClass('open');
+	                },
+	                error: function (xhr, status, error) {
+	                    alert(status + " : " + error);
+	                }
+	            });
+	        });
 	     
 	     
 	    $('#searchbox').keyup(function(){
@@ -44,11 +113,13 @@
 
 	                         html += "<div class = 'totalInfo'><div class='searchMemImg'><img src='" + imgPath + "' alt='Member Image' style='width: 50px; height:50px; border-radius:40px;'></div>";
 	                         
-	                         
+	                      
 	                         if(item.MEM_NAME != null){
 	                        	 html += "<div class = 'searchMemName'>"+item.MEM_NAME +"</div><div class = 'searchMemID'>" + item.MEM_ID +"</div><div class = 'searchMemDept'>" + item.DEPT_NAME+"  /  "+item.POSITION_NAME + "</div>" ;
+	                        	 html += "<div class = 'hiddenMemNo'><input type='hidden' class ='empNo' value='"+item.MEM_NO +"'></div>" ;
 	                         }else if (item.STAFF_NAME != null){
 	                        	 html += "<div class = 'searchMemName'>"+item.STAFF_NAME +"</div><div class = 'searchMemID'>" + item.STAFF_ID +"</div><div class = 'searchMemDept'>" + item.DEPT_NAME +"  /  "+item.STAFF_POSITION+ "</div>" ;
+	                        	 html += "<div class = 'hiddenMemNo'><input type='hidden' class ='empNo2' value='"+item.STAFF_NO +"'></div>" ;
 	                         }
 	                         
 	                         
@@ -69,7 +140,7 @@
 	        }
 	        
 	    })
-		
+	   
 	});
 </script>
 <style>
@@ -114,6 +185,7 @@ form.d-none.d-md-flex.ms-4 {
     align-items: center;
     gap: 0 8px;
     margin-bottom: 10px;
+    cursor: pointer;
 }
 .totalInfo:hover {
 	background-color: #7000D8;
@@ -122,50 +194,6 @@ form.d-none.d-md-flex.ms-4 {
 
 <div class="form-control bg-dark border-0" id="sec">
    <div class="pop_rel_keywords">
-<%-- 		<c:if test="${empty list}">
-       		<span style="text-align: center">사원이 존재하지 않습니다.</span>
-        </c:if>
-        <c:if test="${!empty list}">
-        	<c:forEach var="map" items="${list}">
-        	<div class="allMem">
-	       			<div class = "searchMiniImg">
-	       				<c:choose>
-						    <c:when test="${map['MEM_IMAGE'] != null}">
-						        <c:set var="memImgPath" value="/img/mem_images/${map['MEM_IMAGE']}" />
-						    </c:when>
-						    <c:when test="${map['STAFF_IMAGE'] != null}">
-						        <c:set var="memImgPath" value="/img/staffImages/${map['STAFF_IMAGE']}" />
-						    </c:when>
-						    <c:otherwise>
-						        <c:set var="memImgPath" value="/img/defaultUSER.png" />
-						    </c:otherwise>
-						</c:choose>
-						<img alt="" src="<c:url value='${memImgPath}'/>" style="width: 50px; height: 50px;" class="memberImageInfo" id="searchMemImg" name="memImage">
-	       			</div>
-	     
-	       			<div class = "selectName">	
-	       				<c:choose>
-						    <c:when test="${map['MEM_NAME'] != null}">
-						        ${map['MEM_NAME']}
-						    </c:when>
-						    <c:when test="${map['STAFF_NAME'] != null}">
-						        ${map['STAFF_NAME']}
-						    </c:when>
-						</c:choose>
-	       			</div>
-	       			<div class = "selectID">
-	       				<c:choose>
-						    <c:when test="${map['MEM_ID'] != null}">
-						        ${map['MEM_ID']}
-						    </c:when>
-						    <c:when test="${map['STAFF_ID'] != null}">
-						        ${map['STAFF_ID']}
-						    </c:when>
-						</c:choose>
-	       			</div>
-	     
-       			</div>
-        	</c:forEach>
-        </c:if> --%>
+		
    </div>
 </div>
