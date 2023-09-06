@@ -11,6 +11,7 @@ import com.ez.ezBears.common.SearchVO;
 public interface NoticeDAO {
 	int insertNotice(NoticeVO noticeVo);
 	int insertFileNotice(NoticeFileVO noticeFileVo);
+	int insertFileNotice1(NoticeFileVO noticeFileVo);
 	NoticeVO selectnoticeByNo(int noticeNo);
 	List<Map<String, Object>> selectnoticeFileByNo(int noticeNo);
 	
@@ -24,6 +25,7 @@ public interface NoticeDAO {
 	//List<Map<String, Object>> backPage(int noticeNo);
 	
 	int updateNotice(NoticeVO noticeVo);
+	int updateNoticeFile(NoticeFileVO noticeFileVo);
 	void deleteNoticeFile(int noticeNo);
 	int deleteNotice(int noticeNo);
 	

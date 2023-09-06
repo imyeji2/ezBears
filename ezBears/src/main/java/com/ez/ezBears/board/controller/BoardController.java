@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ez.ezBears.board.model.BoardFileListVO;
 import com.ez.ezBears.board.model.BoardFileVO;
 import com.ez.ezBears.board.model.BoardService;
 import com.ez.ezBears.board.model.BoardVO;
@@ -26,12 +27,10 @@ import com.ez.ezBears.common.ConstUtil;
 import com.ez.ezBears.common.FileUploadUtil2;
 import com.ez.ezBears.common.MyBoardSearchVo;
 import com.ez.ezBears.common.PaginationInfo;
-import com.ez.ezBears.common.SearchVO;
 import com.ez.ezBears.member.model.MemberService;
 import com.ez.ezBears.member.model.MemberVO;
-import com.ez.ezBears.myBoard.model.MyBoardListVO;
+import com.ez.ezBears.notice.model.NoticeFileVO;
 import com.ez.ezBears.staff.model.StaffService;
-import com.ez.ezBears.temNotice.model.TeamNoticeVO;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -130,7 +129,8 @@ public class BoardController {
 
 
 	@PostMapping("/boardWrite")
-	public String boardWrite_post(@ModelAttribute BoardVO boardVo, HttpServletRequest request,
+	public String boardWrite_post(@ModelAttribute BoardVO boardVo, 
+			HttpServletRequest request,
 			@RequestParam(defaultValue = "0") String pwd,
 			HttpSession session, Model model) {
 		logger.info("글 등록 파라미터 boardVo={}", boardVo);
@@ -162,7 +162,7 @@ public class BoardController {
 		try {
 			List<Map<String, Object>> files = fileUploadUtil.fileupload(request, ConstUtil.UPLOAD_BOARD_FLAG);
 			logger.info("업로드파일 정보 files={}", files);
-
+			
 			boardVo.setRandomId(randomKoreanId);
 			int cnt = boardService.insertBoard(boardVo);
 			logger.info("boardVo 결과 boardVo = {}", boardVo);
@@ -238,12 +238,16 @@ public class BoardController {
 		
 		int userNo=0;
 		
-		if(type.equals("정규직")) {
+		if(type.equals("사원")) {
 			userNo = memberService.selectMemberNo(userid);
+			logger.info("정규직 userNo={}",userNo);
 		}else if(type.equals("스태프")) {
 			userNo = staffService.selectStaffNo(userid);
+			logger.info("스태프 userNo={}",userNo);
 		}
-
+		
+		logger.info("type={}, userNo={}",type,userNo);
+		
 		//2
 		Map<String, Object> map=boardService.selectDetail(boardNo);
 		logger.info("자유게시판 결과 map={}",map);
@@ -301,7 +305,7 @@ public class BoardController {
 	@PostMapping("/boardEdit")
 	public String boardEdit_post(@ModelAttribute BoardVO boardVo,
 			@RequestParam(defaultValue = "0") int boardNo,
-			@RequestParam(required = false) String oldFileName,
+			@ModelAttribute BoardFileListVO fileVo,
 			HttpServletRequest request, Model model) {
 		//1
 		logger.info("공지사항 수정 처리 파라미터 boardVo={},boardNo={}",boardVo,boardNo);
@@ -310,40 +314,39 @@ public class BoardController {
 		int cnt = boardService.updateboard(boardVo);
 		logger.info("팀별 공지사항 수정 결과 cnt={}",cnt);
 
-		if(oldFileName!=null) {
-			boardService.deleteBoardFile(boardNo);
-		}
+		List<BoardFileVO> vo=fileVo.getFileNames();
 
 		String fileName="", originalFileName="";
 		List<Map<String, Object>> files;
 
 		try {
-			files = fileUploadUtil.fileupload(request, ConstUtil.UPLOAD_BOARD_FLAG);
-			logger.info("업로드파일 정보 files={}", files);
-
-
 			//2
 			String msg="공지사항 글 수정 실패";
 			String url="/board/boardEdit?boardNo="+boardNo;
 
 			if(cnt>0) {
-				int cnt2=boardService.insertFileBoard(files, boardVo.getBoardNo());
-				logger.info("다중파일 업로드 결과 cnt2={}",cnt2);
-
+				List<Map<String, Object>> list
+				=fileUploadUtil.fileupload(request, ConstUtil.UPLOAD_BOARD_FLAG);
+				
+				int cnt3 = boardService.insertFileBoard(list, boardNo);					
+				
+				if(cnt3 > 0) {
+					if(vo.size() > 0) {
+						boardService.deleteBoardFile(boardNo);
+						for(BoardFileVO vo1 : vo) {
+							String upPath
+							=fileUploadUtil.getUploadPath(request, ConstUtil.UPLOAD_BOARD_FLAG); 
+							File file= new File(upPath, vo1.getFileName()); 
+							if(file.exists()) { 
+								boolean
+								bool=file.delete(); logger.info("글 수정- 파일삭제 여부:{}", bool); 
+								} 
+							}
+						}
+						boardService.insertFileBoard(list, boardNo);	
+					}
 				msg="공지사항 글 수정 성공";
 				url="/board/boardDetail?boardNo="+boardNo;
-
-				if(files!=null && !files.isEmpty()) { //
-					if(oldFileName!=null && !oldFileName.isEmpty()) {//
-						String upPath
-						=fileUploadUtil.getUploadPath(request, ConstUtil.UPLOAD_BOARD_FLAG);
-						File file= new File(upPath,oldFileName);
-						if(file.exists()) {
-							boolean bool=file.delete();
-							logger.info("글 수정- 파일삭제 여부:{}", bool);
-						}
-					}
-				}
 			}//if
 
 

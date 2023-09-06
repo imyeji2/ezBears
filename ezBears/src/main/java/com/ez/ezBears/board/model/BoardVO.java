@@ -19,4 +19,5 @@ public class BoardVO {
 	private String comments;
 	private String randomId;
 	private String randomWrite;
+	private int staffNo;
 }

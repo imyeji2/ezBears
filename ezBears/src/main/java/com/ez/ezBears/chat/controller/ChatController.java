@@ -1,4 +1,3 @@
-
 package com.ez.ezBears.chat.controller;
 
 import java.text.SimpleDateFormat;

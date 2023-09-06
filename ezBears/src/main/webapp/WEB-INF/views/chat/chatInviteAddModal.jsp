@@ -137,20 +137,27 @@
 			trArr.rank = td.eq(3).text();
 			
 			// 객체에 데이터가 있는지 여부 판단
-			var checkedArrIdx = _.findIndex(Arr, { memberNum : trArr.memberNum }); // 동일한 값 인덱스 찾기
-			arrText = []; // 배열 비우기
-			if(checkedArrIdx > -1) {
-				_.remove(Arr, { memberNum : trArr.memberNum }); // 동일한 값 지우기
-			}else {
-				Arr.push(trArr);
+			var existingIndex = -1;
+			for (var i = 0; i < Arr.length; i++) {
+			  if (Arr[i].memberNum === trArr.memberNum) {
+			    existingIndex = i;
+			    break;
+			  }
 			}
-			Arr.forEach(function(el, index) {
-				arrText.push(el.division +" "+ el.memberName +" "+ el.rank);
-			});
-			$("#s-list").html(arrText.join("<br>")); // 개행해서 s-list 영역에 출력
-		});
-	}
-	
+			
+			if (existingIndex > -1) {
+			  Arr.splice(existingIndex, 1); // 동일한 값 제거
+			} else {
+			  Arr.push(trArr);
+			}
+			
+			var arrText = [];
+			for (var j = 0; j < Arr.length; j++) {
+			  arrText.push(Arr[j].division + " " + Arr[j].memberName + " " + Arr[j].rank);
+			}
+			
+			document.getElementById("s-list").innerHTML = arrText.join("<br>");
+				
 	// 사용자 등록
 	function appSelView() {
 		var ref = []; // 사용자 담을 배열 선언
