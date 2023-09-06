@@ -20,14 +20,17 @@
         canvas.height = chartContainer.clientWidth; // 정사각형으로 유지
         
         // 도넛 차트 데이터 설정
+       
+        var resultTodo = $('#resultTodo').val();
+        
         var ctx = canvas.getContext('2d');
         var myDoughnutChart = new Chart(ctx, {
             type: 'doughnut',
             data: {
                 datasets: [{
-                    data: [70, 30],
-                    backgroundColor: ['#31354e', '#7000D8'],
-                    borderColor: ['#31354e', '#7000D8']
+                    data: [resultTodo, 100],
+                    backgroundColor: ['#7000D8', '#31354e'],
+                    borderColor: ['#7000D8', '#31354e']
                 }]
             },
             options: {
@@ -203,12 +206,19 @@
 	                     	<div class="todoChart" id="todoChart">
 	                     		<canvas id="myChart" ></canvas>
 						         <div class="chartText">
-						         	<c:set var="result" value="${(completedCount / totalCount) * 100}"></c:set>
+						         	<c:if test="${totalCount==0}">
+						         		<c:set var="result" value="0"></c:set>
+						         	</c:if>
+						         	<c:if test="${totalCount!=0}">
+						         		<c:set var="result" value="${(completedCount / totalCount) * 100}"></c:set>
+						         	</c:if>						         	
+						         	
 						         	<fmt:formatNumber var="result1" value="${result}" pattern="#,###"/>
 						            <span class="chartText1">${result1}%</span><br>
 						            <span class="chartText2">미완료 : ${incompleteCount}개</span><br>
 						            <span class="chartText2">완료 : ${completedCount}개</span><br>
 						            <span class="chartText2">전체 : ${totalCount}개</span>
+						            <input type="hidden" id="resultTodo" value="${result1}">
 						        </div>
 	                     	</div>                    	
 	                     </div>            

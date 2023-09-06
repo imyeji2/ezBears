@@ -33,5 +33,8 @@ public interface MBoardDAO {
 	//보드 이름 검색
 	String selectMboardName(int mBoardNo);
 	
+	//보드 관리자 검색
+	int selectMboardAdminNo(int mBoardNo);
+	
 
 }

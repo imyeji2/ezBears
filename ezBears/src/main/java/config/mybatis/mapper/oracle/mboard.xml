@@ -80,4 +80,9 @@
 		WHERE M_BOARD_NO =#{mBoardNo}
 	</select>
 	
+	<select id="selectMboardAdminNo">
+		select MEM_NO FROM M_BOARD
+		WHERE M_BOARD_NO = #{mBoardNo}
+	</select>
+	
 </mapper>

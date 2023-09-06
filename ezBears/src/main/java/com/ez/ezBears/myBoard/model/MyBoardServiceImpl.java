@@ -14,6 +14,12 @@ public class MyBoardServiceImpl implements MyBoardService {
 	public int selectMainMboardNo(int memNo) {
 		return myBoardDao.selectMainMboardNo(memNo);
 	}
+	
+	//마이보드 멤버 삭제
+	@Override
+	public int deleteMyBoardMember(MyBoardVO myBoardVo) {
+		return myBoardDao.deleteMyBoardMember(myBoardVo);
+	}
 
 	
 }
