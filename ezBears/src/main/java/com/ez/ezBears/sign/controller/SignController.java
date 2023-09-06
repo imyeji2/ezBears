@@ -269,6 +269,10 @@ public class SignController {
 		model.addAttribute("memberVo",memberVo);
 		model.addAttribute("filemap",filemap);
 		
+		Map<String, Object> userMap = memberService.selectMemberView(userid);
+		logger.info("현재 접속한 사람의 정보, userMap={}", userMap);
+		
+		model.addAttribute("userMap", userMap);
 				
 		return "myBoard/Approval_detail";
 		

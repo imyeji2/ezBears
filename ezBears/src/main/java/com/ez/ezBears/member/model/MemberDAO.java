@@ -61,6 +61,13 @@ public interface MemberDAO {
     
     //
     List<Map<String, Object>> AllselectMem(SearchVO searchVo);
+
+
+    //접속한 멤버의 부서를 판별하기 위한것
+    int selectDeptNo(String memId);
+
+
     
     MemberVO memPositionNoInfo(String memId);
+
 }
