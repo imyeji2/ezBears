@@ -10,4 +10,9 @@
 		INSERT INTO MY_BOARD(MY_BOARD_NO,MEM_NO,M_BOARD_NO)
 		VALUES(#{myBoardNo},#{memNo},#{MBoardNo})	
 	</insert>
+	
+	<select id="selectMainMboardNo" parameterType="int" resultType="int">
+		select M_BOARD_NO from my_Board
+		WHERE MEM_NO=#{mem_no} and main_view='Y'
+	</select>	
 </mapper>

@@ -46,7 +46,7 @@
 	String strDate = simpleDate.format(date);
 
 %>
-		<form id="appform2" action="" method="post" enctype="multipart/form-data" >
+		<form id="appform2" action="<c:url value='/myBoard/Approval_edit'/>"  method="post" enctype="multipart/form-data" >
 				<input type ="hidden" name ="userid" id="userid" value="${userid }">
 				<input type="hidden" name="myBoardNo" id="myBoardNo"value="${myBoardInfoVo.myBoardNo}"> 
 				<input type="hidden" name="memNo" id="memNo" value="${myBoardInfoVo.memNo}"> 
@@ -74,7 +74,7 @@
 				</tr>
 				
 				<tr class="tr-m">
-					<td class="td-1" colspan="3">기안일</td>
+					<td class="td-1 rdate" colspan="3">기안일</td>
 					<td class="td-2" colspan="5">
 					<input name="regdate" id="regdate" class="regdate" value="${list['REGDATE'] }" >
 					</td>
@@ -98,11 +98,25 @@
 						</td>
 				</tr>
 
+	                <c:if test="${!empty filemap }">
 	                <tr class="tr-m">
-
-	            	<td colspan="4">
-	            	<input class="form-control appfile" type="file" id="app_file">
-				    </tr>
+	            	<td colspan="7">
+	            	<!-- <input class="form-control appfile" type="file" id="app_file"> -->	
+							<div class="signfile">
+								<div class="fileupload">
+									<a href="#" class="fileinfo">첨부파일</a>		
+									<c:forEach var="map" items="${filemap }">
+									
+										<a class="fileinfo2" href="<c:url value='/myBoard/Filedownload?docNo=${map["DOC_NO"]}&fileName=${map["FILENAME"]}&fileNo=${map["FILE_NO"] }'/>">
+										${map['ORIGIN_FILENAME']}&nbsp; 
+										(<fmt:formatNumber value="${map['FSIZE'] /1024.0}" type="number" pattern="#.##" /> KB)
+										</a>		
+																	
+									</c:forEach>
+								</div>
+							</div>
+				    	</tr>
+					</c:if>	
 	      
 
 	                <tr>
@@ -117,9 +131,9 @@
 	                </tr>
 			</table>
 			<div>
-			    <c:if test="${myBoardInfoVo.memName eq list['MEM_NAME']}">
+			 
 			        <input type="button" class="btn btn-sm btn-primary btn" value="수정" onclick="docSave2()"/>
-			    </c:if>
+			    
 		</div>
 			</form>
 		</div>
@@ -131,7 +145,8 @@
 	<script>
 		// 결재 요청 확인창
 		function docSave2() {
-		 window.location.href = "<c:url value='/myBoard/Approval_edit?docNo=${docNo}'/>";
+		 window.location.href = "<c:url value='/myBoard/Approval'/>?mBoardNo=" + MBoardNo;
+		 
 		}
 		
 		var ckEditor = CKEDITOR.replace('docContent', {

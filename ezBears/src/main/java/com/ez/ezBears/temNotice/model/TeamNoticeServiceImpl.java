@@ -114,7 +114,11 @@ public class TeamNoticeServiceImpl implements TeamNoticeService {
 		return teamNoticeDao.deleteFile(teamNoticeNo);
 	}
 
-
+	//메인 팀 게시판
+	@Override
+	public List<Map<String, Object>> selectMainTeamNoticeList(MyBoardSearchVo myBoardSearchVo) {
+		return teamNoticeDao.selectMainTeamNoticeList(myBoardSearchVo);
+	}
 
 	
 	

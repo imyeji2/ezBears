@@ -92,6 +92,11 @@ $(function(){
         $('#addBoardError').text('');
     });
     
+    $('#editMyBoard').on('hide.bs.modal', function () {
+    	location.reload();   
+    });    
+    
+    
     
     //마이보드 추가, 이름 입력 시 같은 이름 체크
 	$('#AddBoardName').on('input', function(e) {
@@ -245,27 +250,26 @@ $(function(){
 			var $editFrm = $(this).closest('tr');
 			var mBoardNo=$editFrm.find('input[name=mBoardNo]').val();
 			
-			$.ajax({
-		        type: 'post',
-		        url: "<c:url value='/myBoard/ajax_delMBoard'/>",
-		        data:{mBoardNo:mBoardNo},
-		        dataType: 'json',
-		        error: function(xhr, status, error){
-		            alert(error);
-		        },
-		        success: function(res){
-		            console.log(res); // 서버 응답 확인
-		            if(res>0){
-			            loadBoardList();
-			            alert('삭제가 완료되었습니다.');
-		            }else{
-		            	alert('삭제에 실패했습니다.');
-		            }
-		        }
-	
-		    });					
+			 $.ajax({
+			        type: 'post',
+			        url: "<c:url value='/myBoard/ajax_checkBoardMemberCount'/>",
+			        data:{mBoardNo:mBoardNo},
+			        dataType: 'json',
+			        error: function(xhr, status, error){
+			            alert(error);
+			        },
+			        success: function(res){
+			            console.log(res); // 서버 응답 확인
+			            if(res>1){
+				            alert('보드를 사용중인 사원이 있습니다. 멤버 삭제 후 다시 시도하세요');
+				            return false;
+			            }else{
+			            	deleteMyBoard(mBoardNo);
+			            }
+			        }
+		
+			    });			
 			
-			deleteMyBoard(mBoardNo);
 		}
 	});
 	
@@ -389,6 +393,7 @@ $(function(){
 	
 	//마이보드 삭제(관리자)
 	function deleteMyBoard(mBoardNo){
+		
 		 $.ajax({
 		        type: 'post',
 		        url: "<c:url value='/myBoard/ajax_delMBoard'/>",
@@ -403,16 +408,18 @@ $(function(){
 			            loadBoardList();
 			            alert('삭제가 완료되었습니다.');
 		            }else{
-		            	alert('삭제에 실패했습니다.');
+		            	alert('삭제에 실패했습니다. 다시 시도해 주세요');    	
 		            }
 		        }
 	
 		    });		
 	}	
+	
 		
 </script>
 
 <body>
+
     <div class="container-fluid position-relative d-flex p-0">
         <!-- Spinner Start -->
         <div id="spinner" class="show bg-dark position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
@@ -434,7 +441,7 @@ $(function(){
 	                <div class="d-flex user_info">
 	                    <div class="position-relative">
 	                    	<c:choose>
-	                    		<c:when test="${sessionScope.type=='정규직' }">
+	                    		<c:when test="${sessionScope.memberType=='정규직' }">
 	                    		 	<img class="member_img" src="<c:url value='/img/mem_images/${sessionScope.myimg }'/>" alt="프로필 이미지">
 	                    		</c:when>
 	                    		<c:otherwise>
@@ -493,7 +500,7 @@ $(function(){
 	                            class="dropdown-item">
 	                            	<i class="bi bi-calendar3 me-2"></i>근태관리
 	                            </a>
-	                            <a href="#" class="dropdown-item">
+	                            <a href="<c:url value='/mboard/list'/>" class="dropdown-item">
 	                            	<i class="bi bi-list-task me-2"></i>게시글관리
 	                            </a>
 	                            <a href="<c:url value='/dept/list'/>" class="dropdown-item">
@@ -511,14 +518,16 @@ $(function(){
 	                        </div>
 	                    </div>           
                     </c:if>         
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                        	<i class="bi bi-text-center me-2"></i>나의보드
-                        </a>
-                        <div class="dropdown-menu bg-transparent border-0">
-                            <c:import url="/myBoard/myBoardList"></c:import>
-                        </div>
-                    </div>
+                    <c:if test="${sessionScope.type=='사원'}">
+	                    <div class="nav-item dropdown">
+	                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+	                        	<i class="bi bi-text-center me-2"></i>나의보드
+	                        </a>
+	                        <div class="dropdown-menu bg-transparent border-0">
+	                            <c:import url="/myBoard/myBoardList"></c:import>
+	                        </div>
+	                    </div>
+                    </c:if>
                     
                     
                     <div class="nav-item dropdown">

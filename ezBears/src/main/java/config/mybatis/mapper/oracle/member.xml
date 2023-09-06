@@ -149,7 +149,7 @@
 			    OR TO_CHAR(ALLMEMSTAFFVIEW.POSITION_NAME) LIKE '%'|| #{searchKeyword} ||'%'
 			    OR TO_CHAR(ALLMEMSTAFFVIEW.STAFF_NAME) LIKE '%'|| #{searchKeyword} ||'%'
 			    OR TO_CHAR(ALLMEMSTAFFVIEW.STAFF_POSITION) LIKE '%'|| #{searchKeyword} ||'%'
-			</if>
+            </if>
 		</where>
 	</sql>
 	
@@ -184,5 +184,19 @@
 		set mem_pwd=#{memPwd}
 		where mem_id=#{memId}
 	</update>
+	
+	<select id="AllselectMem" parameterType="searchVo" resultType="map">
+		SELECT * FROM ALLMEMSTAFFVIEW 
+		<include refid="searchWhere3"></include>
+	</select>
+	
+	<sql id="searchWhere3">
+		<where>
+			<if test="searchKeyword!=null and searchKeyword!=''">
+			    TO_CHAR(ALLMEMSTAFFVIEW.MEM_NAME) LIKE '%'|| #{searchKeyword} ||'%'
+			    OR TO_CHAR(ALLMEMSTAFFVIEW.STAFF_NAME) LIKE '%'|| #{searchKeyword} ||'%'
+            </if>
+		</where>
+	</sql>
 	
 </mapper>

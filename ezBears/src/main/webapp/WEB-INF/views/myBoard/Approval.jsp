@@ -78,7 +78,7 @@ document.addEventListener("DOMContentLoaded", function() {
 						<div
 							class="d-flex align-items-center justify-content-between mb-4">
 							<h6 class="mb-0">결재</h6>
-							<a href="">Show All</a>
+							
 						</div>
 						<div class="table-responsive">
 							<table
@@ -86,9 +86,9 @@ document.addEventListener("DOMContentLoaded", function() {
 								<thead>
 									<tr class="text-white">
 										<th scope="col">문서 번호</th>
-										<th scope="col">날짜</th>
+										<th scope="col">기안 날짜</th>
 										<th scope="col">제목</th>
-										<th scope="col">이름</th>
+										<th scope="col">기안자</th>
 										<th scope="col">처리상태</th>
 									</tr>
 								</thead>

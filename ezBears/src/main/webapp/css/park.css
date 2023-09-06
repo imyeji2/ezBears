@@ -9,6 +9,11 @@
 	   margin-left: 1070px;
 	   margin-top: 20px;
 	}	
+	.table td{
+	    color: white;
+    	text-align: center;
+	}
+	
 }
 #approvalModal{
 	#approvalModalLabel{
@@ -74,9 +79,10 @@
 	.docNo{
 		border: none;
 	    background: transparent;
-	    color: white;
-	    width: 50%; 
+	    color: white; 
 	    text-align: center;
+	    font-size: 1.2em;
+	    width: 50%;
 	}
 	.startVacation{
 		border: none;
@@ -93,7 +99,15 @@
 	}
 	.table td.td-3 {
 		text-align: center;
+		width: 13%;
 	}
+	.table td.td-1 {
+    	width: 19%;
+	}
+	.rdate{
+		text-align: center;
+	}
+	
 	.status{
 		border: none;
 	    background: transparent;
@@ -123,6 +137,14 @@
 	    margin-left: 5px;
 	    width: 18%;
 	}
+	.fileinfo{
+		color: white;
+	}
+	.fileinfo2{
+		color: white;
+		margin-left: 40px;
+	}
+	
 }
 
 

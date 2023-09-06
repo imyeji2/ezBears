@@ -71,7 +71,13 @@
 	</update>
 	
 	<delete id="deleteMboard" parameterType="int">
-		delete table M_BOARD
+		delete M_BOARD
 		where M_BOARD_NO=#{MBoardNo}
 	</delete>
+	
+	<select id="selectMboardName" parameterType="int" resultType="String">
+		select M_BOARD_NAME FROM M_BOARD
+		WHERE M_BOARD_NO =#{mBoardNo}
+	</select>
+	
 </mapper>

@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>사용자 초대</title>
-<link href="/resources/css/approval/appModal-style.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/css/approval/appModal-style.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
 </head>
 <body>
@@ -51,7 +51,7 @@
 		$("#s-text").html("사용자");
 		$("#appSelModal").css('display', 'flex').hide().fadeIn();
 		$.ajax({
-			url : "/modal/member/list.sw",
+			url : "/modal/member/list,
 			type : "get",
 			success : function(mList) {
 				$("#s-value").val(""); // 검색 입력창 지우기
@@ -87,7 +87,7 @@
 		var searchCondition = $("#s-condition").val();
 		var searchValue = $("#s-value").val(); 
 		$.ajax({
-			url : "/modal/member/search.sw",
+			url : "/modal/member/search",
 			type : "get",
 			data : { "searchCondition" : searchCondition,  "searchValue" : searchValue },
 			success : function(mList) {
@@ -155,10 +155,10 @@
 		if(chatRoomTitle != null) {
 			var ref = []; // 사용자 담을 배열 선언
 			Arr.forEach(function(el, i){
-				ref[i] = el.memberNum;
+				ref[i] = el.memNo;
 			});
 			$.ajax({
-				url : "/chat/registerChatRoom.sw",
+				url : "/chat/registerChatRoom",
 				type : "get",
 				traditional: true,
 				data : { "chatMember" : ref, "chatRoomTitle" : chatRoomTitle },

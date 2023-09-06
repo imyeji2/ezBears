@@ -10,5 +10,4 @@ public class ChatMemberVO {
 	private String memName;
 	private String positionName;
 	private int memStatus;
-	
 }

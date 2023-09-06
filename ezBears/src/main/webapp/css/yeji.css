@@ -934,7 +934,7 @@
 
 }/*팀별 공지사항 디테일 css*/
 
-/*마이보드 추가*/
+/*top 마이보드 추가 모달*/
 #addMyBoard{
 	.form-control{
 		background-color: #191C24;
@@ -947,6 +947,7 @@
 }
 
 
+/*top 보드 수정 모달*/
 #editMyBoard{
 
 	.form-control{
@@ -984,7 +985,51 @@
 		border-bottom: 1px solid #191C24;
 	}
 	
-	
-	
+}
+
+/*마이보드 멤버 페이지*/
+#myBoardMember{
 	
 }
+
+/*메인 페이지*/
+#main{
+	
+	
+	.table{
+		color:#fff;
+		border-color: #6C7293;
+		text-align: center;
+	}
+	
+	
+	.table tbody tr:hover{
+		color:#fff;
+		background-color: rgba(0, 0, 0, 0.2);
+		
+	}
+	
+	.table a{
+		color:#fff;
+	}
+	
+	.naverNews table{
+		text-align: left;
+		margin: 0 auto;	
+	}
+	
+	.table td{
+		white-space:nowrap;
+		overflow:hidden;
+		text-overflow:ellipsis;
+		max-width:240px
+	}
+	
+	.newImg{
+		width:30px;
+		justify-content: center; /* 수평 가운데 정렬 */
+   		align-items: center; /* 수직 가운데 정렬 */
+	}
+	
+}
+

@@ -51,4 +51,8 @@ public interface TeamNoticeService {
 	int deleteFile(int teamNoticeNo);
 	
 	
+	//메인 팀 게시판
+	List<Map<String, Object>> selectMainTeamNoticeList(MyBoardSearchVo myBoardSearchVo);
+	
+	
 }

@@ -110,7 +110,9 @@
  	<sql id="searchWhere">
  		<where>
  			<if test="date11!=null and date11!='' and date22!=null and date22!=''">
- 				and in_time between to_date(#{date11}, 'YYYY-MM-DD') and to_date(#{date22}, 'YYYY-MM-DD') + 1
+ 				<![CDATA[
+ 				and in_time >= trunc(to_date(#{date11}, 'YYYY-MM-DD HH24:mi:ss')) and in_time < trunc(to_date(#{date22}, 'YYYY-MM-DD HH24:mi:ss')) + 1
+ 				]]>
  			</if>
  			<if test="searchDeptNo!=null and searchDeptNo!=''">
  				and dept_no = #{searchDeptNo}
