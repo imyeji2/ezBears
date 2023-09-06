@@ -108,4 +108,9 @@
 	</select>
 	
 	
+	<select id="selectStaffNo" parameterType="String" resultType="int">
+    	SELECT STAFF_NO FROM staff
+    	WHERE STAFF_ID=#{staffId}
+    </select>
+	
 </mapper>
