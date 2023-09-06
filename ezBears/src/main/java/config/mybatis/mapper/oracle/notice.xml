@@ -50,6 +50,14 @@
 		values(#{noticeFileNo},#{noticeNo},#{fileName},#{fileSize},#{originFileName})
 	</insert>
 	
+	<insert id="insertFileNotice1" parameterType="noticefileVo">
+		<selectKey keyProperty="noticeFileNo" resultType="int" order="BEFORE">
+			select noticeFile_seq.nextval from dual
+		</selectKey>
+		insert into noticeFile(notice_file_no, notice_no, file_name, file_size, origin_fileName)
+		values(#{noticeFileNo},#{noticeNo},#{fileName},#{fileSize},#{originFileName})
+	</insert>
+	
 	<select id="selectnoticeByNo" parameterType="int" resultType="noticeVo">
 		select * from notice
 		where NOTICE_NO=#{noticeNo}
@@ -98,6 +106,13 @@
 		set NOTICE_TITLE = #{noticeTitle}, NOTICE_CONTENT=#{noticeContent}
 		where NOTICE_NO =#{noticeNo}
 	</update>
+	
+	<update id="updateNoticeFile" parameterType="noticefileVo">
+		update notice
+		set file_name = #{fileName}, file_size=#{fileSize},origin_fileName=#{originFileName}
+		where NOTICE_NO =#{noticeNo}
+	</update>
+	
 	
 	<delete id="deleteNoticeFile">
 		delete from noticefile

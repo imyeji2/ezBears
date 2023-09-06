@@ -66,9 +66,9 @@
 					<input type ="text" class="sta" value="처리 상태">
 					<input type ="text" class="status" name="status" id="status" value="${list['STATUS'] }">		
 					
-					<c:if test="${list['STATUS'] eq '대기'}">
+					<%-- <c:if test="${list['STATUS'] eq '대기'}">
 						<input type="button" class=" btn-sm btn-primary appoveBtn " value="승인" onclick="approveDocument()">
-					</c:if>
+					</c:if> --%>
 					
 					</td>
 				</tr>
@@ -106,12 +106,12 @@
 								<div class="fileupload">
 									<a href="#" class="fileinfo">첨부파일</a>		
 									<c:forEach var="map" items="${filemap }">
-									
-										<a class="fileinfo2" href="<c:url value='/myBoard/Filedownload?docNo=${map["DOC_NO"]}&fileName=${map["FILENAME"]}&fileNo=${map["FILE_NO"] }'/>">
-										${map['ORIGIN_FILENAME']}&nbsp; 
+									<input class="form-control appfile app_file2" type="file" id="app_file2" name="file">
+									<label style="color: red">
+										새로운 파일 업로드시 ${map['ORIGIN_FILENAME']}&nbsp; 
 										(<fmt:formatNumber value="${map['FSIZE'] /1024.0}" type="number" pattern="#.##" /> KB)
-										</a>		
-																	
+										은 삭제됩니다.		
+									</label>								
 									</c:forEach>
 								</div>
 							</div>
@@ -120,7 +120,7 @@
 	      
 
 	                <tr>
-	                    <td class="td-1">휴가사유</td>
+	                    <td class="td-1">결재 내용</td>
 	                    </tr>
 	                    <tr>
 	                    <td colspan="8" id="td-leave-reason">

@@ -2,24 +2,22 @@ package com.ez.ezBears.login.controller;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ez.ezBears.attendance.model.AttendanceService;
-import com.ez.ezBears.attendance.model.AttendanceVO;
 import com.ez.ezBears.member.model.MemberService;
 import com.ez.ezBears.member.model.MemberVO;
 import com.ez.ezBears.myBoard.model.MyBoardListService;
 import com.ez.ezBears.staff.model.StaffService;
-import com.ez.ezBears.staff.model.StaffVO;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -82,10 +80,23 @@ public class LoginController {
 					session.setAttribute("myBoardList", myBoardList);
 					
 					
+					Map<String, Object> loginuser = new HashMap<>();
+					loginuser.put("userid", userid);
+					loginuser.put("type", type);
+					loginuser.put("name", map.get("MEM_NAME"));
+					loginuser.put("position", map.get("POSITION_NAME"));
+					loginuser.put("dept_name", map.get("DEPT_NAME"));
+					loginuser.put("dept_no", map.get("DEPT_NO"));
+					loginuser.put("memNo", map.get("MEM_NO"));
+					loginuser.put("myimg", map.get("MEM_IMAGE"));
+					loginuser.put("type", map.get("TYPE"));
 					
-					logger.info("세션 로그 확인 type={},name={},position={},dept_name={},dept_no={},memNo={},myimg={},type={}",type,session.getAttribute("name"),
-							type,session.getAttribute("position"),type,session.getAttribute("dept_name"),type,session.getAttribute("dept_no"),
-							type,session.getAttribute("memNo"),type,session.getAttribute("myimg"),type,session.getAttribute("type"));
+					session = request.getSession();
+					session.setAttribute("sessionAttributes", loginuser);
+					
+					logger.info("loginuser의 로그 map1={}",loginuser);
+					
+					
 					session.setAttribute("memVo", map);
 					logger.info("myimg 로그 확인 myimg={}",session.getAttribute("myimg"));
 					
@@ -128,10 +139,20 @@ public class LoginController {
 					session.setAttribute("myimg", map.get("STAFF_IMAGE"));
 					session.setAttribute("staff_no", map.get("STAFF_NO"));
 					
-					logger.info("세션 로그 확인 type={},name={},position={},dept_name={},dept_no={},myimg={},staff_no={}",type,session.getAttribute("name"),
-							type,session.getAttribute("position"),type,session.getAttribute("dept_name"),type,session.getAttribute("dept_no"),
-							type,session.getAttribute("myimg"),type,session.getAttribute("staff_no"));
+					Map<String, Object> loginuser2 = new HashMap<>();
+					loginuser2.put("userid", userid);
+					loginuser2.put("type", type);
+					loginuser2.put("name", map.get("STAFF_NAME"));
+					loginuser2.put("position", map.get("STAFF_POSITION"));
+					loginuser2.put("dept_name", map.get("DEPT_NAME"));
+					loginuser2.put("dept_no", map.get("DEPT_NO"));
+					loginuser2.put("myimg", map.get("STAFF_IMAGE"));
+					loginuser2.put("staff_no", map.get("STAFF_NO"));
 					
+					session = request.getSession();
+					session.setAttribute("sessionAttributes", loginuser2);
+					
+					logger.info("loginuser2의 로그 map1={}",loginuser2);
 					
 					//cookie
 					Cookie ck = new Cookie("ck_userid", userid);
@@ -167,7 +188,18 @@ public class LoginController {
 		String userid=(String) session.getAttribute("userid");
 		
 		session.removeAttribute("userid");
-		logger.info("로그아웃 세션 userid={}",userid);
+		session.removeAttribute("type");
+		session.removeAttribute("name");
+		session.removeAttribute("position");
+		session.removeAttribute("dept_name");
+		session.removeAttribute("dept_no");
+		session.removeAttribute("memNo");
+		session.removeAttribute("myimg");
+		session.removeAttribute("memberType");
+		session.removeAttribute("staff_no");
+		session.removeAttribute("sessionAttributes");
+		
+		logger.info("세션 로그아웃");
 		
 		return "redirect:/";
 	}

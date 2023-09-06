@@ -8,7 +8,7 @@ import lombok.Setter;
 public class SignListSearchVO extends SearchVO{
 
 	private int deptNo;
-
+	private int MBoardNo;
 	@Override
 	public String toString() {
 		return "SignListSearchVO [deptNo=" + deptNo + "]";

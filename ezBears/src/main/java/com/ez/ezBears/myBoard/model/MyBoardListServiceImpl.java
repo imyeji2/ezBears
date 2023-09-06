@@ -122,6 +122,11 @@ public class MyBoardListServiceImpl implements MyBoardListService {
 		return myBoardListDao.totalCountMboardMember(mBoardNo);
 	}
 
+	@Override
+	public MyBoardInfoVO selectMemAppPositionInfo(int mBoardNo) {
+		return myBoardListDao.selectMemAppPositionInfo(mBoardNo);
+	}
+
 
 
 }

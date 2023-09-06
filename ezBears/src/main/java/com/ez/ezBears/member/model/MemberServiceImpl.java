@@ -185,4 +185,15 @@ public class MemberServiceImpl implements MemberService{
 	public List<Map<String, Object>> AllselectMem(SearchVO searchVo) {
 		return memberDao.AllselectMem(searchVo);
 	}
+
+	@Override
+	public int selectDeptNo(String memId) {
+		return memberDao.selectDeptNo(memId);
+	}
+	
+	@Override
+	public MemberVO memPositionNoInfo(String memId) {
+	
+		return memberDao.memPositionNoInfo(memId);
+	}
 }

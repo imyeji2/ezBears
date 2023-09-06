@@ -91,6 +91,21 @@ select s.*,m.mem_name from
 member m join sign s
 on m.mem_no = s.mem_no;
 
+
+
+create or replace view approvaMemInfo
+as
+select B.*,mem.position_no,mem.mem_name from
+    (select s.*, A.m_board_no 
+        from sign s join 
+    (select my.* from 
+      my_board my join m_board m
+      on my.m_board_no = m.m_board_no
+    )A
+    on s.my_board_no = A.my_board_no
+)B join member mem
+on B.mem_no = mem.mem_no ;
+
 [충혁]---------------------------------------------------------------------
 
 [판주]---------------------------------------------------------------------

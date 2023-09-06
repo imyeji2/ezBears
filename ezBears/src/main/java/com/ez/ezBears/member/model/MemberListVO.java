@@ -13,5 +13,5 @@ public class MemberListVO {
 	private MemberVO memberVo; // member
 	private StaffVO staffVo; // member
 	
-	private List<Map<String, Object>> memberDetailList; //view에서 가지고 온거 담을거
+	private List<Map<String, Object>> MemberListVO; //view에서 가지고 온거 담을거
 }

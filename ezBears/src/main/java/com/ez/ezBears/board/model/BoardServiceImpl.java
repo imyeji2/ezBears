@@ -7,8 +7,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.ez.ezBears.common.MyBoardSearchVo;
 import com.ez.ezBears.common.SearchVO;
 import com.ez.ezBears.notice.model.NoticeServiceImpl;
+import com.ez.ezBears.temNotice.model.TeamNoticeVO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -19,7 +21,7 @@ public class BoardServiceImpl implements BoardService{
 	private final BoardDAO boardDao;
 	
 	@Override
-	public List<Map<String, Object>> selectAllBoard(SearchVO searchVo) {
+	public List<Map<String, Object>> selectAllBoard(MyBoardSearchVo searchVo) {
 		return boardDao.selectAllBoard(searchVo);
 	}
 
@@ -116,6 +118,60 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public int updateboard(BoardVO boardVo) {
 		return boardDao.updateboard(boardVo);
+	}
+
+
+	@Override
+	public List<Map<String, Object>> selectReply(MyBoardSearchVo searchVo) {
+		return boardDao.selectReply(searchVo);
+	}
+
+	@Override
+	public int selectReplyTotalCount(int groupNo) {
+		return boardDao.selectReplyTotalCount(groupNo);
+	}
+
+	@Override
+	public List<Map<String, Object>> boardWriteAll() {
+		return boardDao.boardWriteAll();
+	}
+
+	@Override
+	public int checkExistingWriteId(String randomWrite) {
+		return boardDao.checkExistingWriteId(randomWrite);
+	}
+
+	@Override
+	public BoardVO selectReplyBoardNo(int boardNo) {
+		return boardDao.selectReplyBoardNo(boardNo);
+	}
+
+	@Override
+	public int updeteReply(BoardVO boardVo) {
+		return boardDao.updeteReply(boardVo);
+	}
+
+	@Override
+	public int deleteReply(int boardNo) {
+		return boardDao.deleteReply(boardNo);
+	}
+
+	@Override
+	public int ReReply(BoardVO boardVo) {
+		int cnt = boardDao.updateSortNo(boardVo);
+		boardVo.setGroupno(boardDao.selectGroupNo());
+		cnt = boardDao.insertBoardReReply(boardVo);
+		
+		return cnt;
+	}
+	
+	@Override
+	public int Reply(BoardVO boardVo) {
+		int cnt = boardDao.updateSortNo(boardVo);
+		boardVo.setGroupno(boardDao.selectGroupNo());
+		cnt = boardDao.insertReply(boardVo);
+		
+		return cnt;
 	}
 
 

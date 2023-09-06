@@ -442,11 +442,18 @@ $(function(){
 	                <div class="d-flex user_info">
 	                    <div class="position-relative">
 	                    	<c:choose>
-	                    		<c:when test="${sessionScope.memberType=='정규직' }">
+	                    		<c:when test="${sessionScope.type=='사원' }">
 	                    		 	<img class="member_img" src="<c:url value='/img/mem_images/${sessionScope.myimg }'/>" alt="프로필 이미지">
 	                    		</c:when>
 	                    		<c:otherwise>
-	                    			<img class="member_img" src="<c:url value='/img/staffImages/${sessionScope.myimg }'/>" alt="프로필 이미지">
+	                    			<c:choose>
+	                    				<c:when test="${sessionScope.myimg==null }">
+			                    			<img class="member_img" src="<c:url value='/img/defaultUSER.png'/>" alt="프로필 이미지">
+	                    				</c:when>
+	                    				<c:otherwise>
+			                    			<img class="member_img" src="<c:url value='/img/staffImages/${sessionScope.myimg }'/>" alt="프로필 이미지">
+	                    				</c:otherwise>
+	                    			</c:choose>
 	                    		</c:otherwise>
 	                    	</c:choose>
 	                        <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
@@ -609,6 +616,7 @@ $(function(){
 	                <form class="d-none d-md-flex ms-4">
 	                    <input class="form-control bg-dark border-0" id="searchbox" type="search" placeholder="사원을 검색하세요">
 	                    <%@include file="../Member/memberSearch.jsp"%>
+	                    <%@include file="../Member/memberPopup.jsp"%>
 	                </form>
                 </div>
                 

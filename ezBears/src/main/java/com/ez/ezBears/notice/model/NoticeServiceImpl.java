@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.ez.ezBears.common.SearchVO;
-import com.ez.ezBears.notice.controller.NoticeController;
 
 import lombok.RequiredArgsConstructor;
 
@@ -64,6 +63,11 @@ public class NoticeServiceImpl implements NoticeService{
 	}
 
 	@Override
+	public int insertFileNotice1(NoticeFileVO noticeFileVo, int noticeNo) {
+		return noticeDao.insertFileNotice1(noticeFileVo);
+	}
+	
+	@Override
 	public List<Map<String, Object>> nextPage(int noticeNo) {
 		return noticeDao.nextPage(noticeNo);
 	}
@@ -115,6 +119,15 @@ public class NoticeServiceImpl implements NoticeService{
 	public List<Map<String, Object>> selectMainNotice(SearchVO searchVo) {
 		return noticeDao.selectMainNotice(searchVo);
 	}
+
+	@Override
+	public int updateNoticeFile(NoticeFileVO noticeFileVo) {
+		return noticeDao.updateNoticeFile(noticeFileVo);
+	}
+
+	
+
+	
 
 	
 }

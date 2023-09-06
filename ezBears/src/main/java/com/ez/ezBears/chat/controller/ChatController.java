@@ -1,3 +1,4 @@
+
 package com.ez.ezBears.chat.controller;
 
 import java.text.SimpleDateFormat;
@@ -301,3 +302,4 @@ public class ChatController {
 		return new Gson().toJson(chatMemberArr);
 	}
 }
+
