@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@page import="com.ez.ezBears.attendance.model.AttendanceVO"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -622,7 +623,7 @@ $(function(){
                             <a href="#" class="dropdown-item">
                                 <h6 class="fw-normal mb-0">전체 공지사항 업데이트</h6>
                                 <small>15분 전</small>
-                            </a>  
+                            </a>
                             <hr class="dropdown-divider">
                             <a href="#" class="dropdown-item">
                                 <h6 class="fw-normal mb-0">휴가 신청 승인 완료</h6>
