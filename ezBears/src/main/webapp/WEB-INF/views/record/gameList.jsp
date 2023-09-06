@@ -8,6 +8,12 @@
 		$('input[name="currentPage"]').val(page);
 		$('form[name="frmPage"]').submit();
 	}
+	
+	$(function() {
+		$('#chat').click(function() {
+			$('#exampleModal').modal("show");
+		});
+	});
 </script>
 
 <div class="container-fluid" id="board_style" style="margin-top: 1.5%">
@@ -24,7 +30,7 @@
 			<h4>경기기록</h4>
 			
 			<!-- Button trigger modal -->
-			<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#appSelModal">
+			<button type="button" id="chat" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#appSelModal">
 			  Launch demo modal
 			</button>
 			
@@ -37,7 +43,7 @@
 			        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			      </div>
 			      <div class="modal-body">
-						<%@ include file="../chat/chatModal.jsp" %>
+						<c:import url="/chat/chatModal" />
 			      </div>
 			      <div class="modal-footer">
 			        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -46,7 +52,6 @@
 			    </div>
 			  </div>
 			</div>
-			
 			
 			<br>
 			<div class="table-responsive">

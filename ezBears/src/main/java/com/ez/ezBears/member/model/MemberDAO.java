@@ -58,4 +58,7 @@ public interface MemberDAO {
     //사원,스태프 전체 검색
     List<Map<String, Object>> selectMemStaff(SearchVO searVo);
     int allMemCnt(SearchVO searchVo);
+    
+    //
+    List<Map<String, Object>> AllselectMem(SearchVO searchVo);
 }

@@ -13,7 +13,7 @@
            	 <c:import url="/myBoard/myBoardNavTab?mBoardNo=${mBoardNo}"></c:import>
                 <div class="tab-content" id="pills-tabContent">
                     <div class="tab-pane fade show active">
-						<div id="teamNoticeList">
+						<div id="myBoardMember">
 						 
        
 						</div><!-- teamNoticeList -->

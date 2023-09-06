@@ -44,7 +44,7 @@
 						
 							<div class="seventh">
 								<input type="text" class="firstCol" value="특이사항" readonly="readonly">
-								<input type="text" class="secCol" name ="staffInfo" id =""staffInfo"" readonly="readonly">
+								<input type="text" class="secCol" name ="staffInfo" id ="staffInfo" readonly="readonly">
 							</div>
 						
 						<div class="chatDiv">

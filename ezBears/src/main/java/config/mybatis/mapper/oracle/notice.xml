@@ -115,4 +115,17 @@
 		where NOTICE_FILE_NO=#{noticeFileNo}
 	</update>
 
+	<select id="selectMainNotice" parameterType="searchVo" resultType="map">
+		select *
+		from
+		(
+			select rownum as RNUM, A.* from
+			(
+				select * from noticeView
+				order by notice_no desc
+			)A
+		)
+	  <![CDATA[
+      where RNUM<#{lastRecordIndex}]]>		
+	</select>
 </mapper>

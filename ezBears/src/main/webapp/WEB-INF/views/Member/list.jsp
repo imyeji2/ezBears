@@ -54,6 +54,10 @@
 		                $('.popup-inner #memId').val(res.memberVo.memId);
 		                $('.popup-inner #memTel').val(res.memberVo.memTel);
 
+		                if(res.memberVo.contractDone != null){
+			                $('.popup-inner #staffInfo').val('퇴사');
+		                }
+		                
 		                if (res.memberVo.memBirth) {
 		                    $('.popup-inner #memBirth').val(res.memberVo.memBirth.substring(0, 10));
 		                }
@@ -101,7 +105,7 @@
 </script>
 <style>
 
-tbody {
+.table tbody {
     display: flex;
     flex-wrap: wrap;
 }

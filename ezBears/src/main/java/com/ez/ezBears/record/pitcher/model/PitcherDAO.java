@@ -6,6 +6,8 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.ez.ezBears.team.model.TeamVO;
+
 @Mapper
 public interface PitcherDAO {
 	int insertPitcher(PitcherVO pitcherVo);
@@ -14,4 +16,7 @@ public interface PitcherDAO {
 	PitcherVO selectPitcherByPlayerNo(int playerNo);
 	List<Map<String, Object>> selectPitcherView(int playerNo);
 	List<Map<String, Object>> selectPitcherRecordView(int recordNo);
+	
+	//투수 전체조회
+	List<TeamVO> selectAllPitcher();
 }

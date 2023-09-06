@@ -172,12 +172,17 @@ public class MemberServiceImpl implements MemberService{
 	}
 
   @Override  
-	public List<Map<String, Object>> selectMemStaff(SearchVO searVo) {
-		return memberDao.selectMemStaff(searVo);
+	public List<Map<String, Object>> selectMemStaff(SearchVO searchVo) {
+		return memberDao.selectMemStaff(searchVo);
 	}
 
 	@Override
 	public int allMemCnt(SearchVO searchVo) {
 		return memberDao.allMemCnt(searchVo);
+	}
+
+	@Override
+	public List<Map<String, Object>> AllselectMem(SearchVO searchVo) {
+		return memberDao.AllselectMem(searchVo);
 	}
 }

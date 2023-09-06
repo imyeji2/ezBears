@@ -73,7 +73,7 @@ public class LoginController {
 					session.setAttribute("dept_no", map.get("DEPT_NO"));
 					session.setAttribute("memNo", map.get("MEM_NO"));
 					session.setAttribute("myimg", map.get("MEM_IMAGE"));
-					session.setAttribute("type", map.get("TYPE"));
+					session.setAttribute("memberType", map.get("TYPE"));
 					
 					
 					
