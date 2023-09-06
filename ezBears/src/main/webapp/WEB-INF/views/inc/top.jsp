@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@page import="com.ez.ezBears.attendance.model.AttendanceVO"%>
+<%-- <%@ page import="com.ez.ezBears.attendance.model.AttendanceVO"%> --%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -644,6 +644,6 @@ $(function(){
                         </div>
                     </div>                   	
               	</div>
-            </nav>
+            </nav>  
             <!-- Navbar End -->
             <!-- top 메뉴 종료 -->
