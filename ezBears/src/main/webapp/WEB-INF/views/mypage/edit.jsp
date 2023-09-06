@@ -3,9 +3,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%@include file="../inc/top.jsp"%>
+
+<input type="hidden" id="sample6_extraAddress" placeholder="참고항목"><!-- 없애면 주소입력 및 창이 안꺼짐  -->
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
-    function sample6_execDaumPostcode() {
+    function mypagEdit() {
         new daum.Postcode({
             oncomplete: function(data) {
                 // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
@@ -38,17 +40,17 @@
                         extraAddr = ' (' + extraAddr + ')';
                     }
                     // 조합된 참고항목을 해당 필드에 넣는다.
-                    document.getElementById("staff_addr").value = extraAddr;
+                    document.getElementById("sample6_extraAddress").value = extraAddr;
                 
                 } else {
-                    document.getElementById("staff_addr").value = '';
+                    document.getElementById("sample6_extraAddress").value = '';
                 }
 
                 // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                document.getElementById('contract').value = data.zonecode;
-                document.getElementById("staff_addr").value = addr;
+                document.getElementById('memZipcode').value = data.zonecode;
+                document.getElementById("memAddress").value = addr;
                 // 커서를 상세주소 필드로 이동한다.
-                document.getElementById("sample6_detailAddress").focus();
+                document.getElementById("memAddressDetail").focus();
             }
         }).open();
     }
@@ -79,16 +81,16 @@
 						    <label for="floatingText">이름</label>
 						</div>
 						<div class="form-floating mb-3">
-							<input type="text" name="memZipcode" id="zipcode" class="form-control" id="floatingText" value="${memberVo.memZipcode }"> 
+							<input type="text" name="memZipcode" id="memZipcode" class="form-control" id="floatingText" value="${memberVo.memZipcode }"> 
 							<label for="floatingText">우편번호</label>
-							<input class="btn btn-primary w-30 m-2" type="Button" value="우편번호 찾기" id="btnZipcode" title="새창열림" onclick="sample6_execDaumPostcode()"><br/>
+							<input class="btn btn-primary w-30 m-2" type="Button" value="우편번호 찾기" id="btnZipcode" title="새창열림" onclick="mypagEdit()"><br/>
 						</div>
 						<div class="form-floating mb-3">
-							<input type="text" name="memAddress" id="address" class="form-control" id="floatingText" value="${memberVo.memAddress }"> 
+							<input type="text" name="memAddress" id="memAddress" class="form-control" id="floatingText" value="${memberVo.memAddress }"> 
 							<label for="floatingText">주소</label>
 						</div>
 						<div class="form-floating mb-3">
-							<input type="text" name="memAddressDetail" id="addressDetail" class="form-control" id="floatingText" value="${memberVo.memAddressDetail }"> 
+							<input type="text" name="memAddressDetail" id="memAddressDetail" class="form-control" id="floatingText" value="${memberVo.memAddressDetail }"> 
 							<label for="floatingText">상세주소</label>
 						</div>
 						<div class="form-floating mb-3">

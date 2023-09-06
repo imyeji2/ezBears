@@ -126,4 +126,9 @@ public class StaffServiceImpl implements StaffService {
 	public int selectCntStaff() {
 		return staffDao.selectCntStaff();
 	}
+
+	@Override
+	public int selectStaffNo(String staffId) {
+		return staffDao.selectStaffNo(staffId);
+	}
 }
