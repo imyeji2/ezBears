@@ -233,7 +233,7 @@ public class SignController {
 	    String userid = (String) session.getAttribute("userid");
 	    MyBoardInfoVO myBoardInfoVo = new MyBoardInfoVO();
 	    myBoardInfoVo.setMemId(userid);
-
+ 
 	    logger.info("결재 문서 번호 docNo={}, positionNo={}", docNo, positionNo);
 
 	    if (positionNo == 6) {
