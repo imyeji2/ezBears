@@ -312,37 +312,38 @@ public class MyPageController {
 	}
 
 
-	//마이페이지
+	//마이페이지 비밀번호체크
 	@GetMapping("/pwdchk")
 	public String pwdchk(HttpSession session, Model model) {
 
 		String userid = (String) session.getAttribute("userid");
-		logger.info("회원 수정 페이지, 파라미터 userid={}", userid);
+		logger.info("마이페이지 비밀번호 체크 페이지, 파라미터 userid={}", userid);
 
 		MemberVO memberVo = memberService.selectByUserid(userid);
 		logger.info("마이페이지 비밀번호 체크 페이지, 정보 조회결과 memberVo={}", memberVo);
-
+		
 		model.addAttribute("memberVo", memberVo);
 
 		return "mypage/pwdchk";
 	}
 
-	//마이페이지
 	@PostMapping("/pwdchk")
-	public String pwdchk_post(@ModelAttribute MemberVO vo,  HttpSession session, Model model) {
+	public String pwdchk_post(@ModelAttribute MemberVO vo, HttpSession session, Model model) {
 
 		String userid = (String) session.getAttribute("userid");
-		logger.info("회원 수정 페이지, 파라미터 userid={}", userid);
+		logger.info("마이페이지 비밀번호 체크 페이지, 파라미터 userid={}", userid);
 
-		logger.info("마이페이지 비밀번호 처리, 파라미터 vo={}", vo);
+		vo.setMemId(userid);
+		
+		logger.info("마이페이지 비밀번호 체크 처리, 파라미터 vo={}", vo);
 
 
 		int result = memberService.loginCheck(vo.getMemId(), vo.getMemPwd());
 		logger.info("마이페이지 비밀번호 체크 결과, result={}", result);
 
-		String url = "/mypage/mypage";
+		String url = "";
 		if (result == MemberService.LOGIN_OK) {
-
+				url = "/mypage/mypage";
 		} else if (result == MemberService.PWD_DISAGREE) {
 			String msg = "비밀번호가 일치하지 않습니다.";
 			url="/mypage/pwdchk";
@@ -356,7 +357,7 @@ public class MyPageController {
 		return "common/message";
 	}
 
-	//마이페이지
+	//마이페이지 수정
 	@GetMapping("/mypage")
 	public String mypage_edit(HttpSession session, Model model) {
 
@@ -371,13 +372,13 @@ public class MyPageController {
 		return "mypage/edit";
 	}
 	
-	//마이페이지
 	@PostMapping("/mypage")
 	public String mypage_edit_post(@ModelAttribute MemberVO vo,  HttpSession session, Model model) {
 
 		String userid = (String) session.getAttribute("userid");
 		logger.info("회원 수정 페이지, 파라미터 userid={}", userid);
 
+		vo.setMemId(userid);
 		logger.info("회원 수정 처리, 파라미터 vo={}", vo);
 
 		// 전화번호 처리
@@ -385,7 +386,7 @@ public class MyPageController {
 			vo.setMemTel("");
 		}
 
-		String msg = "회원 수정 실패!", url = "/mypage/edit";
+		String msg = "회원 수정 실패!", url = "/";
 		int cnt = memberService.updateMypage(vo);
 		logger.info("회원정보 수정 결과, cnt={}", cnt);
 		if (cnt > 0) {
@@ -417,20 +418,20 @@ public class MyPageController {
 		return "mypage/pwdchk2";
 	}
 
-	//비밀번호
+	//비밀번호체크
 	@PostMapping("/pwdchk2")
 	public String pwdchk2_post(@ModelAttribute MemberVO vo,  HttpSession session, Model model) {
 		
 		String userid = (String) session.getAttribute("userid");
-		logger.info("회원 수정 페이지, 파라미터 userid={}", userid);
+		logger.info("비밀번호체크  페이지, 파라미터 userid={}", userid);
 		
 		vo.setMemId(userid);
 
-		logger.info("회원 수정 처리, 파라미터 vo={}", vo);
+		logger.info("비밀번호체크 처리, 파라미터 vo={}", vo);
 
 
 		int result = memberService.loginCheck(vo.getMemId(), vo.getMemPwd());
-		logger.info("비밀번호 체크 결과, result={}", result);
+		logger.info("비밀번호체크 결과, result={}", result);
 
 		String url = "";
 		if (result == MemberService.LOGIN_OK) {
@@ -452,7 +453,7 @@ public class MyPageController {
 	public String changepwd(HttpSession session, Model model) {
 		
 		String userid = (String) session.getAttribute("userid");
-		logger.info("회원 수정 페이지, 파라미터 userid={}", userid);
+		logger.info("비밀번호수정 페이지, 파라미터 userid={}", userid);
 
 		MemberVO memberVo = memberService.selectByUserid(userid);
 		logger.info("비밀번호수정 페이지, 정보 조회결과 memberVo={}", memberVo);
@@ -462,23 +463,33 @@ public class MyPageController {
 		return "mypage/editpwd";
 	}
 
-
+	//비밀번호 수정
 	@PostMapping("/pwd")
 	public String changepwd_post(@ModelAttribute MemberVO vo,  HttpSession session, Model model) {
 		
 		String userid = (String) session.getAttribute("userid");
-		logger.info("회원 수정 페이지, 파라미터 userid={}", userid);
+		logger.info("비밀번호수정 페이지, 파라미터 userid={}", userid);
 		
 		vo.setMemId(userid);
 
-		logger.info("비밀번호 처리, 파라미터 vo={}", vo);
+		logger.info("비밀번호수정 처리, 파라미터 vo={}", vo);
 
-		String msg = "비밀번호 수정 실패!", url = "/mypage/pwdchk2";
-		int cnt = memberService.updatePwd(vo);
-		logger.info("비밀번호 수정 결과, cnt={}", cnt);
-		if (cnt > 0) {
-			msg = "비밀번호 수정 성공!";
-		}
+		String msg = "비밀번호 수정 실패!", url = "/";
+		
+		//현재 비밀번호와 새로운 비밀번호를 비교
+		MemberVO existingMember = memberService.selectByUserid(userid);
+	    if (existingMember != null && existingMember.getMemPwd().equals(vo.getMemPwd())) {
+	        msg = "현재 비밀번호와 새로운 비밀번호가 동일합니다.";
+	        url = "/mypage/pwd";
+	    } else {
+	        //비밀번호를 업데이트
+	        int cnt = memberService.updatePwd(vo);
+	        logger.info("비밀번호 수정 결과, cnt={}", cnt);
+	        if (cnt > 0) {
+	            msg = "비밀번호 수정 성공!";
+	        }
+	    }
+	    
 		// 3
 		model.addAttribute("msg", msg);
 		model.addAttribute("url", url);

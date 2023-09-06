@@ -30,4 +30,6 @@ public interface StaffDAO {
 	int isStaffId(String staffId);
 	
 	int selectCntStaff();
+	
+	int selectStaffNo(String staffId);
 }

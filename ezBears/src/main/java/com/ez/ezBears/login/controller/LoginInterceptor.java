@@ -22,7 +22,7 @@ public class LoginInterceptor implements HandlerInterceptor{
 		//logger.info("컨트롤러 수행전 preHandle() 호출!");
 		
 		String userid=(String) request.getSession().getAttribute("userid");
-		logger.info("세션 파라미터 userid={}",userid);
+		/* logger.info("세션 파라미터 userid={}",userid); */
 		
 		//로그인되지 않은 경우 에러 처리
 		if(userid==null || userid.isEmpty()) {
