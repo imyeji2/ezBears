@@ -53,4 +53,8 @@ public interface SignDAO {
 	int countAllComplete(@Param("searchTitle") String searchTitle,
 			@Param("searchDeptNo") int searchDeptNo, @Param("searchName") String searchName);
 	
+	// 결재 수정
+	int updateSignInfo(int docNo);
+	
+	SignMemInfoVO selectApprovaMem(int docNo);
 }

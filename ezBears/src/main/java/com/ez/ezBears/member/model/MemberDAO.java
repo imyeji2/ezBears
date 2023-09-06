@@ -61,4 +61,6 @@ public interface MemberDAO {
     
     //
     List<Map<String, Object>> AllselectMem(SearchVO searchVo);
+    
+    MemberVO memPositionNoInfo(String memId);
 }

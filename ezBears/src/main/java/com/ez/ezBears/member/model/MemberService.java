@@ -61,4 +61,6 @@ public interface MemberService {
     MemberVO selectByUserid(String memId);
     int updateMypage(MemberVO memberVo);
     int updatePwd(MemberVO memberVo);
+    //position 번호뽑기
+    MemberVO memPositionNoInfo(String memId);
 }

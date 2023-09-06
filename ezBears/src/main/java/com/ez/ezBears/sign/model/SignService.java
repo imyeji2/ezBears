@@ -48,5 +48,6 @@ public interface SignService {
 	int countAllComplete(@Param("searchTitle") String searchTitle,
 			@Param("searchDeptNo") int searchDeptNo, @Param("searchName") String searchName);
 	
+	SignMemInfoVO selectApprovaMem(int docNo);
 }
 
