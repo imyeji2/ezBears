@@ -223,7 +223,7 @@
     		(
         		SELECT * FROM memberview1
         		<include refid="searchWhereMember"></include>
-        		ORDER BY MEM_NAME
+        		ORDER BY MEM_NAME, DEPT_NAME,POSITION_NO
     		)A
 		)
 		
@@ -240,4 +240,5 @@
 			</if>
 		</where>
 	</sql>	 
+	
 </mapper>

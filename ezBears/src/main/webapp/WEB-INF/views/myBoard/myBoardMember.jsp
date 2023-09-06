@@ -20,7 +20,6 @@
 
 	<form action="<c:url value='/myBoard/myBoardMember?mBoardNo=${mBoardNo}'/>" method="post" name="myBoardMemberFrm">
 		<input type="hidden" name="currentPage">
-		<input type="hidden" name="searchKeyword" value="${param.searchKeyword}">
 		<input type="hidden" name="searchCondition" value="${param.searchCondition}">
 	</form>
 	
@@ -89,24 +88,26 @@
 						      <div class="modal-body">
 						        <div class="memListBox">
 						        <input type="hidden" name="todoDetailNo" value="">   
-							        <c:forEach var="memMap" items="${allMemberList}">
-							        	<div class="mem_list_content">
-											<div class="mem_img_box">
-												<c:if test="${empty memMap['MEM_IMAGE']}">
-													<img src="<c:url value='/img/mem_images/default_user.png'/>" alt="사원이미지">
-												</c:if>
-						
-												<c:if test="${!empty memMap['MEM_IMAGE']}">
-													<img src="<c:url value='/img/mem_images/${memMap["MEM_IMAGE"]}'/>" alt="사원이미지">
-												</c:if>
-											</div>
-											<div class="mem_info_box">
-												<div>${memMap["MEM_NAME"]}/${memMap["POSITION_NAME"]}</div>
-												<div>${memMap["DEPT_NAME"]}</div>
-												<input type="hidden" name="memNo" value=${memMap["MEM_NO"]}>   
-												
-											</div> 
-										</div><!-- mem_list_content --> 
+							        <c:forEach var="memMap" items="${resultList}">
+							        	<c:if test="${memMap['MEM_NO']!=map['MEM_NO']}">
+								        	<div class="mem_list_content">
+												<div class="mem_img_box">
+													<c:if test="${empty memMap['MEM_IMAGE']}">
+														<img src="<c:url value='/img/mem_images/default_user.png'/>" alt="사원이미지">
+													</c:if>
+							
+													<c:if test="${!empty memMap['MEM_IMAGE']}">
+														<img src="<c:url value='/img/mem_images/${memMap["MEM_IMAGE"]}'/>" alt="사원이미지">
+													</c:if>
+												</div>
+												<div class="mem_info_box">
+													<div>${memMap["MEM_NAME"]}/${memMap["POSITION_NAME"]}</div>
+													<div>${memMap["DEPT_NAME"]}</div>
+													<input type="hidden" name="memNo" value=${memMap["MEM_NO"]}>   
+													
+												</div> 
+											</div><!-- mem_list_content --> 
+										</c:if>	
 									</c:forEach>	
 						        </div><!-- memListBox -->
 						      <div class="page_box">
@@ -138,7 +139,7 @@
 									    </c:if>
 									  </ul>
 									</nav>
-							</div><!-- page_box -->						        
+								</div><!-- page_box -->				        
 						      </div>
 						      <div class="modal-footer">
 								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
