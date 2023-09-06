@@ -8,6 +8,7 @@ import com.ez.ezBears.common.SearchVO;
 public interface NoticeService {
 	int insertNotice(NoticeVO noticeVo);
 	int insertFileNotice(List<Map<String, Object>> files, int noticeNo);
+	int insertFileNotice1(NoticeFileVO noticeFileVo,int noticeNo);
 	NoticeVO selectnoticeByNo(int noticeNo);
 	List<Map<String, Object>> selectnoticeFileByNo(int noticeNo);
 	
@@ -20,6 +21,7 @@ public interface NoticeService {
 	//List<Map<String, Object>> backPage(int noticeNo);
 	
 	int updateNotice(NoticeVO noticeVo);
+	int updateNoticeFile(NoticeFileVO noticeFileVo);
 	void deleteNoticeFile(int noticeNo);
 	int deleteNotice(int noticeNo);
 	

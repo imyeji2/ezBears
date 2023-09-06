@@ -92,7 +92,7 @@ function send(currentPage) {
                 replyData += "</div>";
                 replyData += "<div class='list_box_content'>";
                 replyData += "<div class='content_title'>"+ boardDetailURL + item.BOARD_TITLE + "</a></div>";
-                replyData += "<div class='content_txt'>" + boardDetailURL +item.BOARD_CONTENT + "</a></div>";
+                /* replyData += "<div class='content_txt'>" + boardDetailURL +item.BOARD_CONTENT + "</a></div>"; */
                 replyData += "</div>";
                 replyData += "</div>";
                 replyData += "</div>";

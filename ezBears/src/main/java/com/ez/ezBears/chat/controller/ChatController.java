@@ -301,4 +301,3 @@ public class ChatController {
 		return new Gson().toJson(chatMemberArr);
 	}
 }
-

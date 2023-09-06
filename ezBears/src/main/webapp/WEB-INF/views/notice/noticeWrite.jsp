@@ -76,8 +76,10 @@
 		        	<%-- </c:if> --%>
 		        		<input type="hidden" name="memNo" value="${sessionScope.memNo}">
 		        		<%-- <input type="text" name="memNo" value="${map['NOTICE_NO']}"> --%>
+		        		<c:set var="i" value="0"/>
 		        		<c:forEach var="vo" items="${list }">
-							<input type="hidden" name="oldFileName" value="${vo['FILE_NAME']}">
+							<input type="hidden" name="fileNames[${i }].fileName" value="${vo['FILE_NAME']}">
+							<c:set var="i" value="${i + 1 }"/>
 		        		</c:forEach>
 						<%-- <c:if test="${type=='edite'}"> --%>
 		        			<input type="hidden" name="noticeNo" value="${noticeNo}">
