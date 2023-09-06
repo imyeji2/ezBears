@@ -200,4 +200,9 @@
 		</where>
 	</sql>
 	
+    <select id="selectDeptNo" parameterType="String" resultType="int">
+	   	SELECT dept_no FROM MEMBER
+	   	WHERE MEM_ID=#{memId}
+    </select>
+	
 </mapper>

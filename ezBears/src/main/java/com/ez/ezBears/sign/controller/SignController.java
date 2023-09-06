@@ -200,7 +200,7 @@ public class SignController {
 			Model model) {
 		
 		String userid = (String)session.getAttribute("userid");
-		logger.info("결재 디테일");
+		logger.info("결재 디테일, userid={}", userid);
 		
 		myBoardInfoVo.setMemId(userid);			
 		myBoardInfoVo = myBoardListService.selectMyBoardDept(userid);
@@ -208,6 +208,7 @@ public class SignController {
 		
 		
 		memberVo = memberService.selectpositioninfo(myBoardInfoVo.getDeptNo());
+		logger.info("memberVo={}", memberVo);
 		
 		Map<String, Object> list = signService.detailSign(docNo);
 		logger.info("결재 디테일 list={}",list);
@@ -220,6 +221,10 @@ public class SignController {
 		model.addAttribute("memberVo",memberVo);
 		model.addAttribute("filemap",filemap);
 		
+		Map<String, Object> userMap = memberService.selectMemberView(userid);
+		logger.info("현재 접속한 사람의 정보, userMap={}", userMap);
+		
+		model.addAttribute("userMap", userMap);
 				
 		return "myBoard/Approval_detail";
 		

@@ -66,10 +66,10 @@
 					<input type ="text" class="sta" value="처리 상태">
 					<input type ="text" class="status" name="status" id="status" value="${list['STATUS'] }">		
 					
-					<c:if test="${list['STATUS'] eq '대기'}">
+					<c:if test="${list['STATUS'] eq '대기' && userMap['POSITION_NO'] eq 6}">
 						<input type="button" class=" btn-sm btn-primary appoveBtn " value="승인" onclick="approveDocument()">
 					</c:if>
-					<c:if test="${list['STATUS'] eq '처리중'}">
+					<c:if test="${list['STATUS'] eq '처리중' && userMap['DEPT_NO'] eq 1}">
 						<input type="button" class=" btn-sm btn-primary appoveBtn " value="승인" onclick="approveDocument2()">
 					</c:if>
 					
