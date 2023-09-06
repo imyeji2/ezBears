@@ -61,7 +61,12 @@ public interface MemberService {
     MemberVO selectByUserid(String memId);
     int updateMypage(MemberVO memberVo);
     int updatePwd(MemberVO memberVo);
+
     
     //접속한 멤버의 부서를 판별하기 위한것
     int selectDeptNo(String memId);
+
+    //position 번호뽑기
+    MemberVO memPositionNoInfo(String memId);
+
 }

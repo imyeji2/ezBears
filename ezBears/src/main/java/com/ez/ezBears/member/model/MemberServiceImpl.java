@@ -187,7 +187,12 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
+
 	public int selectDeptNo(String memId) {
 		return memberDao.selectDeptNo(memId);
+
+	public MemberVO memPositionNoInfo(String memId) {
+	
+		return memberDao.memPositionNoInfo(memId);
 	}
 }

@@ -204,4 +204,9 @@
 	   	WHERE MEM_ID=#{memId}
     </select>
 	
+	<select id="memPositionNoInfo" resultType="memberVo">
+		select * from member
+		where mem_id = #{memId}
+	</select>
+
 </mapper>

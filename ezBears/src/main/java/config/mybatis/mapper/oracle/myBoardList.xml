@@ -87,7 +87,10 @@
 		delete MY_BOARD
 		where M_BOARD_NO=#{MBoardNo}
 	</delete>	
-	
+	<select id="selectMemAppPositionInfo" resultType="myBoardInfoVo">
+		select * from myBoardInfo
+		where m_board_no = #{mBoardNo} and position_no=6
+	</select>
 </mapper>
 
 
