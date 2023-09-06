@@ -196,4 +196,10 @@ public class MemberServiceImpl implements MemberService{
 	
 		return memberDao.memPositionNoInfo(memId);
 	}
+
+    //전체 사원 정보 리스트 
+	@Override
+	public List<Map<String, Object>> selectMemberList(SearchVO searchVo) {
+		return memberDao.selectMemberList(searchVo);
+	}
 }

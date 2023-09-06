@@ -69,5 +69,8 @@ public interface MemberDAO {
 
     
     MemberVO memPositionNoInfo(String memId);
+    
+    //전체 사원 정보 리스트 
+    List<Map<String, Object>> selectMemberList(SearchVO searchVo);
 
 }

@@ -68,5 +68,8 @@ public interface MemberService {
 
     //position 번호뽑기
     MemberVO memPositionNoInfo(String memId);
+    
+    //전체 사원 정보 리스트 
+    List<Map<String, Object>> selectMemberList(SearchVO searchVo);
 
 }

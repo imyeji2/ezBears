@@ -214,4 +214,30 @@
 		select * from member
 		where mem_id = #{memId}
 	 </select>
+	 
+	 
+	 <select id="selectMemberList" parameterType="searchVo" resultType="map">
+    	SELECT * FROM 
+    	(
+    		SELECT ROWNUM AS RNUM, A.* FROM 
+    		(
+        		SELECT * FROM memberview1
+        		<include refid="searchWhereMember"></include>
+        		ORDER BY MEM_NAME
+    		)A
+		)
+		
+		<![CDATA[
+		WHERE RNUM > #{firstRecordIndex} 
+		AND RNUM <= #{firstRecordIndex} + #{recordCountPerPage}
+		]]>
+	 </select>
+	 
+    <sql id="searchWhereMember">
+		<where>
+			<if test="searchCondition!=null and searchCondition!=''">
+				dept_No = #{searchCondition}
+			</if>
+		</where>
+	</sql>	 
 </mapper>
