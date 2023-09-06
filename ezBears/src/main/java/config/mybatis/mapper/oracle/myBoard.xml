@@ -15,4 +15,9 @@
 		select M_BOARD_NO from my_Board
 		WHERE MEM_NO=#{mem_no} and main_view='Y'
 	</select>	
+
+	<delete id="deleteMyBoardMember" parameterType="myBoardVo">
+		delete my_board
+		where mem_no = #{memNo} and M_BOARD_NO=#{MBoardNo}
+	</delete>	
 </mapper>

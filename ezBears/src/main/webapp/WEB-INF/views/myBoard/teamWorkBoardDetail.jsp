@@ -608,7 +608,11 @@
 		            		toDoList+="<div class='d-flex w-100 align-items-center justify-content-between'>";
 		            		toDoList+="<span>"+item.TODO_CONTENT+"</span>";
 		            		if(item.MEM_NO){
-		            			toDoList+="<img src='<c:url value='/img/mem_images/"+item.MEM_IMAGE+"'/>' alt='담당자 이미지' class='mem_img' id='addMem_img' data-bs-target='#staticBackdrop'>";
+		            			if(item.MEM_IMAGE==null){
+		            				toDoList+="<img src='<c:url value='/img/mem_images/default_user.png'/>' alt='담당자 이미지' class='mem_img' id='addMem_img' data-bs-target='#staticBackdrop'>";
+		            			}else{
+		            				toDoList+="<img src='<c:url value='/img/mem_images/"+item.MEM_IMAGE+"'/>' alt='담당자 이미지' class='mem_img' id='addMem_img' data-bs-target='#staticBackdrop'>";
+		            			}
 		            		}else{
 		                 		toDoList+="<span style='text-align:left;'><a href='#' data-bs-toggle='modal' data-bs-target='#staticBackdrop' id='addMem'>담당자 등록</a></span>";
 		            		}		            		
@@ -626,7 +630,11 @@
 		            		toDoList+="<div class='d-flex w-100 align-items-center justify-content-between'>";
 		            		toDoList+="<span>"+item.TODO_CONTENT+"</span>";
 		            		if(item.MEM_NO){
-		            			toDoList+="<img src='<c:url value='/img/mem_images/"+item.MEM_IMAGE+"'/>' alt='담당자 이미지' class='mem_img'>";
+		            			if(item.MEM_IMAGE==null){
+		            				toDoList+="<img src='<c:url value='/img/mem_images/default_user.png'/>' alt='담당자 이미지' class='mem_img'>";
+		            			}else{
+		            				toDoList+="<img src='<c:url value='/img/mem_images/"+item.MEM_IMAGE+"'/>' alt='담당자 이미지' class='mem_img'>";
+		            			}
 		            		}
 		            		toDoList+="</div>";
 		            		toDoList+="</div>";
@@ -842,7 +850,13 @@
 					        <c:forEach var="memMap" items="${mem_list}">
 					        	<div class="mem_list_content">
 									<div class="mem_img_box">
-										<img src="<c:url value='/img/mem_images/${memMap["MEM_IMAGE"]}'/>" alt="사원이미지">
+										<c:if test="${empty memMap['MEM_IMAGE']}">
+											<img src="<c:url value='/img/mem_images/default_user.png'/>" alt="사원이미지">
+										</c:if>
+
+										<c:if test="${!empty memMap['MEM_IMAGE']}">
+											<img src="<c:url value='/img/mem_images/${memMap["MEM_IMAGE"]}'/>" alt="사원이미지">
+										</c:if>
 									</div>
 									<div class="mem_info_box">
 										<div>${memMap["MEM_NAME"]}/${memMap["POSITION_NAME"]}</div>

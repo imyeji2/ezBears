@@ -68,6 +68,24 @@ public class ToDoListDetailServiceImpl implements ToDoListDetailService{
 		return toDoListDetail.delTodoDetailByToDoListNo(todolistNo);
 	}
 	
+	//메인 - 멤버 전체 업무 카운트
+	@Override
+	public int totalMemberTodolist(int memNo) {
+		return toDoListDetail.totalMemberTodolist(memNo);
+	}
+	
+	//메인 - 멤버 완료 업무 카운트
+	@Override
+	public int completeMemberTodolist(int memNo) {
+		return toDoListDetail.completeMemberTodolist(memNo);
+	}
+	
+	//메인 - 멤버 미완료 업무 카운트
+	@Override
+	public int incompleteMemberTodolist(int memNo) {
+		return toDoListDetail.incompleteMemberTodolist(memNo);
+	}
+	
 	
 
 }

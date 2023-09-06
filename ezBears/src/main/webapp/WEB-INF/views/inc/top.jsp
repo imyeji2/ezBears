@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@page import="com.ez.ezBears.attendance.model.AttendanceVO"%>
+<%-- <%@ page import="com.ez.ezBears.attendance.model.AttendanceVO"%> --%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -38,6 +38,7 @@
     <link href="${pageContext.request.contextPath}/css/custom.css" rel="stylesheet">
     <script type="text/javascript" src="<c:url value='/js/jquery-3.7.0.min.js'/>"></script>
     <script src="//cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
     
 
     
@@ -651,6 +652,6 @@ $(function(){
                         </div>
                     </div>                   	
               	</div>
-            </nav>
+            </nav>  
             <!-- Navbar End -->
             <!-- top 메뉴 종료 -->
