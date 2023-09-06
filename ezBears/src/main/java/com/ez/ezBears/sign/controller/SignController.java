@@ -238,8 +238,10 @@ public class SignController {
 		memberVo = memberService.selectpositioninfo(myBoardInfoVo.getDeptNo());
 		logger.info("memberVo={}", memberVo);
 
-		 String userid = (String)session.getAttribute("userid");
-		 memberVo = memberService.memPositionNoInfo(userid);
+//		 String userid = (String)session.getAttribute("userid");
+//		 memberVo = memberService.memPositionNoInfo(userid);
+		 
+		 
 		 /*
 		  logger.info("결재 디테일 mBoardNo={} , userid={}",mBoardNo,userid);
 		  myBoardInfoVo.setMemId(userid); 
