@@ -228,6 +228,7 @@ public class SignController {
 		
 		 String userid = (String)session.getAttribute("userid");
 		 memberVo = memberService.memPositionNoInfo(userid);
+		 
 		 /*
 		  logger.info("결재 디테일 mBoardNo={} , userid={}",mBoardNo,userid);
 		  myBoardInfoVo.setMemId(userid); 
@@ -360,7 +361,7 @@ public class SignController {
 
 		ModelAndView mav = new ModelAndView("DownloadView", map);
 		return mav;
-	}
+	} 
 	
 	@RequestMapping("/Approval_delete")
 	public String Approval_delete() {
