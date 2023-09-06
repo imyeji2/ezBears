@@ -226,9 +226,9 @@ public class SignController {
 			@ModelAttribute SignMemInfoVO signMemInfoVo, HttpServletRequest request,HttpSession session,
 			Model model) {
 		
-		  String userid = (String)session.getAttribute("userid");
-		  memberVo = memberService.memPositionNoInfo(userid);
-		  /*
+		 String userid = (String)session.getAttribute("userid");
+		 memberVo = memberService.memPositionNoInfo(userid);
+		 /*
 		  logger.info("결재 디테일 mBoardNo={} , userid={}",mBoardNo,userid);
 		  myBoardInfoVo.setMemId(userid); 
 		  myBoardInfoVo.setMBoardNo(mBoardNo);
@@ -236,13 +236,12 @@ public class SignController {
 		  myBoardInfoVo = myBoardListService.selectBoardInfo(myBoardInfoVo);
 		  
 		  logger.info("myBoardInfoVo={}",myBoardInfoVo);
-		  
-		 
-		BigDecimal deptNoBigDecimal = (BigDecimal) request.getSession().getAttribute("dept_no");
-		int deptNo = deptNoBigDecimal.intValue();
+		  		 
+		  BigDecimal deptNoBigDecimal = (BigDecimal) request.getSession().getAttribute("dept_no");
+		  int deptNo = deptNoBigDecimal.intValue();
 
-		memberVo.setDeptNo(deptNo);
-		memberVo = memberService.selectpositioninfo(deptNo);
+		  memberVo.setDeptNo(deptNo);
+		  memberVo = memberService.selectpositioninfo(deptNo);
 		*/
 		
 		
@@ -252,9 +251,7 @@ public class SignController {
 		signMemInfoVo = signService.selectApprovaMem(docNo);
 		logger.info("결재 디테일 signMemInfoVo={}",signMemInfoVo);
 		
-		
-		
-		
+
 		List<Map<String, Object>> filemap = signService.selectSignnFileInfo(docNo);
 		logger.info("결재 파일 정보 filemap={}",filemap);
 		logger.info("결재 파일 정보 signMemInfoVo.getMBoardNo()={}",signMemInfoVo.getMBoardNo());
