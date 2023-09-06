@@ -1,11 +1,6 @@
 package com.ez.ezBears.member.controller;
 
-import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 
@@ -13,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,8 +32,6 @@ import com.ez.ezBears.staff.model.StaffService;
 import com.ez.ezBears.staff.model.StaffVO;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -185,7 +177,6 @@ public class MemberController {
 		return "Member/zipcode";
 	}
 
-	
 	@RequestMapping("/detail")
 	public String detail(@RequestParam(defaultValue = "0") int memNo, Model model) {
 		//1
@@ -212,31 +203,28 @@ public class MemberController {
 	}
 	
 	@RequestMapping("/edit")
-	public String detail_post(@ModelAttribute MemberVO memberVo, @RequestParam String oldFileName, HttpServletRequest request, String sal, Model model) {
+	public String detail_post(@ModelAttribute MemberVO memberVo, HttpServletRequest request, String sal, Model model) {
 		//1
-		logger.info("회원 수정, 파라미터 memberVo ={}, oldFileName={}", memberVo,oldFileName);
+		logger.info("회원 수정, 파라미터 memberVo ={}", memberVo);
 		
 		//2
 		//사진 수정
 		String fileName = "", originalFileName = "";
+		long fileSize = 0;
 		
 		try {
 			List<Map<String, Object>> list = fileUploadUtil.fileupload(request, ConstUtil.UPLOAD_MEMIMAGE_FLAG);
 			
-			long fileSize = 0;
 			for(Map<String, Object> map : list) {
 				fileName = (String) map.get("fileName");
 				originalFileName = (String) map.get("originalFileName");
 				fileSize = (long) map.get("fileSize");
 			}
-			
-			memberVo.setFileName(fileName);
-			memberVo.setOriginalFileName(originalFileName);
-			memberVo.setFileSize(fileSize);
 		} catch (IllegalStateException | IOException e) {
 			e.printStackTrace();
 		}
 		
+		memberVo.setMemImage(fileName);
 		
 		//연봉 int로 변환
 		String strSal = sal.replace(",", "");
@@ -260,19 +248,6 @@ public class MemberController {
 		if(result > 0) {
 			msg = "수정 되었습니다.";
 			url = "/Member/detail?memNo="+memNo;
-			
-			if(fileName!=null && !fileName.isEmpty()) { //
-				if(oldFileName!=null && !oldFileName.isEmpty()) {//
-					String upPath
-					=fileUploadUtil.getUploadPath(request, ConstUtil.UPLOAD_FILE_FLAG);
-					File file= new File(upPath,oldFileName);
-					if(file.exists()) {
-						boolean bool=file.delete();
-						logger.info("글 수정- 파일삭제 여부:{}", bool);
-					}
-				}
-			}//if
-		
 		}
 		
 		//3
@@ -383,7 +358,7 @@ public class MemberController {
 		logger.info("멤버 조회, list={}", list);
 		
 		MemberListVO memListVo = new MemberListVO(); 
-		memListVo.setMemberDetailList(list);
+		memListVo.setMemberListVO(list);
 		logger.info("멤버 조회 결과, memListVo={}", memListVo);
 		
 		
@@ -392,4 +367,5 @@ public class MemberController {
 		
 		return memListVo;
 	}
+
 }
