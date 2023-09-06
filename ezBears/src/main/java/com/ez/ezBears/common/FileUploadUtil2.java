@@ -75,8 +75,10 @@ public class FileUploadUtil2 {
 		if(ConstUtil.FILE_UPLOAD_TYPE.equals("test")) {
 			if(pathFlag== ConstUtil.UPLOAD_FILE_FLAG) {  //자료실
 				//path=ConstUtil.FILE_UPLOAD_PATH_TEST;
-      }else if(pathFlag==ConstUtil.UPLOAD_MEMIMAGE_FLAG) { //멤버 이미지 업로드
+			}else if(pathFlag==ConstUtil.UPLOAD_MEMIMAGE_FLAG) { //멤버 이미지 업로드
 				//path=ConstUtil.IMAGE_FILE_UPLOAD_PATH_TEST;				
+			}else if(pathFlag==ConstUtil.UPLOAD_NOTICE_FLAG) { //공지사항
+				path=ConstUtil.NOTICE_FILE_PATH;
 			}
 		}else {//deploy
 			if(pathFlag== ConstUtil.UPLOAD_FILE_FLAG) {  //자료실
@@ -89,6 +91,8 @@ public class FileUploadUtil2 {
 				path=ConstUtil.STAFFIMAGE_FILE_UPLOAD_PATH;
 			}else if(pathFlag == ConstUtil.UPLOAD_TEAMIMAGE_FLAG) {	//선수 이미지 업로드
 				path=ConstUtil.TEAMIMAGE_FILE_UPLOAD_PATH;
+			}else if(pathFlag == ConstUtil.UPLOAD_NOTICE_FLAG) { //공지사항
+				path=ConstUtil.NOTICE_FILE_PATH;
 			}else if(pathFlag == ConstUtil.UPLOAD_NOTICE_FLAG) { //공지사항
 				path=ConstUtil.NOTICE_FILE_PATH;
 			}else if(pathFlag == ConstUtil.UPLOAD_WEBHARD_FLAG) {	//웹하드 업로드

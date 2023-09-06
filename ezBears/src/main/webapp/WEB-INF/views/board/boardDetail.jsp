@@ -26,7 +26,7 @@
 		$('#add_reply').click(function(event){
 		    event.preventDefault(); // 이벤트의 기본 동작 방지
 		    var replyData = $('form[name=reply_frm]').serialize(); // 데이터 직렬화
-		    
+		    alert(replyData);
 		    $.ajax({
 		        type: 'post',
 		        url: "<c:url value='/board/reply_insert'/>",
@@ -321,7 +321,7 @@
 				            		replyData+="<div class='reply_txt'>";
 				            		replyData+="<span>"+regdate+"</span>";
 				            		
-				            		if(userid==item.MEM_ID){
+				            		if(userid==item.MEM_ID||userid==item.STAFF_ID){
 				            			replyData+=" <span><a href='#' class='editReply'>수정</a></span>";
 				            			replyData+=" <span><a href='#' id='delReply'>삭제</a></span>";
 					            		replyData+="<form name='replyDelForm' method='post' action='#'>";
@@ -358,6 +358,7 @@
 					            		/* replyData+="<input type='hidden' name='mBoardNo' value='"+item.M_BOARD_NO+"'>"; */
 					            		replyData+="<input type='hidden' name='contentno' value='"+item.CONTENTNO+"'>";
 					            		replyData+="<input type='hidden' name='memNo' value='${userNo}'>";
+					            		replyData+="<input type='hidden' name='staffNo' value='${userNo}'>";
 					            		replyData += "<input type='hidden' name='curPage' value='" +curPage+ "'>";
 	
 					            		replyData+="<div class='reply_write'>";
@@ -522,6 +523,8 @@
 		        	<div class="detail_title">
 		        		<div class="detail_left">
 			        		<span class="title_txt">${map["BOARD_TITLE"]}</span>
+			        		<input type="text" name="memNo" value="${sessionScope.memNo}">사원
+			        		<input type="text" name="staffNo" value="${sessionScope.staff_no}">스태프
 							<span class="title_date">
 								<fmt:formatDate value="${map['REGDATE']}" pattern="yyyy-MM-dd a hh:mm"/>
 							</span>
@@ -573,7 +576,7 @@
 		       				<span class="user_dept">
 		       					<a href="<c:url value='/board/boardList'/>">목록</a>
 		       				</span>
-		       				<c:if test="${userid==map['MEM_ID']}">
+		       				<c:if test="${userid==map['MEM_ID'] || userid==map['STAFF_ID']}">
 		       					<span class="user_dept">
 		       						<a href="<c:url value='/board/boardEdit?boardNo=${map["BOARD_NO"]}'/>">
 		       						수정
@@ -598,7 +601,12 @@
 	       		 
 	       			<!-- 댓글 등록 -->
 	       			<form name="reply_frm" method="post" action="#">
-	       				<input type="hidden" name="memNo" id="memNo" value="${userNo}">
+	       				<c:if test="${sessionScope.type=='사원' }">
+		       				<input type="text" name="memNo" id="memNo" value="${userNo}">ggg
+	       				</c:if>
+	       				<c:if test="${sessionScope.type=='스태프' }">
+		       				<input type="text" name="staffNo" id="staffNo" value="${userNo}">ggg
+	       				</c:if>
 	       				<input type="hidden" name=contentno id="contentno" value="${map['BOARD_NO']}"> 
 	       				<%-- <input type="hidden" name="mBoardNo" id="mBoardNo" value="${map['M_BOARD_NO']}"> --%>
 	       				<input type="hidden" name="step" value="${map['STEP']}">
