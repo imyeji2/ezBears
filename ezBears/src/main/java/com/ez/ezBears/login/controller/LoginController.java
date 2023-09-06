@@ -1,6 +1,7 @@
 package com.ez.ezBears.login.controller;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -16,6 +17,7 @@ import com.ez.ezBears.attendance.model.AttendanceService;
 import com.ez.ezBears.attendance.model.AttendanceVO;
 import com.ez.ezBears.member.model.MemberService;
 import com.ez.ezBears.member.model.MemberVO;
+import com.ez.ezBears.myBoard.model.MyBoardListService;
 import com.ez.ezBears.staff.model.StaffService;
 import com.ez.ezBears.staff.model.StaffVO;
 
@@ -34,7 +36,7 @@ public class LoginController {
 	private final MemberService memberService;
 	private final StaffService staffService;
 	private final AttendanceService attendanceService;
-
+	private final MyBoardListService myBoardListService;
 
 	/*
 	 * @GetMapping("/login") public String login() { logger.info("로그인 화면");
@@ -62,7 +64,10 @@ public class LoginController {
 				if(result>0) {
 					msg= map.get("MEM_NAME") + "님 로그인되었습니다.";
 					url="/";
-
+					
+				   
+				    List<Map<String, Object>> myBoardList = myBoardListService.selectBoardList(userid);
+				    
 					//session
 					HttpSession session=request.getSession();
 					session.setAttribute("userid", userid);
@@ -74,6 +79,7 @@ public class LoginController {
 					session.setAttribute("memNo", map.get("MEM_NO"));
 					session.setAttribute("myimg", map.get("MEM_IMAGE"));
 					session.setAttribute("memberType", map.get("TYPE"));
+					session.setAttribute("myBoardList", myBoardList);
 					
 					
 					

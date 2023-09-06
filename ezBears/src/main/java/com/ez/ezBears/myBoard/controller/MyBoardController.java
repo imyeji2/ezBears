@@ -69,12 +69,6 @@ public class MyBoardController {
 		return cnt;
 	}
 	
-	@RequestMapping("/myBoardMember")
-	public String myBoardMember(@RequestParam(defaultValue = "0") int mBoardNo, Model model) {
-		
-		model.addAttribute("mBoardNo",mBoardNo);
-		return "/myBoard/myBoardMember";
-	}
 
 	
 	@ResponseBody

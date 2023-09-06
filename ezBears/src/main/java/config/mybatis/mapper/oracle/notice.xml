@@ -119,7 +119,9 @@
 		select *
 		from
 		(
-			select rownum as RNUM, A.* from
+			select rownum as RNUM, A.*,
+			(sysdate-regdate)*24 as dateGap
+			from
 			(
 				select * from noticeView
 				order by notice_no desc

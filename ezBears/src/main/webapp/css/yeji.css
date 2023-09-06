@@ -1054,11 +1054,14 @@
     }
 
     .chartText1 {
-        font-size: 1.5em;
+        font-size: 1.4em;
+        color: #fff;
+        font-weight: 700;
     }
 
     .chartText2 {
         font-size: 1.0em;
+        color:#FBEFFB;
     }
     
     .weatherContent{
@@ -1072,10 +1075,10 @@
 	}
 	
 	.nowtime{
-		width:85%;
+		width:80%;
 		text-align: center;
-		font-size: 1em;
-		background: #6C7293;
+		font-size: 0.9em;
+		background: #31354e;
 		border-radius: 10px;
 		padding: 0px 20px 0px 20px;
 		line-height: 40px;
@@ -1089,8 +1092,7 @@
 		line-height: 30px;
 		font-size: 1.5em;
 		font-weight:bolder;
-		margin-top:20px;
-		
+		margin-top:10px;		
 	}
 	
 	.weatherIcon{
@@ -1105,6 +1107,7 @@
 	
 	.weatherTemp{
 		text-align: center;
+		margin-bottom: 20px;
 	}
 	
 	
