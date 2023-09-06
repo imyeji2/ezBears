@@ -1,14 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
 <meta charset="UTF-8">
 <title>사용자 초대</title>
 <link href="${pageContext.request.contextPath}/css/approval/appModal-style.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
-</head>
-<body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 	<div class="m-appSel-wrap" id="appSelModal">
 		<div class="m-appSel">
 			<div class="m-header">
@@ -41,7 +39,7 @@
 			</div>
 		</div>
 	</div>
-</body>
+
 <script>
 	var Arr = new Array(); // 선택한 사용자 담을 배열 선언
 	var arrText = new Array(); // 화면에 보여줄 텍스트 배열 선언
@@ -51,7 +49,7 @@
 		$("#s-text").html("사용자");
 		$("#appSelModal").css('display', 'flex').hide().fadeIn();
 		$.ajax({
-			url : "/modal/member/list,
+			url : "/modal/Member/memberInfo,
 			type : "get",
 			success : function(mList) {
 				$("#s-value").val(""); // 검색 입력창 지우기
@@ -104,10 +102,10 @@
 		$("#m-list-table").html(""); // 테이블 값 지우기
 		var tr;
 		$.each(mList, function(i) {
-			tr += '<tr class="tr"><td style="display:none;">' + mList[i].memberNum
-			+ '</td><td>' + mList[i].division
-			+ '</td><td>' + mList[i].memberName
-			+ '</td><td>' + mList[i].rank + '</td></tr>';
+			tr += '<tr class="tr"><td style="display:none;">' + mList[i].memNo
+			+ '</td><td>' + mList[i].deptName
+			+ '</td><td>' + mList[i].memName
+			+ '</td><td>' + mList[i].positionName + '</td></tr>';
 		});
 		$("#m-list-table").append(tr);
 		appSelect(); // 사용자 선택
@@ -129,25 +127,41 @@
 			});
 			
 			// td.eq(index)를 통해 값 가져와서 trArr 객체에 넣기
-			trArr.memberNum = td.eq(0).text();
-			trArr.division = td.eq(1).text();
-			trArr.memberName = td.eq(2).text();
-			trArr.rank = td.eq(3).text();
+			trArr.memNo = td.eq(0).text();
+			trArr.deptName = td.eq(1).text();
+			trArr.memName = td.eq(2).text();
+			trArr.positionName = td.eq(3).text();
 			
 			// 객체에 데이터가 있는지 여부 판단
-			var checkedArrIdx = _.findIndex(Arr, { memberNum : trArr.memberNum }); // 동일한 값 인덱스 찾기
-			arrText = []; // 배열 비우기
-			if(checkedArrIdx > -1) {
-				_.remove(Arr, { memberNum : trArr.memberNum }); // 동일한 값 지우기
-			}else {
-				Arr.push(trArr);
+			var Arr = []; // 배열 초기화
+			
+			function updateArr(trArr) {
+			    var checkedArrIdx = findIndexByMemNo(Arr, trArr.memNo); // 동일한 값 인덱스 찾기
+			    var arrText = []; // 배열 비우기
+			
+			    if (checkedArrIdx > -1) {
+			        Arr.splice(checkedArrIdx, 1); // 동일한 값 지우기
+			    } else {
+			        Arr.push(trArr);
+			    }
+			
+			    Arr.forEach(function (el, index) {
+			        arrText.push(el.deptName + " " + el.membName + " " + el.positionName);
+			    });
+			
+			    var sList = document.getElementById("s-list");
+			    sList.innerHTML = arrText.join("<br>"); // 개행해서 s-list 영역에 출력
 			}
-			Arr.forEach(function(el, index) {
-				arrText.push(el.division +" "+ el.memberName +" "+ el.rank);
-			});
-			$("#s-list").html(arrText.join("<br>")); // 개행해서 s-list 영역에 출력
-		});
-	}
+			
+			function findIndexByMemNo(arr, memNo) {
+			    for (var i = 0; i < arr.length; i++) {
+			        if (arr[i].memNo === memNo) {
+			            return i;
+			        }
+			    }
+			    return -1;
+			}
+
 	
 	// 채팅방/사용자 등록
 	function appSelView() {
@@ -173,4 +187,3 @@
 		}
 	}
 </script>
-</html>
