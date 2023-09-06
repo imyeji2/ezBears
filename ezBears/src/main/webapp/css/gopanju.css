@@ -203,6 +203,31 @@ margin-top: 5px;
     top: auto;
 	}
 
+
+	.detail_next_wrap{
+		padding: 20px 20px 20px 20px;
+		background:#202335;
+		text-align: left;
+	}
+
+	
+	.reply_next_list{
+		margin: 20px 0px 20px 0px;
+	}
+
+
+	.reply_next_content{
+		padding: 20px 5px 10px 5px;
+		border-bottom: 1px solid #191C24;
+	}
+	
+	.reply_next_user{
+		overflow: hidden;
+	}
+	
+	.detail_next_left{
+		float: left;
+	}
 }
 
 

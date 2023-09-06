@@ -176,7 +176,7 @@ public class MemberController {
 		logger.info("우편번호 페이지");
 		return "Member/zipcode";
 	}
-	
+
 	@RequestMapping("/detail")
 	public String detail(@RequestParam(defaultValue = "0") int memNo, Model model) {
 		//1
