@@ -98,7 +98,7 @@
 						</td>
 				</tr>
 
-	                <c:if test="${!empty filemap }">
+	               
 	                <tr class="tr-m">
 	            	<td colspan="7">
 	            	<!-- <input class="form-control appfile" type="file" id="app_file"> -->	
@@ -116,7 +116,7 @@
 								</div>
 							</div>
 				    	</tr>
-					</c:if>	
+					
 	      
 
 	                <tr>
