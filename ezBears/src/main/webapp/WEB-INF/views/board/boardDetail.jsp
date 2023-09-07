@@ -153,7 +153,8 @@
 		    e.preventDefault(); // 이벤트의 기본 동작 방지
 		    var $replyContainer = $(this).closest('form[name=rAddForm]');
 		    var replyData = $replyContainer.serialize(); // 데이터 직렬화      
-            var curPage = $replyContainer.find('input[name=curPage]').val();		   
+            var curPage = $replyContainer.find('input[name=curPage]').val();
+		    alert(replyData);
 		    $.ajax({
 		        type: 'post',
 		        url: "<c:url value='/board/reReply_insert'/>",
@@ -357,10 +358,12 @@
 					            		replyData+="<input type='hidden' name='step' value='"+item.STEP+"'>";
 					            		/* replyData+="<input type='hidden' name='mBoardNo' value='"+item.M_BOARD_NO+"'>"; */
 					            		replyData+="<input type='hidden' name='contentno' value='"+item.CONTENTNO+"'>";
-					            		replyData+="<input type='hidden' name='memNo' value='${userNo}'>";
-					            		replyData+="<input type='hidden' name='staffNo' value='${userNo}'>";
+					            		if(item.TYPE==="정규직"){
+							            	replyData+="<input type='hidden' name='memNo' value='${userNo}'>";
+					            		}else{
+							            	replyData+="<input type='hidden' name='staffNo' value='${userNo}'>";
+					            		}
 					            		replyData += "<input type='hidden' name='curPage' value='" +curPage+ "'>";
-	
 					            		replyData+="<div class='reply_write'>";
 					            		replyData+="<div class='form-floating'>";
 					            		replyData+="<textarea class='form-control' placeholder='Comments'id='comments' name='comments'style='height: 100px'></textarea>";
@@ -523,8 +526,6 @@
 		        	<div class="detail_title">
 		        		<div class="detail_left">
 			        		<span class="title_txt">${map["BOARD_TITLE"]}</span>
-			        		<input type="text" name="memNo" value="${sessionScope.memNo}">사원
-			        		<input type="text" name="staffNo" value="${sessionScope.staff_no}">스태프
 							<span class="title_date">
 								<fmt:formatDate value="${map['REGDATE']}" pattern="yyyy-MM-dd a hh:mm"/>
 							</span>
