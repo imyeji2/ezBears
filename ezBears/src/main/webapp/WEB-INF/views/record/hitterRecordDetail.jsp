@@ -58,6 +58,7 @@
 														<th scope="col">타수</th>
 														<th scope="col">득점</th>
 														<th scope="col">안타</th>
+														<th scope="col">홈런</th>
 														<th scope="col">타점</th>
 														<th scope="col">사구</th>
 														<th scope="col">삼진</th>
@@ -77,6 +78,7 @@
 																<td>${map.AB }</td>
 																<td>${map.RS }</td>
 																<td>${map.H }</td>
+																<td>${map.HR } </td>
 																<td>${map.RBI }</td>
 																<td>${map.BB }</td>
 																<td>${map.SO }</td>

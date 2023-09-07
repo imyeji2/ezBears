@@ -116,57 +116,92 @@ public class RecordController {
 	//-------------------히터, 타자 정보--------------------------------------------
 	
 	@GetMapping("/hitterRecordWrite")
-	public String hitterRecordWrite_get(Model model/* , int playerNo */) {
-		logger.info("타자기록입력");
+	public String hitterRecordWrite_get(@RequestParam int recodeNo,
+			Model model) {
+		logger.info("타자 기록 등록 화면 이동, recodeNo={}", recodeNo);
 		
-		//List<Map<String, Object>> map = hitterService.selectHitterView(playerNo);
+		List<TeamVO> hitterList = hitterService.selectAllHitter();
+		logger.info("타자 전체 hitterList.size={}",hitterList.size());
 		
-		//model.addAttribute("map", map);
+		model.addAttribute("hitterList", hitterList);
+		
 		
 		return "/record/hitterRecordWrite";
 	}
 	
+	
 	@PostMapping("/hitterRecordWrite")
-	public String hitterRecordWrite_post(@ModelAttribute HitterVO hitterVo, HttpServletRequest request,
-			Model model) {
+	public String hitterRecordWrite_post(@ModelAttribute HitterVO hitterVo) {
 		//1,4
-		logger.info("타자기록입력");
+		logger.info("타자 기록 등록 처리 파라미터 HitterVo={}", hitterVo);
 		
 		int cnt = hitterService.insertHitter(hitterVo);
+		logger.info("타자 기록 등록 처리 결과, cnt={}", cnt);
 		
 		return "redirect:/record/hitterRecordDetail?playerNo="+hitterVo.getPlayerNo();
 	}
 	
 	
 	@GetMapping("/hitterRecordEdit")
-	public String hitterRecordEdit_get(Model model, int playerNo) {
-		logger.info("타자기록수정 파라미터 playerNo={}");
+	public String hitterRecordEdit_get(@RequestParam int recodeNo, Model model) {
+		logger.info("타자기록수정 파라미터 recodeNo={}", recodeNo);
 		
-		List<Map<String, Object>> list = hitterService.selectHitterView(playerNo);
+        if(recodeNo == 0) {
+            model.addAttribute("msg", "잘못된 URL입니다");
+            model.addAttribute("url", "/record/gameRecordDetail?recodeNo="+recodeNo);
+            return "common/message";
+         }
+
+		List<Map<String, Object>> hitterRecordList = hitterService.selectHitterRecordView(recodeNo);
 		
-		model.addAttribute("list", list);
+		model.addAttribute("hitterRecordList", hitterRecordList);
+		logger.info("타자 전체 hitterList.size={}",hitterRecordList.size());
+		model.addAttribute("recodeNo", recodeNo);
+		
 		
 		return "/record/hitterRecordEdit";
 	}
 	
 	
 	@PostMapping("/hitterRecordEdit")
-	public String hitterRecordEdit_post(Model model, HitterVO hitterVo) {
-		logger.info("타자기록수정");
-		
+	public String hitterRecordEdit_post(@ModelAttribute HitterVO hitterVo, HttpServletRequest rquest, Model model) {
+		logger.info("타자기록수정 파라미터 hitterVo={}", hitterVo);
 		int cnt = hitterService.updateHitter(hitterVo);
 		
+		logger.info("타자 수정 처리 결과, cnt={}", cnt);
+
 		
-		
-		return "/record/hitterRecordEdit";
+		return "redirect:/record/hitterRecordDetail?playerNo="+hitterVo.getPlayerNo();
 	}
 	
 	
-	@RequestMapping("/hitterRecordDelete")
-	public String hitterRecordDelete() {
-		//1,4
-		logger.info("타자기록삭제");
+	@GetMapping("/hitterRecordDelete")
+	public String hitterRecordDelete_get(@RequestParam(defaultValue = "0") int playerNo, int recodeNo, Model model) {
+		logger.info("타자기록삭제 이동 파라미터 hitterNo={}", recodeNo);
+		
+		HitterVO hitterVo = hitterService.selectByRecodeNo(recodeNo);
+		List<Map<String, Object>> hitterRecordList = hitterService.selectHitterRecordView(recodeNo);
+		
+		model.addAttribute("hitterRecordList", hitterRecordList);
+		logger.info("타자 전체 hitterList.size={}",hitterRecordList.size());
+		
+		logger.info("경기 삭제 화면 이동, 파라미터 hitterVo={}", hitterVo);
+		
+		model.addAttribute("hitterVo", hitterVo);
+		
+		
 		return "/record/hitterRecordDelete";
+	}
+	
+	
+	@PostMapping("/hitterRecordDelete")
+	public String hitterRecordDelete_post(@RequestParam(defaultValue = "0") int playerNo, int recodeNo, GameVO gameVo, Model model) {
+		logger.info("타자기록삭제처리 파라미터 playerNo={}", recodeNo);
+		
+		int cnt = hitterService.deleteHitter(recodeNo);
+		logger.info("삭제결과 파라미터 cnt={}", cnt);
+		
+		return "redirect:/record/hitterRecordDelete?recodeNo="+gameVo.getRecodeNo();
 	}
 	
 	@GetMapping("/hitterRecordDetail")
@@ -325,22 +360,22 @@ public class RecordController {
 	public String gameUpdate_get(@RequestParam int recodeNo, Model model, SearchVO searchVo) {
 		logger.info("경기 정보 수정 화면 이동, 파라미터 recodeNo={}", recodeNo);
 		
-		if(recodeNo == 0) {
-			model.addAttribute("msg", "잘못된 URL입니다");
-			model.addAttribute("url", "/record/gameList");
-			return "common/message";
-		}
+			if(recodeNo == 0) {
+				model.addAttribute("msg", "잘못된 URL입니다");
+				model.addAttribute("url", "/record/gameList");
+				return "common/message";
+			}
+			
+		GameVO gameVo = gameService.selectByRecodeNo((recodeNo));
+		logger.info("경기 수정 화면 이동 결과, gameVo={}", gameVo);
+		List<GameVO> gameEdit = gameService.selectAllGame(searchVo);
 		
-	GameVO gameVo = gameService.selectByRecodeNo((recodeNo));
-	logger.info("경기 수정 화면 이동 결과, gameVo={}", gameVo);
-	List<GameVO> gameEdit = gameService.selectAllGame(searchVo);
-	
-	model.addAttribute("gameVo", gameVo);
-	model.addAttribute("gameEdit", gameEdit);
-	
-	return "/record/gameEdit";
+		model.addAttribute("gameVo", gameVo);
+		model.addAttribute("gameEdit", gameEdit);
+		
+		return "/record/gameEdit";
 	}
-	
+		
 	
 	@PostMapping("/gameEdit")
 	public String gameUpdate_post(@ModelAttribute GameVO gameVo, HttpServletRequest rquest, Model model) {
