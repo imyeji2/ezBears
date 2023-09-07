@@ -57,4 +57,6 @@ public interface SignDAO {
 	int updateSignInfo(SignVO signVo);
 	
 	SignMemInfoVO selectApprovaMem(int docNo);
+	
+	void deleteSignFile(int docNo);
 }

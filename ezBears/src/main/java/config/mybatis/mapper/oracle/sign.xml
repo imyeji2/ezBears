@@ -163,11 +163,11 @@
 		where doc_no = #{docNo}		
 	</update>
 	
-	<update id="updateSignFileInfo">
+	<delete id="deleteSignFile">
+		delete sign_file
+		where doc_no = #{docNo}
 	
-	
-	</update>
-	
+	</delete>
 	<select id="selectApprovaMem" parameterType="signMemInfoVo">
 		select * from approvaMemInfo
 		where doc_no= #{docNo}

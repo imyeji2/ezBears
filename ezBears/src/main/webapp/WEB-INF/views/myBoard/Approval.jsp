@@ -33,7 +33,7 @@ function submitForm() {
     // 모달 닫기
     $('#approvalModal').modal('hide');
 }
-document.addEventListener("DOMContentLoaded", function() {
+/* document.addEventListener("DOMContentLoaded", function() {
     // 휴가신청서 클릭 시 휴가신청서 페이지로 이동
     document.getElementById("vacationForm").addEventListener("click", function() {
         document.getElementById("approvalCategory").value = "휴가신청서";
@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function() {
         document.getElementById("approvalCategory").value = "지출결의서";
         submitForm();
     });
-});
+}); */
     
 
 </script>
@@ -176,6 +176,7 @@ document.addEventListener("DOMContentLoaded", function() {
 										<option value="품의서" id="requisitionForm">품의서</option>
 										<option value="지출결의서" id="expenseForm">지출결의서</option>
 									</select>
+								
 								</div>
 
 							</div>

@@ -105,8 +105,8 @@
 							<div class="signfile">
 								<div class="fileupload">
 									<a href="#" class="fileinfo">첨부파일</a>		
-									<c:forEach var="map" items="${filemap }">
 									<input class="form-control appfile app_file2" type="file" id="app_file2" name="file">
+									<c:forEach var="map" items="${filemap }">
 									<label style="color: red">
 										새로운 파일 업로드시 ${map['ORIGIN_FILENAME']}&nbsp; 
 										(<fmt:formatNumber value="${map['FSIZE'] /1024.0}" type="number" pattern="#.##" /> KB)

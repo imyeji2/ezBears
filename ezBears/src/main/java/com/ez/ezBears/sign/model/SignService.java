@@ -52,5 +52,8 @@ public interface SignService {
 	
 	//결재 수정
 	int updateSignInfo(SignVO signVo);
+	//수정시 파일삭제
+	void deleteSignFile(int docNo);
+	
 }
 

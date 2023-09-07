@@ -27,6 +27,7 @@ import com.ez.ezBears.member.model.MemberService;
 import com.ez.ezBears.member.model.MemberVO;
 import com.ez.ezBears.myBoard.model.MyBoardInfoVO;
 import com.ez.ezBears.myBoard.model.MyBoardListService;
+import com.ez.ezBears.notice.model.NoticeFileVO;
 import com.ez.ezBears.sign.model.SignFileVO;
 import com.ez.ezBears.sign.model.SignMemInfoVO;
 import com.ez.ezBears.sign.model.SignService;
@@ -212,20 +213,52 @@ public class SignController {
 	}
 	
 	@PostMapping("/Approval_edit")
-	public String Approval_post(@RequestParam (defaultValue = "0")int docNo, 
-			@RequestParam(defaultValue = "0")int MBoardNo ,
-			@ModelAttribute SignFileVO signFileVo ,@ModelAttribute SignVO signVo ,Model model) {
-		
-		
-		logger.info("결재 수정 파라미터 docNo={},signVo={}",docNo,signVo);
-		 
-		
-		int cnt = signService.updateSignInfo(signVo);
-		logger.info("수정 결과 cnt={} , signVo={}",cnt,signVo);
-		
-		
-		return "myBoard/Approval_detail?docNo="+docNo;
+	public String Approval_post(@RequestParam(defaultValue = "0") int docNo,
+	        @RequestParam(defaultValue = "0") int MBoardNo, @ModelAttribute SignFileVO signFileVo,
+	        @ModelAttribute SignVO signVo, HttpServletRequest request, Model model) {
+
+	    logger.info("결재 수정 파라미터 docNo={},signVo={}", docNo, signVo);
+
+	    int cnt = signService.updateSignInfo(signVo);
+	    logger.info("수정 결과 cnt={} , docNo={},signVo.getDocNo={}", cnt, docNo, signVo.getDocNo());
+
+	    try {
+	        String msg = "공지사항 글 수정 실패";
+	        String url = "/myBoard/Approval_edit?docNo=" + docNo;
+
+	        if (cnt > 0) {
+	            // 파일 업로드 로직을 수행합니다.
+	            List<Map<String, Object>> flist = fileUploadUtil.fileupload(request, ConstUtil.UPLOAD_APPROVAL_FLAG);
+	            
+	            // 새로 업로드한 파일이 있는지 확인합니다.
+	            if (flist != null && !flist.isEmpty()) {
+	                // 새로 업로드한 파일이 있다면, 이전 파일을 삭제하고 새 파일로 대체합니다.
+	                signService.deleteSignFile(docNo);
+	                signService.insertSignFile(flist, docNo);
+	                
+	                // 기존 파일을 삭제하는 로직을 추가합니다.
+	                // 파일 삭제 코드를 작성하세요.
+	            }
+	            
+	            msg = "공지사항 글 수정 성공";
+	            url = "/myBoard/Approval_detail?docNo=" + docNo;
+	        }
+
+	        model.addAttribute("msg", msg);
+	        model.addAttribute("url", url);
+
+	    } catch (IllegalStateException e) {
+	        e.printStackTrace();
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+
+	    return "common/message";
 	}
+
+	/*
+	 * return "redirect:/myBoard/Approval_detail?docNo="+docNo; }
+	 */
 	
 	
 	@RequestMapping("/Approval_detail")
