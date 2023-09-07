@@ -41,9 +41,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @RequestMapping("/myBoard")
 public class SignController {
-	/*
-	  http://localhost:9091/ezBears/myBoard/Approval?myBoardNo=0
-	 */
+	/* http://localhost:9091/ezBears/myBoard/Approval?myBoardNo=0  */
 
 	private static final Logger logger = LoggerFactory.getLogger(SignController.class);
 	private final MyBoardListService myBoardListService;
@@ -392,11 +390,14 @@ public class SignController {
 			response.put("success", true);
 		} else {
 			response.put("success", false);
-			response.put("message", "문서 삭제 실패했습니다."); 
+			response.put("message", "문서 삭제를 실패했습니다."); 
 		}
 		
 		return response;
-
 	}
+	
+	
+	
+	
 
 }

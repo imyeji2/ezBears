@@ -48,6 +48,7 @@
       and RNUM<=#{firstRecordIndex} + #{recordCountPerPage}]]>		
 	</select>
 	
+	
 	<select id="selectAppCount" resultType="int" parameterType="searchVo">
 		select count(*) from signListView
 		where m_board_no=#{MBoardNo}  and  del_status &lt;&gt; 'Y'		
