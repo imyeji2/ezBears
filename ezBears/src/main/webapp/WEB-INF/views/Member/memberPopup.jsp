@@ -14,7 +14,7 @@
 			<div class="Info">
 				<form class="frmchat" name="frmchat" method="post" action ="">
 					<div class="memImg">
-		        		<img alt="" src="<c:url value ='/img/mem_images/defaultUSER.png'/> " style="width:180px; height:200px;" id="previewImage" name="memImage">
+		        		<img alt="" src="<c:url value ='/img/mem_images/defaultUSER.png'/> " style="width:180px; height:200px;" id="pop_previewImage" name="memImage">
 		        	</div>
 		        	<div class="infobox">
 						<div class="first">
