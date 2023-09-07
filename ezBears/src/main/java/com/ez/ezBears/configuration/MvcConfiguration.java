@@ -5,23 +5,26 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.ez.ezBears.login.controller.LoginInterceptor;
+import com.ez.ezBears.myBoard.controller.MyBoardInterceptor;
 
 @Configuration
 public class MvcConfiguration implements WebMvcConfigurer{
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		/*
-		registry.addInterceptor(new LoginInterceptor())
-		.addPathPatterns("/shop/cart/*", "/shop/order/*",
-				"/member/memberEdit","/member/memberOut");
-
-	 */
-		
 		
 		registry.addInterceptor(new LoginInterceptor())
 		.excludePathPatterns("/","/css/**","/login/login")
 		.addPathPatterns("/**");
+		
+		
+		registry.addInterceptor(new MyBoardInterceptor())
+		.addPathPatterns("/myBoard/teamNotice")
+		.addPathPatterns("/myBoard/teamWorkBoard")
+		.addPathPatterns("/myBoard/Calender")
+		.addPathPatterns("/myBoard/Approval")
+		.addPathPatterns("/myBoard/webhard")
+		.addPathPatterns("/myBoard/myBoardMember");
 
 	}
 	

@@ -14,6 +14,7 @@
 	<select id="selectToDoListDetail" parameterType="int" resultType="map">
 		SELECT * FROM todoListDetailMemberView
 		WHERE TODOLIST_NO = #{todolistNo}
+		order by TODO_CONTENT 
 	</select>
 
 	<select id="selectToDoListDetailY" parameterType="int" resultType="map">
@@ -55,4 +56,34 @@
 		delete from TODOLIST_DETAIL
 		where TODOLIST_NO=#{todolistNo}	
 	</delete>
+	
+	<select id="totalMemberTodolist" parameterType="int" resultType="int">
+		SELECT COUNT(*) AS TOTALCOUNT
+		FROM TODOLISTVIEW
+		<![CDATA[
+		WHERE start_regdate >= TRUNC(SYSDATE, 'MM') 
+		AND done_regdate < ADD_MONTHS(TRUNC(SYSDATE, 'MM'), 1)
+		]]>
+		AND MEM_NO=#{memNo}
+	</select>
+
+	<select id="completeMemberTodolist" parameterType="int" resultType="int">
+		SELECT COUNT(*) AS TOTALCOUNT
+		FROM TODOLISTVIEW
+		<![CDATA[
+		WHERE start_regdate >= TRUNC(SYSDATE, 'MM') 
+		AND done_regdate < ADD_MONTHS(TRUNC(SYSDATE, 'MM'), 1)
+		]]>
+		AND MEM_NO=#{memNo} and status='N'
+	</select>	
+	
+	<select id="incompleteMemberTodolist" parameterType="int" resultType="int">
+		SELECT COUNT(*) AS TOTALCOUNT
+		FROM TODOLISTVIEW
+		<![CDATA[
+		WHERE start_regdate >= TRUNC(SYSDATE, 'MM') 
+		AND done_regdate < ADD_MONTHS(TRUNC(SYSDATE, 'MM'), 1)
+		]]>
+		AND MEM_NO=#{memNo} and status='Y'
+	</select>	
 </mapper>

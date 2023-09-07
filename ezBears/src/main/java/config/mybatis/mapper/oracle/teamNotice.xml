@@ -195,7 +195,8 @@
       (
 	      select rownum as RNUM,
 	      (sysdate-regdate)*24 as dateGap,
-	       A.* from
+	       A.*
+	       from
 	      (		
 			select * from teamNoticeListView
 			where m_board_no=#{mBoardNo} 

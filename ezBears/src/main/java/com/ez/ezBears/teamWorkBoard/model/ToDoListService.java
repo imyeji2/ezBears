@@ -7,4 +7,5 @@ public interface ToDoListService {
 	
 	//투두 리스트 삭제
 	int delTodoList(int todolistNo);
+	
 }

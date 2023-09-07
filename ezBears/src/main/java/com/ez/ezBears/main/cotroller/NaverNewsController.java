@@ -1,4 +1,4 @@
-package com.ez.ezBears.teamWorkBoard.controller;
+package com.ez.ezBears.main.cotroller;
 
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @RequestMapping("/api")
-public class newsController {
+public class NaverNewsController {
 	
 	@RequestMapping("/naverNews")
 	public String newsView() {
@@ -46,4 +46,5 @@ public class newsController {
 		ResponseEntity<String> result = restTemplate.exchange(req, String.class);
 		return result.getBody();
 	}
+
 }
