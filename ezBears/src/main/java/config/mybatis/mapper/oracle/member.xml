@@ -236,9 +236,34 @@
     <sql id="searchWhereMember">
 		<where>
 			<if test="searchCondition!=null and searchCondition!=''">
-				dept_No = #{searchCondition}
+				dept_No = #{deptNo}
 			</if>
 		</where>
 	</sql>	 
-	
+
+
+	 <select id="selectMemberList2" parameterType="myBoardMemberSearchVo" resultType="memberVo">
+    	SELECT * FROM 
+    	(
+    		SELECT ROWNUM AS RNUM, A.* FROM 
+    		(
+                SELECT * FROM 
+                (
+				select MEM_NO, MEM_NAME, MEM_IMAGE, POSITION_NAME, DEPT_NAME, DEPT_NO 
+				from memberview1
+				MINUS 
+				select MEM_NO, MEM_NAME, MEM_IMAGE, POSITION_NAME, DEPT_NAME, DEPT_NO 
+				from myBoardMemberView
+				WHERE m_Board_no =#{mBoardNo}
+        		ORDER BY MEM_NAME, DEPT_NAME
+                )
+                <include refid="searchWhereMember"></include>
+    		)A
+		)
+		
+		<![CDATA[
+		WHERE RNUM > #{firstRecordIndex} 
+		AND RNUM <= #{firstRecordIndex} + #{recordCountPerPage}
+		]]>
+	 </select>	
 </mapper>

@@ -9,18 +9,109 @@
 			$('#staticBackdrop').modal('show');
 		});
 		
+		$(document).on('show.bs.modal', '#staticBackdrop', function(event) {
+			$('.memListBox').html("");
+			MyBoardAddMemberList(1);
+		});
 	});
+
 	
-	function pageFunc(curPage){
+	
+	
+	function MyBoardAddMemberList(curPage){
 		$('input[name="currentPage"]').val(curPage);
-		$('form[name="myBoardMemberFrm"]').submit();
+		 var sendDate = $('#sendFrm').serialize(); // 데이터 직렬화
+		 console.log(sendDate);
+		 $.ajax({
+		        type: 'post',
+		        url: "<c:url value='/myBoard/ajax_selectMyBoardMemberAll'/>",
+		        data: sendDate,
+		        dataType: 'json',
+		        error: function(xhr, status, error){
+		            alert(error);
+		        },
+		        success: function(res){
+		            console.log(res); // 서버 응답 확인
+		            $('.memListBox').html("");
+		            if(res!=null){		
+		            	var memberDate="";
+		            	//페이징 처리
+						totalCount=res.pagingInfo.totalRecord;
+						var memberNo = $('#memNo').val();
+			            $.each(res.resultList, function(idx, item){
+			            	
+							//출력 데이터
+			            	var imagePath = "default_user.png";
+			            	if(item.MEM_IMAGE!==null){
+			            		var imagePath =item.memImage;
+			            	}
+			            	var allMemNo = item.memNo;
+			            			            	
+			            	memberDate+="<div class='mem_list_content'>";				        	
+			            	memberDate+="<div class='mem_img_box'>";	
+		            		memberDate+="<img src='<c:url value='/img/mem_images/"+imagePath+"'/>' alt='사원프로필'>";				        	
+		            		memberDate+="</div>";				        	
+		            		memberDate+="<div class='mem_info_box'>";				        	
+		            		memberDate+="<div>"+item.memName+"/"+item.positionName+"</div>";				        	
+		            		memberDate+="<input type='hidden' name='memNo' value='"+item.memNo+"'>";				        	
+		            		memberDate+="</div>";				        	
+		            		memberDate+="</div><!-- mem_list_content -->";				        	
+
+			            });//.each
+			         
+			            //페이징
+			            var str = "";
+			            var firstPage = res.pagingInfo.firstPage;
+			            var lastPage = res.pagingInfo.lastPage;
+			            var currentPage = res.pagingInfo.currentPage;
+			            var totalRecord = res.pagingInfo.totalRecord;
+			            var totalPage = res.pagingInfo.totalPage;
+	
+			            // 이전 블럭으로
+			            if (firstPage > 1) {
+			                str += "<li class='page-item'>";
+			                str += "<a class='page-link' onclick='MyBoardAddMemberList(" + (firstPage - 1) + ")'>";
+			                str += "<";
+			                str += "</a>";
+			                str += "</li>";
+			            }
+	
+			            // 페이지 번호 출력
+			            for (var i = firstPage; i <= lastPage; i++) {
+			                if (i == currentPage) {
+			                    str += "<li class='page-item active' >";
+			                    str += "<a class='page-link' href='#'>" + i + "</a>";
+			                    str += "</li>";
+			                } else {
+			                    str += "<li class='page-item' >";
+			                    str += "<a class='page-link' href='#' onclick='MyBoardAddMemberList(" + i + ")'>" + i + "</a>";
+			                    str += "</li>";
+			                }
+			            }
+	
+			            // 다음 블럭으로
+			            if (lastPage < totalPage) {
+			                str += "<li class='page-item'>";
+			                str += "<a class='page-link' onclick='MyBoardAddMemberList(" + (firstPage + 1) + ")'>";
+			                str += ">";
+			                str += "</a>";
+			                str += "</li>";
+			            }
+			            $('.memListBox').append(memberDate);
+			            $('#pageBox').html("");
+			            $('#pageBox').html(str);	
+			            
+	       			}//not null if
+			}//success
+		});//ajax
 	}
 	
 </script>
 
-	<form action="<c:url value='/myBoard/myBoardMember?mBoardNo=${mBoardNo}'/>" method="post" name="myBoardMemberFrm">
+	<form name="sendFrm" id="sendFrm" method="post" action="<c:url value='/myBoard/myBoardMember?mBoardNo=${mBoardNo}'/>" >
+		<input type="hidden" name="mBoardNo" value="${mBoardNo}">
 		<input type="hidden" name="currentPage">
-		<input type="hidden" name="searchCondition" value="${param.searchCondition}">
+		<input type="hidden" name="deptNo" value="${param.deptNo}">
 	</form>
 	
     <!-- Recent Sales Start -->
@@ -54,12 +145,23 @@
 																<div class="memName">&nbsp;${map['MEM_NAME']}</div>
 																<div class="memDeptName">💼 ${map['DEPT_NAME']}</div>
 															</div>
-															<div>
+															<div >
 																<c:if test="${adminNo == memNo}">
 																	<c:if test="${map['MEM_NO']!=memNo}">
-																		<button class="btn btn-sm btn-primary">삭제</button>
+																		<button class="btn btn-sm btn-primary btnLeft" style="margin-right:2%">채팅</button>
+																		<button class="btn btn-sm btn-primary btnLeft">삭제</button>
 																	</c:if>
+																	<button class="btn btn-sm btn-primary">마이페이지</button>
 																</c:if>
+																<c:if test="${adminNo!=memNo}">
+																	<c:if test="${map['MEM_NO']==memNo}">
+																		<button class="btn btn-sm btn-primary">마이페이지</button>
+																	</c:if>
+																	<c:if test="${map['MEM_NO']!=memNo}">
+																		<button class="btn btn-sm btn-primary">채팅</button>				
+																	</c:if>
+																</c:if>	
+																											
 															</div>
 														</div>
 													</div>
@@ -87,56 +189,12 @@
 						   	  </div>				    
 						      <div class="modal-body">
 						        <div class="memListBox">
-						        <input type="hidden" name="todoDetailNo" value="">   
-							        <c:forEach var="memMap" items="${resultList}">
-							        	<c:if test="${memMap['MEM_NO']!=map['MEM_NO']}">
-								        	<div class="mem_list_content">
-												<div class="mem_img_box">
-													<c:if test="${empty memMap['MEM_IMAGE']}">
-														<img src="<c:url value='/img/mem_images/default_user.png'/>" alt="사원이미지">
-													</c:if>
-							
-													<c:if test="${!empty memMap['MEM_IMAGE']}">
-														<img src="<c:url value='/img/mem_images/${memMap["MEM_IMAGE"]}'/>" alt="사원이미지">
-													</c:if>
-												</div>
-												<div class="mem_info_box">
-													<div>${memMap["MEM_NAME"]}/${memMap["POSITION_NAME"]}</div>
-													<div>${memMap["DEPT_NAME"]}</div>
-													<input type="hidden" name="memNo" value=${memMap["MEM_NO"]}>   
-													
-												</div> 
-											</div><!-- mem_list_content --> 
-										</c:if>	
-									</c:forEach>	
+
 						        </div><!-- memListBox -->
 						      <div class="page_box">
 							      <nav aria-label="Page navigation example">
-									  <ul class="pagination justify-content-center">
-									  <c:if test="${pagingInfo.firstPage>1}">
-										    <li class="page-item">
-										      <a class="page-link" onclick="pageFunc(${pagingInfo.firstPage-1})">
-										      	<
-										      </a>
-										    </li>
-									    </c:if>
-									    <c:forEach var="i" begin="${pagingInfo.firstPage}" end="${pagingInfo.lastPage}">		
-											<c:if test="${i == pagingInfo.currentPage}">		
-											    <li class="page-item active" >
-											    	<a class="page-link" href="#">${i}</a>
-											    </li>
-											   </c:if>
-												<c:if test="${i != pagingInfo.currentPage }">
-												    <li class="page-item">
-												    	<a class="page-link" href="#" onclick="pageFunc(${i})">${i}</a>
-												    </li>
-											    </c:if>   		
-											</c:forEach>
-										<c:if test="${pagingInfo.lastPage < pagingInfo.totalPage}">													    
-										    <li class="page-item">
-										      <a class="page-link"  href="#" onclick="pageFunc(${pagingInfo.lastPage+1})">Next</a>
-										    </li>
-									    </c:if>
+									  <ul class="pagination justify-content-center" id="pageBox">
+
 									  </ul>
 									</nav>
 								</div><!-- page_box -->				        

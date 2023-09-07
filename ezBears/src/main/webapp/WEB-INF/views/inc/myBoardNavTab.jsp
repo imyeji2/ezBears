@@ -34,9 +34,9 @@
     <li class="nav-item" role="presentation">
         <a class="nav-link tap_txt" id="Approval" href="<c:url value='/myBoard/Approval?mBoardNo=${mBoardNo}'/>">결재</a>
     </li>      
-    <li class="nav-item"  role="presentation">
+<%--     <li class="nav-item"  role="presentation">
         <a class="nav-link tap_txt" id="webhard" href="<c:url value='/myBoard/webhard?mBoardNo=${mBoardNo}'/>">웹하드</a>
-    </li>
+    </li> --%>
          
     <li class="nav-item"  role="presentation">
         <a class="nav-link tap_txt" id="myBoardMember" href="<c:url value='/myBoard/myBoardMember?mBoardNo=${mBoardNo}'/>">멤버</a>

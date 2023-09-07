@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import com.ez.ezBears.MBoard.model.MBoardDAO;
+import com.ez.ezBears.member.model.MemberVO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -56,6 +57,7 @@ public class MyBoardListServiceImpl implements MyBoardListService {
 		return myBoardListDao.selectMyBoardMember(mBoardNo);
 	}
 
+	
 	//내가 관리자인 보드 리스트 찾기
 	@Override
 	public List<Map<String, Object>> selectAdminBoardList(int adminMem) {

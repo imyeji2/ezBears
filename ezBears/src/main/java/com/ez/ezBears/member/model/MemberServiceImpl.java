@@ -202,4 +202,9 @@ public class MemberServiceImpl implements MemberService{
 	public List<Map<String, Object>> selectMemberList(SearchVO searchVo) {
 		return memberDao.selectMemberList(searchVo);
 	}
+
+	@Override
+	public List<MemberVO> selectMemberList2(SearchVO searchVo) {
+		return memberDao.selectMemberList2(searchVo);
+	}
 }

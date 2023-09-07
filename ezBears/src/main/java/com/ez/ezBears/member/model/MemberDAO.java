@@ -72,5 +72,5 @@ public interface MemberDAO {
     
     //전체 사원 정보 리스트 
     List<Map<String, Object>> selectMemberList(SearchVO searchVo);
-
+    List<MemberVO> selectMemberList2(SearchVO searchVo);
 }
