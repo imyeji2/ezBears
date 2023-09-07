@@ -1,0 +1,77 @@
+------------------------------사원직급----------------------------------------
+
+insert into position(POSITION_NO,POSITION_NAME)
+values(position_seq.nextval,'인턴');
+
+insert into position(POSITION_NO,POSITION_NAME)
+values(position_seq.nextval,'사원');
+
+insert into position(POSITION_NO,POSITION_NAME)
+values(position_seq.nextval,'대리');
+
+insert into position(POSITION_NO,POSITION_NAME)
+values(position_seq.nextval,'차장');
+
+insert into position(POSITION_NO,POSITION_NAME)
+values(position_seq.nextval,'팀장');
+
+insert into position(POSITION_NO,POSITION_NAME)
+values(position_seq.nextval,'단장');
+
+insert into position(POSITION_NO,POSITION_NAME)
+values(position_seq.nextval,'구단주');
+
+
+
+-----------------------------------부서----------------------------------------
+insert into dept(dept_no, dept_name, dept_tel)
+values(dept_seq.nextval,'경영지원팀','02-592-0001');
+
+insert into dept(dept_no, dept_name, dept_tel)
+values(dept_seq.nextval,'스태프','02-592-0002');
+
+insert into dept(dept_no, dept_name, dept_tel)
+values(dept_seq.nextval,'선수','02-592-0003');
+
+
+
+-----------------------------------사원----------------------------------------
+
+insert into member(MEM_NO,DEPT_NO,POSITION_NO,MEM_NAME,MEM_ID,MEM_PWD,MEM_SAL,TYPE)
+values(member_seq.nextval,3,1,'김민석','ez_kms01','kim01',38000000,'정규직');
+
+
+
+--------------------------------게시판 리스트-------------------------------------
+
+insert into m_board(M_BOARD_NO,MEM_NO,M_BOARD_NAME)
+values(m_board_seq.nextval,2,'경영지원팀'); //2
+
+insert into m_board(M_BOARD_NO,MEM_NO,M_BOARD_NAME)
+values(m_board_seq.nextval,2,'운영1팀');//16
+
+insert into m_board(M_BOARD_NO,MEM_NO,M_BOARD_NAME)
+values(m_board_seq.nextval,2,'프로젝트 1팀');//15
+
+----------------------------------마이보드----------------------------------------
+insert into MY_BOARD(MY_BOARD_NO,MEM_NO,M_BOARD_NO)
+values(MY_BOARD_seq.nextval,2,9);
+
+insert into MY_BOARD(MY_BOARD_NO,MEM_NO,M_BOARD_NO)
+values(MY_BOARD_seq.nextval,2,15);
+
+insert into MY_BOARD(MY_BOARD_NO,MEM_NO,M_BOARD_NO)
+values(MY_BOARD_seq.nextval,3,15);
+
+
+-----------------------------------스태프----------------------------------------
+insert into staff(staff_no, dept_no, staff_name, staff_position, staff_back_no, 
+    staff_birth, staff_sal, contract_start, contract_done, staff_tel, staff_info, 
+    staff_addr, staff_addr_detail, staff_status, staff_id, staff_pwd, staff_image)
+values(staff_seq.nextval, 1, '홍길동', '의료팀', 10, '2020-10-10', 100000000, 
+    '2023-08-08', '2024-08-07', '010-0000-1111', '특이사항 없음', '', '', 'Y',
+    'kiki', '1', 'image');
+
+--------------------------------선수 포지션--------------------------------------
+insert into b_position
+values(b_position_seq.nextval, '내야수');
