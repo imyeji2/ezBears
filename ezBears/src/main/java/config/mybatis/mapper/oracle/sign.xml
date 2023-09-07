@@ -39,7 +39,7 @@
 	      (		
 			select * from signListView
 			<include refid="searchWhere"></include>
-			where m_board_no = #{MBoardNo}
+			where m_board_no = #{MBoardNo} and del_status IS NULL OR del_status &lt;&gt; 'Y'
 			order by doc_no desc
 	      )A
       )
@@ -50,7 +50,7 @@
 	
 	<select id="selectAppCount" resultType="int" parameterType="searchVo">
 		select count(*) from signListView
-		where m_board_no=#{MBoardNo} 
+		where m_board_no=#{MBoardNo}  and del_status IS NULL OR del_status &lt;&gt; 'Y'		
 		<include refid="searchWhere"></include>
 	</select>
 	
@@ -173,4 +173,14 @@
 		where doc_no= #{docNo}
 	</select>
 	
+	<delete id="deleteSingInfo">
+		delete sign
+		where doc_no = #{docNo}
+	</delete>
+	
+	<update id="updateStatusSign" >
+		update sign
+		set del_status = 'Y'
+		where doc_no = #{docNo}		
+	</update>
 </mapper>

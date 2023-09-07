@@ -378,4 +378,25 @@ public class SignController {
 		logger.info("결재 삭제");
 		return "myBoard/Approval_delete";
 	}
+	
+	
+	@ResponseBody
+	@PostMapping("/deleteAppDoc")
+	public Map<String, Object> deleteAppDoc(@RequestParam("docNo") int docNo) {
+		Map<String, Object> response = new HashMap<>();
+
+		int cnt = signService.updateStatusSign(docNo);
+		
+		
+		if (cnt > 0) {
+			response.put("success", true);
+		} else {
+			response.put("success", false);
+			response.put("message", "문서 삭제 실패했습니다."); 
+		}
+		
+		return response;
+
+	}
+
 }

@@ -135,6 +135,17 @@ public class SignServiceImpl implements SignService{
 		signDao.deleteSignFile(docNo);
 	}
 
+	@Override
+	public int deleteSingInfo(int docNo) {
+		return signDao.deleteSingInfo(docNo);
+		
+	}
+
+	@Override
+	public int updateStatusSign(int docNo) {
+		return signDao.updateStatusSign(docNo);
+	}
+
 
 
 	

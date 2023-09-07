@@ -55,5 +55,7 @@ public interface SignService {
 	//수정시 파일삭제
 	void deleteSignFile(int docNo);
 	
+	int deleteSingInfo(int docNo);
+	int updateStatusSign(int docNo);
 }
 
