@@ -7,4 +7,7 @@ public interface MyBoardService {
 	
 	//마이보드 멤버 삭제
 	int deleteMyBoardMember(MyBoardVO myBoardVo);
+	
+	//마이보드 등록
+	int insertMyBoard(MyBoardVO myBoardVo);
 }

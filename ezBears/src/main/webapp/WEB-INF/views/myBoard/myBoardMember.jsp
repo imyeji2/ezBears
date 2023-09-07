@@ -4,7 +4,8 @@
 <script type="text/javascript">
 
 	$(function(){
-		
+		MyBoardAddMemberList(1);
+
 		$('#addBtn').click(function(){
 			$('#staticBackdrop').modal('show');
 		});
@@ -12,7 +13,40 @@
 		$(document).on('show.bs.modal', '#staticBackdrop', function(event) {
 			$('.memListBox').html("");
 			MyBoardAddMemberList(1);
+
 		});
+		
+		$('#deptSearch').change(function() {
+			MyBoardAddMemberList(1);
+		});
+		
+		$(document).on('click', '.mem_list_content', function(event) {
+			var memName = $(this).find('#memName').text();
+			var memNo = $(this).find('input[name=memNo]').val();
+			var mBoardNo = $('#mBoardNo').val();
+			if(confirm(memName+"님을 멤버로 추가하시겠습니까?")){
+			    $.ajax({
+			        type: 'post',
+			        url: "<c:url value='/myBoard/ajax_addMyBoardMember'/>",
+			        data: { memNo: memNo, mBoardNo: mBoardNo },
+			        dataType: 'json',
+			        error: function(xhr, status, error) {
+			            alert(error);
+			        },
+			        success: function(res) {
+			            console.log(res); // 서버 응답 확인 
+			            if (res > 0) {
+			            	MyBoardAddMemberList(1)
+			                alert(memName+"님을 멤버로 추가했습니다.");
+			                $('#staticBackdrop').modal('hide');
+			                location.reload();
+			            } else {
+			                alert('다시 시도해주세요');
+			            }
+			        }
+			    }); // ajax
+			}
+		});		
 	});
 
 	
@@ -20,8 +54,7 @@
 	
 	function MyBoardAddMemberList(curPage){
 		$('input[name="currentPage"]').val(curPage);
-		 var sendDate = $('#sendFrm').serialize(); // 데이터 직렬화
-		 console.log(sendDate);
+		 var sendDate = $('#serchFrm').serialize(); // 데이터 직렬화
 		 $.ajax({
 		        type: 'post',
 		        url: "<c:url value='/myBoard/ajax_selectMyBoardMemberAll'/>",
@@ -38,7 +71,7 @@
 		            	//페이징 처리
 						totalCount=res.pagingInfo.totalRecord;
 						var memberNo = $('#memNo').val();
-			            $.each(res.resultList, function(idx, item){
+			            $.each(res.allMemberList, function(idx, item){
 			            	
 							//출력 데이터
 			            	var imagePath = "default_user.png";
@@ -46,13 +79,13 @@
 			            		var imagePath =item.memImage;
 			            	}
 			            	var allMemNo = item.memNo;
-			            			            	
 			            	memberDate+="<div class='mem_list_content'>";				        	
 			            	memberDate+="<div class='mem_img_box'>";	
 		            		memberDate+="<img src='<c:url value='/img/mem_images/"+imagePath+"'/>' alt='사원프로필'>";				        	
 		            		memberDate+="</div>";				        	
 		            		memberDate+="<div class='mem_info_box'>";				        	
-		            		memberDate+="<div>"+item.memName+"/"+item.positionName+"</div>";				        	
+		            		memberDate+="<div><span id='memName'>"+item.memName+"</span>/"+item.positionName+"</div>";				        	
+		            		memberDate+="<div>💼 "+item.deptName+"</div>";				        	
 		            		memberDate+="<input type='hidden' name='memNo' value='"+item.memNo+"'>";				        	
 		            		memberDate+="</div>";				        	
 		            		memberDate+="</div><!-- mem_list_content -->";				        	
@@ -83,8 +116,8 @@
 			                    str += "<a class='page-link' href='#'>" + i + "</a>";
 			                    str += "</li>";
 			                } else {
-			                    str += "<li class='page-item' >";
-			                    str += "<a class='page-link' href='#' onclick='MyBoardAddMemberList(" + i + ")'>" + i + "</a>";
+			                    str += "<li class='page-item'>";
+			                    str += "<a class='page-link' href='#' onclick='MyBoardAddMemberList(" + i + ")' style='background-color:#fff; color:#7000D8'>" + i + "</a>";
 			                    str += "</li>";
 			                }
 			            }
@@ -108,12 +141,6 @@
 	
 </script>
 
-	<form name="sendFrm" id="sendFrm" method="post" action="<c:url value='/myBoard/myBoardMember?mBoardNo=${mBoardNo}'/>" >
-		<input type="hidden" name="mBoardNo" value="${mBoardNo}">
-		<input type="hidden" name="currentPage">
-		<input type="hidden" name="deptNo" value="${param.deptNo}">
-	</form>
-	
     <!-- Recent Sales Start -->
     <div class="container-fluid pt-4 px-4" id="board_style">
         <div class="bg-secondary text-center rounded">
@@ -146,17 +173,25 @@
 																<div class="memDeptName">💼 ${map['DEPT_NAME']}</div>
 															</div>
 															<div >
+																<!-- 관리자일 때 -->
 																<c:if test="${adminNo == memNo}">
+																	<!-- 본인이 아니면 채팅/삭제 -->
 																	<c:if test="${map['MEM_NO']!=memNo}">
 																		<button class="btn btn-sm btn-primary btnLeft" style="margin-right:2%">채팅</button>
 																		<button class="btn btn-sm btn-primary btnLeft">삭제</button>
 																	</c:if>
-																	<button class="btn btn-sm btn-primary">마이페이지</button>
-																</c:if>
-																<c:if test="${adminNo!=memNo}">
+																	<!-- 본인이면 마이페이지 -->
 																	<c:if test="${map['MEM_NO']==memNo}">
 																		<button class="btn btn-sm btn-primary">마이페이지</button>
 																	</c:if>
+																</c:if>
+																<!-- 관리자가 아닐 떄 -->
+																<c:if test="${adminNo!=memNo}">
+																	<!-- 본인이면 마이페이지 -->
+																	<c:if test="${map['MEM_NO']==memNo}">
+																		<button class="btn btn-sm btn-primary">마이페이지</button>
+																	</c:if>
+																	<!-- 본인이 아니면 채팅 -->
 																	<c:if test="${map['MEM_NO']!=memNo}">
 																		<button class="btn btn-sm btn-primary">채팅</button>				
 																	</c:if>
@@ -188,8 +223,18 @@
 						   	  	<h1 class="modal-title fs-5" id="staticBackdropLabel" style="color:#191C24">팀 멤버</h1>
 						   	  </div>				    
 						      <div class="modal-body">
+						      <form name="serchFrm"  id="serchFrm" method="post" action="<c:url value='/myBoard/myBoardMember?mBoardNo=${mBoardNo}'/>">
+						      	   <input type="hidden" name="mBoardNo" value="${mBoardNo}" id="mBoardNo">
+						      	   <input type="hidden" name="currentPage">
+							        <select class="form-select" name="deptNo" id="deptSearch">
+							        <option selected value='0'>부서 선택</option>
+							       	   <c:forEach var="detpVo" items="${deptList}">
+									  		<option value="${detpVo.deptNo}">${detpVo.deptName}</option>
+										</c:forEach>
+									</select>
+								</form>
 						        <div class="memListBox">
-
+			
 						        </div><!-- memListBox -->
 						      <div class="page_box">
 							      <nav aria-label="Page navigation example">

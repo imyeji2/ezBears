@@ -20,6 +20,11 @@ public class MyBoardServiceImpl implements MyBoardService {
 	public int deleteMyBoardMember(MyBoardVO myBoardVo) {
 		return myBoardDao.deleteMyBoardMember(myBoardVo);
 	}
+	//마이보드 등록
+	@Override
+	public int insertMyBoard(MyBoardVO myBoardVo) {
+		return myBoardDao.insertMyBoard(myBoardVo);
+	}
 
 	
 }

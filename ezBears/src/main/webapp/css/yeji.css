@@ -1123,7 +1123,12 @@
 		font-size: 15px;
 		height: 50px;
 		margin-top:2px;
-	}	
+	}
+	
+	.form-select{
+		background-color: #fff;
+		color:#191C24;
+	}
 			
 }
 

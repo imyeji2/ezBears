@@ -235,7 +235,7 @@
 	 
     <sql id="searchWhereMember">
 		<where>
-			<if test="searchCondition!=null and searchCondition!=''">
+			<if test="deptNo!=null and deptNo!=''">
 				dept_No = #{deptNo}
 			</if>
 		</where>
@@ -257,7 +257,7 @@
 				WHERE m_Board_no =#{mBoardNo}
         		ORDER BY MEM_NAME, DEPT_NAME
                 )
-                <include refid="searchWhereMember"></include>
+               <include refid="searchWhereMember"></include> 
     		)A
 		)
 		
@@ -266,4 +266,17 @@
 		AND RNUM <= #{firstRecordIndex} + #{recordCountPerPage}
 		]]>
 	 </select>	
+	<select id="selectMemberListTotal" parameterType="myBoardMemberSearchVo" resultType="int">	 
+			SELECT count(*) FROM 
+                (
+					select MEM_NO, MEM_NAME, MEM_IMAGE, POSITION_NAME, DEPT_NAME, DEPT_NO 
+					from memberview1
+					MINUS 
+					select MEM_NO, MEM_NAME, MEM_IMAGE, POSITION_NAME, DEPT_NAME, DEPT_NO 
+					from myBoardMemberView
+					WHERE m_Board_no =#{mBoardNo}
+	        		ORDER BY MEM_NAME, DEPT_NAME
+                )
+              <include refid="searchWhereMember"></include>
+	</select>
 </mapper>

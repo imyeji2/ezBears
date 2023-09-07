@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -17,6 +18,9 @@ import com.ez.ezBears.MBoard.model.MBoardVO;
 import com.ez.ezBears.common.ConstUtil;
 import com.ez.ezBears.common.MyBoardMemberSearchVO;
 import com.ez.ezBears.common.PaginationInfo;
+import com.ez.ezBears.dept.model.DeptDAO;
+import com.ez.ezBears.dept.model.DeptService;
+import com.ez.ezBears.dept.model.DeptVO;
 import com.ez.ezBears.member.model.MemberService;
 import com.ez.ezBears.member.model.MemberVO;
 import com.ez.ezBears.myBoard.controller.MyBoardController;
@@ -36,6 +40,7 @@ public class MyBoardMemberController {
 	private final MyBoardService myBoardService;
 	private final MBoardService mBoardService;
 	private final MemberService memberService;
+	private final DeptService deptService;
 
 	
 	@RequestMapping("/myBoardMember")
@@ -54,6 +59,9 @@ public class MyBoardMemberController {
 		List<Map<String, Object>> myBoardMemberList= myBoardListService.selectMyBoardMember(mBoardNo);
 		logger.info("myBoardMemberList={}",myBoardMemberList.size());
 		
+		//전체 부서 검색
+		List<DeptVO> deptList=deptService.selectDeptList();
+		logger.info("부서 검색 결과 deptList={}",deptList.size());
 		
 		//관리자 번호
 		MBoardVO vo = mBoardService.selectMboardAdminNo(mBoardNo);
@@ -69,6 +77,7 @@ public class MyBoardMemberController {
 		model.addAttribute("adminNo",adminNo);
 		model.addAttribute("mBoardNo",mBoardNo);
 		model.addAttribute("myBoardMemberList",myBoardMemberList);
+		model.addAttribute("deptList",deptList);
 		
 		
 		
@@ -81,27 +90,23 @@ public class MyBoardMemberController {
 	 public Map<String, Object> selectMemberAll(MyBoardMemberSearchVO searchVo,
 			 @RequestParam(defaultValue = "0") int mBoardNo){
 		 
-		 	logger.info("ajax 멤버 불러오기 mBoardNo={}",mBoardNo);
-			//보드 멤버 리스트
-			List<Map<String, Object>> myBoardMemberList= myBoardListService.selectMyBoardMember(mBoardNo);
-			logger.info("myBoardMemberList={}",myBoardMemberList.size());
+		 	logger.info("ajax 멤버 불러오기 mBoardNo={},searchVo={}",mBoardNo,searchVo);
 		
 			//페이징 하기 위해서 보드 멤버 리스트 숫자 만큼 더해주기
 			PaginationInfo pagingInfo = new PaginationInfo();
 			pagingInfo.setBlockSize(ConstUtil.BLOCK_SIZE);
 			pagingInfo.setCurrentPage(searchVo.getCurrentPage());
-			pagingInfo.setRecordCountPerPage(ConstUtil.RECORD_COUNT+myBoardMemberList.size());
+			pagingInfo.setRecordCountPerPage(ConstUtil.RECORD_COUNT_SIX);
 			
-			searchVo.setRecordCountPerPage(ConstUtil.RECORD_COUNT+myBoardMemberList.size());
+			searchVo.setRecordCountPerPage(ConstUtil.RECORD_COUNT_SIX);
 			searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex()); 
-			//전체 멤버 불러오기
 			
+			//전체 멤버 불러오기(이미 추가된 멤버 제외하고)
 			List<MemberVO> allMemberList = memberService.selectMemberList2(searchVo);
 			logger.info("전체 멤버 리스트 불러오기 allMemberList={}",allMemberList.size());
-			
-			
-			int totalRecord = memberService.totalList(searchVo);
-			pagingInfo.setTotalRecord(totalRecord-myBoardMemberList.size());
+
+			int totalRecord = memberService.selectMemberListTotal(searchVo);
+			pagingInfo.setTotalRecord(totalRecord);
 			logger.info("pagingInfo={}",pagingInfo.getTotalRecord());
 			
 			Map<String,Object> resultMap = new HashMap<>();
@@ -110,6 +115,21 @@ public class MyBoardMemberController {
 			
 			return resultMap;
 	 }
+	 
+		@ResponseBody
+		@RequestMapping("/ajax_addMyBoardMember")
+		public int addMyBoardMember(@ModelAttribute MyBoardVO myBoardVo) {
+			//1
+			logger.info("마이보드 멤버 추가 파라미터 myBoardVo={}",myBoardVo);
+			
+			//2
+			int cnt = myBoardService.insertMyBoard(myBoardVo);
+			logger.info("마이보드 멤버 추가 결과 cnt={}",cnt);
+			
+			//4
+			return cnt;
+			
+		}	 
 	
 	
 	@RequestMapping("/delMyBoardMember")
@@ -139,4 +159,5 @@ public class MyBoardMemberController {
 		//4
 		return "/common/message";
 	}
+	
 }

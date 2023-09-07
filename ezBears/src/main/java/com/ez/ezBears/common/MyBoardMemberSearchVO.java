@@ -11,9 +11,11 @@ public class MyBoardMemberSearchVO extends SearchVO{
 	
 	@Override
 	public String toString() {
-		return "MyBoardMemberSearchVO [mBoardNo=" + mBoardNo + ", deptNo=" + deptNo + ", getMBoardNo()=" + getMBoardNo()
-				+ ", getDeptNo()=" + getDeptNo() + ", toString()=" + super.toString() + "]";
+		return "MyBoardMemberSearchVO [mBoardNo=" + mBoardNo + ", deptNo=" + deptNo + ", toString()=" + super.toString()
+				+ "]";
 	}
+	
+
 	
 	
 	

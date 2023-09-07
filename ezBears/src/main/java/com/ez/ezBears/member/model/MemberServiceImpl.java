@@ -207,4 +207,10 @@ public class MemberServiceImpl implements MemberService{
 	public List<MemberVO> selectMemberList2(SearchVO searchVo) {
 		return memberDao.selectMemberList2(searchVo);
 	}
+	@Override
+	public int selectMemberListTotal(SearchVO searchVo) {
+		return memberDao.selectMemberListTotal(searchVo);
+	}
+	
+	
 }
