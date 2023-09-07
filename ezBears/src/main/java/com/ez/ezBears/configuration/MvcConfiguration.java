@@ -18,13 +18,14 @@ public class MvcConfiguration implements WebMvcConfigurer{
 		.addPathPatterns("/**");
 		
 		
-		registry.addInterceptor(new MyBoardInterceptor())
-		.addPathPatterns("/myBoard/teamNotice")
-		.addPathPatterns("/myBoard/teamWorkBoard")
-		.addPathPatterns("/myBoard/Calender")
-		.addPathPatterns("/myBoard/Approval")
-		.addPathPatterns("/myBoard/webhard")
-		.addPathPatterns("/myBoard/myBoardMember");
+		/*
+		 * registry.addInterceptor(new MyBoardInterceptor())
+		 * .addPathPatterns("/myBoard/teamNotice")
+		 * .addPathPatterns("/myBoard/teamWorkBoard")
+		 * .addPathPatterns("/myBoard/Calender") .addPathPatterns("/myBoard/Approval")
+		 * .addPathPatterns("/myBoard/webhard")
+		 * .addPathPatterns("/myBoard/myBoardMember");
+		 */
 
 	}
 	

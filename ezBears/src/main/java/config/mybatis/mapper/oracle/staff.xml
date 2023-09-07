@@ -112,5 +112,26 @@
     	SELECT STAFF_NO FROM staff
     	WHERE STAFF_ID=#{staffId}
     </select>
+    
+    <!-- 마이페이지 -->
+    <select id="selectByUserid" parameterType="string"
+		resultType="staffVo">
+		select * from staff
+		where staff_id=#{staffId}
+	</select>
+	
+	
+	<update id="updateMypage" parameterType="staffVo">
+		update staff
+		set staff_tel=#{staffTel},
+		staff_zipcode=#{memZipcode}, staff_address=#{memAddress}, staff_address_Detail=#{memAddressDetail}
+		where staff_id=#{staffId}
+	</update>
+	
+	<update id="updatePwd" parameterType="staffVo">
+		update staff
+		set staff_pwd=#{staffPwd}
+		where staff_id=#{staffId}
+	</update>
 	
 </mapper>

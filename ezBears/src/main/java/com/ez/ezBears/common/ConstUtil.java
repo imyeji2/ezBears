@@ -5,6 +5,7 @@ public interface ConstUtil {
 	public static final int RECORD_COUNT=10;
 	int MEMRECORD_COUNT=20;
 	int RECORD_COUNT_FIVE =5;
+	int RECORD_COUNT_SIX =6;
 	int BLOCK_SIZE=5; //인터페이스라 이렇게 가능 앞에 public static final가 붙어 있는거임
 	
 	//파일 업로드 처리 관련 상수

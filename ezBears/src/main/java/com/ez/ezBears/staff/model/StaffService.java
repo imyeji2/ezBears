@@ -34,4 +34,7 @@ public interface StaffService {
 	int selectCntStaff();
 	
 	int selectStaffNo(String staffId);
+	StaffVO selectByUserid(String staffId);
+	int updateMypage(StaffVO staffVo);
+	int updatePwd(StaffVO staffVo);
 }

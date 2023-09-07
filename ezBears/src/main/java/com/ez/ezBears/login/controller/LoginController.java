@@ -198,6 +198,7 @@ public class LoginController {
 		session.removeAttribute("memberType");
 		session.removeAttribute("staff_no");
 		session.removeAttribute("sessionAttributes");
+		session.removeAttribute("memberType");
 		
 		logger.info("세션 로그아웃");
 		

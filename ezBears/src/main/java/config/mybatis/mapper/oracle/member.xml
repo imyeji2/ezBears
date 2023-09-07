@@ -214,10 +214,73 @@
 		select * from member
 		where mem_id = #{memId}
 	 </select>
+	 	 
+	 <select id="selectMemberList" parameterType="searchVo" resultType="map">
+    	SELECT * FROM 
+    	(
+    		SELECT ROWNUM AS RNUM, A.* FROM 
+    		(
+        		SELECT * FROM memberview1
+        		<include refid="searchWhereMember"></include>
+        		ORDER BY MEM_NAME, DEPT_NAME,POSITION_NO
+    		)A
+		)
+		
+		<![CDATA[
+		WHERE RNUM > #{firstRecordIndex} 
+		AND RNUM <= #{firstRecordIndex} + #{recordCountPerPage}
+		]]>
+	 </select>
 	 
+    <sql id="searchWhereMember">
+		<where>
+			CONTRACT_DONE is null
+			<if test="deptNo!=null and deptNo!=''">
+				dept_No = #{deptNo}
+			</if>
+		</where>
+	</sql>	 
+
+	 <select id="selectMemberList2" parameterType="myBoardMemberSearchVo" resultType="memberVo">
+    	SELECT * FROM 
+    	(
+    		SELECT ROWNUM AS RNUM, A.* FROM 
+    		(
+                SELECT * FROM 
+                (
+				select *
+				from myBoardMemberView
+				MINUS 
+				select *
+				from myBoardMemberView
+				WHERE m_Board_no =#{mBoardNo}
+        		ORDER BY MEM_NAME, DEPT_NAME
+                )
+               <include refid="searchWhereMember"></include> 
+    		)A
+		)
+		
+		<![CDATA[
+		WHERE RNUM > #{firstRecordIndex} 
+		AND RNUM <= #{firstRecordIndex} + #{recordCountPerPage}
+		]]>
+	 </select>	
+	<select id="selectMemberListTotal" parameterType="myBoardMemberSearchVo" resultType="int">	 
+			SELECT count(*) FROM 
+                (
+					select *
+					from myBoardMemberView
+					MINUS 
+					select *
+					from myBoardMemberView
+					WHERE m_Board_no =#{mBoardNo}
+	        		ORDER BY MEM_NAME, DEPT_NAME
+                )
+              <include refid="searchWhereMember"></include>
+	</select>
+
 	 <select id="selectAllMemberView" resultType="map">
 	 	select * from memberView1
 	 </select>
-	 
 	 
 </mapper>

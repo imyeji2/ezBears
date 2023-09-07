@@ -860,7 +860,7 @@
 									</div>
 									<div class="mem_info_box">
 										<div>${memMap["MEM_NAME"]}/${memMap["POSITION_NAME"]}</div>
-										<div>${memMap["DEPT_NAME"]}</div>
+										<div>💼 ${memMap["DEPT_NAME"]}</div>
 										<input type="hidden" name="memNo" value=${memMap["MEM_NO"]}>   
 										
 									</div> 
