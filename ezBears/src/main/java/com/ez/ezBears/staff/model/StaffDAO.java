@@ -4,9 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
-import com.ez.ezBears.common.ConstUtil;
 import com.ez.ezBears.common.SearchVO;
 
 @Mapper
@@ -32,4 +30,8 @@ public interface StaffDAO {
 	int selectCntStaff();
 	
 	int selectStaffNo(String staffId);
+	
+	StaffVO selectByUserid(String staffId);
+	int updateMypage(StaffVO staffVo);
+	int updatePwd(StaffVO staffVo);
 }

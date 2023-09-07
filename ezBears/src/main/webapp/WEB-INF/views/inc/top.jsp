@@ -44,7 +44,7 @@
     
 <style>
     	a{
-    	color:#7000D8;
+    	color:#fff;
     	}
     	
     	.btn-primary{
