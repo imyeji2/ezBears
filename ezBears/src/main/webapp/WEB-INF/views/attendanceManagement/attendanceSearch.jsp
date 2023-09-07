@@ -229,7 +229,7 @@
 			        
 			        
 			        
-			       <%--  <a href="<c:url value='/'/>">메세지 테스트</a> --%>
+			       <a href="<c:url value='/message/list'/>">메세지 테스트</a>
 			        
 			    </div>
 			</div>
