@@ -29,6 +29,8 @@ public interface MBoardDAO {
 	
 	//보드 삭제
 	int deleteMboard(int mBoardNo);
+	//관리자 삭제
+	int updateMboardDelAdmin(int mBoardNo);
 	
 	//보드 이름 검색
 	String selectMboardName(int mBoardNo);

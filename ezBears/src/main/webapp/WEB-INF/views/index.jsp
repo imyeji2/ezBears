@@ -28,7 +28,7 @@
             type: 'doughnut',
             data: {
                 datasets: [{
-                    data: [resultTodo, 100],
+                    data: [resultTodo, 100-resultTodo],
                     backgroundColor: ['#7000D8', '#31354e'],
                     borderColor: ['#7000D8', '#31354e']
                 }]
@@ -234,7 +234,9 @@
                      </div>
                      <div class="d-flex mb-2 todayWeather">
                      	<div class="weatherContent">
-	                       	<div class="place"></div>
+	                       	<div class="place">
+	                       		<i class="bi bi-geo-alt-fill"></i>
+	                       	</div>
 	                       	<div class="weatherIcon"></div>
 	                       	<div class="weatherTemp">
 	                       		<p class="nowTemp">현재기온 :</p>

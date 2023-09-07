@@ -56,7 +56,7 @@ public class MyBoardInterceptor implements HandlerInterceptor{
 		PrintWriter out = response.getWriter();
 		out.print("<script>");
 		out.print("alert('접근할 수 없는 보드입니다.');");
-		out.print("history.back();");
+		out.print("location.href='/ezBears/';");
 		out.print("</script>");
 	    return false;
 	}

@@ -6,6 +6,8 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.ez.ezBears.member.model.MemberVO;
+
 @Mapper
 public interface MyBoardListDAO {
 	//예지
@@ -26,6 +28,7 @@ public interface MyBoardListDAO {
 	
 	//마이보드 멤버 검색
 	List<Map<String, Object>>selectMyBoardMember(int mBoardNo);
+
 	
 	//다희
 	//부서 이름으로 동적 게시판 번호 찾기
@@ -39,6 +42,9 @@ public interface MyBoardListDAO {
 	
 	//마이 보드 삭제
 	int deleteMyboard(int mBoardNo);
+	
+	//
+	int updateMyboard(int mBoardNo);
 	
 	//마이보드 멤버 수 
 	int totalCountMboardMember(int mBoardNo);

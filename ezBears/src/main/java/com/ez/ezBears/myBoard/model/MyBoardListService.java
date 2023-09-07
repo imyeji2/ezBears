@@ -4,6 +4,8 @@ package com.ez.ezBears.myBoard.model;
 import java.util.List;
 import java.util.Map;
 
+import com.ez.ezBears.member.model.MemberVO;
+
 public interface MyBoardListService {
 	//예지
 	//마이보드 메뉴 출력
