@@ -229,7 +229,10 @@
 			        
 			        
 			        
-			       <a href="<c:url value='/message/list'/>">메세지 테스트</a>
+			       <a href="<c:url value='/message/messageList'/>">메세지 리스트</a><br>
+			       <a href="<c:url value='/message/receiveBox'/>">받은 쪽지함</a><br>
+			       <a href="<c:url value='/message/sendBox'/>">보낸 쪽지함</a><br>
+			       <a href="<c:url value='/message/messageWrite'/>">메세지 작성</a>
 			        
 			    </div>
 			</div>

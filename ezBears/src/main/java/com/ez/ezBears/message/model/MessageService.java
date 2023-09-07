@@ -1,5 +1,13 @@
 package com.ez.ezBears.message.model;
 
-public interface MessageService {
+import java.util.List;
+import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+
+public interface MessageService {
+	int SendMessage(MessageSendVO messageSendVo);
+	int ReceiveMessage(@Param("messageSendNo") int messageSendNo, @Param("messageReceiveVo") MessageReceiveVO messageReceveVo);
+	List<Map<String, Object>> selectSendBox(int sendUserNo);
+	List<Map<String, Object>> selectReceiveBox(int receiveUserNo);
 }

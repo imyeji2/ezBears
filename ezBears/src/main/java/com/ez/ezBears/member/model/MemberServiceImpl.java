@@ -196,4 +196,9 @@ public class MemberServiceImpl implements MemberService{
 	
 		return memberDao.memPositionNoInfo(memId);
 	}
+
+	@Override
+	public List<Map<String, Object>> selectAllMemberView() {
+		return memberDao.selectAllMemberView();
+	}
 }
