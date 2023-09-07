@@ -1,9 +1,10 @@
 	$(function(){
         $('#imageUpload').on('change', function() {
             var file = $(this)[0].files[0];
+				console.log(file);
             if (file) {
                 var imageUrl = URL.createObjectURL(file);
-
+				console.log(imageUrl);
                 $('#previewImage').attr('src', imageUrl);
             }
         });

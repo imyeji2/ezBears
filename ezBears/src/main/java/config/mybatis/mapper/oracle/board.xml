@@ -211,6 +211,7 @@
 	
 	
 	
+	
 	<sql id="insertRereplyBoard">
          <if test="memNo!=0">
              insert into board(BOARD_NO,MEM_NO,GROUP_NO,STEP,SORTNO,CONTENTNO,COMMENTS,RANDOM_WRITE)
@@ -221,7 +222,6 @@
    			 values(#{boardNo},#{staffNo},#{groupno},#{step}+1,#{sortno}+1,#{contentno},#{comments},#{randomWrite})
           </if>
     </sql>
-	
 	
 	
    <insert id="insertBoardReReply" parameterType="boardVo">
