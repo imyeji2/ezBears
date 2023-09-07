@@ -4,6 +4,7 @@ package com.ez.ezBears.myBoard.model;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
@@ -107,13 +108,15 @@ public class MyBoardListServiceImpl implements MyBoardListService {
 		try {
 			 cnt = myBoardListDao.deleteMyboard(mBoardNo);
 			 cnt = mBoardDao.deleteMboard(mBoardNo);
-		}catch(RuntimeException e) {
-			//선언적 트랜젝션(@Transactional)에서는
-			//런타임 예외가 발생하면 롤백한다.
+			 System.out.println("마이보드 삭제 cnt="+cnt);
+		}catch(DataIntegrityViolationException e) {
 			e.printStackTrace();
-			cnt=-1;//예외처리를 했다는 의미->예외 발생
-			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-		}
+			cnt=myBoardListDao.updateMyboard(mBoardNo);
+			cnt=mBoardDao.updateMboardDelAdmin(mBoardNo);
+		} catch (Exception e) {
+			cnt=-1;
+	        TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+	    }
 		
 		return cnt;
 	}

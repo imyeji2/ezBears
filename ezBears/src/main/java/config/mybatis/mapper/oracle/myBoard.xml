@@ -21,6 +21,12 @@
 		where mem_no = #{memNo} and M_BOARD_NO=#{MBoardNo}
 	</delete>	
 	
+	<update id="updateMyBoardMember" parameterType="myBoardVo">
+		update my_board
+		set status='N'
+		where mem_no = #{memNo} and M_BOARD_NO=#{MBoardNo}
+	</update>	
+	
 	<insert id="insertMyBoard" parameterType="myBoardVo">
 		<selectKey keyProperty="myBoardNo" order="BEFORE" resultType="int">
 			SELECT MY_BOARD_SEQ.NEXTVAL FROM DUAL

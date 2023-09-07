@@ -333,33 +333,35 @@ $(function(){
 		        success: function(res){
 		            console.log(res); // 서버 응답 확인
 		            $('#editMyBoard tbody').html('');
-		            $.each(res, function(idx, item){
 		            	index++;
-		            	
-		            	if(res.length<1){
+		            	if(res.length===0){
 		            		loadDate+="<tr>";
-		            		loadDate+="<td colspan='5'>관리할 보드가 없습니다.</td>";
+		            		loadDate+="<td colspan='6'>관리할 보드가 없습니다.</td>";
 		            		loadDate+="</tr>";
+		            		$('#editMyBoard tbody').append(loadDate);
 		            	}else{
-			            	loadDate+="<tr>";
-			            	loadDate+="<input type='hidden' name='mBoardNo' value='"+item.M_BOARD_NO+"'>";
-			            	loadDate+="<th scope='row'>"+index+"</th>";
-			            	loadDate+="<td>";
-			            	loadDate+="<input type='text' name='mBoardName' id='editMboardName' class='mBoardNameTxt' value='"+item.M_BOARD_NAME+"'readonly>";
-			            	loadDate+="</td>";
-			            	loadDate+="<td id='adminMem'>"+item.ADMIN_NAME+"</a></td>";
-			            	loadDate+="<td>";
-			            	loadDate+="<button class='btn btn-outline-secondary'type='button' id='myBoardEditBtn'>수정</button>";
-			            	loadDate+="</td>";
-			            	loadDate+="<td>";
-			            	loadDate+="<button class='btn btn-outline-secondary' type='button' id='myBoardDelBtn'>삭제</button></td>";
-			            	loadDate+="<td>";
-			            	loadDate+="<button class='btn btn-outline-secondary' type='button' onclick='moveMyBoard("+item.M_BOARD_NO+")'>이동</button></td>";
-			            	loadDate+="</tr>";
+		            		$.each(res, function(idx, item){
+				            	loadDate+="<tr>";
+				            	loadDate+="<input type='hidden' name='mBoardNo' value='"+item.M_BOARD_NO+"'>";
+				            	loadDate+="<th scope='row'>"+index+"</th>";
+				            	loadDate+="<td>";
+				            	loadDate+="<input type='text' name='mBoardName' id='editMboardName' class='mBoardNameTxt' value='"+item.M_BOARD_NAME+"'readonly>";
+				            	loadDate+="</td>";
+				            	loadDate+="<td id='adminMem'>"+item.ADMIN_NAME+"</a></td>";
+				            	loadDate+="<td>";
+				            	loadDate+="<button class='btn btn-outline-secondary'type='button' id='myBoardEditBtn'>수정</button>";
+				            	loadDate+="</td>";
+				            	loadDate+="<td>";
+				            	loadDate+="<button class='btn btn-outline-secondary' type='button' id='myBoardDelBtn'>삭제</button></td>";
+				            	loadDate+="<td>";
+				            	loadDate+="<button class='btn btn-outline-secondary' type='button' onclick='moveMyBoard("+item.M_BOARD_NO+")'>이동</button></td>";
+				            	loadDate+="</tr>";
+		            		 });
+		            		$('#editMyBoard tbody').append(loadDate);
 		            	}//else
 	
-		            });
-		            $('#editMyBoard tbody').append(loadDate);
+		           
+		            
 		            $('#editMyBoard').modal('show');
 		            
 		        }

@@ -70,6 +70,12 @@
 		where M_BOARD_NO=#{MBoardNo}
 	</update>
 	
+	<update id="updateMboardDelAdmin" parameterType="int">
+		update M_BOARD
+		SET MEM_NO = null
+		where M_BOARD_NO=#{MBoardNo}
+	</update>	
+	
 	<delete id="deleteMboard" parameterType="int">
 		delete M_BOARD
 		where M_BOARD_NO=#{MBoardNo}

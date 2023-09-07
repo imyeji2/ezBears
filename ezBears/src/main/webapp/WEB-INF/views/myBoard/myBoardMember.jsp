@@ -4,22 +4,48 @@
 <script type="text/javascript">
 
 	$(function(){
-		MyBoardAddMemberList(1);
-
+		
+		//멤버 추가 버튼
 		$('#addBtn').click(function(){
 			$('#staticBackdrop').modal('show');
 		});
 		
+		//모달 열릴 때 이벤트
 		$(document).on('show.bs.modal', '#staticBackdrop', function(event) {
 			$('.memListBox').html("");
 			MyBoardAddMemberList(1);
-
 		});
 		
+		//멤버 검색
 		$('#deptSearch').change(function() {
 			MyBoardAddMemberList(1);
 		});
 		
+		//마이페이지 클릭시
+		$('#myPage').click(function(){
+			event.preventDefault()
+			location.href="<c:url value='/mypage/pwdchk'/>";
+		})
+		
+		//채팅 버튼 클릭시
+		$('#chatBtn').click(function(){
+			event.preventDefault();
+			return false;
+			//location.href="#";
+		})
+		
+		//멤버 삭제 버튼 클릭시
+		$('.memberDelBtn').click(function(){
+			event.preventDefault();
+			var memName = $(this).closest("form[name=removeMemberForm]").find('.memName').text().trim();
+			if(confirm(memName+"님을 멤버에서 삭제하시겠습니까?")){
+				$(this).closest('form[name=removeMemberForm]').submit();
+				return false;
+			 }
+		});		
+		
+		
+		//멤버 추가 ajax
 		$(document).on('click', '.mem_list_content', function(event) {
 			var memName = $(this).find('#memName').text();
 			var memNo = $(this).find('input[name=memNo]').val();
@@ -151,11 +177,10 @@
 						<div id="myBoardMember">
 						 	<div class="myBoardMemberBox">
 						 		<div class="topBtnBox">
-						 			<h5>🧑‍💼 보드 멤버</h5>
+						 			<h5>🧑‍💼 보드 멤버(${totalMember})</h5>
 						 		</div>
 						 		<div class="myBoardMemberContentBox">
 									<c:if test="${empty myBoardMemberList}">
-										<div class="">등록된 멤버가 없습니다.</div>
 									</c:if>		
 									<c:if test="${!empty myBoardMemberList}">
 										<c:forEach var="map" items="${myBoardMemberList}">
@@ -177,26 +202,25 @@
 																<c:if test="${adminNo == memNo}">
 																	<!-- 본인이 아니면 채팅/삭제 -->
 																	<c:if test="${map['MEM_NO']!=memNo}">
-																		<button class="btn btn-sm btn-primary btnLeft" style="margin-right:2%">채팅</button>
-																		<button class="btn btn-sm btn-primary btnLeft">삭제</button>
+																		<button class="btn btn-sm btn-primary btnLeft" style="margin-right:2%" id="chatBtn">채팅</button>
+																		<button class="btn btn-sm btn-primary btnLeft memberDelBtn">삭제</button>
 																	</c:if>
 																	<!-- 본인이면 마이페이지 -->
 																	<c:if test="${map['MEM_NO']==memNo}">
-																		<button class="btn btn-sm btn-primary">마이페이지</button>
+																		<button class="btn btn-sm btn-primary" id="myPage">마이페이지</button>
 																	</c:if>
 																</c:if>
 																<!-- 관리자가 아닐 떄 -->
 																<c:if test="${adminNo!=memNo}">
 																	<!-- 본인이면 마이페이지 -->
 																	<c:if test="${map['MEM_NO']==memNo}">
-																		<button class="btn btn-sm btn-primary">마이페이지</button>
+																		<button class="btn btn-sm btn-primary" id="myPage">마이페이지</button>
 																	</c:if>
 																	<!-- 본인이 아니면 채팅 -->
 																	<c:if test="${map['MEM_NO']!=memNo}">
-																		<button class="btn btn-sm btn-primary">채팅</button>				
+																		<button class="btn btn-sm btn-primary" id="chatBtn">채팅</button>				
 																	</c:if>
 																</c:if>	
-																											
 															</div>
 														</div>
 													</div>

@@ -235,6 +235,7 @@
 	 
     <sql id="searchWhereMember">
 		<where>
+			CONTRACT_DONE is null
 			<if test="deptNo!=null and deptNo!=''">
 				dept_No = #{deptNo}
 			</if>
@@ -249,10 +250,10 @@
     		(
                 SELECT * FROM 
                 (
-				select MEM_NO, MEM_NAME, MEM_IMAGE, POSITION_NAME, DEPT_NAME, DEPT_NO 
-				from memberview1
+				select *
+				from myBoardMemberView
 				MINUS 
-				select MEM_NO, MEM_NAME, MEM_IMAGE, POSITION_NAME, DEPT_NAME, DEPT_NO 
+				select *
 				from myBoardMemberView
 				WHERE m_Board_no =#{mBoardNo}
         		ORDER BY MEM_NAME, DEPT_NAME
@@ -269,10 +270,10 @@
 	<select id="selectMemberListTotal" parameterType="myBoardMemberSearchVo" resultType="int">	 
 			SELECT count(*) FROM 
                 (
-					select MEM_NO, MEM_NAME, MEM_IMAGE, POSITION_NAME, DEPT_NAME, DEPT_NO 
-					from memberview1
+					select *
+					from myBoardMemberView
 					MINUS 
-					select MEM_NO, MEM_NAME, MEM_IMAGE, POSITION_NAME, DEPT_NAME, DEPT_NO 
+					select *
 					from myBoardMemberView
 					WHERE m_Board_no =#{mBoardNo}
 	        		ORDER BY MEM_NAME, DEPT_NAME

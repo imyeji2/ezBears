@@ -59,6 +59,9 @@ public class MyBoardMemberController {
 		List<Map<String, Object>> myBoardMemberList= myBoardListService.selectMyBoardMember(mBoardNo);
 		logger.info("myBoardMemberList={}",myBoardMemberList.size());
 		
+		int totalMember = myBoardListService.totalCountMboardMember(mBoardNo);
+		logger.info("마이보드 내부 인원수 totalMember={}",totalMember);
+		
 		//전체 부서 검색
 		List<DeptVO> deptList=deptService.selectDeptList();
 		logger.info("부서 검색 결과 deptList={}",deptList.size());
@@ -78,6 +81,7 @@ public class MyBoardMemberController {
 		model.addAttribute("mBoardNo",mBoardNo);
 		model.addAttribute("myBoardMemberList",myBoardMemberList);
 		model.addAttribute("deptList",deptList);
+		model.addAttribute("totalMember",totalMember);
 		
 		
 		
@@ -153,8 +157,8 @@ public class MyBoardMemberController {
 		}
 		
 		//3
-		model.addAttribute("msg");
-		model.addAttribute("url");
+		model.addAttribute("msg",msg);
+		model.addAttribute("url",url);
 		
 		//4
 		return "/common/message";

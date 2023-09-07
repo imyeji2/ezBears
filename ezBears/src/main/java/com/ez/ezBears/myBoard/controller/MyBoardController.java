@@ -36,6 +36,7 @@ public class MyBoardController {
 		//1
 		logger.info("마이보드 추가");
 		
+		
 		//4
 		return "/myBoard/addMyBoard";
 	}
@@ -53,6 +54,9 @@ public class MyBoardController {
 		
 		mBoardVo.setMBoardNo(memNo);
 		int cnt = mBoardService.addBoard(mBoardVo);
+		
+		List<Map<String, Object>> myBoardList = myBoardListService.selectBoardList(userid);
+		session.setAttribute("myBoardList", myBoardList);
 		
 		return cnt;
 	}
@@ -83,6 +87,7 @@ public class MyBoardController {
 		int adminMem = memberService.selectMemberNo(userid);
 		List<Map<String, Object>> boardList = myBoardListService.selectAdminBoardList(adminMem);
 		logger.info("보드 관리 boardList.size()={}",boardList.size());
+		
 		
 		//3
 		model.addAttribute("boardList",boardList);
@@ -116,11 +121,16 @@ public class MyBoardController {
 	
 	@ResponseBody
 	@RequestMapping("/ajax_delMBoard")
-	public int delteMBoard(int mBoardNo) {
+	public int delteMBoard(int mBoardNo, HttpSession session) {
 		logger.info("마이보드 삭제 파라미터 mBoardNo{}",mBoardNo);
+		
+		String userid = (String)session.getAttribute("userid");
 		
 		int cnt = myBoardListService.deleteAdminBoard(mBoardNo);
 		logger.info("마이보드 삭제 최종 cnt={}",cnt);
+		
+		List<Map<String, Object>> myBoardList = myBoardListService.selectBoardList(userid);
+		session.setAttribute("myBoardList", myBoardList);
 		
 		return cnt;
 	}

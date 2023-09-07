@@ -9,6 +9,7 @@
 	<select id="selectBoardList" parameterType="String" resultType="map">
 		select * from myBoardListView
 		where mem_id=#{userid}
+		and STATUS = 'Y'
 		order by m_board_name
 	</select>
 	
@@ -40,20 +41,22 @@
 	
 	<select id="selectMyBoardMember" parameterType="int" resultType="map">
 		select * from myBoardMemberView
-		where m_board_no=#{mBoardNo} and CONTRACT_DONE is null
+		where m_board_no=#{mBoardNo} 
+		and CONTRACT_DONE is null
+		and STATUS = 'Y'
 		order by mem_name
 	</select>
 
 		
 	<select id="selectAdminBoardList" parameterType="int" resultType="map">
 		select * from myBoardListView
-		where ADMIN_NO=#{adminNo} and mem_no=#{adminNo}
-		order by m_board_name
+		where ADMIN_NO=#{adminNo} and mem_no=#{adminNo} and STATUS = 'Y'
+		order by m_board_name 
 	</select>
 	
 	<select id="totalCountMboardMember">
 		select count(mem_no) from myBoardListView
-		where m_board_no=#{mBoardNo}
+		where m_board_no=#{mBoardNo} and STATUS = 'Y'
 	</select>	
 	<!-- 예지 -->
 	
@@ -87,7 +90,14 @@
 	<delete id="deleteMyboard" parameterType="int">
 		delete MY_BOARD
 		where M_BOARD_NO=#{MBoardNo}
-	</delete>	
+	</delete>
+	
+	<update id="updateMyboard" parameterType="int">
+		update MY_BOARD
+		set status ='N'
+		where M_BOARD_NO=#{MBoardNo}
+	</update>
+		
 	<select id="selectMemAppPositionInfo" resultType="myBoardInfoVo">
 		select * from myBoardInfo
 		where m_board_no = #{mBoardNo} and position_no=6
