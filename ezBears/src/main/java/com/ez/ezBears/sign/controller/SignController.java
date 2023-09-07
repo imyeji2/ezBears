@@ -223,7 +223,7 @@ public class SignController {
 	    logger.info("수정 결과 cnt={} , docNo={},signVo.getDocNo={}", cnt, docNo, signVo.getDocNo());
 
 	    try {
-	        String msg = "공지사항 글 수정 실패";
+	        String msg = "결재요청 수정 실패";
 	        String url = "/myBoard/Approval_edit?docNo=" + docNo;
 
 	        if (cnt > 0) {
@@ -234,10 +234,8 @@ public class SignController {
 	            
 	                signService.deleteSignFile(docNo);
 	                signService.insertSignFile(flist, docNo);
-  
-	            }
-	            
-	            msg = "공지사항 글 수정 성공";
+	            }  
+	            msg = "결재요청 수정 완료";
 	            url = "/myBoard/Approval_detail?docNo=" + docNo;
 	        }
 
