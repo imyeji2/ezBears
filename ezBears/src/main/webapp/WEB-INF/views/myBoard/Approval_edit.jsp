@@ -46,13 +46,13 @@
 	String strDate = simpleDate.format(date);
 
 %>
-		<form id="appform2" action="<c:url value='/myBoard/Approval_edit'/>"  method="post" enctype="multipart/form-data" >
+		<form id="appform" action="<c:url value='/myBoard/Approval_edit'/>"  method="post" enctype="multipart/form-data" >
 				<input type ="hidden" name ="userid" id="userid" value="${userid }">
-				<input type="hidden" name="myBoardNo" id="myBoardNo"value="${myBoardInfoVo.myBoardNo}"> 
-				<input type="hidden" name="memNo" id="memNo" value="${myBoardInfoVo.memNo}"> 
-				<input type="hidden" name="MBoardNo" id="MBoardNo" value="${myBoardInfoVo.MBoardNo}"> 
-				<input type="hidden" name="deptNo" id="deptNo" value="${myBoardInfoVo.deptNo}">
-				<input type="hidden" name="positionNo" id="positionNo" value="${myBoardInfoVo.positionNo}">
+				<input type="hidden" name="myBoardNo" id="myBoardNo"value="${signMemInfoVo.myBoardNo}"> 
+				<input type="hidden" name="memNo" id="memNo" value="${signMemInfoVo.memNo}"> 
+				<input type="hidden" name="MBoardNo" id="MBoardNo" value="${signMemInfoVo.MBoardNo}"> 
+				<input type="hidden" name="deptNo" id="deptNo" value="${signMemInfoVo.deptNo}">
+				<input type="hidden" name="positionNo" id="positionNo" value="${signMemInfoVo.positionNo}">
 				<input type="hidden" name="memName" id="memName" value="${myBoardInfoVo.memName}">
 				 
 			<table class="table" id="table" border="1">
@@ -65,10 +65,6 @@
 					<td class="td-4"> 
 					<input type ="text" class="sta" value="처리 상태">
 					<input type ="text" class="status" name="status" id="status" value="${list['STATUS'] }">		
-					
-					<%-- <c:if test="${list['STATUS'] eq '대기'}">
-						<input type="button" class=" btn-sm btn-primary appoveBtn " value="승인" onclick="approveDocument()">
-					</c:if> --%>
 					
 					</td>
 				</tr>
@@ -98,15 +94,15 @@
 						</td>
 				</tr>
 
-	                <c:if test="${!empty filemap }">
+	               
 	                <tr class="tr-m">
 	            	<td colspan="7">
 	            	<!-- <input class="form-control appfile" type="file" id="app_file"> -->	
 							<div class="signfile">
 								<div class="fileupload">
 									<a href="#" class="fileinfo">첨부파일</a>		
-									<c:forEach var="map" items="${filemap }">
 									<input class="form-control appfile app_file2" type="file" id="app_file2" name="file">
+									<c:forEach var="map" items="${filemap }">
 									<label style="color: red">
 										새로운 파일 업로드시 ${map['ORIGIN_FILENAME']}&nbsp; 
 										(<fmt:formatNumber value="${map['FSIZE'] /1024.0}" type="number" pattern="#.##" /> KB)
@@ -116,7 +112,7 @@
 								</div>
 							</div>
 				    	</tr>
-					</c:if>	
+					
 	      
 
 	                <tr>
@@ -132,8 +128,8 @@
 			</table>
 			<div>
 			 
-			        <input type="button" class="btn btn-sm btn-primary btn" value="수정" onclick="docSave2()"/>
-			    
+			        <input type="submit" class="btn btn-sm btn-primary btn" value="수정"/> 
+			   
 		</div>
 			</form>
 		</div>

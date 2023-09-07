@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class MessageSendVO {
 	private int messageSendNo;
-    private String sendUserId;
+    private int sendUserNo;
     private String sendTime;
     private String content;
 }

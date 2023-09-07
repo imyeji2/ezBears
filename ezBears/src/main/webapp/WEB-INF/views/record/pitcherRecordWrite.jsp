@@ -8,10 +8,10 @@
 
 
 	<form name="frmWrite" method="post" action="<c:url value='/record/pitcherRecordWrite'/>">
-		<input type="text" name="staffNo" value="${sessionScope.staff_no}">
+		<input type="hidden" name="staffNo" value="${sessionScope.staff_no}">
 		<%-- <input type="hidden" name="sysdate" value="<%= new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date()) %>"> --%>
 		<!-- 잘 들어오는거 확인함 recodeNo -->
-		<input type="text" name="recodeNo" value="${param.recodeNo}">
+		<input type="hidden" name="recodeNo" value="${param.recodeNo}">
         <!-- Sign In Start -->
         <div class="container-fluid">
             <div class="row h-100 align-items-center justify-content-center">

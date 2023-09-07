@@ -23,6 +23,12 @@
 	href="https://static.flashscore.com/res/_fs/build/tabs_filters.0656451.css"
 	media="all">
 
+<style>
+.lf__sides {
+    display: block; /* 다른 스타일 속성들 */
+}
+</style>
+
 	
 <div class = "background" style = "background-color: white;">
 <div class="lf__lineUp">
@@ -74,25 +80,25 @@
 		<a href="<c:url value='/record/pitcherRecordWrite?recodeNo=${param.recodeNo }'/>">투수 기록정보
 			등록</a>
 	</div>
-	<%-- <div class="divBtn">
+	<div class="divBtn">
 		<a href="<c:url value='/record/pitcherRecordEdit'/>">투수 기록정보
 			수정</a>
 	</div>
 	<div class="divBtn">
 		<a href="<c:url value='/record/pitcherRecordDelete'/>">투수 기록정보
 			삭제</a>
-	</div> --%>
+	</div>
 	
 	<div class="divBtn">
 		<a href="<c:url value='/record/hitterRecordWrite?recodeNo=${param.recodeNo }'/>">타자 기록정보
 			등록</a>
 	</div>
-	<%-- <div class="divBtn">
-		<a href="<c:url value='/record/hitterRecordEdit'/>">타자 기록정보
+	<div class="divBtn">
+		<a href="<c:url value='/record/hitterRecordEdit?recodeNo=${param.recodeNo }'/>">타자 기록정보
 			수정</a>
 	</div>
 	<div class="divBtn">
-		<a href="<c:url value='/record/hitterRecordDelete'/>">타자 기록정보
+		<a href="<c:url value='/record/hitterRecordDelete?recodeNo=${param.recodeNo }'/>">타자 기록정보
 			삭제</a>
-	</div> --%>
+	</div>
 </c:if>

@@ -6,20 +6,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-
-<script type="text/javascript">
-	function pageFunc(page) {
-		$('input[name="currentPage"]').val(page);
-		$('form[name="frmPage"]').submit();
-	}
-	
-	$(function() {
-		$('#chat').click(function() {
-			$('#exampleModal').modal("show");
-		});
-	});
-</script>
-
 <div class="container-fluid" id="board_style" style="margin-top: 1.5%">
 	<div class="col-sm-12 col-xl-12">
 		<div class="bg-secondary rounded h-100 p-4">
@@ -32,33 +18,6 @@
 			</nav>
 			<br>
 			<h4>경기기록</h4>
-			
-			<!-- Button trigger modal -->
-			<button type="button" id="chat" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#appSelModal">
-			  Launch demo modal
-			</button>
-			
-			<!-- Modal -->
-			<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-			  <div class="modal-dialog">
-			    <div class="modal-content">
-			      <div class="modal-header">
-			        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-			        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-			      </div>
-			      <div class="modal-body">
-						<c:import url="/chat/chatModal" >
-							<c:param name="loginuser" value="${sessionScope.memberVo }"></c:param>
-						</c:import>
-						
-			      </div>
-			      <div class="modal-footer">
-			        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-			        <button type="button" class="btn btn-primary">Save changes</button>
-			      </div>
-			    </div>
-			  </div>
-			</div>
 			
 			<br>
 			<div class="table-responsive">
@@ -153,10 +112,11 @@
 						value="검색" id="btnSearch">
 				</form>
 			</div>
-
+			<c:if test="${sessionScope.type eq '스태프'}">
 			<div class="divBtn">
 				<a href="<c:url value='/record/gameWrite'/>">경기정보 등록</a>
 			</div>
+			</c:if>
 		</div>
 	</div>
 </div>

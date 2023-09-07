@@ -54,7 +54,13 @@ public interface SignDAO {
 			@Param("searchDeptNo") int searchDeptNo, @Param("searchName") String searchName);
 	
 	// 결재 수정
-	int updateSignInfo(int docNo);
+	int updateSignInfo(SignVO signVo);
 	
 	SignMemInfoVO selectApprovaMem(int docNo);
+	
+	void deleteSignFile(int docNo);
+	
+	int deleteSingInfo(int docNo);
+	
+	int updateStatusSign(int docNo);
 }

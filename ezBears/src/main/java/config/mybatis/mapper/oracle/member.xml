@@ -214,4 +214,10 @@
 		select * from member
 		where mem_id = #{memId}
 	 </select>
+	 
+	 <select id="selectAllMemberView" resultType="map">
+	 	select * from memberView1
+	 </select>
+	 
+	 
 </mapper>
