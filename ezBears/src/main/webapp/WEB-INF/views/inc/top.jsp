@@ -333,7 +333,7 @@ $(function(){
 		        success: function(res){
 		            console.log(res); // 서버 응답 확인
 		            $('#editMyBoard tbody').html('');
-		            	index++;
+		            	
 		            	if(res.length===0){
 		            		loadDate+="<tr>";
 		            		loadDate+="<td colspan='6'>관리할 보드가 없습니다.</td>";
@@ -341,6 +341,7 @@ $(function(){
 		            		$('#editMyBoard tbody').append(loadDate);
 		            	}else{
 		            		$.each(res, function(idx, item){
+		            			index++;
 				            	loadDate+="<tr>";
 				            	loadDate+="<input type='hidden' name='mBoardNo' value='"+item.M_BOARD_NO+"'>";
 				            	loadDate+="<th scope='row'>"+index+"</th>";
