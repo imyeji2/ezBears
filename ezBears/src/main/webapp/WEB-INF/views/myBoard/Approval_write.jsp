@@ -46,7 +46,7 @@
 				<input type ="hidden" name ="userid" id="userid" value="${userid }">
 				<input type="hidden" name="myBoardNo" id="myBoardNo"value="${myBoardInfoVo.myBoardNo}"> 
 				<input type="hidden" name="memNo" id="memNo" value="${myBoardInfoVo.memNo}"> 
-				<input type="text" name="MBoardNo" id="MBoardNo" value="${myBoardInfoVo.MBoardNo}"> 
+				<input type="hidden" name="MBoardNo" id="MBoardNo" value="${myBoardInfoVo.MBoardNo}"> 
 				<input type="hidden" name="deptNo" id="deptNo" value="${myBoardInfoVo.deptNo}">
  
 				 

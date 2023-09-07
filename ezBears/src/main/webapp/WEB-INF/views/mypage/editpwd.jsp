@@ -7,7 +7,7 @@
 <article class="simpleForm">
 <div class="form-container">
 	<form action="<c:url value='/mypage/pwd'/>" method="post">
-	
+	<input type="hidden" name="type" id="type" value="${sessionScope.type}" disabled>
 		<div class="container-fluid">
 			<div class="row h-100 align-items-center justify-content-center"
 				style="min-height: 100vh;">
@@ -15,9 +15,8 @@
 					<div class="bg-secondary rounded p-4 p-sm-5 my-4 mx-3">
 						<div
 							class="d-flex align-items-center justify-content-between mb-3">
-							<a href="index.html" class="">
-								<h3 class="text-primary">
-									<i class="fa fa-user-edit me-2"></i>회원정보 수정
+								<h3>
+									<i class="fa fa-user-edit me-2"></i>비밀번호 수정
 								</h3>
 							</a>
 						</div>

@@ -44,7 +44,7 @@
     
 <style>
     	a{
-    	color:#7000D8;
+    	color:#fff;
     	}
     	
     	.btn-primary{
@@ -618,7 +618,7 @@ $(function(){
 	                <form class="d-none d-md-flex ms-4">
 	                    <input class="form-control bg-dark border-0" id="searchbox" type="search" placeholder="사원을 검색하세요">
 	                    <%@include file="../Member/memberSearch.jsp"%>
-	                    <%@include file="../Member/memberPopup.jsp"%>
+	                    
 	                </form>
                 </div>
                 

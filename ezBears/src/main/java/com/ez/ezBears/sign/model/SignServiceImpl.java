@@ -123,19 +123,28 @@ public class SignServiceImpl implements SignService{
 	public SignMemInfoVO selectApprovaMem(int docNo) {
 		return signDao.selectApprovaMem(docNo);
 	}
-
-
-
-
-
-
-
-
-
-
-
-
 	
+	//결재 수정
+	@Override
+	public int updateSignInfo(SignVO signVo) {
+		return signDao.updateSignInfo(signVo);
+	}
+
+	@Override
+	public void deleteSignFile(int docNo) {
+		signDao.deleteSignFile(docNo);
+	}
+
+	@Override
+	public int deleteSingInfo(int docNo) {
+		return signDao.deleteSingInfo(docNo);
+		
+	}
+
+	@Override
+	public int updateStatusSign(int docNo) {
+		return signDao.updateStatusSign(docNo);
+	}
 
 
 

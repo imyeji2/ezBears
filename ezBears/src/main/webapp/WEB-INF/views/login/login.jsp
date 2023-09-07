@@ -90,7 +90,7 @@
 				<div class="bg-secondary rounded p-4 p-sm-5 my-4 mx-3">
 					<div class="d-flex align-items-center justify-content-between mb-3">
 						<!-- <a href="index.html" class=""> -->
-							<h3 class="text-primary">
+							<h3>
 								<i class="fa fa-user-edit me-2"></i>로그인
 							</h3>
 						</a>

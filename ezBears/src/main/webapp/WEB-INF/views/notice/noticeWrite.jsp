@@ -72,7 +72,7 @@
 						action="<c:url value='${url }'/>">
 		        	<div class="writeWrap">
 		        	<%-- <c:if test="${!empty param.noticeNo}"> --%>
-		        		<input type="text" name="noticeNo" value="${noticeNo}">
+		        		<input type="hidden" name="noticeNo" value="${noticeNo}">
 		        	<%-- </c:if> --%>
 		        		<input type="hidden" name="memNo" value="${sessionScope.memNo}">
 		        		<%-- <input type="text" name="memNo" value="${map['NOTICE_NO']}"> --%>

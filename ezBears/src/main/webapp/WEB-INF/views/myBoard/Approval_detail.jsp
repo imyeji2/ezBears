@@ -6,27 +6,6 @@
 <%@include file="../inc/top.jsp"%>
 <link rel="stylesheet" href="<c:url value='/css/jquery-ui.min.css'/>"type="text/css">
 <script type="text/javascript" src="<c:url value='/js/jquery-ui.min.js'/>"></script>
-<script>
-
-
-	var jb = jQuery.noConflict();
-	jb(function() {
-		jb("#startVacation").datepicker({
-			dateFormat: 'yy-mm-dd',
-			changeYear: true,
-			dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
-			monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']
-		});
-		
-		jb("#endVacation").datepicker({
-			dateFormat: 'yy-mm-dd',
-			changeYear: true,
-			dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
-			monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']
-		});
-	});
-	
-</script>
 
 
 <div class="container-fluid pt-4 px-4" id ="Approval_wr">
@@ -47,14 +26,11 @@
 
 %>
 		<form id="appform2" action="" method="post" enctype="multipart/form-data" >
-				<input type ="text" name ="userid" id="userid" value="${userid }">
-				<input type="text" name="myBoardNo" id="myBoardNo"value="${signMemInfoVo.myBoardNo}"> 
+				<input type ="hidden" name ="userid" id="userid" value="${userid }">
+				<input type="hidden" name="myBoardNo" id="myBoardNo"value="${signMemInfoVo.myBoardNo}"> 
 				<input type="hidden" name="memNo" id="memNo" value="${signMemInfoVo.memNo}"> 
-				<input type="text" name="MBoardNo" id="MBoardNo" value="${signMemInfoVo.MBoardNo}"> 
-<%-- 				<input type="hidden" name="deptNo" id="deptNo" value="${myBoardInfoVo.deptNo}"> 
-				<input type="text" name="deptNo" id="deptNo" value="${memberVo.deptNo}">--%>
-				 <input type="text" name="positionNo" id="positionNo" value="${memberVo.positionNo}">
-				<%--<input type="hidden" name="memName" id="memName" value="${signMemInfoVo.memName}"> --%>
+				<input type="hidden" name="MBoardNo" id="MBoardNo" value="${signMemInfoVo.MBoardNo}"> 
+				<input type="hidden" name="positionNo" id="positionNo" value="${memberVo.positionNo}">
 				 
 			<table class="table" id="table" border="1">
 				<tr class="tr-s">
@@ -126,7 +102,7 @@
 	      
 
 	                <tr>
-	                    <td class="td-1">휴가사유</td>
+	                    <td class="td-1">결재 내용</td>
 	                    </tr>
 	                    <tr>
 	                    <td colspan="8" id="td-leave-reason">
@@ -139,9 +115,16 @@
 			<div>
 			    <c:if test="${sessionScope.name eq list['MEM_NAME']}">
 					<c:if test="${list['STATUS'] eq '대기' }">
-			        <input type="button" class="btn btn-sm btn-primary btn" value="수정" onclick="docSave2()"/>
+			        <input type="button" class="btn btn-sm btn-primary btn" id="deleteButton" value="삭제" />
+			        <input type="button" class="btn btn-sm btn-primary btn" value="수정" onclick="editApp()"/>
 			    	</c:if>
 			    </c:if>
+			</div>
+			
+			<!-- 비밀번호 입력 창 -->
+			<div id="passwordInput" style="display: none;">
+			    <input type="password" id="password" placeholder="비밀번호 입력" />
+			    <input type="button" id="confirmPasswordButton" value="확인" />
 			</div>
 			</form>
 		</div>
@@ -152,10 +135,15 @@
 </div>
 	<script>
 	
-	 function docSave2() {
+	 function editApp() {
 	        var docNo = "${list['DOC_NO']}";
 	        // docNo를 URL에 추가하여 수정 페이지로 이동
 	        window.location.href = "<c:url value='/myBoard/Approval_edit'/>?docNo=" + docNo;
+	    }
+	 function deleteApp() {
+	        var docNo = "${list['DOC_NO']}";
+	        // docNo를 URL에 추가하여 수정 페이지로 이동
+	        window.location.href = "<c:url value='/myBoard/Approval_delete'/>?docNo=" + docNo;
 	    }
 		
 		var ckEditor = CKEDITOR.replace('docContent', {
@@ -266,7 +254,33 @@
 		        alert("해당 직책에서는 승인 권한이 없습니다.");
 		    }
 		}
+		
+		$("#deleteButton").click(function () {
+		    if (confirm("정말로 이 문서를 삭제하시겠습니까?")) {
+		        // 사용자가 확인을 눌렀을 때만 삭제 수행
+		        deleteAppDoc("${list['DOC_NO']}");
+		    }
+		});
 
+		function deleteAppDoc(docNo) {
+			var mBoardNo = "${signMemInfoVo.MBoardNo}";
+			console.log("mBoardNo",mBoardNo);
+		    // AJAX
+		    $.ajax({
+		        url: "<c:url value='/myBoard/deleteAppDoc'/>",
+		        method: "POST",
+		        data: {
+		            docNo: docNo
+		        },
+		        success: function () {
+		            alert("문서가 삭제되었습니다.");
+		            window.location.href = "<c:url value='/myBoard/Approval?mBoardNo='/>"+mBoardNo;
+		        },
+		        error: function () {
+		            alert("문서 삭제 중 오류가 발생했습니다.");
+		        }
+		    });
+		}
 
 	</script>
 <%@include file="../inc/bottom.jsp"%>
