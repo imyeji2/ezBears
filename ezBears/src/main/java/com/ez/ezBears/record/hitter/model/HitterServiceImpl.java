@@ -5,13 +5,14 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.ez.ezBears.team.model.TeamVO;
+
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class HitterServiceImpl implements HitterService {
 	private final HitterDAO hitterDao;
-
 	
 	@Override
 	public int insertHitter(HitterVO hitterVo) {
@@ -51,5 +52,17 @@ public class HitterServiceImpl implements HitterService {
 		return hitterDao.selectHitterRecordView(recodeNo);
 	}
 
+	@Override
+	public List<TeamVO> selectAllHitter() {
+		// TODO Auto-generated method stub
+		return hitterDao.selectAllHitter();
+	}
 
+	@Override
+	public HitterVO selectByRecodeNo(int recodeNo) {
+		// TODO Auto-generated method stub
+		return hitterDao.selectByRecodeNo(recodeNo);
+	}
+
+	
 }

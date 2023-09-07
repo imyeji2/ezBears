@@ -56,6 +56,7 @@
     }
 </script>
 <article class="simpleForm">
+<input type="hidden" name="type" id="type" value="${sessionScope.type}" disabled>
 <div class="form-container">
 	<form action="<c:url value='/mypage/mypage'/>" method="post">
 	
@@ -66,35 +67,65 @@
 					<div class="bg-secondary rounded p-4 p-sm-5 my-4 mx-3">
 						<div
 							class="d-flex align-items-center justify-content-between mb-3">
-							<a href="index.html" class="">
-								<h3 class="text-primary">
+								<h3>
 									<i class="fa fa-user-edit me-2"></i>회원정보 수정
 								</h3>
 							</a>
 						</div>
 						<div class="form-floating mb-3">
-						    <input type="text" name="memId" id="id" class="form-control" id="floatingText" value="${sessionScope.userid}" disabled>
+							<c:if test="${sessionScope.type=='사원' }">
+						    	<input type="text" style="background-color: black" name="memId" id="id" class="form-control" id="floatingText" value="${sessionScope.userid}" disabled>
+						    </c:if>
+						    
+						    <c:if test="${sessionScope.type=='스태프' }">
+						    	<input type="text" style="background-color: black" name="staffId" id="id" class="form-control" id="floatingText" value="${sessionScope.userid}" disabled>
+						    </c:if>
 						    <label for="floatingText">아이디</label>
 						</div>
 						<div class="form-floating mb-3">
-						    <input type="text" name="memName" id="name" class="form-control" id="floatingText" value="${sessionScope.name}" disabled>
+							<c:if test="${sessionScope.type=='사원' }">
+							    <input type="text" name="memName" style="background-color: black" id="name" class="form-control" id="floatingText" value="${sessionScope.name}" disabled>
+						    </c:if>
+						    <c:if test="${sessionScope.type=='스태프' }">
+							    <input type="text" name="staffName" style="background-color: black" id="name" class="form-control" id="floatingText" value="${sessionScope.name}" disabled>
+						    </c:if>
 						    <label for="floatingText">이름</label>
 						</div>
 						<div class="form-floating mb-3">
-							<input type="text" name="memZipcode" id="memZipcode" class="form-control" id="floatingText" value="${memberVo.memZipcode }"> 
+							<c:if test="${sessionScope.type=='사원' }">
+								<input type="text" name="memZipcode" id="memZipcode" class="form-control" id="floatingText" value="${memberVo.memZipcode }"> 
+						    </c:if>
+						    <c:if test="${sessionScope.type=='스태프' }">
+								<input type="text" name="staffZipcode" id="staffZipcode" class="form-control" id="floatingText" value="${staffVo.staffZipcode }"> 
+						    </c:if>
 							<label for="floatingText">우편번호</label>
 							<input class="btn btn-primary w-30 m-2" type="Button" value="우편번호 찾기" id="btnZipcode" title="새창열림" onclick="mypagEdit()"><br/>
 						</div>
 						<div class="form-floating mb-3">
-							<input type="text" name="memAddress" id="memAddress" class="form-control" id="floatingText" value="${memberVo.memAddress }"> 
+							<c:if test="${sessionScope.type=='사원' }">
+								<input type="text" name="memAddress" id="memAddress" class="form-control" id="floatingText" value="${memberVo.memAddress }"> 
+						    </c:if>
+							<c:if test="${sessionScope.type=='스태프' }">
+								<input type="text" name="staffAddr" id="staffAddr" class="form-control" id="floatingText" value="${staffVo.staffAddr }"> 
+						    </c:if>
 							<label for="floatingText">주소</label>
 						</div>
 						<div class="form-floating mb-3">
-							<input type="text" name="memAddressDetail" id="memAddressDetail" class="form-control" id="floatingText" value="${memberVo.memAddressDetail }"> 
+							<c:if test="${sessionScope.type=='사원' }">
+								<input type="text" name="memAddressDetail" id="memAddressDetail" class="form-control" id="floatingText" value="${memberVo.memAddressDetail }"> 
+						    </c:if>
+							<c:if test="${sessionScope.type=='스태프' }">
+								<input type="text" name="staffAddrDetail" id="staffAddrDetail" class="form-control" id="floatingText" value="${staffVo.staffAddrDetail }"> 
+						    </c:if>
 							<label for="floatingText">상세주소</label>
 						</div>
 						<div class="form-floating mb-3">
-							<input type="text" name="memTel" id="hp" class="form-control" id="floatingInput" value="${memberVo.memTel }"> 
+							<c:if test="${sessionScope.type=='사원' }">
+								<input type="text" name="memTel" id="hp" class="form-control" id="floatingInput" value="${memberVo.memTel }"> 
+						    </c:if>
+							<c:if test="${sessionScope.type=='스태프' }">
+								<input type="text" name="staffTel" id="hp" class="form-control" id="floatingInput" value="${staffVo.staffTel }"> 
+						    </c:if>
 							<label for="floatingInput">핸드폰 번호(- 포함)</label>
 						</div>
 						

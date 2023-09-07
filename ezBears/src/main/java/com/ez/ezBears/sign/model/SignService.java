@@ -49,5 +49,13 @@ public interface SignService {
 			@Param("searchDeptNo") int searchDeptNo, @Param("searchName") String searchName);
 	
 	SignMemInfoVO selectApprovaMem(int docNo);
+	
+	//결재 수정
+	int updateSignInfo(SignVO signVo);
+	//수정시 파일삭제
+	void deleteSignFile(int docNo);
+	
+	int deleteSingInfo(int docNo);
+	int updateStatusSign(int docNo);
 }
 

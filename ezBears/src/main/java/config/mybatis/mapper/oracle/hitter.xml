@@ -30,11 +30,8 @@
 	</select>
 	
 	<insert id="insertHitter" parameterType="hitterVo">
-		<selectKey keyProperty="hitterNo" order="BEFORE" resultType="int">
-			select hitter_seq.nextval from dual
-		</selectKey>
-		insert into hitter(hitter_no, recode_no, player_no, staffNo, regdate ,ab, rs, h, rbi, bb, so, ba)
-		values(#{hitterNo}, #{recodeNo}, #{playerNo}, #{staffNo}, #{regdate} #{AB}, #{RS}, #{H}, #{RBI}, #{BB}, #{SO}, #{BA})
+		insert into hitter(hitter_no, recode_no, player_no, staff_no, regdate ,ab, rs, h, rbi, bb, so, ba, hr)
+		values(hitter_seq.nextval, #{recodeNo}, #{playerNo}, #{staffNo}, sysdate, #{AB}, #{RS}, #{H}, #{RBI}, #{BB}, #{SO}, #{BA}, #{HR})
 	</insert>
 	
 	<select id="selectByPlayerNo" resultType="hitterVo" parameterType="searchVo">
@@ -42,6 +39,13 @@
 		from hitter
 		where player_no = #{playerNo}
 	</select>
+
+	<select id="selectByRecodeNo" resultType="hitterVo">
+		select *
+		from hitter
+		where recode_no = #{recodeNo} and player_no = #{playerNo}
+	</select>
+	
 	
 	<select id="selectHitterView" parameterType="int" resultType="map">
     	select * from hitter_view where player_no = #{playerNo}
@@ -55,4 +59,21 @@
     <select id="selectHitterStatView" parameterType="int" resultType="map">
     	select * from hitter_stat_view
     </select>
+    
+    <select id="selectAllHitter" resultType="teamVo">
+		select * from team where b_position_no != 1 order by player_name
+	</select>
+    
+    <update id="updateHitter" parameterType="hitterVo">
+    	update hitter
+    	set
+    	ab=#{AB}, rs=#{RS}, h=#{H}, rbi=#{RBI}, bb=#{BB}, so=#{SO}, ba=#{BA}, hr=#{HR}
+    	where player_no=#{playerNo} and recode_no=#{recodeNo}
+    </update>
+    
+    <delete id="deleteHitter" parameterType="int">
+    	delete hitter
+    	where player_no=#{playerNo}
+    </delete>
+    
 </mapper>

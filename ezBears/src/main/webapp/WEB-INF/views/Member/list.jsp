@@ -47,7 +47,8 @@
 		            console.log(res);
 		            if (memNo) {
 		                // memNo에 따른 처리
-		                $('.popup-inner #previewImage').attr("src", "../img/mem_images/" + res.memberVo.memImage);
+		                var MemImgUrl = "<c:url value='/img/mem_images/" + res.memberVo.memImage + "'/>";
+		                $('.popup-inner #pop_previewImage').attr("src", MemImgUrl);
 		                $('.popup-inner #deptName').val(res.memberVo.deptName);
 		                $('.popup-inner #positionName').val(res.memberVo.positionName);
 		                $('.popup-inner #memName').val(res.memberVo.memName);
@@ -61,9 +62,15 @@
 		                if (res.memberVo.memBirth) {
 		                    $('.popup-inner #memBirth').val(res.memberVo.memBirth.substring(0, 10));
 		                }
+		                
+		                if(res.memberVo.memImage === null){
+	                        $('.popup-inner #previewImage').attr("src", "<c:url value='/img/defaultUSER.png'/>");
+                        }
+		                
 		            } else if (staffNo) {
 		                // staffNo에 따른 처리
-		                $('.popup-inner #previewImage').attr("src", "../img/staffImages/" + res.staffVo.staffImage);
+		                var StaffImgUrl = "<c:url value='/img/staffImages/" + res.staffVo.staffImage + "'/>";
+		                $('.popup-inner #pop_previewImage').attr("src", StaffImgUrl);
 		                $('.popup-inner #deptName').val("스태프");
 		                $('.popup-inner #positionName').val(res.staffVo.staffPosition);
 		                $('.popup-inner #memName').val(res.staffVo.staffName);
@@ -74,6 +81,9 @@
 		                if (res.staffVo.staffBirth) {
 		                    $('.popup-inner #memBirth').val(res.staffVo.staffBirth.substring(0, 10));
 		                }
+		                if(res.staffVo.staffImage === null){
+	                        $('.popup-inner #pop_previewImage').attr("src", "<c:url value='/img/defaultUSER.png'/>");
+                        }
 		            }
 
 		            $('.popup-inner').show();

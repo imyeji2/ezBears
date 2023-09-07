@@ -6,7 +6,7 @@
 	
   .insertapp{
 	   text-align: right;
-	   margin-left: 1070px;
+	   margin-left: 92%;
 	   margin-top: 20px;
 	}	
 	.table td{
@@ -61,9 +61,11 @@
 	}
 	.btn{
 		width: 90px;	
-		margin-top: 14px;
+		margin-top: -13px;
 		background-color: #7000D8;
-		margin-left: 750px;
+		margin-left: 18px;
+		float: right;
+	
 	}	
 	.table td{
 		color: #fff;
@@ -99,7 +101,7 @@
 	}
 	.table td.td-3 {
 		text-align: center;
-		width: 13%;
+		/*width: 13%;*/
 	}
 	.table td.td-1 {
     	width: 19%;

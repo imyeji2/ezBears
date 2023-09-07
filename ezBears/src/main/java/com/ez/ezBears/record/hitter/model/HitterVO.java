@@ -16,4 +16,5 @@ public class HitterVO {
 	private double BB;
 	private int SO;
 	private double BA;
+	private int HR;
 }

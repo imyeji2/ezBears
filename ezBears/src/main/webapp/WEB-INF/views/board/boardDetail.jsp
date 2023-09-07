@@ -287,7 +287,7 @@
 							var errorMessage=item.errorMessage;
 							
 							//출력 데이터
-							var step= item.STEP
+							var step= item.STEP;
 			            	var imagePath = "defaultUSER.png";
 			            	if(item.MEM_IMAGE!==null){
 			            		var imagePath =item.MEM_IMAGE;
@@ -297,7 +297,7 @@
 				            var date = new Date(item.REGDATE);
 				            var userid='<%=session.getAttribute("userid")%>';
 				            const regdate = new Date(date.getTime()).toISOString().split('T')[0] + " " + date.toTimeString().split(' ')[0];				            
-				         	
+				         	var type = $('input[name=type]').val();
 				           	
 				            if(step=== 1){//댓글일 때
 				            	if(item.STATUS==='N'){
@@ -358,7 +358,7 @@
 					            		replyData+="<input type='hidden' name='step' value='"+item.STEP+"'>";
 					            		/* replyData+="<input type='hidden' name='mBoardNo' value='"+item.M_BOARD_NO+"'>"; */
 					            		replyData+="<input type='hidden' name='contentno' value='"+item.CONTENTNO+"'>";
-					            		if(item.TYPE==="정규직"){
+					            		if(type==='사원'){
 							            	replyData+="<input type='hidden' name='memNo' value='${userNo}'>";
 					            		}else{
 							            	replyData+="<input type='hidden' name='staffNo' value='${userNo}'>";
@@ -386,7 +386,7 @@
 			            		
 			            	}else{//대댓글일때
 
-			            		replyData="<div class='r_reply_content'>";
+			            		replyData="<div class='board_r_reply_content'>";
 			            		replyData+="<!-- 대댓글 보기 -->";			       
 			            		replyData+="<div class='r_reply_write_form'>";
 			            		replyData+="<form name='reReplyDelFrom' method='post' action='#'>";
@@ -603,10 +603,12 @@
 	       			<!-- 댓글 등록 -->
 	       			<form name="reply_frm" method="post" action="#">
 	       				<c:if test="${sessionScope.type=='사원' }">
-		       				<input type="text" name="memNo" id="memNo" value="${userNo}">ggg
+		       				<input type="hidden" name="memNo" id="memNo" value="${userNo}">
+		       				<input type="hidden" name="type" id="type" value="${sessionScope.type}">
 	       				</c:if>
 	       				<c:if test="${sessionScope.type=='스태프' }">
-		       				<input type="text" name="staffNo" id="staffNo" value="${userNo}">ggg
+		       				<input type="hidden" name="staffNo" id="staffNo" value="${userNo}">
+		       				<input type="hidden" name="type" id="type" value="${sessionScope.type}">
 	       				</c:if>
 	       				<input type="hidden" name=contentno id="contentno" value="${map['BOARD_NO']}"> 
 	       				<%-- <input type="hidden" name="mBoardNo" id="mBoardNo" value="${map['M_BOARD_NO']}"> --%>

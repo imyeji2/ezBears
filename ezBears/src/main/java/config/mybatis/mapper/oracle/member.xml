@@ -214,8 +214,7 @@
 		select * from member
 		where mem_id = #{memId}
 	 </select>
-	 
-	 
+	 	 
 	 <select id="selectMemberList" parameterType="searchVo" resultType="map">
     	SELECT * FROM 
     	(
@@ -241,7 +240,6 @@
 			</if>
 		</where>
 	</sql>	 
-
 
 	 <select id="selectMemberList2" parameterType="myBoardMemberSearchVo" resultType="memberVo">
     	SELECT * FROM 
@@ -280,4 +278,9 @@
                 )
               <include refid="searchWhereMember"></include>
 	</select>
+
+	 <select id="selectAllMemberView" resultType="map">
+	 	select * from memberView1
+	 </select>
+	 
 </mapper>

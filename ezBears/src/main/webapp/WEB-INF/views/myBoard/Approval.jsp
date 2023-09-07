@@ -33,7 +33,7 @@ function submitForm() {
     // 모달 닫기
     $('#approvalModal').modal('hide');
 }
-document.addEventListener("DOMContentLoaded", function() {
+/* document.addEventListener("DOMContentLoaded", function() {
     // 휴가신청서 클릭 시 휴가신청서 페이지로 이동
     document.getElementById("vacationForm").addEventListener("click", function() {
         document.getElementById("approvalCategory").value = "휴가신청서";
@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function() {
         document.getElementById("approvalCategory").value = "지출결의서";
         submitForm();
     });
-});
+}); */
     
 
 </script>
@@ -115,9 +115,11 @@ document.addEventListener("DOMContentLoaded", function() {
 								</tbody>
 							</table>
 						</div>
-						<button type="button" class="btn btn-sm btn-primary insertapp"
-							data-toggle="modal" data-target="#approvalModal">결재작성</button>
-					
+						<!-- <button type="button" class="btn btn-sm btn-primary insertapp"
+							data-toggle="modal" data-target="#approvalModal">결재작성							
+						</button> -->
+					<a href='<c:url value='/myBoard/Approval_write?mBoardNo=${mBoardNo }'/>' role="button"
+					class="btn btn-sm btn-primary insertapp">결재 작성</a>
 					  <div class="divPage" style="text-align: center" >		
 				<!-- 페이지 번호 추가 -->		
 				<c:if test="${pagingInfo.firstPage>1 }">
@@ -176,6 +178,7 @@ document.addEventListener("DOMContentLoaded", function() {
 										<option value="품의서" id="requisitionForm">품의서</option>
 										<option value="지출결의서" id="expenseForm">지출결의서</option>
 									</select>
+								
 								</div>
 
 							</div>
@@ -191,11 +194,11 @@ document.addEventListener("DOMContentLoaded", function() {
 				<!-- approvalModal -->
 
 				<div>
-					<input type="text" name="mBoardNo" value="${mBoardNo}">
-					 <input type="text" name="userid" value="${userid}"> 
-						<input type="text" name="memNo" value="${memNo}"> 
-						<input type="text" name="deptNo" value="${myBoardInfoVo.deptNo}">
-						<input type="text" name="positionNo" value="${myBoardInfoVo.positionNo}">
+					<input type="hidden" name="mBoardNo" value="${mBoardNo}">
+					 <input type="hidden" name="userid" value="${userid}"> 
+						<input type="hidden" name="memNo" value="${memNo}"> 
+						<input type="hidden" name="deptNo" value="${myBoardInfoVo.deptNo}">
+						<input type="hidden" name="positionNo" value="${myBoardInfoVo.positionNo}">
 				</div>
 			</div>
 		</div>

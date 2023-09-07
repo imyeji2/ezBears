@@ -23,6 +23,8 @@ import com.ez.ezBears.attendance.model.AttendanceService;
 import com.ez.ezBears.attendance.model.AttendanceVO;
 import com.ez.ezBears.member.model.MemberService;
 import com.ez.ezBears.member.model.MemberVO;
+import com.ez.ezBears.staff.model.StaffService;
+import com.ez.ezBears.staff.model.StaffVO;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -37,6 +39,7 @@ public class MyPageController {
 
 	private final AttendanceService attendanceService;
 	private final MemberService memberService;
+	private final StaffService staffService;
 
 	@RequestMapping("/edit")
 	public String wirte() {
@@ -315,36 +318,53 @@ public class MyPageController {
 	//마이페이지 비밀번호체크
 	@GetMapping("/pwdchk")
 	public String pwdchk(HttpSession session, Model model) {
-
-		String userid = (String) session.getAttribute("userid");
-		logger.info("마이페이지 비밀번호 체크 페이지, 파라미터 userid={}", userid);
-
-		MemberVO memberVo = memberService.selectByUserid(userid);
-		logger.info("마이페이지 비밀번호 체크 페이지, 정보 조회결과 memberVo={}", memberVo);
-		
-		model.addAttribute("memberVo", memberVo);
+//
+//		String userid = (String) session.getAttribute("userid");
+//		logger.info("마이페이지 비밀번호 체크 페이지, 파라미터 userid={}", userid);
+//
+//		MemberVO memberVo = memberService.selectByUserid(userid);
+//		logger.info("마이페이지 비밀번호 체크 페이지, 정보 조회결과 memberVo={}", memberVo);
+//		
+//		model.addAttribute("memberVo", memberVo);
 
 		return "mypage/pwdchk";
 	}
 
 	@PostMapping("/pwdchk")
-	public String pwdchk_post(@ModelAttribute MemberVO vo, HttpSession session, Model model) {
+	public String pwdchk_post(@ModelAttribute MemberVO memberVo,
+			@ModelAttribute StaffVO staffVo,
+			@RequestParam String type,
+			HttpSession session, Model model) {
 
 		String userid = (String) session.getAttribute("userid");
 		logger.info("마이페이지 비밀번호 체크 페이지, 파라미터 userid={}", userid);
-
-		vo.setMemId(userid);
+		String type1 = (String) session.getAttribute("type");
+		logger.info("type 로그 type={}",type1);
 		
-		logger.info("마이페이지 비밀번호 체크 처리, 파라미터 vo={}", vo);
+		
+		int result=0;
+		int result1=0;
+		if(type1.equals("사원")) {
+			memberVo.setMemId(userid);
+			logger.info("마이페이지 비밀번호 체크 처리, 파라미터 memberVo={}", memberVo);
+			
+			result = memberService.loginCheck(memberVo.getMemId(), memberVo.getMemPwd());
+			logger.info("마이페이지 비밀번호 체크 결과, result={}", result);
+		}else if(type1.equals("스태프")) {
+			staffVo.setStaffId(userid);
+			logger.info("마이페이지 비밀번호 체크 처리, 파라미터 staffVo={}", staffVo);
+			
+			result1 = staffService.loginCheck(staffVo.getStaffId(), staffVo.getStaffPwd());
+			logger.info("마이페이지 비밀번호 체크 결과, result1={}", result1);
+		}
+		
 
 
-		int result = memberService.loginCheck(vo.getMemId(), vo.getMemPwd());
-		logger.info("마이페이지 비밀번호 체크 결과, result={}", result);
 
 		String url = "";
-		if (result == MemberService.LOGIN_OK) {
+		if (result == MemberService.LOGIN_OK || result1==staffService.LOGIN_OK) {
 				url = "/mypage/mypage";
-		} else if (result == MemberService.PWD_DISAGREE) {
+		} else if (result == MemberService.PWD_DISAGREE || result1==staffService.PWD_DISAGREE) {
 			String msg = "비밀번호가 일치하지 않습니다.";
 			url="/mypage/pwdchk";
 			model.addAttribute("msg", msg);
@@ -363,31 +383,58 @@ public class MyPageController {
 
 		String userid = (String) session.getAttribute("userid");
 		logger.info("회원 수정 페이지, 파라미터 userid={}", userid);
+		String type = (String) session.getAttribute("type");
+		logger.info("회원 수정 페이지, 파라미터 type={}", type);
+		
+		if(type.equals("사원")) {
+			MemberVO memberVo = memberService.selectByUserid(userid);
+			logger.info("회원정보수정 페이지, 정보 조회결과 memberVo={}", memberVo);
+			model.addAttribute("memberVo", memberVo);
+		}else if(type.equals("스태프")) {
+			StaffVO staffVo = staffService.selectByUserid(userid);
+			logger.info("회원정보수정 페이지, 정보 조회결과 staffVo={}", staffVo);
+			model.addAttribute("staffVo", staffVo);
+		}
 
-		MemberVO memberVo = memberService.selectByUserid(userid);
-		logger.info("회원정보수정 페이지, 정보 조회결과 memberVo={}", memberVo);
-
-		model.addAttribute("memberVo", memberVo);
 
 		return "mypage/edit";
 	}
 	
 	@PostMapping("/mypage")
-	public String mypage_edit_post(@ModelAttribute MemberVO vo,  HttpSession session, Model model) {
+	public String mypage_edit_post(@ModelAttribute MemberVO memberVo,  
+			@ModelAttribute StaffVO staffVo,
+			HttpSession session, Model model) {
 
 		String userid = (String) session.getAttribute("userid");
 		logger.info("회원 수정 페이지, 파라미터 userid={}", userid);
-
-		vo.setMemId(userid);
-		logger.info("회원 수정 처리, 파라미터 vo={}", vo);
-
-		// 전화번호 처리
-		if (vo.getMemTel() == null || vo.getMemTel().isEmpty()) {
-			vo.setMemTel("");
+		String type = (String) session.getAttribute("type");
+		logger.info("회원 수정 페이지, 파라미터 type={}", type);
+		
+		int cnt=0;
+		
+		if(type.equals("사원")) {
+			memberVo.setMemId(userid);
+			logger.info("회원 수정 처리, 파라미터 memberVo={}", memberVo);
+			
+			// 전화번호 처리
+			if (memberVo.getMemTel() == null || memberVo.getMemTel().isEmpty()) {
+				memberVo.setMemTel("");
+			}
+			
+			cnt = memberService.updateMypage(memberVo);
+		}else if(type.equals("스태프")) {
+			staffVo.setStaffId(userid);
+			logger.info("회원 수정 처리, 파라미터 staffVo={}", staffVo);
+			
+			// 전화번호 처리
+			if (staffVo.getStaffTel() == null || staffVo.getStaffTel().isEmpty()) {
+				staffVo.setStaffTel("");
+			}
+			cnt = staffService.updateMypage(staffVo);
 		}
 
+
 		String msg = "회원 수정 실패!", url = "/";
-		int cnt = memberService.updateMypage(vo);
 		logger.info("회원정보 수정 결과, cnt={}", cnt);
 		if (cnt > 0) {
 			msg = "회원 수정 성공!";
@@ -406,37 +453,54 @@ public class MyPageController {
 	///비밀번호
 	@GetMapping("/pwdchk2")
 	public String pwdchk2(HttpSession session, Model model) {
-		
-		String userid = (String) session.getAttribute("userid");
-		logger.info("회원 수정 페이지, 파라미터 userid={}", userid);
-
-		MemberVO memberVo = memberService.selectByUserid(userid);
-		logger.info("마이페이지 비밀번호 체크 페이지, 정보 조회결과 memberVo={}", memberVo);
-
-		model.addAttribute("memberVo", memberVo);
+//		
+//		String userid = (String) session.getAttribute("userid");
+//		logger.info("회원 수정 페이지, 파라미터 userid={}", userid);
+//
+//		MemberVO memberVo = memberService.selectByUserid(userid);
+//		logger.info("마이페이지 비밀번호 체크 페이지, 정보 조회결과 memberVo={}", memberVo);
+//
+//		model.addAttribute("memberVo", memberVo);
 
 		return "mypage/pwdchk2";
 	}
 
 	//비밀번호체크
 	@PostMapping("/pwdchk2")
-	public String pwdchk2_post(@ModelAttribute MemberVO vo,  HttpSession session, Model model) {
-		
+	public String pwdchk2_post(@ModelAttribute MemberVO memberVo, 
+			@ModelAttribute StaffVO staffVo,
+			@RequestParam String type,
+			HttpSession session, Model model) {
+
 		String userid = (String) session.getAttribute("userid");
-		logger.info("비밀번호체크  페이지, 파라미터 userid={}", userid);
+		logger.info("마이페이지 비밀번호 체크 페이지, 파라미터 userid={}", userid);
+		String type1 = (String) session.getAttribute("type");
+		logger.info("type 로그 type={}",type1);
 		
-		vo.setMemId(userid);
+		int result=0;
+		int result1=0;
+		
+		if(type1.equals("사원")) {
+			memberVo.setMemId(userid);
+			logger.info("비밀번호체크 처리, 파라미터 memberVo={}", memberVo);
+			
+			result = memberService.loginCheck(memberVo.getMemId(), memberVo.getMemPwd());
+			logger.info("비밀번호체크 결과, result={}", result);
+		}else if(type1.equals("스태프")) {
+			staffVo.setStaffId(userid);
+			logger.info("비밀번호체크 처리, 파라미터 staffVo={}", staffVo);
+			
+			result1 = staffService.loginCheck(staffVo.getStaffId(), staffVo.getStaffPwd());
+			logger.info("비밀번호체크 결과, result1={}", result1);
+		}
 
-		logger.info("비밀번호체크 처리, 파라미터 vo={}", vo);
 
-
-		int result = memberService.loginCheck(vo.getMemId(), vo.getMemPwd());
-		logger.info("비밀번호체크 결과, result={}", result);
+		
 
 		String url = "";
-		if (result == MemberService.LOGIN_OK) {
+		if (result == MemberService.LOGIN_OK || result1==staffService.LOGIN_OK) {
 			url = "/mypage/pwd";
-		} else if (result == MemberService.PWD_DISAGREE) {
+		} else if (result == MemberService.PWD_DISAGREE || result1==staffService.PWD_DISAGREE) {
 			String msg = "비밀번호가 일치하지 않습니다.";
 			url="/mypage/pwdchk2";
 			model.addAttribute("msg", msg);
@@ -454,41 +518,79 @@ public class MyPageController {
 		
 		String userid = (String) session.getAttribute("userid");
 		logger.info("비밀번호수정 페이지, 파라미터 userid={}", userid);
-
-		MemberVO memberVo = memberService.selectByUserid(userid);
-		logger.info("비밀번호수정 페이지, 정보 조회결과 memberVo={}", memberVo);
-
-		model.addAttribute("memberVo", memberVo);
+		
+		String type = (String) session.getAttribute("type");
+		logger.info("type 로그 type={}",type);
+		
+		if(type.equals("사원")) {
+			MemberVO memberVo = memberService.selectByUserid(userid);
+			logger.info("비밀번호수정 페이지, 정보 조회결과 memberVo={}", memberVo);
+			
+			model.addAttribute("memberVo", memberVo);
+		}else if(type.equals("스태프")) {
+			StaffVO staffVo = staffService.selectByUserid(userid);
+			logger.info("비밀번호수정 페이지, 정보 조회결과 staffVo={}", staffVo);
+			
+			
+			model.addAttribute("staffVo", staffVo);
+		}
 
 		return "mypage/editpwd";
 	}
 
 	//비밀번호 수정
 	@PostMapping("/pwd")
-	public String changepwd_post(@ModelAttribute MemberVO vo,  HttpSession session, Model model) {
+	public String changepwd_post(@ModelAttribute MemberVO memberVo,  
+			@ModelAttribute StaffVO staffVo,
+			HttpSession session, Model model) {
 		
 		String userid = (String) session.getAttribute("userid");
 		logger.info("비밀번호수정 페이지, 파라미터 userid={}", userid);
 		
-		vo.setMemId(userid);
-
-		logger.info("비밀번호수정 처리, 파라미터 vo={}", vo);
-
+		String type = (String) session.getAttribute("type");
+		logger.info("type 로그 type={}",type);
+		
 		String msg = "비밀번호 수정 실패!", url = "/";
 		
-		//현재 비밀번호와 새로운 비밀번호를 비교
-		MemberVO existingMember = memberService.selectByUserid(userid);
-	    if (existingMember != null && existingMember.getMemPwd().equals(vo.getMemPwd())) {
-	        msg = "현재 비밀번호와 새로운 비밀번호가 동일합니다.";
-	        url = "/mypage/pwd";
-	    } else {
-	        //비밀번호를 업데이트
-	        int cnt = memberService.updatePwd(vo);
-	        logger.info("비밀번호 수정 결과, cnt={}", cnt);
-	        if (cnt > 0) {
-	            msg = "비밀번호 수정 성공!";
-	        }
-	    }
+		if(type.equals("사원")) {
+			memberVo.setMemId(userid);
+			logger.info("비밀번호수정 처리, 파라미터 memberVo={}", memberVo);
+			
+			MemberVO existingMember = memberService.selectByUserid(userid);
+			//현재 비밀번호와 새로운 비밀번호를 비교
+		    if (existingMember != null && existingMember.getMemPwd().equals(memberVo.getMemPwd())) {
+		        msg = "현재 비밀번호와 새로운 비밀번호가 동일합니다.";
+		        url = "/mypage/pwd";
+		    } else {
+		        //비밀번호를 업데이트
+		        int cnt = memberService.updatePwd(memberVo);
+		        logger.info("비밀번호 수정 결과, cnt={}", cnt);
+		        if (cnt > 0) {
+		            msg = "비밀번호 수정 성공!";
+		        }
+		    }
+			
+		}else if(type.equals("스태프")) {
+			staffVo.setStaffId(userid);
+			logger.info("비밀번호수정 처리, 파라미터 staffVo={}", staffVo);
+			
+			StaffVO existingMember = staffService.selectByUserid(userid);
+			//현재 비밀번호와 새로운 비밀번호를 비교
+		    if (existingMember != null && existingMember.getStaffPwd().equals(staffVo.getStaffPwd())) {
+		        msg = "현재 비밀번호와 새로운 비밀번호가 동일합니다.";
+		        url = "/mypage/pwd";
+		    } else {
+		        //비밀번호를 업데이트
+		        int cnt = staffService.updatePwd(staffVo);
+		        logger.info("비밀번호 수정 결과, cnt={}", cnt);
+		        if (cnt > 0) {
+		            msg = "비밀번호 수정 성공!";
+		        }
+		    }
+		}
+
+		
+		
 	    
 		// 3
 		model.addAttribute("msg", msg);
@@ -497,12 +599,6 @@ public class MyPageController {
 		// 4
 		return "common/message";
 	}
-
-
-
-
-
-
 
 
 }

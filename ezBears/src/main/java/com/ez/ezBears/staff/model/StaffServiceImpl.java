@@ -131,4 +131,20 @@ public class StaffServiceImpl implements StaffService {
 	public int selectStaffNo(String staffId) {
 		return staffDao.selectStaffNo(staffId);
 	}
+
+	@Override
+	public StaffVO selectByUserid(String staffId) {
+		return staffDao.selectByUserid(staffId);
+	}
+
+	@Override
+	public int updateMypage(StaffVO staffVo) {
+		logger.info("회원정보수정 파라미터 staffVo={}",staffVo);
+		return staffDao.updateMypage(staffVo);
+	}
+
+	@Override
+	public int updatePwd(StaffVO staffVo) {
+		return staffDao.updatePwd(staffVo);
+	}
 }
