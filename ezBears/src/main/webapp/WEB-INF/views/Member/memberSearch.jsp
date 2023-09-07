@@ -3,10 +3,29 @@
 <link href="${pageContext.request.contextPath}/css/Dcss.css" rel="stylesheet">
 <script>
 	$(function(){
+		
+		
 	    $('.pop_rel_keywords').hide();
 	    $('#sec').hide();
 	    $('.popup-inner').hide();
 
+
+		$('.popup-background').click(function() {
+			$('.popup').removeClass('open');
+		});
+		
+		$('.close-btn').click(function() {
+			$('.popup').removeClass('open');
+		});
+		
+		$(document).keyup(function(e) {
+		    if (e.key === "Escape") { 
+		        $('.popup-inner').hide(); 
+		        $('.popup.members-popup').removeClass('open');
+		    }
+		});
+	    
+	    
 	     $(document).on('click', function(event){
 	         if (!$(event.target).closest('.pop_rel_keywords').length && !$(event.target).is('#searchbox')) {
 	             $('.pop_rel_keywords').hide();
@@ -32,10 +51,11 @@
 	                data: data,
 	                dataType: 'json',
 	                success: function (res) {
-	                    console.log(res);
+	                    
 	                    if (memNo) {
 	                        // memNo에 따른 처리
-	                        $('.popup-inner #previewImage').attr("src", "../img/mem_images/" + res.memberVo.memImage);
+		                	var MemImgUrl = "<c:url value='/img/mem_images/" + res.memberVo.memImage + "'/>";
+	                        $('.popup-inner #pop_previewImage').attr("src", MemImgUrl);
 	                        $('.popup-inner #deptName').val(res.memberVo.deptName);
 	                        $('.popup-inner #positionName').val(res.memberVo.positionName);
 	                        $('.popup-inner #memName').val(res.memberVo.memName);
@@ -47,15 +67,16 @@
 	                        }
 	                        
 	                        if(res.memberVo.memImage === null){
-		                        $('.popup-inner #previewImage').attr("src", "../img/defaultUSER.png");
+		                        $('.popup-inner #previewImage').attr("src", "<c:url value='/img/defaultUSER.png'/>");
 	                        }
 
 	                        if (res.memberVo.memBirth) {
 	                            $('.popup-inner #memBirth').val(res.memberVo.memBirth.substring(0, 10));
 	                        }
 	                    } else if (staffNo) {
+		                	var StaffImgUrl = "<c:url value='/img/staffImages/" + res.staffVo.staffImage + "'/>";
 	                        // staffNo에 따른 처리
-	                        $('.popup-inner #previewImage').attr("src", "../img/staffImages/" + res.staffVo.staffImage);
+	                        $('.popup-inner #pop_previewImage').attr("src",StaffImgUrl);
 	                        $('.popup-inner #deptName').val("스태프");
 	                        $('.popup-inner #positionName').val(res.staffVo.staffPosition);
 	                        $('.popup-inner #memName').val(res.staffVo.staffName);
@@ -64,7 +85,7 @@
 	                        $('.popup-inner #staffInfo').val(res.staffVo.staffInfo);
 
 	                        if(res.staffVo.staffImage === null){
-		                        $('.popup-inner #previewImage').attr("src", "../img/defaultUSER.png");
+		                        $('.popup-inner #pop_previewImage').attr("src", "<c:url value='/img/defaultUSER.png'/>");
 	                        }
 	                        
 	                        if (res.staffVo.staffBirth) {
