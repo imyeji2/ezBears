@@ -123,19 +123,12 @@ public class SignServiceImpl implements SignService{
 	public SignMemInfoVO selectApprovaMem(int docNo) {
 		return signDao.selectApprovaMem(docNo);
 	}
-
-
-
-
-
-
-
-
-
-
-
-
 	
+	//결재 수정
+	@Override
+	public int updateSignInfo(SignVO signVo) {
+		return signDao.updateSignInfo(signVo);
+	}
 
 
 

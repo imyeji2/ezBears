@@ -7,7 +7,7 @@
 
 	<sql id="searchWhere">
 		<where>
-				
+			
 			<if test="searchKeyword!=null and searchKeyword!=''">
 				${searchCondition} like '%' || #{searchKeyword} || '%'
 			</if>
@@ -50,6 +50,7 @@
 	
 	<select id="selectAppCount" resultType="int" parameterType="searchVo">
 		select count(*) from signListView
+		where m_board_no=#{MBoardNo} 
 		<include refid="searchWhere"></include>
 	</select>
 	

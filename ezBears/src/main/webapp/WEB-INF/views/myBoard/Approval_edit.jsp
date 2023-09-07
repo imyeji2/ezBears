@@ -46,13 +46,13 @@
 	String strDate = simpleDate.format(date);
 
 %>
-		<form id="appform2" action="<c:url value='/myBoard/Approval_edit'/>"  method="post" enctype="multipart/form-data" >
+		<form id="appform" action="<c:url value='/myBoard/Approval_edit'/>"  method="post" enctype="multipart/form-data" >
 				<input type ="hidden" name ="userid" id="userid" value="${userid }">
-				<input type="hidden" name="myBoardNo" id="myBoardNo"value="${myBoardInfoVo.myBoardNo}"> 
-				<input type="hidden" name="memNo" id="memNo" value="${myBoardInfoVo.memNo}"> 
-				<input type="hidden" name="MBoardNo" id="MBoardNo" value="${myBoardInfoVo.MBoardNo}"> 
-				<input type="hidden" name="deptNo" id="deptNo" value="${myBoardInfoVo.deptNo}">
-				<input type="hidden" name="positionNo" id="positionNo" value="${myBoardInfoVo.positionNo}">
+				<input type="hidden" name="myBoardNo" id="myBoardNo"value="${signMemInfoVo.myBoardNo}"> 
+				<input type="hidden" name="memNo" id="memNo" value="${signMemInfoVo.memNo}"> 
+				<input type="text" name="MBoardNo" id="MBoardNo" value="${signMemInfoVo.MBoardNo}"> 
+				<input type="text" name="deptNo" id="deptNo" value="${signMemInfoVo.deptNo}">
+				<input type="text" name="positionNo" id="positionNo" value="${signMemInfoVo.positionNo}">
 				<input type="hidden" name="memName" id="memName" value="${myBoardInfoVo.memName}">
 				 
 			<table class="table" id="table" border="1">
@@ -132,8 +132,8 @@
 			</table>
 			<div>
 			 
-			        <input type="button" class="btn btn-sm btn-primary btn" value="수정" onclick="docSave2()"/>
-			    
+			        <input type="submit" class="btn btn-sm btn-primary btn" value="수정"/> 
+			   
 		</div>
 			</form>
 		</div>

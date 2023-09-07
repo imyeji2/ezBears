@@ -173,7 +173,7 @@ public class SignController {
 
 	@GetMapping("/Approval_edit")
 	public String Approval_edit(@RequestParam (defaultValue = "0")int docNo ,@ModelAttribute MyBoardInfoVO myBoardInfoVo,
-			@ModelAttribute MemberVO memberVo, HttpSession session ,HttpServletRequest request,	Model model) {
+			@ModelAttribute MemberVO memberVo, @ModelAttribute SignMemInfoVO signMemInfoVo,HttpSession session ,HttpServletRequest request,	Model model) {
 		logger.info("결재 수정 페이지");
 		/*
 		String userid = (String)session.getAttribute("userid");
@@ -186,6 +186,10 @@ public class SignController {
 		memberVo = memberService.selectpositioninfo(myBoardInfoVo.getDeptNo());
 		
 		*/
+		
+		signMemInfoVo = signService.selectApprovaMem(docNo);
+		logger.info("결재 디테일 signMemInfoVo={}",signMemInfoVo);
+		
 		BigDecimal deptNoBigDecimal = (BigDecimal) request.getSession().getAttribute("dept_no");
 		int deptNo = deptNoBigDecimal.intValue();
 
@@ -202,20 +206,25 @@ public class SignController {
 		model.addAttribute("list",list);
 		model.addAttribute("memberVo",memberVo);
 		model.addAttribute("filemap",filemap);
+		model.addAttribute("signMemInfoVo",signMemInfoVo);
 				
 		return "myBoard/Approval_edit";
 	}
 	
 	@PostMapping("/Approval_edit")
-	public String Approval_post(@RequestParam (defaultValue = "0")int docNo,@ModelAttribute SignFileVO signFileVo
-			,@ModelAttribute SignVO signVo ,Model model) {
+	public String Approval_post(@RequestParam (defaultValue = "0")int docNo, 
+			@RequestParam(defaultValue = "0")int MBoardNo ,
+			@ModelAttribute SignFileVO signFileVo ,@ModelAttribute SignVO signVo ,Model model) {
 		
 		
-		
+		logger.info("결재 수정 파라미터 docNo={},signVo={}",docNo,signVo);
 		 
-		 
 		
-		return "";
+		int cnt = signService.updateSignInfo(signVo);
+		logger.info("수정 결과 cnt={} , signVo={}",cnt,signVo);
+		
+		
+		return "myBoard/Approval_detail?docNo="+docNo;
 	}
 	
 	
