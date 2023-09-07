@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.ez.ezBears.team.model.TeamVO;
+
 public interface HitterService {
 	int insertHitter(HitterVO hitterVo);
 	int updateHitter(HitterVO hitterVo);
@@ -13,5 +15,8 @@ public interface HitterService {
 	HitterVO getHitterByPlayerNo(int playerNo);
 	Map<String, Object> selectHitterStatView(int playerNo);
 	List<Map<String, Object>> selectHitterRecordView(int recodeNo);
+	HitterVO selectByRecodeNo(int recodeNo);
+	
+	List<TeamVO> selectAllHitter();
 
 }

@@ -5,14 +5,19 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.ez.ezBears.team.model.TeamVO;
+
 @Mapper
 public interface HitterDAO {
 	int insertHitter(HitterVO hitterVo);
 	HitterVO selectByPlayerNo(int playerNo);
+	HitterVO selectByRecodeNo(int recodeNo);
 	int updateHitter(HitterVO hitterVo);
 	int deleteHitter(int hitterNo);
 	List<Map<String, Object>> selectHitterView(int playerNo);
 	Map<String, Object> selectHitterStatView(int playerNo);
 	List<Map<String, Object>> selectHitterRecordView(int recodeNo);
-
+	
+	
+	List<TeamVO> selectAllHitter();
 }

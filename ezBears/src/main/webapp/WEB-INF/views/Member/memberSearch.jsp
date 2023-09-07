@@ -217,4 +217,5 @@ form.d-none.d-md-flex.ms-4 {
    <div class="pop_rel_keywords">
 		
    </div>
+   <%@include file="../Member/memberPopup.jsp"%>
 </div>

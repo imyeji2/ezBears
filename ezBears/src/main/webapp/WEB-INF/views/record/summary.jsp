@@ -248,7 +248,7 @@
 			</div>
 		</div>
 	</div>
-
+<c:if test="${sessionScope.type eq '스태프'}">
 	<div class="center">
 		<a
 			href="<c:url value='/record/gameEdit?recodeNo=${gameVo.recodeNo }'/>"
@@ -257,7 +257,7 @@
 			style="color: white;">삭제</a> | <a
 			href="<c:url value='/record/gameList'/>" style="color: white;">목록</a>
 	</div>
-
+</c:if>
 	<script>
 		// JavaScript를 사용하여 vo.R 값들을 가져와 합계 계산
 		// 아래 주석은 실제 코드에 맞게 수정해야 합니다.
