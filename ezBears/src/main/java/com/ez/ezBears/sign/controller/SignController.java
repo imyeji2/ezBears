@@ -105,6 +105,8 @@ public class SignController {
 		return "myBoard/Approval";
 	}
 
+	
+	
 	@GetMapping("/Approval_write")
 	public String Approval_wr(@RequestParam(defaultValue = "0") int mBoardNo,
 			@ModelAttribute MyBoardInfoVO myBoardInfoVo, @ModelAttribute MemberVO memberVo , 
@@ -129,6 +131,8 @@ public class SignController {
 		return "myBoard/Approval_write";
 	}
 
+	
+	
 	@PostMapping("/Approval_write")
 	public String Approval_post(@RequestParam(defaultValue = "0") int MBoardNo,
 			@ModelAttribute SignVO signVo,@ModelAttribute SignFileVO signFileVo,
@@ -197,6 +201,7 @@ public class SignController {
 		return "myBoard/Approval_edit";
 	}
 
+	
 	@PostMapping("/Approval_edit")
 	public String Approval_post(@RequestParam(defaultValue = "0") int docNo,
 			@RequestParam(defaultValue = "0") int MBoardNo, @ModelAttribute SignFileVO signFileVo,
@@ -263,9 +268,7 @@ public class SignController {
 		logger.info("결재 디테일 myBoardInfoVo={}",myBoardInfoVo);
 
 		model.addAttribute("myBoardInfoVo",myBoardInfoVo); 
-
 		model.addAttribute("signMemInfoVo",signMemInfoVo); 
-
 		model.addAttribute("list",list);
 		model.addAttribute("memberVo",memberVo);
 		model.addAttribute("filemap",filemap);

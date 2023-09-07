@@ -47,14 +47,11 @@
 
 %>
 		<form id="appform2" action="" method="post" enctype="multipart/form-data" >
-				<input type ="text" name ="userid" id="userid" value="${userid }">
-				<input type="text" name="myBoardNo" id="myBoardNo"value="${signMemInfoVo.myBoardNo}"> 
+				<input type ="hidden" name ="userid" id="userid" value="${userid }">
+				<input type="hidden" name="myBoardNo" id="myBoardNo"value="${signMemInfoVo.myBoardNo}"> 
 				<input type="hidden" name="memNo" id="memNo" value="${signMemInfoVo.memNo}"> 
-				<input type="text" name="MBoardNo" id="MBoardNo" value="${signMemInfoVo.MBoardNo}"> 
-<%-- 				<input type="hidden" name="deptNo" id="deptNo" value="${myBoardInfoVo.deptNo}"> 
-				<input type="text" name="deptNo" id="deptNo" value="${memberVo.deptNo}">--%>
-				 <input type="text" name="positionNo" id="positionNo" value="${memberVo.positionNo}">
-				<%--<input type="hidden" name="memName" id="memName" value="${signMemInfoVo.memName}"> --%>
+				<input type="hidden" name="MBoardNo" id="MBoardNo" value="${signMemInfoVo.MBoardNo}"> 
+				<input type="hidden" name="positionNo" id="positionNo" value="${memberVo.positionNo}">
 				 
 			<table class="table" id="table" border="1">
 				<tr class="tr-s">
@@ -139,6 +136,7 @@
 			<div>
 			    <c:if test="${sessionScope.name eq list['MEM_NAME']}">
 					<c:if test="${list['STATUS'] eq '대기' }">
+			        <input type="button" class="btn btn-sm btn-primary btn" value="삭제" onclick="docSave3()"/>
 			        <input type="button" class="btn btn-sm btn-primary btn" value="수정" onclick="docSave2()"/>
 			    	</c:if>
 			    </c:if>
@@ -156,6 +154,11 @@
 	        var docNo = "${list['DOC_NO']}";
 	        // docNo를 URL에 추가하여 수정 페이지로 이동
 	        window.location.href = "<c:url value='/myBoard/Approval_edit'/>?docNo=" + docNo;
+	    }
+	 function docSave3() {
+	        var docNo = "${list['DOC_NO']}";
+	        // docNo를 URL에 추가하여 수정 페이지로 이동
+	        window.location.href = "<c:url value='/myBoard/Approval_delete'/>?docNo=" + docNo;
 	    }
 		
 		var ckEditor = CKEDITOR.replace('docContent', {

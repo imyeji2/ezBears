@@ -50,9 +50,9 @@
 				<input type ="hidden" name ="userid" id="userid" value="${userid }">
 				<input type="hidden" name="myBoardNo" id="myBoardNo"value="${signMemInfoVo.myBoardNo}"> 
 				<input type="hidden" name="memNo" id="memNo" value="${signMemInfoVo.memNo}"> 
-				<input type="text" name="MBoardNo" id="MBoardNo" value="${signMemInfoVo.MBoardNo}"> 
-				<input type="text" name="deptNo" id="deptNo" value="${signMemInfoVo.deptNo}">
-				<input type="text" name="positionNo" id="positionNo" value="${signMemInfoVo.positionNo}">
+				<input type="hidden" name="MBoardNo" id="MBoardNo" value="${signMemInfoVo.MBoardNo}"> 
+				<input type="hidden" name="deptNo" id="deptNo" value="${signMemInfoVo.deptNo}">
+				<input type="hidden" name="positionNo" id="positionNo" value="${signMemInfoVo.positionNo}">
 				<input type="hidden" name="memName" id="memName" value="${myBoardInfoVo.memName}">
 				 
 			<table class="table" id="table" border="1">
@@ -65,10 +65,6 @@
 					<td class="td-4"> 
 					<input type ="text" class="sta" value="처리 상태">
 					<input type ="text" class="status" name="status" id="status" value="${list['STATUS'] }">		
-					
-					<%-- <c:if test="${list['STATUS'] eq '대기'}">
-						<input type="button" class=" btn-sm btn-primary appoveBtn " value="승인" onclick="approveDocument()">
-					</c:if> --%>
 					
 					</td>
 				</tr>
