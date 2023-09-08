@@ -283,4 +283,9 @@
 	 	select * from memberView1
 	 </select>
 	 
+	 
+	 <select id="selectDeptPositionInfo" >
+	 	select * from member
+		where dept_no = 1 and position_no=6
+	 </select>
 </mapper>

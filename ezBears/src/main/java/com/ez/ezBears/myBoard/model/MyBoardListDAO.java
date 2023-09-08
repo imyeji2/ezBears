@@ -64,4 +64,6 @@ public interface MyBoardListDAO {
 	MyBoardInfoVO selectMyBoardDept(String userid);
 	
 	MyBoardInfoVO selectMemAppPositionInfo(int mBoardNo);
+	
+	List<Map<String, Object>> selectMyBoardMember2(int mBoardNo);
 }

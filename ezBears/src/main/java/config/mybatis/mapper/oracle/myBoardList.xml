@@ -103,7 +103,6 @@
 		where m_board_no = #{mBoardNo} and position_no=6
 	</select>
 	
-	
 	<update id="updateMainBoard" parameterType="myBoardVo">
 		update MY_BOARD
 		set main_view ='Y'
@@ -117,6 +116,13 @@
 		where status ='Y' and main_view='Y'
 		and mem_no=#{memNo}
 	</update>	
+
+	<select id="selectMyBoardMember2" parameterType="int" resultType="map">
+		select * from myBoardMemberView
+		where m_board_no= #{mBoardNo} and CONTRACT_DONE is null and position_no =6 and status &lt;&gt; 'N'
+		order by mem_name
+	</select>
+
 </mapper>
 
 

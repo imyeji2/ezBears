@@ -132,7 +132,6 @@ public class MyBoardListServiceImpl implements MyBoardListService {
 		return myBoardListDao.selectMemAppPositionInfo(mBoardNo);
 	}
 
-	
 	//메인 보드 업데이트 서비스
 	@Transactional
 	@Override
@@ -153,9 +152,11 @@ public class MyBoardListServiceImpl implements MyBoardListService {
 		}
 		
 		return cnt;
+  }
+  
+	@Override
+	public List<Map<String, Object>> selectMyBoardMember2(int mBoardNo) {
+		return myBoardListDao.selectMyBoardMember2(mBoardNo);
 	}
-
-
-
 }
 

@@ -63,4 +63,8 @@ public interface SignDAO {
 	int deleteSingInfo(int docNo);
 	
 	int updateStatusSign(int docNo);
-}
+	
+	int selectAppCount2(@Param("searchName") String searchName);
+	
+	List<Map<String, Object>> selectApprovalList2 (@Param("searchVo")SearchVO searchVo);
+} 
