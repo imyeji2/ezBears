@@ -207,39 +207,10 @@
 						<!--  페이지 번호 끝 -->
 					</div>
 					
-					<%-- <div class="divSearch">
-					   	<form name="frmSearch" method="POST" action="<c:url value='/staff/staffList'/>">
-					        <select name="searchCondition">
-					            <option value="STAFF_NAME" 
-					            	<c:if test="${param.searchCondition=='STAFF_NAME'}">
-					            		selected="selected"
-					            	</c:if>            	
-					            >이름</option>
-					            <option value="STAFF_POSITION"
-					            	<c:if test="${param.searchCondition=='STAFF_POSITION'}">
-					            		selected="selected"
-					            	</c:if> 
-					            >포지션</option>
-					            <option value="STAFF_ID" 
-					            	<c:if test="${param.searchCondition=='STAFF_ID'}">
-					            		selected="selected"
-					            	</c:if> 
-					            >아이디</option>
-					        </select>   
-					        <input type="text" name="searchKeyword" title="검색어 입력" 
-					        	value="${param.searchKeyword }">   
-							<input type="submit" value="검색" id="btnSearch">
-					    </form>
-					</div> --%>
 			        
 			        
 			        
 			        
-			        
-			       <a href="<c:url value='/message/messageList'/>">메세지 리스트</a><br>
-			       <a href="<c:url value='/message/receiveBox'/>">받은 쪽지함</a><br>
-			       <a href="<c:url value='/message/sendBox'/>">보낸 쪽지함</a><br>
-			       <a href="<c:url value='/message/messageWrite'/>">메세지 작성</a>
 			        
 			    </div>
 			</div>

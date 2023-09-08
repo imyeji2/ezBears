@@ -206,6 +206,7 @@ public class MemberController {
 	public String detail_post(@ModelAttribute MemberVO memberVo, @RequestParam String oldFileName, HttpServletRequest request, String sal, Model model) {
 		//1
 		logger.info("회원 수정, 파라미터 memberVo ={}", memberVo);
+		logger.info("oldFileName={}", oldFileName);
 		
 		//2
 		//사진 수정
@@ -223,13 +224,13 @@ public class MemberController {
 		} catch (IllegalStateException | IOException e) {
 			e.printStackTrace();
 		}
+		memberVo.setMemImage(fileName);
 		
 		if(memberVo.getMemImage()==null || memberVo.getMemImage().isEmpty()) {
 			memberVo.setMemImage(oldFileName);
-		}else {
-			memberVo.setMemImage(fileName);
 		}
 		
+		logger.info("fileName={}",memberVo.getMemImage());
 		//연봉 int로 변환
 		String strSal = sal.replace(",", "");
 		strSal = strSal+"0000";
