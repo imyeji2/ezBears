@@ -40,7 +40,7 @@ import lombok.RequiredArgsConstructor;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/myBoard")
-public class SignController {
+public class SignController { 
 	/* http://localhost:9091/ezBears/myBoard/Approval?myBoardNo=0  */
 
 	private static final Logger logger = LoggerFactory.getLogger(SignController.class);
