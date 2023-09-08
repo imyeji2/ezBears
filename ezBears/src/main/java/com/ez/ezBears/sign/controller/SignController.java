@@ -123,14 +123,15 @@ public class SignController {
 		myBoardInfoVo = myBoardListService.selectBoardInfo(myBoardInfoVo);
 		List<Map<String, Object>> list = myBoardListService.selectMyBoardMember2(myBoardInfoVo.getMBoardNo());
 		
-		/* selectMyBoardMember(int mBoardNo) */
 		
-		/* memberVo = memberService.selectpositioninfo(myBoardInfoVo.getDeptNo()); */
-
+		MemberVO vo2 = memberService.selectDeptPositionInfo();
+		logger.info("vo2={}",vo2);
+		
 		model.addAttribute("myBoardInfoVo",myBoardInfoVo);
 		model.addAttribute("memberVo",memberVo);
 		model.addAttribute("list",list);
-
+		model.addAttribute("vo2",vo2);
+		
 		logger.info("myBoardInfo={}",myBoardInfoVo);
 
 
@@ -186,14 +187,6 @@ public class SignController {
 		signMemInfoVo = signService.selectApprovaMem(docNo);
 		logger.info("결재 디테일 signMemInfoVo={}",signMemInfoVo);
 
-		/*
-		  BigDecimal deptNoBigDecimal = (BigDecimal)
-		  request.getSession().getAttribute("dept_no"); 
-		  int deptNo = deptNoBigDecimal.intValue();
-		  memberVo.setDeptNo(deptNo); memberVo =
-		  memberService.selectpositioninfo(deptNo);		 
-		  myBoardInfoVo = myBoardListService.selectBoardInfo(myBoardInfoVo);
-		*/
 		List<Map<String, Object>> listMap = myBoardListService.selectMyBoardMember2(signMemInfoVo.getMBoardNo());
 		
 		Map<String, Object> list = signService.detailSign(docNo);
@@ -202,7 +195,9 @@ public class SignController {
 
 		List<Map<String, Object>> filemap = signService.selectSignnFileInfo(docNo);
 		logger.info("결재 파일 정보 filemap={}",filemap);
-
+		MemberVO vo2 = memberService.selectDeptPositionInfo();
+		
+		model.addAttribute("vo2",vo2);
 		model.addAttribute("list",list);
 		model.addAttribute("memberVo",memberVo);
 		model.addAttribute("filemap",filemap);
@@ -277,10 +272,16 @@ public class SignController {
 
 		myBoardInfoVo = myBoardListService.selectMemAppPositionInfo(signMemInfoVo.getMBoardNo());
 		logger.info("결재 디테일 myBoardInfoVo={}",myBoardInfoVo);
-
+		
+		List<Map<String, Object>> list2 = myBoardListService.selectMyBoardMember2(myBoardInfoVo.getMBoardNo());
+		
+		MemberVO vo2 = memberService.selectDeptPositionInfo();
+		
+		model.addAttribute("vo2",vo2);
 		model.addAttribute("myBoardInfoVo",myBoardInfoVo); 
 		model.addAttribute("signMemInfoVo",signMemInfoVo); 
 		model.addAttribute("list",list);
+		model.addAttribute("list2",list2);
 		model.addAttribute("memberVo",memberVo);
 		model.addAttribute("filemap",filemap);
 

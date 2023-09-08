@@ -58,31 +58,41 @@
 			<table class="table" id="table" border="1">
 				<tr class="tr-s">
 					<td class="td-1" rowspan="2" >문서번호
-					 <input type ="text"  name="docNo" class="docNo"  value="${list['DOC_NO'] }" ><!-- 문서 번호 불러오기 -->
+					 <input type ="text"  name="docNo" class="docNo"  value="${list['DOC_NO'] }" readonly><!-- 문서 번호 불러오기 -->
 					 </td> 
-					<td class="td-2" colspan="2">담당</td><!-- 결재 담당자 -->
-					<c:forEach var ="map" items="${listMap }">
-					<td class="td-3" colspan="3">${map['MEM_NAME'] }</td><!-- 결재 담당자 -->
+					<td class="td-2" rowspan="2"colspan="2">담당</td><!-- 결재 담당자 -->
+			    	<c:forEach var ="map" items="${listMap }">
+						<td class="td-3" colspan="3">${map['MEM_NAME'] }</td><!-- 결재 담당자 -->
 					</c:forEach>
-					<td class="td-4"> 
-					<input type ="text" class="sta" value="처리 상태">
-					<input type ="text" class="status" name="status" id="status" value="${list['STATUS'] }">		
+			   		 <!-- 중간 결재자  -->
+			   		 <td class="td-2"rowspan="2" colspan="2">
+			   		
+					
+			   		 </td>
+			        <!-- 최종 결재자 -->
+			        <td class="td-3"rowspan="2"colspan="1">${vo2.memName }</td>   
+				    
+				    <td class="td-2"rowspan="2" >
+				    
+				    </td>
+				    
+					<td>
+					
+					<c:if test="${list['STATUS'] eq '처리중' && userMap['DEPT_NO'] eq 1}">
+						<input type="button" class=" btn-sm btn-primary appoveBtn " value="승인" onclick="approveDocument2()">
+					</c:if>
 					
 					</td>
 				</tr>
-				
-				<tr class="tr-m">
-					<td class="td-1 rdate" colspan="3">기안일</td>
-					<td class="td-2" colspan="5">
-					<input name="regdate" id="regdate" class="regdate" value="${list['REGDATE'] }" >
-					</td>
-				</tr>
-
+				<tr></tr>
 				<tr class="tr-s">
-					<td class="td-1" rowspan="2" colspan="3">기안자</td>
-					<td class="td-5" rowspan="2" colspan="5" > 
-						<input type ="text" name="memName" class="memName" id="memName" value="${list['MEM_NAME'] }" >
+					<td class="td-1" rowspan="2" colspan="2">기안자</td>
+					<td class="td-5" rowspan="2" colspan="3" > 
+						<input type ="text" name="memName" class="memName" id="memName" value="${list['MEM_NAME'] }" readonly>
 					</td>
+					<td class="td-1 rdate" colspan="2">기안일</td>
+					<td class="td-2" colspan="3">
+					<input name="regdate" id="regdate" class="regdate" value="${list['REGDATE'] }" readonly>
 				</tr>
 				
 				<tr class="tr-s">		
@@ -121,7 +131,7 @@
 	                    <td class="td-1">결재 내용</td>
 	                    </tr>
 	                    <tr>
-	                    <td colspan="8" id="td-leave-reason">
+	                    <td colspan="9" id="td-leave-reason">
 	                    	<textarea name="docContent" style="white-space: pre;" >
 	                    	${list['DOC_CONTENT'] }
 	                    	</textarea>

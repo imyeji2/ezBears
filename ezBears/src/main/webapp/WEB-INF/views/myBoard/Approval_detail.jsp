@@ -31,16 +31,26 @@
 				<input type="hidden" name="memNo" id="memNo" value="${signMemInfoVo.memNo}"> 
 				<input type="hidden" name="MBoardNo" id="MBoardNo" value="${signMemInfoVo.MBoardNo}"> 
 				<input type="hidden" name="positionNo" id="positionNo" value="${memberVo.positionNo}">
-				 <input type ="text" class="sta" value="처리 상태">
-				<input type ="text" class="status" name="status" id="status" value="${list['STATUS'] }">	
+			
+			
+			
 			<table class="table" id="table" border="1">
 				<tr class="tr-s">
 					<td class="td-1" rowspan="2" >문서번호
 					 <input type ="text"  name="docNo" class="docNo"  value="${list['DOC_NO'] }" readonly><!-- 문서 번호 불러오기 -->
 					 </td> 
 					<td class="td-2" rowspan="2"colspan="2">담당</td><!-- 결재 담당자 -->
-			    
-			        <td class="td-3" rowspan="2"colspan="1">${myBoardInfoVo.memName }</td>
+			    	  <c:choose>
+				    <c:when test="${empty list2}">
+				        <td class="td-3" rowspan="2">팀장이 없습니다.</td>
+				    </c:when>
+				    <c:otherwise>
+				        <c:forEach var="map" items="${list2}">
+				            <td class="td-3" rowspan="2">${map['MEM_NAME']}</td>
+				        </c:forEach>
+				    </c:otherwise>
+				</c:choose>
+			       <%--  <td class="td-3" rowspan="2"colspan="1">${myBoardInfoVo.memName }</td> --%>
 			   		 <!-- 중간 결재자  -->
 			   		 <td class="td-2"rowspan="2" colspan="2">
 			   		 <c:if test="${list['STATUS'] eq '대기' && userMap['POSITION_NO'] eq 6}">
@@ -52,7 +62,7 @@
 			   		 </c:if>
 			   		 </td>
 			        <!-- 최종 결재자 -->
-			        <td class="td-3"rowspan="2"colspan="1">${myBoardInfoVo.memName }</td>   
+			        <td class="td-3"rowspan="2"colspan="1">${vo2.memName }</td>   
 				    
 				    <td class="td-2"rowspan="2" >
 				     <c:if test="${list['STATUS'] eq '완료'}">
