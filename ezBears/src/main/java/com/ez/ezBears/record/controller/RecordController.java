@@ -283,7 +283,7 @@ public class RecordController {
 		logger.info("투수 수정 처리 결과, cnt={}", cnt);
 
 		
-		return "redirect:/record/hitterRecordDetail?playerNo="+pitcherVo.getPlayerNo();
+		return "redirect:/record/pitcherRecordDetail?playerNo="+pitcherVo.getPlayerNo();
 	}
 	
 	@GetMapping("/pitcherRecordDelete")

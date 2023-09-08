@@ -81,11 +81,11 @@
 			등록</a>
 	</div>
 	<div class="divBtn">
-		<a href="<c:url value='/record/pitcherRecordEdit'/>">투수 기록정보
+		<a href="<c:url value='/record/pitcherRecordEdit?recodeNo=${param.recodeNo} '/>">투수 기록정보
 			수정</a>
 	</div>
 	<div class="divBtn">
-		<a href="<c:url value='/record/pitcherRecordDelete'/>">투수 기록정보
+		<a href="<c:url value='/record/pitcherRecordDelete?recodeNo=${param.recodeNo }'/>">투수 기록정보
 			삭제</a>
 	</div>
 	
