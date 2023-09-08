@@ -69,64 +69,69 @@ public class LoginController {
 			logger.info("로그인 체크 결과 result={}",result);
 			logger.info("로그인 체크 타입 결과 type={}",type);
 			
-			if(result==memberService.LOGIN_OK) {
-				if(result>0) {
-					msg= map.get("MEM_NAME") + "님 로그인되었습니다.";
-					url="/";
-					
-				   
-				    List<Map<String, Object>> myBoardList = myBoardListService.selectBoardList(userid);
-				    
-					//session
-					HttpSession session=request.getSession();
-					session.setAttribute("userid", userid);
-					session.setAttribute("type", type);
-					session.setAttribute("name", map.get("MEM_NAME"));
-					session.setAttribute("position", map.get("POSITION_NAME"));
-					session.setAttribute("dept_name", map.get("DEPT_NAME"));
-					session.setAttribute("dept_no", map.get("DEPT_NO"));
-					session.setAttribute("memNo", map.get("MEM_NO"));
-					session.setAttribute("myimg", map.get("MEM_IMAGE"));
-					session.setAttribute("memberType", map.get("TYPE"));
-					session.setAttribute("myBoardList", myBoardList);
-					
-					
-					Map<String, Object> loginuser = new HashMap<>();
-					loginuser.put("userid", userid);
-					loginuser.put("type", type);
-					loginuser.put("name", map.get("MEM_NAME"));
-					loginuser.put("position", map.get("POSITION_NAME"));
-					loginuser.put("dept_name", map.get("DEPT_NAME"));
-					loginuser.put("dept_no", map.get("DEPT_NO"));
-					loginuser.put("memNo", map.get("MEM_NO"));
-					loginuser.put("myimg", map.get("MEM_IMAGE"));
-					loginuser.put("type", map.get("TYPE"));
-					
-					session = request.getSession();
-					session.setAttribute("sessionAttributes", loginuser);
-					
-					logger.info("loginuser의 로그 map1={}",loginuser);
-					
-					
-					session.setAttribute("memVo", map);
-					logger.info("myimg 로그 확인 myimg={}",session.getAttribute("myimg"));
-					
-					//cookie
-					Cookie ck = new Cookie("ck_userid", userid);
-					ck.setPath("/");
-					if(chkSave!=null) { //저장하기 체크한 경우
-						ck.setMaxAge(1000*24*60*60); //1000일
-						response.addCookie(ck);
-					}else {
-						ck.setMaxAge(0); //쿠키 제거
-						response.addCookie(ck);
+			if(map.get("CONTRACT_DONE")==null) {
+				if(result==memberService.LOGIN_OK) {
+					if(result>0) {
+						msg= map.get("MEM_NAME") + "님 로그인되었습니다.";
+						url="/";
+						
+						
+						List<Map<String, Object>> myBoardList = myBoardListService.selectBoardList(userid);
+						
+						//session
+						HttpSession session=request.getSession();
+						session.setAttribute("userid", userid);
+						session.setAttribute("type", type);
+						session.setAttribute("name", map.get("MEM_NAME"));
+						session.setAttribute("position", map.get("POSITION_NAME"));
+						session.setAttribute("dept_name", map.get("DEPT_NAME"));
+						session.setAttribute("dept_no", map.get("DEPT_NO"));
+						session.setAttribute("memNo", map.get("MEM_NO"));
+						session.setAttribute("myimg", map.get("MEM_IMAGE"));
+						session.setAttribute("memberType", map.get("TYPE"));
+						session.setAttribute("myBoardList", myBoardList);
+						
+						
+						Map<String, Object> loginuser = new HashMap<>();
+						loginuser.put("userid", userid);
+						loginuser.put("type", type);
+						loginuser.put("name", map.get("MEM_NAME"));
+						loginuser.put("position", map.get("POSITION_NAME"));
+						loginuser.put("dept_name", map.get("DEPT_NAME"));
+						loginuser.put("dept_no", map.get("DEPT_NO"));
+						loginuser.put("memNo", map.get("MEM_NO"));
+						loginuser.put("myimg", map.get("MEM_IMAGE"));
+						loginuser.put("type", map.get("TYPE"));
+						
+						session = request.getSession();
+						session.setAttribute("sessionAttributes", loginuser);
+						
+						logger.info("loginuser의 로그 map1={}",loginuser);
+						
+						
+						session.setAttribute("memVo", map);
+						logger.info("myimg 로그 확인 myimg={}",session.getAttribute("myimg"));
+						
+						//cookie
+						Cookie ck = new Cookie("ck_userid", userid);
+						ck.setPath("/");
+						if(chkSave!=null) { //저장하기 체크한 경우
+							ck.setMaxAge(1000*24*60*60); //1000일
+							response.addCookie(ck);
+						}else {
+							ck.setMaxAge(0); //쿠키 제거
+							response.addCookie(ck);
+						}
 					}
+				}else if(result==memberService.PWD_DISAGREE) {
+					msg="프론트 비밀번호가 일치하지 않습니다.";
+					url="/";
+				}else if(result==memberService.USERID_NONE) {
+					msg="해당 플레이어 아이디가 존재하지 않습니다.";	
+					url="/";
 				}
-			}else if(result==memberService.PWD_DISAGREE) {
-				msg="프론트 비밀번호가 일치하지 않습니다.";
-				url="/";
-			}else if(result==memberService.USERID_NONE) {
-				msg="퇴사자 계정입니다.";	
+			}else if(map.get("CONTRACT_DONE")!=null) {
+				msg="퇴사자 계정입니다.";
 				url="/";
 			}
 		}else if(dept.equals("staff")) {
