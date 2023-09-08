@@ -69,17 +69,13 @@
     var myChart1 = new Chart(ctx1, {
         type: "bar",
         data: {
-            labels: ["2017", "2018", "2019", "2020", "2021", "2022", "2022"],
+            labels: ["01", "02", "03", "04", "05", "06", "07"],
             datasets: [{
-                    label: "남",
+                    label: "승률",
                     data: [15, 30, 55, 65, 60, 80, 95],
-                    backgroundColor: "rgba(1, 77, 208, 0.5)"
+                    backgroundColor: "#7000D8"
                 },
-                {
-                    label: "여",
-                    data: [8, 35, 40, 60, 70, 55, 75],
-                    backgroundColor: "rgba(204, 21, 102, 0.5)"
-                },
+                
                 
             ]
             },

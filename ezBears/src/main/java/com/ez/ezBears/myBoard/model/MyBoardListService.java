@@ -38,6 +38,9 @@ public interface MyBoardListService {
 	//마이보드 멤버 수 
 	int totalCountMboardMember(int mBoardNo);
 	
+	//메인 보드 업데이트
+	int updateMainBoardService(MyBoardVO myBoardVo);
+	
 	
 	
 	//다희
