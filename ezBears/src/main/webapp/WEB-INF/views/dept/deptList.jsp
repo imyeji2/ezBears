@@ -22,6 +22,13 @@
 $(function(){
 	$('#btnEdit').hide();
 });
+	
+	function cancle() {
+	    $('#deptNo').val('');
+	    $('#EditdeptName').val('');
+	    $('#deptTel').val('');
+	}
+
 	function editDeptInfo(deptName, deptNo, deptTel){
 		$('#EditdeptName').val(deptName);
 		$('#deptTel').val(deptTel);
@@ -86,6 +93,7 @@ $(function(){
 					<input type="text" class="addDept" id = "deptTel"  name ="deptTel" placeholder="부서전화번호">
 					<button type="submit" class="btnAdd" id="btnAdd" onclick = "InsertDept()" value="등록">등록</button>
 					<button type="submit" class="btnEdit" id="btnEdit" onclick = "EditDept()"value="수정">수정</button>
+					<button type="button" class="cancel" id="cancel" onclick="cancle()" value="취소">취소</button>
 					<button type="submit" class="btnDelete" id="btnDelete"  onclick = "DelDept()"value="삭제">삭제</button>
 				</div>
 				<br>
@@ -110,9 +118,9 @@ $(function(){
 			                	<c:forEach var="deptVo" items="${list}"> 
 			                		<tr class="memList">
 			                			<td><input type="checkbox" class="deptChk"></td>
-			                			<td class ="deptNoTd"><input type="text" class = "selectdeptNo" value="${deptVo.deptNo}"></td>
-			                			<td onclick="editDeptInfo('${deptVo.deptName}','${deptVo.deptNo}','${deptVo.deptTel}')">${deptVo.deptName}</td>
-			                			<td onclick="editDeptInfo('${deptVo.deptName}','${deptVo.deptNo}','${deptVo.deptTel}')">${deptVo.deptTel}</td>
+			                			<td ondblclick="editDeptInfo('${deptVo.deptName}','${deptVo.deptNo}','${deptVo.deptTel}')" class ="deptNoTd"><input type="text" class = "selectdeptNo" value="${deptVo.deptNo}"></td>
+			                			<td ondblclick="editDeptInfo('${deptVo.deptName}','${deptVo.deptNo}','${deptVo.deptTel}')">${deptVo.deptName}</td>
+			                			<td ondblclick="editDeptInfo('${deptVo.deptName}','${deptVo.deptNo}','${deptVo.deptTel}')">${deptVo.deptTel}</td>
 			                			<td>
 			                				<c:choose>
 				                				<c:when test="${deptVo.deptNo eq '2'}">

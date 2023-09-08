@@ -71,9 +71,9 @@
     	where player_no=#{playerNo} and recode_no=#{recodeNo}
     </update>
     
-    <delete id="deleteHitter" parameterType="int">
+    <delete id="deleteHitter" parameterType="map">
     	delete hitter
-    	where player_no=#{playerNo}
+    	where player_no=#{playerNo} and recode_no=#{recodeNo}
     </delete>
     
 </mapper>

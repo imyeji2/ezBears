@@ -137,18 +137,6 @@
 													type="submit" value="검색" id="btnSearch">
 											</form>
 										</div>
-										<div class="divBtn">
-											<a href="<c:url value='/record/hitterRecordWrite'/>">기록정보
-												등록</a>
-										</div>
-										<div class="divBtn">
-											<a href="<c:url value='/record/hitterRecordEdit'/>">기록정보
-												수정</a>
-										</div>
-										<div class="divBtn">
-											<a href="<c:url value='/record/hitterRecordDelete'/>">기록정보
-												삭제</a>
-										</div>
 									</div>
 								</div>
 							</div>

@@ -38,6 +38,12 @@ public class MessageServiceImpl implements MessageService{
 	}
 
 
+	@Override
+	public int receiveMessageDel(int delNo) {
+		return messageDao.receiveMessageDel(delNo);
+	}
+
+
 
 
 }

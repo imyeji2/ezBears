@@ -57,7 +57,7 @@
 		         
 	         </div>
 	         <br>
-	         <div class="center" style="margin-left: 100px">
+	         <div class="center" style="margin-left: 107px">
 	        	<a href="<c:url value='/message/receiveBox'/>" style="color: white;">받은 쪽지함</a> |
 				<a href="<c:url value='/message/sendBox'/>" style="color: white;">보낸 쪽지함</a>
 			</div>
