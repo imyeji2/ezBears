@@ -684,6 +684,7 @@ $(function(){
                         <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
                             <a href="<c:url value='/mypage/pwdchk'/>" class="dropdown-item">마이페이지</a>
 							<a href="<c:url value='/mypage/pwdchk2'/>" class="dropdown-item">비밀번호변경</a>
+							<a href="<c:url value='/message/receiveBox'/>" class="dropdown-item">쪽지함</a>
                             <a href="<c:url value='/login/logout'/>" class="dropdown-item">로그아웃</a>
                         </div>
                     </div>                   	
