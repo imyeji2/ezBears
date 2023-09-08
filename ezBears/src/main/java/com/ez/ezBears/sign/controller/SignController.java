@@ -411,12 +411,13 @@ public class SignController {
 	
 	
 	@RequestMapping("/appSingListInfo")
-	public String appSingListInfo(@ModelAttribute SearchVO searchVo, @RequestParam(required = false) String searchName, Model model){
+	public String appSingListInfo(@ModelAttribute SearchVO searchVo, @RequestParam(required = false) String searchName,
+			Model model){
 
-		//1
+		
 		logger.info("결재 리스트 페이지, 파라미터 searchVo={}",searchVo);
 		
-		//2
+	
 		PaginationInfo pagingInfo = new PaginationInfo();
 		pagingInfo.setBlockSize(ConstUtil.BLOCK_SIZE);
 		pagingInfo.setCurrentPage(searchVo.getCurrentPage());
@@ -427,19 +428,16 @@ public class SignController {
 		
 		List<Map<String, Object>> list = signService.selectApprovalList2(searchVo);
 		
-		logger.info("멤버 조회 결과, list.size={}", list.size());
+		logger.info("기안자 검색 결과, list.size={}", list.size());
 	
-		//카테고리 가지고오기
-	
+		
 		int totalRecord = signService.selectAppCount2(searchName);
 		pagingInfo.setTotalRecord(totalRecord);
 		
-		
-		//3
-
+	
 		model.addAttribute("list", list);
 		model.addAttribute("pagingInfo", pagingInfo);
-		//4
+	
 		
 		return "/myBoard/Approval";
 		
