@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <link href="${pageContext.request.contextPath}/css/choong/chi.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/css/Dcss.css" rel="stylesheet">
 
 <%@include file="../inc/top.jsp"%>
 
@@ -58,6 +59,12 @@
 		
 	})
 </script>
+
+<style>
+	a {
+		color: #953de7;
+	}
+</style>
 
 <!-- 페이징 처리 관련 form -->
 <form action="<c:url value='/attendanceManagement/attendanceSearch'/>" 
