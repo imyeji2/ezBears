@@ -22,7 +22,7 @@
 	         	
 	         	<form name="frmWrite" method="post" action="<c:url value='/message/messageWrite'/>">
 	         		<!-- 발신자 hidden 으로 넘길거! -->
-	         		<input type="text" id="sendUserNo" name="sendUserNo" value="${sendUserNo }">
+	         		<input type="hidden" id="sendUserNo" name="sendUserNo" value="${sendUserNo }">
 		         	<!-- <div class="form-floating mb-3">
 	                    <input type="text" class="form-control" id="receiveUserId" placeholder="receiveUserId" name="receiveUserId" style="width: 400px">
 	                    <label for="floatingInput">받는사람</label>
@@ -56,7 +56,11 @@
 		        
 		         
 	         </div>
-	         
+	         <br>
+	         <div class="center" style="margin-left: 100px">
+	        	<a href="<c:url value='/message/receiveBox'/>" style="color: white;">받은 쪽지함</a> |
+				<a href="<c:url value='/message/sendBox'/>" style="color: white;">보낸 쪽지함</a>
+			</div>
 	         
 			</div>
 		</div>

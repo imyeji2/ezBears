@@ -23,7 +23,7 @@ $(function(){
 	$('#btnEdit').hide();
 });
 	function editDeptInfo(deptName, deptNo, deptTel){
-		$('#deptName').val(deptName);
+		$('#EditdeptName').val(deptName);
 		$('#deptTel').val(deptTel);
 		$('#deptNo').val(deptNo);
 		
@@ -82,7 +82,7 @@ $(function(){
 	        <form class="btn-form" name="frm1" method="post">
 				<div class = "btns">
 					<input type="hidden" class="addDept" id = "deptNo" name ="deptNo" placeholder="부서번호" disabled="disabled">
-					<input type="text" class="addDept" id = "deptName" name ="deptName" placeholder="부서명">
+					<input type="text" class="addDept" id = "EditdeptName" name ="deptName" placeholder="부서명">
 					<input type="text" class="addDept" id = "deptTel"  name ="deptTel" placeholder="부서전화번호">
 					<button type="submit" class="btnAdd" id="btnAdd" onclick = "InsertDept()" value="등록">등록</button>
 					<button type="submit" class="btnEdit" id="btnEdit" onclick = "EditDept()"value="수정">수정</button>
