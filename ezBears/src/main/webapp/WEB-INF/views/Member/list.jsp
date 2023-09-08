@@ -84,6 +84,10 @@
 		                if(res.staffVo.staffImage === null){
 	                        $('.popup-inner #pop_previewImage').attr("src", "<c:url value='/img/defaultUSER.png'/>");
                         }
+		                
+		                if(res.staffVo.staffStatus === 'N'){
+			                $('.popup-inner #staffInfo').val('계약만료');
+		                }
 		            }
 
 		            $('.popup-inner').show();
@@ -118,10 +122,19 @@
 .table tbody {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
 }
 
 tr.memList {
-    width: 330px;
+    width: 270px;
+    background-color: #202335;
+    margin: 5px;
+    border-radius: 5px;
+}
+.infodiv {
+    width: 120px;
 }
 
 
@@ -192,7 +205,7 @@ tr.memList {
 		                <c:if test="${!empty list }">
 		                	<c:forEach var="map" items="${list}">
 		                		<tr class="memList">
-		                			<td>
+		                			<td class="perPersonOut">
 		                			<div class="perPerson">
 										<div class ="imgdiv">
 											<c:choose>
@@ -219,7 +232,7 @@ tr.memList {
 												</c:choose>
 										</div>
 										<div class = "infodiv">
-			                				<a id="AdeptName">${map['DEPT_NAME']}</a>
+			                				<a id="AdeptName">💼${map['DEPT_NAME']}</a>
 			                				<br>
 			                				<a id="AmemPosition">
 				                				<c:choose>

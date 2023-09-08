@@ -369,7 +369,9 @@ input.edittext {
 	button#btnAdd,
 	button#btnEdit {
 		margin-bottom: 10px;
+		
 	}
+	
 
 }
 
@@ -420,7 +422,7 @@ img.searchImg {
 
 .perPerson {
 	display: flex;
-	gap: 0 30px;
+	gap: 0 13px;
 }
 
 a#AmemName {
@@ -440,7 +442,7 @@ a#AmemName {
 #btInfo {
 	background-color: #7000D8;
 	border-radius: 5px;
-	width: 45px;
+	width: 57px;
 	height: 30px;
 	display: flex;
 	justify-content: center;
@@ -458,6 +460,7 @@ a#AmemName {
 .twoBt {
 	display: flex;
 	gap: 0 5px;
+	justify-content: center;
 }
 
 /*popup*/
@@ -567,7 +570,7 @@ img.gotoChatPng {
 }
 
 img#previewImage {
-	border-radius: 50px;
+	border-radius: 10px;
 }
 
 .searchbtn {
@@ -634,4 +637,8 @@ img#pop_previewImage{
 
 .Info {
     display: flex;
+}
+
+.table{
+	color:#fff;
 }
