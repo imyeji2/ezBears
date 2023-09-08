@@ -234,9 +234,9 @@
 	 
     <sql id="searchWhereMember">
 		<where>
-			CONTRACT_DONE is null
+			CONTRACT_DONE is null 
 			<if test="deptNo!=null and deptNo!=''">
-				dept_No = #{deptNo}
+				AND dept_No = #{deptNo}
 			</if>
 		</where>
 	</sql>	 
@@ -248,12 +248,12 @@
     		(
                 SELECT * FROM 
                 (
-				select *
+				select MEM_NO, MEM_NAME, MEM_IMAGE, POSITION_NAME, DEPT_NAME, DEPT_NO,CONTRACT_DONE 
 				from myBoardMemberView
 				MINUS 
-				select *
+				select MEM_NO, MEM_NAME, MEM_IMAGE, POSITION_NAME, DEPT_NAME, DEPT_NO,CONTRACT_DONE
 				from myBoardMemberView
-				WHERE m_Board_no =#{mBoardNo}
+				WHERE m_Board_no =#{mBoardNo} AND STATUS='Y'
         		ORDER BY MEM_NAME, DEPT_NAME
                 )
                <include refid="searchWhereMember"></include> 
@@ -268,12 +268,12 @@
 	<select id="selectMemberListTotal" parameterType="myBoardMemberSearchVo" resultType="int">	 
 			SELECT count(*) FROM 
                 (
-					select *
+					select MEM_NO, MEM_NAME, MEM_IMAGE, POSITION_NAME, DEPT_NAME, DEPT_NO ,CONTRACT_DONE
 					from myBoardMemberView
 					MINUS 
-					select *
+					select MEM_NO, MEM_NAME, MEM_IMAGE, POSITION_NAME, DEPT_NAME, DEPT_NO, CONTRACT_DONE  
 					from myBoardMemberView
-					WHERE m_Board_no =#{mBoardNo}
+					WHERE m_Board_no =#{mBoardNo} AND STATUS='Y'
 	        		ORDER BY MEM_NAME, DEPT_NAME
                 )
               <include refid="searchWhereMember"></include>

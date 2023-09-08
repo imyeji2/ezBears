@@ -77,7 +77,7 @@ jb(function(){
 		                    <tr>
 		                        <th scope="col">부서</th>
 		                        <td>
-		                        	<input type="text" class="edittext" id="deptName" value="${memberVo.deptName}" readonly="readonly">
+		                        	<input type="text" class="edittext" id="pop_deptName" value="${memberVo.deptName}" readonly="readonly">
 		                        	
 		                        	<select class="showEditDept" name="deptNo" id="dept">
 							        	<option value="" >부서</option>

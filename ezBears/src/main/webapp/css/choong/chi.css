@@ -22,4 +22,7 @@
 .form-control:read-only{
 	background-color: black;
 }
-
+	
+a {
+	color: #7000D8;
+}
