@@ -124,8 +124,10 @@ public class LoginController {
 				}
 			}else if(result==memberService.PWD_DISAGREE) {
 				msg="프론트 비밀번호가 일치하지 않습니다.";
+				url="/";
 			}else if(result==memberService.USERID_NONE) {
-				msg="해당 프론트 아이디가 존재하지 않습니다.";			
+				msg="퇴사자 계정입니다.";	
+				url="/";
 			}
 		}else if(dept.equals("staff")) {
 			int result1=staffService.loginCheck(userid, pwd);
@@ -183,10 +185,13 @@ public class LoginController {
 					}
 				}else if(result1==staffService.PWD_DISAGREE) {
 					msg="플레이어 비밀번호가 일치하지 않습니다.";
+					url="/";
 				}else if(result1==staffService.USERID_NONE) {
-					msg="해당 플레이어 아이디가 존재하지 않습니다.";			
+					msg="해당 플레이어 아이디가 존재하지 않습니다.";
+					url="/";
 				}else if(result1==staffService.USERID_DONE) {
 					msg="해당 플레이어는 상태가 정지되었습니다";
+					url="/";
 				}//LOGIN_OK if
 			}else if(map.get("STAFF_STATUS").equals("N")){
 				msg="계약이 만료된 스태프입니다.";
