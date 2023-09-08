@@ -12,6 +12,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ez.ezBears.myBoard.model.MyBoardListService;
 import com.ez.ezBears.myBoard.model.MyBoardListVO;
@@ -61,6 +62,24 @@ public class MyBoardListController {
 		
 		//4.
 		return "inc/myBoardNavTab";
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping("/ajax_selectMyBoardList")
+	List<Map<String, Object>> selectMyBoardList(HttpSession session){
+		
+		//1
+		logger.info("메인페이지 보드 변경하기, 마이보드 리스트 검색");
+		
+		//2
+		String userid=(String)session.getAttribute("userid");
+		List<Map<String, Object>> myBoardList = myBoardListService.selectBoardList(userid);
+		
+		logger.info("마이보드 리스트 검색 결과 myBoardList.size={}",myBoardList);
+		
+		return myBoardList;
+		
 	}
 
 }

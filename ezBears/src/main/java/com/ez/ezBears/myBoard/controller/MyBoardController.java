@@ -34,7 +34,7 @@ public class MyBoardController {
 	@RequestMapping("/addMyBoard")
 	public String addMyBoard() {
 		//1
-		logger.info("마이보드 추가");
+		logger.info("마이보드 추가 로딩");
 		
 		
 		//4

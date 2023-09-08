@@ -1137,9 +1137,11 @@
 	
 	
 	.table{
+		width: 90%;
 		color:#fff;
 		border-color: #6C7293;
-		text-align: center;
+		
+		margin:0 auto;
 	}
 	
 	
@@ -1162,8 +1164,15 @@
 		white-space:nowrap;
 		overflow:hidden;
 		text-overflow:ellipsis;
-		max-width:240px
+		max-width:240px;
 	}
+	
+	.staff td{
+		white-space:nowrap;
+		overflow:hidden;
+		text-overflow:ellipsis;
+		max-width:150px !important;
+	}	
 	
 	.newImg{
 		width:30px;
@@ -1248,6 +1257,24 @@
 	.weatherTemp{
 		text-align: center;
 		margin-bottom: 20px;
+	}
+	
+	.changeBoardBox{
+		overflow: hidden;
+		margin:0 auto;
+	}
+	
+	.form-select{
+		width: 83%;
+		float: left;
+		background-color: #fff;
+		color:#000;
+	}
+	
+	.changeBoardBtn{
+		width: 15%;
+		margin-left:2%;
+		float: left;
 	}
 	
 	
