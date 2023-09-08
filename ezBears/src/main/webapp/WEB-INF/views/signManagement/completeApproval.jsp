@@ -116,7 +116,7 @@
 <!-- 						<button type="button" class="btn btn-sm btn-primary insertapp"
 							data-toggle="modal" data-target="#approvalModal">결재작성
 						</button> -->
-						
+						<br>
 					    <div class="divPage" style="text-align: center" >		
 							<!-- 페이지 번호 추가 -->		
 							<c:if test="${pagination.firstPage>1 }">
