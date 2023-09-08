@@ -25,8 +25,8 @@ public class PitcherServiceImpl implements PitcherService {
 	}
 	
 	@Override
-	public int deletePitcher(int pitcherNo) {
-		return pitcherDao.deletePitcher(pitcherNo);
+	public int deletePitcher(int recodeNo, int playerNo) {
+		return pitcherDao.deletePitcher(recodeNo, playerNo);
 	}
 
 	@Override

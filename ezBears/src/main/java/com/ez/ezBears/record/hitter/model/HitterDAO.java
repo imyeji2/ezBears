@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.ez.ezBears.team.model.TeamVO;
 
@@ -11,7 +12,7 @@ import com.ez.ezBears.team.model.TeamVO;
 public interface HitterDAO {
 	int insertHitter(HitterVO hitterVo);
 	int updateHitter(HitterVO hitterVo);
-	int deleteHitter(int hitterNo);
+	int deleteHitter(@Param("recodeNo")int recodeNo,@Param("playerNo") int playerNo);
 	
 	HitterVO selectByPlayerNo(int playerNo);
 	HitterVO selectByRecodeNo(int recodeNo);

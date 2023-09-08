@@ -12,7 +12,7 @@ import com.ez.ezBears.team.model.TeamVO;
 public interface PitcherDAO {
 	int insertPitcher(PitcherVO pitcherVo);
 	int updatePitcher(PitcherVO pitcherVo);
-	int deletePitcher(int pitcherNo);
+	int deletePitcher(int recodeNo, int playerNo);
 	
 	PitcherVO selectByRecodeNo(int recodeNo);
 	PitcherVO selectPitcherByPlayerNo(int playerNo);

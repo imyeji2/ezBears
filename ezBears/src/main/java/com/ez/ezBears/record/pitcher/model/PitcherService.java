@@ -10,7 +10,7 @@ import com.ez.ezBears.team.model.TeamVO;
 public interface PitcherService {
 	int insertPitcher(PitcherVO pitcherVo);
 	int updatePitcher(PitcherVO pitcherVo);
-	int deletePitcher(int pitcherNo);
+	int deletePitcher(int recodeNo, int playerNo);
 	PitcherVO selectPitcherByPlayerNo(int playerNo);
 	List<Map<String, Object>> selectPitcherView(int playerNo);
 	List<Map<String, Object>> selectPitcherRecordView(int recordNo);

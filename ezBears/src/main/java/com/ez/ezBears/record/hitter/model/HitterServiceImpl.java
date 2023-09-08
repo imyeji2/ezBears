@@ -31,9 +31,8 @@ public class HitterServiceImpl implements HitterService {
 	}
 
 	@Override
-	public int deleteHitter(int hitterNo) {
-		// TODO Auto-generated method stub
-		return hitterDao.deleteHitter(hitterNo);
+	public int deleteHitter(int recodeNo, int playerNo) {
+		return hitterDao.deleteHitter(recodeNo, playerNo);
 	}
 
 	@Override

@@ -177,7 +177,7 @@ public class RecordController {
 	
 	@GetMapping("/hitterRecordDelete")
 	public String hitterRecordDelete_get(@RequestParam(defaultValue = "0") int playerNo, int recodeNo, Model model) {
-		logger.info("타자기록삭제 이동 파라미터 hitterNo={}", recodeNo);
+		logger.info("타자기록삭제 이동 파라미터 recodeNo={}", recodeNo);
 		
 		HitterVO hitterVo = hitterService.selectByRecodeNo(recodeNo);
 		List<Map<String, Object>> hitterRecordList = hitterService.selectHitterRecordView(recodeNo);
@@ -196,12 +196,12 @@ public class RecordController {
 	
 	@PostMapping("/hitterRecordDelete")
 	public String hitterRecordDelete_post(@RequestParam(defaultValue = "0") int playerNo, int recodeNo, GameVO gameVo, Model model) {
-		logger.info("타자기록삭제처리 파라미터 playerNo={}", recodeNo);
+		logger.info("타자기록삭제처리 파라미터 playerNo={},recodeNo={}", playerNo,recodeNo);
 		
-		int cnt = hitterService.deleteHitter(recodeNo);
+		int cnt = hitterService.deleteHitter(recodeNo, playerNo);
 		logger.info("삭제결과 파라미터 cnt={}", cnt);
 		
-		return "redirect:/record/hitterRecordDelete?recodeNo="+gameVo.getRecodeNo();
+		return "redirect:/record/gameRecordDetail?recodeNo="+gameVo.getRecodeNo();
 	}
 	
 	@GetMapping("/hitterRecordDetail")
@@ -305,13 +305,13 @@ public class RecordController {
 	
 	
 	@PostMapping("/pitcherRecordDelete")
-	public String pitcherRecordDelete_post(@RequestParam(defaultValue = "0") int playerNo, int recodeNo, GameVO gameVo, Model model) {
+	public String pitcherRecordDelete_post(@RequestParam(defaultValue = "0") int recodeNo, int playerNo, GameVO gameVo, Model model) {
 		logger.info("투수기록삭제처리 파라미터 playerNo={}", recodeNo);
 		
-		int cnt = pitcherService.deletePitcher(recodeNo);
+		int cnt = pitcherService.deletePitcher(recodeNo, playerNo);
 		logger.info("삭제결과 파라미터 cnt={}", cnt);
 		
-		return "redirect:/record/pitcherRecordDelete?recodeNo="+gameVo.getRecodeNo();
+		return "redirect:/record/gameRecordDetail?recodeNo="+gameVo.getRecodeNo();
 	}
 	
 	@GetMapping("/pitcherRecordDetail")
