@@ -255,25 +255,48 @@ public class RecordController {
 	}
 	
 	@GetMapping("/pitcherRecordEdit")
-	public String pitcherRecordEdit_get() {
-		//1,4
-		logger.info("투수기록수정");
+	public String pitcherRecordEdit_get(@RequestParam int recodeNo, Model model) {
+		logger.info("투수기록수정 파라미터 recodeNo={}", recodeNo);
+		
+        if(recodeNo == 0) {
+            model.addAttribute("msg", "잘못된 URL입니다");
+            model.addAttribute("url", "/record/gameRecordDetail?recodeNo="+recodeNo);
+            return "common/message";
+         }
+
+		List<Map<String, Object>> pitcherRecordList = pitcherService.selectPitcherRecordView(recodeNo);
+		
+		model.addAttribute("pitcherRecordList", pitcherRecordList);
+		logger.info("투수 전체 pitcherList.size={}",pitcherRecordList.size());
+		model.addAttribute("recodeNo", recodeNo);
+		
+		
 		return "/record/pitcherRecordEdit";
 	}
 	
+	
 	@PostMapping("/pitcherRecordEdit")
-	public String pitcherRecordEdit_post() {
-		//1,4
-		logger.info("투수기록수정");
-		return "/record/pitcherRecordEdit";
+	public String pitcherRecordEdit_post(@ModelAttribute PitcherVO pitcherVo, HttpServletRequest rquest, Model model) {
+		logger.info("타자기록수정 파라미터 pitcherVo={}", pitcherVo);
+		int cnt = pitcherService.updatePitcher(pitcherVo);
+		
+		logger.info("투수 수정 처리 결과, cnt={}", cnt);
+
+		
+		return "redirect:/record/hitterRecordDetail?playerNo="+pitcherVo.getPlayerNo();
 	}
 	
 	@GetMapping("/pitcherRecordDelete")
-	public String pitcherRecordDelete_get(@RequestParam(defaultValue = "0") int recodeNo, Model model) {
-		logger.info("투수기록삭제, 파라미터 recodeNo = {}", recodeNo);
+	public String pitcherRecordDelete_get(@RequestParam(defaultValue = "0") int playerNo, int recodeNo, Model model) {
+		logger.info("타자기록삭제 이동 파라미터 hitterNo={}", recodeNo);
 		
-		PitcherVO pitcherVo = pitcherService.selectPitcherByPlayerNo(recodeNo);
-		logger.info("경기 삭제 화면 이동, 파라미터 gameVo={}", pitcherVo);
+		PitcherVO pitcherVo = pitcherService.selectByRecodeNo(recodeNo);
+		List<Map<String, Object>> pitcherRecordList = hitterService.selectHitterRecordView(recodeNo);
+		
+		model.addAttribute("pitcherRecordList", pitcherRecordList);
+		logger.info("투수 전체 pitcherList.size={}",pitcherRecordList.size());
+		
+		logger.info("투수 기록 삭제 화면 이동, 파라미터 pitcherVo={}", pitcherVo);
 		
 		model.addAttribute("pitcherVo", pitcherVo);
 		
@@ -281,11 +304,15 @@ public class RecordController {
 		return "/record/pitcherRecordDelete";
 	}
 	
+	
 	@PostMapping("/pitcherRecordDelete")
-	public String pitcherRecordDelete_post() {
-		//1,4
-		logger.info("투수기록삭제");
-		return "/record/pitcherRecordDelete";
+	public String pitcherRecordDelete_post(@RequestParam(defaultValue = "0") int playerNo, int recodeNo, GameVO gameVo, Model model) {
+		logger.info("투수기록삭제처리 파라미터 playerNo={}", recodeNo);
+		
+		int cnt = pitcherService.deletePitcher(recodeNo);
+		logger.info("삭제결과 파라미터 cnt={}", cnt);
+		
+		return "redirect:/record/pitcherRecordDelete?recodeNo="+gameVo.getRecodeNo();
 	}
 	
 	@GetMapping("/pitcherRecordDetail")
