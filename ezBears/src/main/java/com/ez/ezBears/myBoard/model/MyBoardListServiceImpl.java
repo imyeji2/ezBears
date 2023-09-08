@@ -132,6 +132,11 @@ public class MyBoardListServiceImpl implements MyBoardListService {
 		return myBoardListDao.selectMemAppPositionInfo(mBoardNo);
 	}
 
+	@Override
+	public List<Map<String, Object>> selectMyBoardMember2(int mBoardNo) {
+		return myBoardListDao.selectMyBoardMember2(mBoardNo);
+	}
+
 
 
 }

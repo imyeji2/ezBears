@@ -22,12 +22,15 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ez.ezBears.common.ConstUtil;
 import com.ez.ezBears.common.FileUploadUtil;
 import com.ez.ezBears.common.PaginationInfo;
+import com.ez.ezBears.common.SearchVO;
 import com.ez.ezBears.common.SignListSearchVO;
+import com.ez.ezBears.dept.model.DeptVO;
 import com.ez.ezBears.member.model.MemberService;
 import com.ez.ezBears.member.model.MemberVO;
 import com.ez.ezBears.myBoard.model.MyBoardInfoVO;
 import com.ez.ezBears.myBoard.model.MyBoardListService;
 import com.ez.ezBears.notice.model.NoticeFileVO;
+import com.ez.ezBears.position.model.PositionVO;
 import com.ez.ezBears.sign.model.SignFileVO;
 import com.ez.ezBears.sign.model.SignMemInfoVO;
 import com.ez.ezBears.sign.model.SignService;
@@ -40,10 +43,8 @@ import lombok.RequiredArgsConstructor;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/myBoard")
-public class SignController {
-	/*
-	  http://localhost:9091/ezBears/myBoard/Approval?myBoardNo=0
-	 */
+public class SignController { 
+	/* http://localhost:9091/ezBears/myBoard/Approval?myBoardNo=0  */
 
 	private static final Logger logger = LoggerFactory.getLogger(SignController.class);
 	private final MyBoardListService myBoardListService;
@@ -120,11 +121,17 @@ public class SignController {
 		logger.info("myBoardInfo 정보={}",myBoardInfoVo);
 
 		myBoardInfoVo = myBoardListService.selectBoardInfo(myBoardInfoVo);
-		memberVo = memberService.selectpositioninfo(myBoardInfoVo.getDeptNo());
-
+		List<Map<String, Object>> list = myBoardListService.selectMyBoardMember2(myBoardInfoVo.getMBoardNo());
+		
+		
+		MemberVO vo2 = memberService.selectDeptPositionInfo();
+		logger.info("vo2={}",vo2);
+		
 		model.addAttribute("myBoardInfoVo",myBoardInfoVo);
 		model.addAttribute("memberVo",memberVo);
-
+		model.addAttribute("list",list);
+		model.addAttribute("vo2",vo2);
+		
 		logger.info("myBoardInfo={}",myBoardInfoVo);
 
 
@@ -175,29 +182,28 @@ public class SignController {
 	public String Approval_edit(@RequestParam (defaultValue = "0")int docNo ,@ModelAttribute MyBoardInfoVO myBoardInfoVo,
 			@ModelAttribute MemberVO memberVo, @ModelAttribute SignMemInfoVO signMemInfoVo,HttpSession session ,HttpServletRequest request,	Model model) {
 		
-		logger.info("결재 수정 페이지");
+		logger.info("결재 수정 페이지 docNo={}",docNo);
 
 		signMemInfoVo = signService.selectApprovaMem(docNo);
 		logger.info("결재 디테일 signMemInfoVo={}",signMemInfoVo);
 
-		BigDecimal deptNoBigDecimal = (BigDecimal) request.getSession().getAttribute("dept_no");
-		int deptNo = deptNoBigDecimal.intValue();
-
-		memberVo.setDeptNo(deptNo);
-		memberVo = memberService.selectpositioninfo(deptNo);
-
+		List<Map<String, Object>> listMap = myBoardListService.selectMyBoardMember2(signMemInfoVo.getMBoardNo());
+		
 		Map<String, Object> list = signService.detailSign(docNo);
 		logger.info("결재 디테일 list={}",list);
 		model.addAttribute("list",list);
 
 		List<Map<String, Object>> filemap = signService.selectSignnFileInfo(docNo);
 		logger.info("결재 파일 정보 filemap={}",filemap);
-
+		MemberVO vo2 = memberService.selectDeptPositionInfo();
+		
+		model.addAttribute("vo2",vo2);
 		model.addAttribute("list",list);
 		model.addAttribute("memberVo",memberVo);
 		model.addAttribute("filemap",filemap);
 		model.addAttribute("signMemInfoVo",signMemInfoVo);
-
+		model.addAttribute("listMap",listMap);
+		
 		return "myBoard/Approval_edit";
 	}
 
@@ -266,10 +272,16 @@ public class SignController {
 
 		myBoardInfoVo = myBoardListService.selectMemAppPositionInfo(signMemInfoVo.getMBoardNo());
 		logger.info("결재 디테일 myBoardInfoVo={}",myBoardInfoVo);
-
+		
+		List<Map<String, Object>> list2 = myBoardListService.selectMyBoardMember2(myBoardInfoVo.getMBoardNo());
+		
+		MemberVO vo2 = memberService.selectDeptPositionInfo();
+		
+		model.addAttribute("vo2",vo2);
 		model.addAttribute("myBoardInfoVo",myBoardInfoVo); 
 		model.addAttribute("signMemInfoVo",signMemInfoVo); 
 		model.addAttribute("list",list);
+		model.addAttribute("list2",list2);
 		model.addAttribute("memberVo",memberVo);
 		model.addAttribute("filemap",filemap);
 
@@ -392,11 +404,46 @@ public class SignController {
 			response.put("success", true);
 		} else {
 			response.put("success", false);
-			response.put("message", "문서 삭제 실패했습니다."); 
+			response.put("message", "문서 삭제를 실패했습니다."); 
 		}
 		
 		return response;
-
 	}
+	
+	
+	/*
+	@RequestMapping("/appSingListInfo")
+	public String appSingListInfo(@ModelAttribute SearchVO searchVo, @RequestParam(required = false) String searchName,
+			Model model){
+
+		
+		logger.info("결재 리스트 페이지, 파라미터 searchVo={}",searchVo);
+		
+	
+		PaginationInfo pagingInfo = new PaginationInfo();
+		pagingInfo.setBlockSize(ConstUtil.BLOCK_SIZE);
+		pagingInfo.setCurrentPage(searchVo.getCurrentPage());
+		pagingInfo.setRecordCountPerPage(ConstUtil.MEMRECORD_COUNT);
+		
+		searchVo.setRecordCountPerPage(ConstUtil.MEMRECORD_COUNT);
+		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
+		
+		List<Map<String, Object>> list = signService.selectApprovalList2(searchVo);
+		
+		logger.info("기안자 검색 결과, list.size={}", list.size());
+	
+		
+		int totalRecord = signService.selectAppCount2(searchName);
+		pagingInfo.setTotalRecord(totalRecord);
+		
+	
+		model.addAttribute("list", list);
+		model.addAttribute("pagingInfo", pagingInfo);
+	
+		
+		return "/myBoard/Approval";
+		
+	}
+	*/
 
 }
