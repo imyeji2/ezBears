@@ -584,7 +584,7 @@
              <div class="col-sm-12 col-xl-6">
                  <div class="bg-secondary text-center rounded p-4">
                      <div class="d-flex align-items-center justify-content-between mb-2">
-                         <h6 class="mb-0">선수기록</h6>
+                         <h6 class="mb-0">경기기록</h6>
                      </div>
                      <div class="d-flex align-items-center py-3">
 			       	 <table class="table">
