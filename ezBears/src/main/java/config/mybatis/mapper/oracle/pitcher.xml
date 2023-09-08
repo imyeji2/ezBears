@@ -71,8 +71,14 @@
 	</update>
     
     <delete id="deletePitcher" parameterType="int">
-    	delte pitcher
+    	delete pitcher
     	where player_no=#{playerNo}
     </delete>
-
+	
+	<select id="selectByRecodeNo" resultType="pitcherVo">
+		select *
+		from pitcher
+		where recode_no = #{recodeNo} and player_no = #{playerNo}
+	</select>
+	
 </mapper>

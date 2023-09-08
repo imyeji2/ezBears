@@ -57,6 +57,12 @@ public class PitcherServiceImpl implements PitcherService {
 		// TODO Auto-generated method stub
 		return pitcherDao.selectByRecodeNo(recodeNo);
 	}
+
+	@Override
+	public PitcherVO selectByPlayerNo(int playerNo) {
+		// TODO Auto-generated method stub
+		return pitcherDao.selectByPlayerNo(playerNo);
+	}
 	
 	
 }

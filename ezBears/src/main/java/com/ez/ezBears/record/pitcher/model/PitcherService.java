@@ -18,4 +18,5 @@ public interface PitcherService {
 	//투수 전체조회
 	List<TeamVO> selectAllPitcher();
 	PitcherVO selectByRecodeNo(int recodeNo);
+	PitcherVO selectByPlayerNo(int playerNo);
 }

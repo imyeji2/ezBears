@@ -288,18 +288,17 @@ public class RecordController {
 	
 	@GetMapping("/pitcherRecordDelete")
 	public String pitcherRecordDelete_get(@RequestParam(defaultValue = "0") int playerNo, int recodeNo, Model model) {
-		logger.info("타자기록삭제 이동 파라미터 hitterNo={}", recodeNo);
+		logger.info("투수기록삭제 이동 파라미터 recodeNo={}", recodeNo);
 		
 		PitcherVO pitcherVo = pitcherService.selectByRecodeNo(recodeNo);
-		List<Map<String, Object>> pitcherRecordList = hitterService.selectHitterRecordView(recodeNo);
+		List<Map<String, Object>> pitcherRecordList = pitcherService.selectPitcherRecordView(recodeNo);
 		
 		model.addAttribute("pitcherRecordList", pitcherRecordList);
-		logger.info("투수 전체 pitcherList.size={}",pitcherRecordList.size());
+		logger.info("투수 전체 pitcherList.size={}", pitcherRecordList.size());
 		
 		logger.info("투수 기록 삭제 화면 이동, 파라미터 pitcherVo={}", pitcherVo);
 		
 		model.addAttribute("pitcherVo", pitcherVo);
-		
 		
 		return "/record/pitcherRecordDelete";
 	}
