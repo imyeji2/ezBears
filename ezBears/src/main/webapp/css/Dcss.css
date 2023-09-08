@@ -625,3 +625,13 @@ p.Allcnt {
 a#mboardNameA {
     color: #fff;
 }
+
+/*pop*/
+
+img#pop_previewImage{
+	border-radius: 40px;
+}
+
+.Info {
+    display: flex;
+}
