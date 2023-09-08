@@ -4,20 +4,23 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.ez.ezBears.team.model.TeamVO;
 
 @Mapper
 public interface HitterDAO {
 	int insertHitter(HitterVO hitterVo);
+	int updateHitter(HitterVO hitterVo);
+	int deleteHitter(@Param("recodeNo")int recodeNo,@Param("playerNo") int playerNo);
+	
 	HitterVO selectByPlayerNo(int playerNo);
 	HitterVO selectByRecodeNo(int recodeNo);
-	int updateHitter(HitterVO hitterVo);
-	int deleteHitter(int hitterNo);
-	List<Map<String, Object>> selectHitterView(int playerNo);
-	Map<String, Object> selectHitterStatView(int playerNo);
-	List<Map<String, Object>> selectHitterRecordView(int recodeNo);
-	
 	
 	List<TeamVO> selectAllHitter();
+	List<Map<String, Object>> selectHitterView(int playerNo);
+	List<Map<String, Object>> selectHitterRecordView(int recodeNo);
+	
+	Map<String, Object> selectHitterStatView(int playerNo);
+	
 }

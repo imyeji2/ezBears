@@ -25,8 +25,8 @@ public class PitcherServiceImpl implements PitcherService {
 	}
 	
 	@Override
-	public int deletePitcher(PitcherVO pitcherVo) {
-		return pitcherDao.deletePitcher(pitcherVo);
+	public int deletePitcher(int recodeNo, int playerNo) {
+		return pitcherDao.deletePitcher(recodeNo, playerNo);
 	}
 
 	@Override
@@ -49,7 +49,19 @@ public class PitcherServiceImpl implements PitcherService {
 
 	@Override
 	public List<TeamVO> selectAllPitcher() {
-		return  pitcherDao.selectAllPitcher();
+		return pitcherDao.selectAllPitcher();
+	}
+
+	@Override
+	public PitcherVO selectByRecodeNo(int recodeNo) {
+		// TODO Auto-generated method stub
+		return pitcherDao.selectByRecodeNo(recodeNo);
+	}
+
+	@Override
+	public PitcherVO selectByPlayerNo(int playerNo) {
+		// TODO Auto-generated method stub
+		return pitcherDao.selectByPlayerNo(playerNo);
 	}
 	
 	

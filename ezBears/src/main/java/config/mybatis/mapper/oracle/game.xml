@@ -12,6 +12,7 @@
 	
 	<select id="selectAllGame" resultType="gameVo" parameterType="searchVo">
 		select * from recode
+		order by play_date desc
 	</select>
 	
 	<select id="selectByRecodeNo" resultType="gameVo" parameterType="int">
