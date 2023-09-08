@@ -45,7 +45,6 @@ public class MBoardServiceImpl implements MBoardService{
 	@Transactional
 	public int addBoard(MBoardVO mBoardVo) {
 		int cnt=0;
-		System.out.println("헤이");
 		try {
 			
 			cnt = mBoardDao.addMboard(mBoardVo);

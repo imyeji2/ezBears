@@ -143,7 +143,6 @@ $(function(){
 			$('#AddBoardName').focus();
 			return false;
 	    }else{
-	    
 		    $.ajax({
 		        type: 'post',
 		        url: "<c:url value='/myBoard/addMyBoard'/>",
@@ -333,7 +332,7 @@ $(function(){
 		        success: function(res){
 		            console.log(res); // 서버 응답 확인
 		            $('#editMyBoard tbody').html('');
-		            	index++;
+		            	
 		            	if(res.length===0){
 		            		loadDate+="<tr>";
 		            		loadDate+="<td colspan='6'>관리할 보드가 없습니다.</td>";
@@ -341,6 +340,7 @@ $(function(){
 		            		$('#editMyBoard tbody').append(loadDate);
 		            	}else{
 		            		$.each(res, function(idx, item){
+		            			index++;
 				            	loadDate+="<tr>";
 				            	loadDate+="<input type='hidden' name='mBoardNo' value='"+item.M_BOARD_NO+"'>";
 				            	loadDate+="<th scope='row'>"+index+"</th>";
@@ -481,16 +481,18 @@ $(function(){
 
                 <!-- 사이드 메뉴 시작 -->
                 <div class="navbar-nav w-100">
-                	<div class="boardTop">
-                		<div class="boardTop_txt">워크보드</div>
-                		<div class="boardTop_btn">
-                			<img src="<c:url value='/img/plus.svg'/>" alt="보드 추가 버튼" 
-                				style="margin-right:10px;" id="addBoard"
-                				data-bs-toggle="modal" data-bs-target="#addMyBoard">
-                			<img src="<c:url value='/img/gear-wide.svg'/>" alt="보드 관리 버튼" id="editBoard"
-                			data-bs-toggle="modal" data-bs-target="#editMyBoard" onclick="loadBoardList()"/>
-                		</div>
-                	</div>
+                	<c:if test="${sessionScope.type=='사원'}">
+	                	<div class="boardTop">
+	                		<div class="boardTop_txt">워크보드</div>
+	                		<div class="boardTop_btn">
+	                			<img src="<c:url value='/img/plus.svg'/>" alt="보드 추가 버튼" 
+	                				style="margin-right:10px;" id="addBoard"
+	                				data-bs-toggle="modal" data-bs-target="#addMyBoard">
+	                			<img src="<c:url value='/img/gear-wide.svg'/>" alt="보드 관리 버튼" id="editBoard"
+	                			data-bs-toggle="modal" data-bs-target="#editMyBoard" onclick="loadBoardList()"/>
+	                		</div>
+	                	</div>
+                	</c:if>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                       	 	<i class="bi bi-building me-2"></i>공용
@@ -581,7 +583,34 @@ $(function(){
             </nav>
         </div>
         <!-- Sidebar End -->
-  		<c:import url="/myBoard/addMyBoard"></c:import>
+  		
+		<!-- Modal -->
+		<div class="modal fade" id="addMyBoard" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="staticBackdropLabel" style="color:#191C24">나의보드 추가</h1>
+				</div><!-- modal-header -->	    
+				<div class="modal-body">
+				<form name="addMyBoardFrm" method="post" action="<c:url value='/myBoard/addMyBoard'/>">
+					<input type="hidden" name="memNo" value="${memNo}">
+					<div id="addBox">
+						<div class="input-group mb-3">
+						  <input type="text" class="form-control" name="MBoardName"placeholder="추가할 보드 이름을 입력하세요" 
+						  aria-label="추가할 보드 이름을 입력하세요" aria-describedby="button-addon2" id="AddBoardName">
+						  <button class="btn btn-outline-secondary" id="AddBoardBtn">추가</button>
+						</div>
+						<p id="addBoardError" style="color:red"></p>
+					</div><!-- addBox -->
+				</form>	
+		      </div><!-- modal-body -->
+		      <div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+		      </div><!-- Modal-footer -->
+		    </div><!-- modal-content -->
+		  </div>
+		</div>
+		<!--Modal-->	 
  
 		<!-- Modal -->
 		<div class="modal fade" id="editMyBoard" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -615,7 +644,6 @@ $(function(){
 		</div>
 		<!--Modal-->	  		
 
-
         <!-- Content Start -->
         <div class="content">
         	<!-- top 메뉴 시작 -->
@@ -625,7 +653,6 @@ $(function(){
 	                <form class="d-none d-md-flex ms-4">
 	                    <input class="form-control bg-dark border-0" id="searchbox" type="search" placeholder="사원을 검색하세요">
 	                    <%@include file="../Member/memberSearch.jsp"%>
-	                    
 	                </form>
                 </div>
                 

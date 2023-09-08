@@ -101,8 +101,8 @@
 			            	
 							//출력 데이터
 			            	var imagePath = "default_user.png";
-			            	if(item.MEM_IMAGE!==null){
-			            		var imagePath =item.memImage;
+			            	if(item.memImage!==null){
+			            		imagePath =item.memImage;
 			            	}
 			            	var allMemNo = item.memNo;
 			            	memberDate+="<div class='mem_list_content'>";				        	
@@ -190,7 +190,12 @@
 													<input type="hidden" name="memNo" value="${map['MEM_NO']}">
 													<div class="memberBox">
 														<div class="memberImg">
-															<img src="<c:url value='/img/mem_images/${map["MEM_IMAGE"]}'/>" alt="사원이미지">
+															<c:if test="${empty map['MEM_IMAGE']}">
+																<img src="<c:url value='/img/mem_images/default_user.png'/>" alt="사원이미지">
+															</c:if>
+															<c:if test="${!empty map['MEM_IMAGE']}">
+																<img src="<c:url value='/img/mem_images/${map["MEM_IMAGE"]}'/>" alt="사원이미지">
+															</c:if>															
 														</div>
 														<div class="memInfo">
 															<div class="memInfoText">
