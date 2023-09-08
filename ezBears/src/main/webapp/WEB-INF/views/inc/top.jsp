@@ -445,7 +445,14 @@ $(function(){
 	                    <div class="position-relative">
 	                    	<c:choose>
 	                    		<c:when test="${sessionScope.type=='사원' }">
-	                    		 	<img class="member_img" src="<c:url value='/img/mem_images/${sessionScope.myimg }'/>" alt="프로필 이미지">
+	                    			<c:choose>
+	                    				<c:when test="${sessionScope.myimg==null }">
+	                    					<img class="member_img" src="<c:url value='/img/defaultUSER.png'/>" alt="프로필 이미지">
+	                    				</c:when>
+	                    				<c:otherwise>
+			                    		 	<img class="member_img" src="<c:url value='/img/mem_images/${sessionScope.myimg }'/>" alt="프로필 이미지">
+	                    				</c:otherwise>
+	                    			</c:choose>
 	                    		</c:when>
 	                    		<c:otherwise>
 	                    			<c:choose>
