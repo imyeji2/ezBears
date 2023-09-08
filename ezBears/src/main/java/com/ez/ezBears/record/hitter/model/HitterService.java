@@ -10,7 +10,7 @@ import com.ez.ezBears.team.model.TeamVO;
 public interface HitterService {
 	int insertHitter(HitterVO hitterVo);
 	int updateHitter(HitterVO hitterVo);
-	int deleteHitter(int hitterNo);
+	int deleteHitter(int recodeNo, int playerNo);
 	List<Map<String, Object>> selectHitterView(int playerNo);
 	HitterVO getHitterByPlayerNo(int playerNo);
 	Map<String, Object> selectHitterStatView(int playerNo);

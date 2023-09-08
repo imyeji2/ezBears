@@ -13,4 +13,5 @@ public interface GameDAO {
 	int deleteGame(int recodeNo);
 	List<GameVO> selectAllGame(SearchVO searchVo);
 	GameVO selectByRecodeNo(int recodeNo);
+	List<GameVO> selectAllGameMain();
 }

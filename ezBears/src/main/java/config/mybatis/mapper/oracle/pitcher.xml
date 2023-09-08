@@ -62,6 +62,23 @@
 	<select id="selectAllPitcher" resultType="teamVo">
 		select * from team where b_position_no = 1 order by player_name
 	</select>
+	
+	<update id="updatePitcher" parameterType="pitcherVo">
+		update pitcher
+		set
+		bb=#{BB}, so=#{SO}, ip=#{IP}, ha=#{HA}, rc=#{RC}, er=#{ER}, hr=#{HR}, era=#{ERA}
+		where player_no=#{playerNo} and recode_no=#{recodeNo}
+	</update>
     
-
+    <delete id="deletePitcher" parameterType="int">
+    	delete pitcher
+    	where player_no=#{playerNo}
+    </delete>
+	
+	<select id="selectByRecodeNo" resultType="pitcherVo">
+		select *
+		from pitcher
+		where recode_no = #{recodeNo} and player_no = #{playerNo}
+	</select>
+	
 </mapper>

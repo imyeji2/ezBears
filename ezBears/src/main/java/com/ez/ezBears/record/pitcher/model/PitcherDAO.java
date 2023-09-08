@@ -12,8 +12,12 @@ import com.ez.ezBears.team.model.TeamVO;
 public interface PitcherDAO {
 	int insertPitcher(PitcherVO pitcherVo);
 	int updatePitcher(PitcherVO pitcherVo);
-	int deletePitcher(PitcherVO pitcherVo);
+	int deletePitcher(int recodeNo, int playerNo);
+	
+	PitcherVO selectByRecodeNo(int recodeNo);
 	PitcherVO selectPitcherByPlayerNo(int playerNo);
+	PitcherVO selectByPlayerNo(int playerNo);
+	
 	List<Map<String, Object>> selectPitcherView(int playerNo);
 	List<Map<String, Object>> selectPitcherRecordView(int recordNo);
 	

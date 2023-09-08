@@ -1140,7 +1140,6 @@
 		width: 90%;
 		color:#fff;
 		border-color: #6C7293;
-		
 		margin:0 auto;
 	}
 	
@@ -1149,6 +1148,10 @@
 		color:#fff;
 		background-color: rgba(0, 0, 0, 0.2);
 		
+	}
+	
+	.table thead{
+		text-align: center;
 	}
 	
 	.table a{

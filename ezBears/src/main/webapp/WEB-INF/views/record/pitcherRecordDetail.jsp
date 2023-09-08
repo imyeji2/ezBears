@@ -129,7 +129,7 @@
 													<option value="PLAYDATE"
 														<c:if test="${param.searchCondition=='PLAY_DATE'}">
 				            		selected="selected"
-				            	</c:if>>날짜</option>
+				            	</c:if>>경기날짜</option>
 													<option value="PLAYER_NAME"
 														<c:if test="${param.searchCondition=='PLAYER_NAME'}">
 				            		selected="selected"
@@ -138,18 +138,6 @@
 													value="${param.searchKeyword }"> <input
 													type="submit" value="검색" id="btnSearch">
 											</form>
-										</div>
-										<div class="divBtn">
-											<a href="<c:url value='/record/pitcherRecordWrite?playerNo=${param.playerNo}'/>">기록정보
-												등록</a>
-										</div>
-										<div class="divBtn">
-											<a href="<c:url value='/record/pitcherRecordEdit'/>">기록정보
-												수정</a>
-										</div>
-										<div class="divBtn">
-											<a href="<c:url value='/record/pitcherRecordDelete'/>">기록정보
-												삭제</a>
 										</div>
 									</div>
 								</div>

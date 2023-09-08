@@ -360,8 +360,6 @@ $(function(){
 		            		$('#editMyBoard tbody').append(loadDate);
 		            	}//else
 	
-		           
-		            
 		            $('#editMyBoard').modal('show');
 		            
 		        }
@@ -445,7 +443,14 @@ $(function(){
 	                    <div class="position-relative">
 	                    	<c:choose>
 	                    		<c:when test="${sessionScope.type=='사원' }">
-	                    		 	<img class="member_img" src="<c:url value='/img/mem_images/${sessionScope.myimg }'/>" alt="프로필 이미지">
+	                    			<c:choose>
+	                    				<c:when test="${sessionScope.myimg==null }">
+	                    					<img class="member_img" src="<c:url value='/img/defaultUSER.png'/>" alt="프로필 이미지">
+	                    				</c:when>
+	                    				<c:otherwise>
+			                    		 	<img class="member_img" src="<c:url value='/img/mem_images/${sessionScope.myimg }'/>" alt="프로필 이미지">
+	                    				</c:otherwise>
+	                    			</c:choose>
 	                    		</c:when>
 	                    		<c:otherwise>
 	                    			<c:choose>
@@ -474,17 +479,17 @@ $(function(){
 
                 <!-- 사이드 메뉴 시작 -->
                 <div class="navbar-nav w-100">
-                	<c:if test="${sessionScope.type=='사원'}">
-	                	<div class="boardTop">
-	                		<div class="boardTop_txt">워크보드</div>
-	                		<div class="boardTop_btn">
-	                			<img src="<c:url value='/img/plus.svg'/>" alt="보드 추가 버튼" 
-	                				style="margin-right:10px;" id="addBoard"
-	                				data-bs-toggle="modal" data-bs-target="#addMyBoard">
-	                			<img src="<c:url value='/img/gear-wide.svg'/>" alt="보드 관리 버튼" id="editBoard"
-	                			data-bs-toggle="modal" data-bs-target="#editMyBoard" onclick="loadBoardList()"/>
-	                		</div>
-	                	</div>
+                <c:if test="${sessionScope.type=='사원'}">
+                	<div class="boardTop">
+                		<div class="boardTop_txt">워크보드</div>
+                		<div class="boardTop_btn">
+                			<img src="<c:url value='/img/plus.svg'/>" alt="보드 추가 버튼" 
+                				style="margin-right:10px;" id="addBoard"
+                				data-bs-toggle="modal" data-bs-target="#addMyBoard">
+                			<img src="<c:url value='/img/gear-wide.svg'/>" alt="보드 관리 버튼" id="editBoard"
+                			data-bs-toggle="modal" data-bs-target="#editMyBoard" onclick="loadBoardList()"/>
+                		</div>
+                	</div>
                 	</c:if>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
@@ -646,6 +651,7 @@ $(function(){
 	                <form class="d-none d-md-flex ms-4">
 	                    <input class="form-control bg-dark border-0" id="searchbox" type="search" placeholder="사원을 검색하세요">
 	                    <%@include file="../Member/memberSearch.jsp"%>
+	                    
 	                </form>
                 </div>
                 

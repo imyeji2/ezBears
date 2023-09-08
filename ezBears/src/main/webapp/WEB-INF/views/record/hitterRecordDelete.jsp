@@ -40,7 +40,7 @@
 							<p class="p">기록을 삭제 하시겠습니까?</p>
 							<br>
 							<div>
-								<input type="hidden" name="pitcherNo"
+								<input type="hidden" name="hitterNo"
 									value="${hitterVo.playerNo }">
 							</div>
 							<div class="align_center">

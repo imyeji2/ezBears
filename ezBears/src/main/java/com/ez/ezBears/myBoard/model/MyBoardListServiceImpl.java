@@ -132,7 +132,31 @@ public class MyBoardListServiceImpl implements MyBoardListService {
 		return myBoardListDao.selectMemAppPositionInfo(mBoardNo);
 	}
 
-
-
+	//메인 보드 업데이트 서비스
+	@Transactional
+	@Override
+	public int updateMainBoardService(MyBoardVO myBoardVo) {
+		
+		int cnt=0;
+		
+		try {
+			cnt = myBoardListDao.deleteMainBoard(myBoardVo.getMemNo());
+			cnt = myBoardListDao.updateMainBoard(myBoardVo);
+			
+		}catch(RuntimeException e) {
+			//선언적 트랜젝션(@Transactional)에서는
+			//런타임 예외가 발생하면 롤백한다.
+			e.printStackTrace();
+			cnt=-1;//예외처리를 했다는 의미->예외 발생
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+		}
+		
+		return cnt;
+  }
+  
+	@Override
+	public List<Map<String, Object>> selectMyBoardMember2(int mBoardNo) {
+		return myBoardListDao.selectMyBoardMember2(mBoardNo);
+	}
 }
 

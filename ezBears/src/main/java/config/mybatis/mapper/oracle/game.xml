@@ -12,6 +12,7 @@
 	
 	<select id="selectAllGame" resultType="gameVo" parameterType="searchVo">
 		select * from recode
+		order by play_date desc
 	</select>
 	
 	<select id="selectByRecodeNo" resultType="gameVo" parameterType="int">
@@ -39,4 +40,20 @@
 		delete recode
 		where recode_no=#{recodeNo}
 	</delete>
+
+		
+	<select id="selectAllGameMain" resultType="gameVo">
+		select *
+		from
+		(
+			select rownum as RNUM, A.*
+			from
+			(
+				select * from recode
+				order by play_date desc
+			)A
+		)
+	<![CDATA[
+      where RNUM<5]]>
+	</select>	
 </mapper>
