@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ez.ezBears.member.model.MemberService;
 import com.ez.ezBears.message.model.MessageReceiveVO;
@@ -38,7 +39,7 @@ public class MessageController {
 	}
 	
 	@GetMapping("/messageWrite")
-	public String write_get(HttpSession session,
+	public String write_get(HttpSession session, @RequestParam(defaultValue = "0") int receiveNo,
 			Model model) {
 		logger.info("메세지 보내기 화면");
 		
@@ -55,6 +56,7 @@ public class MessageController {
 		
 		model.addAttribute("memList", memList);
 		model.addAttribute("sendUserNo", sendUserNo);
+		model.addAttribute("receiveNo", receiveNo);
 		
 		return "message/messageWrite";
 	}
