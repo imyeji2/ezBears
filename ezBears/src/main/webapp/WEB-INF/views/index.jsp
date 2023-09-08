@@ -5,12 +5,13 @@
 <%@include file="inc/top.jsp"%>
 <script>
 	$(function(){
-		
 		//네이버 뉴스 api 호출
 		naverNewsLoad();
 		setInterval(naverNewsLoad,10000);
 		//600000
-
+		
+        // onGeoOk();//현재 위치 찾기 -> 시연 시 위치 정보 활성화 불가로 일단 비활성화
+        OpenWeatherMap(37.4923615, 127.0292881);
 		
         // 차트 컨테이너의 크기에 맞게 canvas 크기 조절
         var chartContainer = document.getElementById('todoChart');
@@ -43,11 +44,22 @@
             }
         });	
         
-        onGeoOk();//현재 위치 찾기
 		
-	
-        
+    	$('#changeBoard').on('shown.bs.modal', function () {
+    		selectMyBoardList();
+    	});
+    	
+    	$('#changeBoardBtn').click(function(){
+    		
+    	});
+    	
+    	
+		
 	});//$(function(){
+		
+		
+		
+		
 	
 	//카카오 로컬 api
 	function kakaoLocalAPI(lat,lon){
@@ -113,7 +125,7 @@
 	}
 		
 	
-	//현재 위치 (위도, 경도) 찾기 + 날씨 api (OpenWeatherMap API)
+/* 	//현재 위치 (위도, 경도) 찾기 + 날씨 api (OpenWeatherMap API)
     function onGeoOk(position) {
         const lat = position.coords.latitude;
         const lon = position.coords.longitude;
@@ -125,7 +137,7 @@
 	function onGeoError() {
 	    alert("날씨를 제공할 위치를 찾을 수 없습니다.")
 	}
-	navigator.geolocation.getCurrentPosition(onGeoOk, onGeoError);
+	navigator.geolocation.getCurrentPosition(onGeoOk, onGeoError); */
 	
 	
 	//오늘 날짜출력
@@ -185,8 +197,29 @@
             }
         });
 	}
+	var mainMboardNo = $('input[name=mainMBoardNo]').val();
+	function selectMyBoardList(){
+		var selectDate="";
+		
+        $.ajax({
+            type: 'post',
+            url: "<c:url value='/myBoard/ajax_selectMyBoardList'/>",
+            dataType: 'json',
+            error: function(xhr, status, error) {
+                alert(error);
+            },
+            success: function(res) {
+                console.log(res);
+                selectDate="<option selected value='0'>보드 선택</option>";
+                $.each(res, function(idx, item){
+                	selectDate+="<option value='"+item.M_BOARD_NO+"'>"+item.M_BOARD_NAME+"</option>";
+                });
+                
+                $('#mBoardNo').append(selectDate);
 
-	
+            }
+        });			
+	}	
 </script>
  <!-- Navbar End -->
  <!-- top ë©”ë‰´ ì¢…ë£Œ -->
@@ -274,12 +307,12 @@
      <div class="container-fluid pt-4 px-4">
          <div class="row g-4">
              <div class="col-sm-12 col-xl-6">
-                 <div class="bg-secondary text-center rounded p-4">
+                 <div class="bg-secondary rounded p-4">
                      <div class="d-flex align-items-center justify-content-between mb-2">
                          <h6 class="mb-0">공지사항</h6>
                      </div>
                      <div class="d-flex align-items-center py-3">
-			           		<table class="table notice">
+			           		<table class="table">
 							 <thead>
 							    <tr>
 							      <th scope="col">제목</th>
@@ -320,7 +353,8 @@
                  <div class="bg-secondary text-center rounded p-4">
                      <div class="d-flex align-items-center justify-content-between mb-2">
                          <h6 class="mb-0">${mBoardName}</h6>
-                         <a href="">변경하기</a>
+                         <input type="hidden" name="mBoardNo" id="mainMBoardNo" value="${mBoardNo}">
+                         <a href="" data-bs-toggle="modal" data-bs-target="#changeBoard">변경하기</a>
                      </div>
                      <div class="d-flex align-items-center py-3">
 			           		<table class="table">
@@ -351,7 +385,6 @@
 								      <td>
 							      		<c:if test="${myNoticeMap['DATEGAP']<1}">방금전</c:if>	
 							      		<c:if test="${myNoticeMap['DATEGAP']>=1}">${regdate}</c:if>									      	
-								      
 								      </td>
 								    </tr>				  		
 							  	</c:forEach>
@@ -363,6 +396,36 @@
              </div>                
           </div>
      </div>
+     
+	<!-- Modal -->
+	<div class="modal fade" id="changeBoard" data-bs-backdrop="static" data-bs-keyboard="false">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	   	  	<h1 class="modal-title fs-5" style="color:#191C24">보드 선택</h1>
+	   	  </div>				    
+	      <div class="modal-body">
+	      
+	      <form name="changeBoardFrm"  method="post" action="<c:url value='#'/>">
+      			<div class="changeBoardBox">
+			       	<select class="form-select" name="mBoardNo" id="mBoardNo">
+				       
+					</select>
+					<div class="changeBoardBtn">
+						<button class="btn btn-outline-secondary" id="changeBoardBtn">변경</button>
+					</div>					
+				</div>
+
+			</form>
+				        
+	      </div>
+	      <div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+	      </div><!-- Modal-footer -->
+	    </div><!-- modal-content -->
+	  </div>
+	</div>
+	<!--Modal-->	     
    <!-- 2번째 줄 게시판 끝 -->   
  	</c:if>
  	
@@ -386,7 +449,7 @@
                          <h6 class="mb-0">공지사항</h6>
                      </div>
                      <div class="d-flex align-items-center py-3">
-			           		<table class="table notice">
+			           		<table class="table staff">
 							 <thead>
 							    <tr>
 							      <th scope="col">제목</th>
@@ -431,7 +494,9 @@
                      </div>
                      <div class="d-flex mb-2 todayWeather">
                      	<div class="weatherContent">
-	                       	<div class="place"></div>
+	                       	<div class="place">
+	                       		<i class="bi bi-geo-alt-fill"></i>
+	                       	</div>
 	                       	<div class="weatherIcon"></div>
 	                       	<div class="weatherTemp">
 	                       		<p class="nowTemp">현재기온 :</p>
@@ -462,8 +527,10 @@
              </div>             
          </div>
      </div>
-     <!-- <!-- 1번째 줄 --> 
-     
+    <!-- 1번째 줄 --> 
+    
+    
+    
 
      <!-- 2번째 줄 게시판 모음 -->   
      <div class="container-fluid pt-4 px-4">
