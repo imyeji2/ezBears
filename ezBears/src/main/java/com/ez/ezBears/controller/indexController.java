@@ -1,38 +1,28 @@
 package com.ez.ezBears.controller;
 
-import java.nio.ByteBuffer;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.catalina.connector.Response;
-import org.apache.taglibs.standard.tag.el.fmt.RequestEncodingTag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.RequestEntity;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponents;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import com.ez.ezBears.MBoard.model.MBoardService;
 import com.ez.ezBears.common.MyBoardSearchVo;
-import com.ez.ezBears.common.SearchVO;
-import com.ez.ezBears.dept.model.DeptService;
 import com.ez.ezBears.member.model.MemberService;
 import com.ez.ezBears.myBoard.model.MyBoardListService;
 import com.ez.ezBears.myBoard.model.MyBoardService;
 import com.ez.ezBears.myBoard.model.MyBoardVO;
 import com.ez.ezBears.notice.model.NoticeService;
+import com.ez.ezBears.record.game.model.GameService;
+import com.ez.ezBears.record.game.model.GameVO;
 import com.ez.ezBears.teamWorkBoard.model.ToDoListDetailService;
 import com.ez.ezBears.temNotice.model.TeamNoticeService;
-import com.oracle.wls.shaded.org.apache.xml.utils.URI;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -48,6 +38,7 @@ public class indexController {
 	private final MBoardService mBoardService;
 	private final ToDoListDetailService todolistDetailService;
 	private final MyBoardListService myBoardListService;
+	private final GameService gameService;
 	
 	@RequestMapping("/")
 	public String index(HttpSession session,Model model,
@@ -89,12 +80,12 @@ public class indexController {
 				model.addAttribute("completedCount",completedCount);
 				model.addAttribute("incompleteCount",incompleteCount);
 				model.addAttribute("mBoardNo",mBoardNo);
-				
-				
-				
-			}else {
-				
+			}else{
+				List<GameVO> gameVo = gameService.selectAllGameMain();
+				logger.info("경기기록 조회 결과 gameVo={}",gameVo);
+				model.addAttribute("gameVo",gameVo);
 			}
+			
 			model.addAttribute("noticeList",noticeList);
 			model.addAttribute("type",type);
 			logger.info("인덱스페이지로 이동 userid={}",userid);

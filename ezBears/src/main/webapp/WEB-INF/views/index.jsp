@@ -572,45 +572,14 @@
      <!-- 2번째 줄 게시판 모음 -->   
      <div class="container-fluid pt-4 px-4">
          <div class="row g-4">
-             <div class="col-sm-12 col-xl-6">
-                 <div class="bg-secondary text-center rounded p-4">
-                     <div class="d-flex align-items-center justify-content-between mb-2">
-                         <h6 class="mb-0">경기기록</h6>
-                     </div>
-                     <div class="d-flex align-items-center py-3">
-<%-- 			     	<table class="table notice">
-							 <thead>
-							    <tr>
-							      <th scope="col">제목</th>
-							      <th scope="col">작성자</th>
-							      <th scope="col">등록일</th>
-							    </tr>
-							  </thead>
-							  <tbody>
-							  <c:if test="${empty noticeList}">
-							  	<tr>
-							  		<th scope="row" colspan="4">등록된 게시글이 없습니다.</th>
-							  	</tr>
-							  </c:if>
-							  <c:if test="${!empty noticeList}">
-							  	<c:forEach var="noticeMap" items="${noticeList}">
-							  	<fmt:formatDate var="regdate" value="${noticeMap['REGDATE']}" pattern="yyyy-MM-dd"/>
-								    <tr>
-								      <td>
-								      	<a href="<c:url value='/notice/noticeDetail?noticeNo=${noticeMap["NOTICE_NO"]}'/>">
-								      		${noticeMap['NOTICE_TITLE']}
-								      	</a>
-								      </td>
-								      <td>${noticeMap['MEM_NAME']}</td>
-								      <td>${regdate}</td>
-								    </tr>				  		
-							  	</c:forEach>
-							  </c:if>			    
-							</tbody>
-						</table> --%>
-                     </div>
-                 </div>
-             </div>
+	          <div class="col-sm-12 col-xl-6">
+	              <div class="bg-secondary text-center rounded p-4">
+	                  <div class="d-flex align-items-center justify-content-between mb-4">
+	                      <h6 class="mb-0">승률 현황</h6>
+	                  </div>
+	                  <canvas id="worldwide-sales"></canvas>
+	              </div>
+	          </div>
                         
              <div class="col-sm-12 col-xl-6">
                  <div class="bg-secondary text-center rounded p-4">
@@ -618,39 +587,35 @@
                          <h6 class="mb-0">선수기록</h6>
                      </div>
                      <div class="d-flex align-items-center py-3">
-			       	<%-- <table class="table">
+			       	 <table class="table">
 							 <thead>
 							    <tr>
-							      <th scope="col">제목</th>
-							      <th scope="col">작성자</th>
-							      <th scope="col">등록일</th>
+							      <th scope="col">경기날짜</th>
+							      <th scope="col">상대팀</th>
+							      <th scope="col">결과</th>
 							    </tr>
 							  </thead>
 							  <tbody>
-							  <c:if test="${empty myNoticeList}">
+							  <c:if test="${empty gameVo}">
 							  	<tr>
 							  		<th scope="row" colspan="4">등록된 게시글이 없습니다.</th>
 							  	</tr>
 							  </c:if>
-							  <c:if test="${!empty myNoticeList}">
-							  	<c:forEach var="myNoticeMap" items="${myNoticeList}">
-							  	<fmt:formatDate var="regdate" value="${myNoticeMap['REGDATE']}" pattern="yyyy-MM-dd"/>
+							  <c:if test="${!empty gameVo}">
+							  	<c:forEach var="vo" items="${gameVo}">
+							  	<fmt:parseDate var="parsedDate" value="${vo.playDate}" pattern="yyyy-MM-dd HH:mm:ss" />
+							  	<fmt:formatDate var="playDate" value="${parsedDate}" pattern="yyyy-MM-dd" />
 								    <tr>
-								      <td style="text-align:left;">
-								      	<a href="<c:url value='/myBoard/teamNoticeDetail?mBoardNo=${myNoticeMap["M_BOARD_NO"]}&teamNoticeNo=${myNoticeMap["TEAM_NOTICE_NO"]}'/>">
-								      		${myNoticeMap['TEAM_NOTICE_TITLE']} 
-										</a>								      		
-								      </td>
-								      <td>${myNoticeMap['MEM_NAME']}</td>
 								      <td>
-							      		<c:if test="${myNoticeMap['DATEGAP']<1}">방금전</c:if>	
-							      		<c:if test="${myNoticeMap['DATEGAP']>=1}">${regdate}</c:if>									      	
+								      	<a href="">${playDate}</a>								      		
 								      </td>
+								      <td>${vo.otherTeam}</td>
+								      <td>${vo.win}</td>
 								    </tr>				  		
 							  	</c:forEach>
 							  </c:if>			    
 							</tbody>
-						</table> --%>
+						</table>
                      </div>
                  </div>
              </div>                
