@@ -217,4 +217,9 @@ public class MemberServiceImpl implements MemberService{
 	public List<Map<String, Object>> selectAllMemberView() {
 		return memberDao.selectAllMemberView();
 	}
+
+	@Override
+	public MemberVO selectDeptPositionInfo() {
+		return memberDao.selectDeptPositionInfo();
+	}
 }

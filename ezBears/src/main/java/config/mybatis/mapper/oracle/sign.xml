@@ -48,6 +48,7 @@
       and RNUM<=#{firstRecordIndex} + #{recordCountPerPage}]]>		
 	</select>
 	
+	
 	<select id="selectAppCount" resultType="int" parameterType="searchVo">
 		select count(*) from signListView
 		where m_board_no=#{MBoardNo}  and  del_status &lt;&gt; 'Y'		
@@ -183,4 +184,41 @@
 		set del_status = 'Y'
 		where doc_no = #{docNo}		
 	</update>
+	
+	<sql id="searchWhere4">
+ 		<where>
+ 			<if test="searchName!=null and searchName!=''">
+ 				and mem_name = #{searchName}
+ 			</if>
+ 		</where>
+ 	</sql>
+
+	
+	<select id="selectAppCount2" parameterType="map" resultType="int">
+		select count(*) from SIGNLISTVIEW 
+		where m_board_no=#{MBoardNo}  and  del_status &lt;&gt; 'Y'	
+		<include refid="searchWhere4"></include>
+		order by doc_no desc
+	</select>
+	
+	
+	
+	<select id="selectApprovalList2" resultType="map" parameterType="searchVo">
+		 select *
+      from
+      (
+	      select rownum as RNUM, A.* from
+	      (		
+			select * from signListView
+			<include refid="searchWhere4"></include>
+			where m_board_no = #{MBoardNo} and  del_status &lt;&gt; 'Y'
+			order by doc_no desc
+	      )A
+      )
+      <![CDATA[
+      where RNUM> #{firstRecordIndex} 
+      and RNUM<=#{firstRecordIndex} + #{recordCountPerPage}]]>		
+	</select>
+	
+	
 </mapper>

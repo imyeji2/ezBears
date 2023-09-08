@@ -6,24 +6,7 @@
 <%@include file="../inc/top.jsp"%>
 <link rel="stylesheet" href="<c:url value='/css/jquery-ui.min.css'/>"type="text/css">
 <script type="text/javascript" src="<c:url value='/js/jquery-ui.min.js'/>"></script>
-<script>
-	var jb = jQuery.noConflict();
-	jb(function() {
-		jb("#startVacation").datepicker({
-			dateFormat: 'yy-mm-dd',
-			changeYear: true,
-			dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
-			monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']
-		});
-		
-		jb("#endVacation").datepicker({
-			dateFormat: 'yy-mm-dd',
-			changeYear: true,
-			dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
-			monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']
-		});
-	});
-</script>
+
 
 <div class="container-fluid pt-4 px-4" id ="Approval_wr">
 	<div class="col-sm-12 col-xl-6">
@@ -42,6 +25,7 @@
 	String strDate = simpleDate.format(date);
 
 %>
+
 		<form id="appform" action="<c:url value='/myBoard/Approval_write?mBoardNo=${myBoardListVo.MBoardNo}'/>" method="post" enctype="multipart/form-data" >
 				<input type ="hidden" name ="userid" id="userid" value="${userid }">
 				<input type="hidden" name="myBoardNo" id="myBoardNo"value="${myBoardInfoVo.myBoardNo}"> 
@@ -56,19 +40,35 @@
 					 <input type ="hidden"  name="docNo" class="docNo" value="0"><!-- 문서 번호 불러오기 -->
 					 </td>
 					
-					<td class="td-2" >담당</td><!-- 결재 담당자 -->
-					<td class="td-3" >${memberVo.memName }</td><!-- 결재 담당자 -->
+								
+			    <td class="td-2" rowspan="2">담당</td>
+			   <c:choose>
+				    <c:when test="${empty list}">
+				        <td class="td-3" rowspan="2">팀장이 없습니다.</td>
+				    </c:when>
+				    <c:otherwise>
+				        <c:forEach var="map" items="${list}">
+				            <td class="td-3" rowspan="2">${map['MEM_NAME']}</td>
+				        </c:forEach>
+				    </c:otherwise>
+				</c:choose>
 
-				</tr>
 				
-				<tr class="tr-m">
-					<td class="td-2">기안일</td>
-					<td class="td-3" colspan="1"><%=strDate %></td>
+			    <td class="td-2"rowspan="2" > 이미지 </td><!-- 결재 승인 이미지 -->
+			    
+			        <td class="td-3"rowspan="2">${vo2.memName}</td><!-- 결재 담당자 -->
+			    <td class="td-2"rowspan="2" >
+			    
+			    </td><!-- 결재 담당자 -->
+				 
 				</tr>
-
+		
+		<tr></tr>
 				<tr class="tr-s">
-					<td class="td-1" rowspan="2" colspan="2">기안자</td>
-					<td class="td-2" rowspan="2" colspan="3"> ${myBoardInfoVo.memName }</td>
+					<td class="td-1" rowspan="2" colspan="1">기안자</td>
+					<td class="td-2" rowspan="2" colspan="2"> ${myBoardInfoVo.memName }</td>
+					<td class="td-2" colspan="1">기안일</td>
+					<td class="td-3" colspan="2"><%=strDate %></td>
 				</tr>
 				
 				<tr class="tr-s">		
@@ -76,7 +76,7 @@
 			
 				<tr id="tr-title" class="tr-m">
 					<td class="td-1 ">제목</td>
-					<td colspan="3">
+					<td colspan="6">
 					<input type="text" class="form-control" id="floatingInput" name="docTitle" placeholder="제목">
 						 <label for="floatingInput">  </label></td>
 				</tr>

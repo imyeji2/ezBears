@@ -78,5 +78,5 @@ public interface MemberService {
     //모든 멤버 조회하기위해 (쪽지에서 사용)
     List<Map<String, Object>> selectAllMemberView();
 
-
+    MemberVO selectDeptPositionInfo();
 }
