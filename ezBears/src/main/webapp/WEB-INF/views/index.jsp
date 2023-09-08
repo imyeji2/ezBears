@@ -49,17 +49,8 @@
     		selectMyBoardList();
     	});
     	
-    	$('#changeBoardBtn').click(function(){
-    		
-    	});
-    	
-    	
 		
 	});//$(function(){
-		
-		
-		
-		
 	
 	//카카오 로컬 api
 	function kakaoLocalAPI(lat,lon){
@@ -197,7 +188,9 @@
             }
         });
 	}
-	var mainMboardNo = $('input[name=mainMBoardNo]').val();
+	
+	
+	//메인 보드에 변경 할 수 있는 마이보드 리스트 호출
 	function selectMyBoardList(){
 		var selectDate="";
 		
@@ -210,6 +203,7 @@
             },
             success: function(res) {
                 console.log(res);
+                $('#mBoardNo').html('');
                 selectDate="<option selected value='0'>보드 선택</option>";
                 $.each(res, function(idx, item){
                 	selectDate+="<option value='"+item.M_BOARD_NO+"'>"+item.M_BOARD_NAME+"</option>";
@@ -220,6 +214,7 @@
             }
         });			
 	}	
+
 </script>
  <!-- Navbar End -->
  <!-- top ë©”ë‰´ ì¢…ë£Œ -->
@@ -353,7 +348,7 @@
                  <div class="bg-secondary text-center rounded p-4">
                      <div class="d-flex align-items-center justify-content-between mb-2">
                          <h6 class="mb-0">${mBoardName}</h6>
-                         <input type="hidden" name="mBoardNo" id="mainMBoardNo" value="${mBoardNo}">
+                         <input type="hidden" name="mBoardNo" id="mainMboardNo" value="${mBoardNo}">
                          <a href="" data-bs-toggle="modal" data-bs-target="#changeBoard">변경하기</a>
                      </div>
                      <div class="d-flex align-items-center py-3">
