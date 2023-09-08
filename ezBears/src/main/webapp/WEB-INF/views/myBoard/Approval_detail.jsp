@@ -50,8 +50,7 @@
 				        </c:forEach>
 				    </c:otherwise>
 				</c:choose>
-			       <%--  <td class="td-3" rowspan="2"colspan="1">${myBoardInfoVo.memName }</td> --%>
-			   		 <!-- 중간 결재자  -->
+			      <!-- 중간 결재자  -->
 			   		 <td class="td-2"rowspan="2" colspan="2">
 			   		 <c:if test="${list['STATUS'] eq '대기' && userMap['POSITION_NO'] eq 6}">
 						<input type="button" class=" btn-sm btn-primary appoveBtn " value="승인" onclick="approveDocument()">
