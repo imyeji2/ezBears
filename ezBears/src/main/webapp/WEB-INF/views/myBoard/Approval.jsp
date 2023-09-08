@@ -82,13 +82,14 @@ function submitForm() {
 							
 							<h6 class="mb-0">결재</h6>
 					<!-- 검색 버튼 -->
-		<form id="app-form" action="<c:url value='/myBoard/appSingListInfo'/>" method="post" enctype="multipart/form-data" >
+		<%-- <form id="app-form" action="<c:url value='/myBoard/appSingListInfo'/>" method="post" enctype="multipart/form-data" >
 			<div class="col-auto d-flex align-items-center">
 				    <input type="text" class="signTextSearch" id="txtboxSearch" name="searchName" 
 				 	   value="${param.searchName }" placeholder="기안자를 입력해주세요" style="text-align: center;">
 				    <button type="submit" class="btn btn-sm btn-primary signSearchBtn" id="btnSearch">검색</button>
 				</div>
-				</form>
+				</form> --%>
+				
 						</div>
 						<div class="table-responsive">
 							<table

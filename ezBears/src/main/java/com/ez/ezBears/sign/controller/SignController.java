@@ -410,6 +410,7 @@ public class SignController {
 	}
 	
 	
+	/*
 	@RequestMapping("/appSingListInfo")
 	public String appSingListInfo(@ModelAttribute SearchVO searchVo, @RequestParam(required = false) String searchName,
 			Model model){
@@ -442,6 +443,6 @@ public class SignController {
 		return "/myBoard/Approval";
 		
 	}
-	
+	*/
 
 }

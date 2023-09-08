@@ -40,20 +40,29 @@
 					 </td>
 					
 								
-			    <td class="td-2">담당</td><!-- 결재 담당자 -->
+			    <td class="td-2" rowspan="2">담당</td><!-- 결재 담당자 -->
 			    <c:forEach var="map" items="${list}">
-			        <td class="td-3">${map['MEM_NAME']}</td><!-- 결재 담당자 -->
+			        <td class="td-3" rowspan="2">${map['MEM_NAME']}</td><!-- 결재 담당자 -->
+			    <td class="td-2"rowspan="2" >
+			    	<%-- <img alt="처리중이미지" name ="stamp1"  src="<c:url value ='/img/OkStamp.png'/>" --%>
+			    </td><!-- 결재 담당자 -->
+			        <td class="td-3"rowspan="2">${map['MEM_NAME']}</td><!-- 결재 담당자 -->
+			    <td class="td-2"rowspan="2" >
+			    	<%-- <img alt="처리중이미지" name ="stamp2" src="<c:url value ='/img/OkStamp.png'/>"> --%>
+			    </td><!-- 결재 담당자 -->
 				 </c:forEach>
 				</tr>
-				
+			<%-- 	
 				<tr class="tr-m">
 					<td class="td-2">기안일</td>
 					<td class="td-3" colspan="1"><%=strDate %></td>
-				</tr>
-
+				</tr> --%>
+				<tr></tr>
 				<tr class="tr-s">
-					<td class="td-1" rowspan="2" colspan="2">기안자</td>
-					<td class="td-2" rowspan="2" colspan="3"> ${myBoardInfoVo.memName }</td>
+					<td class="td-1" rowspan="2" colspan="1">기안자</td>
+					<td class="td-2" rowspan="2" colspan="2"> ${myBoardInfoVo.memName }</td>
+					<td class="td-2" colspan="1">기안일</td>
+					<td class="td-3" colspan="2"><%=strDate %></td>
 				</tr>
 				
 				<tr class="tr-s">		
@@ -61,7 +70,7 @@
 			
 				<tr id="tr-title" class="tr-m">
 					<td class="td-1 ">제목</td>
-					<td colspan="3">
+					<td colspan="6">
 					<input type="text" class="form-control" id="floatingInput" name="docTitle" placeholder="제목">
 						 <label for="floatingInput">  </label></td>
 				</tr>
