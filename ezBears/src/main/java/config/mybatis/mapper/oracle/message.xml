@@ -9,22 +9,27 @@
 		<selectKey keyProperty="messageSendNo" order="BEFORE" resultType="int">
 			select messagesend_seq.nextval from dual
 		</selectKey>
-		insert into messageSend(MESSAGESENDNO, SENDUSERNO, SENDTIME, CONTENT)
-		values(#{messageSendNo}, #{sendUserNo}, sysdate, #{content})
+		insert into messageSend(MESSAGESENDNO, SENDUSERNO, SENDTIME, CONTENT, sendDelFlag)
+		values(#{messageSendNo}, #{sendUserNo}, sysdate, #{content}, 'N')
 	</insert>
 	
 	<insert id="ReceiveMessage" parameterType="map">
-		insert into messageReceive(MESSAGERECEIVENO , RECEIVEUSERNO, MESSAGESENDNO, RECEIVETIME)
-		values(messageReceive_seq.nextval, #{messageReceiveVo.receiveUserNo}, #{messageSendNo}, sysdate)
+		insert into messageReceive(MESSAGERECEIVENO , RECEIVEUSERNO, MESSAGESENDNO, RECEIVETIME, receiveDelFlag)
+		values(messageReceive_seq.nextval, #{messageReceiveVo.receiveUserNo}, #{messageSendNo}, sysdate, 'N')
 	</insert>
 	
 	<select id="selectSendBox" parameterType="int" resultType="map">
-		 select * from messageView where sendUserNo = #{sendUserNo} order by messageSendNo desc
+		 select * from messageView where sendUserNo = #{sendUserNo} and sendDelFlag = 'N' order by messageSendNo desc
 	</select>
 	
 	<select id="selectReceiveBox" parameterType="int" resultType="map">
-		select * from messageView where receiveUserNo = #{receiverNo} order by messageSendNo desc 
+		select * from messageView where receiveUserNo = #{receiverNo} and receiveDelFlag = 'N' order by messageSendNo desc 
 	</select>
+	
+	<update id="receiveMessageDel" parameterType="int">
+		update messageReceive
+		set receiveDelFlag = 'Y' where messageSendNo = #{delNo} 
+	</update>
 	
 	
 </mapper>

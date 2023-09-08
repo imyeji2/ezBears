@@ -118,5 +118,23 @@ public class MessageController {
 		return "message/receiveBox";
 	}
 	
+	@RequestMapping("/sendMessageDel")
+	public String sendMessageDel(@RequestParam int delNo) {
+		logger.info("delNo={}", delNo);
+		
+		
+		
+		return "redirect:/message/sendBox";
+	}
+	
+	@RequestMapping("/receiveMessageDel")
+	public String receiveMessageDel(@RequestParam int delNo) {
+		logger.info("delNo={}", delNo);
+		
+		int cnt = messageService.receiveMessageDel(delNo);
+		logger.info("삭제 처리결과, cnt={}",cnt);
+		
+		return "redirect:/message/receiveBox";
+	}
 	
 }
