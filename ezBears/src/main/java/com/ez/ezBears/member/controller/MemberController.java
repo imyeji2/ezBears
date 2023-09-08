@@ -203,7 +203,7 @@ public class MemberController {
 	}
 	
 	@RequestMapping("/edit")
-	public String detail_post(@ModelAttribute MemberVO memberVo, HttpServletRequest request, String sal, Model model) {
+	public String detail_post(@ModelAttribute MemberVO memberVo, @RequestParam String oldFileName, HttpServletRequest request, String sal, Model model) {
 		//1
 		logger.info("회원 수정, 파라미터 memberVo ={}", memberVo);
 		
@@ -224,7 +224,11 @@ public class MemberController {
 			e.printStackTrace();
 		}
 		
-		memberVo.setMemImage(fileName);
+		if(memberVo.getMemImage()==null || memberVo.getMemImage().isEmpty()) {
+			memberVo.setMemImage(oldFileName);
+		}else {
+			memberVo.setMemImage(fileName);
+		}
 		
 		//연봉 int로 변환
 		String strSal = sal.replace(",", "");

@@ -189,7 +189,7 @@
 			$('#editLable').show();
 			//부서
         	$('.showEditDept').show();
-        	$('#deptName').hide();
+        	$('#pop_deptName').hide();
 			
 			//직급
         	$('.showEditPosition').show();
