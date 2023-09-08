@@ -38,6 +38,11 @@ public class GameServiceImpl implements GameService {
 		// TODO Auto-generated method stub
 		return gameDao.selectByRecodeNo(recodeNo);
 	}
+
+	@Override
+	public List<GameVO> selectAllGameMain() {
+		return gameDao.selectAllGameMain();
+	}
 	
 	
 }

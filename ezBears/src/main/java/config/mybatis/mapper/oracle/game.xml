@@ -39,4 +39,20 @@
 		delete recode
 		where recode_no=#{recodeNo}
 	</delete>
+
+		
+	<select id="selectAllGameMain" resultType="gameVo">
+		select *
+		from
+		(
+			select rownum as RNUM, A.*
+			from
+			(
+				select * from recode
+				order by play_date desc
+			)A
+		)
+	<![CDATA[
+      where RNUM<5]]>
+	</select>	
 </mapper>
