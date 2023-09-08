@@ -8,4 +8,5 @@ public class MessageSendVO {
     private int sendUserNo;
     private String sendTime;
     private String content;
+    private String sendDelFlag;
 }
