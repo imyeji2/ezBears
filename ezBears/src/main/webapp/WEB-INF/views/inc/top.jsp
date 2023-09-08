@@ -656,7 +656,18 @@ $(function(){
                 </div>
                 
                 <div class="navbar-nav align-items-center ms-auto" style="margin-right:20px;">
-                
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link" >
+                            <i class="bi bi-chat-dots-fill me-lg-2"></i>
+                            <span class="d-none d-lg-inline-flex">채팅</span>
+                        </a>
+                     </div>   
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link" >
+                            <i class="fa fa-envelope me-lg-2"></i>
+                            <span class="d-none d-lg-inline-flex">쪽지</span>
+                        </a>
+                     </div>                
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                             <i class="fa fa-bell me-lg-2"></i>

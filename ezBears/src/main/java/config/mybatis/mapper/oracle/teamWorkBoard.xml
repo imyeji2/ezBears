@@ -168,4 +168,22 @@
    		where team_Board_No=#{teamBoardNo}
    </update>
    
+       <select id="selectTeamWorkBoardNext" parameterType="map" resultType="map">
+		 select a.*
+			from(
+				select team_board_no,m_board_no,team_board_title,
+				lag(team_board_no,1) over(order by team_board_no) as prev,
+				lag(team_board_title,1) over(order by team_board_no) as prev_title, 
+				lag(m_board_no,1) over(order by team_board_no) as prev_m_board_no,
+				lead(team_board_no,1) over(order by team_board_no) as next, 
+				lead(team_board_title,1) over(order by team_board_no) as next_title,
+				lead(m_board_no,1) over(order by team_board_no) as next_m_board_no
+				from teamWorkBoardListview
+				where team_board_title is not null 
+				and m_board_no=#{mBoardNo}
+		        order by regdate
+			)a
+		where team_board_no=#{teamBoardNo}
+    </select>
+   
 </mapper>

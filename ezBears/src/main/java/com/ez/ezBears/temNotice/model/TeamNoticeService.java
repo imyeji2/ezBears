@@ -54,5 +54,8 @@ public interface TeamNoticeService {
 	//메인 팀 게시판
 	List<Map<String, Object>> selectMainTeamNoticeList(MyBoardSearchVo myBoardSearchVo);
 	
+	//이전글 다음글
+	Map<String, Object> selectTeamNoticeNext(Map<String, Integer> nextMap);
+	
 	
 }

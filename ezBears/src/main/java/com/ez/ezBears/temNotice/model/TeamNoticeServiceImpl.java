@@ -120,6 +120,11 @@ public class TeamNoticeServiceImpl implements TeamNoticeService {
 		return teamNoticeDao.selectMainTeamNoticeList(myBoardSearchVo);
 	}
 
+	@Override
+	public Map<String, Object> selectTeamNoticeNext(Map<String, Integer> nextMap) {
+		return teamNoticeDao.selectTeamNoticeNext(nextMap);
+	}
+
 	
 	
 
