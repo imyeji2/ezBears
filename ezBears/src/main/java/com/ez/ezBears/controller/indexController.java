@@ -85,6 +85,7 @@ public class indexController {
 				model.addAttribute("totalCount",totalCount);
 				model.addAttribute("completedCount",completedCount);
 				model.addAttribute("incompleteCount",incompleteCount);
+				model.addAttribute("mBoardNo",mBoardNo);
 				
 				
 				

@@ -41,7 +41,7 @@
 		                <tr>
 		                    <th scope="col">Player_NO</th>
 		                    <th scope="col">이름</th>
-		                    <th scope="col">Position_NO</th>
+		                    <th scope="col">Position</th>
 		                    <th scope="col">Back_No</th>
 		                    <th scope="col">생일</th>
 		                    <th scope="col">연봉</th>
