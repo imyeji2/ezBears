@@ -416,6 +416,14 @@ $(function(){
 		    });		
 	}	
 	
+    function openPopup() {
+        // 팝업 창의 URL
+        var popupURL = "<c:url value='/chat/chattingList'/>";
+
+        // 팝업 창을 새 창으로 열기
+        var popupWindow = window.open(popupURL, 'chatList', 'width=1000,height=800');
+
+    }	
 		
 </script>
 
@@ -656,9 +664,9 @@ $(function(){
                 </div>
                 
                 <div class="navbar-nav align-items-center ms-auto" style="margin-right:20px;">
-                    <div class="nav-item dropdown">
+                    <div class="nav-item dropdown" onclick="openPopup()">
                         <a href="#" class="nav-link" >
-                            <i class="bi bi-chat-dots-fill me-lg-2"></i>
+                            <i class="bi bi-chat-dots-fill"></i>
                             <span class="d-none d-lg-inline-flex">채팅</span>
                         </a>
                      </div>   
