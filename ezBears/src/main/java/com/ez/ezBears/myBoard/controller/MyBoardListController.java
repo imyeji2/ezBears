@@ -65,22 +65,6 @@ public class MyBoardListController {
 	}
 	
 	
-	@ResponseBody
-	@RequestMapping("/ajax_selectMyBoardList")
-	List<Map<String, Object>> selectMyBoardList(HttpSession session){
-		
-		//1
-		logger.info("메인페이지 보드 변경하기, 마이보드 리스트 검색");
-		
-		//2
-		String userid=(String)session.getAttribute("userid");
-		List<Map<String, Object>> myBoardList = myBoardListService.selectBoardList(userid);
-		
-		logger.info("마이보드 리스트 검색 결과 myBoardList.size={}",myBoardList);
-		
-		return myBoardList;
-		
-	}
 
 }
 

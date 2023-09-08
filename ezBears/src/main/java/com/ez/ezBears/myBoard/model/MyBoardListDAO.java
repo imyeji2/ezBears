@@ -28,6 +28,11 @@ public interface MyBoardListDAO {
 	
 	//마이보드 멤버 검색
 	List<Map<String, Object>>selectMyBoardMember(int mBoardNo);
+	
+	//마이보드 변경 업데이트
+	int deleteMainBoard(int memNo);//기존 보드 삭제
+	int updateMainBoard(MyBoardVO myBoardVo);//새로운 보드 업데이트
+
 
 	
 	//다희

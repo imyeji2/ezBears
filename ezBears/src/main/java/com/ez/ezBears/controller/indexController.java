@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
@@ -27,6 +28,7 @@ import com.ez.ezBears.dept.model.DeptService;
 import com.ez.ezBears.member.model.MemberService;
 import com.ez.ezBears.myBoard.model.MyBoardListService;
 import com.ez.ezBears.myBoard.model.MyBoardService;
+import com.ez.ezBears.myBoard.model.MyBoardVO;
 import com.ez.ezBears.notice.model.NoticeService;
 import com.ez.ezBears.teamWorkBoard.model.ToDoListDetailService;
 import com.ez.ezBears.temNotice.model.TeamNoticeService;
@@ -45,6 +47,7 @@ public class indexController {
 	private final MyBoardService myBoardService;
 	private final MBoardService mBoardService;
 	private final ToDoListDetailService todolistDetailService;
+	private final MyBoardListService myBoardListService;
 	
 	@RequestMapping("/")
 	public String index(HttpSession session,Model model,
@@ -103,5 +106,42 @@ public class indexController {
 	}
 	
 
+	@ResponseBody
+	@RequestMapping("ajax_selectMyBoardList")
+	List<Map<String, Object>> selectMyBoardList(HttpSession session){
+		
+		//1
+		logger.info("메인페이지 보드 변경하기, 마이보드 리스트 검색");
+		
+		//2
+		String userid=(String)session.getAttribute("userid");
+		List<Map<String, Object>> myBoardList = myBoardListService.selectBoardList(userid);
+		
+		logger.info("마이보드 리스트 검색 결과 myBoardList.size={}",myBoardList);
+		
+		return myBoardList;
+		
+	}
 	
+	@ResponseBody
+	@RequestMapping("ajax_updateMainBoard")
+	public int updateMainBoard(@RequestParam (defaultValue = "0") int mBoardNo,
+			HttpSession session){
+		
+		//1
+		logger.info("메인 보드 업데이트 파라미터 mBoardNo={}",mBoardNo);
+		String userid = (String)session.getAttribute("userid");
+		int memNo = memberService.selectMemberNo(userid);
+		
+		//2
+		MyBoardVO vo = new MyBoardVO();
+		vo.setMBoardNo(mBoardNo);
+		vo.setMemNo(memNo);
+		int cnt = myBoardListService.updateMainBoardService(vo);
+		
+		//4
+		return cnt;
+		
+	}
+
 }

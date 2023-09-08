@@ -49,8 +49,52 @@
     		selectMyBoardList();
     	});
     	
+    	
+        $('#changeBoard').on('hide.bs.modal', function () {
+        	location.reload();   
+        });  
+    	
+    	$('#changeBoardBtn').click(function(){
+    		event.preventDefault();
+    		var mainMboardNo = $('#mainMboardNo').val();
+    		var mBoardNo = $('#mBoardNo').val();
+    		
+    		if(mainMboardNo === mBoardNo){
+    			alert('이미 적용된 보드입니다.');
+    			return false;
+    		}
+
+    	       $.ajax({
+    	            type: 'post',
+    	            url: "<c:url value='/ajax_updateMainBoard'/>",
+    	            data:{mBoardNo:mBoardNo},
+    	            dataType: 'json',
+    	            error: function(xhr, status, error) {
+    	                alert(error);
+    	            },
+    	            success: function(res) {
+    	                console.log(res);
+    	                if(res===1){
+    	                	alert('보드가 변경되었습니다.');
+    	                	$('#changeBoard').modal('hide');
+    	                }else{
+    	                	alert('다시 시도해주세요');
+    	                	return false;
+    	                }
+    	            }
+    	       });
+    	});
+    	
 		
 	});//$(function(){
+	
+		
+		
+		
+		
+		
+		
+		
 	
 	//카카오 로컬 api
 	function kakaoLocalAPI(lat,lon){
@@ -78,7 +122,7 @@
 		});
 	}
 
-
+	//날씨 api 호출
 	function OpenWeatherMap(lat,lon){
 		$.ajax({
 			  url: "https://api.openweathermap.org/data/2.5/weather?lat="+lat+"&lon="+lon+"&appid=e27bb9d898f2ce8fcd7c8a56b3219198",
@@ -196,7 +240,7 @@
 		
         $.ajax({
             type: 'post',
-            url: "<c:url value='/myBoard/ajax_selectMyBoardList'/>",
+            url: "<c:url value='/ajax_selectMyBoardList'/>",
             dataType: 'json',
             error: function(xhr, status, error) {
                 alert(error);
@@ -410,9 +454,7 @@
 						<button class="btn btn-outline-secondary" id="changeBoardBtn">변경</button>
 					</div>					
 				</div>
-
 			</form>
-				        
 	      </div>
 	      <div class="modal-footer">
 			<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
