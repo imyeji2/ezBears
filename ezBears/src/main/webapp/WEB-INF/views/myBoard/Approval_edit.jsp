@@ -61,7 +61,9 @@
 					 <input type ="text"  name="docNo" class="docNo"  value="${list['DOC_NO'] }" ><!-- 문서 번호 불러오기 -->
 					 </td> 
 					<td class="td-2" colspan="2">담당</td><!-- 결재 담당자 -->
-					<td class="td-3" colspan="3">${memberVo.memName }</td><!-- 결재 담당자 -->
+					<c:forEach var ="map" items="${listMap }">
+					<td class="td-3" colspan="3">${map['MEM_NAME'] }</td><!-- 결재 담당자 -->
+					</c:forEach>
 					<td class="td-4"> 
 					<input type ="text" class="sta" value="처리 상태">
 					<input type ="text" class="status" name="status" id="status" value="${list['STATUS'] }">		

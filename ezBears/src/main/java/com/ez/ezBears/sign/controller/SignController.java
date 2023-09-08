@@ -22,12 +22,15 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ez.ezBears.common.ConstUtil;
 import com.ez.ezBears.common.FileUploadUtil;
 import com.ez.ezBears.common.PaginationInfo;
+import com.ez.ezBears.common.SearchVO;
 import com.ez.ezBears.common.SignListSearchVO;
+import com.ez.ezBears.dept.model.DeptVO;
 import com.ez.ezBears.member.model.MemberService;
 import com.ez.ezBears.member.model.MemberVO;
 import com.ez.ezBears.myBoard.model.MyBoardInfoVO;
 import com.ez.ezBears.myBoard.model.MyBoardListService;
 import com.ez.ezBears.notice.model.NoticeFileVO;
+import com.ez.ezBears.position.model.PositionVO;
 import com.ez.ezBears.sign.model.SignFileVO;
 import com.ez.ezBears.sign.model.SignMemInfoVO;
 import com.ez.ezBears.sign.model.SignService;
@@ -118,10 +121,15 @@ public class SignController {
 		logger.info("myBoardInfo 정보={}",myBoardInfoVo);
 
 		myBoardInfoVo = myBoardListService.selectBoardInfo(myBoardInfoVo);
-		memberVo = memberService.selectpositioninfo(myBoardInfoVo.getDeptNo());
+		List<Map<String, Object>> list = myBoardListService.selectMyBoardMember2(myBoardInfoVo.getMBoardNo());
+		
+		/* selectMyBoardMember(int mBoardNo) */
+		
+		/* memberVo = memberService.selectpositioninfo(myBoardInfoVo.getDeptNo()); */
 
 		model.addAttribute("myBoardInfoVo",myBoardInfoVo);
 		model.addAttribute("memberVo",memberVo);
+		model.addAttribute("list",list);
 
 		logger.info("myBoardInfo={}",myBoardInfoVo);
 
@@ -173,17 +181,21 @@ public class SignController {
 	public String Approval_edit(@RequestParam (defaultValue = "0")int docNo ,@ModelAttribute MyBoardInfoVO myBoardInfoVo,
 			@ModelAttribute MemberVO memberVo, @ModelAttribute SignMemInfoVO signMemInfoVo,HttpSession session ,HttpServletRequest request,	Model model) {
 		
-		logger.info("결재 수정 페이지");
+		logger.info("결재 수정 페이지 docNo={}",docNo);
 
 		signMemInfoVo = signService.selectApprovaMem(docNo);
 		logger.info("결재 디테일 signMemInfoVo={}",signMemInfoVo);
 
-		BigDecimal deptNoBigDecimal = (BigDecimal) request.getSession().getAttribute("dept_no");
-		int deptNo = deptNoBigDecimal.intValue();
-
-		memberVo.setDeptNo(deptNo);
-		memberVo = memberService.selectpositioninfo(deptNo);
-
+		/*
+		  BigDecimal deptNoBigDecimal = (BigDecimal)
+		  request.getSession().getAttribute("dept_no"); 
+		  int deptNo = deptNoBigDecimal.intValue();
+		  memberVo.setDeptNo(deptNo); memberVo =
+		  memberService.selectpositioninfo(deptNo);		 
+		  myBoardInfoVo = myBoardListService.selectBoardInfo(myBoardInfoVo);
+		*/
+		List<Map<String, Object>> listMap = myBoardListService.selectMyBoardMember2(signMemInfoVo.getMBoardNo());
+		
 		Map<String, Object> list = signService.detailSign(docNo);
 		logger.info("결재 디테일 list={}",list);
 		model.addAttribute("list",list);
@@ -195,7 +207,8 @@ public class SignController {
 		model.addAttribute("memberVo",memberVo);
 		model.addAttribute("filemap",filemap);
 		model.addAttribute("signMemInfoVo",signMemInfoVo);
-
+		model.addAttribute("listMap",listMap);
+		
 		return "myBoard/Approval_edit";
 	}
 
@@ -397,7 +410,40 @@ public class SignController {
 	}
 	
 	
+	@RequestMapping("/appSingListInfo")
+	public String appSingListInfo(@ModelAttribute SearchVO searchVo, @RequestParam(required = false) String searchName, Model model){
+
+		//1
+		logger.info("결재 리스트 페이지, 파라미터 searchVo={}",searchVo);
+		
+		//2
+		PaginationInfo pagingInfo = new PaginationInfo();
+		pagingInfo.setBlockSize(ConstUtil.BLOCK_SIZE);
+		pagingInfo.setCurrentPage(searchVo.getCurrentPage());
+		pagingInfo.setRecordCountPerPage(ConstUtil.MEMRECORD_COUNT);
+		
+		searchVo.setRecordCountPerPage(ConstUtil.MEMRECORD_COUNT);
+		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
+		
+		List<Map<String, Object>> list = signService.selectApprovalList2(searchVo);
+		
+		logger.info("멤버 조회 결과, list.size={}", list.size());
 	
+		//카테고리 가지고오기
+	
+		int totalRecord = signService.selectAppCount2(searchName);
+		pagingInfo.setTotalRecord(totalRecord);
+		
+		
+		//3
+
+		model.addAttribute("list", list);
+		model.addAttribute("pagingInfo", pagingInfo);
+		//4
+		
+		return "/myBoard/Approval";
+		
+	}
 	
 
 }

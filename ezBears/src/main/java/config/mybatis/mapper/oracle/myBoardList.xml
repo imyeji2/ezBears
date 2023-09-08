@@ -102,6 +102,12 @@
 		select * from myBoardInfo
 		where m_board_no = #{mBoardNo} and position_no=6
 	</select>
+	
+	<select id="selectMyBoardMember2" parameterType="int" resultType="map">
+		select * from myBoardMemberView
+		where m_board_no= #{mBoardNo} and CONTRACT_DONE is null and position_no =6
+		order by mem_name
+	</select>
 </mapper>
 
 

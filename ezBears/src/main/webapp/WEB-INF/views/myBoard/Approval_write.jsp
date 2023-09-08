@@ -6,24 +6,7 @@
 <%@include file="../inc/top.jsp"%>
 <link rel="stylesheet" href="<c:url value='/css/jquery-ui.min.css'/>"type="text/css">
 <script type="text/javascript" src="<c:url value='/js/jquery-ui.min.js'/>"></script>
-<script>
-	var jb = jQuery.noConflict();
-	jb(function() {
-		jb("#startVacation").datepicker({
-			dateFormat: 'yy-mm-dd',
-			changeYear: true,
-			dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
-			monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']
-		});
-		
-		jb("#endVacation").datepicker({
-			dateFormat: 'yy-mm-dd',
-			changeYear: true,
-			dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
-			monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']
-		});
-	});
-</script>
+
 
 <div class="container-fluid pt-4 px-4" id ="Approval_wr">
 	<div class="col-sm-12 col-xl-6">
@@ -56,9 +39,11 @@
 					 <input type ="hidden"  name="docNo" class="docNo" value="0"><!-- 문서 번호 불러오기 -->
 					 </td>
 					
-					<td class="td-2" >담당</td><!-- 결재 담당자 -->
-					<td class="td-3" >${memberVo.memName }</td><!-- 결재 담당자 -->
-
+								
+			    <td class="td-2">담당</td><!-- 결재 담당자 -->
+			    <c:forEach var="map" items="${list}">
+			        <td class="td-3">${map['MEM_NAME']}</td><!-- 결재 담당자 -->
+				 </c:forEach>
 				</tr>
 				
 				<tr class="tr-m">

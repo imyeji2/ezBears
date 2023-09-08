@@ -64,6 +64,7 @@ function submitForm() {
 <form name="frmPage" method="post" action="<c:url value='/myBoard/Approval?mBoardNo=${mBoardNo }'/>">
 	<input type="hidden" name="currentPage">	
 	<input type="hidden" name="searchKeyword" value="${param.searchKeyword}">
+	<input type="hidden" name="searchName" value="${param.searchName }">
 </form>
 
 <!-- Recent Sales Start -->
@@ -75,10 +76,19 @@ function submitForm() {
 				<div class="tab-pane fade show active">
 					<!-- Recent Sales Start -->
 					<div id="approval">
+					
 						<div
 							class="d-flex align-items-center justify-content-between mb-4">
-							<h6 class="mb-0">결재</h6>
 							
+							<h6 class="mb-0">결재</h6>
+					<!-- 검색 버튼 -->
+		<form id="app-form" action="<c:url value='/myBoard/appSingListInfo'/>" method="post" enctype="multipart/form-data" >
+			<div class="col-auto d-flex align-items-center">
+				    <input type="text" class="signTextSearch" id="txtboxSearch" name="searchName" 
+				 	   value="${param.searchName }" placeholder="기안자를 입력해주세요" style="text-align: center;">
+				    <button type="submit" class="btn btn-sm btn-primary signSearchBtn" id="btnSearch">검색</button>
+				</div>
+				</form>
 						</div>
 						<div class="table-responsive">
 							<table
