@@ -32,7 +32,7 @@
     	<selectKey keyProperty="deptNo" order="BEFORE" resultType="int">
     		SELECT DEPT_SEQ.NEXTVAL FROM DUAL
     	</selectKey>
-    	INSERT INTO DEPT
+    	INSERT INTO DEPT(DEPT_NO, DEPT_NAME, DEPT_TEL)
 		VALUES(#{deptNo}, #{deptName},#{deptTel})
     </insert>
     
