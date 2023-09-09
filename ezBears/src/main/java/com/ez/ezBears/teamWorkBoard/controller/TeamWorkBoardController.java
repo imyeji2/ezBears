@@ -235,6 +235,13 @@ public class TeamWorkBoardController {
 		List<Map<String, Object>> mem_list = myBoardListService.selectMyBoardMember(mBoardNo);
 		logger.info("마이보드 멤버 정보 mem_list.size={}",mem_list.size());
 		
+		//이전글 다음글
+		Map<String, Integer> nextMap = new HashMap<>();
+		nextMap.put("mBoardNo", mBoardNo);
+		nextMap.put("teamBoardNo", teamBoardNo);
+		Map<String, Object> resultMap = teamWorkBoardService.selectTeamWorkBoardNext(nextMap);
+		logger.info("이전글/다음글 조회 결과 resultMap={}",resultMap);
+		
 		//3.
 		model.addAttribute("map",map);
 		model.addAttribute("myBoardName",myBoardName);
@@ -242,6 +249,7 @@ public class TeamWorkBoardController {
 		model.addAttribute("userNo",userNo);
 		model.addAttribute("toDoList",toDoList);
 		model.addAttribute("mem_list",mem_list);
+		model.addAttribute("resultMap",resultMap);
 		
 		//4
 		return "myBoard/teamWorkBoardDetail";

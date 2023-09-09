@@ -235,7 +235,7 @@
 	.detail_title{
 		width:100%;
 		border-bottom:1px solid #6C7293;
-		margin:50px 0px 10px 0px;
+		margin:50px 0px 20px 0px;
 		padding: 10px 10px 10px 10px;
 		line-height: 2em;
 		text-align: left;
@@ -383,6 +383,13 @@
 	.del_content{
 		height: 30px;
 		margin:0px 0px 10px 10px;
+	}
+	
+	.boardNext{
+		width: 100%;
+		padding:20px;
+		border-top:1px solid #6C7293;
+		text-align: left;
 	}
 	
 	
@@ -931,7 +938,18 @@
 		margin-top:2px;
 	}
 	
+	.bottonBtnBox{
+		text-align: center;			
+		width: fit-content;
+		margin:0 auto;
+	}
 
+	.boardNext{
+		width: 100%;
+		padding:20px;
+		border-top:1px solid #6C7293;
+		text-align: left;
+	}
 
 }/*팀별 공지사항 디테일 css*/
 

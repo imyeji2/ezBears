@@ -780,26 +780,50 @@
                   	
 	                        </div>                 
 		       			</div> <!--writeTodoList -->
-		       					     			
-		       			<div class="detail_option_btn">
-		       				<span class="user_dept">
-		       					<a href="<c:url value='/myBoard/teamWorkBoard?mBoardNo=${map["M_BOARD_NO"]}'/>">목록</a>
-		       				</span>
-		       				<c:if test="${userid==map['MEM_ID']}">
-		       					<span class="user_dept">
-		       						<a href="<c:url value='/myBoard/teamWorkBoardEdit?mBoardNo=${map["M_BOARD_NO"]}&teamBoardNo=${map["TEAM_BOARD_NO"]}'/>">
-		       						수정
-		       						</a>
-		       					</span>
-		       					
-			        			<span class="user_dept">
-			        				<a href="#" id="del">삭제</a>
-			        			</span>
-		        			</c:if>
-		       			</div>
+		       			<br>
+		       			<div class="bottonBtnBox">     			
+			       			<div class="detail_option_btn">
+			       				<span class="user_dept">
+			       					<a  href="<c:url value='/myBoard/teamWorkBoard?mBoardNo=${map["M_BOARD_NO"]}'/>">목록</a>
+			       				</span>
+			       				<c:if test="${userid==map['MEM_ID']}">
+			       					<span class="user_dept">
+			       						<a  href="<c:url value='/myBoard/teamWorkBoardEdit?mBoardNo=${map["M_BOARD_NO"]}&teamBoardNo=${map["TEAM_BOARD_NO"]}'/>">
+			       						수정
+			       						</a>
+			       					</span>
+			       					
+				        			<span class="user_dept">
+				        				<a  href="#" id="del">삭제</a>
+				        			</span>
+			        			</c:if>
+			       			</div>
+			       			</div>	
 		       		</div><!-- detail_content -->
 	       		</div><!-- detailWrap -->	 
-	       		
+       			<div class="boardNext">
+        			<c:if test="${empty resultMap['PREV']}">
+        				<span>이전글이 없습니다.</span>
+        			</c:if>
+        			<c:if test="${!empty resultMap['PREV']}">
+        				<span>
+        					<a href="<c:url value='/myBoard/teamWorkBoardCountUpdate?mBoardNo=${map["M_BOARD_NO"]}&teamBoardNo=${resultMap["PREV"]}'/>">
+        						이전글 : ${resultMap['PREV_TITLE']}
+        					</a>
+        				</span>
+        			</c:if>	
+        			<br>
+	        		<c:if test="${empty resultMap['NEXT']}">
+        				<span>다음글이 없습니다.</span>
+        			</c:if>
+        			<c:if test="${!empty resultMap['NEXT']}">
+        				<span>
+        					<a href="<c:url value='/myBoard/teamWorkBoardCountUpdate?mBoardNo=${map["M_BOARD_NO"]}&teamBoardNo=${resultMap["NEXT"]}'/>">
+        						다음글 : ${resultMap['NEXT_TITLE']}
+        					</a>
+        				</span>
+        			</c:if>		
+       			</div>  	       		
 	       		<!-- 댓글 리스트 -->
 	       		<div class="detail_reply_wrap">
 	       			<div class="reply_tit"></div>

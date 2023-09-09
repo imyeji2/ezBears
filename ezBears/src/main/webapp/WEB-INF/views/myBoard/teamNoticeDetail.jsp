@@ -555,7 +555,7 @@
 		       			<div class="detail_view">
 		       				${map['TEAM_NOTICE_CONTENT']}
 		       			</div>
-		       			
+		       			<br>
 		       			<div class="detail_option_btn">
 		       				<span class="user_dept">
 		       					<a href="<c:url value='/myBoard/teamNotice?mBoardNo=${map["M_BOARD_NO"]}'/>">목록</a>
@@ -574,7 +574,31 @@
 		       			</div>
 		       		</div><!-- detail_content -->
 	       		</div><!-- detailWrap -->	 
-	       		
+       		
+       			<div class="boardNext">
+        			<c:if test="${empty resultMap['PREV']}">
+        				<span>이전글이 없습니다.</span>
+        			</c:if>
+        			<c:if test="${!empty resultMap['PREV']}">
+        				<span>
+        					<a href="<c:url value='/myBoard/countUpdate?mBoardNo=${map["M_BOARD_NO"]}&teamNoticeNo=${resultMap["PREV"]}'/>">
+        						이전글 : ${resultMap['PREV_TITLE']}
+        					</a>
+        				</span>
+        			</c:if>	
+        			<br>
+	        		<c:if test="${empty resultMap['NEXT']}">
+        				<span>다음글이 없습니다.</span>
+        			</c:if>
+        			<c:if test="${!empty resultMap['NEXT']}">
+        				<span>
+        					<a href="<c:url value='/myBoard/countUpdate?mBoardNo=${map["M_BOARD_NO"]}&teamNoticeNo=${resultMap["NEXT"]}'/>">
+        						다음글 : ${resultMap['NEXT_TITLE']}
+        					</a>
+        				</span>
+        			</c:if>		
+       			</div>  
+       			<br>	       		
 	       		<!-- 댓글 리스트 -->
 	       		<div class="detail_reply_wrap">
 	       			<div class="reply_tit"></div>
