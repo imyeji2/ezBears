@@ -264,12 +264,6 @@
 	
 </script>
 
-<style>
-#win-rate{
-
-}
-
-</style>
  <!-- Navbar End -->
  <!-- top ë©”ë‰´ ì¢…ë£Œ -->
 <div id="main">
@@ -588,13 +582,8 @@
 							class="d-flex align-items-center justify-content-between mb-4">
 							<h6 class="mb-0">승률 현황</h6>
 						</div>
-						<canvas id="myChart3">
-						<c:forEach items="${winlist}" var="item">
-							<tr>
-								<td>${item.month}</td>
-								<td>${item.winRate}</td>
-							</tr>
-						</c:forEach>
+						<canvas id="myChart3" width="300" height="250">
+
 						</canvas>
 
 						
@@ -645,26 +634,7 @@
  	</c:if>
 </div><!-- main -->
 <script>
-// 승률 차트
-/* var winrateData = $("#myChart3").data("winlist");
-
-var ctx1 = $("#myChart3").get(0).getContext("2d");
-var myChart1 = new Chart(ctx1, {
-    type: "bar",
-    data: {
-        labels: ["4월", "5월", "6월", "7월", "8월", "9월"],
-        datasets: [{
-                label: "승률",
-                data: winrateData,
-                backgroundColor: "#7000D8"
-            },                
-        ]
-        },
-    options: {
-        responsive: true
-    }
-});
-
+/* // 승률 차트
 var winrateData = $("#myChart3").data("winlist");
 
 var ctx1 = $("#myChart3").get(0).getContext("2d");
@@ -682,46 +652,68 @@ var myChart1 = new Chart(ctx1, {
     options: {
         responsive: true
     }
-}); */
+});
+ */
+/* var winrateData = $("#myChart3").data("winlist");
 
-	$.ajax({
-	    url: "ajax_winRate",
-	    type: "GET",
-	    dataType: "json",
-	    success: function(data) {
-	        // 서버에서 받아온 데이터를 사용하여 차트 생성
-	        var months = [];
-            var winRates = [];
+var ctx1 = $("#myChart3").get(0).getContext("2d");
+var myChart1 = new Chart(ctx1, {
+    type: "bar",
+    data: {
+        labels: ["4월", "5월", "6월", "7월", "8월", "9월"],
+        datasets: [{
+                label: "승률",
+                data: winrateData,
+                backgroundColor: "#7000D8"
+            },                
+        ]
+        },
+    options: {
+        responsive: true
+    }
+}); 
+ */
+ // 페이지 로드 후 실행
+ $(function() {
+     // AJAX 요청 보내기
+     $.ajax({
+         url: "ajax_winRate",
+         type: "GET",
+         dataType: "json",
+         success: function(data) {
+             // 서버에서 받아온 데이터를 사용하여 차트 생성
+             var months = [];
+             var winRates = [];
 
-            data.forEach(function(item) {
-                months.push(item.month);
-                winRates.push(item.winRate);
-            });
-            
-	        var ctx1 = $("#myChart3").get(0).getContext("2d");
-	        var myChart1 = new Chart(ctx1, {
-	            type: "bar",
-	            data: {
-	                labels: data.map(function(item) {
-	                    return item.month;
-	                }),
-	                datasets: [{
-	                    label: "승률",
-	                    data: data.map(function(item) {
-	                        return item.winRate;
-	                    }),
-	                    backgroundColor: "#7000D8"
-	                }]
-	            },
-	            options: {
-	                responsive: true
-	            }
-	        });
-	    },
-	    error: function(xhr, status, error) {
-	        console.error(error);
-	    }
-	});
+             // 데이터 추출
+             data.forEach(function(item) {
+                 months.push(item.월);
+                 winRates.push(item.월별_승률);
+             });
+
+             // 차트 생성
+             var ctx = document.getElementById("myChart3").getContext("2d");
+             var myChart = new Chart(ctx, {
+                 type: "bar",
+                 data: {
+                     labels: months,
+                     datasets: [{
+                         label: "승률",
+                         data: winRates,
+                         backgroundColor: "#7000D8"
+                     }]
+                 },
+                 options: {
+                     responsive: true
+                 }
+             });
+         },
+         error: function(xhr, status, error) {
+             console.error(error);
+             alert("데이터를 불러오는 도중 오류가 발생했습니다.");
+         }
+     });
+ });
 </script>
 
  <%@include file="inc/bottom.jsp"%>

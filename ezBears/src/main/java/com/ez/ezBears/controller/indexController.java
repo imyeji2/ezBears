@@ -137,9 +137,10 @@ public class indexController {
 	
 	@ResponseBody
 	@RequestMapping("ajax_winRate")
-	public List<Map<String, Object>> WinRate(Model model) {
+	public List<Map<String, Object>> WinRate(Model model, HttpSession session) {
 		List<Map<String, Object>> winlist = gameService.selectMonthlyWinRate();
 		model.addAttribute("winlist", winlist);
+		logger.info("승률 통계", winlist);
 		return winlist;
 	}
 }
