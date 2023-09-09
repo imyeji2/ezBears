@@ -10,42 +10,174 @@
         <meta name="author" content="" />
         <!-- Favicon-->
 		<script type="text/javascript" src="<c:url value='/js/chattingScripts.js'/>"></script>
+		<script type="text/javascript" src="<c:url value='/js/jquery-3.7.0.min.js'/>"></script>
 		<link href="${pageContext.request.contextPath}/css/chattingStyle.css" rel="stylesheet">
+		<link href="${pageContext.request.contextPath}/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+		<link href="${pageContext.request.contextPath}/css/yeji.css" rel="stylesheet">
     </head>
-<style>
-body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-}
+   
+    <script>
+    $(function(){
+    	$('.chat-container').hide();
+    	
+    	$('.list-group-item').click(function(){
+    		$('.chat-container').show();
+    		$('.chat-defult').hide();
+    		
+    	});
 
-.chat-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 93vh; 
-}
+		//멤버 추가 버튼
+		$('#addBtn').click(function(){
+			$('#staticBackdrop').modal('show');
+		});
+		
+		//모달 열릴 때 이벤트
+		$(document).on('show.bs.modal', '#staticBackdrop', function(event) {
+			$('.memListBox').html("");
+			MyBoardAddMemberList(1);
+		});
+		
+		//멤버 검색
+		$('#deptSearch').change(function() {
+			MyBoardAddMemberList(1);
+		});
+		
+    })
+    
+	function MyBoardAddMemberList(curPage){
+		$('input[name="currentPage"]').val(curPage);
+		 var sendDate = $('#serchFrm').serialize(); // 데이터 직렬화
+		 $.ajax({
+		        type: 'post',
+		        url: "<c:url value='/chat/ajax_selecAddChatMember'/>",
+		        data: sendDate,
+		        dataType: 'json',
+		        error: function(xhr, status, error){
+		            alert(error);
+		        },
+		        success: function(res){
+		            console.log(res); // 서버 응답 확인
+		            $('.memListBox').html("");
+		            if(res!=null){		
+		            	var memberDate="";
+		            	//페이징 처리
+						totalCount=res.pagingInfo.totalRecord;
+						var memberNo = $('#memNo').val();
+			            $.each(res.allMemberList, function(idx, item){
+			            	
+							//출력 데이터
+			            	var imagePath = "default_user.png";
+			            	if(item.MEM_IMAGE!==null){
+			            		imagePath =item.MEM_IMAGE;
+			            	}
+			            	var allMemNo = item.MEMNO;
+			            	memberDate+="<div class='mem_list_content'>";				        	
+			            	memberDate+="<div class='mem_img_box'>";	
+		            		memberDate+="<img src='<c:url value='/img/mem_images/"+imagePath+"'/>' alt='사원프로필'>";				        	
+		            		memberDate+="</div>";				        	
+		            		memberDate+="<div class='mem_info_box'>";				        	
+		            		memberDate+="<div class='mem_info_box2'><span id='memName' class='memName '>"+item.MEM_NAME+"</span>/"+item.POSITION_NAME+"</div>";				        	
+		            		memberDate+="<div>💼 "+item.DEPT_NAME+"</div>";				        	
+		            		memberDate+="<input type='hidden' name='memNo' value='"+item.MEM_NO+"'>";				        	
+		            		memberDate+="</div>";				        	
+		            		memberDate+="</div><!-- mem_list_content -->";				        	
 
-.chat-messages {
-    flex-grow: 1; 
-    overflow-y: auto; 
-    padding: 10px;
-}
-
-.fixed-textarea {
-    width: 100%;
-    padding: 10px;
-    resize: none; 
-    position: fixed; 
-    bottom: 0;
-    background-color: #f2f2f2;
-}
-</style>
+			            });//.each
+			         
+			            //페이징
+			            var str = "";
+			            var firstPage = res.pagingInfo.firstPage;
+			            var lastPage = res.pagingInfo.lastPage;
+			            var currentPage = res.pagingInfo.currentPage;
+			            var totalRecord = res.pagingInfo.totalRecord;
+			            var totalPage = res.pagingInfo.totalPage;
+	
+			            // 이전 블럭으로
+			            if (firstPage > 1) {
+			                str += "<li class='page-item'>";
+			                str += "<a class='page-link' onclick='MyBoardAddMemberList(" + (firstPage - 1) + ")'>";
+			                str += "<";
+			                str += "</a>";
+			                str += "</li>";
+			            }
+	
+			            // 페이지 번호 출력
+			            for (var i = firstPage; i <= lastPage; i++) {
+			                if (i == currentPage) {
+			                    str += "<li class='page-item active' >";
+			                    str += "<a class='page-link' href='#'>" + i + "</a>";
+			                    str += "</li>";
+			                } else {
+			                    str += "<li class='page-item'>";
+			                    str += "<a class='page-link' href='#' onclick='MyBoardAddMemberList(" + i + ")' style='background-color:#fff; color:#7000D8'>" + i + "</a>";
+			                    str += "</li>";
+			                }
+			            }
+	
+			            // 다음 블럭으로
+			            if (lastPage < totalPage) {
+			                str += "<li class='page-item'>";
+			                str += "<a class='page-link' onclick='MyBoardAddMemberList(" + (firstPage + 1) + ")'>";
+			                str += ">";
+			                str += "</a>";
+			                str += "</li>";
+			            }
+			            $('.memListBox').append(memberDate);
+			            $('#pageBox').html("");
+			            $('#pageBox').html(str);	
+			            
+	       			}//not null if
+			}//success
+		});//ajax
+	}    	
+    	
+   </script>
+    
+	<style>
+	body {
+	    margin: 0;
+	    padding: 0;
+	    font-family: Arial, sans-serif;
+	}
+	
+	.chat-defult{
+	  display: flex;
+	  justify-content: center; 
+	  align-items: center; /* 세로 가운데 정렬 */
+	  height: 93vh; 
+	}		
+	.chat-container {
+	    display: flex;
+	    flex-direction: column;
+	    justify-content: space-between;
+	    height: 93vh;
+	}
+	
+	
+	.chat-messages {
+	    flex-grow: 1; 
+	    overflow-y: auto; 
+	    padding: 10px;
+	}
+	
+	.fixed-textarea {
+	    width: 100%;
+	    padding: 10px;
+	    resize: none; 
+	    position: fixed; 
+	    bottom: 0;
+	    background-color: #f2f2f2;
+	}
+	</style>
+	
     <body>
-        <div class="d-flex" id="wrapper">
+        <div class="d-flex" id="chatList">
             <!-- Sidebar-->
             <div class="border-end bg-white" id="sidebar-wrapper">
-                <div class="sidebar-heading border-bottom bg-light">채팅</div>
+                <div class="sidebar-heading border-bottom bg-light">
+                	채팅 <a class="btn btn-sm btn-primary" id="addBtn">추가</a>
+                </div>
                 <div class="list-group list-group-flush">
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Dashboard</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Shortcuts</a>
@@ -60,12 +192,15 @@ body {
                 <!-- Top navigation-->
                 <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
                     <div class="container-fluid">
-                        <button class="btn btn-primary" id="sidebarToggle">채팅 리스트</button>
+                        <button class="btn btn-primary" id="sidebarToggle">리스트보기</button>
                       
                     </div>
                 </nav>
                 <!-- Page content-->
                 <div class="container-fluid">
+                	<div class="chat-defult">
+                		<i class="bi bi-chat-dots-fill"></i>원하는 대화방을 선택하세요
+                	</div>
 				    <div class="chat-container">
 				        <div class="chat-messages">
 				            <!-- 채팅 메시지가 표시되는 부분 -->
@@ -73,13 +208,52 @@ body {
 				        
 						<div class="input-group mb-3 chat-input">
 						  <textarea class="form-control fixed-textarea" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2"></textarea>
-						  <button class="btn btn-outline-secondary" type="button" id="button-addon2">Button</button>
+						  <button class="btn btn-outline-secondary" type="button" id="button-addon2">전송</button>
 						</div>				            
 				        
 				    </div>
                </div>
             </div>
+      
+			<!-- Modal -->
+			<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			   	  	<h1 class="modal-title fs-5" id="staticBackdropLabel" style="color:#191C24">팀 멤버</h1>
+			   	  </div>				    
+			      <div class="modal-body">
+			      <form name="serchFrm"  id="serchFrm" method="post" action="<c:url value='/myBoard/myBoardMember?mBoardNo=${mBoardNo}'/>">
+					   <input type="hidden" name="memNo" value="${memNo}" id="memNo">
+			      	   <input type="hidden" name="currentPage">
+				        <select class="form-select" name="deptNo" id="deptSearch">
+				        <option selected value='0'>부서 선택</option>
+				       	   <c:forEach var="detpVo" items="${deptList}">
+						  		<option value="${detpVo.deptNo}">${detpVo.deptName}</option>
+							</c:forEach>
+						</select>
+					</form>
+			        <div class="memListBox">
+	
+			        </div><!-- memListBox -->
+			      <div class="page_box">
+				      <nav aria-label="Page navigation example">
+						  <ul class="pagination justify-content-center" id="pageBox">
+	
+						  </ul>
+						</nav>
+					</div><!-- page_box -->				        
+			      </div>
+			      <div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+			      </div><!-- Modal-footer -->
+			    </div><!-- modal-content -->
+			  </div>
+			</div>
+			<!--Modal-->                    
         </div>
+        
+
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 

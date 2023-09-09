@@ -288,4 +288,44 @@
 	 	select * from member
 		where dept_no = 1 and position_no=6
 	 </select>
+	 
+	 
+	 <select id="selectMemberList3" parameterType="memberSearchVo" resultType="map">
+    	SELECT * FROM 
+    	(
+    		SELECT ROWNUM AS RNUM, A.* FROM 
+    		(
+        		SELECT * FROM memberview1
+        		<include refid="searchWhereMember3"></include>
+        		ORDER BY MEM_NAME, DEPT_NAME,POSITION_NO
+    		)A
+		)
+		
+		<![CDATA[
+		WHERE RNUM > #{firstRecordIndex} 
+		AND RNUM <= #{firstRecordIndex} + #{recordCountPerPage}
+		]]>
+	 </select>			
+
+	 <select id="selectMemberListTotal3" parameterType="memberSearchVo" resultType="int">
+    	SELECT count(*) FROM 
+    	(
+    		SELECT ROWNUM AS RNUM, A.* FROM 
+    		(
+        		SELECT * FROM memberview1
+        		<include refid="searchWhereMember3"></include>
+        		ORDER BY MEM_NAME, DEPT_NAME,POSITION_NO
+    		)A
+		)
+	 </select>	
+	 
+    <sql id="searchWhereMember3">
+		<where>
+			CONTRACT_DONE is null and mem_no != #{memNo}
+			<if test="deptNo!=null and deptNo!=''">
+				AND dept_No = #{deptNo}
+			</if>
+		</where>
+	</sql>	 		
+ 
 </mapper>
