@@ -578,15 +578,16 @@
          <div class="row g-4">
 	          <div class="col-sm-12 col-xl-6">
 	              <div class="bg-secondary text-center rounded p-4">
-						<div
-							class="d-flex align-items-center justify-content-between mb-4">
+						<div class="d-flex align-items-center justify-content-between mb-4">
 							<h6 class="mb-0">승률 현황</h6>
 						</div>
-						<canvas id="myChart3" width="300" height="250">
-
-						</canvas>
-
-						
+						<div class="d-flex align-items-center py-3">
+	                    	<div class="staffChartBox">
+	                     		<div class="staffChart" id="staffChart">							
+									<canvas id="myChart3"></canvas>
+								</div>
+							</div>
+						</div>
 	              </div>
 	          </div>
                         
@@ -690,9 +691,16 @@ var myChart1 = new Chart(ctx1, {
                  months.push(item.월);
                  winRates.push(item.월별_승률);
              });
-
+             
+             // 차트 컨테이너의 크기에 맞게 canvas 크기 조절
+             var chartContainer2 = document.getElementById('staffChart');
+             var canvas2 = document.getElementById('myChart3');
+             
+             canvas2.width = chartContainer2.clientWidth;
+             canvas2.height = chartContainer2.clientWidth; // 정사각형으로 유지
+             
              // 차트 생성
-             var ctx = document.getElementById("myChart3").getContext("2d");
+             var ctx = canvas2.getContext("2d");
              var myChart = new Chart(ctx, {
                  type: "bar",
                  data: {
