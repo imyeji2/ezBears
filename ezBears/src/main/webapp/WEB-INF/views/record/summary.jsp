@@ -260,6 +260,16 @@
 			style="color: white;">삭제</a> | <a
 			href="<c:url value='/record/gameList'/>" style="color: white;">목록</a>
 	</div>
+	<div class="center">
+		<a
+			href="<c:url value='/record/inningWrite?recodeNo=${param.recodeNo }'/>"
+			style="color: white;">이닝 정보 등록</a> | <a
+			href="<c:url value='/record/inningEdit?recodeNo=${param.recodeNo }'/>"
+			style="color: white;">수정</a> | <a
+			href="<c:url value='/record/inningDelete?recodeNo=${param.recodeNo }'/>"
+			style="color: white;">삭제</a>
+	</div>		
+		
 </c:if>
 	<script>
 		// JavaScript를 사용하여 vo.R 값들을 가져와 합계 계산

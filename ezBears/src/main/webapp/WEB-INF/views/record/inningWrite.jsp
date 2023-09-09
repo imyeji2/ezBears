@@ -7,9 +7,10 @@
 	rel="stylesheet">
 <link href="${pageContext.request.contextPath}/css/choong/chi.css"
 	rel="stylesheet">
-	
+
 <form name="frmWrite" method="post"
-	action="<c:url value='/record/gameRecordDetail'/>">
+	action="<c:url value='/record/inningWrite'/>">
+	<input type="hidden" name="recodeNo" value="${param.recodeNo }">
 	<!-- Sign In Start -->
 	<div class="container-fluid">
 		<div class="row h-100 align-items-center justify-content-center">
@@ -18,74 +19,100 @@
 					<div class="d-flex align-items-center justify-content-between mb-3">
 						<h3>이닝 기록</h3>
 					</div>
+
+
+
 					<div style="width: 60%; height: 80%; margin: 0 auto;">
+					
+						<div class="form-floating mb-3">
+							<select class="form-select" id="floatingSelect"
+								aria-label="Floating label select example" name="inning">
+								<!-- 반복문 -->
+								<option value="" selected="selected">이닝</option>
+									<option value="1회초">1회초</option>
+									<option value="1회말">1회말</option>
+									
+									<option value="2회초">2회초</option>
+									<option value="2회말">2회말</option>
+									
+									<option value="3회초">3회초</option>
+									<option value="3회말">3회말</option>
+									
+									<option value="4회초">4회초</option>
+									<option value="4회말">4회말</option>
+									
+									<option value="5회초">5회초</option>
+									<option value="5회말">5회말</option>
+									
+									<option value="6회초">6회초</option>
+									<option value="6회말">6회말</option>
+									
+									<option value="7회초">7회초</option>
+									<option value="7회말">7회말</option>
+									
+									<option value="8회초">8회초</option>
+									<option value="8회말">8회말</option>
+									
+									<option value="9회초">9회초</option>
+									<option value="9회말">9회말</option>
+									
+									
+								<!-- 반복문 -->
+							</select> <label for="floatingSelect">이닝을 선택하세요</label>
+						</div>
+
+
 						<div class="form-floating mb-3">
 							<input type="text" class="form-control" id="floatingInput"
-								placeholder="BB" name="BB"> <label for="floatingInput">안타</label>
+								placeholder="H" name="H"> <label for="floatingInput">안타</label>
 						</div>
 						<div class="form-floating mb-3">
 							<input type="text" class="form-control" id="floatingInput"
-								placeholder="SO" name="SO"> <label for="floatingInput">실책</label>
+								placeholder="ERRORS" name="ERRORS"> <label for="floatingInput">실책</label>
 						</div>
 						<div class="form-floating mb-3">
 							<input type="text" class="form-control" id="floatingInput"
-								placeholder="IP" name="IP"> <label for="floatingInput">삼진</label>
+								placeholder="SO" name="SO"> <label for="floatingInput">삼진</label>
 						</div>
 						<div class="form-floating mb-3">
 							<input type="text" class="form-control" id="floatingInput"
-								placeholder="HA" name="HA"> <label for="floatingInput">2루타</label>
+								placeholder="B2" name="B2"> <label for="floatingInput">2루타</label>
 						</div>
 						<div class="form-floating mb-3">
 							<input type="text" class="form-control" id="floatingInput"
-								placeholder="RC" name="RC"> <label for="floatingInput">3루타</label>
+								placeholder="B3" name="B3"> <label for="floatingInput">3루타</label>
 						</div>
 						<div class="form-floating mb-3">
 							<input type="text" class="form-control" id="floatingInput"
-								placeholder="ER" name="ER"> <label for="floatingInput">홈런</label>
+								placeholder="HR" name="HR"> <label for="floatingInput">홈런</label>
 						</div>
 						<div class="form-floating mb-3">
 							<input type="text" class="form-control" id="floatingInput"
-								placeholder="HR" name="HR"> <label for="floatingInput">타점</label>
+								placeholder="HRI" name="HRI"> <label for="floatingInput">타점</label>
 						</div>
 						<div class="form-floating mb-3">
 							<input type="text" class="form-control" id="floatingInput"
-								placeholder="ERA" name="ERA"> <label for="floatingInput">볼넷</label>
+								placeholder="FOURBALL" name="FOURBALL"> <label for="floatingInput">볼넷</label>
 						</div>
 						<div class="form-floating mb-3">
 							<input type="text" class="form-control" id="floatingInput"
-								placeholder="ERA" name="ERA"> <label for="floatingInput">잔루</label>
+								placeholder="lEFT_ON_BASE" name="lEFT_ON_BASE"> <label for="floatingInput">잔루</label>
 						</div>
 						<div class="form-floating mb-3">
 							<input type="text" class="form-control" id="floatingInput"
-								placeholder="ERA" name="ERA"> <label for="floatingInput">타석</label>
+								placeholder="AB" name="AB"> <label for="floatingInput">타석</label>
 						</div>
 						<div class="form-floating mb-3">
 							<input type="text" class="form-control" id="floatingInput"
-								placeholder="ERA" name="ERA"> <label for="floatingInput">도루</label>
+								placeholder="STEAL" name="STEAL"> <label for="floatingInput">도루</label>
 						</div>
 						<div class="form-floating mb-3">
 							<input type="text" class="form-control" id="floatingInput"
-								placeholder="ERA" name="ERA"> <label for="floatingInput">득점</label>
+								placeholder="R" name="R"> <label for="floatingInput">득점</label>
 						</div>
 						<div class="form-floating mb-3">
 							<input type="text" class="form-control" id="floatingInput"
-								placeholder="ERA" name="ERA"> <label for="floatingInput">볼넷</label>
-						</div>
-						<div class="form-floating mb-3">
-							<input type="text" class="form-control" id="floatingInput"
-								placeholder="ERA" name="ERA"> <label for="floatingInput">잔루</label>
-						</div>
-						<div class="form-floating mb-3">
-							<input type="text" class="form-control" id="floatingInput"
-								placeholder="ERA" name="ERA"> <label for="floatingInput">타석</label>
-						</div>
-						<div class="form-floating mb-3">
-							<input type="text" class="form-control" id="floatingInput"
-								placeholder="ERA" name="ERA"> <label for="floatingInput">도루</label>
-						</div>
-						<div class="form-floating mb-3">
-							<input type="text" class="form-control" id="floatingInput"
-								placeholder="ERA" name="ERA"> <label for="floatingInput">팀정보</label>
+								placeholder="TEAM_INFO" name="TEAM_INFO"> <label for="floatingInput">팀정보</label>
 						</div>
 						<button type="submit" class="btn btn-primary py-3 w-100 mb-4">기록등록</button>
 					</div>
