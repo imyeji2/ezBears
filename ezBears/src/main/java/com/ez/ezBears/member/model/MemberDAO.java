@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.ez.ezBears.common.MemberSearchVO;
 import com.ez.ezBears.common.SearchVO;
 
 @Mapper
@@ -81,4 +82,8 @@ public interface MemberDAO {
     
     
     MemberVO selectDeptPositionInfo();
+    
+    //본인 제외 전제 사원 검색
+    List<Map<String, Object>> selectMemberList3(MemberSearchVO searchVo);
+    int selectMemberListTotal3(MemberSearchVO searchVo);
 }

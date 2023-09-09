@@ -3,6 +3,7 @@ package com.ez.ezBears.member.model;
 import java.util.List;
 import java.util.Map;
 
+import com.ez.ezBears.common.MemberSearchVO;
 import com.ez.ezBears.common.SearchVO;
 
 public interface MemberService {
@@ -79,4 +80,8 @@ public interface MemberService {
     List<Map<String, Object>> selectAllMemberView();
 
     MemberVO selectDeptPositionInfo();
+    
+    //본인 제외 전제 사원 검색
+    List<Map<String, Object>> selectMemberList3(MemberSearchVO searchVo);
+    int selectMemberListTotal3(MemberSearchVO searchVo);
 }

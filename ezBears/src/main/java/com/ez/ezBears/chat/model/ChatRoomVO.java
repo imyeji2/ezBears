@@ -4,10 +4,12 @@ import lombok.Data;
 
 @Data
 public class ChatRoomVO {
-	private int chatRoomNo;
-	private String chatRoomTitle;
-	private int chatRoomType;
-	private String chatContent;
-	private String chatDate;
-	private int headCount;
+	private int chatRoom;
+	private String regdate;
+	
+	@Override
+	public String toString() {
+		return "ChatRoomVO [chatRoom=" + chatRoom + ", regdate=" + regdate + ", toString()=" + super.toString() + "]";
+	}
+
 }
