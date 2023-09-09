@@ -950,6 +950,21 @@
 		border-top:1px solid #6C7293;
 		text-align: left;
 	}
+	
+	.mem_info_box2 {
+		line-height: 25px;
+	    overflow: hidden;
+	}
+	
+	.memName {
+	    white-space: nowrap;
+	    overflow: hidden;
+	    text-overflow: ellipsis;
+	    max-width: 60px;
+	    display: inline-block;
+	    vertical-align: middle; 
+	}		
+
 
 }/*팀별 공지사항 디테일 css*/
 
@@ -1147,6 +1162,20 @@
 		background-color: #fff;
 		color:#191C24;
 	}
+	
+	.mem_info_box2 {
+		line-height: 25px;
+	    overflow: hidden;
+	}
+	
+	.memName {
+	    white-space: nowrap;
+	    overflow: hidden;
+	    text-overflow: ellipsis;
+	    max-width: 60px;
+	    display: inline-block;
+	    vertical-align: middle; 
+	}	
 			
 }
 
@@ -1214,6 +1243,19 @@
         position: relative;
     }
 
+	.staffChartBox{
+        width: 100%;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+	}
+	
+    .staffChart {
+		height: 100%;
+        position: relative;
+    }
+    
     .chartText {
         position: absolute;
         top: 50%;
@@ -1365,14 +1407,19 @@
 		color:#191C24;
 	}
 		
+	.mem_info_box2 {
+		line-height: 25px;
+	    overflow: hidden;
+	}
 	
-	.memName{
-	    width: 50px;
+	.memName {
+	    white-space: nowrap;
 	    overflow: hidden;
 	    text-overflow: ellipsis;
-	    white-space: nowrap;
-	    display: inline-block; 
-		
+	    max-width: 60px;
+	    display: inline-block;
+	    vertical-align: middle; 
 	}	
+
 			
 }

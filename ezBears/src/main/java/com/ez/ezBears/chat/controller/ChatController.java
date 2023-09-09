@@ -1,6 +1,7 @@
 
 package com.ez.ezBears.chat.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,10 +15,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ez.ezBears.chat.model.ChatMemberVO;
+import com.ez.ezBears.chat.model.ChatRoomService;
 import com.ez.ezBears.common.ConstUtil;
 import com.ez.ezBears.common.MemberSearchVO;
 import com.ez.ezBears.common.MyBoardSearchVo;
 import com.ez.ezBears.common.PaginationInfo;
+import com.ez.ezBears.dept.model.DeptService;
+import com.ez.ezBears.dept.model.DeptVO;
 import com.ez.ezBears.member.model.MemberService;
 import com.ez.ezBears.member.model.MemberVO;
 
@@ -30,7 +35,8 @@ import lombok.RequiredArgsConstructor;
 public class ChatController {
 	private static final Logger logger = LoggerFactory.getLogger(ChatController.class);
 	private final MemberService memberService;
-	
+	private final DeptService deptService;	
+	private final ChatRoomService chatRoomService;
 	
 	@RequestMapping("/chattingList")
 	public String chattingList(HttpSession session, Model model) {
@@ -41,8 +47,14 @@ public class ChatController {
 		logger.info("memNo={}",memNo);
 		
 		//2
+		
+		//전체 부서 검색
+		List<DeptVO> deptList=deptService.selectDeptList();
+		logger.info("부서 검색 결과 deptList={}",deptList.size());
+		
 		//3
 		model.addAttribute("memNo",memNo);
+		model.addAttribute("deptList",deptList);
 		//4
 		return "chat/chattingList";
 	}
@@ -78,6 +90,47 @@ public class ChatController {
 		return resultMap;
 	
 	}
+	
+	
+	@ResponseBody
+	@RequestMapping("/ajax_addChatRoom")
+	public int addChatRoom(@RequestParam(defaultValue = "0") int memNo,
+			HttpSession sesstion) {
+		//1
+		logger.info("채팅방 추가 파라미터 memNo={}",memNo);
+		
+		String userid =(String)sesstion.getAttribute("userid");
+		int myMemNo=memberService.selectMemberNo(userid);
+		
+		
+		//2
+		ChatMemberVO member1 = new ChatMemberVO();
+		member1.setMemNo(myMemNo);
+		logger.info("member1={}",member1);
+		
+		ChatMemberVO member2 = new ChatMemberVO();
+		member2.setMemNo(memNo);
+		logger.info("member1={}",member2);
+		
+		List<ChatMemberVO> memberList = new ArrayList<>();
+		memberList.add(member1);
+		memberList.add(member2);
+		
+		int cnt =chatRoomService.addChatRoom(memberList);
+		
+		//4
+		return cnt;
+	}
+	
+	
+	/*
+	 * @ResponseBody
+	 * 
+	 * @RequestMapping("/selectChatRoom") public List<Map<String, Object>>
+	 * selectChatRoom(HttpSession session){ //1 logger.info("내 채팅방 찾기");
+	 * 
+	 * //2 //3 }
+	 */
 
 }
 
