@@ -58,13 +58,6 @@ public class RecordController {
 	}
 	
 	
-	@RequestMapping("/team")
-	public String team() {
-		//1,4
-		logger.info("팀 기록 보여주기");
-		return "/record/team";
-	}
-	
 	//---------------------------이닝 정보----------------------------------
 	
 	@GetMapping("/inningWrite")
@@ -218,8 +211,11 @@ public class RecordController {
 	@GetMapping("/hitterStat")
 	public String hitterStat_get(@RequestParam(defaultValue = "0") int playerNo, Model model) {
 		
-		Map<String, Object> map = hitterService.selectHitterStatView(playerNo);
-		model.addAttribute("map", map);
+		
+		List<Map<String, Object>> statlist = hitterService.selectHitterStatView(playerNo);
+		List<Map<String, Object>> list2 = hitterService.selectHitterView(playerNo);
+		model.addAttribute("statlist", statlist);
+		model.addAttribute("list2", list2);
 		
 		return "/record/hitterStat";
 	}
@@ -343,7 +339,17 @@ public class RecordController {
 		return "/record/pitcherRecordDetail";
 	}
 	
-
+	@GetMapping("/pitcherStat")
+	public String pitcherStat_get(@RequestParam(defaultValue = "0") int playerNo, Model model) {
+		
+		
+		List<Map<String, Object>> statlist = pitcherService.selectPitcherStatView(playerNo);
+		List<Map<String, Object>> list2 = pitcherService.selectPitcherView(playerNo);
+		model.addAttribute("statlist", statlist);
+		model.addAttribute("list2", list2);
+		
+		return "/record/pitcherStat";
+	}
 	
 	//-------------------아래부터 경기기록 눌렀을 때 나오는 부분들------------------------
 	

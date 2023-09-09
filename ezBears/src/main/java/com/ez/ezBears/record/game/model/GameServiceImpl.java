@@ -7,6 +7,7 @@ import com.ez.ezBears.common.SearchVO;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -42,6 +43,11 @@ public class GameServiceImpl implements GameService {
 	@Override
 	public List<GameVO> selectAllGameMain() {
 		return gameDao.selectAllGameMain();
+	}
+
+	@Override
+	public List<Map<String, Object>> selectMonthlyWinRate() {
+		return gameDao.selectMonthlyWinRate();
 	}
 	
 	

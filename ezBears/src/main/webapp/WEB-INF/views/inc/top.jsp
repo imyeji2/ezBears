@@ -569,7 +569,7 @@ $(function(){
                             <a href="#" class="dropdown-item">
                             	<i class="bi bi-pie-chart-fill me-2"></i>팀통계
                             </a>
-                            <a href="#" class="dropdown-item">
+                            <a href="<c:url value='/record/teamList2'/>" class="dropdown-item">
                             	<i class="bi bi-journal-text me-2"></i>선수통계
                             </a>
                         </div>

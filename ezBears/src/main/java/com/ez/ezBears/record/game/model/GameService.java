@@ -1,6 +1,7 @@
 package com.ez.ezBears.record.game.model;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -13,4 +14,6 @@ public interface GameService {
 	List<GameVO> selectAllGame(SearchVO searchVo);
 	GameVO selectByRecodeNo(int recodeNo);
 	List<GameVO> selectAllGameMain();
+	List<Map<String, Object>> selectMonthlyWinRate();
+	
 }
