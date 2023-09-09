@@ -41,6 +41,14 @@ public class MBoardController {
 		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
 		
 		List<MBoardVO> list = mBoardService.selectAllboard(searchVo);
+		
+	    for (MBoardVO mBoardVO : list) {
+	        if (mBoardVO.getDeptName() == null) {
+	            mBoardVO.setDeptName("경영지원팀");
+	            mBoardVO.setDeptTel("02-592-0001");
+	        }
+	    }
+		
 		logger.info("게시판 보여주기 결과, list.size={}",list.size());
 		
 		int totalRecord = mBoardService.totalBoardList(searchVo);

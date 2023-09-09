@@ -54,7 +54,7 @@
 			                <c:if test="${!empty list}">
 			                	<c:forEach var="MBoardVo" items="${list}"> 
 			                		<tr class="mboardList">
-			                			<td id="mboardno">-</td>
+			                			<td id="mboardno">-<input type="hidden" name="MBoardNo" value="${MBoardVo.MBoardNo}"></td>
 			                			<td>
 			                				<a href ="<c:url value = '/myBoard/teamNotice?mBoardNo=${MBoardVo.MBoardNo}'/>" id="mboardNameA">
 			                					${MBoardVo.MBoardName}
@@ -65,7 +65,11 @@
 			                					${MBoardVo.memName}
 			                				</a>
 			                			</td>
-			                			<td >${MBoardVo.deptName}</td>
+			                			<td >
+			                				<c:if test = "">
+			                					${MBoardVo.deptName}
+			                				</c:if>
+			                			</td>
 			                			<td >${MBoardVo.deptTel}</td>
 			                		</tr>
 			                	</c:forEach>
