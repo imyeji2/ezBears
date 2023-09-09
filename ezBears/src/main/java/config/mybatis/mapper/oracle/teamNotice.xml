@@ -208,6 +208,22 @@
 	  <![CDATA[
       where RNUM<#{lastRecordIndex}]]>		
 	</select>   
+	
    
-      
+    <select id="selectTeamNoticeNext" parameterType="map" resultType="map">
+        select a.*
+		from(
+			select team_notice_no,m_board_no,team_notice_title,
+		    lag(team_notice_no,1) over(order by team_notice_no) as prev,
+		    lag(team_notice_title,1) over(order by team_notice_no) as prev_title, 
+		    lag(m_board_no,1) over(order by team_notice_no) as prev_m_board_no,
+		    lead(team_notice_no,1) over(order by team_notice_no) as next,  
+		    lead(team_notice_title,1) over(order by team_notice_no) as next_title,
+		    lead(m_board_no,1) over(order by team_notice_no) as next_m_board_no
+			from teamnoticelistview
+			where team_notice_title is not null 
+			and m_board_no=#{mBoardNo} 
+			)a
+			where team_notice_no=#{teamNoticeNo}
+    </select>
 </mapper>

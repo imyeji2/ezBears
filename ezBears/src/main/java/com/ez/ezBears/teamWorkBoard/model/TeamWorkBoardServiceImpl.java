@@ -197,6 +197,12 @@ public class TeamWorkBoardServiceImpl implements TeamWorkBoardService{
 		return teamWorkBoardDao.deleteFile(teamBoardNo);
 	}
 
+	//이전글 다음글
+	@Override
+	public Map<String, Object> selectTeamWorkBoardNext(Map<String, Integer> nextMap) {
+		return teamWorkBoardDao.selectTeamWorkBoardNext(nextMap);
+	}
+
 
 	
 }
