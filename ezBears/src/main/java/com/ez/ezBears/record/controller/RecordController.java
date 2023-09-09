@@ -61,32 +61,42 @@ public class RecordController {
 	//---------------------------이닝 정보----------------------------------
 	
 	@GetMapping("/inningWrite")
-	public String inningWrite_get(Model model, int recodeNo) {
+	public String inningWrite_get(@RequestParam int recodeNo, Model model) {
 		logger.info("이닝정보등록 페이지 이동 recodeNo={}", recodeNo);
 		
-		List<Map<String, Object>> list = inningService.selectInningView(recodeNo);
-		model.addAttribute("list", list);
-		logger.info("list.size={}", list.size());
+		List<Map<String, Object>> innigList = inningService.selectInningView(recodeNo);
+		logger.info("innigList.size={}", innigList.size());
 		
+		model.addAttribute("innigList", innigList);
 		return "/record/inningWrite";
 	}
 	
 	@PostMapping("/inningWrite")
-	public String inningWrite_post(@ModelAttribute InningVO inningVo) {
+	public String inningWrite_post(@ModelAttribute InningVO inningVo, int recodeNo) {
 		
 		int cnt = inningService.insertInning(inningVo);
 		
 		logger.info("이닝정보등록");
-		return "/record/gameRecordDetail2";
+		return "redirect:/record/gameRecordDetail?recodeNo="+ recodeNo;
 	}
 	
 	
-	@RequestMapping("/inningEdit")
-	public String inningUpdate() {
+	@GetMapping("/inningEdit")
+	public String inningUpdate_get() {
 		//1,4
 		logger.info("이닝정보수정");
 		return "/record/inningEdit";
 	}
+	
+	
+	@PostMapping("/inningEdit")
+	public String inningUpdate_post() {
+		//1,4
+		logger.info("이닝정보수정");
+		return "/record/inningEdit";
+	}
+	
+	
 	
 	@RequestMapping("/inningDelete")
 	public String inningDelete() {
@@ -95,15 +105,6 @@ public class RecordController {
 		return "/record/inningDelete";
 	}
 	
-	
-//	@GetMapping("/summary")
-//	public String summary_get(@RequestParam(defaultValue = "0") int recodeDetailNo, SearchVO searchVo, Model model) {
-//		logger.info("경기 개요 파라미터 recodeDetailNo = {}", recodeDetailNo);
-//		
-//		List<InningVO> list = inningService.selectByrecodeDetailNo(searchVo, recodeDetailNo);
-//		model.addAttribute("list", list);
-//		return "/record/summary";
-//	}
 	
 	
 	//-------------------히터, 타자 정보--------------------------------------------
@@ -463,8 +464,8 @@ public class RecordController {
 		Map <String, Object> map1 = inningService.selectInningHomeView(recodeNo);
 		Map <String, Object> map2 = inningService.selectInningAwayView(recodeNo);
 		model.addAttribute("list", list);
-		model.addAttribute(map1);
-		model.addAttribute(map2);
+		model.addAttribute("map1", map1);
+		model.addAttribute("map2", map2);
 		logger.info("이닝 처리 결과, list.size={}", list.size());
 		logger.info("map1", map1);
 		logger.info("map2", map2);
