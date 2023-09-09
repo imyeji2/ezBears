@@ -21,6 +21,6 @@ public interface HitterDAO {
 	List<Map<String, Object>> selectHitterView(int playerNo);
 	List<Map<String, Object>> selectHitterRecordView(int recodeNo);
 	
-	Map<String, Object> selectHitterStatView(int playerNo);
+	List<Map<String, Object>> selectHitterStatView(int playerNo);
 	
 }

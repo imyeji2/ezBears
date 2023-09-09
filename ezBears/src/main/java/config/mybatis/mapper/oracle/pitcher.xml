@@ -81,4 +81,9 @@
 		where recode_no = #{recodeNo} and player_no = #{playerNo}
 	</select>
 	
+	 <select id="selectPitcherStatView" parameterType="int" resultType="map">
+    	select * from pitcher_stat_view
+    	where player_no=#{playerNo}
+    </select>
+	
 </mapper>

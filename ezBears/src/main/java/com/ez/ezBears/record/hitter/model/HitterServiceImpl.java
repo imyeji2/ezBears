@@ -41,7 +41,7 @@ public class HitterServiceImpl implements HitterService {
 	}
 
 	@Override
-	public Map<String, Object> selectHitterStatView(int playerNo) {
+	public List<Map<String, Object>> selectHitterStatView(int playerNo) {
 		return hitterDao.selectHitterStatView(playerNo);
 	}
 

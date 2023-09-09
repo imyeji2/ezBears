@@ -134,5 +134,12 @@ public class indexController {
 		return cnt;
 		
 	}
-
+	
+	@ResponseBody
+	@RequestMapping("ajax_winRate")
+	public List<Map<String, Object>> WinRate(Model model) {
+		List<Map<String, Object>> winlist = gameService.selectMonthlyWinRate();
+		model.addAttribute("winlist", winlist);
+		return winlist;
+	}
 }

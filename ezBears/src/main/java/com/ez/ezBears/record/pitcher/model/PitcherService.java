@@ -19,4 +19,5 @@ public interface PitcherService {
 	List<TeamVO> selectAllPitcher();
 	PitcherVO selectByRecodeNo(int recodeNo);
 	PitcherVO selectByPlayerNo(int playerNo);
+	List<Map<String, Object>> selectPitcherStatView(int playerNo);
 }

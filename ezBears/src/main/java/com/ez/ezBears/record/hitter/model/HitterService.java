@@ -13,7 +13,7 @@ public interface HitterService {
 	int deleteHitter(int recodeNo, int playerNo);
 	List<Map<String, Object>> selectHitterView(int playerNo);
 	HitterVO getHitterByPlayerNo(int playerNo);
-	Map<String, Object> selectHitterStatView(int playerNo);
+	List<Map<String, Object>> selectHitterStatView(int playerNo);
 	List<Map<String, Object>> selectHitterRecordView(int recodeNo);
 	HitterVO selectByRecodeNo(int recodeNo);
 	

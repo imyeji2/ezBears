@@ -7,6 +7,8 @@
 		<div id="detail" class="container__detailInner">
 			<div class="fixedHeaderDuel fixedHeaderDuel--isHidden">
 				<div class="fixedHeaderDuel__homeLogo ">
+				
+<c:set var="totalErrorsHome" value="${totalErrorsHome + map.ERRORS }"></c:set> 
 
 					<div class="fixedHeaderParticipant__participantServe"></div>
 				</div>
@@ -18,9 +20,10 @@
 							<div
 								class="smh__part smh__home smh__part--${map.INNING.charAt(1)}">${map.R}</div>
 							<c:set var="totalScoreHome" value="${totalScoreHome + map.R}" />
+							
 						</c:if>
 					</c:forEach>
-					<div class="smh__part smh__score smh__home smh__part--current">${totalScoreHome}</div>
+					<div class="smh__part smh__score smh__home smh__part--current">${totalScoreHome} </div>
 				</div>
 
 				<div class="smh__part smh__score smh__away smh__part--current">
