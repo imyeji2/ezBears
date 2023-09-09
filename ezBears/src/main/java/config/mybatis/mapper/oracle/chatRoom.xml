@@ -9,4 +9,22 @@
 		insert into CHAT_ROOM(CHAT_ROOM_NO)
 		values(#{chatRoomNo})	
 	</insert>
+	
+	<select id="selectMyChatRoom" parameterType="int" resultType="map">
+		select * from 
+            (
+                SELECT a.*,(sysdate-LASTDATE)*24 as dateGap
+                FROM (
+                    SELECT *
+                    FROM chatRoomInfoView
+                    MINUS
+                    SELECT *
+                    FROM chatRoomInfoView
+                    WHERE MEM_NO = #{memNo}
+                )a
+           
+            )
+             ORDER BY LASTDATE DESC
+		
+	</select>
 </mapper>

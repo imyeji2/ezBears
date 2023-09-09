@@ -1,6 +1,7 @@
 package com.ez.ezBears.chat.model;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +15,8 @@ public class ChatRoomServiceImpl implements ChatRoomService{
 	private final ChatRoomDAO chatRoomDao;
 	private final ChatMemberDAO chatMemberDao;
 	
+	
+	//채팅방 추가 서비스
 	@Transactional
 	@Override
 	public int addChatRoom(List<ChatMemberVO> chatMemberVo) {
@@ -42,6 +45,13 @@ public class ChatRoomServiceImpl implements ChatRoomService{
 			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 		}
 		return cnt;
+	}
+
+
+	//채팅방 리스트 출력
+	@Override
+	public List<Map<String, Object>> selectMyChatRoom(int memNo) {
+		return chatRoomDao.selectMyChatRoom(memNo);
 	}
 
 }

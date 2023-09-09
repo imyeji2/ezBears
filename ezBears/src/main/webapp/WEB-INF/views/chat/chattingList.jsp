@@ -21,9 +21,11 @@
    
     <script>
     $(function(){
+    	loadChatRoom();
+		
     	$('.chat-container').hide();
     	
-    	$('.list-group-item').click(function(){
+    	$(document).on('click','.list-group-item', function(event) {
     		$('.chat-container').show();
     		$('.chat-defult').hide();
     		
@@ -66,13 +68,16 @@
 			                $('#staticBackdrop').modal('hide');
 			        		$('.chat-container').show();
 			        		$('.chat-defult').hide();
+			        		loadChatRoom();
 			            } else {
 			                alert('다시 시도해주세요');
 			            }
 			        }
 			    }); // ajax
 			}
-		});		
+		});	
+		
+
 
 		
     })
@@ -114,7 +119,7 @@
 		            		memberDate+="<input type='hidden' name='memNo' value='"+item.MEM_NO+"'>";				        	
 		            		memberDate+="</div>";				        	
 		            		memberDate+="</div><!-- mem_list_content -->";				        	
-
+		            		
 			            });//.each
 			         
 			            //페이징
@@ -174,32 +179,56 @@
 		        },
 		        success: function(res){
 		            console.log(res); // 서버 응답 확인
-		            $('.memListBox').html("");
+		           // $('.list-group').html("");
 		            if(res!=null){		
-		            	var memberDate="";
-		            	//페이징 처리
-						totalCount=res.pagingInfo.totalRecord;
-						var memberNo = $('#memNo').val();
-			            $.each(res.allMemberList, function(idx, item){
+		            	var chatRoomDate="";		          
+			            $.each(res, function(idx, item){
 			            	
 							//출력 데이터
 			            	var imagePath = "default_user.png";
+							
 			            	if(item.MEM_IMAGE!==null){
 			            		imagePath =item.MEM_IMAGE;
 			            	}
-			            	var allMemNo = item.MEMNO;
-			            	memberDate+="<div class='mem_list_content'>";				        	
-			            	memberDate+="<div class='mem_img_box'>";	
-		            		memberDate+="<img src='<c:url value='/img/mem_images/"+imagePath+"'/>' alt='사원프로필'>";				        	
-		            		memberDate+="</div>";				        	
-		            		memberDate+="<div class='mem_info_box'>";				        	
-		            		memberDate+="<div class='mem_info_box2'><span id='memName' class='memName '>"+item.MEM_NAME+"</span>/<span style='vertical-align: middle;'>"+item.POSITION_NAME+"</span></div>";				        	
-		            		memberDate+="<div>💼 "+item.DEPT_NAME+"</div>";				        	
-		            		memberDate+="<input type='hidden' name='memNo' value='"+item.MEM_NO+"'>";				        	
-		            		memberDate+="</div>";				        	
-		            		memberDate+="</div><!-- mem_list_content -->";				        	
+			            	
+			            	//등록된 메시지가 없을 때
+			            	var message = "등록된 메시지가 없습니다.";
+			            	if(item.CHAT_MESSAGE){
+			            		message=item.CHAT_MESSAGE;
+			            	}
+			            	
+			            	// 날짜
+			            	var dateStr = item.REGDATE;
+			            	var regdate = new Date(dateStr).toISOString().split('T')[0];
+			          		
+			          		if(item.DATEGAP<24){
+			          			regdate="오늘"
+			          		}
+			            	
+			            	chatRoomDate+="<div class='list-group-item list-group-item-action list-group-item-light p-3' href='#!'>";
+			            	chatRoomDate+="<div class='chatListBox'>";
+			            	chatRoomDate+="<img src='<c:url value='/img/mem_images/"+imagePath+"'/>' alt='사원 이미지'>";
+			            	chatRoomDate+="<div class='chatListInfo'>";
+			            	chatRoomDate+="<p style='font-weight: 500'>&nbsp;"+item.MEM_NAME+"</p>";
+			            	chatRoomDate+="<p>💼"+item.DEPT_NAME+"</p>";
+			            	chatRoomDate+="</div>";
+			            	chatRoomDate+="<div class='chatListContent'>";
+			            	chatRoomDate+="<p class='text-truncate'>"+message+"<p>";
+			            	chatRoomDate+="<p style='text-align: right;margin-top:5px'>"+regdate+"</p>";
+			            	chatRoomDate+="</div>";
+			            	chatRoomDate+="</div>";
+			            	chatRoomDate+="</div>";
+			            	chatRoomDate+="<input type='hidden' name='memNo' value='"+item.MEM_NO+"'>";				        	
 
-			            });//.each    
+		                   
+	                   		
+			            });//.each   
+			        	 $('.list-group').append(chatRoomDate);
+		            }
+		        }
+		 });
+	}
+		            
    </script>
     
 	<style>
@@ -247,12 +276,7 @@
                 	채팅 <i class="bi bi-plus-circle-fill" id="addBtn" style="color:#7000D8;"></i>
                 </div>
                 <div class="list-group list-group-flush">
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Dashboard</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Shortcuts</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Overview</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Events</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Profile</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Status</a>
+                    
                 </div>
             </div>
             <!-- Page content wrapper-->

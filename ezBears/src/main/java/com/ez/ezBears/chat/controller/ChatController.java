@@ -123,14 +123,22 @@ public class ChatController {
 	}
 	
 	
-	/*
-	 * @ResponseBody
-	 * 
-	 * @RequestMapping("/selectChatRoom") public List<Map<String, Object>>
-	 * selectChatRoom(HttpSession session){ //1 logger.info("내 채팅방 찾기");
-	 * 
-	 * //2 //3 }
-	 */
+	@ResponseBody
+	@RequestMapping("/ajax_selectChatRoom")
+	public List<Map<String, Object>> selectChatRoom(HttpSession session){
+		//1
+		logger.info("내 채팅방 찾기");
+		String userid = (String)session.getAttribute("userid");
+		int memNo = memberService.selectMemberNo(userid);
+		
+		//2
+		List<Map<String, Object>> chatRoomList = chatRoomService.selectMyChatRoom(memNo);
+		logger.info("채팅방 리스트 찾기 결과 chatRoomList={}",chatRoomList.size());
+		
+		//3
+		
+		return chatRoomList;
+	}
 
 }
 
