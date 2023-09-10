@@ -223,7 +223,7 @@
                 console.log();
 
                 var newsDate="<tr>";
-                newsDate+="<th scope='col'>"+date + ' ' + time.substring(0, 5)+" 기준</th>"; // 시간 문자열에서 앞 5글자만 가져옴 (시:분)
+                newsDate+="<th scope='col' style='text-align:left'>"+date + ' ' + time.substring(0, 5)+" 기준</th>"; // 시간 문자열에서 앞 5글자만 가져옴 (시:분)
                 newsDate+="</tr>";
 
 
@@ -378,8 +378,8 @@
 								      		${noticeMap['NOTICE_TITLE']}
 								      	</a>
 								      </td>
-								      <td>${noticeMap['MEM_NAME']}</td>
-								      <td>
+								      <td style="text-align: center;">${noticeMap['MEM_NAME']}</td>
+								      <td style="text-align: center;">
 								      	<c:if test="${noticeMap['DATEGAP']<1}">방금전</c:if>	
 							      		<c:if test="${noticeMap['DATEGAP']>=1}">${regdate}</c:if>	
 								      </td>
@@ -513,8 +513,8 @@
 								      		${noticeMap['NOTICE_TITLE']}
 								      	</a>
 								      </td>
-								      <td>${noticeMap['MEM_NAME']}</td>
-								      <td>
+								      <td style="text-align:center;">${noticeMap['MEM_NAME']}</td>
+								      <td style="text-align:center;">
 								     	 <c:if test="${noticeMap['DATEGAP']<1}">방금전</c:if>	
 							      		 <c:if test="${noticeMap['DATEGAP']>=1}">${regdate}</c:if>	
 								      </td>

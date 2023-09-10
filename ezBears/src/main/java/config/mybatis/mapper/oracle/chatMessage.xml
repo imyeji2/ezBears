@@ -9,4 +9,19 @@
 		insert into CHAT_MESSAGE(CHAT_MESSAGE_NO,CHAT_MEMBER_NO, CHAT_MESSAGE)
 		values(#{chatMessageNo}, #{chatMemberNo},#{chatMessage})	
 	</insert>	
+	
+	<select id="selectChatRoomMessage" parameterType="int" resultType="map">
+      select *
+      from
+      (
+	      select rownum as RNUM, A.* from
+	      (	
+			SELECT * FROM chatMessageListView
+			WHERE CHAT_ROOM_NO=#{chatRoomNo}
+			ORDER BY REGDATE DESC
+	      )A
+      )
+      <![CDATA[
+      where RNUM<=20]]>		
+	</select>
 </mapper>

@@ -9,7 +9,7 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <!-- Favicon-->
-		<script type="text/javascript" src="<c:url value='/js/chattingScripts.js'/>"></script>
+
 		<script type="text/javascript" src="<c:url value='/js/jquery-3.7.0.min.js'/>"></script>
 		<script type="text/javascript" src="<c:url value='https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.min.js'/>"></script>
 		<script type="text/javascript" src="<c:url value='https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js'/>"></script>
@@ -19,9 +19,11 @@
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 		<link href="${pageContext.request.contextPath}/css/yeji.css" rel="stylesheet">
 		<link href="${pageContext.request.contextPath}/css/custom.css" rel="stylesheet">
+
     </head>
    
     <script>
+ 
     $(function(){	
     	loadChatRoom();
 		
@@ -34,6 +36,7 @@
     		var chatRoomNo = $(this).find('input[name=chatRoomNo]').val();
     		alert(chatRoomNo);
     		$('#sendChatRoomNo').val(chatRoomNo);
+    		loadChatRoomMessage(chatRoomNo)
     		
     		
     	});
@@ -257,7 +260,38 @@
 		        }
 		 });
 	}
-		            
+		 
+	
+	function loadChatRoomMessage(chatRoomNo){
+		var message = "";
+		var myMemNo = $('#sendMemNo').val();
+		alert(myMemNo);
+	    $.ajax({
+	        type: 'post',
+	        url: "<c:url value='/chat/ajax_selectChatRoomMessage'/>",
+	        data: {chatRoomNo:chatRoomNo},
+	        dataType: 'json',
+	        error: function(xhr, status, error) {
+	            alert(error);
+	        },
+	        success: function(res) {
+	            console.log(res); // 서버 응답 확인 
+	            if (res!==null) {
+	            	 $.each(res, function(idx, item){
+	            		 if(item.MEM_NO===myMemNo){
+	            			 message+="<div class='messageBox'>";
+	            			 message+="<div class='myMessage'>"+item.CHAT_MESSAGE+"</div>";
+	            			 message+="</div>";
+	            		 }else{
+					            
+				           		
+				             			 
+	            		 }   		 
+	            	 });
+	            $('.chat-messages').append(message)
+	        }
+	    }); // ajax		
+	}
    </script>
     
 	<style>
@@ -314,7 +348,6 @@
                 <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
                     <div class="container-fluid">
                         <button class="btn btn-primary" id="sidebarToggle">리스트보기</button>
-                      
                     </div>
                 </nav>
                 <!-- Page content-->
@@ -325,13 +358,7 @@
 				    <div class="chat-container">
 				        <div class="chat-messages">
 				            <!-- 채팅 메시지가 표시되는 부분 -->
-				            <div class="messageBox">
-				           		<div class="myMessage">dhkekekek</div>
-				            </div>
-				            
-				            <div class="messageBox">
-				            	<div class="memberMessage">dhkekekek</div>
-				            </div>
+	
 				        </div>
 				        
 				        <form name="sendFrm" method="post">
@@ -393,6 +420,6 @@
 
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-
+		<script type="text/javascript" src="<c:url value='/js/chattingScripts.js'/>"></script>
     </body>
 </html>
