@@ -42,6 +42,7 @@
 					
 								
 			    <td class="td-2" rowspan="2">담당</td>
+			   
 			   <c:choose>
 				    <c:when test="${empty list}">
 				        <td class="td-3" rowspan="2">팀장이 없습니다.</td>
@@ -54,7 +55,7 @@
 				</c:choose>
 
 				
-			    <td class="td-2"rowspan="2" > 이미지 </td><!-- 결재 승인 이미지 -->
+			    <td class="td-2"rowspan="2" >  </td><!-- 결재 승인 이미지 -->
 			    
 			        <td class="td-3 mem"rowspan="2">${vo2.memName}</td><!-- 결재 담당자 -->
 			    <td class="td-2"rowspan="2" >

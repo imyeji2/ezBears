@@ -222,4 +222,9 @@ public class MemberServiceImpl implements MemberService{
 	public MemberVO selectDeptPositionInfo() {
 		return memberDao.selectDeptPositionInfo();
 	}
+
+	@Override
+	public List<MemberVO> selectAllMemberInfo() {
+		return memberDao.selectAllMemberInfo();
+	}
 }

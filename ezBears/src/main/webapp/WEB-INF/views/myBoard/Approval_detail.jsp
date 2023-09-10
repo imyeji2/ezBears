@@ -82,12 +82,7 @@
 					</td>
 				</tr>
 				<tr></tr>
-				<%-- <tr class="tr-m">
-					<td class="td-1 rdate" colspan="3">기안일</td>
-					<td class="td-2" colspan="5">
-					<input name="regdate" id="regdate" class="regdate" value="${list['REGDATE'] }" readonly>
-					</td>
-				</tr> --%>
+
 
 				<tr class="tr-s">
 					<td class="td-1" rowspan="2" colspan="2">기안자</td>

@@ -79,4 +79,6 @@ public interface MemberService {
     List<Map<String, Object>> selectAllMemberView();
 
     MemberVO selectDeptPositionInfo();
+    
+    List<MemberVO> selectAllMemberInfo();
 }

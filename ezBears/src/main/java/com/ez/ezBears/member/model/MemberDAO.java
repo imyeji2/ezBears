@@ -81,4 +81,6 @@ public interface MemberDAO {
     
     
     MemberVO selectDeptPositionInfo();
+    
+    List<MemberVO> selectAllMemberInfo();
 }
