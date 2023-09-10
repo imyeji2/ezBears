@@ -3,6 +3,37 @@
 <%@include file="../inc/top.jsp"%>
 <link href="${pageContext.request.contextPath}/css/choong/chi.css" rel="stylesheet">
 
+<script type="text/javascript">
+	$(function () {
+		
+		$('.btnDel').click(function () {
+			if(confirm('선택 목록을 삭제하시겠습니까?')){
+				var delNo = $('.delNo:checked').val();
+				if(!delNo){
+					alert('삭제할 쪽지를 선택해주세요.');
+					return false;
+				}
+				/*
+				이거 주석 풀면 메세지 한개 지우는 기능은 됨
+				근데 다중삭제 도전
+				else{
+					
+		            
+	                var url = "<c:url value='/message/receiveMessageDel?delNo=" + delNo + "'/>";
+	                $('.btnDel').attr('action', url); 
+					$('.btnDel').submit();
+				}
+				*/
+			}
+			else{
+				return false;
+			};
+			
+		})
+		
+	})
+</script>
+
 <div class="container-fluid pt-4 px-4">
     <div class="row g-4">
 		<div class="col-sm-12 col-xl-12">
@@ -20,8 +51,10 @@
 	         <h3 style="text-align: center;">보낸 쪽지함</h3><br>
 	         
 	         <table class="table table-hover">
+	         	<form action="<c:url value='/message/sendMessageDel'/>" >
 		            <thead>
 		                <tr style="border-top: 1px solid white;">
+		                	<th scope="col"><input type="submit" value="삭제" class="btnDel"></th>
 		                    <th scope="col">받는사람</th>
 		                    <th scope="col">내용</th>
 		                    <th scope="col">보낸날짜</th>
@@ -38,12 +71,16 @@
 				         	<c:if test="${!empty sendBoxList }">
 				            	<c:forEach var="map" items="${sendBoxList }">
 					                <tr>
+					                	<td style="text-align: center;">
+					                		<%-- <input type="checkbox" class="delNo" name="ReceiveMessages[${idx }].messageSendNo" value="${map['MESSAGESENDNO'] }"> --%>
+				                			<input type="checkbox" class="delNo" name="messageSendNos" value="${map['MESSAGESENDNO'] }">
+				                		</td>
 					                	<td scope="row">
 						                    <a href="<c:url value='/message/messageWrite?receiveNo=${map.RECEIVEUSERNO }'/>" style="color: #fff">
 						                    	${map['RECEIVERDEPT'] }  ${map['RECEIVERPOSITION'] }  ${map['RECEIVER'] }
 						                    </a>
 					                    </td>
-					                    <td style="width: 75%">${map['CONTENT'] }</td>
+					                    <td style="width: 70%">${map['CONTENT'] }</td>
 					                    <th><fmt:formatDate value="${map['SENDTIME'] }" pattern="yyyy-MM-dd HH:mm:ss"/></th>
 					                </tr>
 				            	</c:forEach>
