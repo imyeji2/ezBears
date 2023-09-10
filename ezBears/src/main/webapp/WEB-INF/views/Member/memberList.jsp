@@ -9,6 +9,12 @@
 	}
 	
 	$(function(){
+		
+		var url =window.location.pathname;
+		var type =url.lastIndexOf("/");
+		var id= url.substr(type+1);
+		$('#'+id).addClass('active');
+		
 	    $('.btnDelete').click(function(){
 			if (confirm("삭제하시겠습니까?")) {
 		        var memNo = $('.MemChk:checked').closest('tr').find('#hiddenMemNo').val();
@@ -36,10 +42,17 @@
 	             <li class="breadcrumb-item active" aria-current="page">
 	                <a href="<c:url value='/Member/list'/>">사원관리</a>
 	             </li>
-	             <li class="breadcrumb-item active" aria-current="page">사원 리스트</li>
 	           </ol>
 	         </nav>
-	      
+	        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+			    <li class="nav-item" role="presentation">
+			        <a class="nav-link tap_txt" id="list" href="<c:url value='/Member/list'/>">사원 리스트</a>
+			    </li>
+			    <li class="nav-item" role="presentation">
+			        <a class="nav-link tap_txt" id="SMSSend" href="<c:url value='/Member/sendMSG'/>">SMS전송</a>
+			    </li>                                 
+			</ul>
+			
 			<form class="btn-form" name="frm1" method="post" action="<c:url value ='/Member/list'/>">
 				<div class="btns">
 					<input type="text" class ="txtboxSearch" id="txtboxSearch" name="searchKeyword" value="${param.searchKeyword}" placeholder="검색어를 입력해주세요" style="text-align: center;">

@@ -267,7 +267,6 @@ public class RecordController {
 		logger.info("투수 전체 pitcherList.size={}",pitcherRecordList.size());
 		model.addAttribute("recodeNo", recodeNo);
 		
-		
 		return "/record/pitcherRecordEdit";
 	}
 	
@@ -358,7 +357,21 @@ public class RecordController {
     @RequestMapping("/gameList")
     public String gameList(@ModelAttribute SearchVO searchVo, Model model) {
         logger.info("경기정보, 파라미터 searchVo={}", searchVo);
-            
+        
+		PaginationInfo pagination = new PaginationInfo();
+		pagination.setBlockSize(ConstUtil.BLOCK_SIZE);
+		pagination.setCurrentPage(searchVo.getCurrentPage());
+		pagination.setRecordCountPerPage(ConstUtil.RECORD_COUNT);
+		
+		//searchVo 에 비어있는 변수 선언하기
+		searchVo.setFirstRecordIndex(pagination.getFirstRecordIndex());
+		searchVo.setRecordCountPerPage(pagination.getRecordCountPerPage());
+		logger.info("설정 후 searchVo={}", searchVo);
+		
+		int totalRecord = teamService.getTotalRecord(searchVo);
+		pagination.setTotalRecord(totalRecord);
+		logger.info("pagination 설정 완");
+        
         List<GameVO> list = gameService.selectAllGame(searchVo);
         logger.info("경기 전체 조회결과, list.size={}", list.size());
         
@@ -549,6 +562,12 @@ public class RecordController {
 		return "/record/teamList2";
 	}
 	
+	@RequestMapping("/teamStat")
+	public String teamStat() {
+		return "/record/teamStat";
+	} 
+		
+		
 	
-
+	
 }

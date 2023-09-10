@@ -7,10 +7,11 @@
 
 	<sql id="searchWhere">
 		<where>
+		 m_board_no = #{MBoardNo} and  del_status &lt;&gt; 'Y'
+		<if test="searchKeyword != null and searchKeyword != ''">
+            AND mem_name LIKE '%' || #{searchKeyword} || '%'
+        </if>
 			
-			<if test="searchKeyword!=null and searchKeyword!=''">
-				${searchCondition} like '%' || #{searchKeyword} || '%'
-			</if>
 		</where>
 	</sql>
 	
@@ -23,9 +24,7 @@
 	</insert>
 	
 	<insert id="insertSignFile" parameterType="signFileVo">
-		<!-- <selectKey keyColumn="fileNo" order="BEFORE" resultType="int">
-			select sign_file_seq.nextval from dual
-		</selectKey> -->
+		
 		insert into sign_file(file_no,doc_no,fileName,origin_filename,fsize)
 		values(sign_file_seq.nextval,#{docNo},#{fileName},#{originFileName},#{fsize})
 	</insert>
@@ -39,7 +38,7 @@
 	      (		
 			select * from signListView
 			<include refid="searchWhere"></include>
-			where m_board_no = #{MBoardNo} and  del_status &lt;&gt; 'Y'
+			
 			order by doc_no desc
 	      )A
       )
@@ -51,7 +50,7 @@
 	
 	<select id="selectAppCount" resultType="int" parameterType="searchVo">
 		select count(*) from signListView
-		where m_board_no=#{MBoardNo}  and  del_status &lt;&gt; 'Y'		
+			
 		<include refid="searchWhere"></include>
 	</select>
 	
@@ -185,40 +184,7 @@
 		where doc_no = #{docNo}		
 	</update>
 	
-	<sql id="searchWhere4">
- 		<where>
- 			<if test="searchName!=null and searchName!=''">
- 				and mem_name = #{searchName}
- 			</if>
- 		</where>
- 	</sql>
 
-	
-	<select id="selectAppCount2" parameterType="map" resultType="int">
-		select count(*) from SIGNLISTVIEW 
-		where m_board_no=#{MBoardNo}  and  del_status &lt;&gt; 'Y'	
-		<include refid="searchWhere4"></include>
-		order by doc_no desc
-	</select>
-	
-	
-	
-	<select id="selectApprovalList2" resultType="map" parameterType="searchVo">
-		 select *
-      from
-      (
-	      select rownum as RNUM, A.* from
-	      (		
-			select * from signListView
-			<include refid="searchWhere4"></include>
-			where m_board_no = #{MBoardNo} and  del_status &lt;&gt; 'Y'
-			order by doc_no desc
-	      )A
-      )
-      <![CDATA[
-      where RNUM> #{firstRecordIndex} 
-      and RNUM<=#{firstRecordIndex} + #{recordCountPerPage}]]>		
-	</select>
-	
+	 
 	
 </mapper>

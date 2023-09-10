@@ -42,16 +42,19 @@
 					<td class="td-2" rowspan="2"colspan="2">담당</td><!-- 결재 담당자 -->
 			    	  <c:choose>
 				    <c:when test="${empty list2}">
-				        <td class="td-3" rowspan="2">팀장이 없습니다.</td>
+				        <td class="td-3 mem" rowspan="2">팀장이 없습니다.</td>
 				    </c:when>
 				    <c:otherwise>
 				        <c:forEach var="map" items="${list2}">
-				            <td class="td-3" rowspan="2">${map['MEM_NAME']}</td>
+				            <td class="td-3 mem" rowspan="2">
+				            <div> <!-- td 사이에 div 주고 영역 늘리기  -->
+				           	 ${map['MEM_NAME']}
+				            </div>
+				            </td>
 				        </c:forEach>
 				    </c:otherwise>
 				</c:choose>
-			       <%--  <td class="td-3" rowspan="2"colspan="1">${myBoardInfoVo.memName }</td> --%>
-			   		 <!-- 중간 결재자  -->
+			      <!-- 중간 결재자  -->
 			   		 <td class="td-2"rowspan="2" colspan="2">
 			   		 <c:if test="${list['STATUS'] eq '대기' && userMap['POSITION_NO'] eq 6}">
 						<input type="button" class=" btn-sm btn-primary appoveBtn " value="승인" onclick="approveDocument()">
@@ -62,7 +65,7 @@
 			   		 </c:if>
 			   		 </td>
 			        <!-- 최종 결재자 -->
-			        <td class="td-3"rowspan="2"colspan="1">${vo2.memName }</td>   
+			        <td class="td-3 mem"rowspan="2"colspan="1">${vo2.memName }</td>   
 				    
 				    <td class="td-2"rowspan="2" >
 				     <c:if test="${list['STATUS'] eq '완료'}">
@@ -79,12 +82,7 @@
 					</td>
 				</tr>
 				<tr></tr>
-				<%-- <tr class="tr-m">
-					<td class="td-1 rdate" colspan="3">기안일</td>
-					<td class="td-2" colspan="5">
-					<input name="regdate" id="regdate" class="regdate" value="${list['REGDATE'] }" readonly>
-					</td>
-				</tr> --%>
+
 
 				<tr class="tr-s">
 					<td class="td-1" rowspan="2" colspan="2">기안자</td>

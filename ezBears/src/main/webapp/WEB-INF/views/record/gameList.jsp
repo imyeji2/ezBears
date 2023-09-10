@@ -96,6 +96,7 @@
 			</div>
 			<br>
 			<div class="divSearch">
+			
 				<form name="frmSearch" method="POST"
 					action="<c:url value='/record/gameList'/>">
 					<select name="searchCondition">
