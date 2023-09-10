@@ -93,10 +93,12 @@
 				<div class="duelParticipant__startTime">
 					<div class="playDate">${gameVo.playDate }</div>
 				</div>
+				
+				
 				<div class="duelParticipant__home duelParticipant--winner">
 					<a
 						class="participant__participantLink participant__participantLink--team"
-						href="/team/doosan-bears/pGmPNh11/" title="프로필 보기"><img
+						 title="프로필 보기"><img
 						class="participant__image" loading="lazy" alt="두산"
 						src="https://static.flashscore.com/res/image/data/bJkMHaZA-UV1Mu7H3.png"></a>
 					<div class="participant__participantServe"></div>
@@ -106,10 +108,20 @@
 							이젠</div>
 					</div>
 				</div>
+
 				<div class="duelParticipant__score">
 					<div class="detailScore__matchInfo">
 						<div class="detailScore__wrapper">
-							<span>${totalScoreHome}</span><span class="detailScore__divider">-</span><span>${totalScoreAway}</span>
+							<span> <c:if test="${gameVo.ground != '잠실'}">
+								${totalScoreHome}
+							</c:if> <c:if test="${gameVo.ground == '잠실'}">
+								${totalScoreAway}
+							</c:if> </span>
+						<span class="detailScore__divider">-</span><span><c:if test="${gameVo.ground != '잠실'}">
+								${totalScoreAway}
+							</c:if> <c:if test="${gameVo.ground == '잠실'}">
+								${totalScoreHome}
+							</c:if></span>
 						</div>
 
 					</div>
@@ -147,9 +159,7 @@
 						<div class="smh__header smh__header__part--7" title="7회">7</div>
 						<div class="smh__header smh__header__part--8" title="8회">8</div>
 						<div class="smh__header smh__header__part--9" title="9회">9</div>
-						<div class="smh__header smh__header__part--10" title="연장회">EI</div>
-						<div class="smh__header smh__header__part--11" title="안타">H</div>
-						<div class="smh__header smh__header__part--12" title="실책">E</div>
+
 						<div class="smh__border"></div>
 						<div class="smh__service smh__home"></div>
 						<div class="smh__participantName smh__home">

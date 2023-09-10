@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class InningVO {
 	private int inningNo;
-	private int recodeDetailNo;
+	private int recodeNo;
 	private String inning;
 	private int H;
 	private int errors;
