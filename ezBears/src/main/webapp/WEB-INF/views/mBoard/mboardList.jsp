@@ -65,11 +65,7 @@
 			                					${MBoardVo.memName}
 			                				</a>
 			                			</td>
-			                			<td >
-			                				<c:if test = "">
-			                					${MBoardVo.deptName}
-			                				</c:if>
-			                			</td>
+			                			<td >${MBoardVo.deptName}</td>
 			                			<td >${MBoardVo.deptTel}</td>
 			                		</tr>
 			                	</c:forEach>

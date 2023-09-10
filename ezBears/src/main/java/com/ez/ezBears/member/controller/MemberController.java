@@ -26,6 +26,7 @@ import com.ez.ezBears.member.model.MemberService;
 import com.ez.ezBears.member.model.MemberVO;
 import com.ez.ezBears.myBoard.model.MyBoardListService;
 import com.ez.ezBears.myBoard.model.MyBoardListVO;
+import com.ez.ezBears.myBoard.model.MyBoardService;
 import com.ez.ezBears.position.model.PositionService;
 import com.ez.ezBears.position.model.PositionVO;
 import com.ez.ezBears.staff.model.StaffService;
@@ -43,7 +44,7 @@ public class MemberController {
 	private final DeptService deptService;
 	private final PositionService positionService;
 	private final MemberService memberService;
-	private final MyBoardListService myBoardService;
+	private final MyBoardListService myBoardListService;
 	private final StaffService staffService;
 	
 	//파일 업로드
@@ -111,7 +112,7 @@ public class MemberController {
 			
 			//부서 이름으로 동적 게시판 번호 찾기
 			logger.info("부서 이름 deptName={}", deptName);
-			int MdeptNo = myBoardService.findBoardNoByBoardName(deptName);
+			int MdeptNo = myBoardListService.findBoardNoByBoardName(deptName);
 			
 			//내 동적 게시판에 부서 번호로 게시판 등록
 			logger.info("동적게시판 부서번호 MdeptNo={}", MdeptNo);
@@ -123,7 +124,7 @@ public class MemberController {
 			
 			logger.info("동적게시판 myBoardListVo={}", myBoardListVo);
 			
-			int cnt = myBoardService.insertMyBoard(myBoardListVo);
+			int cnt = myBoardListService.insertMyBoard(myBoardListVo);
 			
 			if(cnt > 0) {
 				msg = "사원 등록이 완료되었습니다.";
@@ -371,6 +372,17 @@ public class MemberController {
 		model.addAttribute("memListVo", memListVo);
 		
 		return memListVo;
+	}
+	
+	@RequestMapping("/sendMSG")
+	public String sendSms(Model model) {
+		logger.info("회원 등록 페이지");
+		
+		List<DeptVO> deptList = deptService.selectDeptList();
+		
+		model.addAttribute("deptList", deptList);
+		
+		return "/sms/sendSMS";
 	}
 
 }
