@@ -10,4 +10,9 @@
 		values(#{chatMemberNo}, #{chatRoomNo},#{memNo})	
 	</insert>
 	
+	<select id="selectChatMemberNo" parameterType="chatMemberVo">
+		select CHAT_MEMBER_NO from CHAT_MEMBER
+		WHERE CHAT_ROOM_NO = #{chatRoomNo} and MEM_NO = #{memNo}
+	</select>
+	
 </mapper>
