@@ -201,6 +201,9 @@ public class LoginController {
 			}else if(map.get("STAFF_STATUS").equals("N")){
 				msg="계약이 만료된 스태프입니다.";
 				url="/";
+			}else if(map.get("STAFF_STATUS")==null) {
+				msg="스태프 계정이 아닙니다.";
+				url="/";
 			}
 		}//if(dept.equals("staff")) if
 
