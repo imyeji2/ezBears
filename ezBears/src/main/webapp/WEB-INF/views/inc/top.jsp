@@ -12,8 +12,6 @@
     <meta content="" name="keywords">
     <meta content="" name="description">
 
-	<link href="${pageContext.request.contextPath}/css/chat/chatRoom-style.css" rel="stylesheet">
-
     <!-- Favicon -->
     <link href="${pageContext.request.contextPath}/img/favicon.ico" rel="icon">
 

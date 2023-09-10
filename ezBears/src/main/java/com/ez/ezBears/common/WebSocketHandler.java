@@ -1,12 +1,9 @@
 package com.ez.ezBears.common;
 
 import org.springframework.stereotype.Component;
+import org.springframework.web.socket.TextMessage;
+import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 /*
 * WebSocket Handler 작성
@@ -15,10 +12,14 @@ import lombok.extern.slf4j.Slf4j;
 * TextWebSocketHandler를 상속받아 핸들러 작성
 * 클라이언트로 받은 메세지를 log로 출력하고 클라이언트로 환영 메세지를 보내줌
 * */
-@Slf4j
 @Component
-@RequiredArgsConstructor
 public class WebSocketHandler extends TextWebSocketHandler {
-    private final ObjectMapper mapper;
-
+    @Override
+    public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
+        // 클라이언트로부터 메시지 수신 처리
+        String payload = message.getPayload();
+        // 수신한 메시지를 원하는 방식으로 처리
+        // 예: 다른 연결된 클라이언트에게 메시지 브로드캐스팅
+        // session.sendMessage(new TextMessage("서버에서 보낸 메시지: " + payload));
+    }
 }

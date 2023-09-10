@@ -11,6 +11,8 @@
         <!-- Favicon-->
 		<script type="text/javascript" src="<c:url value='/js/chattingScripts.js'/>"></script>
 		<script type="text/javascript" src="<c:url value='/js/jquery-3.7.0.min.js'/>"></script>
+		<script type="text/javascript" src="<c:url value='https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.min.js'/>"></script>
+		<script type="text/javascript" src="<c:url value='https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js'/>"></script>
 		
 		<link href="${pageContext.request.contextPath}/css/chattingStyle.css" rel="stylesheet">
 		<link href="${pageContext.request.contextPath}/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
@@ -20,7 +22,7 @@
     </head>
    
     <script>
-    $(function(){
+    $(function(){	
     	loadChatRoom();
 		
     	$('.chat-container').hide();
@@ -28,6 +30,11 @@
     	$(document).on('click','.list-group-item', function(event) {
     		$('.chat-container').show();
     		$('.chat-defult').hide();
+    		
+    		var chatRoomNo = $(this).find('input[name=chatRoomNo]').val();
+    		alert(chatRoomNo);
+    		$('#sendChatRoomNo').val(chatRoomNo);
+    		
     		
     	});
 
@@ -77,10 +84,32 @@
 			}
 		});	
 		
+		
+		//메시지 전송
+		$('#sendBtn').click(function(){
+			var sendForm = $('form[name=sendFrm]').serialize();
+		    $.ajax({
+		        type: 'post',
+		        url: "<c:url value='/chat/ajax_sendChat'/>",
+		        data: sendForm,
+		        dataType: 'json',
+		        error: function(xhr, status, error) {
+		            alert(error);
+		        },
+		        success: function(res) {
+		            console.log(res); // 서버 응답 확인 
+		            if (res > 0) {
+		               $('#chatMessage').val('');
+		            } else {
+		                alert('다시 시도해주세요');
+		            }
+		        }
+		    }); // ajax			
+		});
 
 
 		
-    })
+    });
     
 	function chatAddMember(curPage){
 		$('input[name="currentPage"]').val(curPage);
@@ -179,7 +208,7 @@
 		        },
 		        success: function(res){
 		            console.log(res); // 서버 응답 확인
-		           // $('.list-group').html("");
+		            $('.list-group').html("");
 		            if(res!=null){		
 		            	var chatRoomDate="";		          
 			            $.each(res, function(idx, item){
@@ -217,11 +246,11 @@
 			            	chatRoomDate+="<p style='text-align: right;margin-top:5px'>"+regdate+"</p>";
 			            	chatRoomDate+="</div>";
 			            	chatRoomDate+="</div>";
-			            	chatRoomDate+="</div>";
 			            	chatRoomDate+="<input type='hidden' name='memNo' value='"+item.MEM_NO+"'>";				        	
+			            	chatRoomDate+="<input type='hidden' name='chatRoomNo' value='"+item.CHAT_ROOM_NO+"'>";				            	
+			            	chatRoomDate+="</div>";
+			        	
 
-		                   
-	                   		
 			            });//.each   
 			        	 $('.list-group').append(chatRoomDate);
 		            }
@@ -296,12 +325,24 @@
 				    <div class="chat-container">
 				        <div class="chat-messages">
 				            <!-- 채팅 메시지가 표시되는 부분 -->
+				            <div class="messageBox">
+				           		<div class="myMessage">dhkekekek</div>
+				            </div>
+				            
+				            <div class="messageBox">
+				            	<div class="memberMessage">dhkekekek</div>
+				            </div>
 				        </div>
 				        
-						<div class="input-group mb-3 chat-input">
-						  <textarea class="form-control fixed-textarea" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2"></textarea>
-						  <button class="btn btn-outline-secondary" type="button" id="button-addon2">전송</button>
-						</div>				            
+				        <form name="sendFrm" method="post">
+							<div class="input-group mb-3 chat-input">
+							  <textarea class="form-control fixed-textarea" name="chatMessage" id="chatMessage"
+							   placeholder="내용을 입력해주세요" aria-label="내용을 입력해주세요" aria-describedby="sendBtn"></textarea>
+							  <button class="btn btn-outline-secondary" type="button" id="sendBtn">전송</button>
+							  <input type="hidden" name="memNo" value="${memNo}" id="sendMemNo">
+							  <input type="hidden" name="chatRoomNo" id="sendChatRoomNo">
+							</div>	
+						</form>			            
 				        
 				    </div>
                </div>

@@ -273,9 +273,10 @@
 			});
 		
 		//담당자 변경 및 삭제	
-		$(document).on('click','#addMem_img',function(event){
+		$(document).on('click','.addMem_img',function(event){
 			if(confirm('담당자를 변경하시겠습니까?')){
 				var todoDetailNo = $(this).closest('.todoList').find('input[name="todoDetailNo"]').val();
+	
 				$('#staticBackdrop').data('todoDetailNo', todoDetailNo);
 				$('#staticBackdrop').modal('show');
 				
@@ -307,19 +308,25 @@
 		
 		//버튼 클릭하면 두투 디테일 값 넘겨주기	
 		$(document).on('show.bs.modal', '#staticBackdrop', function(event) {
-			var date = $(event.relatedTarget).closest('.todoList').find("input[name='todoDetailNo']").val();
+			$('#sendTodoDetailNo').val('');
+			var date = $(event.relatedTarget).closest('.todoList').find("input[name=todoDetailNo]").val();
+
 		    if($(this).data('todoDetailNo')){
 		    	date = $(this).data('todoDetailNo');
 		    }
 		    $('.memListBox input[name=todoDetailNo]').val(date);
 		});
-			
-				
+		
+		
+		$('#staticBackdrop').on('hidden.bs.modal', function() {
+		    location.reload();
+		});			
 		
 		// 업무 담당자 지정
 		$('.mem_list_content').click(function() {
 		    var todoDetailNo = $('.memListBox input[name=todoDetailNo]').val();
 		    var memNo = $(this).find('input[name=memNo]').val();
+		   
 		    
 		    $.ajax({
 		        type: 'post',
@@ -609,9 +616,9 @@
 		            		toDoList+="<span>"+item.TODO_CONTENT+"</span>";
 		            		if(item.MEM_NO){
 		            			if(item.MEM_IMAGE==null){
-		            				toDoList+="<img src='<c:url value='/img/mem_images/default_user.png'/>' alt='담당자 이미지' class='mem_img' id='addMem_img' data-bs-target='#staticBackdrop'>";
+		            				toDoList+="<img src='<c:url value='/img/mem_images/default_user.png'/>' alt='담당자 이미지' class='mem_img addMem_img' id='' data-bs-target='#staticBackdrop'>";
 		            			}else{
-		            				toDoList+="<img src='<c:url value='/img/mem_images/"+item.MEM_IMAGE+"'/>' alt='담당자 이미지' class='mem_img' id='addMem_img' data-bs-target='#staticBackdrop'>";
+		            				toDoList+="<img src='<c:url value='/img/mem_images/"+item.MEM_IMAGE+"'/>' alt='담당자 이미지' class='mem_img addMem_img' id='' data-bs-target='#staticBackdrop'>";
 		            			}
 		            		}else{
 		                 		toDoList+="<span style='text-align:left;'><a href='#' data-bs-toggle='modal' data-bs-target='#staticBackdrop' id='addMem'>담당자 등록</a></span>";
