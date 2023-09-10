@@ -58,5 +58,7 @@ public interface TeamWorkBoardService {
 	//파일 삭제
 	int deleteFile(int teamBoardNo);
 
+	//이전글/다음글
+	Map<String, Object> selectTeamWorkBoardNext(Map<String, Integer> nextMap);
 	
 }

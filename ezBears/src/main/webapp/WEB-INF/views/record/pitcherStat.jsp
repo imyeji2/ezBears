@@ -37,57 +37,63 @@
 											</thead>
 											<tbody>
 												<tr>
-													<td>${list2[0].BACK_NO}</td>
+													<td>${list2[0]['BACK_NO']}</td>
 													<td>${list2[0].PLAYER_NAME}</td>
-													<td>타자</td>
-													<td><fmt:formatDate value="${list2[0]['PLAYER_BIRTH'] }" pattern="yyyy-MM-dd"/></td>
+													<td>투수</td>
+													<td><fmt:formatDate
+															value="${list2[0]['PLAYER_BIRTH'] }" pattern="yyyy-MM-dd" /></td>
 													<td>${list2[0].HEIGHT}cm</td>
 													<td>${list2[0].WEIGHT}kg</td>
 													<td>${list2[0].PLAYER_SAL}원</td>
 													<td>${list2[0].PLAYER_STATUS}</td>
 												</tr>
+
 											</tbody>
 										</table>
 										<br>
 										<br>
-										<h4>시즌 기록</h4>
 										<div class="table-responsive">
 											<table class="table">
 												<thead>
-													<tr>
-														<th scope="col">타수</th>
-														<th scope="col">득점</th>
-														<th scope="col">안타</th>
-														<th scope="col">타점</th>
+													<tr>												
 														<th scope="col">사구</th>
 														<th scope="col">삼진</th>
-														<th scope="col">홈런</th>
-														<th scope="col">타율</th>
+														<th scope="col">투구이닝</th>
+														<th scope="col">피안타</th>
+														<th scope="col">실점</th>
+														<th scope="col">자책점</th>
+														<th scope="col">피홈런</th>
+														<th scope="col">평균자책점</th>
 													</tr>
-												</thead>
+												</thead>											
 												<tbody>
+												<br>
+												<h4>시즌 기록</h4>
 													<c:if test="${empty statlist }">
 														<tr>
 															<th colspan="6">기록이 존재하지 않습니다.
 														</tr>
 													</c:if>
 													<c:if test="${!empty statlist }">
-															<tr>
-																<td>${statlist[0].AB }</td>
-																<td>${statlist[0].RS }</td>
-																<td>${statlist[0].H }</td>
-																<td>${statlist[0].RBI }</td>
+														<c:forEach var="map" items="${statlist }">
+															<tr>										
 																<td>${statlist[0].BB }</td>
-																<td>${statlist[0].SO }</td>
-																<td>${statlist[0].HR }</td>
-																<td>${statlist[0].BA }</td>
-															</tr>										
+																<td>${map.SO }</td>
+																<td>${map.IP }</td>
+																<td>${map.HA }</td>
+																<td>${map.RC }</td>
+																<td>${map.ER }</td>
+																<td>${map.HR }</td>
+																<td>${map.ERA }</td>
+															</tr>
+														</c:forEach>
 													</c:if>
 												</tbody>
 											</table>
-											<br><br>
+											<br> <br>
 										</div>
 										<br>
+
 									</div>
 								</div>
 							</div>

@@ -27,6 +27,7 @@ import com.ez.ezBears.member.model.MemberService;
 import com.ez.ezBears.myBoard.controller.MyBoardController;
 import com.ez.ezBears.myBoard.model.MyBoardListService;
 import com.ez.ezBears.myBoard.model.MyBoardListVO;
+import com.ez.ezBears.myBoard.model.MyBoardVO;
 import com.ez.ezBears.temNotice.model.TeamNoticeService;
 import com.ez.ezBears.temNotice.model.TeamNoticeVO;
 
@@ -232,11 +233,16 @@ public class TeamNoticeController {
 		//2
 		Map<String, Object> map = teamNoticeService.selectDetail(teamNoticeNo);
 		logger.info("팀 공지사항 디테일 결과 map={}",map);
-		
 
-		
 		String myBoardName = myBoardListService.selectByBoardName(mBoardNo);
 		logger.info("마이보드 이름 myBoardName={}",myBoardName);	
+		
+		//이전글 다음글
+		Map<String, Integer> nextMap = new HashMap<>();
+		nextMap.put("mBoardNo", mBoardNo);
+		nextMap.put("teamNoticeNo", teamNoticeNo);
+		Map<String, Object> resultMap = teamNoticeService.selectTeamNoticeNext(nextMap);
+		logger.info("이전글/다음글 조회 결과 resultMap={}",resultMap);
 		
 		
 
@@ -245,6 +251,7 @@ public class TeamNoticeController {
 		model.addAttribute("myBoardName",myBoardName);
 		model.addAttribute("userid",userid);
 		model.addAttribute("userNo",userNo);
+		model.addAttribute("resultMap",resultMap);
 		
 		//4
 		return "myBoard/teamNoticeDetail";

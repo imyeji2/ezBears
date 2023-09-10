@@ -64,19 +64,17 @@
     Chart.defaults.borderColor = "#6c757d";
 
 
-    // Worldwide Sales Chart
-    var ctx1 = $("#worldwide-sales").get(0).getContext("2d");
+    // 승률 차트
+    var ctx1 = $("#myChart1").get(0).getContext("2d");
     var myChart1 = new Chart(ctx1, {
         type: "bar",
         data: {
-            labels: ["01", "02", "03", "04", "05", "06", "07"],
+            labels: ["4월", "5월", "6월", "7월", "8월", "9월"],
             datasets: [{
                     label: "승률",
                     data: [15, 30, 55, 65, 60, 80, 95],
                     backgroundColor: "#7000D8"
-                },
-                
-                
+                },                
             ]
             },
         options: {

@@ -23,4 +23,6 @@ public interface PitcherDAO {
 	
 	//투수 전체조회
 	List<TeamVO> selectAllPitcher();
+	
+	List<Map<String, Object>> selectPitcherStatView(int playerNo);
 }

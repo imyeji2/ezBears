@@ -3,6 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@include file="inc/top.jsp"%>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+
 <script>
 	$(function(){
 		//네이버 뉴스 api 호출
@@ -257,9 +259,11 @@
 
             }
         });			
-	}	
-
+	}
+	
+	
 </script>
+
  <!-- Navbar End -->
  <!-- top ë©”ë‰´ ì¢…ë£Œ -->
 <div id="main">
@@ -574,10 +578,16 @@
          <div class="row g-4">
 	          <div class="col-sm-12 col-xl-6">
 	              <div class="bg-secondary text-center rounded p-4">
-	                  <div class="d-flex align-items-center justify-content-between mb-4">
-	                      <h6 class="mb-0">승률 현황</h6>
-	                  </div>
-	                  <canvas id="worldwide-sales"></canvas>
+						<div class="d-flex align-items-center justify-content-between mb-4">
+							<h6 class="mb-0">승률 현황</h6>
+						</div>
+						<div class="d-flex align-items-center py-3">
+	                    	<div class="staffChartBox">
+	                     		<div class="staffChart" id="staffChart">							
+									<canvas id="myChart3"></canvas>
+								</div>
+							</div>
+						</div>
 	              </div>
 	          </div>
                         
@@ -624,4 +634,94 @@
    <!-- 2번째 줄 게시판 끝 -->    	 
  	</c:if>
 </div><!-- main -->
+<script>
+/* // 승률 차트
+var winrateData = $("#myChart3").data("winlist");
+
+var ctx1 = $("#myChart3").get(0).getContext("2d");
+var myChart1 = new Chart(ctx1, {
+    type: "bar",
+    data: {
+        labels: ["4월", "5월", "6월", "7월", "8월", "9월"],
+        datasets: [{
+                label: "승률",
+                data: winrateData,
+                backgroundColor: "#7000D8"
+            },                
+        ]
+        },
+    options: {
+        responsive: true
+    }
+});
+ */
+/* var winrateData = $("#myChart3").data("winlist");
+
+var ctx1 = $("#myChart3").get(0).getContext("2d");
+var myChart1 = new Chart(ctx1, {
+    type: "bar",
+    data: {
+        labels: ["4월", "5월", "6월", "7월", "8월", "9월"],
+        datasets: [{
+                label: "승률",
+                data: winrateData,
+                backgroundColor: "#7000D8"
+            },                
+        ]
+        },
+    options: {
+        responsive: true
+    }
+}); 
+ */
+ // 페이지 로드 후 실행
+ $(function() {
+     // AJAX 요청 보내기
+     $.ajax({
+         url: "ajax_winRate",
+         type: "GET",
+         dataType: "json",
+         success: function(data) {
+             // 서버에서 받아온 데이터를 사용하여 차트 생성
+             var months = [];
+             var winRates = [];
+
+             // 데이터 추출
+             data.forEach(function(item) {
+                 months.push(item.월);
+                 winRates.push(item.월별_승률);
+             });
+             
+             // 차트 컨테이너의 크기에 맞게 canvas 크기 조절
+             var chartContainer2 = document.getElementById('staffChart');
+             var canvas2 = document.getElementById('myChart3');
+             
+             canvas2.width = chartContainer2.clientWidth;
+             canvas2.height = chartContainer2.clientWidth; // 정사각형으로 유지
+             
+             // 차트 생성
+             var ctx = canvas2.getContext("2d");
+             var myChart = new Chart(ctx, {
+                 type: "bar",
+                 data: {
+                     labels: months,
+                     datasets: [{
+                         label: "승률",
+                         data: winRates,
+                         backgroundColor: "#7000D8"
+                     }]
+                 },
+                 options: {
+                     responsive: true
+                 }
+             });
+         },
+         error: function(xhr, status, error) {
+             console.error(error);
+             alert("데이터를 불러오는 도중 오류가 발생했습니다.");
+         }
+     });
+ });
+</script>
+
  <%@include file="inc/bottom.jsp"%>

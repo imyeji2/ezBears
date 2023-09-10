@@ -7,6 +7,8 @@
 		<div id="detail" class="container__detailInner">
 			<div class="fixedHeaderDuel fixedHeaderDuel--isHidden">
 				<div class="fixedHeaderDuel__homeLogo ">
+				
+<c:set var="totalErrorsHome" value="${totalErrorsHome + map.ERRORS }"></c:set> 
 
 					<div class="fixedHeaderParticipant__participantServe"></div>
 				</div>
@@ -18,9 +20,10 @@
 							<div
 								class="smh__part smh__home smh__part--${map.INNING.charAt(1)}">${map.R}</div>
 							<c:set var="totalScoreHome" value="${totalScoreHome + map.R}" />
+							
 						</c:if>
 					</c:forEach>
-					<div class="smh__part smh__score smh__home smh__part--current">${totalScoreHome}</div>
+					<div class="smh__part smh__score smh__home smh__part--current">${totalScoreHome} </div>
 				</div>
 
 				<div class="smh__part smh__score smh__away smh__part--current">
@@ -257,6 +260,16 @@
 			style="color: white;">삭제</a> | <a
 			href="<c:url value='/record/gameList'/>" style="color: white;">목록</a>
 	</div>
+	<div class="center">
+		<a
+			href="<c:url value='/record/inningWrite?recodeNo=${param.recodeNo }'/>"
+			style="color: white;">이닝 정보 등록</a> | <a
+			href="<c:url value='/record/inningEdit?recodeNo=${param.recodeNo }'/>"
+			style="color: white;">수정</a> | <a
+			href="<c:url value='/record/inningDelete?recodeNo=${param.recodeNo }'/>"
+			style="color: white;">삭제</a>
+	</div>		
+		
 </c:if>
 	<script>
 		// JavaScript를 사용하여 vo.R 값들을 가져와 합계 계산

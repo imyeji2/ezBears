@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.ez.ezBears.common.MemberSearchVO;
 import com.ez.ezBears.common.SearchVO;
 import com.ez.ezBears.login.controller.LoginController;
 
@@ -226,5 +227,15 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public List<MemberVO> selectAllMemberInfo() {
 		return memberDao.selectAllMemberInfo();
+	}
+	@Override
+	public List<Map<String, Object>> selectMemberList3(MemberSearchVO searchVo) {
+		return memberDao.selectMemberList3(searchVo);
+	}
+
+	@Override
+	public int selectMemberListTotal3(MemberSearchVO searchVo) {
+		return memberDao.selectMemberListTotal3(searchVo);
+
 	}
 }

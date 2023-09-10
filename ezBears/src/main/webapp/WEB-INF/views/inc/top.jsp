@@ -416,6 +416,14 @@ $(function(){
 		    });		
 	}	
 	
+    function openPopup() {
+        // 팝업 창의 URL
+        var popupURL = "<c:url value='/chat/chattingList'/>";
+
+        // 팝업 창을 새 창으로 열기
+        var popupWindow = window.open(popupURL, 'chatList', 'width=1000,height=800');
+
+    }	
 		
 </script>
 
@@ -561,7 +569,7 @@ $(function(){
                             <a href="#" class="dropdown-item">
                             	<i class="bi bi-pie-chart-fill me-2"></i>팀통계
                             </a>
-                            <a href="#" class="dropdown-item">
+                            <a href="<c:url value='/record/teamList2'/>" class="dropdown-item">
                             	<i class="bi bi-journal-text me-2"></i>선수통계
                             </a>
                         </div>
@@ -656,7 +664,20 @@ $(function(){
                 </div>
                 
                 <div class="navbar-nav align-items-center ms-auto" style="margin-right:20px;">
-                
+	                <c:if test="${sessionScope.type=='사원'}">
+	                    <div class="nav-item dropdown" onclick="openPopup()">
+	                        <a href="#" class="nav-link" >
+	                            <i class="bi bi-chat-dots-fill"></i>
+	                            <span class="d-none d-lg-inline-flex">채팅</span>
+	                        </a>
+	                     </div>   
+	                    <div class="nav-item dropdown">
+	                        <a href="#" class="nav-link" >
+	                            <i class="fa fa-envelope me-lg-2"></i>
+	                            <span class="d-none d-lg-inline-flex">쪽지</span>
+	                        </a>
+	                     </div>          
+	                </c:if>      
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                             <i class="fa fa-bell me-lg-2"></i>

@@ -111,7 +111,7 @@
 				</div>
 				<br>
 				<div class="divSearch">
-				   	<form name="frmSearch" method="POST" action="<c:url value='/record/teamList'/>">
+				   	<form name="frmSearch" method="POST" action="<c:url value='/record/teamList2'/>">
 				        <select name="searchCondition">
 				            <option value="PLAYER_NAME" 
 				            	<c:if test="${param.searchCondition=='PLAYER_NAME'}">

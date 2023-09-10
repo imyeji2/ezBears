@@ -58,6 +58,7 @@
     
     <select id="selectHitterStatView" parameterType="int" resultType="map">
     	select * from hitter_stat_view
+    	where player_no=#{playerNo}
     </select>
     
     <select id="selectAllHitter" resultType="teamVo">

@@ -58,42 +58,45 @@ public class RecordController {
 	}
 	
 	
-	@RequestMapping("/team")
-	public String team() {
-		//1,4
-		logger.info("팀 기록 보여주기");
-		return "/record/team";
-	}
-	
 	//---------------------------이닝 정보----------------------------------
 	
 	@GetMapping("/inningWrite")
-	public String inningWrite_get(Model model, int recodeNo) {
+	public String inningWrite_get(@RequestParam int recodeNo, Model model) {
 		logger.info("이닝정보등록 페이지 이동 recodeNo={}", recodeNo);
 		
-		List<Map<String, Object>> list = inningService.selectInningView(recodeNo);
-		model.addAttribute("list", list);
-		logger.info("list.size={}", list.size());
+		List<Map<String, Object>> innigList = inningService.selectInningView(recodeNo);
+		logger.info("innigList.size={}", innigList.size());
 		
+		model.addAttribute("innigList", innigList);
 		return "/record/inningWrite";
 	}
 	
 	@PostMapping("/inningWrite")
-	public String inningWrite_post(@ModelAttribute InningVO inningVo) {
+	public String inningWrite_post(@ModelAttribute InningVO inningVo, int recodeNo) {
 		
 		int cnt = inningService.insertInning(inningVo);
 		
 		logger.info("이닝정보등록");
-		return "/record/gameRecordDetail2";
+		return "redirect:/record/gameRecordDetail?recodeNo="+ recodeNo;
 	}
 	
 	
-	@RequestMapping("/inningEdit")
-	public String inningUpdate() {
+	@GetMapping("/inningEdit")
+	public String inningUpdate_get() {
 		//1,4
 		logger.info("이닝정보수정");
 		return "/record/inningEdit";
 	}
+	
+	
+	@PostMapping("/inningEdit")
+	public String inningUpdate_post() {
+		//1,4
+		logger.info("이닝정보수정");
+		return "/record/inningEdit";
+	}
+	
+	
 	
 	@RequestMapping("/inningDelete")
 	public String inningDelete() {
@@ -102,15 +105,6 @@ public class RecordController {
 		return "/record/inningDelete";
 	}
 	
-	
-//	@GetMapping("/summary")
-//	public String summary_get(@RequestParam(defaultValue = "0") int recodeDetailNo, SearchVO searchVo, Model model) {
-//		logger.info("경기 개요 파라미터 recodeDetailNo = {}", recodeDetailNo);
-//		
-//		List<InningVO> list = inningService.selectByrecodeDetailNo(searchVo, recodeDetailNo);
-//		model.addAttribute("list", list);
-//		return "/record/summary";
-//	}
 	
 	
 	//-------------------히터, 타자 정보--------------------------------------------
@@ -218,8 +212,11 @@ public class RecordController {
 	@GetMapping("/hitterStat")
 	public String hitterStat_get(@RequestParam(defaultValue = "0") int playerNo, Model model) {
 		
-		Map<String, Object> map = hitterService.selectHitterStatView(playerNo);
-		model.addAttribute("map", map);
+		
+		List<Map<String, Object>> statlist = hitterService.selectHitterStatView(playerNo);
+		List<Map<String, Object>> list2 = hitterService.selectHitterView(playerNo);
+		model.addAttribute("statlist", statlist);
+		model.addAttribute("list2", list2);
 		
 		return "/record/hitterStat";
 	}
@@ -343,7 +340,17 @@ public class RecordController {
 		return "/record/pitcherRecordDetail";
 	}
 	
-
+	@GetMapping("/pitcherStat")
+	public String pitcherStat_get(@RequestParam(defaultValue = "0") int playerNo, Model model) {
+		
+		
+		List<Map<String, Object>> statlist = pitcherService.selectPitcherStatView(playerNo);
+		List<Map<String, Object>> list2 = pitcherService.selectPitcherView(playerNo);
+		model.addAttribute("statlist", statlist);
+		model.addAttribute("list2", list2);
+		
+		return "/record/pitcherStat";
+	}
 	
 	//-------------------아래부터 경기기록 눌렀을 때 나오는 부분들------------------------
 	
@@ -457,8 +464,8 @@ public class RecordController {
 		Map <String, Object> map1 = inningService.selectInningHomeView(recodeNo);
 		Map <String, Object> map2 = inningService.selectInningAwayView(recodeNo);
 		model.addAttribute("list", list);
-		model.addAttribute(map1);
-		model.addAttribute(map2);
+		model.addAttribute("map1", map1);
+		model.addAttribute("map2", map2);
 		logger.info("이닝 처리 결과, list.size={}", list.size());
 		logger.info("map1", map1);
 		logger.info("map2", map2);
