@@ -58,5 +58,6 @@
 	
 	<select id="selectMonthlyWinRate" parameterType="int" resultType="map">
 		select * from monthly_win_rate
+		order by 월
 	</select>
 </mapper>

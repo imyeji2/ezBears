@@ -110,7 +110,7 @@
 		            		memberDate+="<img src='<c:url value='/img/mem_images/"+imagePath+"'/>' alt='사원프로필'>";				        	
 		            		memberDate+="</div>";				        	
 		            		memberDate+="<div class='mem_info_box'>";				        	
-		            		memberDate+="<div><span id='memName'>"+item.memName+"</span>/"+item.positionName+"</div>";				        	
+		            		memberDate+="<div class='mem_info_box2'><span id='memName' class='memName'>"+item.memName+"</span>/<span style='vertical-align: middle;'>"+item.positionName+"</span></div>";				        	
 		            		memberDate+="<div>💼 "+item.deptName+"</div>";				        	
 		            		memberDate+="<input type='hidden' name='memNo' value='"+item.memNo+"'>";				        	
 		            		memberDate+="</div>";				        	
@@ -258,7 +258,11 @@
 							        <select class="form-select" name="deptNo" id="deptSearch">
 							        <option selected value='0'>부서 선택</option>
 							       	   <c:forEach var="detpVo" items="${deptList}">
-									  		<option value="${detpVo.deptNo}">${detpVo.deptName}</option>
+							       	   		<c:if test="${detpVo.deptName!='선수'}">
+							       	   			<c:if test="${detpVo.deptName!='스태프'}">
+							       	   				<option value="${detpVo.deptNo}">${detpVo.deptName}</option>
+							       	   			</c:if>
+							       	   		</c:if>
 										</c:forEach>
 									</select>
 								</form>

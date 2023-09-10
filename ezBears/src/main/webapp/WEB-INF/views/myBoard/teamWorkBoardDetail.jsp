@@ -883,7 +883,9 @@
 										</c:if>
 									</div>
 									<div class="mem_info_box">
-										<div>${memMap["MEM_NAME"]}/${memMap["POSITION_NAME"]}</div>
+										<div class="mem_info_box2">
+											<span id="memName" class="memName ">${memMap["MEM_NAME"]}</span>/
+											<span style="vertical-align: middle;">${memMap["POSITION_NAME"]}</span></div>
 										<div>💼 ${memMap["DEPT_NAME"]}</div>
 										<input type="hidden" name="memNo" value=${memMap["MEM_NO"]}>   
 										
