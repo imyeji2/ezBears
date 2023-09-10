@@ -478,10 +478,12 @@ $(function(){
 		                       <span>💼${sessionScope.dept_name }</span>
 	                    </div>
 	                </div>
-	                <div class="btnBox">
-		               	<button class="inoutBtn" onclick="attendanceIn()" id="btnInOut">출근</button>
-		               	<button class="inoutBtn" onclick="attendanceOut()" id="btnInOut">퇴근</button>
-              	 	</div>
+	                <c:if test="${sessionScope.type=='사원'}">
+		                <div class="btnBox">
+			               	<button class="inoutBtn" onclick="attendanceIn()" id="btnInOut">출근</button>
+			               	<button class="inoutBtn" onclick="attendanceOut()" id="btnInOut">퇴근</button>
+	              	 	</div>
+              	 	</c:if>
                 </div>
                 <!-- 사원정보 끝-->
 
@@ -704,7 +706,9 @@ $(function(){
                         <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
                             <a href="<c:url value='/mypage/pwdchk'/>" class="dropdown-item">마이페이지</a>
 							<a href="<c:url value='/mypage/pwdchk2'/>" class="dropdown-item">비밀번호변경</a>
-							<a href="<c:url value='/message/receiveBox'/>" class="dropdown-item">쪽지함</a>
+							<c:if test="${sessionScope.type=='사원'}">
+								<a href="<c:url value='/message/receiveBox'/>" class="dropdown-item">쪽지함</a>
+							</c:if>
                             <a href="<c:url value='/login/logout'/>" class="dropdown-item">로그아웃</a>
                         </div>
                     </div>                   	

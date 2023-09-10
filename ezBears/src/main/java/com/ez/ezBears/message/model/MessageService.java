@@ -10,5 +10,9 @@ public interface MessageService {
 	int ReceiveMessage(@Param("messageSendNo") int messageSendNo, @Param("messageReceiveVo") MessageReceiveVO messageReceveVo);
 	List<Map<String, Object>> selectSendBox(int sendUserNo);
 	List<Map<String, Object>> selectReceiveBox(int receiveUserNo);
-	int receiveMessageDel(int delNo);
+	int receiveMessageDelMulti(List<Integer> messageSendNos);
+	int sendMessageDelMulti(List<Integer> messageSendNos);
+	List<Integer> dropMessageList();
+	int delMessage(int delNo);
+	
 }
