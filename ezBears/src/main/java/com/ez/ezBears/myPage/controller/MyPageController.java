@@ -127,18 +127,18 @@ public class MyPageController {
 				int attendanceNo = attendanceService.selectAttendanceNo(memNo);
 				logger.info("가장 최근 출근 번호, attendanceNo={}", attendanceNo);
 
-				if (currentTime.isAfter(nineAM)) {
-					// 현재 시간이 9시 이후인 경우 (지각)
-					int cnt2 = attendanceService.comeCompanyLate(attendanceNo); 
-					logger.info("지각 처리 결과, cnt2={}", cnt2);
-
-					msg = "지각 처리 되었습니다.";
-				} else {
+				if (currentTime.isBefore(nineAM)) {
 					// 현재 시간이 9시 이전인 경우
 					int cnt2 = attendanceService.comeCompanyGood(attendanceNo);
 					logger.info("출근 처리 결과, cnt2={}", cnt2);
-
+					
 					msg = "출근 처리 되었습니다.";
+				} else {
+					// 현재 시간이 9시 이후인 경우 (지각)
+					int cnt2 = attendanceService.comeCompanyLate(attendanceNo); 
+					logger.info("지각 처리 결과, cnt2={}", cnt2);
+					
+					msg = "지각 처리 되었습니다.";
 				}
 
 				//최근의 출근날짜가 오늘 날짜일 경우
