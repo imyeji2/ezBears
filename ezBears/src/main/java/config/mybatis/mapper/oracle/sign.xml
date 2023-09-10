@@ -219,6 +219,6 @@
       where RNUM> #{firstRecordIndex} 
       and RNUM<=#{firstRecordIndex} + #{recordCountPerPage}]]>		
 	</select>
-	
+	 
 	
 </mapper>
