@@ -13,5 +13,8 @@ public interface MessageDAO {
 	List<Map<String, Object>> selectSendBox(int sendUserNo);
 	List<Map<String, Object>> selectReceiveBox(int receiveUserNo);
 	int receiveMessageDel(int delNo);
-	
+	int sendMessageDel(int delNo);
+	List<Integer> dropMessageList();
+	int delMessageReceive(int delNo);
+	int delMessageSend(int delNo);
 }

@@ -26,10 +26,27 @@
 		select * from messageView where receiveUserNo = #{receiverNo} and receiveDelFlag = 'N' order by messageSendNo desc 
 	</select>
 	
-	<update id="receiveMessageDel" parameterType="int">
+ 	<update id="receiveMessageDel" parameterType="int">
 		update messageReceive
 		set receiveDelFlag = 'Y' where messageSendNo = #{delNo} 
 	</update>
+	
+ 	<update id="sendMessageDel" parameterType="int">
+		update messageSend
+		set sendDelFlag = 'Y' where messageSendNo = #{delNo} 
+	</update>
+	
+	<select id="dropMessageList" resultType="int">
+		select messageSendNo from messageView where sendDelFlag = 'Y' and receiveDelFlag = 'Y'
+	</select>
+	
+	<delete id="delMessageReceive" parameterType="int">
+		delete messageReceive where messageSendNo = #{delNo}
+	</delete>
+	
+	<delete id="delMessageSend" parameterType="int">
+		delete messageSend where messageSendNo = #{delNo}
+	</delete>
 	
 	
 </mapper>

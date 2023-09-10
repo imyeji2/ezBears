@@ -12,19 +12,20 @@
 				if(!delNo){
 					alert('삭제할 쪽지를 선택해주세요.');
 					return false;
-				}else{
+				}
+				/*
+				이거 주석 풀면 메세지 한개 지우는 기능은 됨
+				근데 다중삭제 도전
+				else{
 					
-					/*
-		            $('.delNo:checked').each(function () {
-		                var delNo = $(this).val();
-		                delList.push(delNo);
-		            }  
-		            */
+		            
 	                var url = "<c:url value='/message/receiveMessageDel?delNo=" + delNo + "'/>";
 	                $('.btnDel').attr('action', url); 
 					$('.btnDel').submit();
 				}
-			}else{
+				*/
+			}
+			else{
 				return false;
 			};
 			
@@ -57,7 +58,7 @@
 			                    <th scope="col"><input type="submit" value="삭제" class="btnDel"></th>
 			                    <th scope="col">받는사람</th>
 			                    <th scope="col">내용</th>
-			                    <th scope="col">보낸날짜</th>
+			                    <th scope="col">받은날짜</th>
 			                </tr>
 			            </thead>
 				         <tbody>
@@ -69,10 +70,12 @@
 				            		</tr>
 					         	</c:if>
 					         	<c:if test="${!empty receiveBoxList }">
+					         	 <c:set var="idx" value="0"/>
 						            	<c:forEach var="map" items="${receiveBoxList }">
 							                <tr>
 							                	<td style="text-align: center;">
-							                		<input type="checkbox" class="delNo" name="delNo" value="${map['MESSAGESENDNO'] }">
+							                		<%-- <input type="checkbox" class="delNo" name="ReceiveMessages[${idx }].messageSendNo" value="${map['MESSAGESENDNO'] }"> --%>
+						                			<input type="checkbox" class="delNo" name="messageSendNos" value="${map['MESSAGESENDNO'] }">
 						                		</td>
 							                    <td scope="row">
 								                    <a href="<c:url value='/message/messageWrite?receiveNo=${map.SENDUSERNO }'/>" style="color: #fff">

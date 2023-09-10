@@ -1,6 +1,7 @@
 package com.ez.ezBears.message.controller;
 
 import java.math.BigDecimal;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ez.ezBears.member.model.MemberService;
+import com.ez.ezBears.message.model.ListMessageReceiveVo;
 import com.ez.ezBears.message.model.MessageReceiveVO;
 import com.ez.ezBears.message.model.MessageSendVO;
 import com.ez.ezBears.message.model.MessageService;
@@ -119,22 +121,67 @@ public class MessageController {
 	}
 	
 	@RequestMapping("/sendMessageDel")
-	public String sendMessageDel(@RequestParam int delNo) {
-		logger.info("delNo={}", delNo);
+	public String sendMessageDel(@RequestParam("messageSendNos") List<Integer> messageSendNos) {
+		 // messageSendNos 리스트에 체크된 값이 들어옵니다.
+	    // 이제 이 값을 사용하여 삭제 작업을 수행할 수 있습니다.
+	    logger.info("보낸 쪽지 다중 삭제, messageSendNos={}", messageSendNos);
+	    
+	    // 삭제 작업 수행
+	    int cnt = messageService.sendMessageDelMulti(messageSendNos);
+	    logger.info("보낸 쪽지 다중 삭제 처리 결과, cnt={}",cnt);
 		
-		
+	    //만약 보낸메세지함과 받은메세지함에서 모두 삭제처리 되었을 경우 db에서도 삭제
+	    List<Integer> dropList = messageService.dropMessageList();
+	    logger.info("수신함, 발신함 모두 삭제처리된 쪽지의 수 dropList.size={}",dropList.size());
+	    
+	    
+	    if(dropList.size() > 0) {
+	    	for(int dropNo : dropList) {
+	    		int del = messageService.delMessage(dropNo);
+	    	}
+	    }
 		
 		return "redirect:/message/sendBox";
 	}
 	
+	/*
 	@RequestMapping("/receiveMessageDel")
-	public String receiveMessageDel(@RequestParam int delNo) {
-		logger.info("delNo={}", delNo);
+	public String receiveMessageDel(@ModelAttribute ListMessageReceiveVo listMessageReceiveVo) {
+		//logger.info("delNo={}", delNo);
+		logger.info("다중삭제, listMessageReceiveVo={}", listMessageReceiveVo);
 		
-		int cnt = messageService.receiveMessageDel(delNo);
-		logger.info("삭제 처리결과, cnt={}",cnt);
+		//int cnt = messageService.receiveMessageDel(delNo);
+		//logger.info("삭제 처리결과, cnt={}",cnt);
+		List<MessageReceiveVO> list = listMessageReceiveVo.getReceiveMessages();
+		logger.info("다중삭제, list.size={}",list.size());
+		
+		
 		
 		return "redirect:/message/receiveBox";
+	}
+	*/
+	
+	@RequestMapping("/receiveMessageDel")
+	public String receiveMessageDel(@RequestParam("messageSendNos") List<Integer> messageSendNos) {
+	    // messageSendNos 리스트에 체크된 값이 들어옵니다.
+	    // 이제 이 값을 사용하여 삭제 작업을 수행할 수 있습니다.
+	    logger.info("받은 쪽지 다중 삭제, messageSendNos={}", messageSendNos);
+	    
+	    // 삭제 작업 수행
+	    int cnt = messageService.receiveMessageDelMulti(messageSendNos);
+	    logger.info("받은 쪽지 다중 삭제 처리 결과, cnt={}",cnt);
+	    
+	    //만약 보낸메세지함과 받은메세지함에서 모두 삭제처리 되었을 경우 db에서도 삭제
+	    List<Integer> dropList = messageService.dropMessageList();
+	    logger.info("수신함, 발신함 모두 삭제처리된 쪽지의 수 dropList.size={}",dropList.size());
+	    
+	    if(dropList.size() > 0) {
+	    	for(int dropNo : dropList) {
+	    		int del = messageService.delMessage(dropNo);
+	    	}
+	    }
+	    
+	    return "redirect:/message/receiveBox";
 	}
 	
 }
