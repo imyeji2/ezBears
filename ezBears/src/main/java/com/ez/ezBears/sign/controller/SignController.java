@@ -22,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ez.ezBears.common.ConstUtil;
 import com.ez.ezBears.common.FileUploadUtil;
 import com.ez.ezBears.common.PaginationInfo;
+import com.ez.ezBears.common.SearchVO;
 import com.ez.ezBears.common.SignListSearchVO;
 import com.ez.ezBears.member.model.MemberService;
 import com.ez.ezBears.member.model.MemberVO;
@@ -406,40 +407,6 @@ public class SignController {
 		return response;
 	} 
 	
-	
-	/*
-	@RequestMapping("/appSingListInfo")
-	public String appSingListInfo(@ModelAttribute SearchVO searchVo, @RequestParam(required = false) String searchName,
-			Model model){
 
-		
-		logger.info("결재 리스트 페이지, 파라미터 searchVo={}",searchVo);
-		
-	
-		PaginationInfo pagingInfo = new PaginationInfo();
-		pagingInfo.setBlockSize(ConstUtil.BLOCK_SIZE);
-		pagingInfo.setCurrentPage(searchVo.getCurrentPage());
-		pagingInfo.setRecordCountPerPage(ConstUtil.MEMRECORD_COUNT);
-		
-		searchVo.setRecordCountPerPage(ConstUtil.MEMRECORD_COUNT);
-		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
-		
-		List<Map<String, Object>> list = signService.selectApprovalList2(searchVo);
-		
-		logger.info("기안자 검색 결과, list.size={}", list.size());
-	
-		
-		int totalRecord = signService.selectAppCount2(searchName);
-		pagingInfo.setTotalRecord(totalRecord);
-		
-	
-		model.addAttribute("list", list);
-		model.addAttribute("pagingInfo", pagingInfo);
-	
-		
-		return "/myBoard/Approval";
-		
-	}
-	*/
 
 }

@@ -16,55 +16,13 @@ function pageFunc(curPage){
 	$('form[name=frmPage]').submit();
 }
 
-//폼 출력
-function submitForm() {
-    var selectedCategory = document.getElementById("approvalCategory").value;
-    
-    if (selectedCategory === "휴가") {
-        window.location.href = "<c:url value='/myBoard/Approval_write?mBoardNo=${mBoardNo }'/>";
-    } else if (selectedCategory === "기안서") {
-        window.location.href = "기안서";
-    } else if (selectedCategory === "품의서") {
-        window.location.href = "품의사";
-    } else if (selectedCategory === "지출결의서") {
-        window.location.href = "지출결의서";
-    }
-
-    // 모달 닫기
-    $('#approvalModal').modal('hide');
-}
-/* document.addEventListener("DOMContentLoaded", function() {
-    // 휴가신청서 클릭 시 휴가신청서 페이지로 이동
-    document.getElementById("vacationForm").addEventListener("click", function() {
-        document.getElementById("approvalCategory").value = "휴가신청서";
-        submitForm();
-    });
-
-    // 기안서 클릭 시 기안서 페이지로 이동
-    document.getElementById("draftForm").addEventListener("click", function() {
-        document.getElementById("approvalCategory").value = "기안서";
-        submitForm();
-    });
-
-    // 품의서 클릭 시 휴가신청서 페이지로 이동
-    document.getElementById("requisitionForm").addEventListener("click", function() {
-        document.getElementById("approvalCategory").value = "품의서";
-        submitForm();
-    });
-
-    // 지출결의서 클릭 시 기안서 페이지로 이동
-    document.getElementById("expenseForm").addEventListener("click", function() {
-        document.getElementById("approvalCategory").value = "지출결의서";
-        submitForm();
-    });
-}); */
-    
+ 
 
 </script>
 <form name="frmPage" method="post" action="<c:url value='/myBoard/Approval?mBoardNo=${mBoardNo }'/>">
 	<input type="hidden" name="currentPage">	
 	<input type="hidden" name="searchKeyword" value="${param.searchKeyword}">
-	<input type="hidden" name="searchName" value="${param.searchName }">
+	<%-- <input type="hidden" name="searchName" value="${param.searchName }"> --%>
 </form>
 
 <!-- Recent Sales Start -->
@@ -82,13 +40,15 @@ function submitForm() {
 							
 							<h6 class="mb-0">결재</h6>
 					<!-- 검색 버튼 -->
-		<%-- <form id="app-form" action="<c:url value='/myBoard/appSingListInfo'/>" method="post" enctype="multipart/form-data" >
-			<div class="col-auto d-flex align-items-center">
-				    <input type="text" class="signTextSearch" id="txtboxSearch" name="searchName" 
-				 	   value="${param.searchName }" placeholder="기안자를 입력해주세요" style="text-align: center;">
-				    <button type="submit" class="btn btn-sm btn-primary signSearchBtn" id="btnSearch">검색</button>
-				</div>
-				</form> --%>
+				 <form id="app-form" action="<c:url value='/myBoard/Approval?mBoardNo=${mBoardNo }'/>" method="post" enctype="multipart/form-data" >
+						<div class="col-auto d-flex align-items-center">
+							<input type="hidden" name="mBoardNo" value="${mBoardNo}">
+
+						    <input type="text" class="signTextSearch" id="txtboxSearch" name="searchKeyword" 
+						 	   value="${param.searchKeyword }" placeholder="기안자를 입력해주세요" style="text-align: center;">
+						    <button type="submit" class="btn btn-sm btn-primary signSearchBtn" id="btnSearch">검색</button>
+						</div>
+				</form> 
 				
 						</div>
 						<div class="table-responsive">
@@ -163,46 +123,6 @@ function submitForm() {
 					</div>
 				</div>
 				<!-- Recent Sales End -->
-
-				<!-- 모달 -->
-				<div class="modal fade" id="approvalModal" tabindex="-1"
-					role="dialog" aria-labelledby="approvalModalLabel"
-					aria-hidden="true">
-					<div class="modal-dialog" role="document">
-						<div class="modal-content">
-							<div class="modal-header">
-								<h5 class="modal-title" id="approvalModalLabel">결재 작성</h5>
-								<button type="button" class="close" data-dismiss="modal"
-									aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-								</button>
-							</div>
-							<div class="modal-body">
-								<!-- 결재분류 선택 -->
-								<div class="form-group">
-									<label for="approvalCategory">결재분류</label> <select
-										class="form-control" id="approvalCategory"
-										name="approvalCategory">
-										<option value="" disabled selected>선택하세요</option>
-										<option value="휴가" id="vacationForm">휴가신청서</option>
-										<option value="기안서" id="draftForm">기안서</option>
-										<option value="품의서" id="requisitionForm">품의서</option>
-										<option value="지출결의서" id="expenseForm">지출결의서</option>
-									</select>
-								
-								</div>
-
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-primary"
-									onclick="submitForm()">작성</button>
-								<button type="button" class="btn btn-secondary"
-									data-dismiss="modal">취소</button>
-							</div>
-						</div>
-					</div>
-				</div> 
-				<!-- approvalModal -->
 
 				<div>
 					<input type="hidden" name="mBoardNo" value="${mBoardNo}">
