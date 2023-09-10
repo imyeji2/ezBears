@@ -11,6 +11,8 @@
 <form name="frmWrite" method="post"
 	action="<c:url value='/record/inningWrite'/>">
 	<input type="hidden" name="recodeNo" value="${param.recodeNo }">
+	<input type="hidden" name="staffNo" value="${sessionScope.staffNo }">
+	<input type="hidden" name="recode_detail_no" value="${param.recodeDetailNo }">
 	<!-- Sign In Start -->
 	<div class="container-fluid">
 		<div class="row h-100 align-items-center justify-content-center">

@@ -5,7 +5,6 @@ import lombok.Data;
 @Data
 public class InningVO {
 	private int inningNo;
-	private int recodeNo;
 	private String inning;
 	private int H;
 	private int errors;
@@ -20,4 +19,5 @@ public class InningVO {
 	private int steal;
 	private int R;
 	private String teamInfo;
+	private int recodeDetailNo;
 }

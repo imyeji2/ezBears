@@ -12,12 +12,12 @@
 	</sql>
 	
 	<insert id="insertInning" parameterType="inningVo">
-	<selectKey keyProperty="inningNo" order="BEFORE"
-		resultType="int">
-		select inning_seq.nextval from dual
-	</selectKey>
-		insert into inning(inning_no, recode_no, inning, h, errors, so, b2, b3, hr, hri, fourball, left_on_base, ab, steal, r, team_info)
-		values(#{inningNo}, #{recodeNo}, #{inning}, #{H}, #{errors}, #{SO}, #{B2}, #{B3}, #{HR}, #{HRI}, #{fourBall}, #{leftOnBase}, #{AB}, #{steal}, #{R}, #{teamInfo})
+		<selectKey keyProperty="inningNo" order="BEFORE"
+			resultType="int">
+			select inning_seq.nextval from dual
+		</selectKey>		
+		insert into inning(inning_no, inning, h, errors, so, b2, b3, hr, hri, fourball, left_on_base, ab, steal, r, team_info, recode_detail_no)
+		values(inning_seq.nextval, #{inning}, #{H}, #{errors}, #{SO}, #{B2}, #{B3}, #{HR}, #{HRI}, #{fourBall}, #{leftOnBase}, #{AB}, #{steal}, #{R}, #{teamInfo}, #{recodeDetailNo})
 	</insert>
 	
 	<update id="updateInning" parameterType="inningVo">
