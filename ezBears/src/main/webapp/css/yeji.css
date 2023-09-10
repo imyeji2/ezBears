@@ -1346,7 +1346,8 @@
 
 
 #chatList{
-	
+	 width: 100%;
+	 
 	.memberBox1{
 		display: flex;
 	    justify-content: center;
@@ -1457,7 +1458,7 @@
 	}
 	
 	.chat-messages{
-		overflow: hidden;
+		
 	}
 	
 	.messageBox{

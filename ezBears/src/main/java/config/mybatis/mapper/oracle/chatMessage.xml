@@ -18,10 +18,11 @@
 	      (	
 			SELECT * FROM chatMessageListView
 			WHERE CHAT_ROOM_NO=#{chatRoomNo}
-			ORDER BY REGDATE DESC
+			ORDER BY REGDATE desc
 	      )A
       )
       <![CDATA[
-      where RNUM<=20]]>		
+      where RNUM<=20]]>	
+      order by regdate	
 	</select>
 </mapper>
