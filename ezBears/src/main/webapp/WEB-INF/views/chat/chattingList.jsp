@@ -325,6 +325,13 @@
 				    <div class="chat-container">
 				        <div class="chat-messages">
 				            <!-- 채팅 메시지가 표시되는 부분 -->
+				            <div class="messageBox">
+				           		<div class="myMessage">dhkekekek</div>
+				            </div>
+				            
+				            <div class="messageBox">
+				            	<div class="memberMessage">dhkekekek</div>
+				            </div>
 				        </div>
 				        
 				        <form name="sendFrm" method="post">

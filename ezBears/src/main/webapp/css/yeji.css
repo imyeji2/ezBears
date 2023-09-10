@@ -1455,6 +1455,33 @@
 		margin: 0px;
 
 	}
+	
+	.chat-messages{
+		overflow: hidden;
+	}
+	
+	.messageBox{
+		overflow: hidden;
+		clear: both;	
+		margin:10px 0px 10px 0px;
+	}
+	
+	.myMessage{
+		max-width: 50%;
+		padding: 10px 10px 10px 10px;
+		background-color: #31354e;
+		color: #fff;
+		border-radius: 10px;
+		float: right;
+	}
 
+	.memberMessage{
+		max-width: 50%;
+		padding: 10px 10px 10px 10px;
+		background-color: #6C7293;
+		color: #fff;
+		border-radius: 10px;
+		float: left;
+	}
 			
 }
