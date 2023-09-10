@@ -62,15 +62,13 @@
 					 </td> 
 					<td class="td-2" rowspan="2"colspan="2">담당</td><!-- 결재 담당자 -->
 			    	<c:forEach var ="map" items="${listMap }">
-						<td class="td-3" colspan="3">${map['MEM_NAME'] }</td><!-- 결재 담당자 -->
+						<td class="td-3 mem" colspan="3">${map['MEM_NAME'] }</td><!-- 결재 담당자 -->
 					</c:forEach>
 			   		 <!-- 중간 결재자  -->
 			   		 <td class="td-2"rowspan="2" colspan="2">
-			   		
-					
 			   		 </td>
 			        <!-- 최종 결재자 -->
-			        <td class="td-3"rowspan="2"colspan="1">${vo2.memName }</td>   
+			        <td class="td-3 mem"rowspan="2"colspan="1">${vo2.memName }</td>   
 				    
 				    <td class="td-2"rowspan="2" >
 				    

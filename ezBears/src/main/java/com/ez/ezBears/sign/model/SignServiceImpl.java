@@ -3,6 +3,7 @@ package com.ez.ezBears.sign.model;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -146,16 +147,7 @@ public class SignServiceImpl implements SignService{
 		return signDao.updateStatusSign(docNo);
 	}
 
-	@Override
-	public List<Map<String, Object>> selectApprovalList2(SearchVO searchVo) {
-		return signDao.selectApprovalList2(searchVo);
-	}
-
-	@Override
-	public int selectAppCount2(String searchName) {
-		return signDao.selectAppCount2(searchName);
-	}
-
+	
 
 
 	

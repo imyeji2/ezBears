@@ -19,7 +19,37 @@
 			dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
 			monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']
 		});
+		
+		
+		
+		jb('#schedulStart').on('change',function(){
+			var startDay = jb(this).val();
+			var endDay = jb('#schedulEnd').val();
+			
+			if(endDay!=='' && startDay > endDay){
+				alert('시작일이 종료일보다 늦습니다 다시 입력해주세요.');
+				jb(this).val('');
+				jb(this).focus();
+				return false;
+			}
+		});
+		
+		
+		jb('#schedulEnd').on('change',function(){
+			var startDay = jb('#schedulStart').val();
+			var endDay = jb(this).val();
+		         
+		    if(startDay!=='' && endDay < startDay) {
+				alert('종료일이 시작일 보다 빠릅니다 다시 입력해주세요.')
+				jb(this).val('');
+				jb(this).focus();
+				return false;
+			}
+		});
+		
 	});
+
+
 </script>
 
 

@@ -225,6 +225,10 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
+	public List<MemberVO> selectAllMemberInfo() {
+		return memberDao.selectAllMemberInfo();
+	}
+	@Override
 	public List<Map<String, Object>> selectMemberList3(MemberSearchVO searchVo) {
 		return memberDao.selectMemberList3(searchVo);
 	}
@@ -232,5 +236,6 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public int selectMemberListTotal3(MemberSearchVO searchVo) {
 		return memberDao.selectMemberListTotal3(searchVo);
+
 	}
 }
