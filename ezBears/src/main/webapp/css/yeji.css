@@ -1245,6 +1245,7 @@
 
 	.staffChartBox{
         width: 100%;
+        min-height: 392px;
         overflow: hidden;
         display: flex;
         justify-content: center;

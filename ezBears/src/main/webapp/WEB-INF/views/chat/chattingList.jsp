@@ -99,11 +99,7 @@
 		        success: function(res) {
 		            console.log(res); // 서버 응답 확인 
 		            if (res > 0) {
-		                alert(memName+"님과 채팅을 시작합니다."); 
-		                $('#staticBackdrop').modal('hide');
-		        		$('.chat-container').show();
-		        		$('.chat-defult').hide();
-		        		loadChatRoom();
+		               $('#chatMessage').val('');
 		            } else {
 		                alert('다시 시도해주세요');
 		            }
@@ -333,7 +329,8 @@
 				        
 				        <form name="sendFrm" method="post">
 							<div class="input-group mb-3 chat-input">
-							  <textarea class="form-control fixed-textarea" name="chatMessage" placeholder="내용을 입력해주세요" aria-label="내용을 입력해주세요" aria-describedby="sendBtn"></textarea>
+							  <textarea class="form-control fixed-textarea" name="chatMessage" id="chatMessage"
+							   placeholder="내용을 입력해주세요" aria-label="내용을 입력해주세요" aria-describedby="sendBtn"></textarea>
 							  <button class="btn btn-outline-secondary" type="button" id="sendBtn">전송</button>
 							  <input type="hidden" name="memNo" value="${memNo}" id="sendMemNo">
 							  <input type="hidden" name="chatRoomNo" id="sendChatRoomNo">

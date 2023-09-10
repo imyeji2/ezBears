@@ -97,7 +97,6 @@ $(function(){
 	
 	
 	//투두 삭제 버튼
-	
 	$(document).on('click', '#delWorkBtn',function(e) { 
 		var index = 0;
 		event.preventDefault(); // 이벤트의 기본 동작 방지
@@ -242,7 +241,6 @@ $(function(){
 			        },
 			        success: function(res) {
 			            console.log(res); 
-			            alert(res);
 			            if(res<0){
 			            	alert('파일 삭제 실패');
 			            	return false;
@@ -385,8 +383,9 @@ $(function(){
 			                                    </div>
 			                                </div>
 			                            </div>
+			                            <input type="hidden" name="index" value="${index+1}"> 
 	                            	</c:forEach>
-	                            	<input type="hidden" name="index" value="${index+1}">    
+	                            	   
 	                            </c:if>
 	                            
 								<!-- todoList 입력 영역 -->
