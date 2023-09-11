@@ -38,13 +38,13 @@
 		where recode_no=#{recodeNo}
 	</select>
 
-	<select id="selectInningHomeView" parameterType="map"
+	<select id="selectInningHomeView" parameterType="int"
 		resultType="map">
 		select * from inning_home_view
 		where recode_no=#{recodeNo}
 	</select>
 
-	<select id="selectInningAwayView" parameterType="map"
+	<select id="selectInningAwayView" parameterType="int"
 		resultType="map">
 		select * from inning_away_view
 		where recode_no=#{recodeNo}
