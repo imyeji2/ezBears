@@ -27,10 +27,6 @@
 			location.href="<c:url value='/mypage/pwdchk'/>";
 		})
 		
-		//채팅 버튼 클릭시
-		$('.messageBtn').click(function(){
-			location.href="<c:url value='/message/messageWrite'/>";
-		})
 		
 		//멤버 삭제 버튼 클릭시
 		$('.memberDelBtn').click(function(){
@@ -163,6 +159,9 @@
 		});//ajax
 	}
 	
+	function messageSend(memNo){
+	    location.href="<c:url value='/message/messageWrite?receiveNo="+memNo+"'/>";
+	}
 </script>
 
     <!-- Recent Sales Start -->
@@ -203,9 +202,9 @@
 															<div >
 																<!-- 관리자일 때 -->
 																<c:if test="${adminNo == memNo}">
-																	<!-- 본인이 아니면 채팅/삭제 -->
+																	<!-- 본인이 아니면 쪽지/삭제 -->
 																	<c:if test="${map['MEM_NO']!=memNo}">
-																		<input type="button" class="btn btn-sm btn-primary btnLeft messageBtn" style="margin-right:2%" value="쪽지"/>
+																		<input type="button" class="btn btn-sm btn-primary btnLeft messageBtn" style="margin-right:2%" value="쪽지" onclick="messageSend(${map['MEM_NO']})"/>
 																		<button class="btn btn-sm btn-primary btnLeft memberDelBtn">삭제</button>
 																	</c:if>
 																	<!-- 본인이면 마이페이지 -->
@@ -219,9 +218,9 @@
 																	<c:if test="${map['MEM_NO']==memNo}">
 																		<button class="btn btn-sm btn-primary" id="myPage">마이페이지</button>
 																	</c:if>
-																	<!-- 본인이 아니면 채팅 -->
+																	<!-- 본인이 아니면 쪽지 -->
 																	<c:if test="${map['MEM_NO']!=memNo}">
-																		<input type="button" class="btn btn-sm btn-primary messageBtn" value="쪽지">
+																		<input type="button" class="btn btn-sm btn-primary messageBtn" value="쪽지" onclick="messageSend(${map['MEM_NO']})">
 																	</c:if>
 																</c:if>	
 															</div>
