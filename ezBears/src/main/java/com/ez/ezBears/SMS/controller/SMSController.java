@@ -94,7 +94,7 @@ public class SMSController {
     public SingleMessageSentResponse sendOne() {
         Message message = new Message();
         // 발신번호 및 수신번호는 반드시 01012345678 형태로 입력되어야 합니다.
-        message.setFrom("발신번호 입력");
+        message.setFrom("025920001");
         message.setTo("수신번호 입력");
         message.setText("한글 45자, 영자 90자 이하 입력되면 자동으로 SMS타입의 메시지가 추가됩니다.");
 

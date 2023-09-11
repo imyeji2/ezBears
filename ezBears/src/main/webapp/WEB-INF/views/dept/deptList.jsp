@@ -27,6 +27,8 @@ $(function(){
 	    $('#deptNo').val('');
 	    $('#EditdeptName').val('');
 	    $('#deptTel').val('');
+		$('#btnEdit').hide();
+		$('#btnAdd').show();
 	}
 
 	function editDeptInfo(deptName, deptNo, deptTel){
