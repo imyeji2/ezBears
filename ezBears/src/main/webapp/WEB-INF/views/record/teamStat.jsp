@@ -23,51 +23,35 @@
 													<th scope="col">선수 등번호</th>
 													<th scope="col">선수 이름</th>
 													<th scope="col">포지션</th>
+													<th scope="col">삼진</th>
+													<th scope="col">투구이닝</th>
+													<th scope="col">평균자책점</th>
 												</tr>
 											</thead>
 											<tbody>
-												<tr>
-													<td>${list4[0]['BACK_NO']}</td>
-													<td>${list4[0].PLAYER_NAME}</td>
-													<td>투수</td>
-												</tr>
-
+												<c:if test="${empty list3 }">
+													<tr>
+														<th colspan="6">기록이 존재하지 않습니다.
+													</tr>
+												</c:if>
+												<c:if test="${!empty list3 }">
+													<c:forEach var="map" items="${list3 }, ${list4 }">
+														<tr>
+															<td>${list4[0].['BACK_NO']}</td>
+															<td>${list4[0].PLAYER_NAME}</td>
+															<td>투수</td>
+															<td>${map.SO }</td>
+															<td>${map.IP }</td>
+															<td>${map.ERA }</td>
+														</tr>
+													</c:forEach>
+												</c:if>
 											</tbody>
 										</table>
-										<br>
-										<br>
-										<div class="table-responsive">
-											<table class="table">
-												<thead>
-													<tr>												
-														<th scope="col">삼진</th>
-														<th scope="col">투구이닝</th>
-														<th scope="col">평균자책점</th>
-													</tr>
-												</thead>											
-												<tbody>
-												<br>
-													<c:if test="${empty list3 }">
-														<tr>
-															<th colspan="6">기록이 존재하지 않습니다.
-														</tr>
-													</c:if>
-													<c:if test="${!empty list3 }">
-														<c:forEach var="map" items="${list3 }">
-															<tr>
-																<td>${map.SO }</td>
-																<td>${map.IP }</td>
-																<td>${map.ERA }</td>
-															</tr>
-														</c:forEach>
-													</c:if>
-												</tbody>
-											</table>
-											<br> <br>
-										</div>
-										<br>
-
+										<br> <br>
 									</div>
+									<br>
+
 								</div>
 							</div>
 						</div>
@@ -76,9 +60,10 @@
 			</div>
 		</div>
 	</div>
-</div>
-<div>
-     <div class="container-fluid pt-4 px-4">
+
+
+
+<div class="container-fluid pt-4 px-4">
          <div class="row g-4">
 	          <div class="col-sm-12 col-xl-6">
 	              <div class="bg-secondary text-center rounded p-4">
@@ -94,9 +79,9 @@
 						</div>
 	              </div>
 	          </div>
-
+	</div>
 </div>
-<div>   
+  
  
 <script>
  $(function() {
