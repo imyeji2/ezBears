@@ -41,8 +41,8 @@
 		                <tr>
 		                    <th scope="col">Player_NO</th>
 		                    <th scope="col">이름</th>
-		                    <th scope="col">Position</th>
-		                    <th scope="col">Back_No</th>
+		                    <th scope="col">포지션</th>
+		                    <th scope="col">등번호</th>
 		                    <th scope="col">생일</th>
 		                    <th scope="col">연봉</th>
 		                </tr>
@@ -61,7 +61,7 @@
 				                    <td>${map['B_POSITION_NAME'] }</td>
 				                    <td>${map['BACK_NO'] }</td>
 				                    <td><fmt:formatDate value="${map['PLAYER_BIRTH'] }" pattern="yyyy-MM-dd"/> </td>
-				                    <td>${map['PLAYER_SAL']}</td>
+				                    <td>${map['PLAYER_SAL']} 원</td>
 				                </tr>
 			            	</c:forEach>
 		            	</c:if>
