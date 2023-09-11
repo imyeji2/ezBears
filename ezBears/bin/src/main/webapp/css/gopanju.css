@@ -1,0 +1,240 @@
+#board_write{
+	top: 100%;
+	left: 100%;
+	margin: 2% 2% 0 2%;
+	
+	.infotext{
+		resize: none;
+	}
+}
+
+
+
+#board_list{
+	margin: 2% 2% 0 2%;
+	
+	.board_listbox{
+		width: 100%;
+		magin: 0 auto;
+	}
+	.serch_input {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 2%;
+		padding-top: 16px
+	}
+	
+	.text_box {
+	width: 57%;
+	}
+	
+	.select_box select {
+		width: 150px;
+	}
+	
+	.text_box input {
+	  width: 100%;
+	}
+	
+}
+
+
+
+/* Basic reset for margin and padding */
+
+
+#facebook-feed {
+  
+ 
+width: 95%; /* Adjust this as needed */
+  
+ 
+height: 400px; /* Set a fixed height for the container */
+margin: 0 auto;
+font-family: Arial, sans-serif;
+  
+ 
+overflow-y: auto; /* Enable vertical scrolling when content overflows */
+
+.board_listsize{
+	width: 600px;
+}
+
+
+.post {
+  
+ 
+border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  background-color: #fff;
+  
+ 
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  
+ 
+display: flex;
+}
+
+.user-profile {
+  
+ 
+padding: 10px;
+}
+
+.user-profile img {
+  width: 50px;
+  height: 50px;
+  
+ 
+border-radius: 50%;
+}
+
+.post-content {
+  
+ 
+flex: 1;
+  
+ 
+padding: 10px;
+}
+
+.post-header {
+  
+ 
+display: flex;
+  justify-content: space-between;
+  
+ 
+align-items: center;
+}
+
+.display-name {
+  
+ 
+font-weight: bold;
+  
+ 
+margin-right: 10px;
+}
+
+.post-date {
+  
+ 
+font-size: 14px;
+  
+ 
+color: #999;
+}
+
+.post-image img {
+  
+ 
+width: 100%;
+  
+ 
+display: block;
+}
+
+.post-caption {
+  
+ 
+margin-top: 5px;
+  
+ 
+color: #333;
+}
+
+.comment-section {
+  
+ 
+margin-top: 10px;
+}
+
+.comment {
+  
+ 
+margin-bottom: 5px;
+}
+
+.comment-author {
+  font-weight: bold;
+}
+
+.comment-content {
+  
+ 
+color: #333;
+}
+
+.add-comment input {
+  
+ 
+width: 100%;
+  
+ 
+padding: 5px;
+  
+ 
+border: 1px solid #ddd;
+  
+ 
+border-radius: 5px;
+  
+ 
+margin-top: 5px;
+}
+
+/* Add any other custom styling as needed */
+}
+
+#teamNoticeDetail{
+	.fileupload_right{
+		text-align: right;
+	}
+	.fileupload{
+		text-align: right;
+	}
+	
+	.noticeFiles {
+    position: absolute;
+    right: 80px;
+    top: auto;
+	}
+
+
+	.detail_next_wrap{
+		padding: 20px 20px 20px 20px;
+		background:#202335;
+		text-align: left;
+	}
+
+	
+	.reply_next_list{
+		margin: 20px 0px 20px 0px;
+	}
+
+
+	.reply_next_content{
+		padding: 20px 5px 10px 5px;
+		border-bottom: 1px solid #191C24;
+	}
+	
+	.reply_next_user{
+		overflow: hidden;
+	}
+	
+	.detail_next_left{
+		float: left;
+	}
+	
+	
+	.board_r_reply_content{
+		margin: 20px 0px 20px 50px;
+	}
+	
+}
+
+
+

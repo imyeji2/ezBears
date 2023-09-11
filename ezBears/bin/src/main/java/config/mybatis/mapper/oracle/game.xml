@@ -1,0 +1,63 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ez.ezBears.record.game.model.GameDAO">
+	<sql id="searchWhere">
+		<where>
+			<if test="searchKeyword!=null and searchKeyword!=''">
+	${searchCondition} like '%' || #{searchKeyword} || '%'
+			</if>
+		</where>
+	</sql>
+	
+	<select id="selectAllGame" resultType="gameVo" parameterType="searchVo">
+		select * from recode
+		order by play_date desc
+	</select>
+	
+	<select id="selectByRecodeNo" resultType="gameVo" parameterType="int">
+		select * from recode
+		where recode_no=#{recodeNo}
+	</select>
+	
+	
+	<insert id="insertGame" parameterType="gameVo">
+		<selectKey keyProperty="recodeNo" order="BEFORE" resultType="int">
+			select recode_seq.nextval from dual
+		</selectKey>
+		insert into recode(recode_no, play_date, ground, win, first_pitcher, other_team)
+		values(#{recodeNo}, #{playDate}, #{ground}, #{win}, #{firstPitcher}, #{otherTeam})
+	</insert>
+	
+	<update id="updateGame" parameterType="gameVo">
+		update recode
+		set
+		play_date=#{playDate}, ground=#{ground}, win=#{win}, first_pitcher=#{firstPitcher}, other_team=#{otherTeam}
+		where recode_no=#{recodeNo}
+	</update>
+	
+	<delete id="deleteGame" parameterType="int">
+		delete recode
+		where recode_no=#{recodeNo}
+	</delete>
+		
+	<select id="selectAllGameMain" resultType="gameVo">
+		select *
+		from
+		(
+			select rownum as RNUM, A.*
+			from
+			(
+				select * from recode
+				order by play_date desc
+			)A
+		)
+	<![CDATA[
+      where RNUM<10]]>
+	</select>
+	
+	<select id="selectMonthlyWinRate" parameterType="int" resultType="map">
+		select * from monthly_win_rate
+		order by 월
+	</select>
+</mapper>

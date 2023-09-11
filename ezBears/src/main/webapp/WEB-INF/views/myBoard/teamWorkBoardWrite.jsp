@@ -82,7 +82,7 @@ $(function(){
 		add+="</div>";
 		add+="</div>";
 		add+="</div><!--todoList-->";
-		
+		index++;
 		$('.todoListWrap').append(add);
 		$('#writeWorkInput').val('');
 		todoCount=index;

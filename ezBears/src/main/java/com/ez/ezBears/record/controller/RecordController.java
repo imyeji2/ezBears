@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.HttpServerErrorException;
 
 import com.ez.ezBears.common.ConstUtil;
@@ -20,6 +21,7 @@ import com.ez.ezBears.common.PaginationInfo;
 import com.ez.ezBears.common.SearchVO;
 import com.ez.ezBears.record.game.model.GameService;
 import com.ez.ezBears.record.game.model.GameVO;
+import com.ez.ezBears.record.gameDetail.model.GameDetailService;
 import com.ez.ezBears.record.hitter.model.HitterService;
 import com.ez.ezBears.record.hitter.model.HitterVO;
 import com.ez.ezBears.record.inning.model.InningService;
@@ -30,6 +32,7 @@ import com.ez.ezBears.team.model.TeamService;
 import com.ez.ezBears.team.model.TeamVO;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 
@@ -44,6 +47,7 @@ public class RecordController {
 	private final HitterService hitterService;
 	private final PitcherService pitcherService;
 	private final InningService inningService;
+	private final GameDetailService gameDetailService;
 	
 	@GetMapping("/gameRecordDetail")
 	public String gameRecordDetail_get(@RequestParam(defaultValue = "0") int recodeNo, Model model) {
@@ -61,13 +65,16 @@ public class RecordController {
 	//---------------------------이닝 정보----------------------------------
 	
 	@GetMapping("/inningWrite")
-	public String inningWrite_get(@RequestParam int recodeNo, Model model) {
+	public String inningWrite_get(@RequestParam int recodeNo,  Model model) {
 		logger.info("이닝정보등록 페이지 이동 recodeNo={}", recodeNo);
 		
-		List<Map<String, Object>> innigList = inningService.selectInningView(recodeNo);
-		logger.info("innigList.size={}", innigList.size());
+		Map<String, Object> df = gameDetailService.selectByRecodeNo(recodeNo);
 		
-		model.addAttribute("innigList", innigList);
+		model.addAttribute("df", df);
+	
+		logger.info("df={}", df);
+		
+		
 		return "/record/inningWrite";
 	}
 	
@@ -461,7 +468,7 @@ public class RecordController {
 	
 	@RequestMapping("/summary")
 	public String inningDetail_get(Model model, int recodeNo) {
-		logger.info("이닝 파라미터, recodeDetailNo={}", recodeNo);
+		logger.info("이닝 파라미터, recodeNo={}", recodeNo);
 		
 		List<Map<String, Object>> list = inningService.selectInningView(recodeNo);
 		model.addAttribute("list", list);
@@ -563,11 +570,33 @@ public class RecordController {
 	}
 	
 	@RequestMapping("/teamStat")
-	public String teamStat() {
+	public String teamStat(@RequestParam(defaultValue = "0") int playerNo, Model model) {
+		
+		List<Map<String, Object>> list3 = pitcherService.selectAllPitcherStat();
+		List<Map<String, Object>> list4 = pitcherService.selectPitcherView(playerNo);
+		model.addAttribute("list3", list3);
+		model.addAttribute("list4", list4);
+		
 		return "/record/teamStat";
-	} 
+	}
 		
-		
+	@ResponseBody
+	@RequestMapping("ajax_winRate")
+	public List<Map<String, Object>> WinRate(Model model, HttpSession session) {
+		List<Map<String, Object>> winlist = gameService.selectMonthlyWinRate();
+		model.addAttribute("winlist", winlist);
+		logger.info("승률 통계", winlist);
+		return winlist;
+	}	
 	
+	@ResponseBody
+	@RequestMapping("ajax_pitcher1")
+	public List<Map<String, Object>> Pitcher1(Model model, HttpSession session) {
+		List<Map<String, Object>> pitcher1 = pitcherService.selectAllPitcherStat();
+		model.addAttribute(pitcher1);
+		logger.info("투수 순위", pitcher1);
+		return pitcher1;
+		
+	}
 	
 }

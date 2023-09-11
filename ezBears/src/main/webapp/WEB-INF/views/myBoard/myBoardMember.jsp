@@ -28,10 +28,8 @@
 		})
 		
 		//채팅 버튼 클릭시
-		$('.chatBtn').click(function(){
-			event.preventDefault();
-			return false;
-			//location.href="#";
+		$('.messageBtn').click(function(){
+			location.href="<c:url value='/message/messageWrite'/>";
 		})
 		
 		//멤버 삭제 버튼 클릭시
@@ -207,7 +205,7 @@
 																<c:if test="${adminNo == memNo}">
 																	<!-- 본인이 아니면 채팅/삭제 -->
 																	<c:if test="${map['MEM_NO']!=memNo}">
-																		<input type="button" class="btn btn-sm btn-primary btnLeft chatBtn" style="margin-right:2%" value="채팅"/>
+																		<input type="button" class="btn btn-sm btn-primary btnLeft messageBtn" style="margin-right:2%" value="쪽지"/>
 																		<button class="btn btn-sm btn-primary btnLeft memberDelBtn">삭제</button>
 																	</c:if>
 																	<!-- 본인이면 마이페이지 -->
@@ -223,7 +221,7 @@
 																	</c:if>
 																	<!-- 본인이 아니면 채팅 -->
 																	<c:if test="${map['MEM_NO']!=memNo}">
-																		<input type="button" class="btn btn-sm btn-primary chatBtn" value="채팅">
+																		<input type="button" class="btn btn-sm btn-primary messageBtn" value="쪽지">
 																	</c:if>
 																</c:if>	
 															</div>

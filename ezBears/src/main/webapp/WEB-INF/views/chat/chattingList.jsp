@@ -5,11 +5,12 @@
 <!DOCTYPE html>
 <html lang="ko">
     <head>
+        <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
         <!-- Favicon-->
-		<script type="text/javascript" src="<c:url value='/js/chattingScripts.js'/>"></script>
+
 		<script type="text/javascript" src="<c:url value='/js/jquery-3.7.0.min.js'/>"></script>
 		<script type="text/javascript" src="<c:url value='https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.min.js'/>"></script>
 		<script type="text/javascript" src="<c:url value='https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js'/>"></script>
@@ -19,12 +20,18 @@
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 		<link href="${pageContext.request.contextPath}/css/yeji.css" rel="stylesheet">
 		<link href="${pageContext.request.contextPath}/css/custom.css" rel="stylesheet">
+
     </head>
    
     <script>
     $(function(){	
+    	
     	loadChatRoom();
-		
+    	
+ 	    setInterval(function() {
+ 	    	loadChatRoom();
+	    }, 1000); 
+ 	    
     	$('.chat-container').hide();
     	
     	$(document).on('click','.list-group-item', function(event) {
@@ -32,11 +39,19 @@
     		$('.chat-defult').hide();
     		
     		var chatRoomNo = $(this).find('input[name=chatRoomNo]').val();
-    		alert(chatRoomNo);
     		$('#sendChatRoomNo').val(chatRoomNo);
+    		loadChatRoomMessage(chatRoomNo);
+
     		
     		
     	});
+    	
+        $("#chatMessage").keypress(function(event) {
+            if (event.which === 13) { // Enter 키의 key code는 13입니다.
+                event.preventDefault(); // 엔터 키 기본 동작(새 줄 추가) 방지
+                $("#sendBtn").click(); // 전송 버튼 클릭 이벤트 실행
+            }
+        });    	
 
 		//멤버 추가 버튼
 		$('#addBtn').click(function(){
@@ -87,6 +102,8 @@
 		
 		//메시지 전송
 		$('#sendBtn').click(function(){
+			var chatRoomNo = $('#sendChatRoomNo').val();
+			
 			var sendForm = $('form[name=sendFrm]').serialize();
 		    $.ajax({
 		        type: 'post',
@@ -99,7 +116,11 @@
 		        success: function(res) {
 		            console.log(res); // 서버 응답 확인 
 		            if (res > 0) {
-		               $('#chatMessage').val('');
+		               $('#chatMessage').val('');		  
+		               loadChatRoomMessage(chatRoomNo);
+		        	    setInterval(function() {
+		         	    	loadChatRoomMessage(chatRoomNo);
+		        	    }, 2000); 
 		            } else {
 		                alert('다시 시도해주세요');
 		            }
@@ -208,11 +229,10 @@
 		        },
 		        success: function(res){
 		            console.log(res); // 서버 응답 확인
-		            $('.list-group').html("");
+		          	 $('.list-group').html("");
 		            if(res!=null){		
-		            	var chatRoomDate="";		          
+		            	var chatRoomDate="";	         
 			            $.each(res, function(idx, item){
-			            	
 							//출력 데이터
 			            	var imagePath = "default_user.png";
 							
@@ -236,15 +256,17 @@
 			            	
 			            	chatRoomDate+="<div class='list-group-item list-group-item-action list-group-item-light p-3' href='#!'>";
 			            	chatRoomDate+="<div class='chatListBox'>";
-			            	chatRoomDate+="<img src='<c:url value='/img/mem_images/"+imagePath+"'/>' alt='사원 이미지'>";
-			            	chatRoomDate+="<div class='chatListInfo'>";
+			            	//chatRoomDate+="<img src='<c:url value='/img/mem_images/"+imagePath+"'/>' alt='사원 이미지'>";
+			            	//chatRoomDate+="<div class='chatListInfo'>";
 			            	chatRoomDate+="<p style='font-weight: 500'>&nbsp;"+item.MEM_NAME+"</p>";
 			            	chatRoomDate+="<p>💼"+item.DEPT_NAME+"</p>";
-			            	chatRoomDate+="</div>";
-			            	chatRoomDate+="<div class='chatListContent'>";
-			            	chatRoomDate+="<p class='text-truncate'>"+message+"<p>";
-			            	chatRoomDate+="<p style='text-align: right;margin-top:5px'>"+regdate+"</p>";
-			            	chatRoomDate+="</div>";
+			            	chatRoomDate+="<p style='text-align: right;margin-top:5px'>"+regdate+"</p>";//추가
+			            	
+			            	//chatRoomDate+="</div>";
+			            	//chatRoomDate+="<div class='chatListContent'>";
+			            	//chatRoomDate+="<p class='text-truncate'>"+message+"<p>";
+			            	//chatRoomDate+="<p style='text-align: right;margin-top:5px'>"+regdate+"</p>";
+			            	//chatRoomDate+="</div>";
 			            	chatRoomDate+="</div>";
 			            	chatRoomDate+="<input type='hidden' name='memNo' value='"+item.MEM_NO+"'>";				        	
 			            	chatRoomDate+="<input type='hidden' name='chatRoomNo' value='"+item.CHAT_ROOM_NO+"'>";				            	
@@ -252,12 +274,54 @@
 			        	
 
 			            });//.each   
-			        	 $('.list-group').append(chatRoomDate);
+			            $('.list-group').append(chatRoomDate).fadeIn(1000);
 		            }
 		        }
 		 });
 	}
-		            
+		 
+	
+	function loadChatRoomMessage(chatRoomNo) {
+	    var message = "";
+	    var myMemNo = $('#sendMemNo').val();
+
+	    $.ajax({
+	        type: 'post',
+	        url: "<c:url value='/chat/ajax_selectChatRoomMessage'/>",
+	        data: { chatRoomNo: chatRoomNo },
+	        dataType: 'json',
+	        error: function(xhr, status, error) {
+	            alert(error);
+	        },
+	        success: function(res) {
+	            console.log(res); // 서버 응답 확인
+	            $('.chat-messages').html('');
+	            if (res !== null) {
+	            	$.each(res, function(idx, item){
+	                    if (item.MEM_NO == myMemNo) {
+	                        message +="<div class='messageBox'>";
+	                        message +="<div class='myMessage'>" + item.CHAT_MESSAGE + "</div>";
+	                        message +="</div>";
+	                    } else {
+	                    	 message +="<div class='messageBox'>";
+		                     message +="<div class='memberMessage'>"+item.CHAT_MESSAGE+"</div>";
+		                     message +="</div>";
+	                    }
+	                    
+	                });
+	            	$('.chat-messages').prepend(message);
+	            	scrollToBottom();
+	                
+	            }
+	        }
+	    }); // ajax
+	}
+	
+	function scrollToBottom() {
+	    var chatMessages = document.querySelector('.chat-messages');
+	    chatMessages.scrollTop = chatMessages.scrollHeight;
+	}
+	
    </script>
     
 	<style>
@@ -282,9 +346,8 @@
 	
 	
 	.chat-messages {
-	    flex-grow: 1; 
-	    overflow-y: auto; 
-	    padding: 10px;
+	    height: 80vh; /* 고정된 높이 설정 (원하는 높이로 조정) */
+	    overflow: auto; /* 스크롤을 허용하도록 설정 */
 	}
 	
 	.fixed-textarea {
@@ -298,13 +361,14 @@
 	</style>
 	
     <body>
-        <div class="d-flex" id="chatList">
+        <div class="d-flex" id="wrapper">
+        	<div class="d-flex" id="chatList">
             <!-- Sidebar-->
             <div class="border-end bg-white" id="sidebar-wrapper">
                 <div class="sidebar-heading border-bottom bg-light">
                 	채팅 <i class="bi bi-plus-circle-fill" id="addBtn" style="color:#7000D8;"></i>
                 </div>
-                <div class="list-group list-group-flush">
+                <div class="list-group list-group-flush" style="height: 95vh; overflow: auto;">
                     
                 </div>
             </div>
@@ -313,8 +377,7 @@
                 <!-- Top navigation-->
                 <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
                     <div class="container-fluid">
-                        <button class="btn btn-primary" id="sidebarToggle">리스트보기</button>
-                      
+                      <button class="btn btn-primary" id="sidebarToggle">리스트보기</button>
                     </div>
                 </nav>
                 <!-- Page content-->
@@ -325,13 +388,7 @@
 				    <div class="chat-container">
 				        <div class="chat-messages">
 				            <!-- 채팅 메시지가 표시되는 부분 -->
-				            <div class="messageBox">
-				           		<div class="myMessage">dhkekekek</div>
-				            </div>
-				            
-				            <div class="messageBox">
-				            	<div class="memberMessage">dhkekekek</div>
-				            </div>
+	
 				        </div>
 				        
 				        <form name="sendFrm" method="post">
@@ -387,12 +444,13 @@
 			    </div><!-- modal-content -->
 			  </div>
 			</div>
-			<!--Modal-->                    
+			<!--Modal-->    
+			  </div>             
         </div>
         
 
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-
+		<script type="text/javascript" src="<c:url value='/js/chattingScripts.js'/>"></script>
     </body>
 </html>

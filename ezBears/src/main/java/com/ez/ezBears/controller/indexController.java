@@ -25,6 +25,7 @@ import com.ez.ezBears.teamWorkBoard.model.ToDoListDetailService;
 import com.ez.ezBears.temNotice.model.TeamNoticeService;
 
 import jakarta.servlet.http.HttpSession;
+import kotlin.reflect.jvm.internal.impl.descriptors.ConstUtil;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -54,7 +55,7 @@ public class indexController {
 		}else {
 			
 			//메인 페이지 공지사항
-			searchVo.setLastRecordIndex(5);
+			searchVo.setLastRecordIndex(6);
 			List<Map<String, Object>> noticeList = noticeService.selectMainNotice(searchVo);
 			logger.info("메인 공지사항 리스트 noticeList.size()",noticeList);
 			

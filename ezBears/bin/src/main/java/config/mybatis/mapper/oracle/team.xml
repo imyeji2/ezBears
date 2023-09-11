@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ez.ezBears.team.model.TeamDAO">
+	<sql id="searchWhere">
+		<where>
+			<if test="searchKeyword!=null and searchKeyword!=''">
+				${searchCondition} like '%' || #{searchKeyword} || '%'
+			</if>
+		</where>
+	</sql>
+
+	<insert id="insertTeam" parameterType="teamVo">
+		<selectKey keyProperty="playerNo" order="BEFORE" resultType="int">
+			select team_seq.nextval from dual
+		</selectKey>
+		insert into team(player_no, b_position_no, dept_no, back_no, player_name, player_birth,
+    		height, weight, player_sal, contract_start, contract_done, player_tel, player_info, 
+    		player_status, player_address, player_address_detail, player_zipcode, player_image)
+		values(#{playerNo}, #{positionNo}, #{deptNo}, #{backNo}, #{playerName}, #{playerBirth}, 
+			#{height}, #{weight}, #{playerSal}, #{contractStart}, #{contractDone}, #{playerTel}, #{playerInfo}, 
+    		'Y', #{playerAddress}, #{playerAddressDetail}, #{playerZipcode}, #{playerImage})
+	</insert>
+	
+	<select id="selectAllTeam" resultType="map" parameterType="searchVo">
+		select * 
+		from
+		(
+		    select rownum as RNUM, A.*
+		    from
+		    (
+        		select * from teamSelectView 
+				<include refid="searchWhere"></include>
+				order by player_no desc
+		    )A
+		)
+		<![CDATA[
+		where RNUM > #{firstRecordIndex}
+		and RNUM <= #{firstRecordIndex} + #{recordCountPerPage}
+		and PLAYER_STATUS = 'Y'
+		]]> 
+	</select>
+	
+	<select id="getTotalRecord" resultType="int" parameterType="searchVo">
+		select count(*) from teamSelectView
+		<include refid="searchWhere"></include>
+	</select>
+	
+	<select id="selectByPlayerNo" parameterType="int" resultType="map">
+		select * from teamSelectView where player_no = #{playerNo}
+	</select>
+	
+	<update id="updateTeam" parameterType="teamVo">
+		update team
+		set
+		dept_no=#{deptNo}, b_position_no=#{positionNo}, back_no=#{backNo},
+		player_name=#{playerName}, player_birth=#{playerBirth}, height=#{height},
+		weight=#{weight}, player_sal=#{playerSal}, contract_start=#{contractStart}, contract_done=#{contractDone},
+		player_tel=#{playerTel}, player_info=#{playerInfo}, player_address=#{playerAddress},
+		player_address_detail=#{playerAddressDetail},player_zipcode=#{playerZipcode},player_image=#{playerImage}
+		where player_no=#{playerNo}
+	</update>
+	
+	<update id="deleteTeam" parameterType="int">
+		update team
+		set 
+		player_status = 'N'
+		where player_no = #{playerNo}
+	</update>
+	
+	<!-- 부서에서 팀원 수 구하기 -->
+	
+	<select id="selectCntTeam" resultType="int">
+		SELECT COUNT(*) FROM TEAM
+	</select>
+</mapper>
