@@ -90,15 +90,15 @@ $(function () {
 						action="<c:url value='${url }'/>">
 		        	<div class="writeWrap">
 		        	<%-- <c:if test="${!empty param.noticeNo}"> --%>
-		        		<input type="text" name="boardNo" value="${boardNo}">
+		        		<input type="hidden" name="boardNo" value="${boardNo}">
 		        		<%-- <input type="text" name="randomNo" value="${randNo}"> --%>
 		        	<%-- </c:if> --%>
-		        		<c:if test="${sessionScope.type=='사원' }">사원
-				        		<input type="text" name="memNo" value="${sessionScope.memNo}">사원
+		        		<c:if test="${sessionScope.type=='사원' }">
+				        		<input type="hidden" name="memNo" value="${sessionScope.memNo}">
 		        		</c:if>
 		        		
-		        		<c:if test="${sessionScope.type=='스태프' }">스태프
-				        		<input type="text" name="staffNo" value="${sessionScope.staff_no}">스태프
+		        		<c:if test="${sessionScope.type=='스태프' }">
+				        		<input type="hidden" name="staffNo" value="${sessionScope.staff_no}">
 		        		</c:if>
 		        		
 		        		<%-- <input type="text" name="memNo" value="${map['NOTICE_NO']}"> --%>
