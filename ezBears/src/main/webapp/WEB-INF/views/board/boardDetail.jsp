@@ -26,7 +26,13 @@
 		$('#add_reply').click(function(event){
 		    event.preventDefault(); // 이벤트의 기본 동작 방지
 		    var replyData = $('form[name=reply_frm]').serialize(); // 데이터 직렬화
-		    alert(replyData);
+		    
+			 // 댓글 내용이 비어있는지 확인
+	          if ($.trim($('#addComment').val()) === '') {
+	              alert("댓글 내용을 입력해주세요.");
+	              return; // 댓글 내용이 비어있다면 함수를 빠져나감
+	          }
+		    
 		    $.ajax({
 		        type: 'post',
 		        url: "<c:url value='/board/reply_insert'/>",
@@ -154,7 +160,13 @@
 		    var $replyContainer = $(this).closest('form[name=rAddForm]');
 		    var replyData = $replyContainer.serialize(); // 데이터 직렬화      
             var curPage = $replyContainer.find('input[name=curPage]').val();
-		    alert(replyData);
+		    
+            // 대댓글 내용이 비어있는지 확인
+            if ($.trim($replyContainer.find('textarea[name=replyContent]').val()) === '') {
+                alert("대댓글 내용을 입력해주세요.");
+                return; // 대댓글 내용이 비어있다면 함수를 빠져나감
+            }
+            
 		    $.ajax({
 		        type: 'post',
 		        url: "<c:url value='/board/reReply_insert'/>",
@@ -233,7 +245,6 @@
 		        var $replyContainer = $(this).closest('.r_reply_write_form');
 		        var $replyDelForm = $replyContainer.find('form[name=reReplyDelFrom]'); // replyDelForm 선택
 		        var replyData = $replyDelForm.serialize(); // 데이터 직렬화
-			    console.log(replyData);
 			    if(confirm('정말 삭제하시겠습니까?')){
 				    $.ajax({
 				        type: 'post',

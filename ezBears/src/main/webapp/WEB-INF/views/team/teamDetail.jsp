@@ -68,7 +68,7 @@
 							<span class="sp1">몸무게</span> <span>${map['WEIGHT'] }</span>
 						</div>
 						<div>
-							<span class="sp1">연봉</span> <span>${map['PLAYER_SAL'] } 만원</span>
+							<span class="sp1">연봉</span> <span>${map['PLAYER_SAL'] } 원</span>
 						</div>
 						<div>
 							<span class="sp1">계약시작일</span> <span>
