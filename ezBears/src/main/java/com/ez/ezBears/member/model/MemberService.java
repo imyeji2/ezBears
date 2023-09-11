@@ -87,4 +87,7 @@ public interface MemberService {
     //본인 제외 전제 사원 검색
     List<Map<String, Object>> selectMemberList3(MemberSearchVO searchVo);
     int selectMemberListTotal3(MemberSearchVO searchVo);
+    
+    //전화번호 가지고오기
+    List<String> selectMemTel(int deptNo);
 }

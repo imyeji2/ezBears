@@ -376,10 +376,10 @@ public class MemberController {
 	
 	@RequestMapping("/sendMSG")
 	public String sendSms(Model model) {
-		logger.info("회원 등록 페이지");
+		logger.info("메세지 전송 페이지");
 		
 		List<DeptVO> deptList = deptService.selectDeptList();
-		
+
 		model.addAttribute("deptList", deptList);
 		
 		return "/sms/sendSMS";
