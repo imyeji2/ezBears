@@ -1,0 +1,81 @@
+@charset "UTF-8";
+
+/*전체 페이지 기본 속성(default) 변경 금지*/
+html, body{
+   margin: 0 auto;
+}
+
+body{
+   font-family: RobotoInCjk, "Noto Sans KR", 
+   "Apple SD Gothic Neo", "Nanum Gothic", 
+   "Malgun Gothic", sans-serif;
+   background:#F2EFFB;
+   color:#333;
+}
+
+
+ul,li{
+   margin:0px;
+   padding:0px;
+}
+
+a{
+   text-decoration: none;
+   cursor: pointer;
+   color: #fff;
+}
+
+a:hover{
+    color: #fff;
+}
+
+
+.f_left{
+   float: left;
+}
+
+.f_right{
+   float: right;
+}
+
+.clear{
+   clear: both;
+}
+
+p{
+   margin:0 auto;
+}
+
+
+/*관리자 css*/
+.admin_content{
+   width: 100%;
+   display: flex;
+   min-height: 100vh;
+}
+
+aside{
+   width:20%;;
+   background-color: #D8CEF6;
+   float: left;
+   padding:1% 0% 1% 0%;
+   box-sizing: border-box;
+}
+
+section{
+   width:80%;
+   float: left;
+   box-sizing: border-box;
+   
+}
+
+.top{
+   width:100%;
+   float: right;
+   height:80px;
+   background:#F2EFFB ;
+   border-bottom: 1px solid #d3d3d3;
+   position: fixed;
+   z-index: 99;
+}
+

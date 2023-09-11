@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ez.ezBears.teamWorkBoard.model.ToDoListDetailDAO">
+	<insert id="insertTodoListDetail" parameterType="toDoListDetailVo">
+		<selectKey keyProperty="todoDetailNo" order="BEFORE" resultType="int">
+			select TODOLIST_DETAIL_SEQ.nextval from dual
+		</selectKey>
+		insert into TODOLIST_DETAIL(TODO_DETAIL_NO,TODOLIST_NO,TODO_CONTENT)
+		values(#{todoDetailNo},#{todolistNo},#{todoContent}) 
+	</insert>
+	
+	<select id="selectToDoListDetail" parameterType="int" resultType="map">
+		SELECT * FROM todoListDetailMemberView
+		WHERE TODOLIST_NO = #{todolistNo}
+		order by TODO_CONTENT 
+	</select>
+
+	<select id="selectToDoListDetailY" parameterType="int" resultType="map">
+		SELECT * FROM todoListDetailMemberView
+		WHERE TODOLIST_NO = #{todolistNo}
+		AND STATUS ='Y';
+	</select>
+		
+	<update id="updateTodoStatus" parameterType="todoListDetailVo">
+		update TODOLIST_DETAIL
+		set status=#{status}
+		where TODO_DETAIL_NO=#{todoDetailNo}
+	</update>
+	
+	<update id="updateTodoMember" parameterType="todoListDetailVo">
+		update TODOLIST_DETAIL
+		set mem_no = #{memNo}
+		where TODO_DETAIL_NO=#{todoDetailNo}
+	</update>
+	
+	<update id="delTodoMember" parameterType="todoListDetailVo">
+		update TODOLIST_DETAIL
+		set mem_no = null
+		where TODO_DETAIL_NO=#{todoDetailNo}	
+	</update>
+	
+	<update id="updateTodoDetail" parameterType="todoListDetailVo">
+		update TODOLIST_DETAIL
+		set TODO_CONTENT= #{todoContent}
+		where TODO_DETAIL_NO=#{todoDetailNo}
+	</update>
+	
+	<delete id="delTodoDetail" parameterType="int">
+		delete from TODOLIST_DETAIL
+		where TODO_DETAIL_NO=#{todoDetailNo}
+	</delete>
+	
+	<delete id="delTodoDetailByToDoListNo">
+		delete from TODOLIST_DETAIL
+		where TODOLIST_NO=#{todolistNo}	
+	</delete>
+	
+	<select id="totalMemberTodolist" parameterType="int" resultType="int">
+		SELECT COUNT(*) AS TOTALCOUNT
+		FROM TODOLISTVIEW
+		<![CDATA[
+		WHERE start_regdate >= TRUNC(SYSDATE, 'MM') 
+		AND done_regdate < ADD_MONTHS(TRUNC(SYSDATE, 'MM'), 1)
+		]]>
+		AND MEM_NO=#{memNo}
+	</select>
+
+	<select id="completeMemberTodolist" parameterType="int" resultType="int">
+		SELECT COUNT(*) AS TOTALCOUNT
+		FROM TODOLISTVIEW
+		<![CDATA[
+		WHERE start_regdate >= TRUNC(SYSDATE, 'MM') 
+		AND done_regdate < ADD_MONTHS(TRUNC(SYSDATE, 'MM'), 1)
+		]]>
+		AND MEM_NO=#{memNo} and status='N'
+	</select>	
+	
+	<select id="incompleteMemberTodolist" parameterType="int" resultType="int">
+		SELECT COUNT(*) AS TOTALCOUNT
+		FROM TODOLISTVIEW
+		<![CDATA[
+		WHERE start_regdate >= TRUNC(SYSDATE, 'MM') 
+		AND done_regdate < ADD_MONTHS(TRUNC(SYSDATE, 'MM'), 1)
+		]]>
+		AND MEM_NO=#{memNo} and status='Y'
+	</select>	
+</mapper>

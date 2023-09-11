@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ez.ezBears.notice.model.NoticeDAO">
+
+	<sql id="searchWhere">
+		<where>
+			<if test="searchKeyword!=null and searchKeyword!=''">
+				${searchCondition} like '%' || #{searchKeyword} || '%'
+			</if>
+		</where>
+	</sql>
+
+	<select id="selectAllNotice" parameterType="searchVo" resultType="map">
+		select *
+		from
+		(
+			select rownum as RNUM, A.* from
+			(
+				select * from notice1
+				<include refid="searchWhere"></include>
+				order by notice_no desc
+			)A
+		)
+	  <![CDATA[
+      where RNUM> #{firstRecordIndex} 
+      and RNUM<=#{firstRecordIndex} + #{recordCountPerPage}]]>		
+	</select>
+
+	
+	<select id="selectTotalCount" parameterType="SearchVo" resultType="int">
+		select count(*) from notice1
+		<include refid="searchWhere"></include>
+	</select>
+
+
+	<insert id="insertNotice" parameterType="noticeVo">
+		<selectKey keyProperty="noticeNo" resultType="int" order="BEFORE">
+			select NOTICE_SEQ.nextval from dual
+		</selectKey>
+		insert into notice(NOTICE_NO, MEM_NO, NOTICE_TITLE, NOTICE_CONTENT)
+		values(#{noticeNo}, #{memNo}, #{noticeTitle}, #{noticeContent})
+	</insert> 
+	
+	<insert id="insertFileNotice" parameterType="noticefileVo">
+		<selectKey keyProperty="noticeFileNo" resultType="int" order="BEFORE">
+			select noticeFile_seq.nextval from dual
+		</selectKey>
+		insert into noticeFile(notice_file_no, notice_no, file_name, file_size, origin_fileName)
+		values(#{noticeFileNo},#{noticeNo},#{fileName},#{fileSize},#{originFileName})
+	</insert>
+	
+	<insert id="insertFileNotice1" parameterType="noticefileVo">
+		<selectKey keyProperty="noticeFileNo" resultType="int" order="BEFORE">
+			select noticeFile_seq.nextval from dual
+		</selectKey>
+		insert into noticeFile(notice_file_no, notice_no, file_name, file_size, origin_fileName)
+		values(#{noticeFileNo},#{noticeNo},#{fileName},#{fileSize},#{originFileName})
+	</insert>
+	
+	<select id="selectnoticeByNo" parameterType="int" resultType="noticeVo">
+		select * from notice
+		where NOTICE_NO=#{noticeNo}
+	</select>
+	
+
+	<select id="selectNoticeList" parameterType="int" resultType="map">
+		select * from notice1
+		order by NOTICE_NO desc
+	</select>
+
+	
+	<select id="selectDetail" parameterType="int" resultType="map">
+		select * from notice1
+		where NOTICE_NO=#{noticeNo}
+	</select>
+
+	<select id="selectNoticeFile" parameterType="int" resultType="map">
+		select * from noticefile
+		where NOTICE_NO=#{noticeNo}
+	</select>
+	
+	<select id="selectnoticeFileByNo" parameterType="int" resultType="map">
+		select * from noticefile
+		where NOTICE_NO=#{noticeNo}
+	</select>
+	
+	<update id="updateViewsCount" parameterType="int">
+		update notice1
+        set views = views+1
+        where NOTICE_NO=#{noticeNo}
+	</update>
+	
+	<select id="nextPage" resultType="map" parameterType="int">
+		SELECT NOTICE_NO, MEM_NO, NOTICE_TITLE, NOTICE_CONTENT, REGDATE, STATUS, VIEWS,MEM_NAME,
+		LAG(NOTICE_NO, 1,0) OVER(ORDER BY NOTICE_NO ) PREV_NUM,
+	    LAG(NOTICE_TITLE) OVER(ORDER BY NOTICE_NO ) PREV_TITLE,
+	    
+	    LEAD(NOTICE_NO,1,0) OVER (ORDER BY NOTICE_NO) AS NEXT_NUM,
+        LEAD(NOTICE_TITLE) OVER(ORDER BY NOTICE_NO ) NEXT_TITLE
+		FROM NOTICE1
+	</select>
+	
+	<update id="updateNotice" parameterType="noticeVo">
+		update notice
+		set NOTICE_TITLE = #{noticeTitle}, NOTICE_CONTENT=#{noticeContent}
+		where NOTICE_NO =#{noticeNo}
+	</update>
+	
+	<update id="updateNoticeFile" parameterType="noticefileVo">
+		update notice
+		set file_name = #{fileName}, file_size=#{fileSize},origin_fileName=#{originFileName}
+		where NOTICE_NO =#{noticeNo}
+	</update>
+	
+	
+	<delete id="deleteNoticeFile">
+		delete from noticefile
+		where NOTICE_NO =#{noticeNo}
+	</delete>
+	
+	<delete id="deleteNotice">
+		delete from notice
+		where NOTICE_NO =#{noticeNo}
+	</delete>
+	
+	<update id="updateDowncount" parameterType="int">
+		update noticefile
+		set	DOWN_COUNT=DOWN_COUNT+1
+		where NOTICE_FILE_NO=#{noticeFileNo}
+	</update>
+
+	<select id="selectMainNotice" parameterType="searchVo" resultType="map">
+		select *
+		from
+		(
+			select rownum as RNUM, A.*,
+			(sysdate-regdate)*24 as dateGap
+			from
+			(
+				select * from noticeView
+				order by notice_no desc
+			)A
+		)
+	  <![CDATA[
+      where RNUM<#{lastRecordIndex}]]>		
+	</select>
+</mapper>

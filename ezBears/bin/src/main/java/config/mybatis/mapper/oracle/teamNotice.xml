@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ez.ezBears.temNotice.model.TeamNoticeDAO">
+   
+   
+	<insert id="insertTeamNotice" parameterType="teamNoticeVo">
+		<selectKey keyProperty="teamNoticeNo" resultType="int" order="BEFORE">
+			select TEAM_NOTICE_SEQ.nextval from dual
+		</selectKey>
+		insert into team_Notice(TEAM_NOTICE_NO, MEM_NO, MY_BOARD_NO, TEAM_NOTICE_TITLE, 
+				TEAM_NOTICE_CONTENT,FSIZE,FILENAME,ORIGINNAME,CONTENTNO)
+		values(#{teamNoticeNo},#{memNo}, #{myBoardNo}, #{teamNoticeTitle},
+				#{teamNoticeContent},#{fsize},#{fileName},#{originname},#{teamNoticeNo})
+	</insert> 
+	
+	
+	
+   <sql id="searchWhere">
+      <where>
+     	 m_board_no=#{mBoardNo} 
+     	 and status='Y'
+     	<![CDATA[and step < 1]]>
+         <if test="searchKeyword!=null and searchKeyword!=''">
+             and  ${searchCondition} like '%' || #{searchKeyword} || '%'
+         </if>   
+      </where>
+   </sql>
+   
+
+	
+	<select id="selectTeamNoticeList" parameterType="myBoardSearchVo" resultType="map">
+      select *
+      from
+      (
+	      select rownum as RNUM, A.* from
+	      (		
+			select * from teamNoticeListView
+			<include refid="searchWhere"></include>
+			order by regdate desc
+	      )A
+      )
+      <![CDATA[
+      where RNUM> #{firstRecordIndex} 
+      and RNUM<=#{firstRecordIndex} + #{recordCountPerPage}]]>		
+	</select>
+	
+	
+	
+	
+	<select id="selectTotalCount" parameterType="myBoardSearchVo" resultType="int">
+		select count(*) from teamNoticeListView
+		<include refid="searchWhere"></include>
+	</select>
+	
+	
+	
+	
+	<select id="selectDetail" parameterType="int" resultType="map">
+		select * from teamNoticeListView
+		where team_notice_no=#{teamNoticeNo}
+	</select>
+	
+	
+	
+	
+	<update id="updateViewCount" parameterType="int">
+		update team_notice
+        set views = views+1
+        where team_Notice_no=#{teamNoticeNo}
+	</update>
+	
+	
+	
+	
+	<update id="updateTeamNotice" parameterType="teamNoticeVo">
+		update team_notice
+		set team_notice_title = #{teamNoticeTitle},
+		team_notice_content=#{teamNoticeContent}
+		<if test="fileName != null and fileName !=''">
+			,fsize=#{fsize},fileName=#{fileName},
+			originname=#{originname}
+		</if>
+		where team_Notice_No =#{teamNoticeNo}
+	</update>
+
+
+
+
+	<select id="selectTeamNoticeByNo" parameterType="int" resultType="teamNoticeVo">
+		select * from team_Notice
+		where team_notice_no=#{teamNoticeNo}
+	</select>
+	
+	
+	
+	
+	<parameterMap type="map" id="deleteTeamNoticeProc">
+		<!-- 아래 ?의 순서에 맞춰서 만들어야함 -->
+		<parameter property="teamNoticeNo" javaType="string" jdbcType="VARCHAR" mode="IN"/>
+		<parameter property="step" javaType="string" jdbcType="VARCHAR" mode="IN"/>
+		<parameter property="contentno" javaType="string" jdbcType="VARCHAR" mode="IN"/>
+		<parameter property="groupno" javaType="string" jdbcType="VARCHAR" mode="IN"/>
+	</parameterMap>
+	
+
+   <delete id="deleteTeamNotice" parameterMap="deleteTeamNoticeProc">
+   		call DELETETEAMNOTICE(?,?,?,?)
+   </delete>
+   
+ 
+ 
+ 
+	<update id="updateSortNo" parameterType="teamNoticeVo">
+		update team_Notice
+		set sortNo = sortNo+1
+		where CONTENTNO=#{contentno} and sortNo>#{sortno}
+	</update>
+	
+	
+	<select id="selectGroupNo" resultType="int">
+		select GROUPNO_SEQ.nextval from dual
+	</select>
+	
+   <insert id="insertReply" parameterType="teamNoticeVo">
+   
+		<selectKey keyProperty="teamNoticeNo" resultType="int" order="BEFORE">
+			select TEAM_NOTICE_SEQ.nextval from dual
+		</selectKey>
+		
+   		insert into team_Notice(TEAM_NOTICE_NO,MEM_NO,COMMENTS,GROUPNO,STEP,SORTNO,MY_BOARD_NO,CONTENTNO)
+   		values(#{teamNoticeNo},#{memNo},#{comments},#{groupno},#{step}+1,#{sortno}+1,#{myBoardNo},#{contentno})
+   </insert>
+   
+ 
+   
+   <select id="selectReply" parameterType="myBoardSearchVo" resultType="map">
+       select *
+	      from
+	      (
+	      select rownum as RNUM, A.* from
+		      (	
+		   		select * from teamNoticeListView
+		   		where CONTENTNO = #{contentno} and step>0
+		   		order by groupNo desc, step, sortno desc
+ 				)A
+     		 )
+      <![CDATA[
+      where RNUM> #{firstRecordIndex} 
+      and RNUM<=#{firstRecordIndex} + #{recordCountPerPage}]]>				   		
+   </select>
+   
+   
+   
+   <select id="selectReplyTotalCount" parameterType="myBoardSearchVo" resultType="int">
+  	   	select count(*) from teamNoticeListView
+   		where CONTENTNO = #{contentno} and step>0
+ 	</select>
+
+
+	
+
+   <select id="selectReplyTeamNoticeNo" parameterType="int" resultType="map">
+   		select * from teamNoticeListView
+   		where team_notice_no = #{teamNoticeNo}
+   </select>   	
+   
+   
+   
+   <update id="updeteReply" parameterType="teamNoticeVo">
+	   	update team_Notice
+	   	set COMMENTS = #{comments}
+	   	where team_notice_no=#{teamNoticeNo}
+   </update>
+   
+   
+   <insert id="insertReReply" parameterType="teamNoticeVo">
+		<selectKey keyProperty="teamNoticeNo" resultType="int" order="BEFORE">
+			select TEAM_NOTICE_SEQ.nextval from dual
+		</selectKey>
+		
+   		insert into team_Notice(TEAM_NOTICE_NO,MEM_NO,COMMENTS,GROUPNO,STEP,SORTNO,MY_BOARD_NO,CONTENTNO)
+   		values(#{teamNoticeNo},#{memNo},#{comments},#{groupno},#{step}+1,#{sortno}+1,#{myBoardNo},#{contentno})
+   </insert>
+   
+   <update id="deleteFile" parameterType="int">
+   		update team_notice
+   		set fsize=0, fileName=null, originname=null
+   		where team_notice_no=#{teamNoticeNo}
+   </update>
+   
+	<select id="selectMainTeamNoticeList" parameterType="myBoardSearchVo" resultType="map">
+      select *
+      from
+      (
+	      select rownum as RNUM,
+	      (sysdate-regdate)*24 as dateGap,
+	       A.*
+	       from
+	      (		
+			select * from teamNoticeListView
+			where m_board_no=#{mBoardNo} 
+     	 	and status='Y' and step=0
+			order by regdate desc
+			
+	      )A
+      )
+	  <![CDATA[
+      where RNUM<#{lastRecordIndex}]]>		
+	</select>   
+	
+   
+    <select id="selectTeamNoticeNext" parameterType="map" resultType="map">
+        select a.*
+		from(
+			select team_notice_no,m_board_no,team_notice_title,
+		    lag(team_notice_no,1) over(order by team_notice_no) as prev,
+		    lag(team_notice_title,1) over(order by team_notice_no) as prev_title, 
+		    lag(m_board_no,1) over(order by team_notice_no) as prev_m_board_no,
+		    lead(team_notice_no,1) over(order by team_notice_no) as next,  
+		    lead(team_notice_title,1) over(order by team_notice_no) as next_title,
+		    lead(m_board_no,1) over(order by team_notice_no) as next_m_board_no
+			from teamnoticelistview
+			where team_notice_title is not null 
+			and m_board_no=#{mBoardNo} 
+			)a
+			where team_notice_no=#{teamNoticeNo}
+    </select>
+</mapper>

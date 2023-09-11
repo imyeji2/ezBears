@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.ez.ezBears.record.pitcher.model.PitcherDAO">
+	<sql id="searchWhere">
+		<where>
+			<if test="searchKeyword!=null and searchKeyword!=''">
+				${searchCondition} like '%' || #{searchKeyword} || '%'
+			</if>
+		</where>
+	</sql>
+
+	<select id="selectCheckId" parameterType="string"
+		resultType="int">
+		select count(*) from STAFF
+		where STAFF_ID=#{staffId}
+	</select>
+
+	<select id="selectPwd" parameterType="String"
+		resultType="string">
+	select STAFF_PWD from STAFF
+	where STAFF_ID=#{staffId}
+	</select>
+
+	<select id="selectStatus" parameterType="String"
+		resultType="string">
+		select STAFF_STATUS from STAFF
+		where STAFF_ID=#{staffId}
+	</select>
+
+	<insert id="insertPitcher" parameterType="pitcherVo">
+		<!-- <selectKey keyProperty="pitcherNo" order="BEFORE"
+			resultType="int">
+			select pitcher_seq.nextval from dual
+		</selectKey> -->
+		insert into pitcher(pitcher_no, recode_no, player_no, staff_no, regdate
+		, bb, so, ip, ha, rc, er, hr, era)
+		values(pitcher_seq.nextval, #{recodeNo},
+		#{playerNo}, #{staffNo}, sysdate, #{BB}, #{SO}, #{IP}, #{HA}, #{RC},
+		#{ER}, #{HR}, #{ERA})
+
+	</insert>
+
+	<select id="selectPitcherByPlayerNo" resultType="pitcherVo"
+		parameterType="int">
+		select * from pitcher
+		where player_no = #{playerNo}
+	</select>
+
+	<select id="selectPitcherView" parameterType="int"
+		resultType="map">
+		select * from pitcher_view where player_no = #{playerNo}
+	</select>
+
+	<select id="selectPitcherRecordView" parameterType="int"
+		resultType="map">
+		select * from pitcher_record_view where recode_no = #{recodeNo}
+	</select>
+	
+	<select id="selectAllPitcher" resultType="teamVo">
+		select * from team where b_position_no = 1 order by player_name
+	</select>
+	
+	<update id="updatePitcher" parameterType="pitcherVo">
+		update pitcher
+		set
+		bb=#{BB}, so=#{SO}, ip=#{IP}, ha=#{HA}, rc=#{RC}, er=#{ER}, hr=#{HR}, era=#{ERA}
+		where player_no=#{playerNo} and recode_no=#{recodeNo}
+	</update>
+    
+    <delete id="deletePitcher" parameterType="int">
+    	delete pitcher
+    	where player_no=#{playerNo}
+    </delete>
+	
+	<select id="selectByRecodeNo" resultType="pitcherVo">
+		select *
+		from pitcher
+		where recode_no = #{recodeNo} and player_no = #{playerNo}
+	</select>
+	
+	 <select id="selectPitcherStatView" parameterType="int" resultType="map">
+    	select * from pitcher_stat_view
+    	where player_no=#{playerNo}
+    </select>
+	
+	<select id="selectAllPitcherStat" parameterType="int">
+		select * from pitcher_stat_view
+	</select>
+	
+</mapper>

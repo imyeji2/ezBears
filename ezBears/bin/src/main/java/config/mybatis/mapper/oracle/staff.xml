@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ez.ezBears.staff.model.StaffDAO">
+	<sql id="searchWhere">
+		<where>
+			<if test="searchKeyword!=null and searchKeyword!=''">
+				${searchCondition} like '%' || #{searchKeyword} || '%'
+			</if>
+		</where>
+	</sql>
+
+	<select id="selectCheckId" parameterType="string"
+		resultType="int">
+		select count(*) from STAFF  
+		where STAFF_ID=#{staffId}
+	</select>
+	
+	<select id="selectPwd" parameterType="String"
+		resultType="string">
+		select STAFF_PWD from STAFF 
+		where STAFF_ID=#{staffId}
+	</select> 
+
+	<select id="selectStatus" parameterType="String"
+		resultType="string">
+		select STAFF_STATUS from STAFF 
+		where STAFF_ID=#{staffId}
+	</select> <!-- vo랑 map가 NULL값이 들어오면 return이 안된다 -->
+	
+	
+	<insert id="insertStaff" parameterType="staffVo">
+		<selectKey keyProperty="staffNo" order="BEFORE" resultType="int">
+			select staff_seq.nextval from dual
+		</selectKey>
+		insert into staff(staff_no, dept_no, staff_name, staff_position, staff_back_no, 
+    		staff_birth, staff_sal, contract_start, contract_done, staff_tel, staff_info, staff_zipcode,
+    		staff_addr, staff_addr_detail, staff_status, staff_id, staff_pwd, staff_image)
+		values(#{staffNo}, #{deptNo}, #{staffName}, #{staffPosition}, #{staffBackNo}, 
+			#{staffBirth}, #{staffSal}, #{contractStart}, #{contractDone}, #{staffTel}, #{staffInfo}, #{staffZipcode},
+			#{staffAddr}, #{staffAddrDetail}, 'Y', #{staffId}, #{staffPwd}, #{staffImage})
+	</insert>
+	
+	<select id="selectAllStaff" resultType="staffVo" parameterType="searchVo">
+		select *
+		from
+		(
+			select rownum as RNUM, A.* from
+			(
+				select * from staff
+				<include refid="searchWhere"></include>
+					<!-- where staff_id like '%ez_st%' -->
+				order by staff_no desc
+			)A
+		)
+		<![CDATA[
+		where RNUM> #{firstRecordIndex} 
+		and RNUM<=#{firstRecordIndex} + #{recordCountPerPage}
+		and staff_status='Y']]>
+	</select>
+	
+	<select id="getStaffById" parameterType="String" resultType="staffVo">
+        SELECT * FROM STAFF WHERE STAFF_ID = #{staffId}
+    </select>
+	
+	<select id="getTotalRecord" resultType="int" parameterType="searchVo">
+		select count(*) from staff
+		<include refid="searchWhere"></include>
+	</select>
+	
+	<select id="selectByStaffNo" parameterType="int" resultType="staffVo">
+		select * from staff where STAFF_NO=#{staffNo}
+	</select>
+	
+	<select id="selectStaffView" parameterType="String" resultType="map">
+    	select * from staffView where STAFF_ID = #{staffId}
+    </select>
+  
+	<update id="updateStaff" parameterType="staffVo">
+		update staff
+		set
+		dept_no=#{deptNo}, staff_name=#{staffName}, staff_position=#{staffPosition}, staff_back_no=#{staffBackNo},
+		staff_birth=#{staffBirth}, staff_sal=#{staffSal}, contract_done=#{contractDone},
+		staff_tel=#{staffTel}, staff_info=#{staffInfo}, staff_zipcode=#{staffZipcode}, staff_addr=#{staffAddr},
+		staff_addr_detail=#{staffAddrDetail}, staff_id=#{staffId}, staff_pwd=#{staffPwd}, staff_image=#{staffImage}
+		where staff_no=#{staffNo}
+	</update>
+	
+	<update id="deleteStaff" parameterType="int">
+		update staff
+		set staff_status='N'
+		where staff_no=#{staffNo}
+	</update>
+	
+	<select id="getTodayStaff" parameterType="string" resultType="int">
+		select count(*) from staff where contract_start = #{contractStart}
+	</select>
+	
+	<select id="isStaffId" parameterType="string" resultType="int">
+		select count(*) from staff where staff_id = #{staffId}
+	</select>
+	
+	
+	<!-- 부서에서 스태프 수 불러오기 -->
+	<select id="selectCntStaff" resultType="int">
+		SELECT COUNT(*) FROM STAFF
+	</select>
+	
+	
+	<select id="selectStaffNo" parameterType="String" resultType="int">
+    	SELECT STAFF_NO FROM staff
+    	WHERE STAFF_ID=#{staffId}
+    </select>
+    
+    <!-- 마이페이지 -->
+    <select id="selectByUserid" parameterType="string"
+		resultType="staffVo">
+		select * from staff
+		where staff_id=#{staffId}
+	</select>
+	
+	
+	<update id="updateMypage" parameterType="staffVo">
+		update staff
+		set staff_tel=#{staffTel},
+		staff_zipcode=#{memZipcode}, staff_address=#{memAddress}, staff_address_Detail=#{memAddressDetail}
+		where staff_id=#{staffId}
+	</update>
+	
+	<update id="updatePwd" parameterType="staffVo">
+		update staff
+		set staff_pwd=#{staffPwd}
+		where staff_id=#{staffId}
+	</update>
+	
+</mapper>

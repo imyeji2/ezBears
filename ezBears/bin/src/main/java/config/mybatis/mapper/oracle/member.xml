@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ez.ezBears.member.model.MemberDAO">
+
+	<!-- 판주 -->
+	<!-- 로그인 관련 -->
+	<select id="selectCheckId" parameterType="string" resultType="int">
+		select count(*) from member 
+		where MEM_ID=#{memId}
+	</select>
+	
+	<select id="selectPwd" parameterType="string" resultType="string">
+		select MEM_PWD from member
+		where MEM_ID=#{memId}
+		and CONTRACT_DONE is null
+	</select>
+    
+    <select id="selectMemberNo" parameterType="String" resultType="int">
+    	SELECT MEM_NO FROM MEMBER
+    	WHERE MEM_ID=#{memId}
+    </select>
+    
+    <select id="selectMemberView" parameterType="String" resultType="map">
+    	select * from memberView1 where MEM_ID = #{memId} 
+    </select>
+    
+	
+	<!-- 다희 -->
+	<!-- 자동 아이디 생성 관리 및 멤버 등록  -->
+	<select id="getTodayMem" resultType="int">
+		SELECT COUNT(*) FROM MEMBER WHERE CONTRACT_START = #{contractStart}
+	</select>
+	
+	<select id="isMemId" resultType="int">
+		SELECT COUNT(*) FROM MEMBER WHERE MEM_ID = #{memId}
+	</select>
+	
+	<insert id="insertMem" parameterType="memberVo">
+		<selectKey keyProperty="memNo" order="BEFORE" resultType="int">
+		 SELECT MEMBER_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO MEMBER(MEM_NO, DEPT_NO, POSITION_NO, MEM_NAME, MEM_ID, MEM_PWD, MEM_TEL,MEM_SAL, 
+				CONTRACT_START, TYPE, MEM_ADDRESS, MEM_ADDRESS_DETAIL, MEM_ZIPCODE, MEM_IMAGE, MEM_BIRTH)
+		VALUES(#{memNo},#{deptNo},#{positionNo},#{memName},#{memId},#{memPwd},#{memTel}, #{memSal},
+				#{contractStart},#{type},#{memAddress},#{memAddressDetail},#{memZipcode},#{memImage},#{memBirth})
+	</insert>
+	
+	<select id="getMemberById" parameterType="String" resultType="memberVo">
+        SELECT * FROM MEMBER WHERE MEM_ID = #{memId}
+    </select>
+    
+    <update id="updateMember" parameterType="memberVo">
+        UPDATE MEMBER
+        SET MEM_NAME = #{memName},
+            MEM_BIRTH = #{memBirth},
+            CONTRACT_START = #{contractStart}
+        WHERE MEM_ID = #{memId}
+    </update>
+    <!-- 여기까지 -->
+
+	<!-- 전체멤버 페이징처리후 뿌려주기 -->
+    <select id="selectAllMem" parameterType="searchVo" resultType="memberVo">
+    	SELECT * FROM 
+    	(
+    		SELECT ROWNUM AS RNUM, A.* FROM 
+    		(
+        		SELECT * FROM MEMLISTVIEW 
+        		<include refid="searchWhere"></include>
+        		ORDER BY DEPT_NAME, POSITION_NO DESC, MEM_NAME
+    		)A
+		)
+		
+		<![CDATA[
+		WHERE RNUM > #{firstRecordIndex} 
+		AND RNUM <= #{firstRecordIndex} + #{recordCountPerPage}
+		]]>
+    </select>
+    
+    <!-- 총 멤버 리스트 수 -->
+    <select id="totalList" parameterType="searchVo" resultType="int">
+    	SELECT COUNT(*) FROM MEMLISTVIEW
+    	<include refid="searchWhere"></include>
+    </select>
+    
+    <!-- 멤버 디테일 페이지 -->
+    <select id="memberDetail" parameterType="int" resultType="memberVo">
+    	SELECT * FROM MEMLISTVIEW WHERE MEM_NO = #{memNo}
+    </select>
+    
+    <!-- 멤버 디테일 수정 페이지 -->
+    <update id="updateMemberFromAdmin" parameterType="memberVo">
+    	UPDATE MEMBER 
+		SET MEM_IMAGE = #{memImage}, DEPT_NO = #{deptNo}, POSITION_NO = #{positionNo}, MEM_SAL =#{memSal}, CONTRACT_DONE = #{contractDone}, TYPE= #{type}
+		WHERE MEM_NO = #{memNo}
+    </update>
+    
+    <!-- 부서 삭제시 그 부서에 들어있는 인원체크 -->
+    <select id="countMem" parameterType="int" resultType="int">
+    	SELECT COUNT(*) FROM MEMBER WHERE DEPT_NO = #{deptNo} AND CONTRACT_DONE IS NULL
+    </select>
+	
+	<!-- 멤버 퇴사 처리 -->
+	<update id="deleteMem" parameterType="int" >
+		UPDATE MEMBER
+		SET CONTRACT_DONE = SYSDATE
+		WHERE MEM_NO = #{memNo} AND CONTRACT_DONE IS NULL
+	</update>
+	
+    <!-- 검색where조건 -->
+    <sql id="searchWhere">
+		<where>
+			<if test="searchKeyword!=null and searchKeyword!=''">
+			    TO_CHAR(MEMLISTVIEW.MEM_NAME) LIKE '%'|| #{searchKeyword} ||'%'
+			    OR TO_CHAR(MEMLISTVIEW.MEM_ID) LIKE '%'|| #{searchKeyword} ||'%'
+			    OR TO_CHAR(MEMLISTVIEW.MEM_TEL) LIKE '%'|| #{searchKeyword} ||'%'
+			    OR TO_CHAR(MEMLISTVIEW.TYPE) LIKE '%'|| #{searchKeyword} ||'%'
+			    OR TO_CHAR(MEMLISTVIEW.DEPT_NAME) LIKE '%'|| #{searchKeyword} ||'%'
+			    OR TO_CHAR(MEMLISTVIEW.POSITION_NAME) LIKE '%'|| #{searchKeyword} ||'%'
+			</if>
+		</where>
+	</sql>
+	
+	<!-- 사원 스태프 전체 검색 -->
+	<select id="selectMemStaff" parameterType="searchVo" resultType="map">
+		SELECT * FROM 
+    	(
+    		SELECT ROWNUM AS RNUM, A.* FROM 
+    		(
+        		SELECT * FROM ALLMEMSTAFFVIEW 
+        		<include refid="searchWhere2"></include>
+        		ORDER BY DEPT_NAME, POSITION_NO DESC, MEM_NAME, STAFF_NAME
+    		)A
+		)	
+			
+		<![CDATA[
+		WHERE RNUM > #{firstRecordIndex} 
+		AND RNUM <= #{firstRecordIndex} + #{recordCountPerPage}
+		]]>
+		
+	</select>
+	
+	<sql id="searchWhere2">
+		<where>
+			<if test="searchKeyword!=null and searchKeyword!=''">
+			    TO_CHAR(ALLMEMSTAFFVIEW.MEM_NAME) LIKE '%'|| #{searchKeyword} ||'%'
+			    OR TO_CHAR(ALLMEMSTAFFVIEW.DEPT_NAME) LIKE '%'|| #{searchKeyword} ||'%'
+			    OR TO_CHAR(ALLMEMSTAFFVIEW.POSITION_NAME) LIKE '%'|| #{searchKeyword} ||'%'
+			    OR TO_CHAR(ALLMEMSTAFFVIEW.STAFF_NAME) LIKE '%'|| #{searchKeyword} ||'%'
+			    OR TO_CHAR(ALLMEMSTAFFVIEW.STAFF_POSITION) LIKE '%'|| #{searchKeyword} ||'%'
+            </if>
+		</where>
+	</sql>
+	
+	<select id="allMemCnt" parameterType="searchVo" resultType="int">
+    	SELECT COUNT(*) FROM ALLMEMSTAFFVIEW
+    	<include refid="searchWhere2"></include>
+    </select>
+	
+	<!-- 희진  -->
+	<select id="selectpositioninfo" parameterType="int" resultType="memberVo">
+		select * from member 
+		where dept_no = #{deptNo} 
+		and position_no =6
+	</select>
+	
+	
+	<!-- 마이페이지수정  -->
+	<select id="selectByUserid" parameterType="string"
+		resultType="memberVo">
+		select * from member
+		where mem_id=#{memId}
+	</select>
+	
+	<update id="updateMypage" parameterType="memberVo">
+		update member
+		set mem_tel=#{memTel},
+		mem_zipcode=#{memZipcode}, mem_address=#{memAddress}, mem_address_Detail=#{memAddressDetail}
+		where mem_id=#{memId}
+	</update>
+	
+	<update id="updatePwd" parameterType="memberVo">
+		update member
+		set mem_pwd=#{memPwd}
+		where mem_id=#{memId}
+	</update>
+	
+	<select id="AllselectMem" parameterType="searchVo" resultType="map">
+		select * from 
+		(
+		    select rownum as rnum, a.* from
+		        (
+		            SELECT * FROM ALLMEMSTAFFVIEW
+					<include refid="searchWhere3"></include>
+					ORDER BY MEM_NAME, STAFF_NAME
+		        )a
+		)
+		<![CDATA[
+		where rnum > 0 and rnum <= 5
+		]]>
+		 
+	</select>
+	
+	<sql id="searchWhere3">
+		<where>
+			<if test="searchKeyword!=null and searchKeyword!=''">
+			    TO_CHAR(ALLMEMSTAFFVIEW.MEM_NAME) LIKE '%'|| #{searchKeyword} ||'%'
+			    OR TO_CHAR(ALLMEMSTAFFVIEW.STAFF_NAME) LIKE '%'|| #{searchKeyword} ||'%'
+            </if>
+		</where>
+	</sql>
+	<select resultType="memberVo" id="memPositionNoInfo">
+		select * from member
+		where mem_id = #{memId}
+	 </select>
+	 	 
+	 <select id="selectMemberList" parameterType="searchVo" resultType="map">
+    	SELECT * FROM 
+    	(
+    		SELECT ROWNUM AS RNUM, A.* FROM 
+    		(
+        		SELECT * FROM memberview1
+        		<include refid="searchWhereMember"></include>
+        		ORDER BY MEM_NAME, DEPT_NAME,POSITION_NO
+    		)A
+		)
+		
+		<![CDATA[
+		WHERE RNUM > #{firstRecordIndex} 
+		AND RNUM <= #{firstRecordIndex} + #{recordCountPerPage}
+		]]>
+	 </select>
+	 
+    <sql id="searchWhereMember">
+		<where>
+			CONTRACT_DONE is null 
+			<if test="deptNo!=null and deptNo!=''">
+				AND dept_No = #{deptNo}
+			</if>
+		</where>
+	</sql>	 
+
+	 <select id="selectMemberList2" parameterType="myBoardMemberSearchVo" resultType="memberVo">
+    	SELECT * FROM 
+    	(
+    		SELECT ROWNUM AS RNUM, A.* FROM 
+    		(
+                SELECT * FROM 
+                (
+				select MEM_NO, MEM_NAME, MEM_IMAGE, POSITION_NAME, DEPT_NAME, DEPT_NO,CONTRACT_DONE 
+				from myBoardMemberView
+				MINUS 
+				select MEM_NO, MEM_NAME, MEM_IMAGE, POSITION_NAME, DEPT_NAME, DEPT_NO,CONTRACT_DONE
+				from myBoardMemberView
+				WHERE m_Board_no =#{mBoardNo} AND STATUS='Y'
+        		ORDER BY MEM_NAME, DEPT_NAME
+                )
+               <include refid="searchWhereMember"></include> 
+    		)A
+		)
+		
+		<![CDATA[
+		WHERE RNUM > #{firstRecordIndex} 
+		AND RNUM <= #{firstRecordIndex} + #{recordCountPerPage}
+		]]>
+	 </select>	
+	<select id="selectMemberListTotal" parameterType="myBoardMemberSearchVo" resultType="int">	 
+			SELECT count(*) FROM 
+                (
+					select MEM_NO, MEM_NAME, MEM_IMAGE, POSITION_NAME, DEPT_NAME, DEPT_NO ,CONTRACT_DONE
+					from myBoardMemberView
+					MINUS 
+					select MEM_NO, MEM_NAME, MEM_IMAGE, POSITION_NAME, DEPT_NAME, DEPT_NO, CONTRACT_DONE  
+					from myBoardMemberView
+					WHERE m_Board_no =#{mBoardNo} AND STATUS='Y'
+	        		ORDER BY MEM_NAME, DEPT_NAME
+                )
+              <include refid="searchWhereMember"></include>
+	</select>
+
+	 <select id="selectAllMemberView" resultType="map">
+	 	select * from memberView1
+	 </select>
+	 
+	 
+	 <select id="selectDeptPositionInfo" >
+	 	select * from member
+		where dept_no = 1 and position_no=6
+	 </select>
+	 
+	 
+	 <select id="selectMemberList3" parameterType="memberSearchVo" resultType="map">
+    	SELECT * FROM 
+    	(
+    		SELECT ROWNUM AS RNUM, A.* FROM 
+    		(
+        		SELECT * FROM memberview1
+        		<include refid="searchWhereMember3"></include>
+        		ORDER BY MEM_NAME, DEPT_NAME,POSITION_NO
+    		)A
+		)
+		
+		<![CDATA[
+		WHERE RNUM > #{firstRecordIndex} 
+		AND RNUM <= #{firstRecordIndex} + #{recordCountPerPage}
+		]]>
+	 </select>			
+
+	 <select id="selectMemberListTotal3" parameterType="memberSearchVo" resultType="int">
+    	SELECT count(*) FROM 
+    	(
+    		SELECT ROWNUM AS RNUM, A.* FROM 
+    		(
+        		SELECT * FROM memberview1
+        		<include refid="searchWhereMember3"></include>
+        		ORDER BY MEM_NAME, DEPT_NAME,POSITION_NO
+    		)A
+		)
+	 </select>	
+	 
+    <sql id="searchWhereMember3">
+		<where>
+			CONTRACT_DONE is null and mem_no != #{memNo}
+			<if test="deptNo!=null and deptNo!=''">
+				AND dept_No = #{deptNo}
+			</if>
+		</where>
+	</sql>	 		
+ 
+</mapper>

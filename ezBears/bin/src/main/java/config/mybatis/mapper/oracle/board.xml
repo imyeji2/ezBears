@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ez.ezBears.board.model.BoardDAO">
+
+	<sql id="searchWhere">
+		<where>
+			<if test="searchKeyword!=null and searchKeyword!=''">
+				${searchCondition} like '%' || #{searchKeyword} || '%'
+			</if>
+		</where>
+	</sql>
+
+	<select id="selectAllBoard"  parameterType="myBoardSearchVo" resultType="map">
+		select *
+		from
+		(
+			select rownum as RNUM, A.* from
+			(
+				select * from board1
+				<include refid="searchWhere"></include>
+				where random_id is not null and status='Y'
+				order by BOARD_NO desc
+			)A
+		)
+	  <![CDATA[
+      where RNUM> #{firstRecordIndex} 
+      and RNUM<=#{firstRecordIndex} + #{recordCountPerPage}]]>		
+	</select>
+	
+	<select id="boardAll" resultType="map">
+		select random_id from board
+	</select>
+	
+	<select id="boardWriteAll" resultType="map">
+		select random_write from board
+	</select>
+	
+	<select id="selectTotalCount" parameterType="myBoardSearchVo" resultType="int">
+		select count(*) from board
+		<include refid="searchWhere"></include>
+	</select>
+	
+	   <sql id="insertboard">
+         <if test="memNo!=0">
+             insert into board(board_no, mem_no, board_title, board_content,contentNo, RANDOM_ID)
+	    	 values(#{boardNo}, #{memNo}, #{boardTitle}, #{boardContent},#{contentno} , #{randomId,jdbcType=VARCHAR})
+          </if>
+          <if test="staffNo!=0">
+            insert into board(board_no,  board_title, board_content,contentNo, RANDOM_ID, staff_no)
+	    	values(#{boardNo},  #{boardTitle}, #{boardContent},#{contentno} , #{randomId,jdbcType=VARCHAR}, #{staffNo})
+          </if>
+        </sql>
+	
+	<insert id="insertBoard" parameterType="boardVo">
+	    <selectKey keyProperty="boardNo" resultType="int" order="BEFORE">
+	        select BOARD_SEQ.nextval from dual
+	    </selectKey>
+	  	<include refid="insertboard"></include>
+	</insert>
+	
+	<select id="checkExistingRandomId" parameterType="String" resultType="int">
+	    select count(*) from board
+	    where RANDOM_ID=#{randomId}
+	</select>
+	
+	<select id="checkExistingWriteId" parameterType="String" resultType="int">
+	    select count(*) from board
+	    where RANDOM_WRITE=#{randomWrite}
+	</select>
+	
+	
+	<insert id="insertFileBoard" parameterType="boardfileVo">
+		<selectKey keyProperty="boardFileNo" resultType="int" order="BEFORE">
+			select boardFile_seq.nextval from dual
+		</selectKey>
+		insert into boardFile(board_file_no, board_no, file_name, file_size, origin_fileName)
+		values(#{boardFileNo},#{boardNo},#{fileName},#{fileSize},#{originFileName})
+	</insert>
+	
+	<update id="updateDowncount" parameterType="int">
+		update boardfile
+		set	DOWN_COUNT=DOWN_COUNT+1
+		where BOARD_FILE_NO=#{boardFileNo}
+	</update>
+	
+	
+	<select id="nextPage" resultType="map" parameterType="int">
+		SELECT BOARD_NO, MEM_NO, BOARD_TITLE, BOARD_CONTENT, REGDATE, STATUS, VIEWS,RANDOM_ID,
+		LAG(BOARD_NO, 1,0) OVER(ORDER BY BOARD_NO ) PREV_NUM,
+	    LAG(BOARD_TITLE) OVER(ORDER BY BOARD_NO ) PREV_TITLE,
+	    
+	    LEAD(BOARD_NO,1,0) OVER (ORDER BY BOARD_NO) AS NEXT_NUM,
+        LEAD(BOARD_TITLE) OVER(ORDER BY BOARD_NO ) NEXT_TITLE
+		FROM BOARD1
+        where RANDOM_ID is not null
+	</select>
+	
+	<select id="selectDetail" parameterType="int" resultType="map">
+		select * from board_view
+		where BOARD_NO=#{boardNo}
+	</select>
+	
+	<update id="updateViewsCount" parameterType="int">
+		update board
+        set views = views+1
+        where BOARD_NO=#{boardNo}
+	</update>
+	
+	<select id="selectBoardList" parameterType="int" resultType="map">
+		select * from board_view
+		order by BOARD_NO desc
+	</select>
+	
+	<select id="selectBoardFile" parameterType="int" resultType="map">
+		select * from boardfile
+		where BOARD_NO=#{boardNo}
+	</select>
+	
+	
+	<delete id="deleteBoardFile">
+		delete from boardfile
+		where BOARD_NO =#{boardNo}
+	</delete>
+ 	
+	<delete id="deleteBoard">
+		delete from board
+		where BOARD_NO = #{boardNo}
+	</delete>
+	
+	<select id="selectboardFileByNo" parameterType="int" resultType="map">
+		select * from boardfile
+		where BOARD_NO =#{boardNo}
+	</select>
+	
+	<update id="updateboard" parameterType="boardVo">
+		update board
+		set BOARD_TITLE=#{boardTitle}, BOARD_CONTENT=#{boardContent}
+		where BOARD_NO=#{boardNo}
+	</update>
+	
+	
+	<sql id="insertReplyBoard">
+         <if test="memNo!=0">
+             insert into board(BOARD_NO,MEM_NO,GROUP_NO,STEP,SORTNO,CONTENTNO,COMMENTS,RANDOM_WRITE)
+   			 values(#{boardNo},#{memNo},#{groupno},#{step}+1,#{sortno}+1,#{contentno},#{comments},#{randomWrite})
+          </if>
+          <if test="staffNo!=0">
+	    	 insert into board(BOARD_NO,STAFF_NO,GROUP_NO,STEP,SORTNO,CONTENTNO,COMMENTS,RANDOM_WRITE)
+   			 values(#{boardNo},#{staffNo},#{groupno},#{step}+1,#{sortno}+1,#{contentno},#{comments},#{randomWrite})
+          </if>
+    </sql>
+	
+	<insert id="insertReply" parameterType="boardVo">
+		<selectKey keyProperty="boardNo" resultType="int" order="BEFORE">
+			select BOARD_SEQ.nextval from dual
+		</selectKey>
+		<include refid="insertReplyBoard"></include>
+   </insert>
+   
+   
+   <update id="updateSortNo" parameterType="boardVo">
+		update board
+		set sortNo = sortNo + 1
+		where CONTENTNO=#{contentno} and sortNo>#{sortno}
+	</update>
+	
+	
+	<select id="selectGroupNo" resultType="int">
+		select GROUPNO_SEQ.nextval from dual
+	</select>
+	
+	
+	<select id="selectReply" parameterType="myBoardSearchVo" resultType="map">
+       select *
+	      from
+	      (
+	      select rownum as RNUM, A.* from
+		      (	
+		   		select * from board_view
+		   		where CONTENTNO = #{contentno} and step>0
+		   		order by group_No, step, sortno desc
+ 				)A
+     		 )
+      <![CDATA[
+      where RNUM> #{firstRecordIndex} 
+      and RNUM<=#{firstRecordIndex} + #{recordCountPerPage}]]>				   		
+   </select>
+	
+	<select id="selectReplyTotalCount" parameterType="myBoardSearchVo" resultType="int">
+  	   	select count(*) from board_view
+   		where CONTENTNO = #{contentno} and step>0
+ 	</select>
+	
+	
+	<select id="selectReplyBoardNo" parameterType="int" resultType="boardVo">
+   		select * from board_view
+   		where board_no = #{boardNo}
+   </select>   	
+   
+   <update id="updeteReply" parameterType="teamNoticeVo">
+	   	update board
+	   	set COMMENTS = #{comments}
+	   	where board_no = #{boardNo}
+   </update>
+	
+	<delete id="deleteReply" >
+		delete from board
+		where board_no = #{boardNo}
+	</delete>
+	
+	
+	
+	
+	<sql id="insertRereplyBoard">
+         <if test="memNo!=0">
+             insert into board(BOARD_NO,MEM_NO,GROUP_NO,STEP,SORTNO,CONTENTNO,COMMENTS,RANDOM_WRITE)
+   			 values(#{boardNo},#{memNo},#{groupno},#{step}+1,#{sortno}+1,#{contentno},#{comments},#{randomWrite})
+          </if>
+          <if test="staffNo!=0">
+	    	 insert into board(BOARD_NO,STAFF_NO,GROUP_NO,STEP,SORTNO,CONTENTNO,COMMENTS,RANDOM_WRITE)
+   			 values(#{boardNo},#{staffNo},#{groupno},#{step}+1,#{sortno}+1,#{contentno},#{comments},#{randomWrite})
+          </if>
+    </sql>
+	
+	
+   <insert id="insertBoardReReply" parameterType="boardVo">
+		<selectKey keyProperty="boardNo" resultType="int" order="BEFORE">
+			select BOARD_SEQ.nextval from dual
+		</selectKey>
+		<include refid="insertRereplyBoard"></include>
+   </insert>
+	
+	
+</mapper>

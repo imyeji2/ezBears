@@ -1,0 +1,43 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ez.ezBears.myBoard.model.MyBoardDAO">
+
+	<insert id="addMyboard" parameterType="MyBoardVo">
+		<selectKey keyProperty="myBoardNo" order="BEFORE" resultType="int">
+			SELECT MY_BOARD_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO MY_BOARD(MY_BOARD_NO,MEM_NO,M_BOARD_NO)
+		VALUES(#{myBoardNo},#{memNo},#{MBoardNo})	
+	</insert>
+	
+	<select id="selectMainMboardNo" parameterType="int" resultType="int">
+		select M_BOARD_NO from my_Board
+		WHERE MEM_NO=#{mem_no} and main_view='Y'
+	</select>	
+
+	<delete id="deleteMyBoardMember" parameterType="myBoardVo">
+		delete my_board
+		where mem_no = #{memNo} and M_BOARD_NO=#{MBoardNo}
+	</delete>	
+	
+	<update id="updateMyBoardMember" parameterType="myBoardVo">
+		update my_board
+		set status='N'
+		where mem_no = #{memNo} and M_BOARD_NO=#{MBoardNo}
+	</update>	
+	
+	<insert id="insertMyBoard" parameterType="myBoardVo">
+		<selectKey keyProperty="myBoardNo" order="BEFORE" resultType="int">
+			SELECT MY_BOARD_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO MY_BOARD(MY_BOARD_NO,MEM_NO, M_BOARD_NO,MAIN_VIEW)
+		VALUES(#{myBoardNo},#{memNo},#{MBoardNo},'Y')
+	</insert>
+	
+	<update id="viewMyboard" parameterType="int">
+		UPDATE MY_BOARD
+		SET MAIN_VIEW = 'Y'
+		WHERE MEM_NO = #{memNo} AND M_BOARD_NO = #{MBoardNo}
+	</update>	
+</mapper>

@@ -1,0 +1,18 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ez.ezBears.chat.model.ChatMemberDAO">
+
+	<insert id="insertChatMember" parameterType="chatMemberVo">
+		<selectKey keyProperty="chatMemberNo" resultType="int" order="BEFORE">
+			select CHAT_MEMBER_SEQ.nextval from dual
+		</selectKey>
+		insert into CHAT_MEMBER(CHAT_MEMBER_NO,CHAT_ROOM_NO, MEM_NO)
+		values(#{chatMemberNo}, #{chatRoomNo},#{memNo})	
+	</insert>
+	
+	<select id="selectChatMemberNo" parameterType="chatMemberVo">
+		select CHAT_MEMBER_NO from CHAT_MEMBER
+		WHERE CHAT_ROOM_NO = #{chatRoomNo} and MEM_NO = #{memNo}
+	</select>
+	
+</mapper>

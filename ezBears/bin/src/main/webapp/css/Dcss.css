@@ -1,0 +1,652 @@
+@charset "UTF-8";
+
+/* MemWrite */
+
+.register-form {
+	margin: 0 100px;
+	display: flex;
+	flex-direction: column;
+	gap: 15px 0;
+}
+
+.select-box {
+	display: flex;
+	gap: 10px 30px;
+	padding: 0;
+	justify-content: center;
+	flex-direction: column;
+	width: 100%;
+}
+
+.select-box li {
+	list-style: none;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	width: 100%;
+}
+
+.select-box li select {
+	outline: none;
+	cursor: pointer;
+	padding: 10px 15px;
+	border-radius: 5px;
+	width: 100%;
+	background-color: #000;
+	color: #fff;
+	border: 0;
+}
+
+.firstdiv,
+.password-form,
+.detail {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0 15px;
+}
+
+.firstdiv .form-floating,
+.password-form .form-floating,
+.detail .form-floating {
+	width: 100%;
+}
+
+.firstdiv .findZipcode input {
+	outline: none;
+	background-color: #7000D8;
+	border: 0;
+	color: #fff;
+	padding: 15px 20px;
+	border-radius: 5px;
+	transition: all 0.35s linear;
+}
+
+.firstdiv .dup input {
+	outline: none;
+	background-color: #191C24;
+	border: 0;
+	color: #fff;
+	padding: 15px 20px;
+	border-radius: 5px;
+}
+
+.firstdiv .findZipcode input:hover {
+	background-color: #953de7;
+
+}
+
+input#addressDetail,
+input#contract,
+input#zipcode {
+	outline: none;
+	cursor: pointer;
+	padding: 10px 15px;
+	border-radius: 5px;
+	width: 100%;
+	background-color: #000;
+	color: #fff;
+	border: 0;
+}
+
+.confirm {
+	outline: none;
+	color: #fff;
+	background-color: #7000D8;
+	transition: all 0.35s linear;
+	width: 100%;
+	padding: 10px;
+	border: 0;
+	border-radius: 5px;
+}
+
+.confirm:hover {
+	background-color: #953de7;
+}
+
+
+.side {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 0 30px;
+}
+
+.imgdiv {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.innerSide {
+	width: 100%;
+}
+
+.imgdiv label {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: #fff;
+}
+
+.memList a {
+	color: #fff;
+}
+
+.memList a:hover {
+	color: #953de7;
+}
+
+
+
+.form-floating>.form-control:focus,
+.form-floating>.form-control:not(:placeholder-shown) {
+	padding-top: 1.625rem;
+	padding-bottom: 0.625rem;
+	color: #fff;
+}
+
+label {
+	color: #fff;
+}
+
+@media (max-width: 720px) {
+	.register-form {
+		margin: 0;
+	}
+
+	.side {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: 0 30px;
+		flex-direction: column;
+	}
+
+	.imgdiv {
+		display: none;
+
+	}
+
+	.select-box {
+		width: 100%;
+		flex-direction: column;
+		gap: 10px 0;
+	}
+
+	.select-box li label {
+		width: 80px;
+		flex: none;
+	}
+
+	.select-box li select {
+		width: 100%;
+	}
+
+	.password-form,
+	.detail {
+		flex-direction: column;
+		gap: 15px 0;
+	}
+}
+
+
+/* MemList */
+#rounded {
+	border-radius: 5px !important;
+	width: 97%;
+	margin-left: 1.5%;
+	margin-top: 2%;
+}
+
+.btn-form .btns {
+	display: flex;
+	justify-content: right;
+	gap: 0 15px;
+}
+
+.btn-form button,
+#btnAdd {
+	outline: none;
+	background-color: #7000D8;
+	border: 0;
+	color: #fff;
+	padding: 5px 15px;
+	border-radius: 5px;
+	transition: all 0.35s linear;
+	text-align: center;
+}
+
+.btn-form button:hover {
+	background-color: #953de7;
+}
+
+#btnAdd:hover {
+	background-color: #953de7;
+}
+
+.memImg {
+	float: left;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	gap: 10px 0;
+}
+
+.memInfo {
+	float: right;
+}
+
+#editLable {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #7000D8;
+	border-radius: 5px;
+	width: 180px;
+	transition: all 0.35s linear;
+	cursor: pointer;
+}
+
+#editLable:hover {
+	background-color: #953de7;
+}
+
+.inner {
+	display: flex;
+	justify-content: center;
+	gap: 0 5%;
+	margin: 7% 0;
+}
+
+.divPage {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 0 7px;
+}
+
+.curPageNum {
+	display: flex;
+	justify-content: center;
+	background-color: #7000D8;
+	color: #fff !important;
+	align-items: center;
+	flex-direction: column;
+	width: 30px;
+	border-radius: 5px;
+}
+
+.txtboxSearch {
+	border-radius: 5px;
+	width: 250px;
+	background-color: #343a40;
+	border: none;
+	color: #fff;
+}
+
+.MemChk,
+.deptChk {
+	accent-color: #7000D8;
+}
+
+@media (max-width: 720px) {
+	.memImg {
+		display: none;
+
+	}
+
+	button#btnSearch,
+	a#btnAdd {
+		margin-bottom: 10px;
+	}
+
+	.txtboxSearch {
+		border-radius: 5px;
+		margin-bottom: 10px;
+		width: 100%;
+		height: 45px;
+		background-color: #343a40;
+		border: none;
+	}
+}
+
+/* MemDetail */
+
+.editIcon {
+	width: 20px;
+	height: 20px;
+	float: right;
+}
+
+input.edittext {
+	background-color: #191C24;
+	border: none;
+	color: #fff;
+}
+
+#sal {
+	width: 50%;
+}
+
+.errMsg {
+	float: right;
+	margin-top: 30px;
+}
+
+.showEditDept,
+.showEditPosition,
+.showEditType {
+	outline: none;
+	cursor: pointer;
+	border-radius: 5px;
+	background-color: #000;
+	color: #fff;
+	border: 0;
+}
+
+
+/* deptList*/
+
+.addDeptPart {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 0 10px;
+}
+
+@media (max-width: 720px) {
+	.btns {
+		display: flex;
+		flex-direction: column;
+	}
+
+	input.addDept {
+		margin-bottom: 10px;
+	}
+
+	button#btnAdd,
+	button#btnEdit {
+		margin-bottom: 10px;
+		
+	}
+	
+
+}
+
+/*deptList*/
+.selectdeptNo {
+	background-color: #191C24;
+	border: none;
+	color: #fff;
+	width: 20px;
+}
+
+#deptResp {
+	display: flex;
+	width: 80%;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+.table-out {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#mboardno {
+	text-align: center;
+}
+
+#btChat,
+#btInfo {
+	color: #fff;
+}
+
+#mboardNameA:hover {
+	color: #953de7;
+}
+
+/*memberInfo*/
+
+img.searchImg {
+	width: 25px;
+}
+
+.memberImageInfo {
+	border-radius: 40px;
+}
+
+.perPerson {
+	display: flex;
+	gap: 0 13px;
+}
+
+a#AmemName {
+	font-size: larger;
+}
+
+#AdeptName {
+	font-size: 15px;
+	color: #6C7293;
+}
+
+#AmemPosition {
+	font-size: 15px;
+}
+
+#btChat,
+#btInfo {
+	background-color: #7000D8;
+	border-radius: 5px;
+	width: 57px;
+	height: 30px;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	align-items: center;
+	cursor: pointer;
+}
+
+#btChat:hover,
+#btInfo:hover {
+	color: #953de7;
+	transition: all 0.35s linear;
+}
+
+.twoBt {
+	display: flex;
+	gap: 0 5px;
+	justify-content: center;
+}
+
+/*popup*/
+.popup {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: none;
+	justify-content: center;
+	align-items: center;
+	z-index: 100;
+}
+
+.popup.open {
+	display: flex;
+}
+
+.popup-background {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+.popup-wrapper {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.popup-inner {
+	position: relative;
+	background-color: rgba(255, 255, 255, 0.9);
+	padding: 50px 30px;
+	border-radius: 10px;
+	width: 600px;
+	height: 400px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.close-btn {
+	position: absolute;
+	top: 15px;
+	right: 30px;
+	width: 20px;
+	height: 20px;
+	cursor: pointer;
+}
+
+.close-btn svg path {
+	color: #000;
+}
+
+input.firstCol {
+	width: 100px;
+}
+
+.infobox {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	margin-top: 32px;
+}
+
+.frmchat {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 0 30px;
+}
+
+.firstCol {
+	border: none;
+	background-color: transparent;
+	font-weight: bold;
+	color: #7000D8;
+}
+
+.secCol {
+	border: none;
+	background-color: transparent;
+	text-align: left;
+	width: 160px;
+}
+
+button#gotoChat {
+	background-color: #7000D8;
+	border-radius: 17px;
+}
+
+img.gotoChatPng {
+	width: 20px;
+	transform: rotate(90deg);
+}
+
+.chatDiv {
+	margin-left: 170px;
+	margin-top: 10px;
+}
+
+img#previewImage {
+	border-radius: 10px;
+}
+
+.searchbtn {
+	width: 23%;
+	float: right;
+}
+
+button.searchAll {
+	background: transparent;
+}
+
+
+#MemDeptNo{
+	background: #191C24;
+	color: #fff;
+	border: none;
+	width: 104px;
+}
+
+#MemPositionNo {
+	background: #191C24;
+	color: #fff;
+	border: none;
+	width: 77px;
+}
+#MemDeptNo:hover,
+#MemPositionNo:hover {
+	color: #953de7;
+	background-color: #191C24 !important;
+	transition: all 0.35s linear;
+}
+
+.memClass {
+	background: #191C24;
+	color: #fff;
+	border: none;
+}
+
+.searchAll:hover {
+	color: #953de7;
+	background-color: #191C24 !important;
+	transition: all 0.35s linear;
+}
+
+p.Allcnt {
+    width: 50%;
+    float: left;
+    text-align: left;
+    color: #6C7293;
+}
+
+/*mboardlist*/
+
+
+a#mboardNameA {
+    color: #fff;
+}
+
+/*pop*/
+
+img#pop_previewImage{
+	border-radius: 40px;
+}
+
+.Info {
+    display: flex;
+}
+
+.table{
+	color:#fff;
+}
+
+.tap_txt {
+    color: #fff;
+}
+.tap_txt:hover {
+    color: #953de7;
+    transition: all 0.35s linear;
+}
