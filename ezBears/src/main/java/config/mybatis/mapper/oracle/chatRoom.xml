@@ -15,16 +15,18 @@
             (
                 SELECT a.*,(sysdate-LASTDATE)*24 as dateGap
                 FROM (
-                    SELECT *
-                    FROM chatRoomInfoView
-                    MINUS
-                    SELECT *
-                    FROM chatRoomInfoView
-                    WHERE MEM_NO = #{memNo}
+					SELECT *
+					FROM chatRoomInfoView
+					WHERE CHAT_ROOM_NO 
+					IN (SELECT CHAT_ROOM_NO 
+					FROM chatRoomInfoView WHERE MEM_NO = #{memNo})
+					MINUS
+					SELECT *
+					FROM chatRoomInfoView
+					WHERE MEM_NO = #{memNo}
                 )a
            
             )
-             ORDER BY LASTDATE DESC
-		
+             ORDER BY dateGap
 	</select>
 </mapper>

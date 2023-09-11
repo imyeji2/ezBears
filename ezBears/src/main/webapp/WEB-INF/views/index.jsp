@@ -223,7 +223,7 @@
                 console.log();
 
                 var newsDate="<tr>";
-                newsDate+="<th scope='col'>"+date + ' ' + time.substring(0, 5)+" 기준</th>"; // 시간 문자열에서 앞 5글자만 가져옴 (시:분)
+                newsDate+="<th scope='col' style='text-align:left'>"+date + ' ' + time.substring(0, 5)+" 기준</th>"; // 시간 문자열에서 앞 5글자만 가져옴 (시:분)
                 newsDate+="</tr>";
 
 
@@ -378,8 +378,8 @@
 								      		${noticeMap['NOTICE_TITLE']}
 								      	</a>
 								      </td>
-								      <td>${noticeMap['MEM_NAME']}</td>
-								      <td>
+								      <td style="text-align: center;">${noticeMap['MEM_NAME']}</td>
+								      <td style="text-align: center;">
 								      	<c:if test="${noticeMap['DATEGAP']<1}">방금전</c:if>	
 							      		<c:if test="${noticeMap['DATEGAP']>=1}">${regdate}</c:if>	
 								      </td>
@@ -513,8 +513,8 @@
 								      		${noticeMap['NOTICE_TITLE']}
 								      	</a>
 								      </td>
-								      <td>${noticeMap['MEM_NAME']}</td>
-								      <td>
+								      <td style="text-align:center;">${noticeMap['MEM_NAME']}</td>
+								      <td style="text-align:center;">
 								     	 <c:if test="${noticeMap['DATEGAP']<1}">방금전</c:if>	
 							      		 <c:if test="${noticeMap['DATEGAP']>=1}">${regdate}</c:if>	
 								      </td>
@@ -617,9 +617,11 @@
 							  	<fmt:formatDate var="playDate" value="${parsedDate}" pattern="yyyy-MM-dd" />
 								    <tr>
 								      <td>
-								      	<a href="">${playDate}</a>								      		
+								      	${playDate}							      		
 								      </td>
-								      <td>${vo.otherTeam}</td>
+								      <td>
+								      	<a href="<c:url value='/record/gameRecordDetail?recodeNo=${vo.recodeNo}'/>">${vo.otherTeam}</a>
+								      </td>
 								      <td>${vo.win}</td>
 								    </tr>				  		
 							  	</c:forEach>
@@ -696,8 +698,10 @@ var myChart1 = new Chart(ctx1, {
              var chartContainer2 = document.getElementById('staffChart');
              var canvas2 = document.getElementById('myChart3');
              
-             canvas2.width = chartContainer2.clientWidth;
-             canvas2.height = chartContainer2.clientWidth; // 정사각형으로 유지
+             // 부모 요소의 너비를 100%로 설정
+             chartContainer2.style.width = '100%';
+             canvas2.style.width = '100%';
+            
              
              // 차트 생성
              var ctx = canvas2.getContext("2d");
@@ -712,7 +716,14 @@ var myChart1 = new Chart(ctx1, {
                      }]
                  },
                  options: {
-                     responsive: true
+                     responsive: true,
+                     scales: {
+                         y: {
+                             ticks: {
+                                 stepSize: 10 // X 축 레이블 간격 설정
+                             }
+                         }
+                     }
                  }
              });
          },

@@ -53,7 +53,7 @@
 			)A
 		)
 	<![CDATA[
-      where RNUM<5]]>
+      where RNUM<10]]>
 	</select>
 	
 	<select id="selectMonthlyWinRate" parameterType="int" resultType="map">

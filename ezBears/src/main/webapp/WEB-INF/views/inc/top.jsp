@@ -12,8 +12,6 @@
     <meta content="" name="keywords">
     <meta content="" name="description">
 
-	<link href="${pageContext.request.contextPath}/css/chat/chatRoom-style.css" rel="stylesheet">
-
     <!-- Favicon -->
     <link href="${pageContext.request.contextPath}/img/favicon.ico" rel="icon">
 
@@ -674,17 +672,17 @@ $(function(){
 	                        </a>
 	                     </div>   
 	                    <div class="nav-item dropdown">
-	                        <a href="#" class="nav-link" >
+	                        <a href="<c:url value='/message/receiveBox'/>" class="nav-link" >
 	                            <i class="fa fa-envelope me-lg-2"></i>
 	                            <span class="d-none d-lg-inline-flex">쪽지</span>
 	                        </a>
 	                     </div>          
 	                </c:if>      
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+<!--                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                             <i class="fa fa-bell me-lg-2"></i>
                             <span class="d-none d-lg-inline-flex">알림</span>                   
-                        </a>
+                        </a> -->
                         <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
                             <a href="#" class="dropdown-item">
                                 <h6 class="fw-normal mb-0">전체 공지사항 업데이트</h6>
@@ -706,9 +704,6 @@ $(function(){
                         <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
                             <a href="<c:url value='/mypage/pwdchk'/>" class="dropdown-item">마이페이지</a>
 							<a href="<c:url value='/mypage/pwdchk2'/>" class="dropdown-item">비밀번호변경</a>
-							<c:if test="${sessionScope.type=='사원'}">
-								<a href="<c:url value='/message/receiveBox'/>" class="dropdown-item">쪽지함</a>
-							</c:if>
                             <a href="<c:url value='/login/logout'/>" class="dropdown-item">로그아웃</a>
                         </div>
                     </div>                   	

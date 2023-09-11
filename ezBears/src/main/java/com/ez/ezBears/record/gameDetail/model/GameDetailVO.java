@@ -7,5 +7,4 @@ public class GameDetailVO {
 	private int recodeDetailNo;
 	private int recodeNo;
 	private int staffNo;
-	private String staffRegdate;
 }

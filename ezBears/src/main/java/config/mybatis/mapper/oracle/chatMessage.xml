@@ -1,0 +1,28 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ez.ezBears.chat.model.ChatMessageDAO">
+
+	<insert id="insertChatMessage" parameterType="chatMessageVo">
+		<selectKey keyProperty="chatMessageNo" resultType="int" order="BEFORE">
+			select CHAT_MESSAGE_SEQ.nextval from dual
+		</selectKey>
+		insert into CHAT_MESSAGE(CHAT_MESSAGE_NO,CHAT_MEMBER_NO, CHAT_MESSAGE)
+		values(#{chatMessageNo}, #{chatMemberNo},#{chatMessage})	
+	</insert>	
+	
+	<select id="selectChatRoomMessage" parameterType="int" resultType="map">
+      select *
+      from
+      (
+	      select rownum as RNUM, A.* from
+	      (	
+			SELECT * FROM chatMessageListView
+			WHERE CHAT_ROOM_NO=#{chatRoomNo}
+			ORDER BY REGDATE desc
+	      )A
+      )
+      <![CDATA[
+      where RNUM<=20]]>	
+      order by regdate	
+	</select>
+</mapper>

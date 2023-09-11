@@ -25,4 +25,5 @@ public interface PitcherDAO {
 	List<TeamVO> selectAllPitcher();
 	
 	List<Map<String, Object>> selectPitcherStatView(int playerNo);
+	List<Map<String, Object>> selectAllPitcherStat();
 }

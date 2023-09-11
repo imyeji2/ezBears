@@ -69,6 +69,12 @@ public class PitcherServiceImpl implements PitcherService {
 		// TODO Auto-generated method stub
 		return pitcherDao.selectPitcherStatView(playerNo);
 	}
+
+	@Override
+	public List<Map<String, Object>> selectAllPitcherStat() {
+		// TODO Auto-generated method stub
+		return pitcherDao.selectAllPitcherStat();
+	}
 	
 	
 }

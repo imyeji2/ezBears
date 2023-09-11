@@ -7,8 +7,8 @@ public class ChatMessageVO {
 	private int chatMessageNo;
 	private int chatMemberNo;
 	private String chatMessage;
-	private String chatDate;
 	private String readChat;
+	private String regdate;
 	
 	
 }

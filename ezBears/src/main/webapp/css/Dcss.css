@@ -642,3 +642,11 @@ img#pop_previewImage{
 .table{
 	color:#fff;
 }
+
+.tap_txt {
+    color: #fff;
+}
+.tap_txt:hover {
+    color: #953de7;
+    transition: all 0.35s linear;
+}

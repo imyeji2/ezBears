@@ -41,7 +41,10 @@ $(function(){
 	var index=0;
 	//투두리스트 추가
 	$('#addWorkBtn').click(function(){
+		var index =0;
 		var inputTxt = $('#writeWorkInput').val();
+		var innerContent = document.querySelectorAll('form[name=workBoardWriteFrom] .todoList');
+		var add="";
 		
 		if(inputTxt.length<1){
 			alert('업무를 입력하세요');
@@ -49,32 +52,77 @@ $(function(){
 			return false;
 		}
 		
-		var add ="<div class='d-flex align-items-center border-bottom py-2 todoList'>";
+		$('.todoListWrap').html('');
+		
+		innerContent.forEach(function(element) {
+		    var todoContent = element.querySelector('.todoInput').value;
+		    var todoDetailNo = element.querySelector('#todoDetailNo').value;
+		    
+			add ="<div class='d-flex align-items-center border-bottom py-2 todoList'>";
+			add+="<div class='w-100 ms-3' id='addWrokBox'>"
+			add+="<div class='d-flex w-100 align-items-center justify-content-between toDoContentInputBox'>";
+			add+="<input class='form-control border-0 todoInput' type='text'name='items["+index+"].todoContent' value='"+todoContent+"'>";
+			add+="<input type='hidden' name='items["+index+"].todoDetailNo' value='"+todoDetailNo+"' id='todoDetailNo'>";
+			add+="<button class='btn btn-sm' id='delWorkBtn'><i class='fa fa-times'></i></button>";
+			add+="</div>";
+			add+="</div>";
+			add+="</div><!--todoList-->";
+			
+			index++;
+		    console.log(todoContent);
+			$('.todoListWrap').append(add);
+		});
+		
+		add ="<div class='d-flex align-items-center border-bottom py-2 todoList'>";
 		add+="<div class='w-100 ms-3' id='addWrokBox'>"
 		add+="<div class='d-flex w-100 align-items-center justify-content-between toDoContentInputBox'>";
 		add+="<input class='form-control border-0 todoInput' type='text'name='items["+index+"].todoContent' value='"+inputTxt+"'>";
+		add+="<input type='hidden' name='items["+index+"].todoDetailNo' value='0' id='todoDetailNo'>";
 		add+="<button class='btn btn-sm' id='delWorkBtn'><i class='fa fa-times'></i></button>";
 		add+="</div>";
 		add+="</div>";
 		add+="</div><!--todoList-->";
-		
+		index++;
 		$('.todoListWrap').append(add);
 		$('#writeWorkInput').val('');
-		
-		todoCount = $('.todoList').length;
-		$('#todoCountTxt').text(todoCount);
-		index++;
+		todoCount=index;
+		$('#todoCountTxt').text(index+1);
 		
 	});
 	
 	//투두 삭제 버튼
-	$(document).on('click', '#delWorkBtn',function(e) {       
+	$(document).on('click', '#delWorkBtn',function(e) {   
+		var index=0;
 		event.preventDefault(); // 이벤트의 기본 동작 방지
 		$delContent = $(this).closest('.todoList');
 		$delContent.remove();
-		todoCount = $('.todoList').length;
-		$('#todoCountTxt').text(todoCount);
-		index--;
+		
+		var innerContent = document.querySelectorAll('form[name=workBoardWriteFrom] .todoList');
+		console.log(innerContent);
+		$('.todoListWrap').html('');
+		var add="";
+		
+		innerContent.forEach(function(element) {
+		    var todoContent = element.querySelector('.todoInput').value;
+		    var todoDetailNo = element.querySelector('#todoDetailNo').value;
+		    
+			add ="<div class='d-flex align-items-center border-bottom py-2 todoList'>";
+			add+="<div class='w-100 ms-3' id='addWrokBox'>"
+			add+="<div class='d-flex w-100 align-items-center justify-content-between toDoContentInputBox'>";
+			add+="<input class='form-control border-0 todoInput' type='text'name='items["+index+"].todoContent' value='"+todoContent+"'>";
+			add+="<input type='hidden' name='items["+index+"].todoDetailNo' value='"+todoDetailNo+"' id='todoDetailNo'>";
+			add+="<button class='btn btn-sm' id='delWorkBtn'><i class='fa fa-times'></i></button>";
+			add+="</div>";
+			add+="</div>";
+			add+="</div><!--todoList-->";
+			
+			index++;
+		    console.log(todoContent);
+			$('.todoListWrap').append(add);
+		});
+		
+		todoCount=index;
+		$('#todoCountTxt').text(index);
 	});
 	
 	

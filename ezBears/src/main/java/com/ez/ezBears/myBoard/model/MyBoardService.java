@@ -11,4 +11,5 @@ public interface MyBoardService {
 
 
 	int deleteMyBoardMember(MyBoardVO myBoardVo);
+
 }

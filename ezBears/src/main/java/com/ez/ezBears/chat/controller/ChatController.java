@@ -15,28 +15,31 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ez.ezBears.chat.model.ChatMemberService;
 import com.ez.ezBears.chat.model.ChatMemberVO;
+import com.ez.ezBears.chat.model.ChatMessageService;
+import com.ez.ezBears.chat.model.ChatMessageVO;
 import com.ez.ezBears.chat.model.ChatRoomService;
 import com.ez.ezBears.common.ConstUtil;
 import com.ez.ezBears.common.MemberSearchVO;
-import com.ez.ezBears.common.MyBoardSearchVo;
 import com.ez.ezBears.common.PaginationInfo;
 import com.ez.ezBears.dept.model.DeptService;
 import com.ez.ezBears.dept.model.DeptVO;
 import com.ez.ezBears.member.model.MemberService;
-import com.ez.ezBears.member.model.MemberVO;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 @Controller
-@RequestMapping("/chat")
 @RequiredArgsConstructor
+@RequestMapping("/chat")
 public class ChatController {
 	private static final Logger logger = LoggerFactory.getLogger(ChatController.class);
 	private final MemberService memberService;
 	private final DeptService deptService;	
 	private final ChatRoomService chatRoomService;
+	private final ChatMemberService chatMemberService;
+	private final ChatMessageService chatMessageService;
 	
 	@RequestMapping("/chattingList")
 	public String chattingList(HttpSession session, Model model) {
@@ -139,6 +142,45 @@ public class ChatController {
 		
 		return chatRoomList;
 	}
+	
+	@ResponseBody
+	@RequestMapping("/ajax_sendChat")
+	public int insertChatMessage(@ModelAttribute ChatMemberVO memberVo,
+			@RequestParam String chatMessage){
+		//1
+		logger.info("메시지 전송 파라미터 memberVo={},chatMessage={}",memberVo,chatMessage);
+		
+		//2
+		int chatMemberNo = chatMemberService.selectChatMemberNo(memberVo);
+		logger.info("채팅방에서 내 번호 찾기 chatMemberNo={}",chatMemberNo);
+		
+		ChatMessageVO messageVo = new ChatMessageVO();
+		messageVo.setChatMessage(chatMessage);
+		messageVo.setChatMemberNo(chatMemberNo);
+
+		int cnt = chatMessageService.insertChatMessage(messageVo);
+		logger.info("메시지 등록 결과 cnt={}",cnt);
+		
+		
+		//3
+		return cnt;
+	}	
+	
+	
+	@ResponseBody
+	@RequestMapping("/ajax_selectChatRoomMessage")
+	public List<Map<String, Object>> selectChatRoomMessage(@RequestParam (defaultValue = "0") int chatRoomNo){
+		//1
+		logger.info("채팅방별 메시지 출력 파라미터 chatRoomNo={}",chatRoomNo);
+		
+		//2
+		List<Map<String, Object>> messageList = chatMessageService.selectChatRoomMessage(chatRoomNo);
+		logger.info("채팅방별 메시지 검색 결과 messageList={}",messageList.size());
+		
+		//3
+		return messageList;
+	}
+	
 
 }
 
