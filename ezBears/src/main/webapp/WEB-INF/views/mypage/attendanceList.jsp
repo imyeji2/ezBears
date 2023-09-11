@@ -171,6 +171,20 @@ function startDate() {
 
 	
 			<div class="s-container">
+				<!-- 검색일<input type="text" id="searchDate">  -->
+				<form action="<c:url value='/mypage/attendanceList'/>" method="post">
+			    	<table class="t-search">
+			    	<tr>
+			    		<td class="t-search-title">
+			    			검색일
+			    		</td>
+			    		<td>
+				      		<input type="month" id="nowMonth" name="date">
+				      		<input type="submit" value="검색" id="btnSearch">
+				      	</td>
+				     </tr>
+			    	</table>
+			    </form><br>
 				<div class="att-header">
 					<%-- <div class="div-time-btn">
 						<div id="now-time"><%= sf.format(cal.getTime()) %></div>
@@ -202,20 +216,6 @@ function startDate() {
 						</table>
 					</div>
 				</div><br>
-				<!-- 검색일<input type="text" id="searchDate">  -->
-				<form action="<c:url value='/mypage/attendanceList'/>" method="post">
-			    	<table class="t-search">
-			    	<tr>
-			    		<td class="t-search-title">
-			    			검색일
-			    		</td>
-			    		<td>
-				      		<input type="month" id="nowMonth" name="date">
-				      		<input type="submit" value="검색" id="btnSearch">
-				      	</td>
-				     </tr>
-			    	</table>
-			    </form><br>
 					<div class="div-stats">
 						<table class="stats-List" style="margin-bottom: 1%">
 							<tr>
