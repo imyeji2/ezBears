@@ -3,6 +3,7 @@ package com.ez.ezBears.record.controller;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -481,14 +482,14 @@ public class RecordController {
 		logger.info("경기별 이닝 기록 파라미터, recodeNo={}", recodeNo);
 		
 		List<Map <String, Object>> list = inningService.selectInningView(recodeNo);
-		Map <String, Object> map1 = inningService.selectInningHomeView(recodeNo);
-		Map <String, Object> map2 = inningService.selectInningAwayView(recodeNo);
+		List<Map <String, Object>> map1 = inningService.selectInningHomeView(recodeNo);
+		List<Map <String, Object>> map2 = inningService.selectInningAwayView(recodeNo);
 		model.addAttribute("list", list);
 		model.addAttribute("map1", map1);
 		model.addAttribute("map2", map2);
 		logger.info("이닝 처리 결과, list.size={}", list.size());
-		logger.info("map1", map1);
-		logger.info("map2", map2);
+		logger.info("map1={}", map1);
+		logger.info("map2={}", map2);
 		
 		return "/record/gameRecordDetail2";
 	}

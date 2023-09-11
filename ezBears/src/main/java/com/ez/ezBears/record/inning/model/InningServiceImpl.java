@@ -39,13 +39,13 @@ public class InningServiceImpl implements InningService {
 	}
 
 	@Override
-	public Map<String, Object> selectInningHomeView(int recodeNo) {
+	public List<Map<String, Object>> selectInningHomeView(int recodeNo) {
 		// TODO Auto-generated method stub
 		return inningDao.selectInningHomeView(recodeNo);
 	}
 
 	@Override
-	public Map<String, Object> selectInningAwayView(int recodeNo) {
+	public List<Map<String, Object>> selectInningAwayView(int recodeNo) {
 		// TODO Auto-generated method stub
 		return inningDao.selectInningAwayView(recodeNo);
 	}

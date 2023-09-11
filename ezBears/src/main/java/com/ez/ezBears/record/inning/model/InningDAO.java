@@ -15,6 +15,6 @@ public interface InningDAO {
 	
 	List<Map <String, Object>> selectInningView(int recodeNo);
 	
-	Map<String, Object> selectInningHomeView(int recodeNo);
-	Map<String, Object> selectInningAwayView(int recodeNo);
+	List<Map<String, Object>> selectInningHomeView(int recodeNo);
+	List<Map<String, Object>> selectInningAwayView(int recodeNo);
 }
