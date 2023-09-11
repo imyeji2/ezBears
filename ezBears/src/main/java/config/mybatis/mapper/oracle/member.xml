@@ -326,6 +326,10 @@
 				AND dept_No = #{deptNo}
 			</if>
 		</where>
-	</sql>	 		
+	</sql>	
+	
+	<select id="selectMemTel" parameterType="int" resultType="String">
+		SELECT MEM_TEL FROM MEMBER WHERE DEPT_NO =#{deptNo} AND MEM_TEL IS NOT NULL
+	</select> 		
  
 </mapper>

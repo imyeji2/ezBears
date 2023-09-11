@@ -11,10 +11,22 @@ import net.nurigo.sdk.message.response.MessageListResponse;
 import net.nurigo.sdk.message.response.MultipleDetailMessageSentResponse;
 import net.nurigo.sdk.message.response.SingleMessageSentResponse;
 import net.nurigo.sdk.message.service.DefaultMessageService;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.ez.ezBears.dept.model.DeptVO;
+import com.ez.ezBears.member.controller.MemberController;
+import com.ez.ezBears.member.model.MemberService;
+
+import lombok.RequiredArgsConstructor;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,14 +38,22 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-@RestController
-public class SMSController {
 
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/msg")
+public class SMSController {
+	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
+	
+	@Autowired
+	final MemberService memberService;
     final DefaultMessageService messageService;
 
     public SMSController() {
-        // 반드시 계정 내 등록된 유효한 API 키, API Secret Key를 입력해주셔야 합니다!
-        this.messageService = NurigoApp.INSTANCE.initialize("INSERT_API_KEY", "INSERT_API_SECRET_KEY", "https://api.coolsms.co.kr");
+		
+		// 반드시 계정 내 등록된 유효한 API 키, API Secret Key를 입력해주셔야 합니다!
+        this.messageService = NurigoApp.INSTANCE.initialize("NCSENBPDBONJ9W3J", "HWJVJCVSNQZJOKZFR7G5PPMAW1MPUBJB", "https://api.coolsms.co.kr");
+		this.memberService = null;
     }
 
     /**
@@ -134,23 +154,21 @@ public class SMSController {
      * 한 번 실행으로 최대 10,000건 까지의 메시지가 발송 가능합니다.
      */
     @PostMapping("/send-many")
-    public MultipleDetailMessageSentResponse sendMany(List<String> TelNumbers) {
+    public MultipleDetailMessageSentResponse sendMany(@RequestParam int deptNo,@RequestParam String MSGcontext) {
         ArrayList<Message> messageList = new ArrayList<>();
+        logger.info("메세지 보내기 deptNo={}, MSGcontext={}",deptNo, MSGcontext);
 
-        for (int i = 0; i < 3; i++) {
+        List<String> telList = memberService.selectMemTel(deptNo);
+
+        logger.info("메세지 보내기 telList={}",telList);
+        for (String tel : telList) {
             Message message = new Message();
             // 발신번호 및 수신번호는 반드시 01012345678 형태로 입력되어야 합니다.
-            message.setFrom("025910001");
-            message.setTo("수신번호 입력");
-            message.setText("한글 45자, 영자 90자 이하 입력되면 자동으로 SMS타입의 메시지가 추가됩니다." + i);
+            message.setFrom("01092326691");
+            message.setTo(tel); // 수신번호를 tel로 설정
+            message.setText(MSGcontext);
 
-            // 메시지 건건 마다 사용자가 원하는 커스텀 값(특정 주문/결제 건의 ID를 넣는등)을 map 형태로 기입하여 전송 후 확인해볼 수 있습니다!
-            /*HashMap<String, String> map = new HashMap<>();
-
-            map.put("키 입력", "값 입력");
-            message.setCustomFields(map);
-
-            messageList.add(message);*/
+            messageList.add(message);
         }
 
         try {
