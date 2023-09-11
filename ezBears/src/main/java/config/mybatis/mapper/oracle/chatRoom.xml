@@ -27,7 +27,6 @@
                 )a
            
             )
-             ORDER BY LASTDATE DESC
-		
+             ORDER BY dateGap
 	</select>
 </mapper>

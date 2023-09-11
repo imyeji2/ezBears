@@ -166,6 +166,21 @@ public class ChatController {
 		return cnt;
 	}	
 	
+	
+	@ResponseBody
+	@RequestMapping("/ajax_selectChatRoomMessage")
+	public List<Map<String, Object>> selectChatRoomMessage(@RequestParam (defaultValue = "0") int chatRoomNo){
+		//1
+		logger.info("채팅방별 메시지 출력 파라미터 chatRoomNo={}",chatRoomNo);
+		
+		//2
+		List<Map<String, Object>> messageList = chatMessageService.selectChatRoomMessage(chatRoomNo);
+		logger.info("채팅방별 메시지 검색 결과 messageList={}",messageList.size());
+		
+		//3
+		return messageList;
+	}
+	
 
 }
 

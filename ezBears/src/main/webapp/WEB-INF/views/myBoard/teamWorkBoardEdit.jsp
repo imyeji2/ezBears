@@ -373,19 +373,20 @@ $(function(){
 	                            <!-- todoList 입력 영역 -->
 	                            <c:set var="index" value="0"/>
 	                            <c:if test="${!empty toDoListDetailList}">
-	                            	<c:forEach var="list" items="${toDoListDetailList}">
-	                            		 <div class="d-flex align-items-center border-bottom py-2 todoList">
-			                                <div class="w-100 ms-3">
-			                                    <div class="d-flex w-100 align-items-center justify-content-between">
-			                                        <input class="form-control border-0 todoInput" type="text" name="items[${index}].todoContent" value="${list['TODO_CONTENT']}">
-			                                        <input type="hidden" name="items[${index}].todoDetailNo" value="${list['TODO_DETAIL_NO']}" id="todoDetailNo">
-			                                        <button class="btn btn-sm" id="delWorkBtn"><i class="fa fa-times"></i></button>
-			                                    </div>
-			                                </div>
-			                            </div>
-			                            <input type="hidden" name="index" value="${index+1}"> 
-	                            	</c:forEach>
-	                            	   
+								<c:if test="${!empty toDoListDetailList}">
+								    <c:forEach var="list" items="${toDoListDetailList}" varStatus="loop">
+								        <div class="d-flex align-items-center border-bottom py-2 todoList">
+								            <div class="w-100 ms-3">
+								                <div class="d-flex w-100 align-items-center justify-content-between">
+								                    <input class="form-control border-0 todoInput" type="text" name="items[${loop.index}].todoContent" value="${list['TODO_CONTENT']}">
+								                    <input type="hidden" name="items[${loop.index}].todoDetailNo" value="${list['TODO_DETAIL_NO']}" id="todoDetailNo">
+								                    <button class="btn btn-sm" id="delWorkBtn"><i class="fa fa-times"></i></button>
+								                </div>
+								            </div>
+								        </div>
+								    </c:forEach>
+								</c:if>
+									                            	   
 	                            </c:if>
 	                            
 								<!-- todoList 입력 영역 -->
