@@ -63,6 +63,11 @@
 	.aa{
 		color: #7000D8;
 	}
+	
+	.aaa{
+		color: yellow;
+		text-align: left;
+	}
 </style>
 <!-- Blank Start -->
 <div class="container-fluid pt-4 px-4">
@@ -75,9 +80,9 @@
 	             <li class="breadcrumb-item active" aria-current="page">출/퇴근 현황</li>
 	           </ol>
          	</nav>
-        <div class="col-md-8 text-center">
-        	<h3>월별 근태조회</h3><br>
-        	<a href="<c:url value='/mypage/attendanceList'/>" class="aa">출근기록 상세보기</a>
+        <div class="col-md-8">
+        	<a href="<c:url value='/mypage/attendanceList'/>" class="aaa">출근기록 상세보기</a><br><br>
+        	<h3 style="text-align: center;">월별 근태조회</h3><br>
        		<div id='calendar'></div>
        
         </div>
