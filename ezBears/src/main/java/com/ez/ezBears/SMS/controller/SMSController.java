@@ -24,6 +24,7 @@ import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 public class SMSController {
@@ -133,13 +134,13 @@ public class SMSController {
      * 한 번 실행으로 최대 10,000건 까지의 메시지가 발송 가능합니다.
      */
     @PostMapping("/send-many")
-    public MultipleDetailMessageSentResponse sendMany() {
+    public MultipleDetailMessageSentResponse sendMany(List<String> TelNumbers) {
         ArrayList<Message> messageList = new ArrayList<>();
 
         for (int i = 0; i < 3; i++) {
             Message message = new Message();
             // 발신번호 및 수신번호는 반드시 01012345678 형태로 입력되어야 합니다.
-            message.setFrom("발신번호 입력");
+            message.setFrom("025910001");
             message.setTo("수신번호 입력");
             message.setText("한글 45자, 영자 90자 이하 입력되면 자동으로 SMS타입의 메시지가 추가됩니다." + i);
 

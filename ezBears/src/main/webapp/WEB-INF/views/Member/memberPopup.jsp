@@ -49,7 +49,11 @@
 						
 						<div class="chatDiv">
 							<button type="submit" id="gotoChat">
-								<label for="gotoChat">채팅하러 가기</label>
+								<label for="gotoChat">
+									<a id = "gotoMSG" href = "<c:url value='/message/messageWrite?receiveNo=${map.MEM_NO}'/>">
+									채팅하러 가기
+									</a>
+								</label>
 								<img class="gotoChatPng" src="<c:url value='/img/white arrow icon.png'/>">
 							</button>
 						</div>
