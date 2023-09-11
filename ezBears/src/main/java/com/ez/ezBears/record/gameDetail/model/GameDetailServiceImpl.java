@@ -1,5 +1,7 @@
 package com.ez.ezBears.record.gameDetail.model;
 
+import java.util.Map;
+
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -16,10 +18,13 @@ public class GameDetailServiceImpl implements GameDetailService {
 	}
 
 	@Override
-	public GameDetailVO selectByRecodeNo(int recodeNo) {
+	public Map<String, Object> selectByRecodeNo(int recodeNo) {
 		// TODO Auto-generated method stub
 		return gameDetailDao.selectByRecodeNo(recodeNo);
 	}
+
+	
+
 	
 	
 }
