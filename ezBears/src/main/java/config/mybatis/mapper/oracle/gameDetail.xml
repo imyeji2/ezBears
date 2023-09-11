@@ -5,18 +5,9 @@
 
 <mapper namespace="com.ez.ezBears.record.gameDetail.model.GameDetailDAO">
 
-	<insert id="insertGameDetail" parameterType="gameDetailVo">
-		<selectKey keyProperty="recodeDetailNo" order="BEFORE" resultType="int">
-			select recode_detail_seq.nextval from dual
-		</selectKey>
-		insert into recode_detail (recode_detail_no, staff_no)
-		values(#{recode_detail_no}, #{staff_no})
-		where recode_no = #{recodeNo}	
-	</insert>
-
-	<select id="selectByRecodeNo" parameterType="int" resultType="gameDetailVo">
-		select * from recode_detail
-		where recode_no = #{recodeNo]
+	<select id="selectByRecodeNo" parameterType="int" >
+		select recode_detail_no from record_detail
+		where recode_no = #{recodeNo}
 	</select>
 
 </mapper>

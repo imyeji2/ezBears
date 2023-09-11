@@ -86,4 +86,8 @@
     	where player_no=#{playerNo}
     </select>
 	
+	<select id="selectAllPitcherStat" parameterType="int">
+		select * from pitcher_stat_view
+	</select>
+	
 </mapper>
