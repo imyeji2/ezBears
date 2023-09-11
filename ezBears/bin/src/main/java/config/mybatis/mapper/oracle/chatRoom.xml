@@ -1,0 +1,33 @@
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ez.ezBears.chat.model.ChatRoomDAO">
+	<insert id="insertChatRoom" parameterType="chatRoomVo">
+		<selectKey keyProperty="chatRoomNo" resultType="int" order="BEFORE">
+			select CHAT_ROOM_SEQ.nextval from dual
+		</selectKey>
+		insert into CHAT_ROOM(CHAT_ROOM_NO)
+		values(#{chatRoomNo})	
+	</insert>
+	
+	<select id="selectMyChatRoom" parameterType="int" resultType="map">
+		select * from 
+            (
+                SELECT a.*,(sysdate-LASTDATE)*24 as dateGap
+                FROM (
+					SELECT *
+					FROM chatRoomInfoView
+					WHERE CHAT_ROOM_NO 
+					IN (SELECT CHAT_ROOM_NO 
+					FROM chatRoomInfoView WHERE MEM_NO = #{memNo})
+					MINUS
+					SELECT *
+					FROM chatRoomInfoView
+					WHERE MEM_NO = #{memNo}
+                )a
+           
+            )
+             ORDER BY LASTDATE DESC
+		
+	</select>
+</mapper>

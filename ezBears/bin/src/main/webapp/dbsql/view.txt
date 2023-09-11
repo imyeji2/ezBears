@@ -1,0 +1,169 @@
+[예지]---------------------------------------------------------------------
+create or replace view myBoardListView
+as
+SELECT M.MEM_ID, M.MEM_NO, MY.MY_BOARD_NO, B.M_BOARD_NO, B.M_BOARD_NAME  
+FROM MEMBER M
+LEFT JOIN my_board MY
+ON M.MEM_NO = MY.MEM_NO
+LEFT JOIN M_BOARD B
+ON MY.M_BOARD_NO = B.M_BOARD_NO;
+
+
+create or replace view teamNoticeListView
+as
+SELECT A.*, B.MEM_ID,B.MEM_NAME, B.MEM_IMAGE, B.DEPT_NAME
+FROM
+(
+    SELECT T.*, MY.M_BOARD_NO
+    FROM TEAM_NOTICE T
+    JOIN MY_BOARD MY
+    ON T.MY_BOARD_NO = my.my_board_no
+)A JOIN
+(
+    SELECT M.MEM_NO,M.MEM_ID, MEM_NAME, MEM_IMAGE, D.DEPT_NAME
+    FROM MEMBER M
+    JOIN DEPT D
+    ON M.DEPT_NO = D.DEPT_NO
+) B
+ON A.MEM_NO = B.MEM_NO;
+
+
+
+create or replace view teamWorkBoardListView
+as
+SELECT A.*, B.MEM_ID,B.MEM_NAME, B.MEM_IMAGE, B.DEPT_NAME
+FROM
+(
+    SELECT T.*, MY.M_BOARD_NO
+    FROM TEAM_WORK_BOARD T
+    JOIN MY_BOARD MY
+    ON T.MY_BOARD_NO = my.my_board_no
+)A JOIN
+(
+    SELECT M.MEM_NO,M.MEM_ID, MEM_NAME, MEM_IMAGE, D.DEPT_NAME
+    FROM MEMBER M
+    JOIN DEPT D
+    ON M.DEPT_NO = D.DEPT_NO
+) B
+ON A.MEM_NO = B.MEM_NO;
+
+[다희]---------------------------------------------------------------------
+
+
+[희진]---------------------------------------------------------------------
+create or replace view myBoardInfo
+as
+select b.*,m.mem_id,m.dept_No,m.mem_name,m.position_no
+from member m join my_board b
+on m.mem_no = b.mem_no;
+
+
+create or replace view calenderInfo
+as
+select s.mem_no,info.mem_id,info.my_board_no,info.m_board_no,s.schedule_start,s.schedule_end,s.schedule_title, s.schedule_no  from
+myBoardInfo info join schedule s
+on info.my_board_no = s.my_board_no;
+
+
+CREATE OR REPLACE VIEW signListView
+AS
+SELECT A.*, B.MEM_ID, B.MEM_NAME, B.DEPT_NAME, B.POSITION_NO
+FROM
+(
+    SELECT S.*, MY.M_BOARD_NO
+    FROM SIGN S
+    JOIN MY_BOARD MY
+    ON S.MY_BOARD_NO = my.my_board_no
+)A JOIN
+(
+    SELECT M.MEM_NO,M.MEM_ID, MEM_NAME, MEM_IMAGE, D.DEPT_NAME, M.DEPT_NO, M.POSITION_NO
+    FROM MEMBER M
+    JOIN DEPT D
+    ON M.DEPT_NO = D.DEPT_NO
+) B
+ON A.MEM_NO = B.MEM_NO; 
+
+
+
+create or replace view approvalDetailView
+as
+select s.*,m.mem_name from
+member m join sign s
+on m.mem_no = s.mem_no;
+
+
+
+create or replace view approvaMemInfo
+as
+select B.*,mem.position_no,mem.mem_name from
+    (select s.*, A.m_board_no 
+        from sign s join 
+    (select my.* from 
+      my_board my join m_board m
+      on my.m_board_no = m.m_board_no
+    )A
+    on s.my_board_no = A.my_board_no
+)B join member mem
+on B.mem_no = mem.mem_no ;
+
+[충혁]---------------------------------------------------------------------
+
+[판주]---------------------------------------------------------------------
+create or replace view memberView
+as
+select m.*,p.position_name
+from member m join position p
+on m.position_no = p.position_no;
+
+select * from memberView;
+
+create or replace view staffView
+as
+select s.*,dept_name
+from staff s join dept d
+on s.dept_no = d.dept_no;
+
+select * from staffView;
+
+
+create or replace view memberView1
+as
+select m.*,d.dept_name
+from memberView m join dept d
+on m.dept_no = d.dept_no;
+
+select * from memberView1;
+
+
+create or replace view notice1
+as
+select n.*,m.dept_no,m.mem_name,m.mem_id,m.mem_image,d.dept_name
+from notice n left join member m
+on m.mem_no = n.mem_no
+right join dept d
+on m.dept_no=d.dept_no;
+
+create or replace view noticeView
+as
+select n.*,m.mem_name,m.dept_no
+from notice n join member m
+on n.mem_no = m.mem_no;
+
+select * from noticeView;
+
+create or replace view board1
+as
+select b.*,m.mem_name,m.mem_id
+from board b left join member m
+on b.mem_no = m.mem_no;
+
+
+create or replace view board1
+as
+select m.mem_name,b.*
+from  board b left join member m
+on m.mem_no = b.mem_no;
+
+
+
+[건우]---------------------------------------------------------------------

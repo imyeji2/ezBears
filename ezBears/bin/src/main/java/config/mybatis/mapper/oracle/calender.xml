@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ez.ezBears.schedule.model.ScheduleDAO">
+	
+ 	<select id="selectAll" resultType="map" parameterType="scheduleVo">
+		select *from calenderInfo
+		where mem_id = #{memId} and m_board_no = #{mBoardNo}
+	</select>
+	
+	<!-- <select id="selectCalender" resultType="scheduleVo" parameterType="int">
+		select s.schedule_start,s.schedule_end,s.schedule_title,m.m_board_no
+		from 
+		schedule s join my_board m
+		on s.my_board_no = m.my_board_no
+	</select> -->	
+	<update id="updateEvent" parameterType="map">
+	    update schedule
+	    set schedule_title = #{schedulTitle},
+	        schedule_start = #{schedulStart},
+	        schedule_end = #{schedulEnd}
+	    where schedule_no = #{scheduleNo}
+	</update>
+	
+	<delete id="deleteEvent" parameterType="map">
+		delete schedule
+		where schedule_no = #{scheduleNo}
+	</delete>
+	
+	<insert id="insertSchedule" parameterType="scheduleVo" >
+		<selectKey keyProperty="scheduleNo" order="BEFORE" resultType="int">
+			select schedule_seq.nextval from dual
+		</selectKey>
+		insert into schedule(schedule_no,mem_no,schedule_start,schedule_end,schedule_title,schedule_content,my_board_no)
+		values(#{scheduleNo},#{memNo},#{schedulStart},#{schedulEnd},#{schedulTitle},#{schedulContent},#{myBoardNo})
+		
+		
+	</insert>
+</mapper>

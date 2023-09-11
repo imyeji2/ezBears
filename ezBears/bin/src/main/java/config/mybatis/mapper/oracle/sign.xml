@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ez.ezBears.sign.model.SignDAO">
+
+
+	<sql id="searchWhere">
+		<where>
+		 m_board_no = #{MBoardNo} and  del_status &lt;&gt; 'Y'
+		<if test="searchKeyword != null and searchKeyword != ''">
+            AND mem_name LIKE '%' || #{searchKeyword} || '%'
+        </if>
+			
+		</where>
+	</sql>
+	
+	<insert id="insertApproval" parameterType="signVo">
+		<selectKey keyProperty="docNo" order="BEFORE" resultType="int">
+			select sign_seq.nextval from dual
+		</selectKey>
+		insert into sign(doc_no,dept_no,mem_no,doc_title,doc_content,my_board_no)
+		values(#{docNo},#{deptNo},#{memNo},#{docTitle},#{docContent},#{myBoardNo})
+	</insert>
+	
+	<insert id="insertSignFile" parameterType="signFileVo">
+		
+		insert into sign_file(file_no,doc_no,fileName,origin_filename,fsize)
+		values(sign_file_seq.nextval,#{docNo},#{fileName},#{originFileName},#{fsize})
+	</insert>
+	
+	
+	<select id="selectApprovalList" resultType="map" parameterType="SignListSearchVO">
+		 select *
+      from
+      (
+	      select rownum as RNUM, A.* from
+	      (		
+			select * from signListView
+			<include refid="searchWhere"></include>
+			
+			order by doc_no desc
+	      )A
+      )
+      <![CDATA[
+      where RNUM> #{firstRecordIndex} 
+      and RNUM<=#{firstRecordIndex} + #{recordCountPerPage}]]>		
+	</select>
+	
+	
+	<select id="selectAppCount" resultType="int" parameterType="searchVo">
+		select count(*) from signListView
+			
+		<include refid="searchWhere"></include>
+	</select>
+	
+	
+	<select id="detailSign" resultType="map" parameterType="int">
+		select * from approvalDetailView
+		where doc_no = #{docNo}
+	</select>
+	
+	<update id="updateStatus"  parameterType="int" >
+		update sign
+		set status ='처리중'
+		where doc_no = #{docNo}
+	</update>
+	
+	<update id="updateStatus2"  parameterType="int" >
+		update sign
+		set status ='완료'
+		where doc_no = #{docNo}
+	</update>
+
+	<select id="selectAllUnder" parameterType="map" resultType="map">
+		select *
+		from
+		(
+			select rownum as RNUM, A.* from
+			(
+				select * from SIGNLISTVIEW <!-- where status = '처리중' -->
+				<include refid="searchWhere2"></include>
+				order by doc_no desc
+			)A
+		)
+		<![CDATA[
+		where RNUM> #{searchVo.firstRecordIndex} 
+		and RNUM<=#{searchVo.firstRecordIndex} + #{searchVo.recordCountPerPage}]]>
+	</select>
+	
+	<select id="selectAllComplete" parameterType="map" resultType="map">
+		select *
+		from
+		(
+			select rownum as RNUM, A.* from
+			(
+				select * from SIGNLISTVIEW <!-- where status = '완료' -->
+				<include refid="searchWhere3"></include>
+				order by doc_no desc
+			)A
+		)
+		<![CDATA[
+		where RNUM> #{searchVo.firstRecordIndex} 
+		and RNUM<=#{searchVo.firstRecordIndex} + #{searchVo.recordCountPerPage}]]>
+	</select>
+	
+	<select id="selectStatus" parameterType="int">
+		select status from sign
+		where doc_no = #{docNo}
+	</select>
+	
+
+	<select id="selectSignnFileInfo" parameterType="int" resultType="map">
+		select * from sign_file
+		where doc_no = #{docNo}
+	</select>
+
+	<select id="countAllUnder" parameterType="map" resultType="int">
+		select count(*) from SIGNLISTVIEW <!-- where status = '처리중' --> 
+		<include refid="searchWhere2"></include>
+		order by doc_no desc
+	</select>
+	
+	<select id="countAllComplete" parameterType="map" resultType="int">
+		select count(*) from SIGNLISTVIEW <!-- where status = '완료' -->
+		<include refid="searchWhere3"></include>
+		order by doc_no desc
+	</select>
+	
+	<sql id="searchWhere2">
+ 		<where>
+ 			status = '처리중'
+ 			<if test="searchTitle!=null and searchTitle!=''">
+ 				and doc_title like '%' || #{searchTitle} || '%'
+ 			</if>
+ 			<if test="searchDeptNo!=null and searchDeptNo!=''">
+ 				and dept_no = #{searchDeptNo}
+ 			</if>
+ 			<if test="searchName!=null and searchName!=''">
+ 				and mem_name = #{searchName}
+ 			</if>
+ 		</where>
+ 	</sql>
+ 	
+	<sql id="searchWhere3">
+ 		<where>
+ 			status = '완료'
+ 			<if test="searchTitle!=null and searchTitle!=''">
+ 				and doc_title like '%' || #{searchTitle} || '%'
+ 			</if>
+ 			<if test="searchDeptNo!=null and searchDeptNo!=''">
+ 				and dept_no = #{searchDeptNo}
+ 			</if>
+ 			<if test="searchName!=null and searchName!=''">
+ 				and mem_name = #{searchName}
+ 			</if>
+ 		</where>
+ 	</sql>
+	
+	<update id="updateSignInfo" parameterType="signVo">
+		update sign
+		set doc_title= #{docTitle}, doc_content= #{docContent}
+		where doc_no = #{docNo}		
+	</update>
+	
+	<delete id="deleteSignFile">
+		delete sign_file
+		where doc_no = #{docNo}
+	
+	</delete>
+	<select id="selectApprovaMem" parameterType="signMemInfoVo">
+		select * from approvaMemInfo
+		where doc_no= #{docNo}
+	</select>
+	
+	<delete id="deleteSingInfo">
+		delete sign
+		where doc_no = #{docNo}
+	</delete>
+	
+	<update id="updateStatusSign" >
+		update sign
+		set del_status = 'Y'
+		where doc_no = #{docNo}		
+	</update>
+	
+
+	 
+	
+</mapper>

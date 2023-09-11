@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ez.ezBears.teamWorkBoard.model.TeamWorkBoardDAO">
+
+
+	<insert id="insertTeamWorkBoard" parameterType="teamWorkBoardVo">
+		<selectKey keyProperty="teamBoardNo" order="BEFORE" resultType="int">	
+			select team_work_board_seq.nextval from dual
+		</selectKey>
+		insert into team_work_board(TEAM_BOARD_NO,MEM_NO,MY_BOARD_NO,TEAM_BOARD_TITLE,
+		TEAM_BOARD_CONTENT,FSIZE,FILENAME,ORIGIN_FILENAME,CONTENTNO)
+		values(#{teamBoardNo},#{memNo},#{myBoardNo},#{teamBoardTitle},#{teamBoardContent},
+		#{fsize},#{fileName},#{originFileName},#{teamBoardNo})
+	</insert>
+
+   <sql id="searchWhere">
+      <where>
+     	 m_board_no=#{mBoardNo} 
+     	 and status='Y'
+     	<![CDATA[and step < 1]]>
+         <if test="searchKeyword!=null and searchKeyword!=''">
+             and  ${searchCondition} like '%' || #{searchKeyword} || '%'
+         </if>   
+      </where>
+   </sql>
+   
+	
+	<select id="selectTeamWorkBoard" parameterType="myBoardSearchVo" resultType="map">
+      select *
+      from
+      (
+	      select rownum as RNUM, A.* from
+	      (		
+			select * from teamWorkBoardlistView
+			<include refid="searchWhere"></include>
+			order by regdate desc
+	      )A
+      )
+      <![CDATA[
+      where RNUM> #{firstRecordIndex} 
+      and RNUM<=#{firstRecordIndex} + #{recordCountPerPage}]]>				
+	</select>
+	
+	
+	<select id="selectTotalCount" parameterType="myBoardSearchVo" resultType="int">
+		select count(*) from teamWorkBoardlistView
+		<include refid="searchWhere"></include>
+	</select>	
+	
+	<update id="updateViewCount" parameterType="int">
+		update team_Work_Board
+        set views = views+1
+        where team_Board_No=#{teamBoardNo}
+	</update>
+	
+	
+	<select id="selectDetail" parameterType="int" resultType="map">
+		select * from teamWorkBoardlistView
+		where team_Board_No=#{teamBoardNo}
+	</select>
+	
+
+
+	<update id="updateTeamWorkBoard" parameterType="teamWorkBoardVo">
+		update team_Work_Board
+		set team_board_title = #{teamBoardTitle},
+		team_board_content=#{teamBoardContent}
+		<if test="fileName != null and fileName !=''">
+			,fsize=#{fsize},fileName=#{fileName},
+			origin_fileName=#{originFileName}
+		</if>
+		where team_Board_No =#{teamBoardNo}
+	</update>
+
+
+
+
+	<select id="selectTeamWorkBoardByNo" parameterType="int" resultType="teamWorkBoardVo">
+		select * from team_Work_Board
+		where team_Board_No=#{teamBoardNo}
+	</select>
+	
+
+	
+	<parameterMap type="map" id="deleteTeamWorkBoardProc">
+		<!-- 아래 ?의 순서에 맞춰서 만들어야함 -->
+		<parameter property="teamBoardNo" javaType="string" jdbcType="VARCHAR" mode="IN"/>
+		<parameter property="step" javaType="string" jdbcType="VARCHAR" mode="IN"/>
+		<parameter property="contentno" javaType="string" jdbcType="VARCHAR" mode="IN"/>
+		<parameter property="groupNo" javaType="string" jdbcType="VARCHAR" mode="IN"/>
+	</parameterMap>
+	
+
+   <delete id="deleteTeamWorkBoard" parameterMap="deleteTeamWorkBoardProc">
+   		call DELETETEAMWORKBOARD(?,?,?,?)
+   </delete>
+   
+   
+   
+
+
+
+   <select id="selectReply" parameterType="myBoardSearchVo" resultType="map">
+       select *
+	      from
+	      (
+	      select rownum as RNUM, A.* from
+		      (	
+		   		select * from teamWorkBoardListView
+		   		where CONTENTNO = #{contentno} and step>0
+		   		order by group_no desc, step, sortno desc
+ 				)A
+     		 )
+      <![CDATA[
+      where RNUM> #{firstRecordIndex} 
+      and RNUM<=#{firstRecordIndex} + #{recordCountPerPage}]]>				   		
+   </select>
+   
+   
+   
+   
+   	<select id="selectReplyTotalCount" parameterType="myBoardSearchVo" resultType="int">
+  	   	select count(*) from team_Work_Board
+   		where CONTENTNO = #{contentno} and step>0
+ 	</select>
+ 	
+ 
+	<update id="updateSortNo" parameterType="teamWorkBoardVo">
+		update team_Work_Board
+		set sortNo = sortNo+1
+		where CONTENTNO=#{contentno} and sortNo>#{sortno}
+	</update> 
+	
+	<select id="selectGroupNo" resultType="int">
+		select TEAM_WORK_BOARDGROUPNO_SEQ.nextval from dual
+	</select> 	
+ 	
+   <insert id="insertReply" parameterType="teamWorkBoardVo">
+   
+		<selectKey keyProperty="teamBoardNo" resultType="int" order="BEFORE">
+			select TEAM_WORK_BOARD_SEQ.nextval from dual
+		</selectKey>
+		
+   		insert into team_Work_Board(TEAM_BOARD_NO,MEM_NO,COMMENTS,GROUP_NO,STEP,SORTNO,MY_BOARD_NO,CONTENTNO)
+   		values(#{teamBoardNo},#{memNo},#{comments},#{groupNo},#{step}+1,#{sortno}+1,#{myBoardNo},#{contentno})
+   </insert> 	
+   
+   
+   <update id="updeteReply" parameterType="teamWorkBoardVo">
+	   	update team_Work_Board
+	   	set COMMENTS = #{comments}
+	   	where team_Board_No=#{teamBoardNo}
+   </update>   
+   
+   <insert id="insertReReply" parameterType="teamWorkBoardVo">
+		<selectKey keyProperty="teamBoardNo" resultType="int" order="BEFORE">
+			select TEAM_WORK_BOARD_SEQ.nextval from dual
+		</selectKey>
+		
+   		insert into team_Work_Board(TEAM_BOARD_NO,MEM_NO,COMMENTS,GROUP_NO,STEP,SORTNO,MY_BOARD_NO,CONTENTNO)
+   		values(#{teamBoardNo},#{memNo},#{comments},#{groupNo},#{step}+1,#{sortno}+1,#{myBoardNo},#{contentno})
+   </insert>   
+
+   <update id="deleteFile" parameterType="int">
+   		update team_Work_Board
+   		set FSIZE=0, FILENAME=null, ORIGIN_FILENAME=null
+   		where team_Board_No=#{teamBoardNo}
+   </update>
+   
+       <select id="selectTeamWorkBoardNext" parameterType="map" resultType="map">
+		 select a.*
+			from(
+				select team_board_no,m_board_no,team_board_title,
+				lag(team_board_no,1) over(order by team_board_no) as prev,
+				lag(team_board_title,1) over(order by team_board_no) as prev_title, 
+				lag(m_board_no,1) over(order by team_board_no) as prev_m_board_no,
+				lead(team_board_no,1) over(order by team_board_no) as next, 
+				lead(team_board_title,1) over(order by team_board_no) as next_title,
+				lead(m_board_no,1) over(order by team_board_no) as next_m_board_no
+				from teamWorkBoardListview
+				where team_board_title is not null 
+				and m_board_no=#{mBoardNo}
+		        order by regdate
+			)a
+		where team_board_no=#{teamBoardNo}
+    </select>
+   
+</mapper>

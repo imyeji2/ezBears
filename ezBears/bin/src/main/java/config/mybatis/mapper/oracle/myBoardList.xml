@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ez.ezBears.myBoard.model.MyBoardListDAO">
+
+<!-- 예지 -->
+	<!-- 마이보드 메뉴 출력  -->
+	<select id="selectBoardList" parameterType="String" resultType="map">
+		select * from myBoardListView
+		where mem_id=#{userid}
+		and STATUS = 'Y'
+		order by m_board_name
+	</select>
+	
+	
+	<!-- 마이보드 탭 -->
+	<select id="selectByMyBoardName" parameterType="myBoardListVo" resultType="String">
+		select m_board_name from myBoardListView
+		where m_board_no=#{MBoardNo} and mem_id=#{memId}
+	</select>
+	
+	
+	<!-- 마이보드 정보 -->
+	<select id="selectMyBoardInfo" parameterType="myBoardListVo" resultType="myBoardListVo">
+		select my_board_no, m_board_no, mem_no, m_board_name
+		from myBoardListView
+		where m_board_no=#{MBoardNo} and mem_id=#{memId}
+	</select>
+	
+	<select id="selectByBoardName" parameterType="int" resultType="String">
+		select m_board_name
+		from m_board
+		where m_board_no=#{mBoardNo}
+	</select>
+	
+	<select id="seleectMyBoardNo" parameterType="myBoardListVo" resultType="int">
+		select  my_board_no from myBoardListView
+		where m_board_no=#{MBoardNo} and mem_no=${memNo}
+	</select>
+	
+	<select id="selectMyBoardMember" parameterType="int" resultType="map">
+		select * from myBoardMemberView
+		where m_board_no=#{mBoardNo} 
+		and CONTRACT_DONE is null
+		and STATUS = 'Y'
+		order by mem_name
+	</select>
+
+		
+	<select id="selectAdminBoardList" parameterType="int" resultType="map">
+		select * from myBoardListView
+		where ADMIN_NO=#{adminNo} and mem_no=#{adminNo} and STATUS = 'Y'
+		order by m_board_name 
+	</select>
+	
+	<select id="totalCountMboardMember">
+		select count(mem_no) from myBoardListView
+		where m_board_no=#{mBoardNo} and STATUS = 'Y'
+	</select>	
+	<!-- 예지 -->
+	
+	<!-- 다희 -->	
+	<!-- 부서 이름으로 동적 게시판 번호 찾기 -->
+	<select id="findBoardNoByBoardName" parameterType="String" resultType="int">
+		SELECT M_BOARD_NO FROM M_BOARD WHERE M_BOARD_NAME = #{MBoardName}
+	</select>
+	
+	<!-- 내 동적 게시판에 부서 번호로 게시판 등록 -->
+	<insert id="insertMyBoard" parameterType="myBoardListVo">
+		<selectKey keyProperty="myBoardNo" order="BEFORE" resultType="int">
+			SELECT MY_BOARD_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO MY_BOARD(MY_BOARD_NO, MEM_NO, M_BOARD_NO) VALUES(#{myBoardNo}, #{memNo}, #{MBoardNo} )
+	</insert>
+	
+	<!-- 다희 -->	
+	
+	<!-- 희진 -->
+	<select id="selectBoardInfo" parameterType="myBoardInfoVo" resultType="myBoardInfoVo">
+		select * from myBoardInfo
+		where m_board_no = #{mBoardNo} and mem_id = #{memId}
+	</select>
+	
+	<select id="selectMyBoardDept" parameterType="String" resultSets="myBoardInfoVo">
+		select * from myboardInfo
+		where mem_id = #{memId}
+	</select>
+	
+	<delete id="deleteMyboard" parameterType="int">
+		delete MY_BOARD
+		where M_BOARD_NO=#{MBoardNo}
+	</delete>
+	
+	<update id="updateMyboard" parameterType="int">
+		update MY_BOARD
+		set status ='N'
+		where M_BOARD_NO=#{MBoardNo}
+	</update>
+		
+	<select id="selectMemAppPositionInfo" resultType="myBoardInfoVo">
+		select * from myBoardInfo
+		where m_board_no = #{mBoardNo} and position_no=6
+	</select>
+	
+	<update id="updateMainBoard" parameterType="myBoardVo">
+		update MY_BOARD
+		set main_view ='Y'
+		where status ='Y' and main_view='N' 
+		and mem_no=#{memNo} and m_board_no = #{MBoardNo}
+	</update>
+	
+	<update id="deleteMainBoard" parameterType="int">
+		update MY_BOARD
+		set main_view ='N'
+		where status ='Y' and main_view='Y'
+		and mem_no=#{memNo}
+	</update>	
+
+	<select id="selectMyBoardMember2" parameterType="int" resultType="map">
+		select * from myBoardMemberView
+		where m_board_no= #{mBoardNo} and CONTRACT_DONE is null and position_no =6 and status &lt;&gt; 'N'
+		order by mem_name
+	</select>
+
+</mapper>
+
+
