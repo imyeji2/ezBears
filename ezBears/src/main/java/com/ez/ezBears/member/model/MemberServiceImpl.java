@@ -238,4 +238,9 @@ public class MemberServiceImpl implements MemberService{
 		return memberDao.selectMemberListTotal3(searchVo);
 
 	}
+
+	@Override
+	public List<String> selectMemTel(int deptNo) {
+		return memberDao.selectMemTel(deptNo);
+	}
 }

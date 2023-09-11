@@ -46,6 +46,7 @@ textarea#MSGtextArea {
     border-radius: 5px;
     width: 700px;
     height: 300px;
+    color: #fff;
 }
 
 input.MSGContext {
@@ -53,6 +54,17 @@ input.MSGContext {
     border: none;
     color: #fff;
 }
+input.BTsendMSG {
+	outline: none;
+	background-color: #7000D8;
+	border: 0;
+	color: #fff;
+	padding: 5px 15px;
+	border-radius: 5px;
+	transition: all 0.35s linear;
+	text-align: center;
+}
+
 </style>
 
 	<div class="col-12">
@@ -72,26 +84,31 @@ input.MSGContext {
 			        <a class="nav-link tap_txt" id="sendMSG" href="<c:url value='/Member/sendMSG'/>">SMS전송</a>
 			    </li>                                 
 			</ul>
-			<div class = "sendto">
-				<input type="text" class = "sender" value = "받는사람">
-		        <select name="selectTo" id="selectTo">
-		        	<option value="" >전송 대상</option>
-					<option >전체</option>
-					<option class="selectDept" value="selectDept">부서별</option>
-		       	</select>
-		       	<select name="deptNo" id="dept">
-		        	<option value="" >부서</option>
-					<!-- 반복문 -->
-					<c:forEach var="deptVo" items="${deptList}">
-						<option value ="${deptVo.deptNo}">${deptVo.deptName}</option>
-					</c:forEach>
-					<!-- 반복문 -->
-		       	</select>
-			</div>
-			<div class = "msgContext">
-				<input type="text" class = "MSGContext" value = "내용">
-				<textarea class = "MSGContext" id="MSGtextArea"></textarea>
-			</div>
+			<form  name="frm123" method="post" action="<c:url value='/msg/send-many'/>">
+				<div class = "sendto">
+					<input type="text" class = "sender" value = "받는사람">
+			        <select name="selectTo" id="selectTo">
+			        	<option value="" >전송 대상</option>
+						<option >전체</option>
+						<option class="selectDept" value="selectDept">부서별</option>
+			       	</select>
+			       	<select name="deptNo" id="dept">
+			        	<option value="" >부서</option>
+						<!-- 반복문 -->
+						<c:forEach var="deptVo" items="${deptList}">
+							<option value ="${deptVo.deptNo}" name = "deptNo">${deptVo.deptName}</option>
+						</c:forEach>
+						<!-- 반복문 -->
+			       	</select>
+				</div>
+				<div class = "msgContext">
+					<input type="text" class = "MSGContext" value = "내용">
+					<textarea class = "MSGContext" name="MSGcontext" id="MSGtextArea"></textarea>
+				</div>
+				<div class="buttons">
+					<input type ="submit" class = "BTsendMSG" value = "전송">
+				</div>
+			</form>
 	    </div>
 	</div>
 
