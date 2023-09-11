@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ez.ezBears.attendance.model.AttendanceDAO">
+	<select id="selectByMemNo" parameterType="int" resultType="attendanceVo">
+		select * from attendance where MEM_NO = #{memNo}
+	</select>
+ 
+ 	<insert id="insertAttendance" parameterType="int">
+ 		insert into attendance(attendance_no, mem_no, in_time)
+ 		values(attendance_seq.nextval, #{memNo}, sysdate)
+ 	</insert>
+	
+	<update id="comeCompanyLate" parameterType="int">
+		update attendance 
+		set 
+		<!-- in_time = sysdate, -->
+		status = '지각'
+		where attendance_no = #{attendanceNo}
+	</update>
+	
+	<update id="comCompanyGood" parameterType="int">
+		update attendance 
+		set 
+		<!-- in_time = sysdate, -->
+		status = '출근'
+		where attendance_no = #{attendanceNo}
+	</update>
+	
+	<update id="goHome" parameterType="attendanceVo">
+		update attendance 
+		set out_time = sysdate,
+		status = #{status}
+		where attendance_no = #{attendanceNo}
+	</update>
+	
+	<select id="selectAttendanceNo" parameterType="attendanceVo" resultType="int">
+		select * 
+		from(
+			select attendance_no from attendance where mem_no = #{memNo} order by attendance_no desc
+		) where rownum = 1
+	</select>
+	
+	<select id="selectRecentAttendance" parameterType="int" resultType="attendanceVo">
+		select * 
+		from(
+			select * from attendance where mem_no = #{memNo} order by attendance_no desc
+		) where rownum = 1
+	</select>
+	
+	<select id="selectAllAttendance" resultType="attendanceVo">
+		select * from attendance order by attendance_no desc	
+	</select>
+	
+	<select id="selectAllThisMonth" parameterType="map" resultType="map">
+		SELECT *
+		FROM attendance
+		WHERE TO_CHAR(in_time, 'YYYY-MM') = #{date}
+		AND mem_no = #{memNo}
+		ORDER BY attendance_no DESC
+	</select>
+	
+	<select id="countComeLate" parameterType="map" resultType="int">
+		SELECT count(*)
+		FROM attendance
+		WHERE TO_CHAR(in_time, 'YYYY-MM') = #{date}
+		AND mem_no = #{memNo}
+		and status like '%지각%'
+	</select>
+	
+	<select id="countComeGood" parameterType="map" resultType="int">
+		SELECT count(*)
+		FROM attendance
+		WHERE TO_CHAR(in_time, 'YYYY-MM') = #{date}
+		AND mem_no = #{memNo}
+		and status like '%출근%'
+	</select>
+	
+	<select id="countGoEarly" parameterType="map" resultType="int">
+		SELECT count(*)
+		FROM attendance
+		WHERE TO_CHAR(in_time, 'YYYY-MM') = #{date}
+		AND mem_no = #{memNo}
+		and status like '%조퇴%'
+	</select>
+	
+	<select id="selectAllView" parameterType="map" resultType="map">
+		select *
+		from
+		(
+			select rownum as RNUM, A.* from
+			(
+				select * from attendanceView
+				<include refid="searchWhere"></include>
+				order by attendance_no desc
+			)A
+		)
+		<![CDATA[
+		where RNUM> #{searchVo.firstRecordIndex} 
+		and RNUM<=#{searchVo.firstRecordIndex} + #{searchVo.recordCountPerPage}]]>
+	</select>
+ 
+ 	<select id="countAllView" parameterType="map" resultType="int">
+ 		select count(*) from attendanceView
+ 		<include refid="searchWhere"></include>
+		order by attendance_no desc
+ 	</select>
+ 	
+ 	<sql id="searchWhere">
+ 		<where>
+ 			<if test="date11!=null and date11!='' and date22!=null and date22!=''">
+ 				<![CDATA[
+ 				and in_time >= trunc(to_date(#{date11}, 'YYYY-MM-DD HH24:mi:ss')) and in_time < trunc(to_date(#{date22}, 'YYYY-MM-DD HH24:mi:ss')) + 1
+ 				]]>
+ 			</if>
+ 			<if test="searchDeptNo!=null and searchDeptNo!=''">
+ 				and dept_no = #{searchDeptNo}
+ 			</if>
+ 			<if test="searchName!=null and searchName!=''">
+ 				and mem_name = #{searchName}
+ 			</if>
+ 		</where>
+ 	</sql>
+ 	
+ 	<select id="findAllToExcel" parameterType="map" resultType="map">
+ 		select * from attendanceView
+ 		<include refid="searchWhere"></include>
+		order by attendance_no desc
+ 	</select>
+ 	
+ 	
+ 
+ 
+</mapper>

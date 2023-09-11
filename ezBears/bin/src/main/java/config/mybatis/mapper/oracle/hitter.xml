@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ez.ezBears.record.hitter.model.HitterDAO">
+	<sql id="searchWhere">
+		<where>
+			<if test="searchKeyword!=null and searchKeyword!=''">
+				${searchCondition} like '%' || #{searchKeyword} || '%'
+			</if>
+		</where>
+	</sql>
+
+	<select id="selectCheckId" parameterType="string"
+		resultType="int">
+		select count(*) from STAFF
+		where STAFF_ID=#{staffId}
+	</select>
+
+	<select id="selectPwd" parameterType="String"
+		resultType="string">
+		select STAFF_PWD from STAFF
+		where STAFF_ID=#{staffId}
+	</select>
+
+	<select id="selectStatus" parameterType="String"
+		resultType="string">
+		select STAFF_STATUS from STAFF
+		where STAFF_ID=#{staffId}
+	</select>
+	
+	<insert id="insertHitter" parameterType="hitterVo">
+		insert into hitter(hitter_no, recode_no, player_no, staff_no, regdate ,ab, rs, h, rbi, bb, so, ba, hr)
+		values(hitter_seq.nextval, #{recodeNo}, #{playerNo}, #{staffNo}, sysdate, #{AB}, #{RS}, #{H}, #{RBI}, #{BB}, #{SO}, #{BA}, #{HR})
+	</insert>
+	
+	<select id="selectByPlayerNo" resultType="hitterVo" parameterType="searchVo">
+		select *
+		from hitter
+		where player_no = #{playerNo}
+	</select>
+
+	<select id="selectByRecodeNo" resultType="hitterVo">
+		select *
+		from hitter
+		where recode_no = #{recodeNo} and player_no = #{playerNo}
+	</select>
+	
+	
+	<select id="selectHitterView" parameterType="int" resultType="map">
+    	select * from hitter_view where player_no = #{playerNo}
+    </select>
+
+	<select id="selectHitterRecordView" parameterType="int"
+		resultType="map">
+		select * from hitter_record_view where recode_no = #{recodeNo}
+	</select>
+    
+    <select id="selectHitterStatView" parameterType="int" resultType="map">
+    	select * from hitter_stat_view
+    	where player_no=#{playerNo}
+    </select>
+    
+    <select id="selectAllHitter" resultType="teamVo">
+		select * from team where b_position_no != 1 order by player_name
+	</select>
+    
+    <update id="updateHitter" parameterType="hitterVo">
+    	update hitter
+    	set
+    	ab=#{AB}, rs=#{RS}, h=#{H}, rbi=#{RBI}, bb=#{BB}, so=#{SO}, ba=#{BA}, hr=#{HR}
+    	where player_no=#{playerNo} and recode_no=#{recodeNo}
+    </update>
+    
+    <delete id="deleteHitter" parameterType="map">
+    	delete hitter
+    	where player_no=#{playerNo} and recode_no=#{recodeNo}
+    </delete>
+    
+</mapper>

@@ -1,0 +1,1487 @@
+@charset "UTF-8";
+
+/*나의보드(board) css*/
+#board_style{
+	.tap_txt{
+		color: #fff;
+	}
+	
+}/*나의보드(board) css*/
+
+.breadcrumb-item.active {
+    color: #fff;
+}
+
+/*top 멤버 정보 */
+#top_membox{
+	width:100%;
+	margin: 0 auto;
+	overflow: hidden;
+	padding:0px 0px 20px 0px;
+	text-align: center;	
+	
+	.meminfo{
+		overflow: hidden;
+	}
+	
+	.member_img{
+		width: 40px;
+		border-radius: 10px;
+	}
+	
+	.btnBox{
+		width:80%;
+		margin: 0 auto;
+		overflow: hidden;
+	}
+	
+	
+	
+	.inoutBtn{
+		margin-top:10px;
+		margin-left: 3%;
+		float: left;
+		width:47%;
+		line-height:35px;
+		background:#31354e;
+		border-radius: 10px;
+		border: none;
+		outline: none;
+		color: #fff;
+	}
+
+	.inoutBtn1{
+		margin-top:10px;
+		margin-right:3%;
+		float: left;
+		width:47%;
+		line-height:35px;
+		background:#31354e;
+		border-radius: 10px;
+		border: none;
+		outline: none;
+		color: #fff;
+	}	
+	.user_info{
+		width:fit-content;
+		margin:0 auto;
+	}
+
+	
+	
+	
+	
+}/*top 멤버 정보 */
+
+/*팀별 공지사항 리스트(피드형) css*/
+#teamNoticeList{
+	color:#fff;
+	
+	
+	.notice_list_box{
+		width:80%;
+		border-top:1px solid #6C7293;
+		padding:30px 10px 30px 10px;
+		margin:0 auto;
+		text-align: left;
+	}
+	
+	.list_box_title{
+		overflow:hidden;
+		line-height:50px;
+		width:100%;
+	}
+	
+	.user_img{
+		float:left;
+	}
+	
+	.user_img img{
+		width:40px;
+		border-radius:10px 10px 10px 10px;
+	}
+	
+	.user_txt{
+		float:left	
+	
+	}
+	
+	.user_txt_name{
+		font-size: 1em;
+		margin-left:10px;
+		font-weight:800;
+	}
+	
+	.user_txt_time{
+		font-size:0.9em;
+		margin-left:5px;
+	}
+	
+	
+	.list_box_content{
+		margin:20px 0px 20px 0px;
+		line-height:1.8em;
+	}
+	
+	.content_title{
+		font-weight: 900;
+		margin-bottom: 20px;
+	}
+	
+	.content_txt{
+		max-height:90px;
+		overflow: hidden;
+	}	
+	
+	.list_box_file{
+		width:fit-content;
+		border: 1px solid #6C7293;
+		border-radius:5px 5px 5px 5px;
+		padding:5px 5px 5px 5px;
+		margin-bottom:20px;
+		
+	}
+	
+	.list_box_file a{
+		color: #6C7293;
+	}
+		
+	
+	.list_line{
+		width: 80%;
+		border-bottom:1px solid #6C7293;
+		margin:0 auto;
+	}
+	
+	.page_box{
+		margin-top:80px;
+	}
+	
+	.user_dept{
+		width:fit-content;
+		border:1px solid #6C7293;
+		border-radius:5px 5px 5px 5px;
+		padding:5px 5px 5px 5px;
+		float:right;
+		line-height:25px;
+		font-size:0.9em;
+	}
+	
+	
+	.teamNotice_serch{
+		width: 80%;
+		margin:0 auto;
+	}
+	
+	.serch_input{
+		overflow: hidden;
+	}
+	
+	.select_box{
+		width:15%;
+		margin-right: 1%;
+		float: left;
+		line-height: 1.5;
+	}
+	
+	.select_box select{
+		text-align: center;
+	}
+	
+	.text_box{
+		width: 63%;
+		margin-right: 1%;
+		float: left;
+	}
+	
+	.serch_btn{
+		width: 10%;
+		float: left;
+	}
+	
+	.serch_btn button{
+		width: 100%;
+	    font-size: 1rem;
+	    font-weight: 400;
+	    line-height: 38px;
+	    border:0px;
+	    background: #000;
+	    color: #fff;
+	    border-radius: 5px;
+	}
+
+	.btnBox{
+		width: 10%;
+		float: left;
+	}
+	
+	.btnBox a{
+		line-height: 28px;
+		width: 80%;
+	}
+	
+}/*팀별 공지사항 리스트(피드형) css*/
+
+
+
+
+/*팀별 공지사항 디테일 css*/
+#teamNoticeDetail{
+	
+	
+	min-height:50vh;
+	color:#fff;
+
+	.detail_title{
+		width:100%;
+		border-bottom:1px solid #6C7293;
+		margin:50px 0px 20px 0px;
+		padding: 10px 10px 10px 10px;
+		line-height: 2em;
+		text-align: left;
+		overflow: hidden;
+	}	
+	
+	.detail_left{
+		float: left;
+	}
+	.title_txt{
+		font-weight: 900;
+	}
+	
+	.title_date{
+		margin-left: 10px;
+	}
+	
+	.detail_right{
+		text-align: right;
+	}
+	
+	.detail_content{
+		margin:50px 0px 50px 0px;
+		line-height:1.8em;
+		text-align: left;
+	}
+	
+	.detail_file{
+		overflow: hidden;
+	}
+	
+	
+	
+	.detail_info{
+		overflow: hidden;
+		margin:10px 0px 0px 0px;
+	}
+	
+	.user_info{
+		overflow: hidden;
+		margin-bottom: 30px;
+	}
+		
+	.user_img{
+		float: left;
+	}
+	
+	.user_img img{
+		width:40px;
+		border-radius: 10px 10px 10px 10px;
+	}
+	
+
+	.user_name{
+		margin-left:10px;
+		line-height: 40px;
+	}
+
+	.user_dept{
+		margin-left: 3px;
+		line-height: 40px;
+	}
+	
+	
+	.detail_reply_wrap{
+		padding: 20px 20px 20px 20px;
+		background:#202335;
+		text-align: left;
+	}
+	
+	.reply_write{
+		margin:20px 0px 0px 0px;
+		overflow: hidden;
+	}
+	
+	.form-floating{
+		width:90%;
+		float: left;
+	}
+	
+	.reply_add{
+		width: 9%;
+		float:left;
+		margin-left:1%;
+	}
+	
+	.reply_add_btn{
+		width: 100%;
+		line-height: 100px;;
+		border:0px;
+		background: #191C24;
+		color: #fff;
+		border-radius: 5px;
+	}
+
+	
+	.reply_add_btn2{
+		width: 100%;
+		line-height:46px;
+		border:0px;
+		background: #191C24;
+		color: #fff;
+		border-radius: 5px;
+	}	
+	.form-control{
+		background-color: #191C24;
+		border: 1px solid #191C24;
+		resize: none;
+	}
+	
+	.reply_list{
+		margin: 20px 0px 20px 0px;
+	}
+	
+	.reply_content{
+		padding: 20px 5px 10px 5px;
+		border-bottom: 1px solid #191C24;
+	}
+	
+	.reply_user{
+		overflow: hidden;
+	}
+	
+	.reply_txt{
+		margin:15px 5px 5px 5px;
+	}
+	
+	.reply_txt span{
+		font-size: 0.9em;
+	}
+	
+	.r_reply_content{
+		margin: 20px 0px 20px 20px;
+	}
+	
+	.reply_line{
+		border-bottom: 1px solid #191C24;
+	}
+	
+	.detail_option_btn{
+		width: fit-content;
+		margin:20px 0px 0px 0px;
+	}
+	
+	.del_content{
+		height: 30px;
+		margin:0px 0px 10px 10px;
+	}
+	
+	.boardNext{
+		width: 100%;
+		padding:20px;
+		border-top:1px solid #6C7293;
+		text-align: left;
+	}
+	
+	
+
+}/*팀별 공지사항 디테일 css*/
+
+
+
+/*팀별 공지사항 등록*/
+#teamNoticeWrite{
+	width:70%;
+	margin:0 auto;
+	color:#fff;
+	
+	.writeWrap{
+		margin: 50px 0px 30px 0px;
+	}
+	
+	.write_content{
+		margin:20px 0px 20px 0px;
+	}
+	
+	.write_title input{
+		line-height: 30px;
+	}
+	
+	.write_form{
+		resize: none;
+		height: 500px;
+	}
+	
+	.write_option_btn{
+		margin:30px 0px 0px 0px;
+	}
+	
+	.write_file{
+		margin: 20px 0px 20px 0px;
+
+	}
+	
+	.write_file input{
+		background: #000;
+	}
+	
+	.fileText{
+		text-align: left;
+		margin-top:10px;
+		color: red;
+	}
+	
+	.list_box_file{
+		width:fit-content;
+		border: 1px solid #6C7293;
+		border-radius:5px 5px 5px 5px;
+		padding:5px 5px 5px 5px;
+		margin-bottom:20px;
+		
+	}
+			
+	.list_box_file2{
+		width:fit-content;
+		border: 1px solid #6C7293;
+		border-radius:5px 5px 5px 5px;
+		padding:5px 5px 5px 5px;
+		margin:10px 0px 10px 0px;
+	}
+	
+					
+	
+}
+
+
+/*팀별 업무 게시판 리스트*/
+#teamWorkBoardList{
+	color:#fff;
+	
+	.table{
+		color:#fff;
+	}
+	
+	.table tbody tr:hover{
+		color:#fff;
+		cursor: pointer;
+	}
+	
+	.table a{
+		color:#fff;
+	}
+	
+	.table a:hover{
+		color:#fff;
+		cursor: pointer;
+	}
+	
+	
+	.teamNotice_serch{
+		width: 80%;
+		margin:0 auto;
+	}
+	
+	.serch_input{
+		overflow: hidden;
+	}
+	
+	.select_box{
+		width:10%;
+		margin-right: 1%;
+		float: left;
+		line-height: 1.5;
+	}
+	
+	.select_box select{
+		text-align: center;
+	}
+	
+	.text_box{
+		width: 68%;
+		margin-right: 1%;
+		float: left;
+	}
+	
+	.serch_btn{
+		width: 10%;
+		float: left;
+	}
+	
+	.serch_btn button{
+		width: 100%;
+	    font-size: 1rem;
+	    font-weight: 400;
+	    line-height: 38px;
+	    border:0px;
+	    background: #000;
+	    color: #fff;
+	    border-radius: 5px;
+	}
+
+	.btnBox{
+		width: 10%;
+		float: left;
+	}
+	
+	.btnBox a{
+		line-height: 28px;
+		width: 80%;
+	}
+	
+}/*팀별 업무 게시판 리스트*/
+
+
+
+/*팀별 업무 게시판 등록*/
+#teamWorkBoardWrite{
+	width:70%;
+	margin:0 auto;
+	color:#fff;
+
+	.writeWrap{
+		margin: 50px 0px 30px 0px;
+	}
+	
+	.write_content{
+		margin:20px 0px 20px 0px;
+		
+	}
+	
+	.write_title input{
+		line-height: 30px;
+	}
+	.write_form{
+		resize: none;
+		height:300px;
+	}
+	
+	.write_option_btn{
+		margin:30px 0px 0px 0px;
+	}
+	
+	.write_file{
+		margin: 20px 0px 20px 0px;
+
+	}
+	
+	.write_file input{
+		background: #000;
+	}
+	
+	.writeTodoList{
+		margin:0px 0px 30px 0px;
+		background: #000;
+		border-radius: 5px;
+		padding: 30px 30px 30px 30px;
+	}
+	
+	.todoList{
+		background: #191C24;
+		padding: 0px 10px 0px 10px;
+		border-radius: 5px;
+		margin:0px 0px 5px 0px;
+	}
+	
+	.form-check-input{
+		border: 1px solid #6C7293;
+	}
+	
+	.todoInput{
+		background:#191C24;
+	}
+	
+	.todoDate{
+		overflow: hidden;
+		margin:10px 0px 20px 0px;
+		text-align: center;
+	}
+	
+	
+	.dateBox{
+		width: 100%;
+		background: #191C24;
+		line-height: 38px;
+		border-radius: 5px;
+	}
+	
+	.dateBox span{
+		width: 10%;
+	}
+	
+	.dateBox_left{
+		width: 49.5%;
+		float: left;
+		background: #191C24;
+		line-height: 38px;
+		border-radius: 5px;
+	}
+	
+	.dateBox_right{
+		width: 49.5%;
+		float: right;
+		background: #191C24;
+		line-height: 38px;
+		border-radius: 5px;
+	}
+	
+	.dateinput{
+		width:70%;
+		line-height: 30px;
+		background: #191C24;
+		color:#6C7293;
+		border: none;
+		outline: none;
+		margin-left:10px;
+		text-align: right;
+	}
+	
+	.list_box_file2{
+		width:fit-content;
+		border: 1px solid #6C7293;
+		border-radius:5px 5px 5px 5px;
+		padding:5px 5px 5px 5px;
+		margin:10px 0px 10px 0px;
+	}	
+
+}/*teamWorkBoardWrite*/
+
+
+/*팀별 업무게시판 디테일 css*/
+#teamWorkBoardDetail{
+	min-height:50vh;
+	color:#fff;
+	
+	.detail_title{
+		width:100%;
+		border-bottom:1px solid #6C7293;
+		margin:50px 0px 10px 0px;
+		padding: 10px 10px 10px 10px;
+		line-height: 2em;
+		text-align: left;
+		overflow: hidden;
+	}	
+	
+	.detail_left{
+		float: left;
+	}
+	.title_txt{
+		font-weight: 900;
+	}
+	
+	.title_date{
+		margin-left: 10px;
+	}
+	
+	.detail_right{
+		text-align: right;
+	}
+	
+	.detail_content{
+		margin:50px 0px 50px 0px;
+		line-height:1.8em;
+		text-align: left;
+	}
+	
+	.detail_file{
+		overflow: hidden;
+	}
+	
+	
+	
+	.detail_info{
+		overflow: hidden;
+		margin:10px 0px 0px 0px;
+	}
+	
+	.user_info{
+		overflow: hidden;
+		margin-bottom: 30px;
+	}
+		
+	.user_img{
+		float: left;
+	}
+	
+	.user_img img{
+		width:40px;
+		border-radius: 10px 10px 10px 10px;
+	}
+	
+
+	.user_name{
+		margin-left:10px;
+		line-height: 40px;
+	}
+
+	.user_dept{
+		margin-left: 3px;
+		line-height: 40px;
+	}
+	
+	
+	.detail_reply_wrap{
+		padding: 20px 20px 20px 20px;
+		background:#202335;
+		text-align: left;
+	}
+	
+	.reply_write{
+		margin:20px 0px 0px 0px;
+		overflow: hidden;
+	}
+	
+	.form-floating{
+		width:90%;
+		float: left;
+	}
+	
+	.reply_add{
+		width: 9%;
+		float:left;
+		margin-left:1%;
+	}
+	
+	.reply_add_btn{
+		width: 100%;
+		line-height: 100px;;
+		border:0px;
+		background: #191C24;
+		color: #fff;
+		border-radius: 5px;
+	}
+
+	
+	.reply_add_btn2{
+		width: 100%;
+		line-height:46px;
+		border:0px;
+		background: #191C24;
+		color: #fff;
+		border-radius: 5px;
+	}
+	
+	.form-control{
+		background-color: #191C24;
+		border: 1px solid #191C24;
+		resize: none;
+	}
+	
+	.reply_list{
+		margin: 20px 0px 20px 0px;
+	}
+	
+	.reply_content{
+		border-bottom: 1px solid #191C24;
+	}
+	
+	.reply_user{
+		overflow: hidden;
+	}
+	
+	.reply_txt{
+		margin:10px 0px 10px 0px;
+	}
+	
+	.reply_txt span{
+		font-size: 0.9em;
+	}
+	
+	.r_reply_content{
+		margin: 20px 0px 20px 20px;
+	}
+	
+	.reply_line{
+		border-bottom: 1px solid #191C24;
+	}
+	
+	.detail_option_btn{
+		width: fit-content;
+		margin:20px 0px 0px 0px;
+	}
+	
+	
+	.detailTodoList{
+		width:100%;
+		margin:0 auto;
+		margin-top:10px;
+		padding: 30px 50px 50px 50px;
+		border-radius: 10px 10px 10px 10px;
+		background-color: #000;
+	
+	}
+	
+	.todoTitle{
+		text-align: left;
+		margin-bottom: 10px;
+	}
+	.todoList{
+		width: 100%;
+		background: #191C24;
+		padding: 0px 10px 0px 10px;
+		border-radius: 5px;
+		margin:0px 0px 5px 0px;
+		height: 50px;
+	}
+	
+	.todoList span{
+		width: fit-content;
+
+	}
+	
+	.mem_img{
+		width:35px;
+		height: 35px;
+		border-radius: 10px 10px 10px 10px;
+		float: left;
+	}
+	
+	.todoList a{
+		color:#fff;
+	}
+	
+	.form-check-input{
+		border: 1px solid #6C7293;
+	}
+	
+	.todoInput{
+		background:#000;
+	}
+	
+	.todoDate{
+		width: fit-content;
+		margin:10px 0px 10px 0px;
+		font-weight: bolder;
+	}
+	
+	.checkListBox{
+		width: 90%;
+		margin:0 auto;
+	}
+	
+	.checkedList span{
+		 text-decoration:line-through
+	}
+	
+	.del_content{
+		height: 30px;
+		margin:0px 0px 10px 10px;
+	}
+	
+	.result_Box{
+		margin-bottom: 20px;
+	}
+	
+	.result_txt{
+		width:fit-content;
+		margin:10px 0px 10px 0px;
+		font-size: medium;
+		font-weight: bolder;
+	}
+
+	.result_progress{
+		width:fit-content;
+	}	
+	
+	.memListBox{
+		 display: flex;
+		 flex-wrap: wrap;
+	}
+	
+	.mem_list_content{
+		  flex: 0 0 calc(50% - 20px);
+		  margin: 10px;
+		  padding: 20px;
+		  overflow: hidden;
+		  color: #191C24;
+	}
+	
+	.mem_list_content:hover{
+		background-color:rgb(240, 240, 240);
+		border-radius: 10px 10px 10px 10px;
+		cursor: pointer;
+	}
+	
+	
+	.modal-footer button{
+		background-color: #7000D8 !important;
+	}
+	
+	
+	.mem_img_box{
+		float:left;
+		width: 50px;
+		height: 50px;
+		margin-right:10px;
+		
+	}
+	
+	.mem_img_box img{
+		width: 100%;
+		height: 100%;
+		border-radius: 10px 10px 10px 10px;
+	}
+	
+	.mem_info_box{
+		float: left;
+		text-align: left;
+		font-size: 15px;
+		height: 50px;
+		margin-top:2px;
+	}
+	
+	.bottonBtnBox{
+		text-align: center;			
+		width: fit-content;
+		margin:0 auto;
+	}
+
+	.boardNext{
+		width: 100%;
+		padding:20px;
+		border-top:1px solid #6C7293;
+		text-align: left;
+	}
+	
+	.mem_info_box2 {
+		line-height: 25px;
+	    overflow: hidden;
+	}
+	
+	.memName {
+	    white-space: nowrap;
+	    overflow: hidden;
+	    text-overflow: ellipsis;
+	    max-width: 60px;
+	    display: inline-block;
+	    vertical-align: middle; 
+	}		
+
+
+}/*팀별 공지사항 디테일 css*/
+
+/*top 마이보드 추가 모달*/
+#addMyBoard{
+	.form-control{
+		background-color: #191C24;
+		color: #fff;
+	}
+	
+	.modal-footer button{
+		background-color: #7000D8 !important;
+	}
+}
+
+
+/*top 보드 수정 모달*/
+#editMyBoard{
+
+	.form-control{
+		background-color: #191C24;
+		color: #fff;
+	}
+	
+	.footer button{
+		background-color: #7000D8 !important;
+	}
+	
+	.table{
+		color:#191C24;
+		text-align: center;
+	}
+	
+	.table tr{
+		vertical-align: middle;;
+		
+	}
+	
+	.footer{
+		margin: -10px 20px 20px 0px;
+		text-align: right;
+		border:none ;
+		padding: 10px 0px 0px 0xp;
+	}
+	
+	.mBoardNameTxt{
+		border: 0px;
+		text-align: center;
+	}
+	
+	.mBoardNameTxtEdit{
+		border-bottom: 1px solid #191C24;
+	}
+	
+}
+
+/*마이보드 멤버 페이지*/
+#myBoardMember{
+	
+	
+	.myBoardMemberBox{
+		margin-top:30px;
+		padding: 30px 30px 30px 30px;
+		width: 95%;
+		margin:0 auto;
+		border-radius: 10px;
+		color: #fff;
+	}
+	
+	.topBtnBox{
+		text-align: left;
+		overflow: hidden;
+	}
+	
+	.topBtnBox h4{
+		float:left;
+		margin-bottom: 50px;
+	}
+	
+	.myBoardMemberContentBox{
+		 display: flex;
+		 flex-wrap: wrap;
+		 width: 98%;
+		 margin:0 auto;
+	}
+	
+	.memberListBox{
+		width:24%;
+		background-color: #202335;
+		margin-bottom: 20px;
+		border-radius: 5px;
+		padding: 10px;
+		margin:0% 0.5% 1% 0.5%;
+	}
+	
+	.memberBox{
+		overflow: hidden;;
+	}
+	
+	.memberImg{
+		float: left;
+		width:30%;
+	}
+	
+	.memberImg img{
+		width: 100%;
+		height: 85px;
+		border-radius: 5px;
+	}
+	
+	.memInfo{
+		float: left;
+		text-align: left;
+		margin-left:3%;
+		width: 67%;
+	}
+	
+	
+	.btn-primary{
+		width:100%;
+		height:30px;
+		margin:0px;
+	}
+	
+	.btnLeft{
+		width: 49%;
+		float: left;
+	}
+	
+	.memDeptName{
+		margin-bottom: 3px;;
+	}
+	
+	.bi-person-plus{
+		text-align: center;
+		font-size: 20px;
+	}
+	
+	.memberBox1{
+		display: flex;
+	    justify-content: center;
+	    align-items: center;
+		height: 85px;
+	}
+	
+	
+	.memListBox{
+		 display: flex;
+		 flex-wrap: wrap;
+	}
+	
+	.mem_list_content{
+		  flex: 0 0 calc(50% - 20px);
+		  margin: 10px;
+		  padding: 20px;
+		  overflow: hidden;
+		  color: #191C24;
+	}
+	
+	.mem_list_content:hover{
+		background-color:rgb(240, 240, 240);
+		border-radius: 10px 10px 10px 10px;
+		cursor: pointer;
+	}
+	
+	
+	.modal-footer button{
+		background-color: #7000D8 !important;
+	}
+	
+	
+	.mem_img_box{
+		float:left;
+		width: 50px;
+		height: 50px;
+		margin-right:10px;
+		
+	}
+	
+	.mem_img_box img{
+		width: 100%;
+		height: 100%;
+		border-radius: 10px 10px 10px 10px;
+	}
+	
+	.mem_info_box{
+		float: left;
+		text-align: left;
+		font-size: 15px;
+		height: 50px;
+		margin-top:2px;
+	}
+	
+	.form-select{
+		background-color: #fff;
+		color:#191C24;
+	}
+	
+	.mem_info_box2 {
+		line-height: 25px;
+	    overflow: hidden;
+	}
+	
+	.memName {
+	    white-space: nowrap;
+	    overflow: hidden;
+	    text-overflow: ellipsis;
+	    max-width: 60px;
+	    display: inline-block;
+	    vertical-align: middle; 
+	}	
+			
+}
+
+/*메인 페이지*/
+#main{
+	
+	
+	.table{
+		width: 90%;
+		color:#fff;
+		border-color: #6C7293;
+		margin:0 auto;
+	}
+	
+	
+	.table tbody tr:hover{
+		color:#fff;
+		background-color: rgba(0, 0, 0, 0.2);
+		
+	}
+	
+	.table thead{
+		text-align: center;
+	}
+	
+	.table a{
+		color:#fff;
+	}
+	
+	.naverNews table{
+		text-align: left;
+		margin: 0 auto;	
+	}
+	
+	.table td{
+		white-space:nowrap;
+		overflow:hidden;
+		text-overflow:ellipsis;
+		max-width:240px;
+	}
+	
+	.staff td{
+		white-space:nowrap;
+		overflow:hidden;
+		text-overflow:ellipsis;
+		max-width:150px !important;
+	}	
+	
+	.newImg{
+		width:30px;
+		justify-content: center; /* 수평 가운데 정렬 */
+   		align-items: center; /* 수직 가운데 정렬 */
+	}
+	
+	.todoChartBox{
+        width: 100%;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+	}
+	
+    .todoChart {
+        height: 60%;
+        position: relative;
+    }
+
+	.staffChartBox{
+        width: 100%;
+        min-height: 392px;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+	}
+	
+    .staffChart {
+		height: 100%;
+        position: relative;
+    }
+    
+    .chartText {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        color: #fff;
+    }
+
+    .chartText1 {
+        font-size: 1.4em;
+        color: #fff;
+        font-weight: 700;
+    }
+
+    .chartText2 {
+        font-size: 1.0em;
+        color:#FBEFFB;
+    }
+    
+    .weatherContent{
+		width: 100%;
+		color:#fff;
+		margin:20px 0px 20px 0px;
+	}
+
+	.weatherContent p{
+		margin:0 auto;
+	}
+	
+	.nowtime{
+		width:80%;
+		text-align: center;
+		font-size: 0.9em;
+		background: #31354e;
+		border-radius: 10px;
+		padding: 0px 20px 0px 20px;
+		line-height: 40px;
+		margin:0 auto;
+		font-weight:bolder;
+	}
+	
+	
+    .place{
+		text-align: center;
+		line-height: 30px;
+		font-size: 1.5em;
+		font-weight:bolder;
+		margin-top:10px;		
+	}
+	
+	.weatherIcon{
+		display: flex;
+		justify-content: center; /* 수평 가운데 정렬 */
+	}
+	
+	.weatherIcon img{
+		width:100px;
+		margin: 0 auto;
+	}
+	
+	.weatherTemp{
+		text-align: center;
+		margin-bottom: 20px;
+	}
+	
+	.changeBoardBox{
+		overflow: hidden;
+		margin:0 auto;
+	}
+	
+	.form-select{
+		width: 83%;
+		float: left;
+		background-color: #fff;
+		color:#000;
+	}
+	
+	.changeBoardBtn{
+		width: 15%;
+		margin-left:2%;
+		float: left;
+	}
+	
+	
+}
+
+
+#chatList{
+	
+	.memberBox1{
+		display: flex;
+	    justify-content: center;
+	    align-items: center;
+		height: 85px;
+	}
+	
+	
+	.memListBox{
+		 display: flex;
+		 flex-wrap: wrap;
+	}
+	
+	.mem_list_content{
+		  flex: 0 0 calc(50% - 20px);
+		  margin: 10px;
+		  padding: 20px;
+		  overflow: hidden;
+		  color: #191C24;
+	}
+	
+	.mem_list_content:hover{
+		background-color:rgb(240, 240, 240);
+		border-radius: 10px 10px 10px 10px;
+		cursor: pointer;
+	}
+	
+	
+	.modal-footer button{
+		background-color: #7000D8 !important;
+	}
+	
+	
+	.mem_img_box{
+		float:left;
+		width: 50px;
+		height: 50px;
+		margin-right:10px;
+		
+	}
+	
+	.mem_img_box img{
+		width: 100%;
+		height: 100%;
+		border-radius: 10px 10px 10px 10px;
+	}
+	
+	.mem_info_box{
+		float: left;
+		text-align: left;
+		font-size: 15px;
+		height: 50px;
+		margin-top:2px;
+		overflow: hidden;
+	}
+	
+	.form-select{
+		background-color: #fff;
+		color:#191C24;
+	}
+		
+	.mem_info_box2 {
+		line-height: 25px;
+	    overflow: hidden;
+	}
+	
+	.memName {
+	    white-space: nowrap;
+	    overflow: hidden;
+	    text-overflow: ellipsis;
+	    max-width: 60px;
+	    display: inline-block;
+	    vertical-align: middle; 
+	}
+	
+	.chatListBox{
+		overflow: hidden;
+		cursor: pointer;
+	}
+	
+	.chatListBox img{
+		width: 50px;
+		height: 50px;
+		border-radius: 15px;
+		float: left;
+	}
+	
+	.chatListInfo{
+		float: left;
+		margin-left: 5px;
+		font-size: 1em;
+		vertical-align: middle; 
+	}
+	
+	.chatListBox p{
+		margin: 0px;
+	}
+	
+	.chatListContent{
+		padding: 8px 0px 0px 5px;
+		font-size: 13px;
+		clear: both;
+	}
+	
+	.chatListContent p{
+		margin: 0px;
+
+	}
+	
+	.chat-messages{
+		overflow: hidden;
+	}
+	
+	.messageBox{
+		overflow: hidden;
+		clear: both;	
+		margin:10px 0px 10px 0px;
+	}
+	
+	.myMessage{
+		max-width: 50%;
+		padding: 10px 10px 10px 10px;
+		background-color: #31354e;
+		color: #fff;
+		border-radius: 10px;
+		float: right;
+	}
+
+	.memberMessage{
+		max-width: 50%;
+		padding: 10px 10px 10px 10px;
+		background-color: #6C7293;
+		color: #fff;
+		border-radius: 10px;
+		float: left;
+	}
+			
+}

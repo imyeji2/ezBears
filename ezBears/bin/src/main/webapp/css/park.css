@@ -1,0 +1,264 @@
+@charset "UTF-8";
+
+
+
+#approval{
+	
+  .insertapp{
+	   text-align: right;
+	   margin-left: 92%;
+	   margin-top: 20px;
+	}	
+	.table td{
+	    color: white;
+    	text-align: center;
+	}
+	
+	.signSearchBtn{
+		 margin-right: 20px;
+		 width: 24%;
+	}
+	.signTextSearch{
+	    margin-right: 15px;
+	    border-radius: 5px;
+		width: 100%;
+		height: 30px;
+		background-color: #343a40;
+		border: none;
+		color: white;
+	}
+	
+		
+}
+#approvalModal{
+	#approvalModalLabel{
+		color: #191C24;
+	}
+	.close{
+		background-color: #fff;
+		color: #191C24;
+	}
+	
+	.modal-content{
+		background-color: #fff;
+	}
+	.form-group{
+		font-size: 1.2em;
+		color: #191C24;
+	}
+	.form-control{
+		color: black;
+	}
+}
+/* Approval_write */
+#Approval_wr {	
+	
+	.appbox{
+		width: 70%;
+		margin: 0 auto;
+		
+	}
+	.Appfrm{
+	  width: 1250px;
+	}
+	.form-select{
+		width: 50%;
+		background-color: #191C24;
+		color: #fff;
+	}
+	.textarea{
+		resize: none;
+	}
+	.appfile{
+		width: 95%;
+		background: #191C24;
+		color: #fff;
+	}
+	.btn{
+		width: 90px;	
+		margin-top: -13px;
+		background-color: #7000D8;
+		margin-left: 18px;
+		float: right;
+	
+	}	
+	.table td{
+		color: #fff;
+		
+	}
+	.form-control{
+		color: white;
+		width: 80%; 
+	    margin-left: 40px;
+	    border: none;
+	    background: transparent;
+	}
+	
+	.docNo{
+		border: none;
+	    background: transparent;
+	    color: white; 
+	    text-align: center;
+	    font-size: 1.2em;
+	    width: 50%;
+	}
+	.startVacation{
+		border: none;
+	    background: transparent;
+	    color: white;
+	}
+	.endVacation{
+		border: none;
+	    background: transparent;
+	    color: white;
+	}
+	.table td.td-2 {
+		text-align: center;
+	}
+	.table td.td-3 {
+		text-align: center;
+		/*width: 13%;*/
+	}
+	.table td.td-1 {
+    	width: 19%;
+	}
+	.rdate{
+		text-align: center;
+	}
+	
+	.status{
+		border: none;
+	    background: transparent;
+	    color: white;
+	    width: 30%;
+
+	}
+	.sta{
+		border: none;
+	    background: transparent;
+	    color: white;
+	    width: 30%;
+
+	}
+	.regdate{
+		border: none;
+	    background: transparent;
+	    color: white;
+	}
+	.memName{
+		border: none;
+	    background: transparent;
+	    color: white;
+	}
+	.appoveBtn{
+		background-color: #7000D8;
+	    margin-left: 5px;
+	    width: 53%;
+	}
+	.fileinfo{
+		color: white;
+	}
+	.fileinfo2{
+		color: white;
+		margin-left: 40px;
+	}
+	.app_file2 {
+    float: right;
+	}
+	
+}
+
+
+
+
+/*Appdetail*/
+#Appdetail{
+	.appbox{
+		width: 70%;
+		margin: 0 auto;
+	}
+.appfrm {
+    width: 1250px;
+}	
+	
+.Appbtn{
+	text-align: center;
+}	
+.btn {
+	width: 70px;	
+	margin-top: 14px;
+} 	
+.textarea{
+		resize: none;
+	}	
+}
+
+/*Appdelete*/
+#Appdelete{
+	.pwd{
+	 width: 230px;	
+	}	
+	.center{
+	margin-top: 15px;
+	margin-left: 60px;
+	}	
+}
+/*webhard*/
+#webhard{
+	.download{
+		margin: 0px;
+		text-align: center;
+	}
+}
+/* webhard_detail */
+#harddetail{
+	.appbox{
+		width: 70%;
+		margin: 0 auto;
+	}
+	.hardfrm{
+	  width: 1250px;
+	}
+	.hardbtn{
+	 	text-align:  center;
+	 	margin-top: 14px;
+	}
+	.textarea{
+		resize: none;
+	}
+	.webFile{
+	background: black;
+	}	
+	
+}
+/* harddelete*/
+#harddelete{
+	.center{   
+	margin-top: 15px;
+	margin-left: 60px;
+	}	
+	.pwd{
+		 width: 230px;	
+	}	
+}
+
+/*Calender*/
+#insertcal {
+    width: 100%;
+    height: 58px;
+	.btn {
+	   margin-left: 480px;
+	}
+}
+
+#cal{
+	.calendar{
+	width: 85%;
+	height: 90%;
+	margin-left: 105px;
+	
+	}
+	.calendar a {
+		color: #fff;
+	}
+}
