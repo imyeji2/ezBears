@@ -55,6 +55,7 @@
 		                $('.popup-inner #memName').val(res.memberVo.memName);
 		                $('.popup-inner #memId').val(res.memberVo.memId);
 		                $('.popup-inner #memTel').val(res.memberVo.memTel);
+		                $('.chatDiv #gotoMSG').attr("href", "<c:url value='/message/messageWrite?receiveNo="+res.memberVo.memNo+"'/>");
 
 		                if(res.memberVo.contractDone != null){
 			                $('.popup-inner #staffInfo').val('퇴사');
@@ -259,7 +260,8 @@ tr.memList {
 		                					<br>
 		                					<br>
 		                					<div class ="twoBt">
-		                						<a id="btChat">채팅</a>
+		                				
+		                						<a id="btChat" href = "<c:url value='/message/messageWrite?receiveNo=${map.MEM_NO}'/>">쪽지</a>
 		                						<a id="btInfo">정보</a>
 		                					</div>
 											<%@include file="../Member/memberPopup.jsp"%>    

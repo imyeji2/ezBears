@@ -61,7 +61,7 @@
 	                        $('.popup-inner #memName').val(res.memberVo.memName);
 	                        $('.popup-inner #memId').val(res.memberVo.memId);
 	                        $('.popup-inner #memTel').val(res.memberVo.memTel);
-
+	                        $('.chatDiv #gotoMSG').attr("href", "<c:url value='/message/messageWrite?receiveNo="+res.memberVo.memNo+"'/>");
 	                        if(res.memberVo.contractDone != null){
 	                            $('.popup-inner #staffInfo').val('퇴사');
 	                        }
