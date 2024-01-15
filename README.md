@@ -246,6 +246,21 @@
 
 
 ### ▶️동적보드 공지사항
+![image](https://github.com/imyeji2/ezBears/assets/137904402/e943af1c-b128-492d-bd12-aa611636ba41)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/63b08421-c6f7-4170-8a2c-2dda1bac6e7d)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/b9931f4c-7572-424a-b434-7e8c99f50171)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/552d6119-6d73-4ec3-ac26-9a59800e0db6)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/a84c8b3f-02da-4fc9-b5e4-6e159c5bd449)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/4b7778e8-dd8a-4bca-9654-f57da8017575)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/bf2ac02f-09d6-4a6d-acbc-804fd2fb2693)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/293580f9-8750-441e-95f0-a91d80b64283)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/8181c7f8-c719-4c12-b1b8-af727afd5283)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/876d9069-b9ed-411b-9a54-65b34291684c)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/88325f21-83a2-4767-9743-8d832b712e41)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/63650dbd-37c3-4fe5-a9d6-69d33bc68cf1)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/64835d9f-3c3b-4f21-be48-024c3635905b)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/6f5f1747-8c78-4f51-bf95-d8138a9b4148)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/5f5ab39e-eaeb-4dbf-8256-5f91f4aab1ae)
 
 
 
@@ -254,20 +269,63 @@
 
 
 ### ▶️동적보드 업무게시판
+![image](https://github.com/imyeji2/ezBears/assets/137904402/3ae610c4-7a7c-47a8-b878-9d4505c6864b)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/746c2af9-4bc2-4d60-b8db-68bf3cdcdfcb)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/d79c6481-3a2f-4990-82a3-84802e406baa)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/7246f89a-1917-41d6-b058-30d7f9837448)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/92ce6fcb-adb0-4380-ad02-e5735d6616f8)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/fe4df7d4-8ff8-4ff8-9143-0680f58e8298)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/0ee9a568-2238-4ac7-b098-24d6bce9a757)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/2efbdec4-27f7-4fad-aa10-38c2630fec34)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/aa700770-5f1a-45ba-a048-e13c87cb8e06)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/f530c1e6-0f8f-4cb8-8610-09121e517aca)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/fbc40b41-1f0f-4196-87aa-aaf0628179b4)
 
 
 
 ###### [[멤버 및 역할 분담👆]](#%EF%B8%8F멤버-및-역할-분담)
 ---
+
 
 ### ▶️동적보드 스케줄
+![image](https://github.com/imyeji2/ezBears/assets/137904402/9b4db8ae-f770-4891-b9cc-94048ae2dab8)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/59648bd1-b057-439f-a598-43ea15ff2ca2)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/d5965664-1418-4c56-856b-de33a4967175)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/f9ab21da-3f8c-485d-b659-aed20f9bcc1b)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/5909f40c-e8a8-4945-97f6-202e812a7567)
 
 
 
 ###### [[멤버 및 역할 분담👆]](#%EF%B8%8F멤버-및-역할-분담)
 ---
 
+
+### ▶️동적보드 결재
+![image](https://github.com/imyeji2/ezBears/assets/137904402/30ea2308-db3c-413e-b286-0e8ab2dad082)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/4bc883ce-7c3e-4d49-9bcc-8c237dd65ba6)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/1c0dff5f-9d88-464b-83a9-6c6de95c2961)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/9fbe6efa-e854-4195-8986-d3f24dc90c43)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/a8421268-f4fe-4d8d-8190-6a951691e804)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/f5ae8a74-2ac4-431f-8237-b9ac922cc778)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/8a0e5fd7-aac0-48a0-9278-a46d01b1b3c1)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/3ce51dac-a2be-4034-a4ac-aef8a8181d31)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/3e58f597-d76f-4a93-a6f7-8b8e20d393cf)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/e067faf5-a358-4329-a1ed-836d524424e3)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/abbc764e-dfc0-4cef-94c0-d838dcc5d647)
+
+
+
+###### [[멤버 및 역할 분담👆]](#%EF%B8%8F멤버-및-역할-분담)
+---
+
+
 ### ▶️동적보드 멤버관리
+![image](https://github.com/imyeji2/ezBears/assets/137904402/609ebf92-09ae-445f-a120-b074572b65d4)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/82ce0143-4c51-43da-b187-373d9c0df48a)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/1fc78d50-61d8-44d1-999a-306274551559)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/82a9d391-2ead-4ebb-9281-60100e9a4f3a)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/68212333-df81-4e93-a784-858e69fb2dc4)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/76dd6c76-d8b2-4fb7-84a0-b9a3850fd931)
 
 
 
@@ -276,12 +334,33 @@
 
 
 ### ▶️동적보드 관리 
+![image](https://github.com/imyeji2/ezBears/assets/137904402/604edf7a-f960-4b9f-b3de-3504aef351bd)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/7736d618-627f-4dca-a566-b4c8a5a5a406)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/a36a35ec-2fc9-4aee-ad83-ff502a7fe5d4)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/c984488b-efc3-408e-ba71-9ff7f9d8543c)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/9ceaf737-5ef9-4f87-b714-4a834f33eaf5)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/8e84f0ec-6e2f-4d5b-bc1c-20440d90299b)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/a308b331-7627-45ce-a2e2-394f97540cd2)
 
 
 
 ###### [[멤버 및 역할 분담👆]](#%EF%B8%8F멤버-및-역할-분담)
 ---
 
+
+### ▶️팀관리 관리 
+![image](https://github.com/imyeji2/ezBears/assets/137904402/604edf7a-f960-4b9f-b3de-3504aef351bd)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/7736d618-627f-4dca-a566-b4c8a5a5a406)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/a36a35ec-2fc9-4aee-ad83-ff502a7fe5d4)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/c984488b-efc3-408e-ba71-9ff7f9d8543c)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/9ceaf737-5ef9-4f87-b714-4a834f33eaf5)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/8e84f0ec-6e2f-4d5b-bc1c-20440d90299b)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/a308b331-7627-45ce-a2e2-394f97540cd2)
+
+
+
+###### [[멤버 및 역할 분담👆]](#%EF%B8%8F멤버-및-역할-분담)
+---
 
 
 ## ✔️프로젝트 개선 방향
