@@ -348,19 +348,45 @@
 ---
 
 
-### ▶️팀관리 관리 
-![image](https://github.com/imyeji2/ezBears/assets/137904402/604edf7a-f960-4b9f-b3de-3504aef351bd)
-![image](https://github.com/imyeji2/ezBears/assets/137904402/7736d618-627f-4dca-a566-b4c8a5a5a406)
-![image](https://github.com/imyeji2/ezBears/assets/137904402/a36a35ec-2fc9-4aee-ad83-ff502a7fe5d4)
-![image](https://github.com/imyeji2/ezBears/assets/137904402/c984488b-efc3-408e-ba71-9ff7f9d8543c)
-![image](https://github.com/imyeji2/ezBears/assets/137904402/9ceaf737-5ef9-4f87-b714-4a834f33eaf5)
-![image](https://github.com/imyeji2/ezBears/assets/137904402/8e84f0ec-6e2f-4d5b-bc1c-20440d90299b)
-![image](https://github.com/imyeji2/ezBears/assets/137904402/a308b331-7627-45ce-a2e2-394f97540cd2)
+### ▶️팀관리 경기 기록 관리 
+![image](https://github.com/imyeji2/ezBears/assets/137904402/ed71827a-1db8-486b-a190-accd717257aa)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/4ee9569d-6839-45e8-bee5-e37133a62fd1)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/7afeb377-92f1-40d8-b28f-b994038e3307)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/c766f9e8-4197-44d7-8498-95995e31c5f1)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/ac326fb1-5c69-4a29-83a6-250256d89830)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/4371212c-81b4-4503-9cd6-babfea04324b)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/826abb69-5358-4a63-bb51-d081ffdee2fa)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/9729ff78-3f8c-450e-bccd-91d36dfca6bf)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/7106ebb3-980f-41c7-b3ce-7aec5391208e)
 
 
 
 ###### [[멤버 및 역할 분담👆]](#%EF%B8%8F멤버-및-역할-분담)
 ---
+
+
+### ▶️팀관리 선수 기록 관리 
+![image](https://github.com/imyeji2/ezBears/assets/137904402/60b99b31-b9d4-4731-9f6c-fc78214b775e)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/6e835cb8-8113-4918-b221-f56227e911fc)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/863acfa1-2850-4015-a8fc-0f2ae9dad45a)
+
+
+###### [[멤버 및 역할 분담👆]](#%EF%B8%8F멤버-및-역할-분담)
+---
+
+
+### ▶️임직원정보 
+![image](https://github.com/imyeji2/ezBears/assets/137904402/df3b6236-ce7d-4d5f-9eaa-a61e5a4d703c)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/c0b40a43-34e9-484f-b2a0-d7df143a245e)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/e2be2c78-4f1d-4368-838b-53a184ce04a3)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/3b0f9fd3-39da-4d6b-8426-4ea398a8a875)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/9af3d521-caa1-46bb-bd19-fd829bd214c4)
+
+
+
+###### [[멤버 및 역할 분담👆]](#%EF%B8%8F멤버-및-역할-분담)
+---
+
 
 
 ## ✔️프로젝트 개선 방향
