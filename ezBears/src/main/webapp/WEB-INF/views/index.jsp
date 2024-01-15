@@ -7,7 +7,7 @@
 
 <script>
 	$(function(){
-		//네이버 뉴스 api 호출
+		//네이버 뉴스 api 호출.
 		naverNewsLoad();
 		setInterval(naverNewsLoad,10000);
 		//600000
