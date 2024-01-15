@@ -122,11 +122,14 @@
 
 
 #### 📍일반 사원
-![image](https://github.com/imyeji2/ezBears/assets/137904402/ec16282b-fa29-425d-aa33-16d05ecde681)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/0278f5fd-3470-499b-93f6-cc81c8fac7c2)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/2ab87fed-123d-464c-91fb-2cb4ca3b24e0)
+
 
 
 #### 📍스태프
-이미지 추가
+![image](https://github.com/imyeji2/ezBears/assets/137904402/9df23c99-574e-4048-ae84-f87ce8aa89cb)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/bf9a6948-ec18-4f06-b31a-794cd7186e19)
 
 
 ###### [[멤버 및 역할 분담👆]](#%EF%B8%8F멤버-및-역할-분담)
@@ -206,7 +209,8 @@
 
 
 ### ▶️경영지원팀 게시판 관리
-![image](https://github.com/imyeji2/ezBears/assets/137904402/dcedf1b6-180b-4dd2-819d-a3d7815049bf)
+![image](https://github.com/imyeji2/ezBears/assets/137904402/c51b28c0-5433-4700-8cf6-40249a01b560)
+
 
 
 ###### [[멤버 및 역할 분담👆]](#%EF%B8%8F멤버-및-역할-분담)
